@@ -19,6 +19,7 @@ Create `.env` (or let `npm run dev` generate it) and set:
 - `APP_SLUG` – app slug (becomes `tenant_<slug>` schema/user)
 - `DATABASE_URL` – tenant runtime DB URL
 - `SYSTEM_DATABASE_URL` – admin DB URL for scripts
+- `SHADOW_DATABASE_URL` – Prisma shadow DB for `migrate dev`
 - `TENANT_DB_PASSWORD` – tenant DB password (required in prod; defaults to `devpass` locally)
 - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` – Clerk keys
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` – Stripe keys
@@ -31,7 +32,11 @@ Reference: `.env.example`.
 `npm run dev` will auto-bootstrap `.env`, provision `tenant_dev`, and apply migrations. To run manually:
 ```bash
 npm run db:init -- --slug dev       # creates schema/user + registry row
-npm run db:migrate:dev              # applies existing Prisma migrations
+npm run db:migrate:dev              # runs Prisma migrate dev (uses SHADOW_DATABASE_URL)
+```
+For new projects or when you need `.env.production` updated, run:
+```bash
+./scripts/provision-saas.sh <project-slug>
 ```
 
 ## 4) Start the app

@@ -6,7 +6,8 @@ This file captures the contracts that must stay stable while rebranding the boil
 - Core DB + runtime  
   - `APP_SLUG` – canonical tenant slug (becomes `tenant_<slug>` schema + user).  
   - `DATABASE_URL` – runtime connection for the tenant user scoped to the tenant schema.  
-  - `SYSTEM_DATABASE_URL` – admin connection for provisioning/migrations/cleanup only.  
+  - `SYSTEM_DATABASE_URL` – admin connection for provisioning/cleanup only.  
+  - `SHADOW_DATABASE_URL` – Prisma shadow DB for `migrate dev` (usually same as `SYSTEM_DATABASE_URL`).  
   - `TENANT_DB_PASSWORD` – tenant DB user password (required in production; defaults to `devpass` locally).
 - App host + URLs  
   - `NEXT_PUBLIC_APP_URL` – base URL for links and metadata.  
@@ -39,18 +40,19 @@ This file captures the contracts that must stay stable while rebranding the boil
 - `npm run build` – Next.js production build.  
 - `npm start` – Next.js server (`next start -p 3000`).  
 - `npm run db:init` – `scripts/db/init-tenant.js`; provisions schema/user/registry row for `APP_SLUG` or `--slug`; writes `.env` in dev; prints runtime `DATABASE_URL` in prod.  
+- `./scripts/provision-saas.sh <project-slug>` – required for new apps; wraps `db:init` + migrations and updates `.env.production`.  
 - `npm run db:cleanup` – `scripts/db/cleanup-tenant.js`; drops schema/user and registry row (preview-only unless `--force`).  
-- `npm run db:migrate:dev` – `prisma migrate deploy --schema=prisma/system.prisma` (applies existing migrations to dev DB).  
+- `npm run db:migrate:dev` – `prisma migrate dev --schema=prisma/system.prisma` (creates/applies dev migrations; uses `SHADOW_DATABASE_URL`).  
 - `npm run db:migrate:prod` – same deploy command targeting production connection.  
 - `npm run postinstall` – `prisma generate --schema=prisma/system.prisma`.
 
 ## Runtime & Infra Assumptions
 - One Postgres database per environment (`postgres`), one schema per app: `tenant_<APP_SLUG>`, and one DB role: `tenant_<APP_SLUG>_user`.
 - Registry `public.tenants` exists for infra scripts only (provision/cleanup). Runtime never reads or writes it.
-- Runtime uses only `DATABASE_URL` (tenant user scoped to tenant schema). Scripts use `SYSTEM_DATABASE_URL`.
+- Runtime uses only `DATABASE_URL` (tenant user scoped to tenant schema). Scripts use `SYSTEM_DATABASE_URL`; Prisma `migrate dev` uses `SHADOW_DATABASE_URL`.
 - Provisioning (`db:init`): validates slug, uses `TENANT_DB_PASSWORD` (prod) or `devpass` (dev), creates schema/user, ensures registry row (type `prod` unless `--preview`), and in dev writes `.env` defaults.
 - Cleanup (`db:cleanup`): looks up `public.tenants`, refuses non-preview unless `--force`, drops schema/user, deletes registry row. Runs against `SYSTEM_DATABASE_URL`.
-- Migrations: Prisma schema at `prisma/system.prisma`; migrations live under `prisma/migrations`; both `db:migrate:*` commands run `prisma migrate deploy` (no drift-creating behavior baked into scripts).
+- Migrations: Prisma schema at `prisma/system.prisma`; migrations live under `prisma/migrations`; `db:migrate:dev` runs `prisma migrate dev` and `db:migrate:prod` runs `prisma migrate deploy`.
 - CI/Dokploy: expect Postgres reachable on port 5433, and Dokploy jobs run the same scripts inside the VNet for Supabase.
 
 ## Critical Flows (behavior to preserve)

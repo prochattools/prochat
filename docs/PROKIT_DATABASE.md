@@ -32,21 +32,24 @@ Registry columns (infra-only):
 
 ## Connection & Env Model
 - `DATABASE_URL`: tenant-scoped runtime connection (only URL the app uses).
-- `SYSTEM_DATABASE_URL`: admin connection for scripts (provision/migrate/cleanup).
+- `SYSTEM_DATABASE_URL`: admin connection for scripts (provision/cleanup).
+- `SHADOW_DATABASE_URL`: Prisma shadow DB for `migrate dev` (usually same as `SYSTEM_DATABASE_URL`).
 
 Examples:
 ```
 # Development
 DATABASE_URL=postgresql://tenant_demo_user:***@localhost:5433/postgres?schema=tenant_demo
 SYSTEM_DATABASE_URL=postgresql://postgres:devpass@localhost:5433/postgres?schema=public
+SHADOW_DATABASE_URL=postgresql://postgres:devpass@localhost:5433/postgres?schema=public
 
 # Production
 DATABASE_URL=postgresql://tenant_demo_user:***@10.0.2.4:5433/postgres?schema=tenant_demo
 SYSTEM_DATABASE_URL=postgresql://postgres:prodpass@10.0.2.4:5433/postgres?schema=public
+SHADOW_DATABASE_URL=postgresql://postgres:prodpass@10.0.2.4:5433/postgres?schema=public
 ```
 
 Responsibilities:
-- Dev: scripts + runtime hit `localhost:5433`; scripts use `SYSTEM_DATABASE_URL`, runtime uses `DATABASE_URL`.
+- Dev: scripts + runtime hit `localhost:5433`; scripts use `SYSTEM_DATABASE_URL`, runtime uses `DATABASE_URL`, and `migrate dev` uses `SHADOW_DATABASE_URL`.
 - Prod: scripts run inside Dokploy with `SYSTEM_DATABASE_URL`; runtime uses `DATABASE_URL` (tenant user).
 
 ## Provisioning & Managing Tenants
@@ -80,7 +83,7 @@ GRANT ALL PRIVILEGES ON SCHEMA tenant_<slug> TO tenant_<slug>_user;
 
 5) Output connection URL  
    - Logs `postgresql://tenant_<slug>_user:<password>@<host>:<port>/postgres?schema=tenant_<slug>`.  
-   - In dev, writes `APP_SLUG` + `DATABASE_URL` (and sets `SYSTEM_DATABASE_URL` if missing) into `.env`.
+   - In dev, writes `APP_SLUG` + `DATABASE_URL` (and sets `SYSTEM_DATABASE_URL`/`SHADOW_DATABASE_URL` if missing) into `.env`.
 
 ### Cleanup flow
 
@@ -104,7 +107,7 @@ Command: `npm run db:cleanup -- --slug <slug> [--force]`
 
 ## Migrations & Schema Sync
 - Prisma schema: `prisma/system.prisma`.  
-- Dev: `npm run db:migrate:dev` → `prisma migrate deploy --schema=prisma/system.prisma` against `localhost:5433`, applying existing migrations.  
+- Dev: `npm run db:migrate:dev` → `prisma migrate dev --schema=prisma/system.prisma` against `localhost:5433` (uses `SHADOW_DATABASE_URL`).  
 - Prod: `NODE_ENV=production npm run db:migrate:prod` → `prisma migrate deploy --schema=prisma/system.prisma` inside Dokploy.  
 - Contract: new app versions must not boot without successful `db:migrate:prod`; no raw SQL migrations outside Prisma; `prisma/system.prisma` and `prisma/migrations` stay aligned.
 
@@ -118,7 +121,7 @@ Command: `npm run db:cleanup -- --slug <slug> [--force]`
 
 ## Rules for AI Assistants
 - May propose Prisma schema changes and request `db:init`, `db:migrate:dev`, `db:migrate:prod`, `db:cleanup`.  
-- Must not execute raw SQL against production, change the `DATABASE_URL` vs `SYSTEM_DATABASE_URL` split, or create/drop schemas/users outside scripts.  
+- Must not execute raw SQL against production, change the `DATABASE_URL` vs `SYSTEM_DATABASE_URL`/`SHADOW_DATABASE_URL` split, or create/drop schemas/users outside scripts.  
 - Must not connect to production DB from outside the VNet.
 
 ## Guardrails & Good Practice
@@ -127,7 +130,7 @@ Command: `npm run db:cleanup -- --slug <slug> [--force]`
 - `db:init -- --slug <slug>` is idempotent and safe to rerun.  
 - `db:cleanup -- --slug <slug>` deletes preview tenants; `--force` required for prod tenants.  
 - Validate slugs; never interpolate untrusted input into SQL.  
-- Runtime uses tenant user via `DATABASE_URL`; scripts use `SYSTEM_DATABASE_URL`.
+- Runtime uses tenant user via `DATABASE_URL`; scripts use `SYSTEM_DATABASE_URL`; `migrate dev` uses `SHADOW_DATABASE_URL`.
 
 ## Pointers
 - Infra/network layout: `docs/PROKIT_INFRASTRUCTURE.md`  

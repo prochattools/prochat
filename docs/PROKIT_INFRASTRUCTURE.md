@@ -8,12 +8,12 @@ ProKit ships with a scripted, environment-safe way to provision databases, run m
 - Registry table `public.tenants` is infra-only (provision/cleanup), never read by runtime.  
 - Prisma manages schema + migrations (`prisma/system.prisma`).  
 - Dev runtime + provisioning hit Docker Postgres on `localhost:5433`.  
-- Prod provisioning/migrations run inside Dokploy to Supabase `10.0.2.4:5433` via `SYSTEM_DATABASE_URL`.  
+- Prod provisioning/cleanup run inside Dokploy to Supabase `10.0.2.4:5433` via `SYSTEM_DATABASE_URL`; migrations use `DATABASE_URL` (tenant user).  
 - Prod runtime uses `DATABASE_URL` (tenant user) only.  
 - Optional MCP bridge (`https://mcp.prochat.tools`) wraps the same commands.
 
 Environment split:
-- **Dev**: scripts → `SYSTEM_DATABASE_URL` @ `localhost:5433`; runtime → `DATABASE_URL` @ `localhost:5433`; env file `.env`.  
+- **Dev**: scripts → `SYSTEM_DATABASE_URL` @ `localhost:5433`; `migrate dev` → `SHADOW_DATABASE_URL`; runtime → `DATABASE_URL` @ `localhost:5433`; env file `.env`.  
 - **Prod**: scripts inside Dokploy → `SYSTEM_DATABASE_URL` @ `10.0.2.4:5433`; runtime → `DATABASE_URL` (tenant user); env via Dokploy or `.env.production`.
 
 For database behavior details, see `docs/PROKIT_DATABASE.md`. Cleanup specifics live in `docs/PROKIT_TENANT_CLEANUP.md`.
@@ -22,8 +22,8 @@ For database behavior details, see `docs/PROKIT_DATABASE.md`. Cleanup specifics 
 - Provision: `npm run db:init -- --slug <slug> [--preview] [--external-id <id>]`  
   - Creates schema + user, grants, search_path, and upserts registry row with type (`prod` or `preview`).  
 - Migrations:  
-  - Dev: `npm run db:migrate:dev` → `prisma migrate deploy --schema=prisma/system.prisma`  
-  - Prod: `npm run db:migrate:prod` → same command in Dokploy  
+  - Dev: `npm run db:migrate:dev` → `prisma migrate dev --schema=prisma/system.prisma`  
+  - Prod: `npm run db:migrate:prod` → `prisma migrate deploy --schema=prisma/system.prisma` in Dokploy  
 - Cleanup (preview by default): `npm run db:cleanup -- --slug <slug> [--force]`  
   - Looks up `public.tenants`, refuses non-preview unless `--force`, drops schema/user, deletes registry row.
 
@@ -36,6 +36,7 @@ AI/agents must use these commands (or MCP wrappers), not raw SQL.
 - `.env` / `.env.production` include tenant/runtime and system URLs:
   - `DATABASE_URL=postgresql://tenant_<slug>_user:<password>@localhost:5433/postgres?schema=tenant_<slug>`
   - `SYSTEM_DATABASE_URL=postgresql://postgres:<admin>@localhost:5433/postgres?schema=public`
+  - `SHADOW_DATABASE_URL=postgresql://postgres:<admin>@localhost:5433/postgres?schema=public`
 
 ## Starting a new project
 1) Clone + install  
@@ -46,11 +47,12 @@ npm install
 ```
 2) Provision  
 ```
-npm run db:init -- --slug <slug>
+./scripts/provision-saas.sh <slug>
 ```
+   - Wraps `db:init` + migrations and writes `.env.production` defaults.  
    - Dev: hits `localhost:5433` via `SYSTEM_DATABASE_URL`.  
    - Prod: run inside Dokploy against `10.0.2.4:5433`.  
-   - Creates schema/user + registry; in dev writes `DATABASE_URL`/`APP_SLUG` (and sets `SYSTEM_DATABASE_URL` if missing) into `.env`.
+   - Creates schema/user + registry; in dev writes `DATABASE_URL`/`APP_SLUG` (and sets `SYSTEM_DATABASE_URL`/`SHADOW_DATABASE_URL` if missing) into `.env`.
 
 3) Run (dev)  
 ```

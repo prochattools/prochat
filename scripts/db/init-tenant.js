@@ -295,6 +295,9 @@ async function main() {
       if (!loadEnvFile(envPath).SYSTEM_DATABASE_URL) {
         updates.SYSTEM_DATABASE_URL = systemUrl
       }
+      if (!loadEnvFile(envPath).SHADOW_DATABASE_URL) {
+        updates.SHADOW_DATABASE_URL = systemUrl
+      }
 
       persistEnv(envPath, updates)
       console.log('✅ Updated .env for development')

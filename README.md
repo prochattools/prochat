@@ -24,7 +24,7 @@ For rules governing how AI assistants may modify this boilerplate—including ar
 - Local development using Docker Postgres on `localhost:5433`
 - Production Postgres on a private Supabase instance (no public DB access)
 - Prisma migrations:
-  - `db:migrate:dev` → `prisma migrate deploy`
+  - `db:migrate:dev` → `prisma migrate dev`
   - `db:migrate:prod` → `prisma migrate deploy`
 - Deterministic scripts:
   - Provisioning: `npm run db:init -- --slug <slug> [--preview] [--external-id <id>]`
@@ -61,7 +61,7 @@ The full database model and automation behavior is documented in:
 
 - Each environment (development, production) has its own Postgres instance with a database named `postgres`.
 - One app → one schema (`tenant_<APP_SLUG>`) → one DB user (`tenant_<APP_SLUG>_user`).
-- Runtime uses only `DATABASE_URL` (tenant user + tenant schema). Runtime must NOT read hostnames, `SYSTEM_DATABASE_URL`, or `public.tenants`.
+- Runtime uses only `DATABASE_URL` (tenant user + tenant schema). Runtime must NOT read hostnames, `SYSTEM_DATABASE_URL`, `SHADOW_DATABASE_URL`, or `public.tenants`.
 - Registry (`public.tenants`) is infra-only (provision/cleanup). Columns: slug, schema_name, db_user, db_password, type (`prod`/`preview`), external_id, created_at, updated_at.
 
 Example environment variables (conceptual):
@@ -70,6 +70,7 @@ Example environment variables (conceptual):
 # .env (development)
 DATABASE_URL=postgresql://tenant_dev_user:devpass@localhost:5433/postgres?schema=tenant_dev
 SYSTEM_DATABASE_URL=postgresql://postgres:postgres@localhost:5433/postgres?schema=public
+SHADOW_DATABASE_URL=postgresql://postgres:postgres@localhost:5433/postgres?schema=public
 APP_SLUG=dev
 
 # Production (Dokploy env)
@@ -78,6 +79,7 @@ APP_SLUG=myapp
 TENANT_DB_PASSWORD=<strong-password>
 DATABASE_URL=postgresql://tenant_myapp_user:<TENANT_DB_PASSWORD>@10.0.2.4:5433/postgres?schema=tenant_myapp
 SYSTEM_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public
+SHADOW_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public
 ```
 
 Commands:
@@ -119,16 +121,16 @@ npm run dev
 Under the hood:
 
 1) `scripts/dev/bootstrap-env.js`
-   - If `.env` does not exist, writes defaults with `NODE_ENV=development`, `APP_SLUG=dev`, and `SYSTEM_DATABASE_URL` pointing at `localhost:5433`.
+   - If `.env` does not exist, writes defaults with `NODE_ENV=development`, `APP_SLUG=dev`, `SYSTEM_DATABASE_URL`, and `SHADOW_DATABASE_URL` pointing at `localhost:5433`.
 
 2) `npm run db:init`
    - Parses `--slug <slug>` (preferred) or `APP_SLUG`.
    - Defaults to `dev` in development if nothing is provided.
    - Creates `tenant_<slug>` schema, `tenant_<slug>_user`, grants, and `public.tenants` row with metadata (type `prod` by default, `preview` if `--preview` is passed).
-   - Updates `.env` with `APP_SLUG` and `DATABASE_URL`; only sets `SYSTEM_DATABASE_URL` if missing.
+   - Updates `.env` with `APP_SLUG` and `DATABASE_URL`; only sets `SYSTEM_DATABASE_URL`/`SHADOW_DATABASE_URL` if missing.
 
 3) `npm run db:migrate:dev`
-   - Runs `prisma migrate deploy --schema=prisma/system.prisma` against your local Postgres on `localhost:5433`.
+   - Runs `prisma migrate dev --schema=prisma/system.prisma` against your local Postgres on `localhost:5433` (uses `SHADOW_DATABASE_URL` for the shadow DB).
 
 4) `next dev`
    - Starts the Next.js dev server on http://localhost:3000.
@@ -144,6 +146,7 @@ npx prisma migrate reset --schema=prisma/system.prisma
 - Provision: `npm run db:init -- --slug myapp`
 - Migrate: `npm run db:migrate:dev`
 - Start dev server: `npm run dev`
+- New app provisioning (also updates `.env.production`): `./scripts/provision-saas.sh <slug>`
 
 ---
 
@@ -173,6 +176,7 @@ Result:
    - `TENANT_DB_PASSWORD=<strong-password>`
    - `DATABASE_URL=postgresql://tenant_myapp_user:<TENANT_DB_PASSWORD>@10.0.2.4:5433/postgres?schema=tenant_myapp`
    - `SYSTEM_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public`
+   - `SHADOW_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public`
    - `NEXT_PUBLIC_APP_URL=https://myapp.example.com`
    - `PORT=3000`
 
@@ -184,7 +188,7 @@ npm run db:init -- --slug $APP_SLUG && npm run db:migrate:prod && npm start
 
 Notes:
 - `npm run db:init` is idempotent; it reconciles schema, user, and registry row.
-- Runtime must only use `DATABASE_URL` (tenant user). `SYSTEM_DATABASE_URL` is for scripts.
+- Runtime must only use `DATABASE_URL` (tenant user). `SYSTEM_DATABASE_URL` is for scripts; `SHADOW_DATABASE_URL` is for Prisma dev migrations.
 
 ### Preview tenants and cleanup (optional)
 
@@ -198,7 +202,7 @@ Notes:
 `.github/workflows/ci.yml`:
 - Postgres 16 mapped to host port 5433.
 - Provision tenant (`npm run db:init -- --slug ci`).
-- Run `npm run db:migrate:dev` (uses `prisma migrate deploy`).
+- Run `npm run db:migrate:dev` (uses `prisma migrate dev`).
 - Build the app.
 
 ---

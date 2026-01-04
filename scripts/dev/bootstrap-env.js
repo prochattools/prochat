@@ -24,6 +24,7 @@ const content = [
   `APP_SLUG=${slug}`,
   `NODE_ENV=development`,
   `SYSTEM_DATABASE_URL=${systemUrl}`,
+  `SHADOW_DATABASE_URL=${systemUrl}`,
   `# DATABASE_URL will be populated automatically after the first "npm run db:init"`,
   ''
 ].join('\n')

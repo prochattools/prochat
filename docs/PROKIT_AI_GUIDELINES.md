@@ -31,14 +31,16 @@ Forbidden: runtime access to registry or changing meaning of `type`.
 - `APP_SLUG` – canonical tenant slug  
 - `DATABASE_URL` – tenant runtime DB  
 - `SYSTEM_DATABASE_URL` – admin DB for scripts only  
+- `SHADOW_DATABASE_URL` – Prisma shadow DB for `migrate dev`  
 - `TENANT_DB_PASSWORD` – password used when provisioning tenant user
 
-Forbidden: change semantics of these vars or use `SYSTEM_DATABASE_URL` during app runtime.
+Forbidden: change semantics of these vars or use `SYSTEM_DATABASE_URL`/`SHADOW_DATABASE_URL` during app runtime.
 
 ## 3) Database scripts & commands (public contract)
 - `db:init` provisions schema + role + registry row using `SYSTEM_DATABASE_URL` (`TENANT_DB_PASSWORD` in prod; `devpass` in dev).  
-- `db:migrate:dev` / `db:migrate:prod` apply Prisma migrations (`prisma migrate deploy`).  
+- `db:migrate:dev` uses `prisma migrate dev`; `db:migrate:prod` uses `prisma migrate deploy`.  
 - `db:cleanup` deletes preview tenants unless `--force`; uses `SYSTEM_DATABASE_URL`; must not silently delete prod tenants.
+- New apps must be provisioned via `./scripts/provision-saas.sh <project-slug>` (wraps `db:init` + migrations and updates `.env.production`).  
 
 ## 4) Prisma rules
 Datasource:
@@ -46,7 +48,7 @@ Datasource:
 datasource db {
   provider          = "postgresql"
   url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SYSTEM_DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 ```
 Allowed: add models/fields useful for future SaaS apps; generate migrations when asked.  
@@ -61,6 +63,7 @@ ProKit must remain generic.
 - Confirm intent before touching migrations, tenant model, provisioning scripts, or env contracts.  
 - Keep diffs minimal; do not rewrite entire files unless requested.  
 - Infra changes must be reflected in `README.md`, `docs/PROKIT_DATABASE.md`, `docs/PROKIT_INFRASTRUCTURE.md`, `docs/PROKIT_TENANT_CLEANUP.md`.
+- Do not modify `scripts/provision-saas.sh` unless explicitly instructed.  
 - If anything conflicts with this file, this file wins unless a human explicitly approves the change.
 
 ## 7) Summary

@@ -11,7 +11,7 @@
 		"postinstall": "prisma generate --schema=prisma/system.prisma",
 		"db:init": "node scripts/db/init-tenant.js",
 		"db:cleanup": "node scripts/db/cleanup-tenant.js",
-		"db:migrate:dev": "prisma migrate deploy --schema=prisma/system.prisma",
+		"db:migrate:dev": "prisma migrate dev --schema=prisma/system.prisma",
 		"db:migrate:prod": "prisma migrate deploy --schema=prisma/system.prisma",
 		"predev": "node scripts/dev/bootstrap-env.js && npm run db:init && npm run db:migrate:dev"
 	},
