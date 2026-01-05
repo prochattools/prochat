@@ -12,26 +12,26 @@ export const SystemApply: React.FC = () => {
        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(91,73,245,0.08),transparent_70%)]" />
 
        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <Reveal>
+          <Reveal width="100%">
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
                  How to apply the system.
               </h2>
           </Reveal>
-          <Reveal delay={0.3}>
+          <Reveal width="100%" delay={0.3}>
               <p className="text-slate-400 text-xl font-light leading-relaxed max-w-2xl mx-auto mb-10">
                  ProChat is the methodology. The kits are the accelerators. <br className="hidden md:block"/>
                  Choose the entry point that matches your technical confidence.
               </p>
           </Reveal>
-          <Reveal delay={0.4}>
+          <Reveal width="100%" delay={0.4}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                  <Link href="/kits/saaskit">
-                    <Button className="bg-[#5b49f5] hover:bg-[#4a3bd1] text-white h-14 px-8 text-lg border-none shadow-lg shadow-[#5b49f5]/20">
+                    <Button className="bg-[#5b49f5] hover:bg-[#4a3bd1] text-white h-14 px-8 text-lg border-none shadow-lg shadow-[#5b49f5]/20 dark:shadow-[0_0_20px_rgba(91,73,245,0.35)] dark:hover:shadow-[0_0_28px_rgba(91,73,245,0.45)]">
                         Explore SaaSKit
                     </Button>
                  </Link>
                  <Link href="/kits/prokit">
-                    <Button variant="secondary" className="bg-transparent border-slate-700 text-white hover:border-[#5b49f5] hover:text-[#5b49f5] h-14 px-8 text-lg hover:bg-white/5">
+                    <Button variant="secondary" className="h-14 px-8 text-lg">
                         Explore ProKit
                     </Button>
                  </Link>

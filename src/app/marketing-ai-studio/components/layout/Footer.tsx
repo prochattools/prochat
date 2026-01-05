@@ -1,44 +1,61 @@
 import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Youtube, Send } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-white pt-20 pb-10 border-t border-slate-200">
+    <footer className="bg-white pt-20 pb-10 border-t border-slate-200 dark:bg-[#0B111B] dark:border-[#1E242D]">
       <div className="max-w-7xl mx-auto px-8">
         
         <div className="grid md:grid-cols-4 gap-12 mb-16">
            
            {/* Brand */}
            <div className="space-y-4">
-              <div className="font-bold text-xl text-slate-900">prochat</div>
-              <p className="text-slate-500 text-sm">Launch your SaaS in days, not weeks</p>
+              <Link href="/" className="inline-flex items-center">
+                 <Image
+                   src="/logo/prochat_logo_light.png"
+                   alt="ProChat"
+                   width={175}
+                   height={56}
+                   className="h-[45px] w-auto dark:hidden"
+                 />
+                 <Image
+                   src="/logo/prochat_logo_dark.png"
+                   alt="ProChat"
+                   width={175}
+                   height={56}
+                   className="h-[45px] w-auto hidden dark:block"
+                 />
+              </Link>
+              <p className="text-slate-500 text-sm dark:text-slate-400">A system for turning service into SaaS.</p>
            </div>
 
            {/* Links */}
            <div>
-              <h4 className="font-bold text-slate-900 mb-4">System</h4>
-              <ul className="space-y-3 text-sm text-slate-500">
-                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors">System notes</a></li>
-                 <li><a href="/contact" className="hover:text-[#5b49f5] transition-colors">Contact</a></li>
+              <h4 className="font-bold text-slate-900 mb-4 dark:text-white">System</h4>
+              <ul className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
+                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">System notes</a></li>
+                 <li><a href="/contact" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">Contact</a></li>
               </ul>
            </div>
 
            {/* Legal */}
            <div>
-              <h4 className="font-bold text-slate-900 mb-4">Legal</h4>
-              <ul className="space-y-3 text-sm text-slate-500">
-                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors">Terms of services</a></li>
-                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors">Privacy Policy</a></li>
-                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors">Licences</a></li>
+              <h4 className="font-bold text-slate-900 mb-4 dark:text-white">Legal</h4>
+              <ul className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
+                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">Terms of services</a></li>
+                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">Privacy Policy</a></li>
+                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">Licences</a></li>
               </ul>
            </div>
 
            {/* Contact / Maker */}
            <div>
-              <h4 className="font-bold text-slate-900 mb-4">Contact the maker</h4>
-              <ul className="space-y-3 text-sm text-slate-500 mb-6">
-                 <li className="font-medium text-slate-900">Steve Westhoek</li>
+              <h4 className="font-bold text-slate-900 mb-4 dark:text-white">Contact the maker</h4>
+              <ul className="space-y-3 text-sm text-slate-500 mb-6 dark:text-slate-400">
+                 <li className="font-medium text-slate-900 dark:text-white">Steve Westhoek</li>
                  <li>ProChat</li>
               </ul>
               <div className="flex gap-2">
@@ -53,8 +70,8 @@ export const Footer: React.FC = () => {
 
         </div>
 
-        <div className="pt-8 border-t border-slate-100 text-center text-slate-400 text-sm">
-           © 2025 ProChat - All rights reserved
+        <div className="pt-8 border-t border-slate-100 text-center text-slate-400 text-sm dark:border-[#1E242D] dark:text-slate-500">
+           © {new Date().getFullYear()} ProChat - All rights reserved
         </div>
 
       </div>

@@ -15,7 +15,7 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet'
-import { Blog, Demo, Moon, OpenNav, Pricing, RightArrow, Sun } from '@/icons'
+import { Blog, Demo, Landing, Moon, OpenNav, Pricing, RightArrow, Sun } from '@/icons'
 import { ScrollToSection } from '@/utils/scroll-to-section'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
@@ -36,6 +36,15 @@ const nav_links = [
 		icon: <Blog width={18} height={18} />,
 		title: 'Blog',
 		link: '/blog',
+	},
+	{
+		icon: (
+			<span className='inline-flex scale-[0.6]'>
+				<Landing />
+			</span>
+		),
+		title: 'Kits',
+		link: '/kits',
 	},
 ]
 

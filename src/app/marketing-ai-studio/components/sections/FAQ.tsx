@@ -5,24 +5,24 @@ import { Reveal } from '../ui/Reveal';
 
 const FAQS = [
     {
-        q: "What is ProChat?",
-        a: "ProChat is a practical system for building SaaS from paid client pain—so you don’t guess what to build."
+        q: "What is the difference between the kits?",
+        a: "WaaSKit starts with clients (no idea required). SaaSKit starts with your idea (skip the service). All paths use the same underlying system. The difference is where you start."
     },
     { 
-        q: "Who is this for?", 
-        a: "Non-technical founders and operators who want a repeatable way to validate demand before building." 
+        q: "Do I need to be technical?", 
+        a: "For WaaSKit, no—you can start with no-code service. For SaaSKit and ProKit, basic familiarity with React/Next.js is recommended, though we provide detailed guides." 
     },
     { 
-        q: "Is ProChat a product or a methodology?", 
-        a: "It’s a methodology first. The kits are optional tools that help you apply it faster." 
+        q: "Is ProChat a course?", 
+        a: "It’s a hybrid. You get the strategy (Playbook) and the code (Kits). We don't just teach you 'how'—we give you the standardized asset to do it." 
     },
     { 
         q: "Do you sell services?", 
-        a: "Yes, selectively. Studio exists for implementation help, but the core focus is selling repeatable kits—not custom work." 
+        a: "We selectively help operators implement the system via Studio, but our core focus is giving you the kits to build it yourself." 
     },
     {
-        q: "Where do the kits fit?",
-        a: "Kits are how you apply the system at different stages: SaaSKit for founders, ProKit for builders."
+        q: "Where should I start?",
+        a: "If you don't have paid clients or an idea yet, start with WaaSKit. If you have an idea ready to code, start with SaaSKit."
     }
 ];
 
@@ -30,10 +30,10 @@ export const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-24 bg-white relative">
+    <section className="py-24 bg-white relative dark:bg-[#0B111B]">
         <div className="max-w-3xl mx-auto px-6">
             <Reveal width="100%">
-                <h2 className="text-3xl font-bold text-slate-900 mb-12 text-center">Frequently Asked Questions</h2>
+                <h2 className="text-3xl font-bold text-slate-900 mb-12 text-center dark:text-white">Frequently Asked Questions</h2>
             </Reveal>
             
             <div className="space-y-4">
@@ -41,10 +41,10 @@ export const FAQ: React.FC = () => {
                     <Reveal key={i} delay={i * 0.1} width="100%">
                         <div 
                             className={`
-                                relative bg-white border rounded-2xl overflow-hidden transition-all duration-300 transform-gpu
+                                relative bg-white border rounded-2xl overflow-hidden transition-all duration-300 transform-gpu dark:bg-[#0F1424]
                                 ${openIndex === i 
-                                    ? 'border-[#5b49f5]/30 shadow-[0_4px_20px_-10px_rgba(91,73,245,0.15)] ring-1 ring-[#5b49f5]/10' 
-                                    : 'border-slate-200 shadow-sm hover:border-slate-300'
+                                    ? 'border-[#5b49f5]/30 shadow-[0_4px_20px_-10px_rgba(91,73,245,0.15)] ring-1 ring-[#5b49f5]/10 dark:border-[#5b49f5]/40 dark:ring-[#5b49f5]/20 dark:shadow-none' 
+                                    : 'border-slate-200 shadow-sm hover:border-slate-300 dark:border-[#1E242D] dark:hover:border-[#2A3445] dark:shadow-none'
                                 }
                             `}
                         >
@@ -52,12 +52,12 @@ export const FAQ: React.FC = () => {
                                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                                 className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
                             >
-                                <span className={`font-bold transition-colors duration-200 ${openIndex === i ? 'text-[#5b49f5]' : 'text-slate-900'}`}>
+                                <span className={`font-bold transition-colors duration-200 ${openIndex === i ? 'text-[#5b49f5] dark:text-[#9b8bff]' : 'text-slate-900 dark:text-slate-100'}`}>
                                     {faq.q}
                                 </span>
                                 <div className={`
                                     flex items-center justify-center w-6 h-6 rounded-full transition-colors duration-200
-                                    ${openIndex === i ? 'bg-[#5b49f5]/10 text-[#5b49f5]' : 'bg-slate-100 text-slate-400 group-hover:bg-slate-200'}
+                                    ${openIndex === i ? 'bg-[#5b49f5]/10 text-[#5b49f5] dark:bg-[#5b49f5]/20 dark:text-[#9b8bff]' : 'bg-slate-100 text-slate-400 group-hover:bg-slate-200 dark:bg-[#1A2233] dark:text-slate-500 dark:group-hover:bg-[#22304A]'}
                                 `}>
                                     {openIndex === i ? <Minus size={14} /> : <Plus size={14} />}
                                 </div>
@@ -69,7 +69,7 @@ export const FAQ: React.FC = () => {
                                     ${openIndex === i ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
                                 `}
                             >
-                                <div className="px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed whitespace-pre-line border-t border-dashed border-slate-100 mt-2 pt-4">
+                                <div className="px-6 pb-6 pt-0 text-slate-600 text-sm leading-relaxed whitespace-pre-line border-t border-dashed border-slate-100 mt-2 pt-4 dark:text-slate-400 dark:border-[#1E242D]">
                                     {faq.a}
                                 </div>
                             </div>

@@ -1,8 +1,14 @@
+'use client';
 import React from 'react';
 import { Button } from '../ui/Button';
 import { Check } from 'lucide-react';
 
-export const Pricing: React.FC = () => {
+interface PricingProps {
+  ctaLabel?: string;
+  onCtaClick?: () => void;
+}
+
+export const Pricing: React.FC<PricingProps> = ({ ctaLabel = 'Get ProKit', onCtaClick }) => {
   return (
     <section id="pricing" className="py-32 bg-[#0a0a0a] dark:bg-[#0B111B] relative overflow-hidden text-white">
       {/* Dark Blueprint Grid */}
@@ -56,8 +62,12 @@ export const Pricing: React.FC = () => {
                     ))}
                 </div>
 
-                <Button className="w-full bg-[#5b49f5] hover:bg-[#4a3bd1] border-0 h-14 text-lg font-bold shadow-lg shadow-[#5b49f5]/20 hover:shadow-[#5b49f5]/40 transition-all relative z-10">
-                    Get ProKit
+                <Button
+                    className="w-full bg-[#5b49f5] hover:bg-[#4a3bd1] border-0 h-14 text-lg font-bold shadow-lg shadow-[#5b49f5]/20 hover:shadow-[#5b49f5]/40 transition-all relative z-10"
+                    onClick={onCtaClick}
+                    type="button"
+                >
+                    {ctaLabel}
                 </Button>
                 
                 <p className="text-center text-xs text-slate-600 dark:text-slate-500 mt-6 flex items-center justify-center gap-2 relative z-10">

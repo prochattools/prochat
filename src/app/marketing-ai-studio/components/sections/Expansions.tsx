@@ -10,14 +10,14 @@ export const Proof: React.FC = () => {
     const youtubeUrl = process.env.NEXT_PUBLIC_YOUTUBE_URL || "#";
 
     return (
-        <section className="py-24 bg-white relative overflow-hidden border-b border-slate-200/50">
+        <section className="py-24 bg-white relative overflow-hidden border-b border-slate-200/50 dark:bg-[#0B111B] dark:border-[#1E242D]">
             <div className="max-w-7xl mx-auto px-8">
                 <div className="mb-16 space-y-3">
                      <Reveal>
-                        <h2 className="text-3xl font-bold text-slate-900">Proof over promises.</h2>
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Proof over promises.</h2>
                      </Reveal>
                      <Reveal delay={0.3}>
-                        <p className="text-slate-500 font-light max-w-2xl">
+                        <p className="text-slate-500 font-light max-w-2xl dark:text-slate-400">
                             These are standardized interface patterns we ship repeatedly—shown here as examples, not promises.
                         </p>
                      </Reveal>
@@ -34,28 +34,28 @@ export const Proof: React.FC = () => {
                     
                     {/* Dashboard - Large */}
                     <div className="md:col-span-8 row-span-1 md:row-span-2">
-                        <BlueprintCard className="h-full bg-white p-1">
+                        <BlueprintCard className="h-full bg-white p-1 dark:bg-[#0F1424]">
                             <DashboardMockup />
                         </BlueprintCard>
                     </div>
 
                     {/* Auth - Medium */}
                     <div className="md:col-span-4 row-span-1">
-                        <BlueprintCard className="h-full bg-white p-1" label="Standard Auth">
+                        <BlueprintCard className="h-full bg-white p-1 dark:bg-[#0F1424]" label="Standard Auth">
                             <AuthMockup />
                         </BlueprintCard>
                     </div>
 
                     {/* Billing - Small */}
                     <div className="md:col-span-2 row-span-1 hidden md:block">
-                        <BlueprintCard className="h-full bg-white p-1" label="Email View">
+                        <BlueprintCard className="h-full bg-white p-1 dark:bg-[#0F1424]" label="Email View">
                              <EmailMockup />
                         </BlueprintCard>
                     </div>
 
                     {/* Billing - Medium */}
                     <div className="md:col-span-2 row-span-1">
-                         <BlueprintCard className="h-full bg-white p-1" label="Billing Portal">
+                         <BlueprintCard className="h-full bg-white p-1 dark:bg-[#0F1424]" label="Billing Portal">
                             <BillingMockup />
                         </BlueprintCard>
                     </div>
