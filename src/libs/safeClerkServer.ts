@@ -4,7 +4,15 @@ import { NextRequest } from 'next/server'
  * Checks whether Clerk keys are configured.
  * Used by middleware and server utilities.
  */
+const isClerkDisabled =
+  process.env.CLERK_DISABLED === 'true' ||
+  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+
 export const isClerkEnabled = (): boolean => {
+  if (isClerkDisabled) {
+    return false
+  }
+
   return (
     !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
     !!process.env.CLERK_SECRET_KEY

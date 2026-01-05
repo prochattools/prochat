@@ -1,63 +1,44 @@
 import React from 'react';
-import Image from 'next/image';
 import { Youtube, Send } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-white dark:bg-[#010814] pt-20 pb-10 border-t border-slate-200 dark:border-[#1E242D]">
-      <div className="max-w-7xl mx-auto px-6">
+    <footer className="bg-white pt-20 pb-10 border-t border-slate-200">
+      <div className="max-w-7xl mx-auto px-8">
         
         <div className="grid md:grid-cols-4 gap-12 mb-16">
            
            {/* Brand */}
            <div className="space-y-4">
-              <div className="flex items-center">
-                <Image
-                  src="/logo/prochat_logo_light.png"
-                  alt="ProChat"
-                  width={250}
-                  height={50}
-                  className="h-[3.12rem] w-auto dark:hidden"
-                />
-                <Image
-                  src="/logo/prochat_logo_dark.png"
-                  alt="ProChat"
-                  width={250}
-                  height={50}
-                  className="hidden h-[3.12rem] w-auto dark:block"
-                />
-              </div>
-              <p className="text-slate-500 dark:text-[#808389] text-sm">Launch your SaaS in days, not weeks</p>
+              <div className="font-bold text-xl text-slate-900">prochat</div>
+              <p className="text-slate-500 text-sm">Launch your SaaS in days, not weeks</p>
            </div>
 
            {/* Links */}
            <div>
-              <h4 className="font-bold text-slate-900 dark:text-white mb-4">Links</h4>
-              <ul className="space-y-3 text-sm text-slate-500 dark:text-[#808389]">
-                 <li><a href="#" className="hover:text-[#5b49f5] dark:hover:text-[#885efe] transition-colors">Demo</a></li>
-                 <li><a href="#pricing" className="hover:text-[#5b49f5] dark:hover:text-[#885efe] transition-colors">Pricing</a></li>
-                 <li><a href="#" className="hover:text-[#5b49f5] dark:hover:text-[#885efe] transition-colors">Support</a></li>
-                 <li><a href="#" className="hover:text-[#5b49f5] dark:hover:text-[#885efe] transition-colors">Documentation</a></li>
-                 <li><a href="#" className="hover:text-[#5b49f5] dark:hover:text-[#885efe] transition-colors">Affiliates</a></li>
+              <h4 className="font-bold text-slate-900 mb-4">System</h4>
+              <ul className="space-y-3 text-sm text-slate-500">
+                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors">System notes</a></li>
+                 <li><a href="/contact" className="hover:text-[#5b49f5] transition-colors">Contact</a></li>
               </ul>
            </div>
 
            {/* Legal */}
            <div>
-              <h4 className="font-bold text-slate-900 dark:text-white mb-4">Legal</h4>
-              <ul className="space-y-3 text-sm text-slate-500 dark:text-[#808389]">
-                 <li><a href="#" className="hover:text-[#5b49f5] dark:hover:text-[#885efe] transition-colors">Terms of services</a></li>
-                 <li><a href="#" className="hover:text-[#5b49f5] dark:hover:text-[#885efe] transition-colors">Privacy Policy</a></li>
-                 <li><a href="#" className="hover:text-[#5b49f5] dark:hover:text-[#885efe] transition-colors">Licences</a></li>
+              <h4 className="font-bold text-slate-900 mb-4">Legal</h4>
+              <ul className="space-y-3 text-sm text-slate-500">
+                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors">Terms of services</a></li>
+                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors">Privacy Policy</a></li>
+                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors">Licences</a></li>
               </ul>
            </div>
 
            {/* Contact / Maker */}
            <div>
-              <h4 className="font-bold text-slate-900 dark:text-white mb-4">Contact the maker</h4>
-              <ul className="space-y-3 text-sm text-slate-500 dark:text-[#808389] mb-6">
-                 <li className="font-medium text-slate-900 dark:text-white">Steve Westhoek</li>
+              <h4 className="font-bold text-slate-900 mb-4">Contact the maker</h4>
+              <ul className="space-y-3 text-sm text-slate-500 mb-6">
+                 <li className="font-medium text-slate-900">Steve Westhoek</li>
                  <li>ProChat</li>
               </ul>
               <div className="flex gap-2">
@@ -72,7 +53,7 @@ export const Footer: React.FC = () => {
 
         </div>
 
-        <div className="pt-8 border-t border-slate-100 dark:border-[#1E242D] text-center text-slate-400 dark:text-[#5A5E66] text-sm">
+        <div className="pt-8 border-t border-slate-100 text-center text-slate-400 text-sm">
            © 2025 ProChat - All rights reserved
         </div>
 

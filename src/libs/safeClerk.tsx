@@ -27,7 +27,14 @@ interface SafeUserResult {
 /**
  * Detect if Clerk is properly configured.
  */
+const isClerkDisabled =
+  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+
 const isClerkEnabled = (() => {
+  if (isClerkDisabled) {
+    return false
+  }
+
   const pk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''
   const sk = process.env.CLERK_SECRET_KEY || ''
   const looksValid = pk.startsWith('pk_') && sk.startsWith('sk_')

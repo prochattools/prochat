@@ -15,13 +15,13 @@ export const Button: React.FC<ButtonProps> = ({
   withArrow = false,
   ...props 
 }) => {
-  const baseStyles = "relative inline-flex items-center justify-center font-semibold transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-[#0B111B] disabled:opacity-50 disabled:cursor-not-allowed group overflow-hidden";
+  const baseStyles = "relative inline-flex items-center justify-center font-semibold transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed group overflow-hidden";
   
   const variants = {
-    primary: "bg-[#5b49f5] text-white hover:bg-[#4a3bd1] hover:shadow-[0_0_20px_rgba(91,73,245,0.4)] hover:-translate-y-0.5 border border-transparent dark:shadow-[0_10px_24px_-18px_rgba(0,0,0,0.8)] dark:hover:shadow-[0_0_20px_rgba(91,73,245,0.25)]",
-    secondary: "bg-white text-slate-900 border border-slate-200 hover:border-[#5b49f5] hover:text-[#5b49f5] hover:shadow-lg hover:-translate-y-0.5 dark:bg-[#0B111B] dark:text-white dark:border-[#373C53] dark:hover:border-[#885efe] dark:hover:text-[#885efe] dark:hover:shadow-[0_12px_30px_-18px_rgba(0,0,0,0.8)]",
-    ghost: "bg-transparent text-slate-600 hover:text-[#5b49f5] hover:bg-purple-50 dark:text-[#B2B5BA] dark:hover:text-[#885efe] dark:hover:bg-[#1E242D]",
-    glass: "bg-white/20 backdrop-blur-md text-white border border-white/30 hover:bg-white/30 shadow-lg dark:bg-white/10 dark:border-white/10 dark:hover:bg-white/15"
+    primary: "bg-[#5b49f5] text-white hover:bg-[#4a3bd1] hover:shadow-[0_0_20px_rgba(91,73,245,0.4)] hover:-translate-y-0.5 border border-transparent",
+    secondary: "bg-white text-slate-900 border border-slate-200 hover:border-[#5b49f5] hover:text-[#5b49f5] hover:shadow-lg hover:-translate-y-0.5",
+    ghost: "bg-transparent text-slate-600 hover:text-[#5b49f5] hover:bg-purple-50",
+    glass: "bg-white/20 backdrop-blur-md text-white border border-white/30 hover:bg-white/30 shadow-lg"
   };
 
   const sizes = {

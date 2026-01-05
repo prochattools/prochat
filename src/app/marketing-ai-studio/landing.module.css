@@ -7,3 +7,8 @@
 .marketingRoot :global(.font-sans) {
   font-family: inherit;
 }
+
+.marketingRoot ::selection {
+  background: #885efe;
+  color: #ffffff;
+}
