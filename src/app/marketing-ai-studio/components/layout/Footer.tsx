@@ -43,7 +43,11 @@ export const Footer: React.FC = () => {
                       Proof
                     </Link>
                  </li>
-                 <li><a href="/contact" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">Contact</a></li>
+                 <li>
+                    <Link href="/contact" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">
+                      Contact
+                    </Link>
+                 </li>
                  <li>
                     <TrackedOutboundLink
                       href="https://accountant.prochat.tools"
@@ -67,8 +71,16 @@ export const Footer: React.FC = () => {
            <div>
               <h4 className="font-bold text-slate-900 mb-4 dark:text-white">Legal</h4>
               <ul className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
-                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">Terms of services</a></li>
-                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">Privacy Policy</a></li>
+                 <li>
+                    <Link href="/terms" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">
+                      Terms of services
+                    </Link>
+                 </li>
+                 <li>
+                    <Link href="/privacy" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">
+                      Privacy Policy
+                    </Link>
+                 </li>
                  <li><a href="#" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">Licences</a></li>
               </ul>
            </div>

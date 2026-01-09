@@ -3,35 +3,18 @@
 import { useEffect, type ReactNode } from 'react'
 import { Check, Users } from 'lucide-react'
 import { trackEvent } from '@/utils/analytics'
-import { Scaffolding, BlueprintCard } from '@/app/marketing-ai-studio/components/ui/Scaffolding'
+import { Scaffolding } from '@/app/marketing-ai-studio/components/ui/Scaffolding'
 import { Reveal } from '@/app/marketing-ai-studio/components/ui/Reveal'
 import { Hero } from '@/app/marketing-ai-studio/components/sections/Hero'
 import { FinalCTA } from '@/app/marketing-ai-studio/components/sections/FinalCTA'
 import ProofLive from '@/app/marketing-ai-studio/components/sections/ProofLive'
+import ProofOperational from '@/app/marketing-ai-studio/components/sections/ProofOperational'
+import ProofTimeline from '@/app/marketing-ai-studio/components/sections/ProofTimeline'
 
 const HERO_PRIMARY_CTA = 'Explore kits'
 const HERO_SECONDARY_CTA = 'See the system'
 const FINAL_PRIMARY_CTA = 'Start with clients → WaaSKit'
 const FINAL_SECONDARY_CTA = 'Start with SaaS → SaaSKit'
-
-const LOOP_NOW = [
-	'Playbook v1.3 published',
-	'ProKit engine exists',
-	'Funnel live (accountant)',
-	'Kits structured + priced',
-	'Tracking wired (events)',
-]
-
-const LOOP_NEXT = [
-	'First paid accountant clients',
-	'Pain log from real calls',
-	'First workflow shipped as SaaS feature',
-]
-
-const LOOP_LATER = [
-	'Testimonials + case studies',
-	'SaaS metrics (only after proof)',
-]
 
 type SectionProps = {
 	id?: string
@@ -201,79 +184,9 @@ export default function ProofPageContent() {
 
 				<ProofLive />
 
-				<section className="py-24 bg-slate-50/50 border-y border-slate-200 dark:bg-[#0F1626] dark:border-[#1E242D]">
-					<div className="max-w-7xl mx-auto px-8">
-						<div className="text-center mb-12 space-y-4">
-							<Reveal>
-								<h2 className="text-3xl font-bold text-slate-900 dark:text-white">
-									The loop in practice (current stage)
-								</h2>
-							</Reveal>
-							<Reveal delay={0.2}>
-								<p className="text-slate-500 font-light max-w-2xl mx-auto dark:text-slate-400">
-									This page is about operational proof, not finished outcomes.
-								</p>
-							</Reveal>
-						</div>
+				<ProofOperational />
 
-						<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-							<BlueprintCard className="p-6">
-								<div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 dark:text-slate-500">
-									Now
-								</div>
-								<ul className="space-y-3 text-slate-600 font-light text-base dark:text-slate-300">
-									{LOOP_NOW.map((item) => (
-										<li key={item} className="flex items-start gap-3">
-											<div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#5b49f5]" />
-											{item}
-										</li>
-									))}
-								</ul>
-							</BlueprintCard>
-
-							<BlueprintCard className="p-6">
-								<div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 dark:text-slate-500">
-									Next
-								</div>
-								<ul className="space-y-3 text-slate-600 font-light text-base dark:text-slate-300">
-									{LOOP_NEXT.map((item) => (
-										<li key={item} className="flex items-start gap-3">
-											<div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#5b49f5]" />
-											{item}
-										</li>
-									))}
-								</ul>
-							</BlueprintCard>
-
-							<BlueprintCard className="p-6">
-								<div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 dark:text-slate-500">
-									Later
-								</div>
-								<ul className="space-y-3 text-slate-600 font-light text-base dark:text-slate-300">
-									{LOOP_LATER.map((item) => (
-										<li key={item} className="flex items-start gap-3">
-											<div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#5b49f5]" />
-											{item}
-										</li>
-									))}
-								</ul>
-							</BlueprintCard>
-						</div>
-
-						<div className="text-center mt-10 space-y-2">
-							<Reveal delay={0.2}>
-								<p className="text-slate-500 font-light dark:text-slate-400">
-									Results and testimonials are intentionally not shown yet.
-								</p>
-							</Reveal>
-							<Reveal delay={0.3}>
-								<p className="text-slate-400 text-sm dark:text-slate-500">
-									This page will expand as the loop completes.
-								</p>
-							</Reveal>
-						</div>
-					</div>
-				</section>
+				<ProofTimeline />
 
 				<FinalCTA
 					heading="Start with proof. Choose your entry point."

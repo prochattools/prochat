@@ -8,7 +8,7 @@ interface RevealProps {
   delay?: number;
 }
 
-export const Reveal: React.FC<RevealProps> = ({ children, width = "fit-content", delay = 0.25 }) => {
+export const Reveal: React.FC<RevealProps> = ({ children, width = "100%", delay = 0.25 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const mainControls = useAnimation();
@@ -20,7 +20,11 @@ export const Reveal: React.FC<RevealProps> = ({ children, width = "fit-content",
   }, [isInView, mainControls]);
 
   return (
-    <div ref={ref} style={{ position: "relative", width }}>
+    <div
+      ref={ref}
+      style={{ position: "relative" }}
+      className={width === "fit-content" ? "w-fit" : "w-full"}
+    >
       <motion.div
         variants={{
           hidden: { opacity: 0, y: 20 },

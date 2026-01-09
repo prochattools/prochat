@@ -57,7 +57,7 @@ export const ShipFast: React.FC<ShipFastProps> = ({
 
              {steps.map((item, i) => (
                  <div key={i} className="relative flex flex-col items-center text-center group z-10">
-                     <Reveal delay={i * 0.1}>
+                     <Reveal delay={i * 0.1} width="fit-content">
                        <div className="w-20 h-20 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-center justify-center mb-8 text-slate-400 group-hover:text-[#5b49f5] group-hover:border-[#5b49f5]/30 group-hover:shadow-[0_0_30px_-10px_rgba(91,73,245,0.2)] transition-all duration-500 dark:bg-[#0F1626] dark:border-[#2A3445] dark:text-slate-400 dark:shadow-none">
                            {item.icon}
                        </div>
