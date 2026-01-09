@@ -7,19 +7,12 @@ import { Scaffolding, BlueprintCard } from '@/app/marketing-ai-studio/components
 import { Reveal } from '@/app/marketing-ai-studio/components/ui/Reveal'
 import { Hero } from '@/app/marketing-ai-studio/components/sections/Hero'
 import { FinalCTA } from '@/app/marketing-ai-studio/components/sections/FinalCTA'
-import { DashboardMockup } from '@/app/marketing-ai-studio/components/ui/Visuals'
+import ProofLive from '@/app/marketing-ai-studio/components/sections/ProofLive'
 
 const HERO_PRIMARY_CTA = 'Explore kits'
 const HERO_SECONDARY_CTA = 'See the system'
 const FINAL_PRIMARY_CTA = 'Start with clients → WaaSKit'
 const FINAL_SECONDARY_CTA = 'Start with SaaS → SaaSKit'
-
-const OPERATIONAL_BULLETS = [
-	'Authenticated dashboards (real scaffolds)',
-	'Billing + subscription flows (Stripe-ready)',
-	'Reusable admin tooling patterns',
-	'Production-grade layout + accessibility baselines',
-]
 
 const LOOP_NOW = [
 	'Playbook v1.3 published',
@@ -206,43 +199,7 @@ export default function ProofPageContent() {
 					</Container>
 				</Section>
 
-				<section className="py-32 relative bg-white border-y border-slate-100 overflow-hidden dark:bg-[#0B111B] dark:border-[#1E242D]">
-					<div className="max-w-7xl mx-auto px-8 relative z-10">
-						<div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-							<div className="space-y-6">
-								<Reveal>
-									<h2 className="text-3xl font-bold text-slate-900 leading-tight dark:text-white">
-										Operational proof, not promises
-									</h2>
-								</Reveal>
-								<Reveal delay={0.3}>
-									<ul className="space-y-4 mt-6">
-										{OPERATIONAL_BULLETS.map((item) => (
-											<li
-												key={item}
-												className="flex items-start gap-3 text-lg text-slate-500 font-light dark:text-slate-400"
-											>
-												<div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0 dark:bg-orange-400/80" />
-												{item}
-											</li>
-										))}
-									</ul>
-								</Reveal>
-								<Reveal delay={0.4}>
-									<p className="text-sm text-slate-400 dark:text-slate-500">
-										Screens use sample/anonymized data by design.
-									</p>
-								</Reveal>
-							</div>
-
-							<div className="relative h-80 md:h-[420px]">
-								<BlueprintCard className="h-full bg-white p-1 dark:bg-[#0F1424]">
-									<DashboardMockup />
-								</BlueprintCard>
-							</div>
-						</div>
-					</div>
-				</section>
+				<ProofLive />
 
 				<section className="py-24 bg-slate-50/50 border-y border-slate-200 dark:bg-[#0F1626] dark:border-[#1E242D]">
 					<div className="max-w-7xl mx-auto px-8">
