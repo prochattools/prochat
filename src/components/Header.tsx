@@ -98,7 +98,7 @@ const MobileNav = () => {
 					</SheetTitle>
 				</SheetHeader>
 				<Link href='/' className='flex items-center gap-2 mt-8 mx-auto w-fit'>
-					<Logo />
+					<Logo scale={1.3} />
 				</Link>
 				<div className='my-8 mx-auto w-fit'>
 					<NavLinks nav_links={nav_links} />
@@ -125,7 +125,7 @@ const Header = () => {
 		<div className='flex justify-center items-center w-full fixed top-0 z-50 bg-white dark:bg-[#010814]'>
 			<div className='max-w-[1440px] w-full flex justify-between items-center gap-4 px-4 sm:px-12 py-6'>
 				<Link href='/'>
-					<Logo />
+					<Logo scale={1.3} />
 				</Link>
 				<div className='hidden lg:block'>
 					<NavLinks nav_links={nav_links} />

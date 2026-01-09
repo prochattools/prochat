@@ -2,21 +2,24 @@
 
 import { ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
-import { Header } from '@/layout'
+import { Navbar } from '@/app/marketing-ai-studio/components/layout/Navbar'
+import { Footer } from '@/app/marketing-ai-studio/components/layout/Footer'
 
 const HOME_ROUTE = '/'
 
 export default function AppShell({ children }: { children: ReactNode }) {
-  const pathname = usePathname()
+	const pathname = usePathname()
+	const isHome = pathname === HOME_ROUTE
 
-  if (pathname === HOME_ROUTE) {
-    return <>{children}</>
-  }
-
-  return (
-    <>
-      <Header />
-      <main className="min-h-screen pt-24 bg-background">{children}</main>
-    </>
-  )
+	return (
+		<>
+			<Navbar />
+			<main
+				className={`min-h-screen bg-background ${isHome ? '' : 'pt-24'}`}
+			>
+				{children}
+			</main>
+			<Footer />
+		</>
+	)
 }

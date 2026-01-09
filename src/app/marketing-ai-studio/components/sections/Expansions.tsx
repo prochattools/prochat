@@ -6,28 +6,47 @@ import { Reveal } from '../ui/Reveal';
 import { Button } from '../ui/Button';
 import Link from 'next/link';
 
-export const Proof: React.FC = () => {
+interface ProofProps {
+    title?: string;
+    description?: string;
+    showCta?: boolean;
+    ctaLabel?: string;
+    ctaHref?: string;
+    ctaTarget?: string;
+}
+
+export const Proof: React.FC<ProofProps> = ({
+    title = "Proof over promises.",
+    description = "These are standardized interface patterns we ship repeatedly—shown here as examples, not promises.",
+    showCta = true,
+    ctaLabel = "Watch the build series",
+    ctaHref,
+    ctaTarget = "_blank"
+}) => {
     const youtubeUrl = process.env.NEXT_PUBLIC_YOUTUBE_URL || "#";
+    const resolvedCtaHref = ctaHref ?? youtubeUrl;
 
     return (
         <section className="py-24 bg-white relative overflow-hidden border-b border-slate-200/50 dark:bg-[#0B111B] dark:border-[#1E242D]">
             <div className="max-w-7xl mx-auto px-8">
                 <div className="mb-16 space-y-3">
                      <Reveal>
-                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Proof over promises.</h2>
+                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">{title}</h2>
                      </Reveal>
                      <Reveal delay={0.3}>
                         <p className="text-slate-500 font-light max-w-2xl dark:text-slate-400">
-                            These are standardized interface patterns we ship repeatedly—shown here as examples, not promises.
+                            {description}
                         </p>
                      </Reveal>
-                     <Reveal delay={0.4}>
-                        <div className="pt-4">
-                            <Link href={youtubeUrl} target="_blank">
-                                <Button variant="secondary" withArrow>Watch the build series</Button>
-                            </Link>
-                        </div>
-                     </Reveal>
+                     {showCta && (
+                        <Reveal delay={0.4}>
+                            <div className="pt-4">
+                                <Link href={resolvedCtaHref} target={ctaTarget}>
+                                    <Button variant="secondary" withArrow>{ctaLabel}</Button>
+                                </Link>
+                            </div>
+                        </Reveal>
+                     )}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[300px]">

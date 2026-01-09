@@ -43,7 +43,7 @@ export const Navbar: React.FC = () => {
             width={150}
             height={48}
             priority
-            className="h-10 w-auto transition-opacity duration-300 group-hover:opacity-90 dark:hidden"
+            className="h-[52px] w-auto transition-opacity duration-300 group-hover:opacity-90 dark:hidden"
           />
           <Image
             src="/logo/prochat_logo_dark.png"
@@ -51,7 +51,7 @@ export const Navbar: React.FC = () => {
             width={150}
             height={48}
             priority
-            className="h-10 w-auto transition-opacity duration-300 group-hover:opacity-90 hidden dark:block"
+            className="h-[52px] w-auto transition-opacity duration-300 group-hover:opacity-90 hidden dark:block"
           />
         </Link>
 

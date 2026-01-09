@@ -2,11 +2,14 @@ import Image from "next/image";
 
 type LogoProps = {
   isLarge?: boolean;
+  scale?: number;
 };
 
-const Logo = ({ isLarge = false }: LogoProps) => {
-  const width = isLarge ? 200 : 160;
-  const height = isLarge ? 64 : 51;
+const Logo = ({ isLarge = false, scale = 1 }: LogoProps) => {
+  const baseWidth = isLarge ? 200 : 160;
+  const baseHeight = isLarge ? 64 : 51;
+  const width = Math.round(baseWidth * scale);
+  const height = Math.round(baseHeight * scale);
 
   return (
     <div className="flex items-center">

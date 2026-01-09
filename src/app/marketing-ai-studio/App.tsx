@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Navbar } from './components/layout/Navbar';
 import { Hero } from './components/sections/Hero';
 import { ProblemSolution } from './components/sections/ProblemSolution';
 import { Principle } from './components/sections/Principle';
@@ -13,7 +12,6 @@ import { Trust } from './components/sections/Trust';
 import { SystemApply } from './components/sections/SystemApply';
 import { FAQ } from './components/sections/FAQ';
 import { FinalCTA } from './components/sections/FinalCTA';
-import { Footer } from './components/layout/Footer';
 import { Scaffolding } from './components/ui/Scaffolding';
 
 const App: React.FC = () => {
@@ -22,7 +20,6 @@ const App: React.FC = () => {
       <div className="fixed inset-0 pointer-events-none z-0">
         <Scaffolding opacity={0.6} />
       </div>
-      <Navbar />
       <div className="relative z-10 min-h-screen">
         <Hero />
         <ProblemSolution />
@@ -36,7 +33,6 @@ const App: React.FC = () => {
         <FAQ />
         <FinalCTA />
       </div>
-      <Footer />
     </main>
   );
 };
