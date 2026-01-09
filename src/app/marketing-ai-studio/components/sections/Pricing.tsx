@@ -38,8 +38,8 @@ export const Pricing: React.FC<PricingProps> = ({ ctaLabel = 'Get ProKit', onCta
                 <div className="mb-8 text-center relative z-10">
                     <div className="text-xs font-bold text-[#5b49f5] uppercase tracking-widest mb-4 bg-[#5b49f5]/10 inline-block px-3 py-1 rounded-full border border-[#5b49f5]/20">Lifetime Access</div>
                     <div className="flex items-baseline justify-center gap-3">
-                        <span className="text-6xl font-bold text-white tracking-tighter">$247</span>
-                        <span className="text-slate-500 dark:text-slate-400 line-through text-xl">$347</span>
+                        <span className="text-6xl font-bold text-white tracking-tighter">€247</span>
+                        <span className="text-slate-500 dark:text-slate-400 line-through text-xl">€347</span>
                     </div>
                     <p className="text-slate-500 dark:text-slate-400 text-sm mt-4 font-light">Pay once. Build forever.</p>
                 </div>

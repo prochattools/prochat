@@ -13,7 +13,7 @@ const HowToUse = () => {
         <div className="video-class mt-10">
           <LazyLoadIframe
             src="https://www.youtube.com/embed/gRxrvPqDKNw?si=veriUjp8slBmdCNP"
-            title="Build 56 micro SaaS, Earn $14,400/m, with SIMPLE Tech Stack"
+            title="Build 56 micro SaaS, Earn €14,400/m, with SIMPLE Tech Stack"
           />
         </div>
       </div>

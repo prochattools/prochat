@@ -74,9 +74,9 @@ const AboutMe = () => {
                 In 2017, I spent two years building a startup, raising funds,
                 and investing{" "}
                 <strong className="text-black1 dark:text-white">
-                  $180,000
+                  €180,000
                 </strong>{" "}
-                into it, only to end up with 1 user, $800, and bankruptcy.
+                into it, only to end up with 1 user, €800, and bankruptcy.
               </p>
               <p className="mb-3">
                 After that, I built over{" "}
@@ -96,7 +96,7 @@ const AboutMe = () => {
               <p className="mb-3">
                 Their exits drive me crazy –{" "}
                 <strong className="text-black1 dark:text-white">
-                  $20M, $5M, $10M,
+                  €20M, €5M, €10M,
                 </strong>{" "}
                 and so on.{" "}
                 <strong className="text-black1 dark:text-white">

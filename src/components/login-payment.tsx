@@ -436,7 +436,7 @@ const LoginPayment = ({ user }: any) => {
                         color: "#000",
                       }}
                     >
-                      ${parseFloat(user?.amountPaid).toFixed(2)} paid on{" "}
+                      €{parseFloat(user?.amountPaid).toFixed(2)} paid on{" "}
                       {FormatDate(user?.publishedAt)}
                     </h2>
                     <table
@@ -517,7 +517,7 @@ const LoginPayment = ({ user }: any) => {
                               color: "#000",
                             }}
                           >
-                            ${parseFloat(user?.amountPaid).toFixed(2)}
+                            €{parseFloat(user?.amountPaid).toFixed(2)}
                           </td>
                           <td
                             style={{
@@ -526,7 +526,7 @@ const LoginPayment = ({ user }: any) => {
                               color: "#000",
                             }}
                           >
-                            ${parseFloat(user?.amountPaid).toFixed(2)}
+                            €{parseFloat(user?.amountPaid).toFixed(2)}
                           </td>
                         </tr>
                       </tbody>
@@ -549,7 +549,7 @@ const LoginPayment = ({ user }: any) => {
                               color: "#000",
                             }}
                           >
-                            ${parseFloat(user?.amountPaid).toFixed(2)}
+                            €{parseFloat(user?.amountPaid).toFixed(2)}
                           </td>
                         </tr>
                         <tr>
@@ -570,7 +570,7 @@ const LoginPayment = ({ user }: any) => {
                               color: "#000",
                             }}
                           >
-                            ${parseFloat(user?.amountPaid).toFixed(2)}
+                            €{parseFloat(user?.amountPaid).toFixed(2)}
                           </td>
                         </tr>
                         <tr>
@@ -592,7 +592,7 @@ const LoginPayment = ({ user }: any) => {
                             }}
                           >
                             <strong>
-                              ${parseFloat(user?.amountPaid).toFixed(2)}{" "}
+                              €{parseFloat(user?.amountPaid).toFixed(2)}{" "}
                               {user?.currency.toUpperCase()}
                             </strong>
                           </td>

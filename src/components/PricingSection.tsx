@@ -27,7 +27,7 @@ export default function PricingSection() {
 							)}
 							<h3 className='text-2xl font-semibold mb-4'>{product.title}</h3>
 							<p className='text-4xl font-bold mb-6'>
-								${product.price}
+								€{product.price}
 								<span className='text-xl dark:text-gray-500 text-black1/70 font-normal'>
 									/{product.type === 'subscription' ? product.period : 'once'}
 								</span>

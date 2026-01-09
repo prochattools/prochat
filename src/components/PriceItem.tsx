@@ -38,7 +38,7 @@ const PriceItem: FC<PriceItemProps> = ({
                 item?.isBest ? "text-[#1AAB12]" : "text-black1 dark:text-white"
               }`}
             >
-              {item?.price}{" "}
+              €{item?.price}{" "}
               <span className="text-base font-semibold text-[#01061033] dark:text-[#808389]">
                 / {isSubscription ? (item as StripePlan).period : "one-time"}
               </span>
@@ -151,7 +151,7 @@ export default PriceItem;
 //       )}
 //       <h3 className="text-2xl font-semibold mb-4">{item.title}</h3>
 //       <p className="text-4xl font-bold mb-2">
-//         ${item.price}
+//         €{item.price}
 //         <span className="text-xl text-gray-500 font-normal">
 //           /{isSubscription ? (item as StripePlan).period : "one-time"}
 //         </span>

@@ -13,7 +13,7 @@ const data = [
       "Over price",
       "No guarantee result",
     ],
-    cost: "$10,000 - $25,000",
+    cost: "€10,000 - €25,000",
   },
   {
     title: "No-code",
@@ -23,17 +23,17 @@ const data = [
       "Not your IP",
       "No SEO",
     ],
-    cost: "$34 - $160 / monthly",
+    cost: "€34 - €160 / monthly",
   },
   {
     title: "Personal coding",
     features: ["Find time", "Identify what needed", "Do not overthink", "Code"],
-    cost: "55 hours and your rate: $6,000",
+    cost: "55 hours and your rate: €6,000",
   },
   {
     title: <Logo />,
     features: ["Ready to use", "14 min setup", "LIVE in 1 day"],
-    cost: "One time $247 payment",
+    cost: "One time €247 payment",
     isGreen: true,
   },
 ];
@@ -100,7 +100,7 @@ const SaveMoney = () => {
         </div>
         <div>
           <p className="text-base font-medium text-black1 dark:text-white text-center">
-            Hourly rate: $60 / hour
+            Hourly rate: €60 / hour
           </p>
           <Slider
             defaultValue={[50]}
@@ -113,7 +113,7 @@ const SaveMoney = () => {
             ProKit starter kit saves you
           </p>
           <p className="text-[#1AAB12] text-[32px] font-bold text-center mb-5">
-            $13,655
+            €13,655
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mx-auto max-w-[320px] sm:max-w-[700px] xl:max-w-none">

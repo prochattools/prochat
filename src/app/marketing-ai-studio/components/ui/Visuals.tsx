@@ -59,7 +59,7 @@ export const DashboardMockup = () => (
         <div className="flex justify-between items-end">
             <div>
                 <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider mb-1 dark:text-slate-500">Total Revenue</div>
-                <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-100">$24,500.00</div>
+                <div className="text-2xl font-bold text-slate-900 tracking-tight dark:text-slate-100">€24,500.00</div>
             </div>
             <div className="px-2 py-0.5 bg-emerald-50 text-emerald-600 border border-emerald-100 text-[10px] font-bold rounded-full shadow-sm dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-400/20">+12.5%</div>
         </div>
@@ -144,7 +144,7 @@ export const BillingMockup = () => (
             <div className="flex justify-between items-start mb-3">
                 <div>
                     <div className="text-[10px] text-slate-500 font-medium mb-0.5 dark:text-slate-400">Pro Foundation</div>
-                    <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-100">$29<span className="text-xs font-medium text-slate-400 dark:text-slate-500">/mo</span></div>
+                    <div className="text-xl font-bold text-slate-900 tracking-tight dark:text-slate-100">€29<span className="text-xs font-medium text-slate-400 dark:text-slate-500">/mo</span></div>
                 </div>
                 <div className="w-5 h-5 bg-slate-50 rounded-full flex items-center justify-center text-[#5b49f5] dark:bg-[#111827]">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg>

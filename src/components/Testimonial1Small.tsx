@@ -27,7 +27,7 @@ const Testimonial1Small = () => {
         <div className="text-base leading-relaxed space-y-2 max-w-md mx-auto text-center">
           <p className="dark:text-white text-black1">
             <span className="bg-warning/25 px-1.5">
-              I want to avoid paying Stripe $2 for each invoice,
+              I want to avoid paying Stripe €2 for each invoice,
             </span>{" "}
             and I also don&apos;t want to spend 10 minutes manually creating
             them.

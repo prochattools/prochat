@@ -8,8 +8,8 @@ const Review = () => {
       <div className="max-w-[730px] flex flex-col items-center px-4 sm:px-12 mx-auto py-16">
         <Quote />
         <p className="text-lg font-medium text-black1 dark:text-white my-5 text-center">
-          In just 2 months, I’ve already launched 3 ideas — 2 made $0, but one
-          has brought in $1,600! ProKit saved me tons of time on writing
+          In just 2 months, I’ve already launched 3 ideas — 2 made €0, but one
+          has brought in €1,600! ProKit saved me tons of time on writing
           wrappers and gave me the motivation to ship finally!
         </p>
         <div className="flex gap-2 items-center">
