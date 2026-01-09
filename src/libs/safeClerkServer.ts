@@ -1,5 +1,3 @@
-import { NextRequest } from 'next/server'
-
 /**
  * Checks whether Clerk keys are configured.
  * Used by middleware and server utilities.
@@ -23,9 +21,11 @@ export const isClerkEnabled = (): boolean => {
  * Safe wrapper for Clerk's server-side authentication.
  * Works even when Clerk keys are missing (local, CI, or first-time setup).
  */
-export async function authenticateRequest(req: NextRequest) {
+export async function authenticateRequest() {
   if (!isClerkEnabled()) {
-    console.warn('⚠️ Clerk keys missing — skipping authentication.')
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('⚠️ Clerk keys missing — skipping authentication.')
+    }
     return { userId: null }
   }
 

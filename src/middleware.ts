@@ -23,7 +23,9 @@ if (hasClerkKeys) {
 export default hasClerkKeys
   ? clerkAuth?.() // Normal Clerk middleware
   : function mockMiddleware() {
-      console.warn('⚠️ Clerk middleware disabled — running in mock mode.')
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn('⚠️ Clerk middleware disabled — running in mock mode.')
+      }
       return NextResponse.next()
     }
 

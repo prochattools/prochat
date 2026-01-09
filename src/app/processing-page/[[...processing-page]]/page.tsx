@@ -3,12 +3,14 @@
 import PriceItem from '@/components/PriceItem'
 import config from '@/config'
 import { handleCheckoutProcess } from '@/helpers/checkout'
-import { SignUp, useUser } from '@clerk/nextjs'
+import { useUser, isClerkEnabled } from '@/libs/safeClerk'
+import { SignUp } from '@clerk/nextjs'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo } from 'react'
 
 export default function Home() {
 	const { isSignedIn, user } = useUser()
+	const clerkEnabled = isClerkEnabled
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 	const queryString = searchParams.toString()
@@ -64,7 +66,11 @@ export default function Home() {
 			<div className='lg:w-1/2 w-[100%] flex items-center justify-center p-8 bg-white dark:bg-black1'>
 				<div className='w-full max-w-md'>
 					{isSignedIn}
-					{!isSignedIn ? (
+					{!clerkEnabled ? (
+						<div className='rounded-lg border border-gray-200 bg-gray-50 p-6 text-center text-sm text-gray-600 dark:border-gray-800 dark:bg-black1 dark:text-gray-300'>
+							Authentication is currently disabled.
+						</div>
+					) : !isSignedIn ? (
 						<div>
 							<SignUp forceRedirectUrl={fullPath} />
 						</div>

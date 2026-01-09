@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 //import { loadStripe, Stripe } from '@stripe/stripe-js';
-import { useUser } from '@clerk/nextjs';
+import { useUser } from '@/libs/safeClerk';
 import { handleCheckoutProcess } from '@/helpers/checkout';
 
 interface CheckoutButtonProps {

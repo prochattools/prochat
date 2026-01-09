@@ -11,6 +11,7 @@ import {
  * Minimal safe subset of Clerk’s user fields, compatible with mock mode.
  */
 interface SafeUser {
+  id?: string
   firstName?: string
   primaryEmailAddress?: {
     emailAddress?: string
@@ -20,6 +21,7 @@ interface SafeUser {
 }
 
 interface SafeUserResult {
+  isLoaded: boolean
   isSignedIn: boolean
   user: SafeUser | null
 }
@@ -27,18 +29,16 @@ interface SafeUserResult {
 /**
  * Detect if Clerk is properly configured.
  */
-const isClerkDisabled =
+export const isClerkDisabled =
   process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
 
-const isClerkEnabled = (() => {
+export const isClerkEnabled = (() => {
   if (isClerkDisabled) {
     return false
   }
 
   const pk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''
-  const sk = process.env.CLERK_SECRET_KEY || ''
-  const looksValid = pk.startsWith('pk_') && sk.startsWith('sk_')
-  return looksValid
+  return pk.startsWith('pk_')
 })()
 
 /**
@@ -48,7 +48,7 @@ function useUserMock(): SafeUserResult {
   if (process.env.NODE_ENV !== 'production') {
     console.warn('⚠️ useUser() called while Clerk is disabled — returning mock user.')
   }
-  return { isSignedIn: false, user: null }
+  return { isLoaded: true, isSignedIn: false, user: null }
 }
 
 function useClerkMock() {
@@ -66,7 +66,9 @@ function useClerkMock() {
  */
 export const SafeClerkProvider = ({ children }: { children: React.ReactNode }) => {
   if (!isClerkEnabled) {
-    console.warn('⚠️ Clerk keys missing or invalid — skipping ClerkProvider and using mock mode.')
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('⚠️ Clerk keys missing or invalid — skipping ClerkProvider and using mock mode.')
+    }
     return <>{children}</>
   }
 
