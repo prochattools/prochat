@@ -14,22 +14,32 @@ const config: ConfigProps = {
 		products: [
 			{
 				type: 'one-time', // one-time, subscription
-				title: 'One Time Deal',
-				productId: 'prod_T3pFkpyoE0SNMD',
-				subtitle: 'Once',
-				price: 25,
+				title: 'ProKit',
+				productId: process.env.NEXT_PUBLIC_STRIPE_PRODUCT_PROKIT,
+				subtitle: 'Lifetime access',
+				price: 97,
 				isBest: true,
-				linkTitle: 'PAY ONE TIME',
+				linkTitle: 'Get ProKit',
 				featuresTitle: 'Features',
-				priceId: 'price_1S7hauQ6GY0txCDNErDhgmjn',
+				priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PROKIT,
 				features: [
 					{
-						title: 'Feature 1',
-						disabled: false,
+						title: 'Unlimited Projects',
 					},
 					{
-						title: 'Feature 2',
-						disabled: true,
+						title: 'Full Source Code',
+					},
+					{
+						title: 'Lifetime Updates',
+					},
+					{
+						title: 'Discord Community',
+					},
+					{
+						title: 'Documentation',
+					},
+					{
+						title: 'Commercial License',
 					},
 				],
 			},
