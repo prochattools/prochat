@@ -43,27 +43,6 @@ const config: ConfigProps = {
 					},
 				],
 			},
-			{
-				type: 'subscription',
-				period: 'year',
-				productId: 'prod_T3pFJYo1qjQhxD',
-				title: 'Year',
-				subtitle: 'yearly',
-				price: 25,
-				linkTitle: 'PAY PER YEAR',
-				featuresTitle: 'Features VIP',
-				priceId: 'price_1S7hb8Q6GY0txCDNIYng1ClO',
-				features: [
-					{
-						title: 'Feature 1',
-						disabled: false,
-					},
-					{
-						title: 'Feature 2',
-						disabled: false,
-					},
-				],
-			},
 		],
 	},
 	colors: {
