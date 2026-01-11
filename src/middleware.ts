@@ -1,33 +1,62 @@
+import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-// Only import Clerk middleware if we have real keys
+const isProduction = process.env.NODE_ENV === 'production'
 const isClerkDisabled =
-  process.env.CLERK_DISABLED === 'true' ||
-  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+  !isProduction &&
+  (process.env.CLERK_DISABLED === 'true' ||
+    process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true')
 const hasClerkKeys =
-  !isClerkDisabled &&
-  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.startsWith('pk_') &&
-  process.env.CLERK_SECRET_KEY?.startsWith('sk_')
+  !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
+  !!process.env.CLERK_SECRET_KEY
 
-// Lazy import Clerk’s middleware only when enabled
-let clerkAuth: any = null
-if (hasClerkKeys) {
+if (isProduction && !hasClerkKeys) {
+  throw new Error(
+    'Clerk is required in production but Clerk environment variables are missing.'
+  )
+}
+
+const mockMiddleware = (_req: NextRequest) => {
+  if (!isProduction) {
+    console.warn('⚠️ Clerk middleware disabled — running in mock mode.')
+  }
+  return NextResponse.next()
+}
+
+const getClerkMiddleware = () => {
+  if (isClerkDisabled || !hasClerkKeys) {
+    return null
+  }
+
   try {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    clerkAuth = require('@clerk/nextjs').authMiddleware
-  } catch {
-    console.warn('⚠️ Clerk middleware not available, falling back to mock.')
+    const clerk = require('@clerk/nextjs/server')
+    const middlewareFactory =
+      clerk.clerkMiddleware || clerk.authMiddleware || clerk.default
+    if (!middlewareFactory) {
+      if (!isProduction) {
+        console.warn('⚠️ Clerk middleware factory not found — running in mock mode.')
+      }
+      return null
+    }
+    return middlewareFactory()
+  } catch (err) {
+    if (isProduction) {
+      throw err
+    }
+    console.warn('⚠️ Clerk middleware not available, falling back to mock.', err)
+    return null
   }
 }
 
-export default hasClerkKeys
-  ? clerkAuth?.() // Normal Clerk middleware
-  : function mockMiddleware() {
-      if (process.env.NODE_ENV !== 'production') {
-        console.warn('⚠️ Clerk middleware disabled — running in mock mode.')
-      }
-      return NextResponse.next()
-    }
+const clerkMiddlewareHandler = getClerkMiddleware()
+
+export const middleware = (req: NextRequest) => {
+  if (clerkMiddlewareHandler) {
+    return clerkMiddlewareHandler(req)
+  }
+  return mockMiddleware(req)
+}
 
 export const config = {
   matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],

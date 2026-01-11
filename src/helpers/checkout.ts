@@ -4,15 +4,11 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 export const handleCheckoutProcess = async (
     priceId: string,
-    userId: string,
+    userId: string | null,
     email: string | null,
     setLoading: (loading: boolean) => void,
     setError: (error: string | null) => void,
   ) => {
-    if (!email) {
-      throw new Error('User email not available');
-    }
-  
     setLoading(true);
     setError(null);
   
@@ -25,10 +21,10 @@ export const handleCheckoutProcess = async (
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           priceId,
           userId,
-          email
+          email,
         }),
       });
   

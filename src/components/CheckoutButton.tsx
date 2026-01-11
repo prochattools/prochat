@@ -16,34 +16,27 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ priceId, disabled = fal
   const { isLoaded, isSignedIn, user } = useUser();
 
   const handleCheckout = async () => {
-    if (!isLoaded || !isSignedIn) {
-      setError("Please sign in to proceed with checkout");
-      return;
-    }
+    const userId = isLoaded && isSignedIn ? user?.id || null : null;
+    const email =
+      isLoaded && isSignedIn ? user?.primaryEmailAddress?.emailAddress || null : null;
 
-    if (user) {
-      await handleCheckoutProcess(
-        priceId,
-        user.id,
-        user.primaryEmailAddress?.emailAddress || null,
-        setLoading,
-        setError
-      );
-    }
+    await handleCheckoutProcess(
+      priceId,
+      userId,
+      email,
+      setLoading,
+      setError
+    );
   };
-
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div>
       <button 
         className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
         onClick={handleCheckout}
-        disabled={loading || !isSignedIn || disabled}
+        disabled={loading || disabled}
       >
-        {loading ? 'Processing...' : isSignedIn ? 'Proceed to Checkout' : 'Sign in to Checkout'}
+        {loading ? 'Processing...' : 'Proceed to Checkout'}
       </button>
       {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>

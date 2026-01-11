@@ -8,7 +8,7 @@ import { Proof } from '@/app/marketing-ai-studio/components/sections/Expansions'
 import { Pricing } from '@/app/marketing-ai-studio/components/sections/Pricing'
 import { trackEvent } from '@/utils/analytics'
 import { handleCheckoutProcess } from '@/helpers/checkout'
-import { useUser, useClerk, isClerkEnabled } from '@/libs/safeClerk'
+import { useUser } from '@/libs/safeClerk'
 
 interface ProKitPageContentProps {
 	priceId: string | null
@@ -16,26 +16,8 @@ interface ProKitPageContentProps {
 
 const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
 	const { isLoaded, isSignedIn, user } = useUser()
-	const { openSignIn } = useClerk()
 	const [isCheckingOut, setIsCheckingOut] = useState(false)
 	const [, setCheckoutError] = useState<string | null>(null)
-
-	useEffect(() => {
-		if (!isLoaded || !isSignedIn || !user || !priceId) return
-		if (typeof window === 'undefined') return
-
-		const pendingPriceId = window.localStorage.getItem('pendingCheckoutPriceId')
-		if (!pendingPriceId) return
-
-		window.localStorage.removeItem('pendingCheckoutPriceId')
-		handleCheckoutProcess(
-			pendingPriceId,
-			user.id || 'anonymous',
-			user.primaryEmailAddress?.emailAddress || null,
-			setIsCheckingOut,
-			setCheckoutError
-		)
-	}, [isLoaded, isSignedIn, user, priceId])
 
 	useEffect(() => {
 		trackEvent('kit_view', { kit: 'prokit', page: '/kits/prokit' })
@@ -60,26 +42,20 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
 			cta: 'pricing_get_prokit',
 			page: '/kits/prokit',
 		})
-		if (!priceId || isCheckingOut || !isLoaded) return
+		if (!priceId || isCheckingOut) return
 
-		if (!isSignedIn || !user?.primaryEmailAddress?.emailAddress) {
-			if (isClerkEnabled) {
-				if (typeof window !== 'undefined') {
-					window.localStorage.setItem('pendingCheckoutPriceId', priceId)
-				}
-				openSignIn({ redirectUrl: '/kits/prokit?checkout=1' })
-			}
-			return
-		}
+		const userId = isLoaded && isSignedIn ? user?.id || null : null
+		const email =
+			isLoaded && isSignedIn ? user?.primaryEmailAddress?.emailAddress || null : null
 
 		handleCheckoutProcess(
 			priceId,
-			user.id || 'anonymous',
-			user.primaryEmailAddress?.emailAddress || null,
+			userId,
+			email,
 			setIsCheckingOut,
 			setCheckoutError
 		)
-	}, [priceId, isCheckingOut, isLoaded, isSignedIn, user, openSignIn])
+	}, [priceId, isCheckingOut, isLoaded, isSignedIn, user])
 
 	return (
 		<KitsShell>

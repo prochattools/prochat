@@ -20,14 +20,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Product not found' }, { status: 400 });
     }
 
-    if (!email) {
-      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
-    }
-
     const isSub = currentProduct.type === 'subscription'
     const planType = priceId.includes('monthly') ? 'monthly' : 'yearly';
 
     const mode = isSub ? 'subscription' : 'payment'
+
+    const customerEmail = email || undefined
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -40,7 +38,7 @@ export async function POST(req: Request) {
       mode,
       success_url: `${req.headers.get('origin')}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.get('origin')}/cancel?session_id={CHECKOUT_SESSION_ID}`,
-      customer_email: email,
+      ...(customerEmail ? { customer_email: customerEmail } : {}),
       metadata: {
         priceId: priceId,
         productId: currentProduct.productId,
