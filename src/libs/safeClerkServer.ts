@@ -2,19 +2,27 @@
  * Checks whether Clerk keys are configured.
  * Used by middleware and server utilities.
  */
+const isProduction = process.env.NODE_ENV === 'production'
 const isClerkDisabled =
-  process.env.CLERK_DISABLED === 'true' ||
-  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+  !isProduction &&
+  (process.env.CLERK_DISABLED === 'true' ||
+    process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true')
+const hasServerKeys =
+  !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
+  !!process.env.CLERK_SECRET_KEY
 
 export const isClerkEnabled = (): boolean => {
   if (isClerkDisabled) {
     return false
   }
 
-  return (
-    !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
-    !!process.env.CLERK_SECRET_KEY
-  )
+  if (isProduction && !hasServerKeys) {
+    throw new Error(
+      'Clerk is required in production but Clerk environment variables are missing.'
+    )
+  }
+
+  return hasServerKeys
 }
 
 /**
@@ -25,8 +33,8 @@ export async function authenticateRequest() {
   if (!isClerkEnabled()) {
     if (process.env.NODE_ENV !== 'production') {
       console.warn('⚠️ Clerk keys missing — skipping authentication.')
+      return { userId: null }
     }
-    return { userId: null }
   }
 
   try {
@@ -38,6 +46,9 @@ export async function authenticateRequest() {
     return { userId: userId ?? null }
   } catch (err) {
     console.error('❌ Clerk server auth failed:', err)
+    if (process.env.NODE_ENV === 'production') {
+      throw err
+    }
     return { userId: null }
   }
 }

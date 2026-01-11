@@ -1,24 +1,41 @@
 'use client'
 
-import { useEffect, useMemo, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useCallback, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
 import { Hero } from '@/app/marketing-ai-studio/components/sections/Hero'
 import { Features } from '@/app/marketing-ai-studio/components/sections/Features'
 import { Proof } from '@/app/marketing-ai-studio/components/sections/Expansions'
 import { Pricing } from '@/app/marketing-ai-studio/components/sections/Pricing'
 import { trackEvent } from '@/utils/analytics'
+import { handleCheckoutProcess } from '@/helpers/checkout'
+import { useUser, useClerk, isClerkEnabled } from '@/libs/safeClerk'
 
 interface ProKitPageContentProps {
 	priceId: string | null
 }
 
 const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
-	const router = useRouter()
-	const checkoutHref = useMemo(() => {
-		if (!priceId) return '/processing-page'
-		return `/processing-page?priceId=${encodeURIComponent(priceId)}`
-	}, [priceId])
+	const { isLoaded, isSignedIn, user } = useUser()
+	const { openSignIn } = useClerk()
+	const [isCheckingOut, setIsCheckingOut] = useState(false)
+	const [, setCheckoutError] = useState<string | null>(null)
+
+	useEffect(() => {
+		if (!isLoaded || !isSignedIn || !user || !priceId) return
+		if (typeof window === 'undefined') return
+
+		const pendingPriceId = window.localStorage.getItem('pendingCheckoutPriceId')
+		if (!pendingPriceId) return
+
+		window.localStorage.removeItem('pendingCheckoutPriceId')
+		handleCheckoutProcess(
+			pendingPriceId,
+			user.id || 'anonymous',
+			user.primaryEmailAddress?.emailAddress || null,
+			setIsCheckingOut,
+			setCheckoutError
+		)
+	}, [isLoaded, isSignedIn, user, priceId])
 
 	useEffect(() => {
 		trackEvent('kit_view', { kit: 'prokit', page: '/kits/prokit' })
@@ -43,8 +60,26 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
 			cta: 'pricing_get_prokit',
 			page: '/kits/prokit',
 		})
-		router.push(checkoutHref)
-	}, [checkoutHref, router])
+		if (!priceId || isCheckingOut || !isLoaded) return
+
+		if (!isSignedIn || !user?.primaryEmailAddress?.emailAddress) {
+			if (isClerkEnabled) {
+				if (typeof window !== 'undefined') {
+					window.localStorage.setItem('pendingCheckoutPriceId', priceId)
+				}
+				openSignIn({ redirectUrl: '/kits/prokit?checkout=1' })
+			}
+			return
+		}
+
+		handleCheckoutProcess(
+			priceId,
+			user.id || 'anonymous',
+			user.primaryEmailAddress?.emailAddress || null,
+			setIsCheckingOut,
+			setCheckoutError
+		)
+	}, [priceId, isCheckingOut, isLoaded, isSignedIn, user, openSignIn])
 
 	return (
 		<KitsShell>

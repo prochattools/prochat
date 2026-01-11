@@ -29,16 +29,28 @@ interface SafeUserResult {
 /**
  * Detect if Clerk is properly configured.
  */
+const isProduction = process.env.NODE_ENV === 'production'
+const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''
+const hasValidPublishableKey = publishableKey.startsWith('pk_')
+
 export const isClerkDisabled =
-  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+  !isProduction && process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
 
 export const isClerkEnabled = (() => {
   if (isClerkDisabled) {
     return false
   }
 
-  const pk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''
-  return pk.startsWith('pk_')
+  if (isProduction) {
+    if (!hasValidPublishableKey) {
+      throw new Error(
+        'Clerk is required in production but NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is missing or invalid.'
+      )
+    }
+    return true
+  }
+
+  return hasValidPublishableKey
 })()
 
 /**
@@ -76,6 +88,9 @@ export const SafeClerkProvider = ({ children }: { children: React.ReactNode }) =
     return <ClerkProvider>{children}</ClerkProvider>
   } catch (err) {
     console.error('❌ ClerkProvider initialization failed:', err)
+    if (isProduction) {
+      throw err
+    }
     return <>{children}</>
   }
 }
@@ -89,6 +104,9 @@ export const useUser = (): SafeUserResult => {
     return useClerkUser() as unknown as SafeUserResult
   } catch (err) {
     console.warn('⚠️ useUser() failed, falling back to mock mode:', err)
+    if (isProduction) {
+      throw err
+    }
     return useUserMock()
   }
 }
@@ -99,6 +117,9 @@ export const useClerk = () => {
     return useClerkClient()
   } catch (err) {
     console.warn('⚠️ useClerk() failed, falling back to mock mode:', err)
+    if (isProduction) {
+      throw err
+    }
     return useClerkMock()
   }
 }
