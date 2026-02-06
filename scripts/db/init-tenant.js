@@ -346,8 +346,10 @@ async function main() {
     const runtimeDbUrl = `postgresql://${user}:${password}@${host}:${port}/postgres?schema=${schema}`
     // .env.production is a copy/paste reference for Dokploy. Avoid duplicating secrets:
     // keep TENANT_DB_PASSWORD as the single password source and reference it in DATABASE_URL.
-    const runtimeDbUrlProd = `postgresql://${user}:\${TENANT_DB_PASSWORD}@${host}:${port}/postgres?schema=${schema}`
-    const systemDbUrlProd = `postgresql://supabase_admin:CHANGE_ME@${host}:${port}/postgres?schema=public`
+    const prodHost = (process.env.PRODUCTION_DB_HOST || '10.0.2.4').trim()
+    const prodPort = (process.env.PRODUCTION_DB_PORT || '5433').trim()
+    const runtimeDbUrlProd = `postgresql://${user}:\${TENANT_DB_PASSWORD}@${prodHost}:${prodPort}/postgres?schema=${schema}`
+    const systemDbUrlProd = `postgresql://supabase_admin:CHANGE_ME@${prodHost}:${prodPort}/postgres?schema=public`
 
     const envPath = path.join(process.cwd(), '.env')
     const prodEnvPath = path.join(process.cwd(), '.env.production')
