@@ -4,11 +4,9 @@ import { clerkClient } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import configFile from "@/config";
-import { stripeService } from '@/libs/stripe';
+import { getStripeClient, stripeService } from '@/libs/stripe';
 import emailEvents from "@/events/email-events";
 import { randomUUID } from 'crypto';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2024-06-20' });
 
 export async function getSubscriptionByUserId(userId: string) {
     const existingSubscription = await prisma.subscription.findFirst({
@@ -18,6 +16,7 @@ export async function getSubscriptionByUserId(userId: string) {
 }
 
 export async function processCheckoutSuccessWebhook(body: any, event: Stripe.Event) {
+  const stripe = getStripeClient()
   const stripeObject: Stripe.Checkout.Session = event.data
   .object as Stripe.Checkout.Session;
 const session = await stripeService.findCheckoutSession(stripeObject.id);
@@ -93,6 +92,7 @@ return NextResponse.json({}, { status: 200 });
 }
 
 export async function processSubscriptonDelete(event: Stripe.Event) {
+        const stripe = getStripeClient()
 
         // The customer subscription stopped
         // ❌ Revoke access to the product

@@ -24,9 +24,6 @@ const config = {
         black1: "#010610",
         secondary: "#D6D6DE",
       },
-      backgroundImage: {
-        banner: "url('/assets/banner.svg')",
-      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

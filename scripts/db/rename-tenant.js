@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// SaaSKit – ProChat SaaS Starter (ProKit engine)
+// ProKit – ProChat's developer core boilerplate
 // (c) 2025 Steve Westhoek / ProChat
 /**
  * Rename a tenant schema + user + registry entry.
@@ -7,7 +7,7 @@
  * Use this when the repo/app slug changes and you want to keep existing data.
  *
  * Usage:
- *   node scripts/db/rename-tenant.js --from prokit --to saaskit [--apply]
+ *   node scripts/db/rename-tenant.js --from <old_slug> --to <new_slug> [--apply]
  *
  * By default this script is DRY (no changes). Pass --apply to execute.
  *

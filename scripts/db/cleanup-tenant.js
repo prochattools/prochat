@@ -1,11 +1,11 @@
-// SaaSKit – ProChat SaaS Starter (ProKit engine)
+// ProKit – ProChat's developer core boilerplate
 // (c) 2025 Steve Westhoek / ProChat
 // scripts/db/cleanup-tenant.js
 // Deletes a tenant schema + user + registry row.
 //
 // Usage:
 //   node scripts/db/cleanup-tenant.js --slug pr_42
-//   node scripts/db/cleanup-tenant.js --slug saaskit --force   # dangerous
+//   node scripts/db/cleanup-tenant.js --slug prokit --force   # dangerous
 
 const { Client } = require('pg')
 

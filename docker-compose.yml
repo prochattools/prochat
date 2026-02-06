@@ -2,7 +2,7 @@ volumes:
   data:
 
 services:
-  # Local development Postgres (SaaSKit / ProKit engine).
+  # Local development Postgres (ProKit).
   postgres:
     image: postgres:15
     restart: unless-stopped

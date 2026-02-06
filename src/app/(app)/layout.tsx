@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react'
 
-import Header from '@/components/Header'
+import AppHeader from '@/components/AppHeader'
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <Header />
-      <main className="min-h-screen pt-24 bg-background">{children}</main>
+      <AppHeader />
+      <main className="min-h-screen bg-background">{children}</main>
     </>
   )
 }

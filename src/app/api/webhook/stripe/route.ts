@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server'
 import { headers } from 'next/headers'
 import Stripe from 'stripe'
-import { getStripeClient, getStripeWebhookSecret } from '@/constants/stripe'
+import { getStripeClient, getStripeWebhookSecret } from '@/libs/stripe'
 import {
   processSubscriptonDelete,
   processInvoicePaid,

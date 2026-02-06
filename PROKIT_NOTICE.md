@@ -1,5 +1,8 @@
-# SaaSKit Notice
+# ProKit Notice
 
-SaaSKit is ProChat’s commercial boilerplate. It is built on the ProKit engine and includes a full marketing site plus SaaS-ready infrastructure.
+ProKit is ProChat’s **developer core boilerplate** for building SaaS apps.
 
-The package name and internal scripts still use ProKit because it is the engine. The product name is SaaSKit. Licensing and distribution terms are handled separately.
+It is intentionally lean: ProKit ships the SaaS engine only (auth, billing wiring, database lifecycle, runtime deploy gate), and does **not** include a marketing site or SEO/blog/content systems.
+
+Production deploys are tag-gated. Provisioning + migrations run automatically via the runtime deploy gate; do not run ad-hoc database commands in production.
+

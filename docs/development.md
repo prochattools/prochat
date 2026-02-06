@@ -1,54 +1,88 @@
 # Development
 
-Local development workflow for SaaSKit (ProKit engine).
+Local development workflow for ProKit.
 
 ## Prerequisites
-- Node.js + npm
-- Docker Desktop
-- Local Postgres container mapped to `localhost:5433` (default; configurable via `POSTGRES_PORT`)
 
-## Quick start
+- Node.js 20+
+- Docker Desktop (or equivalent)
+- PostgreSQL 15 reachable at `localhost:5433` (default; configurable via `POSTGRES_PORT`)
+
+## Slug Rule (Required)
+
+ProKit derives tenancy from the repo name:
+
+- Repo folder name must match `[a-z0-9_]+`.
+- `APP_SLUG` must match the repo folder name.
+
+If you want an app slug like `my_app`, the repo folder must also be named `my_app`.
+
+## Quick Start
+
+1. Start Postgres:
+
+```bash
+docker compose up -d postgres
+```
+
+2. Install and run:
+
 ```bash
 npm install
 npm run dev
 ```
 
-`npm run dev` triggers the `predev` script which:
-1. Ensures `.env` exists
-2. Provisions a tenant (`npm run db:init`)
-3. Runs migrations (`npm run db:migrate:dev`)
-4. Starts Next.js
+### What `npm run dev` is expected to do
 
-If you want to run steps manually:
+By convention ProKit wires `predev` to bootstrap the local environment:
+
+- Create `.env` if missing (`scripts/dev/bootstrap-env.js`)
+- Provision the tenant schema/user (`npm run db:init`)
+- Run dev migrations (`npm run db:migrate:dev`)
+- Start Next.js (`next dev`)
+
+## Local Environment Model
+
+- `DATABASE_URL` is the tenant connection (tenant user, tenant schema).
+- `SYSTEM_DATABASE_URL` is an admin connection used by provisioning/cleanup/backups.
+- `SHADOW_DATABASE_URL` is an admin connection used by `prisma migrate dev`.
+
+Example `.env` (development):
+
 ```bash
-npm run db:init -- --slug <project-name>
-npm run db:migrate:dev
-npm run dev
+APP_SLUG=prokit
+NODE_ENV=development
+POSTGRES_PORT=5433
+
+SYSTEM_DATABASE_URL=postgresql://postgres:postgres@localhost:5433/postgres?schema=public
+SHADOW_DATABASE_URL=postgresql://postgres:postgres@localhost:5433/postgres?schema=public
+
+# Populated by the first db:init run:
+DATABASE_URL=postgresql://tenant_prokit_user:<password>@localhost:5433/postgres?schema=tenant_prokit
 ```
 
-## Local environment variables
-```bash
-APP_SLUG=saaskit  # should match the repo/project name
-PROCHAT_VERSION=<release-version>  # optional: used for UI display
-POSTGRES_PORT=5433  # optional: used by docker-compose (change if 5433 is already in use)
-DATABASE_URL=postgresql://tenant_saaskit_user:<password>@localhost:5433/postgres?schema=tenant_saaskit
-SYSTEM_DATABASE_URL=postgresql://postgres:<admin-password>@localhost:5433/postgres?schema=public
-SHADOW_DATABASE_URL=postgresql://postgres:<admin-password>@localhost:5433/postgres?schema=public
-```
+## Common Local Commands
 
-## Common commands
 ```bash
+# provision schema + user + env outputs
 npm run db:init -- --slug <slug>
+
+# apply dev migrations (uses SHADOW_DATABASE_URL)
 npm run db:migrate:dev
+
+# delete a tenant (preview by default; use --force to delete prod tenants)
 npm run db:cleanup -- --slug <slug>
+
+# rename a tenant schema/user/registry (dry-run by default)
+npm run db:rename -- --from <old> --to <new> [--apply]
 ```
 
-## Quick troubleshooting
-- Connection refused: confirm Docker is running and port `5433` is mapped (or update `POSTGRES_PORT`).
-- Auth errors: verify `.env` is loaded and `DATABASE_URL` is correct.
-- Prisma drift: run `npm run db:migrate:dev` or `npx prisma migrate reset --schema=prisma/system.prisma`.
-- Shadow DB error: set `SHADOW_DATABASE_URL` to the admin connection (tenant users cannot create shadow DBs).
+## Troubleshooting Quick Hits
 
-## Optional features
+- Port `5433` already allocated:
+  - Change `POSTGRES_PORT` (and update your local DB URLs), or stop the process already using `5433`.
+- Prisma shadow DB errors:
+  - Ensure `SHADOW_DATABASE_URL` is set to an admin connection (same as `SYSTEM_DATABASE_URL`).
+- APP_SLUG mismatch:
+  - Rename the repo folder to the slug you want, then rerun `npm run dev`.
 
-See `docs/optional-features.md` for enabling the optional blog, waiting list, and checkout funnel routes.

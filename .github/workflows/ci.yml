@@ -28,17 +28,17 @@ jobs:
     env:
       NODE_ENV: test
 
-      # CI runs in a non-prod environment, so SaaSKit enforces APP_SLUG == repo name.
-      APP_SLUG: saaskit
+      # CI runs in a non-prod environment, so ProKit enforces APP_SLUG == repo name.
+      APP_SLUG: prokit
 
       # Must be alphanumeric only (see scripts/db/init-tenant.js).
       TENANT_DB_PASSWORD: cipass123
 
       POSTGRES_PORT: 5433
 
-      DATABASE_URL: postgresql://tenant_saaskit_user:cipass123@localhost:5433/postgres?schema=tenant_saaskit
+      DATABASE_URL: postgresql://tenant_prokit_user:cipass123@localhost:5433/postgres?schema=tenant_prokit
       SYSTEM_DATABASE_URL: postgresql://postgres:postgres@localhost:5433/postgres?schema=public
-      RESEND_API_KEY: dummy-ci-key
+      SHADOW_DATABASE_URL: postgresql://postgres:postgres@localhost:5433/postgres?schema=public
 
     steps:
       - name: Checkout

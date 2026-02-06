@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// SaaSKit – ProChat SaaS Starter (ProKit engine)
+// ProKit – ProChat's developer core boilerplate
 // (c) 2025 Steve Westhoek / ProChat
 /**
  * Provision a single-tenant schema + user + registry entry.

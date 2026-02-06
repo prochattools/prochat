@@ -1,4 +1,4 @@
-# SaaSKit (ProKit core) repo rules
+# ProKit repo rules
 - Docs in /docs and /instructions are authoritative for this repo.
 - Primary deploy path is Dokploy + Nixpacks; Dockerfile is optional only.
 - APP_SLUG must match the repo/project name; tenant schema is tenant_<slug>.

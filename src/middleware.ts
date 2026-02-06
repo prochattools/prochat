@@ -5,19 +5,8 @@ const isPublicRoute = createRouteMatcher([
   '/',
   '/sign-in(.*)',
   '/sign-up(.*)',
-  '/api/create-checkout-session',
-  '/api/stripe/create-checkout',
   '/api/webhook/:path*',
-  '/dashboard',
-  '/api/waiting-list',
-  '/waiting-list',
-  '/blog',
-  '/blog(.*)',
-  '/sitemap.xml',
-  '/processing-page(.*)',
-  '/success',
-  '/cancel',
-  '/images/:path*',
+  '/api/health',
 ])
 
 const hasClerkKeys =

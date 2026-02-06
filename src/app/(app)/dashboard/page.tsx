@@ -1,6 +1,5 @@
 import PricingSection from '@/components/PricingSection'
-import Scenarios from '@/components/Scenarios'
-import ThankYouPopup from '@/components/ThankyouPopUp'
+import BillingPortalButton from '@/components/BillingPortalButton'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { getSubscriptionByUserId } from '@/app/api/actions'
@@ -15,19 +14,25 @@ export default async function Dashboard() {
   const sub = await getSubscriptionByUserId(userId)
   const isInactive = sub ? sub?.sub_status !== 'active' : true
 
-  // SaaSKit note:
-  // The processing funnel route (`/processing-page`) is optional.
-  // For the default app flow we keep billing inside the dashboard.
-
   return (
-    <div>
+    <div className="container mx-auto px-4 py-12">
       {isInactive ? (
-        <PricingSection />
+        <>
+          <h1 className="text-2xl font-bold mb-2">Billing</h1>
+          <p className="text-muted-foreground mb-8">
+            Choose a plan to activate your account.
+          </p>
+          <PricingSection />
+        </>
       ) : (
-        <div>
-          <Scenarios />
-          <ThankYouPopup />
-        </div>
+        <>
+          <h1 className="text-2xl font-bold mb-2">Dashboard</h1>
+          <p className="text-muted-foreground mb-6">
+            Your subscription is active.
+          </p>
+
+          <BillingPortalButton />
+        </>
       )}
     </div>
   )

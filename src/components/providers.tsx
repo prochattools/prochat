@@ -1,8 +1,7 @@
-'use client';
+'use client'
 
-import { ReactNode } from "react";
-import { ThemeProvider } from "next-themes";
-import { Toaster } from "react-hot-toast";
+import { ReactNode } from 'react'
+import { ThemeProvider } from 'next-themes'
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
@@ -17,14 +16,6 @@ export function Providers({ children }: { children: ReactNode }) {
           {children}
         </div>
       </ThemeProvider>
-
-      <Toaster
-        position="bottom-center"
-        toastOptions={{
-          duration: 3000,
-          className: "text-sm dark:bg-black dark:text-white",
-        }}
-      />
     </>
-  );
+  )
 }

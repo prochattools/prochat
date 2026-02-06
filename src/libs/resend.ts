@@ -1,8 +1,6 @@
 import ThankYouTemplate from '@/components/email-templates/ThanksYouTemplate'
 import config from '@/config'
-import prisma from '@/libs/prisma'
 import { Resend } from 'resend'
-import { randomUUID } from 'crypto'
 
 class ResendService {
   private client: Resend | null = null
@@ -37,40 +35,6 @@ class ResendService {
     }
 
     return data
-  }
-
-  public async addNewEmailAddress(email: string) {
-    const audience = await this.upsertAudience()
-
-    return this.getClient().contacts.create({
-      email,
-      unsubscribed: false,
-      audienceId: audience.resend_id,
-    })
-  }
-
-  private async upsertAudience() {
-    const audience = await prisma.audiences.findFirst()
-
-    if (audience) {
-      return audience
-    }
-
-    const resendAudience = await this.getClient().audiences.create({
-      name: 'Waiting List',
-    })
-
-    const {
-      data: { id, name },
-    } = resendAudience
-
-    return prisma.audiences.create({
-      data: {
-        id: randomUUID(),
-        resend_id: id,
-        name,
-      },
-    })
   }
 }
 
