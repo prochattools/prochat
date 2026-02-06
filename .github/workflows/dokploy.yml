@@ -1,0 +1,11 @@
+name: Dokploy Deployments
+
+on:
+  workflow_dispatch:
+
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: No-op Dokploy placeholder
+        run: echo "Dokploy deployments are managed directly in Dokploy. This workflow is kept as a placeholder and does not perform any actions."

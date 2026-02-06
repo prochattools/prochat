@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      NODE_ENV: test
+
+      # CI runs in a non-prod environment, so SaaSKit enforces APP_SLUG == repo name.
+      APP_SLUG: saaskit
+
+      # Must be alphanumeric only (see scripts/db/init-tenant.js).
+      TENANT_DB_PASSWORD: cipass123
+
+      POSTGRES_PORT: 5433
+
+      DATABASE_URL: postgresql://tenant_saaskit_user:cipass123@localhost:5433/postgres?schema=tenant_saaskit
+      SYSTEM_DATABASE_URL: postgresql://postgres:postgres@localhost:5433/postgres?schema=public
+      RESEND_API_KEY: dummy-ci-key
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Provision tenant schema
+        run: npm run db:init
+
+      - name: Generate Prisma client
+        run: npx prisma generate --schema=prisma/system.prisma
+
+      - name: Run migrations
+        run: npm run db:migrate:dev
+
+      - name: Build
+        run: npm run build

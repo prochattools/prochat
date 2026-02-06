@@ -1,0 +1,4 @@
+{
+  "main_deploy": "tag-gated",
+  "notes": "Production deploys are triggered only by pushing a release tag (e.g. v1.0.0)."
+}
