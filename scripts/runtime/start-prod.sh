@@ -16,6 +16,15 @@ require_env SYSTEM_DATABASE_URL
 require_env DATABASE_URL
 require_env NODE_ENV
 
+# Dokploy env values are treated as literal strings. If DATABASE_URL references
+# TENANT_DB_PASSWORD, expand it here before running the deploy gate.
+if [[ "${DATABASE_URL}" == *'${TENANT_DB_PASSWORD}'* || "${DATABASE_URL}" == *'$TENANT_DB_PASSWORD'* ]]; then
+  require_env TENANT_DB_PASSWORD
+  DATABASE_URL="${DATABASE_URL//\${TENANT_DB_PASSWORD}/${TENANT_DB_PASSWORD}}"
+  DATABASE_URL="${DATABASE_URL//\$TENANT_DB_PASSWORD/${TENANT_DB_PASSWORD}}"
+  export DATABASE_URL
+fi
+
 PORT="${PORT:-3000}"
 export PORT
 

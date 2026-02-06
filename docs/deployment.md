@@ -20,7 +20,7 @@ Required:
 NODE_ENV=production
 APP_SLUG=<repo_name>                 # must match the repo folder name
 SYSTEM_DATABASE_URL=postgresql://<admin-user>:<admin-password>@<db-host>:5433/postgres
-DATABASE_URL=postgresql://tenant_<slug>_user:<TENANT_DB_PASSWORD>@<db-host>:5433/postgres?schema=tenant_<slug>
+DATABASE_URL=postgresql://tenant_<slug>_user:${TENANT_DB_PASSWORD}@<db-host>:5433/postgres?schema=tenant_<slug>
 TENANT_DB_PASSWORD=<alphanumeric_only_password>
 PROCHAT_VERSION=<semver>             # must match the git tag without the leading "v"
 NEXT_PUBLIC_APP_URL=https://<your-domain>
@@ -36,8 +36,9 @@ LEGACY_APP_SLUG=<old_slug>
 Notes:
 
 - `APP_SLUG` must match `[a-z0-9_]+` and must equal the repo name.
-- `SYSTEM_DATABASE_URL` must be an admin connection that can create schemas/roles and run backups.
+- `SYSTEM_DATABASE_URL` must be an admin connection that can create schemas/roles and run backups. (For Supabase, the admin user is typically `supabase_admin`.)
 - `TENANT_DB_PASSWORD` must be alphanumeric only (no special characters).
+- If your platform does not expand env vars inside other env vars, ProKit expands `${TENANT_DB_PASSWORD}` in `DATABASE_URL` at runtime (before running the deploy gate).
 
 ### 2) Backup bind mount (required)
 
@@ -86,4 +87,3 @@ Do not exec into production to run provisioning/migrations manually.
 Rollback is done by redeploying a previous tag (or creating a new tag pointing at a known-good commit).
 
 Keep `PROCHAT_VERSION` aligned with the deployed tag.
-

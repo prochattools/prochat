@@ -344,14 +344,20 @@ async function main() {
     const host = parsedUrl.hostname
     const port = parsedUrl.port || (process.env.POSTGRES_PORT || '5433')
     const runtimeDbUrl = `postgresql://${user}:${password}@${host}:${port}/postgres?schema=${schema}`
+    // .env.production is a copy/paste reference for Dokploy. Avoid duplicating secrets:
+    // keep TENANT_DB_PASSWORD as the single password source and reference it in DATABASE_URL.
+    const runtimeDbUrlProd = `postgresql://${user}:\${TENANT_DB_PASSWORD}@${host}:${port}/postgres?schema=${schema}`
+    const systemDbUrlProd = `postgresql://supabase_admin:CHANGE_ME@${host}:${port}/postgres?schema=public`
 
     const envPath = path.join(process.cwd(), '.env')
     const prodEnvPath = path.join(process.cwd(), '.env.production')
 
     const exampleEnvPath = path.join(process.cwd(), '.env.example')
     const exampleEnv = loadEnvFile(exampleEnvPath)
+    const envProchatVersion = (process.env.PROCHAT_VERSION || '').trim()
+    const exampleProchatVersion = (exampleEnv.PROCHAT_VERSION || '').trim()
     const prochatVersion = (
-      process.env.PROCHAT_VERSION || exampleEnv.PROCHAT_VERSION || ''
+      isProd ? envProchatVersion || exampleProchatVersion : exampleProchatVersion || envProchatVersion
     ).trim()
 
     const baseUpdates = {
@@ -369,6 +375,8 @@ async function main() {
     })
     persistEnv(prodEnvPath, {
       ...baseUpdates,
+      DATABASE_URL: runtimeDbUrlProd,
+      SYSTEM_DATABASE_URL: systemDbUrlProd,
       NODE_ENV: 'production'
     })
 
