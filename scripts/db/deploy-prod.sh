@@ -22,6 +22,9 @@ SMOKE_STATUS="not_run"
 RESTORE_STATUS="not_needed"
 DETECT_REASON=""
 BACKUP_ELIGIBLE="yes"
+RESET_TENANT="no"
+EXTRA_MIGRATIONS_IN_DB=""
+RESET_FLAG="${PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH:-}"
 
 normalize_psql_url() {
   local url="$1"
@@ -58,6 +61,8 @@ write_status() {
     printf 'LAST_RUN_TS=%q\n' "$TS"
     printf 'DETECTED_MIGRATIONS=%q\n' "$DETECTED_MIGRATIONS"
     printf 'DETECT_REASON=%q\n' "$DETECT_REASON"
+    printf 'RESET_TENANT=%q\n' "$RESET_TENANT"
+    printf 'EXTRA_MIGRATIONS_IN_DB=%q\n' "$EXTRA_MIGRATIONS_IN_DB"
     printf 'BACKUP_PATH=%q\n' "$BACKUP_PATH"
     printf 'MIGRATION_STATUS=%q\n' "$MIGRATION_STATUS"
     printf 'SMOKE_STATUS=%q\n' "$SMOKE_STATUS"
@@ -227,8 +232,26 @@ detect_migrations() {
   extra_in_db=$(comm -13 <(list_to_stream "$disk_list") <(list_to_stream "$db_list"))
 
   if [[ -n "$extra_in_db" ]]; then
+    EXTRA_MIGRATIONS_IN_DB="$extra_in_db"
+    DETECTED_MIGRATIONS="yes"
+    DETECT_REASON="migrations_missing_on_disk"
+
+    if [[ "${RESET_FLAG}" == "1" ]]; then
+      RESET_TENANT="yes"
+      echo "[deploy] migration history mismatch detected; reset enabled (PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH=1)"
+      echo "[deploy] extra migrations in DB:"
+      printf '%s\n' "$extra_in_db"
+      return 0
+    fi
+
     echo "db has migrations not present on disk:" >&2
     echo "$extra_in_db" >&2
+    echo "" >&2
+    echo "This usually happens when migrations were squashed/removed or when this tenant schema was reused by another app." >&2
+    echo "Fix options:" >&2
+    echo "- Restore the missing migration directories on disk (must match checksums), OR" >&2
+    echo "- Reset the tenant schema on next deploy (DATA LOSS) by setting:" >&2
+    echo "  PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH=1" >&2
     exit 1
   fi
 
@@ -291,6 +314,20 @@ restore_schema() {
     "$dump_path"
 }
 
+reset_tenant_schema() {
+  validate_slug "$APP_SLUG"
+  local role="${APP_SCHEMA}_user"
+  local ident_safe='^[a-z0-9_]+$'
+  if [[ ! "$APP_SCHEMA" =~ $ident_safe || ! "$role" =~ $ident_safe ]]; then
+    echo "refusing reset: unsafe identifiers (schema=${APP_SCHEMA}, role=${role})" >&2
+    exit 1
+  fi
+
+  echo "[deploy] resetting tenant schema + role (data will be lost): ${APP_SCHEMA}"
+  psql "$SYSTEM_DATABASE_URL_PSQL" -v ON_ERROR_STOP=1 -c "DROP SCHEMA IF EXISTS ${APP_SCHEMA} CASCADE;"
+  psql "$SYSTEM_DATABASE_URL_PSQL" -v ON_ERROR_STOP=1 -c "DROP ROLE IF EXISTS ${role};"
+}
+
 detect_migrations
 write_status
 
@@ -307,6 +344,10 @@ fi
 
 MIGRATION_STATUS="running"
 write_status
+
+if [[ "$RESET_TENANT" == "yes" ]]; then
+  reset_tenant_schema
+fi
 
 echo "[deploy] running db:init"
 npm run db:init -- --slug "$APP_SLUG"

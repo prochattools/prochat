@@ -33,6 +33,14 @@ Optional (slug rename support):
 LEGACY_APP_SLUG=<old_slug>
 ```
 
+Optional (last resort, destructive):
+
+```bash
+# If the deploy gate reports "db has migrations not present on disk",
+# allow the gate to reset the tenant schema/user and re-init from scratch.
+PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH=1
+```
+
 Notes:
 
 - `APP_SLUG` must match `[a-z0-9_]+` and must equal the repo name.

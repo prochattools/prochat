@@ -78,6 +78,22 @@ Production is hands-off:
 
 Do not run ad-hoc database commands in production.
 
+## Migration History Mismatch (Production)
+
+If the deploy gate fails with:
+
+- `db has migrations not present on disk: ...`
+
+it means the tenant schema already contains Prisma migration history that is not present in the current repo. This can happen if:
+
+- migrations were squashed/removed in git, or
+- you reused an existing tenant schema from another app/repo.
+
+Fix options:
+
+1. **Reset the tenant schema (data loss)**: set `PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH=1` in Dokploy env and redeploy a tag.
+2. **Keep data**: restore the missing migration directories on disk (must match the checksums stored in the database).
+
 ## Rename Flow (Repo Slug Changes)
 
 If you rename a repo that already has data, use one of these:
@@ -86,4 +102,3 @@ If you rename a repo that already has data, use one of these:
 - Hands-off production path: set `LEGACY_APP_SLUG=<old_slug>` in Dokploy env for the next deploy.
   - The deploy gate will rename `tenant_<old_slug>` -> `tenant_<new_slug>` if the target schema does not already exist.
   - Remove `LEGACY_APP_SLUG` after a successful deploy.
-

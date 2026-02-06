@@ -38,3 +38,6 @@ npm run db:migrate:dev
   - Ensure Nixpacks installs the correct client version (`nixpacks.toml`).
 - Backup mount missing:
   - Verify bind mount `/var/backups/pgdump` -> `/var/backups/pgdump` (RW).
+- Migration history mismatch:
+  - Error: `db has migrations not present on disk: ...`
+  - Fix (destructive): set `PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH=1` in Dokploy env and redeploy a tag.

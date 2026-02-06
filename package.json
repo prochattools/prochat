@@ -1,6 +1,6 @@
 {
 	"name": "@prochat/prokit",
-	"version": "1.0.50",
+	"version": "1.0.51",
 	"private": true,
 	"description": "ProKit is ProChat’s developer core boilerplate for building SaaS apps.",
 	"author": "Steve Westhoek",
