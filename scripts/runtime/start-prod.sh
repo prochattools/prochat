@@ -52,6 +52,26 @@ rm -f "${BACKUP_ROOT}/.write_test"
 
 ./scripts/db/deploy-prod.sh
 
+# Refresh DATABASE_URL from the tenant registry for the app runtime.
+# This avoids relying on Dokploy expanding env vars inside DATABASE_URL.
+if command -v psql >/dev/null 2>&1; then
+  SYS_PSQL_URL="$(node -e "const u=new URL(process.env.SYSTEM_DATABASE_URL);u.search='';console.log(u.toString());")"
+  TENANT_ROW="$(psql "$SYS_PSQL_URL" -v ON_ERROR_STOP=1 -tA -c "SELECT db_user || '|' || db_password || '|' || schema_name FROM public.tenants WHERE slug='${APP_SLUG}';" 2>/dev/null || true)"
+  if [[ -n "$TENANT_ROW" ]]; then
+    TENANT_USER="${TENANT_ROW%%|*}"
+    REST="${TENANT_ROW#*|}"
+    TENANT_PASSWORD="${REST%%|*}"
+    TENANT_SCHEMA="${REST#*|}"
+    DB_HOST="$(node -e "console.log(new URL(process.env.SYSTEM_DATABASE_URL).hostname)")"
+    DB_PORT="$(node -e "console.log(new URL(process.env.SYSTEM_DATABASE_URL).port||'5432')")"
+    IDENT_SAFE='^[a-z0-9_]+$'
+    if [[ "$TENANT_USER" =~ $IDENT_SAFE && "$TENANT_SCHEMA" =~ $IDENT_SAFE && -n "$TENANT_PASSWORD" ]]; then
+      export DATABASE_URL="postgresql://${TENANT_USER}:${TENANT_PASSWORD}@${DB_HOST}:${DB_PORT}/postgres?schema=${TENANT_SCHEMA}"
+      echo "[deploy] DATABASE_URL refreshed from registry for app start (user=${TENANT_USER}, schema=${TENANT_SCHEMA})"
+    fi
+  fi
+fi
+
 script_exists() {
   node -e "const pkg=require('./package.json');process.exit(pkg.scripts&&pkg.scripts['$1']?0:1)" >/dev/null 2>&1
 }

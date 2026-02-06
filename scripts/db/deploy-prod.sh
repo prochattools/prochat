@@ -198,6 +198,10 @@ detect_migrations() {
   if [[ "$table_exists" != "1" ]]; then
     DETECTED_MIGRATIONS="yes"
     DETECT_REASON="migrations_table_missing"
+    if [[ "${RESET_FLAG}" == "1" ]]; then
+      RESET_TENANT="yes"
+      echo "[deploy] _prisma_migrations missing; reset enabled (PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH=1)"
+    fi
     return 0
   fi
 
@@ -351,6 +355,43 @@ fi
 
 echo "[deploy] running db:init"
 npm run db:init -- --slug "$APP_SLUG"
+
+# Refresh DATABASE_URL from the tenant registry so Prisma uses the exact
+# credentials that were provisioned/updated by db:init (avoid env drift).
+get_host_port() {
+  node - <<'NODE'
+const u = new URL(process.env.SYSTEM_DATABASE_URL);
+const host = u.hostname;
+const port = u.port || '5432';
+process.stdout.write(host + '\n' + port + '\n');
+NODE
+}
+
+read_tenant_row() {
+  psql "$SYSTEM_DATABASE_URL_PSQL" -v ON_ERROR_STOP=1 -tA \
+    -c "SELECT db_user || '|' || db_password || '|' || schema_name FROM public.tenants WHERE slug='${APP_SLUG}';"
+}
+
+tenant_row="$(read_tenant_row || true)"
+if [[ -n "$tenant_row" ]]; then
+  tenant_user="${tenant_row%%|*}"
+  rest="${tenant_row#*|}"
+  tenant_password="${rest%%|*}"
+  tenant_schema="${rest#*|}"
+  read -r db_host db_port < <(get_host_port)
+
+  ident_safe='^[a-z0-9_]+$'
+  if [[ "$tenant_user" =~ $ident_safe && "$tenant_schema" =~ $ident_safe && -n "$tenant_password" ]]; then
+    DATABASE_URL="postgresql://${tenant_user}:${tenant_password}@${db_host}:${db_port}/postgres?schema=${tenant_schema}"
+    export DATABASE_URL
+    DATABASE_URL_PSQL="$(normalize_psql_url "$DATABASE_URL")"
+    echo "[deploy] refreshed DATABASE_URL from registry (user=${tenant_user}, schema=${tenant_schema})"
+  else
+    echo "[deploy] failed to refresh DATABASE_URL from registry (unsafe values)" >&2
+  fi
+else
+  echo "[deploy] tenant registry row not found; continuing with existing DATABASE_URL env" >&2
+fi
 
 echo "[deploy] running db:migrate:prod"
 NODE_ENV=production npm run db:migrate:prod

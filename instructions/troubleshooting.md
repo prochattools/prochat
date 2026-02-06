@@ -41,3 +41,6 @@ npm run db:migrate:dev
 - Migration history mismatch:
   - Error: `db has migrations not present on disk: ...`
   - Fix (destructive): set `PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH=1` in Dokploy env and redeploy a tag.
+- Migrations table missing:
+  - Error: `[deploy] detected migrations: yes (migrations_table_missing)`
+  - Fix (destructive): set `PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH=1` in Dokploy env and redeploy a tag.

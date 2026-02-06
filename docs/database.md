@@ -78,13 +78,14 @@ Production is hands-off:
 
 Do not run ad-hoc database commands in production.
 
-## Migration History Mismatch (Production)
+## Migration State Mismatch (Production)
 
-If the deploy gate fails with:
+If the deploy gate fails with one of these:
 
+- `[deploy] detected migrations: yes (migrations_table_missing)`
 - `db has migrations not present on disk: ...`
 
-it means the tenant schema already contains Prisma migration history that is not present in the current repo. This can happen if:
+it means the tenant schema is not in the expected state for this repo. This can happen if:
 
 - migrations were squashed/removed in git, or
 - you reused an existing tenant schema from another app/repo.

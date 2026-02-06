@@ -36,7 +36,9 @@ LEGACY_APP_SLUG=<old_slug>
 Optional (last resort, destructive):
 
 ```bash
-# If the deploy gate reports "db has migrations not present on disk",
+# If the deploy gate reports a migration-state mismatch (for example:
+# - "db has migrations not present on disk"
+# - "detected migrations: ... (migrations_table_missing)")
 # allow the gate to reset the tenant schema/user and re-init from scratch.
 PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH=1
 ```
