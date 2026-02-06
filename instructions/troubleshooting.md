@@ -24,10 +24,12 @@ npm install
   - Ensure Docker is running and port `5433` is mapped (or set `POSTGRES_PORT`).
 - Prisma migrate dev fails:
   - Confirm `SHADOW_DATABASE_URL` is set to the admin connection (same as `SYSTEM_DATABASE_URL`).
-- Reset dev DB:
+- Reset dev tenant (drops `tenant_<slug>`; last resort; destructive):
 
 ```bash
-npx prisma migrate reset --schema=prisma/system.prisma
+npm run db:cleanup -- --slug <slug> --force
+npm run db:init
+npm run db:migrate:dev
 ```
 
 ## Dokploy deploy gate failures
@@ -36,4 +38,3 @@ npx prisma migrate reset --schema=prisma/system.prisma
   - Ensure Nixpacks installs the correct client version (`nixpacks.toml`).
 - Backup mount missing:
   - Verify bind mount `/var/backups/pgdump` -> `/var/backups/pgdump` (RW).
-
