@@ -1,10 +1,20 @@
 import { NextResponse, NextRequest } from 'next/server'
-import { stripeService } from '@/libs/stripe'
+
 import prisma from '@/libs/prisma'
-import { auth } from '@clerk/nextjs/server'
+import { stripeService } from '@/libs/stripe'
+import { hasClerkServerKeys, safeAuth } from '@/libs/safeClerkServer'
 
 export async function POST(req: NextRequest) {
-  const { userId }: { userId: string | null } = auth()
+  if (!hasClerkServerKeys) {
+    return NextResponse.json(
+      {
+        error: 'Clerk is not configured. Set Clerk keys to enable the billing portal.',
+      },
+      { status: 501 }
+    )
+  }
+
+  const { userId } = safeAuth()
 
   if (!userId) {
     return NextResponse.json({ error: 'Not signed in' }, { status: 401 })
@@ -44,11 +54,11 @@ export async function POST(req: NextRequest) {
     )
 
     return NextResponse.json({ url: stripePortalUrl })
-  } catch (e: any) {
-    console.error(e)
+  } catch (e: unknown) {
+    const error = e as Error
     return NextResponse.json(
       {
-        error: e?.message || 'Failed to create Stripe portal session',
+        error: error?.message || 'Failed to create Stripe portal session',
       },
       { status: 500 }
     )

@@ -30,6 +30,11 @@ export function getSEOTags({
     keywords: keywords || [config.appName],
     applicationName: config.appName,
     metadataBase: new URL(baseUrl),
+    icons: {
+      icon: [{ url: '/favicon.ico', type: 'image/x-icon' }],
+      shortcut: ['/favicon.ico'],
+      apple: [{ url: '/logo/prochat_logo_light.png' }],
+    },
     openGraph: {
       title: openGraph?.title || config.appName,
       description: openGraph?.description || config.appDescription,
@@ -47,4 +52,3 @@ export function getSEOTags({
     ...extraTags,
   }
 }
-

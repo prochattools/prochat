@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 import config from '@/config'
@@ -11,8 +12,16 @@ export default function AppHeader() {
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur">
       <div className="container mx-auto flex h-14 items-center justify-between px-4">
         <div className="flex items-center gap-3">
-          <Link href="/" className="font-semibold">
-            {config.appName}
+          <Link href="/" className="flex items-center gap-2 font-semibold">
+            <Image
+              src="/logo/prochat_logo_dark.png"
+              alt="ProChat"
+              width={140}
+              height={32}
+              className="h-6 w-auto"
+              priority
+            />
+            <span>{config.appName}</span>
           </Link>
           {version ? (
             <span className="text-xs text-muted-foreground">v{version}</span>
