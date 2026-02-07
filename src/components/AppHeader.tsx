@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { auth } from '@clerk/nextjs/server'
 
 import config from '@/config'
+import { safeAuth } from '@/libs/safeClerkServer'
 
 export default function AppHeader() {
-  const { userId } = auth()
+  const { userId } = safeAuth()
   const version = (process.env.PROCHAT_VERSION || '').trim()
 
   return (
@@ -20,6 +20,9 @@ export default function AppHeader() {
         </div>
 
         <nav className="flex items-center gap-4 text-sm">
+          <Link href="/setup" className="hover:underline">
+            Setup
+          </Link>
           {userId ? (
             <Link href="/dashboard" className="hover:underline">
               Dashboard
@@ -39,4 +42,3 @@ export default function AppHeader() {
     </header>
   )
 }
-

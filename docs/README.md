@@ -22,4 +22,5 @@ It is intentionally lean: ProKit is the engine only (no marketing layer, no funn
 - Dockerfile exists as an optional fallback only.
 - Production deploys are tag-gated.
 - Production is hands-off: provisioning and migrations run automatically via the runtime deploy gate on deploy. Do not run manual commands in production.
+- Database model is fixed: one shared Supabase/Postgres database per environment, schema-per-app isolation only (no per-app databases).
 

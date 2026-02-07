@@ -46,6 +46,9 @@ PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH=1
 Notes:
 
 - `APP_SLUG` must match `[a-z0-9_]+` and must equal the repo name.
+- `SYSTEM_DATABASE_URL` and `DATABASE_URL` must point to the same shared Supabase/Postgres database for that environment.
+- App isolation is schema/role only: `tenant_<slug>` + `tenant_<slug>_user`.
+- Never create a dedicated database per app.
 - `SYSTEM_DATABASE_URL` must be an admin connection that can create schemas/roles and run backups. (For Supabase, the admin user is typically `supabase_admin`.)
 - `TENANT_DB_PASSWORD` must be alphanumeric only (no special characters).
 - If your platform does not expand env vars inside other env vars, ProKit expands `${TENANT_DB_PASSWORD}` in `DATABASE_URL` at runtime (before running the deploy gate).

@@ -3,9 +3,10 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
 const isPublicRoute = createRouteMatcher([
   '/',
+  '/setup',
   '/sign-in(.*)',
   '/sign-up(.*)',
-  '/api/webhook/:path*',
+  '/api/webhook(.*)',
   '/api/health',
 ])
 
@@ -20,10 +21,9 @@ export default hasClerkKeys
       }
     })
   : function mockMiddleware() {
-      console.warn('⚠️ Clerk middleware disabled — running in mock mode.')
       return NextResponse.next()
     }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!_next|.*\\..*).*)', '/(api|trpc)(.*)'],
 }

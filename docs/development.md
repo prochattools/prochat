@@ -5,8 +5,13 @@ Local development workflow for ProKit.
 ## Prerequisites
 
 - Node.js 20+
-- Docker Desktop (or equivalent)
-- PostgreSQL 15 reachable at `localhost:5433` (default; configurable via `POSTGRES_PORT`)
+- Shared Supabase/Postgres instance reachable at `localhost:5433` (default; configurable via `POSTGRES_PORT`)
+
+## Shared Database Rule (Required)
+
+- Dev and prod each use one shared Supabase/Postgres database.
+- ProKit creates only `tenant_<slug>` schema and `tenant_<slug>_user` role in that shared database.
+- Never create a dedicated database per app.
 
 ## Slug Rule (Required)
 
@@ -19,11 +24,7 @@ If you want an app slug like `my_app`, the repo folder must also be named `my_ap
 
 ## Quick Start
 
-1. Start Postgres:
-
-```bash
-docker compose up -d postgres
-```
+1. Ensure your shared Supabase/Postgres service is running and exposed on `localhost:5433` (or your configured `POSTGRES_PORT`).
 
 2. Install and run:
 

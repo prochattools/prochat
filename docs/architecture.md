@@ -25,8 +25,9 @@ This repo uses Next.js App Router route groups to keep “public entry” vs “
 ### Public entry
 
 - `/` -> `src/app/page.tsx`
+- `/setup` -> `src/app/setup/page.tsx`
 
-This page is intentionally minimal. If the user is signed in, it redirects to `/dashboard`.
+`/` is intentionally minimal and public. If the user is signed in, it redirects to `/dashboard`. `/setup` is a public technical start page with environment checks and local run commands.
 
 ### App routes (engine)
 

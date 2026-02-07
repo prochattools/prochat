@@ -9,6 +9,13 @@ ProKit uses a single-tenant schema-per-app model in Postgres.
 - Registry table `public.tenants` is **scripts-only** (provision/cleanup). The runtime app must not depend on it.
 - Prisma schema is managed in `prisma/system.prisma` (single schema file).
 
+## Shared Database Rule (Required)
+
+- Exactly one Supabase/Postgres database is used per environment (dev and prod).
+- Every app in that environment gets only a dedicated schema and role inside that same database.
+- Never create a separate database per app.
+- ProKit scripts may create/update only tenant schema objects (`tenant_<slug>` and `tenant_<slug>_user`), never a new app database.
+
 ## Slug Contract (Required)
 
 - The repo/project name is the app slug.
