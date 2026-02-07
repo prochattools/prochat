@@ -63,7 +63,7 @@ if command -v psql >/dev/null 2>&1; then
     TENANT_PASSWORD="${REST%%|*}"
     TENANT_SCHEMA="${REST#*|}"
     DB_HOST="$(node -e "console.log(new URL(process.env.SYSTEM_DATABASE_URL).hostname)")"
-    DB_PORT="$(node -e "console.log(new URL(process.env.SYSTEM_DATABASE_URL).port||'5432')")"
+    DB_PORT="$(node -e "console.log(new URL(process.env.SYSTEM_DATABASE_URL).port || process.env.POSTGRES_PORT || '5433')")"
     IDENT_SAFE='^[a-z0-9_]+$'
     if [[ "$TENANT_USER" =~ $IDENT_SAFE && "$TENANT_SCHEMA" =~ $IDENT_SAFE && -n "$TENANT_PASSWORD" ]]; then
       export DATABASE_URL="postgresql://${TENANT_USER}:${TENANT_PASSWORD}@${DB_HOST}:${DB_PORT}/postgres?schema=${TENANT_SCHEMA}"

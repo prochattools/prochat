@@ -362,8 +362,8 @@ get_host_port() {
   node - <<'NODE'
 const u = new URL(process.env.SYSTEM_DATABASE_URL);
 const host = u.hostname;
-const port = u.port || '5432';
-process.stdout.write(host + '\n' + port + '\n');
+const port = u.port || process.env.POSTGRES_PORT || '5433';
+process.stdout.write(host + '|' + port);
 NODE
 }
 
@@ -378,7 +378,7 @@ if [[ -n "$tenant_row" ]]; then
   rest="${tenant_row#*|}"
   tenant_password="${rest%%|*}"
   tenant_schema="${rest#*|}"
-  read -r db_host db_port < <(get_host_port)
+  IFS='|' read -r db_host db_port <<< "$(get_host_port)"
 
   ident_safe='^[a-z0-9_]+$'
   if [[ "$tenant_user" =~ $ident_safe && "$tenant_schema" =~ $ident_safe && -n "$tenant_password" ]]; then
