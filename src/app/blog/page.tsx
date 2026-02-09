@@ -1,6 +1,5 @@
 import config from '@/config'
 import { getSEOTags } from '@/libs/seo'
-import { wordpressService } from '@/libs/wp'
 import BlogListingNew from './_assets/components/BlogListingNew'
 
 export const metadata = getSEOTags({
@@ -12,7 +11,7 @@ export const metadata = getSEOTags({
 })
 
 export default async function Blog() {
-	const articles = await wordpressService.getAllPosts()
+	const articles: any[] = []
 
 	return (
 		<>
@@ -42,7 +41,7 @@ export default async function Blog() {
 				<div className='container mx-auto p-8 px-20  md:w-[80%] '>
 					<div className='text-center max-w-xl mx-auto mt-14 mb-14'>
 						<h1 className='text-4xl font-bold text-center mb-6'>
-							The MyNew App Blog
+							The ProChat Blog
 						</h1>
 
 						<p className='text-lg opacity-80 leading-relaxed '>

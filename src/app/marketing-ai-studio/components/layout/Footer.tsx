@@ -1,8 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Youtube, Send } from 'lucide-react';
-import { Button } from '../ui/Button';
+import { Youtube } from 'lucide-react';
 import TrackedOutboundLink from '@/components/TrackedOutboundLink';
 
 export const Footer: React.FC = () => {
@@ -93,12 +92,15 @@ export const Footer: React.FC = () => {
                  <li>ProChat</li>
               </ul>
               <div className="flex gap-2">
-                 <Button variant="secondary" size="sm" className="px-3">
-                    <Youtube size={16} />
-                 </Button>
-                 <Button variant="secondary" size="sm" className="px-3">
-                    <Send size={16} />
-                 </Button>
+                 <Link
+                   href="https://www.youtube.com/@stevewesthoek"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="Steve Westhoek on YouTube"
+                   className="relative inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-900 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#5b49f5] hover:text-[#5b49f5] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-[#0B111B] dark:bg-white/10 dark:text-slate-100 dark:border-white/15 dark:hover:bg-white/15 dark:hover:border-white/30 dark:hover:text-white"
+                 >
+                   <Youtube size={16} />
+                 </Link>
               </div>
            </div>
 

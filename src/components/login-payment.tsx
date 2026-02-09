@@ -23,7 +23,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { validateGithubUsername } from "@/utils/validate_github";
-import DennisAvatar from "@/assets/images/dennis-avatar.svg";
+import ProfileImage from "@/assets/images/profile.svg";
 import Image from "next/image";
 
 const links = [
@@ -291,8 +291,8 @@ const LoginPayment = ({ user }: any) => {
             </div>
             <div className="my-8 flex gap-4">
               <Image
-                src={DennisAvatar}
-                alt="profile-pic"
+                src={ProfileImage}
+                alt="ProChat"
                 className="w-[77px] h-[77px] rounded-full"
               />
               <div className="min-h-full flex flex-col justify-between gap-4">

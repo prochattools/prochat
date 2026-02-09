@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Logo } from "@/components";
 import Link from "next/link";
 import NavLinks from "@/components/nav-links";
-import { Telegram, Youtube } from "@/icons";
+import { Youtube } from "@/icons";
 import footerBg from "@/assets/images/footer-bg1.svg";
 import footerBgDark from "@/assets/images/footer-bg2.svg";
 
@@ -51,12 +51,8 @@ const nav_links2 = [
 
 const data = [
   {
-    link: "https://x.com/prochattools",
+    link: "https://www.youtube.com/@stevewesthoek",
     icon: <Youtube />,
-  },
-  {
-    link: "https://x.com/prochattools",
-    icon: <Telegram />,
   },
 ];
 

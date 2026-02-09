@@ -1,25 +1,24 @@
 import { ConfigProps } from '@/types'
-import themes from 'daisyui/src/theming/themes'
 
 const config: ConfigProps = {
 	// REQUIRED
-	appName: 'ProKit',
+	appName: 'ProChat',
 	// REQUIRED: a short description of your app for SEO tags (can be overwritten)
 	appDescription:
-		'ProKit is ProChat’s internal Next.js starter for shipping SaaS, AI tools, or any other web app fast.',
+		'ProChat is built on ProKit—our internal Next.js starter for shipping SaaS, AI tools, or any other web app fast.',
 	// REQUIRED (no https://, not trialing slash at the end, just the naked domain)
 	domainName: 'prokit.prochat.tools',
 	stripe: {
 		// Create multiple products in your Stripe dashboard, then add them here. You can add as many plans as you want, just make sure to add the priceId
 		products: [
 			{
-				type: 'one-time', // one-time, subscription
-				title: 'ProKit',
+				type: 'subscription', // one-time, subscription
+				title: 'ProChat ProKit',
 				productId: process.env.NEXT_PUBLIC_STRIPE_PRODUCT_PROKIT,
-				subtitle: 'Lifetime access',
-				price: 97,
+				subtitle: 'Monthly access',
+				price: 49,
 				isBest: true,
-				linkTitle: 'Get ProKit',
+				linkTitle: 'Get ProChat ProKit',
 				featuresTitle: 'Features',
 				priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PROKIT,
 				features: [
@@ -46,11 +45,8 @@ const config: ConfigProps = {
 		],
 	},
 	colors: {
-		// REQUIRED — The DaisyUI theme to use (added to the main layout.js). Leave blank for default (light & dark mode). If you any other theme than light/dark, you need to add it in config.tailwind.js in daisyui.themes.
 		theme: 'light',
-		// REQUIRED — This color will be reflected on the whole app outside of the document (loading bar, Chrome tabs, etc..). By default it takes the primary color from your DaisyUI theme (make sure to update your the theme name after "data-theme=")
-		// OR you can just do this to use a custom color: main: "#f37055". HEX only.
-		main: themes['light']['primary'],
+		main: '#006FEE',
 	},
 	resend: {
 		// REQUIRED — Email 'From' field to be used when sending other emails, like abandoned carts, updates etc..
@@ -60,7 +56,7 @@ const config: ConfigProps = {
 		// When someone replies to supportEmail sent by the app, forward it to the email below (otherwise it's lost). If you set supportEmail to empty, this will be ignored.
 		forwardRepliesTo: 'info@prochat.tools',
 		subjects: {
-			thankYou: 'Welcome to ProKit',
+			thankYou: 'Welcome to ProChat',
 		},
 	},
 }

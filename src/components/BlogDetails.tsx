@@ -1,12 +1,11 @@
 'use client'
-import { post } from '@/utils/data'
 import { useMemo } from 'react'
 import '../assets/styles/blog-page.scss'
 import BlogMoreArticles from './BlogMoreArticles'
 import BlogSpotlight from './BlogSpotlight'
 
 const BlogDetails = ({ postDetails, allPosts }: any) => {
-	const htmlContent = post[0]?.html as string
+	const htmlContent = (postDetails?.content?.rendered as string) || ''
 	const faqArray = useMemo(() => {
 		if (typeof window === 'undefined') return []
 

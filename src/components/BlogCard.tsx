@@ -2,7 +2,36 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { posts } from "@/utils/data";
+
+const posts: {
+  title: string;
+  date: string;
+  image: string;
+  alt: string;
+  slug: string;
+}[] = [
+  {
+    title: "Shipping faster with ProChat’s ProKit engine",
+    date: "Feb 2026",
+    image: "/opengraph-image.png",
+    alt: "ProChat ProKit preview",
+    slug: "prochat-prokit-shipping",
+  },
+  {
+    title: "Stack guardrails for Next.js + Prisma + Clerk + Stripe",
+    date: "Jan 2026",
+    image: "/opengraph-image.png",
+    alt: "ProChat stack guardrails",
+    slug: "prochat-stack-guardrails",
+  },
+  {
+    title: "How ProChat uses n8n for SaaS automations",
+    date: "Dec 2025",
+    image: "/opengraph-image.png",
+    alt: "ProChat n8n automations",
+    slug: "prochat-n8n-automations",
+  },
+];
 
 const BlogCard = () => {
   const [visiblePosts, setVisiblePosts] = useState(6);
@@ -14,7 +43,7 @@ const BlogCard = () => {
     <div className="mt-[100px] mb-[40px]">
       <div className="container mx-auto p-8 px-20  md:w-[80%] ">
         <h1 className="text-4xl font-bold text-center mb-14">
-          The MyNew App Blog
+          The ProChat Blog
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {posts.slice(0, visiblePosts).map((post, index) => (

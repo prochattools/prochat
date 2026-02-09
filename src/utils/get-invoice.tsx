@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 
 const downloadAsPDF = () => {
   const content = document.getElementById("invoice-modal");
-  const stripeName = "Dennis";
+  const stripeName = "ProChat";
   if (content) {
     html2canvas(content).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");

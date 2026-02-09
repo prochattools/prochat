@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/accordion";
 
 const StaticData = {
-  title: "A frequently asked questions",
-  below_title: "Have another question? Contact me on X or by email",
+  title: "Frequently asked questions",
+  below_title: "Have another question? Email info@prochat.tools",
   faqs: [
     {
       id: 1,
@@ -46,7 +46,7 @@ const StaticData = {
       id: 5,
       question: "Are there any hidden costs?",
       answer:
-        "Typical SaaS costs apply: Postgres hosting, Stripe fees, Clerk seats, and Resend emails. ProKit itself is a one-time license.",
+        "Typical SaaS costs apply: Postgres hosting, Stripe fees, Clerk seats, and Resend emails. ProKit access is subscription-based through Stripe.",
     },
     {
       id: 6,
