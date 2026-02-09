@@ -1,5 +1,5 @@
-# PROKIT Notice
+# ProChat Notice (powered by the ProKit engine)
 
-ProKit is ProChat’s internal SaaS starter used to build and operate micro-SaaS products. It is provided for ProChat and Steve Westhoek’s use and is not distributed as a public template.
+ProChat (Steve Westhoek, info@prochat.tools) owns the ProKit engine and sells kit products built on it: ProKit (engine-only), SaaSKit (ProKit + marketing layer), and WaaSKit (service/agency flavor). This repository is the ProChat marketing/sales application running on the shared ProKit codebase; engine naming remains ProKit internally.
 
 Copyright (c) 2025 Steve Westhoek / ProChat. All rights reserved.

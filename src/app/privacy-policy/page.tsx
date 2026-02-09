@@ -59,7 +59,7 @@ const PrivacyPolicy = () => {
         >
           {`Last Updated: 2023-08-25
 
-Thank you for visiting ProKit ("we," "us," or "our"). This Privacy Policy outlines how we collect, use, and protect your personal and non-personal information when you use our website located at https://prokit.prochat.tools (the "Website").
+Thank you for visiting ProChat ("we," "us," or "our"). This Privacy Policy outlines how we collect, use, and protect your personal and non-personal information when you use our website located at https://prochat.tools (the "Website").
 
 By accessing or using the Website, you agree to the terms of this Privacy Policy. If you do not agree with the practices described in this policy, please do not use the Website.
 
@@ -87,7 +87,7 @@ We do not share your personal data with any third parties except as required for
 
 4. Children's Privacy
 
-ProKit is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us at the email address provided below.
+ProChat is not intended for children under the age of 13. We do not knowingly collect personal information from children. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us at the email address provided below.
 
 5. Updates to the Privacy Policy
 
@@ -101,7 +101,7 @@ Email: info@prochat.tools
 
 For all other inquiries, please visit our Contact Us page on the Website.
 
-By using ProKit, you consent to the terms of this Privacy Policy.`}
+By using ProChat, you consent to the terms of this Privacy Policy.`}
         </pre>
       </div>
     </main>

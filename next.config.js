@@ -1,4 +1,4 @@
-// ProKit – ProChat SaaS Starter
+// ProChat marketing site – powered by the ProKit engine
 // (c) 2025 Steve Westhoek / ProChat
 /** @type {import('next').NextConfig} */
 const nextConfig = {

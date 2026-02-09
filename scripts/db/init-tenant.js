@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ProKit – ProChat SaaS Starter
+// ProChat marketing site – powered by the ProKit engine
 // (c) 2025 Steve Westhoek / ProChat
 /**
  * Provision a single-tenant schema + user + registry entry.

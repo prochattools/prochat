@@ -1,9 +1,10 @@
-# ProKit (Next.js + Postgres + Prisma)
+# ProChat (marketing + sales site) — powered by the ProKit engine
 
 Repository: `prochattools/prochat` (renamed from `prochattools/prochat-tools` on February 9, 2026).
 
+ProChat is the business owned by Steve Westhoek (info@prochat.tools). ProChat sells three kit products built on the same ProKit engine: **ProKit** (engine-only), **SaaSKit** (ProKit + marketing layer), and **WaaSKit** (service/agency flavor). This repo is the ProChat marketing/sales application built on the shared ProKit codebase; internal modules still use ProKit naming because the engine is shared.
 
-ProKit is ProChat’s internal SaaS starter built by Steve Westhoek to launch micro-SaaS apps quickly while preserving the proven Next.js + Postgres + Prisma stack.
+ProKit remains the underlying engine used here to launch micro-SaaS apps quickly while preserving the proven Next.js + Postgres + Prisma stack.
 
 Production-ready boilerplate for building B2B SaaS apps with:
 
