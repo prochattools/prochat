@@ -12,15 +12,15 @@ const config: ConfigProps = {
 		// Create multiple products in your Stripe dashboard, then add them here. You can add as many plans as you want, just make sure to add the priceId
 		products: [
 			{
-				type: 'subscription', // one-time, subscription
+				type: 'one-time', // one-time, subscription
 				title: 'ProChat ProKit',
-				productId: process.env.NEXT_PUBLIC_STRIPE_PRODUCT_PROKIT,
-				subtitle: 'Monthly access',
-				price: 49,
+				productId: process.env.STRIPE_PRODUCT_PROKIT,
+				subtitle: 'Lifetime access',
+				price: 97,
 				isBest: true,
 				linkTitle: 'Get ProChat ProKit',
 				featuresTitle: 'Features',
-				priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PROKIT,
+				priceId: process.env.STRIPE_PRICE_PROKIT,
 				features: [
 					{
 						title: 'Unlimited Projects',
