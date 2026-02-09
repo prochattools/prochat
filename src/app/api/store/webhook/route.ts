@@ -36,15 +36,16 @@ export async function POST(req: Request) {
       const session = event.data.object as Stripe.Checkout.Session
       const customerId = session.customer as string | null
 
-      if (
-        session.metadata?.product_slug === 'prokit' &&
-        customerId
-      ) {
+      const productSlug = session.metadata?.product_slug
+
+      if (customerId && productSlug && session.metadata?.entitlement_type === 'github_repo') {
+        const paidKey = `prochat_${productSlug}_paid`
+        const lastKey = `prochat_${productSlug}_last_session`
         // Mark paid on customer metadata (idempotent)
         await stripe.customers.update(customerId, {
           metadata: {
-            prochat_prokit_paid: 'true',
-            prochat_prokit_last_session: session.id,
+            [paidKey]: 'true',
+            [lastKey]: session.id,
           },
         })
       }

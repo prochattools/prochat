@@ -22,24 +22,29 @@ const config: ConfigProps = {
 				featuresTitle: 'Features',
 				priceId: process.env.STRIPE_PRICE_PROKIT,
 				features: [
-					{
-						title: 'Unlimited Projects',
-					},
-					{
-						title: 'Full Source Code',
-					},
-					{
-						title: 'Lifetime Updates',
-					},
-					{
-						title: 'Discord Community',
-					},
-					{
-						title: 'Documentation',
-					},
-					{
-						title: 'Commercial License',
-					},
+					{ title: 'Unlimited Projects' },
+					{ title: 'Full Source Code' },
+					{ title: 'Lifetime Updates' },
+					{ title: 'Discord Community' },
+					{ title: 'Documentation' },
+					{ title: 'Commercial License' },
+				],
+			},
+			{
+				type: 'one-time',
+				title: 'ProChat SaaSkit',
+				productId: process.env.STRIPE_PRODUCT_SAASKIT,
+				subtitle: 'Lifetime access',
+				price: 147,
+				isBest: false,
+				linkTitle: 'Get SaaSkit',
+				featuresTitle: 'Features',
+				priceId: process.env.STRIPE_PRICE_SAASKIT,
+				features: [
+					{ title: 'Client service funnel + delivery' },
+					{ title: 'Ready-to-sell SaaS kit templates' },
+					{ title: 'Stripe + billing flows included' },
+					{ title: 'Docs and commercial license' },
 				],
 			},
 		],
