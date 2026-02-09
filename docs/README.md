@@ -1,8 +1,8 @@
-# ProChat Docs (built on ProKit)
+# ProChat Docs (built on the ProKit engine)
 
-ProChat is the **SaaS boilerplate built on the ProKit engine** for building SaaS apps.
+ProKit is the core engine owned by ProChat (Steve Westhoek, info@prochat.tools). ProChat sells three kits powered by this engine: ProKit (bare engine), SaaSKit (ProKit + marketing layer), and WaaSKit (service/agency flavor). This repo documents the bare ProKit engine.
 
-It is intentionally lean: ProKit is the engine only (auth, billing, database, deploy gate). ProChat keeps it focused—no marketing layer, no funnels, no SEO/blog/content system.
+It is intentionally lean: ProKit ships only the engine primitives (auth, billing, database, deploy gate). No marketing layer, no funnels, no SEO/blog/content system.
 
 ## Contents
 

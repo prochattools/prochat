@@ -1,8 +1,8 @@
-# ProChat Boilerplate (built on ProKit)
+# ProChat Boilerplate (built on the ProKit engine)
 
-ProChat is the **SaaS boilerplate built on the ProKit engine** for building apps fast.
+ProKit is the core SaaS engine maintained by ProChat (Steve Westhoek, info@prochat.tools). ProChat sells three kits built on this engine: **ProKit** (bare engine), **SaaSKit** (ProKit + marketing layer), and **WaaSKit** (ProKit adapted for services/agency flows). This repo is the bare ProKit boilerplate.
 
-It is intentionally lean: the ProKit engine ships the core (auth, billing, database, deploy gate) and ProChat keeps it focused—no marketing layer, no funnels, no SEO/blog/content system.
+It is intentionally lean: the ProKit engine ships the core (auth, billing, database, deploy gate). No marketing layer, no funnels, no SEO/blog/content system.
 
 This repo is optimized for Dokploy + Nixpacks. The `Dockerfile` exists as an optional fallback only.
 
