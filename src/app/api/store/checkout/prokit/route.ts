@@ -1,12 +1,15 @@
 import { NextResponse } from 'next/server'
-import Stripe from 'stripe'
+import { getProductConfig, getStripeClient } from '@/lib/store/stripe'
 
-const stripeKey = process.env.STRIPE_SECRET_KEY
-const priceId = process.env.STRIPE_PRICE_PROKIT
+const PRODUCT_SLUG = 'prokit' as const
 
-const stripe = stripeKey
-  ? new Stripe(stripeKey, { apiVersion: '2024-06-20' })
-  : null
+const stripe = (() => {
+  try {
+    return getStripeClient()
+  } catch {
+    return null
+  }
+})()
 
 const getOrigin = (req: Request) => {
   const host = req.headers.get('host') || ''
@@ -18,12 +21,13 @@ const getOrigin = (req: Request) => {
 
 export async function POST(req: Request) {
   try {
-    if (!stripe || !priceId) {
+    if (!stripe) {
       return NextResponse.json(
         { error: 'Stripe is not configured' },
         { status: 500 }
       )
     }
+    const productConfig = getProductConfig(PRODUCT_SLUG)
 
     const origin = getOrigin(req)
 
@@ -32,16 +36,16 @@ export async function POST(req: Request) {
       payment_method_types: ['card'],
       line_items: [
         {
-          price: priceId,
+          price: productConfig.priceId,
           quantity: 1,
         },
       ],
       success_url: `${origin}/store/prokit/finish?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/store/prokit`,
       metadata: {
-        product_slug: 'prokit',
+        product_slug: PRODUCT_SLUG,
         entitlement_type: 'github_repo',
-        github_repo: 'prochattools/prokit',
+        github_repo: productConfig.githubRepo,
       },
     })
 

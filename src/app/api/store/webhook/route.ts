@@ -1,13 +1,16 @@
 import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { getStripeClient, markSessionPaid } from '@/lib/store/stripe'
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
-const stripeKey = process.env.STRIPE_SECRET_KEY
-
-const stripe = stripeKey
-  ? new Stripe(stripeKey, { apiVersion: '2024-06-20' })
-  : null
+const stripe = (() => {
+  try {
+    return getStripeClient()
+  } catch {
+    return null
+  }
+})()
 
 export async function POST(req: Request) {
   if (!stripe || !webhookSecret) {
@@ -34,20 +37,8 @@ export async function POST(req: Request) {
   try {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session
-      const customerId = session.customer as string | null
-
-      const productSlug = session.metadata?.product_slug
-
-      if (customerId && productSlug && session.metadata?.entitlement_type === 'github_repo') {
-        const paidKey = `prochat_${productSlug}_paid`
-        const lastKey = `prochat_${productSlug}_last_session`
-        // Mark paid on customer metadata (idempotent)
-        await stripe.customers.update(customerId, {
-          metadata: {
-            [paidKey]: 'true',
-            [lastKey]: session.id,
-          },
-        })
+      if (session.metadata?.entitlement_type === 'github_repo') {
+        await markSessionPaid(session)
       }
     }
 

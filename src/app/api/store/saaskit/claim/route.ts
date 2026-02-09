@@ -1,100 +1,217 @@
-import { NextResponse } from 'next/server'
-import Stripe from 'stripe'
+import { NextResponse } from "next/server";
+import type Stripe from "stripe";
+
+import { addCollaborator } from "@/lib/store/github";
+import {
+  findLatestPaidUnprovisionedSessionByEmail,
+  getSessionStatusById,
+  markSessionProvisioned,
+  retrieveSessionById,
+} from "@/lib/store/stripe";
+import { ProductSlug } from "@/lib/store/types";
 
 type ClaimBody = {
-  session_id?: string
-  github_username?: string
-}
+  session_id?: string | null;
+  email?: string | null;
+  github_username?: string | null;
+};
 
-const stripeKey = process.env.STRIPE_SECRET_KEY
-const stripe = stripeKey
-  ? new Stripe(stripeKey, { apiVersion: '2024-06-20' })
-  : null
-
-const GITHUB_PAT = process.env.GITHUB_PROKIT_PAT // reuse same PAT unless separate provided
-const GITHUB_REPO = process.env.GITHUB_SAASKIT_REPO || 'prochattools/saaskit'
-
-async function addCollaborator(username: string) {
-  if (!GITHUB_PAT) throw new Error('GitHub PAT not configured')
-  const url = `https://api.github.com/repos/${GITHUB_REPO}/collaborators/${username}`
-  const resp = await fetch(url, {
-    method: 'PUT',
-    headers: {
-      Authorization: `token ${GITHUB_PAT}`,
-      Accept: 'application/vnd.github+json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ permission: 'pull' }),
-  })
-
-  if (resp.status === 404) {
-    throw new Error('GitHub username not found')
-  }
-  if (!resp.ok && resp.status !== 201 && resp.status !== 204) {
-    const text = await resp.text()
-    console.error('[github] collaborator error', resp.status, text)
-    throw new Error('GitHub invitation failed')
-  }
-}
+const PRODUCT_SLUG: ProductSlug = "saaskit";
+const GITHUB_USERNAME_PATTERN = /^[A-Za-z0-9-]{1,39}$/;
 
 export async function POST(req: Request) {
   try {
-    if (!stripe) {
-      return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 })
-    }
-    const body: ClaimBody = await req.json()
-    const sessionId = body.session_id?.trim()
-    const username = body.github_username?.trim()
-
-    if (!sessionId || !username) {
-      return NextResponse.json({ error: 'session_id and github_username are required' }, { status: 400 })
-    }
-    if (!/^[a-zA-Z0-9-]{1,39}$/.test(username)) {
-      return NextResponse.json({ error: 'Invalid GitHub username format' }, { status: 400 })
-    }
-
-    const session = await stripe.checkout.sessions.retrieve(sessionId, {
-      expand: ['customer'],
-    })
+    const body = (await req.json()) as ClaimBody;
+    const sessionId = body.session_id?.trim() || "";
+    const email = body.email?.trim() || "";
+    const githubUsername = body.github_username?.trim() || "";
 
     if (
-      session.metadata?.product_slug !== 'saaskit' ||
-      (session.payment_status !== 'paid' && session.status !== 'complete')
+      !githubUsername ||
+      !GITHUB_USERNAME_PATTERN.test(githubUsername) ||
+      (!sessionId && !email)
     ) {
-      return NextResponse.json({ error: 'Payment not verified for SaaSkit' }, { status: 400 })
-    }
-
-    const customerId = session.customer as string | null
-    let customerMetadata: Record<string, string> = {}
-    if (customerId) {
-      const customer = await stripe.customers.retrieve(customerId)
-      if (!customer || customer.deleted) {
-        return NextResponse.json({ error: 'Customer not found' }, { status: 400 })
-      }
-      customerMetadata = (customer as Stripe.Customer).metadata || {}
-      if (customerMetadata.prochat_saaskit_github_provisioned === 'true') {
-        return NextResponse.json({ success: true, message: 'Access already provisioned.' })
-      }
-    }
-
-    await addCollaborator(username)
-
-    if (customerId) {
-      await stripe.customers.update(customerId, {
-        metadata: {
-          ...customerMetadata,
-          prochat_saaskit_paid: 'true',
-          prochat_saaskit_github_provisioned: 'true',
-          prochat_saaskit_github_username: username,
-          prochat_saaskit_last_session: session.id,
+      return NextResponse.json(
+        {
+          error: "invalid_input",
+          message:
+            "Please provide a valid GitHub username and either your session link or checkout email.",
         },
-      })
+        { status: 400 }
+      );
     }
 
-    return NextResponse.json({ success: true })
-  } catch (error: any) {
-    const msg = error?.message || 'Server error'
-    const status = msg.includes('username not found') ? 400 : 500
-    return NextResponse.json({ error: msg }, { status })
+    let targetSessionId = sessionId;
+    let targetSession: Stripe.Checkout.Session | null = null;
+
+    if (sessionId) {
+      const status = await getSessionStatusById(sessionId, PRODUCT_SLUG);
+
+      if (status.state === "invalid_session") {
+        return NextResponse.json(
+          {
+            error: "invalid_session",
+            message:
+              status.message ||
+              "We could not verify this checkout session. Use your checkout email below to recover access.",
+          },
+          { status: 400 }
+        );
+      }
+
+      if (status.state === "unpaid") {
+        return NextResponse.json(
+          {
+            error: "unpaid",
+            message:
+              "We can't confirm your payment yet. If you just paid, wait a minute and refresh this page.",
+          },
+          { status: 400 }
+        );
+      }
+
+      if (status.state === "error") {
+        return NextResponse.json(
+          {
+            error: "server_error",
+            message:
+              "We couldn't verify this purchase right now. Please retry in a moment.",
+          },
+          { status: 500 }
+        );
+      }
+
+      if (status.state === "provisioned") {
+        const existingUsername = (status.githubUsername || "").trim();
+        if (
+          existingUsername &&
+          existingUsername.toLowerCase() !== githubUsername.toLowerCase()
+        ) {
+          return NextResponse.json(
+            {
+              error: "already_linked",
+              message:
+                "This purchase has already been linked to a different GitHub username. Contact support if this is unexpected.",
+            },
+            { status: 409 }
+          );
+        }
+        return NextResponse.json({
+          success: true,
+          alreadyProvisioned: true,
+          githubUsername: existingUsername || githubUsername,
+        });
+      }
+
+      targetSession = await retrieveSessionById(sessionId);
+      if (!targetSession) {
+        return NextResponse.json(
+          {
+            error: "invalid_session",
+            message:
+              "We could not verify this checkout session. Use your checkout email below to recover access.",
+          },
+          { status: 400 }
+        );
+      }
+    } else {
+      const lookup = await findLatestPaidUnprovisionedSessionByEmail(
+        email,
+        PRODUCT_SLUG
+      );
+
+      if (!lookup.session) {
+        const statusCode = lookup.status.state === "error" ? 500 : 404;
+        return NextResponse.json(
+          {
+            error:
+              statusCode === 500 ? "server_error" : "purchase_not_found",
+            message:
+              statusCode === 500
+                ? "We couldn't verify purchases for that email right now. Please retry."
+                : "We couldn't find a completed purchase for that email. Double-check the email used at checkout or contact support.",
+          },
+          { status: statusCode }
+        );
+      }
+
+      targetSession = lookup.session;
+      targetSessionId = lookup.session.id;
+    }
+
+    if (!targetSession) {
+      return NextResponse.json(
+        {
+          error: "invalid_session",
+          message:
+            "We could not verify this checkout session. Use your checkout email below to recover access.",
+        },
+        { status: 400 }
+      );
+    }
+
+    const provisionResult = await addCollaborator(PRODUCT_SLUG, githubUsername);
+
+    if (provisionResult === "ok" || provisionResult === "already") {
+      await markSessionProvisioned(
+        targetSession,
+        PRODUCT_SLUG,
+        githubUsername
+      );
+
+      return NextResponse.json({
+        success: true,
+        sessionId: targetSessionId,
+        alreadyCollaborator: provisionResult === "already",
+      });
+    }
+
+    if (provisionResult.error === "not_found") {
+      return NextResponse.json(
+        {
+          error: "github_user_not_found",
+          message:
+            "GitHub username not found. Double-check the spelling or create your GitHub account first.",
+        },
+        { status: 400 }
+      );
+    }
+
+    if (provisionResult.error === "forbidden") {
+      console.error("[store/saaskit/claim] GitHub permission error", {
+        sessionId: targetSessionId,
+      });
+      return NextResponse.json(
+        {
+          error: "server_error",
+          message:
+            "We couldn't add this GitHub username automatically. Please contact support so we can fix your access.",
+        },
+        { status: 500 }
+      );
+    }
+
+    console.error("[store/saaskit/claim] Unknown GitHub API error", {
+      sessionId: targetSessionId,
+      details: provisionResult.message,
+    });
+    return NextResponse.json(
+      {
+        error: "server_error",
+        message:
+          "We couldn't add this GitHub username automatically. Please contact support so we can fix your access.",
+      },
+      { status: 500 }
+    );
+  } catch (error) {
+    console.error("[store/saaskit/claim] Unexpected error", error);
+    return NextResponse.json(
+      {
+        error: "server_error",
+        message:
+          "Something went wrong while linking your GitHub account. Please retry or contact support.",
+      },
+      { status: 500 }
+    );
   }
 }
