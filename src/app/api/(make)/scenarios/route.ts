@@ -1,3 +1,6 @@
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 import { currentUser } from '@clerk/nextjs/server'
 import axios from 'axios'
 import { NextResponse } from 'next/server'

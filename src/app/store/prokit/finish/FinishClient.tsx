@@ -1,17 +1,11 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+"use client";
 
-import { Suspense } from "react";
-import FinishClient from "./FinishClient";
+import { useMemo, useState } from "react";
 
-export default function ProkitFinishPage({ searchParams }: { searchParams: { session_id?: string } }) {
-  const sessionId = typeof searchParams?.session_id === "string" ? searchParams.session_id : "";
-  return (
-    <Suspense fallback={<div className="px-4 py-16 text-slate-600">Loading checkout status…</div>}>
-      <FinishClient sessionId={sessionId} />
-    </Suspense>
-  );
-}
+export default function FinishClient({ sessionId }: { sessionId: string }) {
+  const [username, setUsername] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [error, setError] = useState("");
 
   const disabled = useMemo(() => status === "loading" || !username.trim(), [status, username]);
 

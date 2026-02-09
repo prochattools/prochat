@@ -1,3 +1,6 @@
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 import PricingSection from '@/components/PricingSection'
 import Scenarios from '@/components/Scenarios'
 import ThankYouPopup from '@/components/ThankyouPopUp'
