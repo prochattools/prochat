@@ -1,5 +1,8 @@
 # ProKit (Next.js + Postgres + Prisma)
 
+Repository: `prochattools/prochat` (renamed from `prochattools/prochat-tools` on February 9, 2026).
+
+
 ProKit is ProChat’s internal SaaS starter built by Steve Westhoek to launch micro-SaaS apps quickly while preserving the proven Next.js + Postgres + Prisma stack.
 
 Production-ready boilerplate for building B2B SaaS apps with:
