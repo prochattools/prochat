@@ -1,12 +1,13 @@
 {
   "name": "@prochat/prokit",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "description": "ProKit – ProChat’s SaaS starter for micro-SaaS apps.",
   "author": "Steve Westhoek",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "prestart": "npm run build",
     "start": "CI=false next start -p 3000",
     "prebuild": "NODE_ENV=production npm run provision:auto",
     "provision:auto": "node scripts/provision-auto.js",
