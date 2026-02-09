@@ -6,6 +6,35 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-06-20',
 });
 
+const getOrigin = (req: Request) => {
+  const directOrigin = req.headers.get('origin');
+  if (directOrigin) {
+    return directOrigin;
+  }
+  const host = req.headers.get('host') || '';
+  const proto =
+    req.headers.get('x-forwarded-proto') ||
+    (host.startsWith('localhost') ? 'http' : 'https');
+  return `${proto}://${host}`;
+};
+
+const resolveStoreProductSlug = (priceId: string, productId?: string) => {
+  const prokitPrice = process.env.STRIPE_PRICE_PROKIT;
+  const saaskitPrice = process.env.STRIPE_PRICE_SAASKIT;
+  const prokitProduct = process.env.STRIPE_PRODUCT_PROKIT;
+  const saaskitProduct = process.env.STRIPE_PRODUCT_SAASKIT;
+
+  if (priceId === prokitPrice || (productId && productId === prokitProduct)) {
+    return 'prokit' as const;
+  }
+
+  if (priceId === saaskitPrice || (productId && productId === saaskitProduct)) {
+    return 'saaskit' as const;
+  }
+
+  return null;
+};
+
 export async function POST(req: Request) {
   try {
     const { priceId, email, userId } = await req.json() as { priceId?: string; email?: string; userId?: string };
@@ -26,6 +55,22 @@ export async function POST(req: Request) {
     const mode = isSub ? 'subscription' : 'payment'
 
     const customerEmail = email || undefined
+    const origin = getOrigin(req);
+    const productSlug = resolveStoreProductSlug(priceId, currentProduct.productId);
+    const githubRepo =
+      productSlug === 'prokit'
+        ? process.env.GITHUB_PROKIT_REPO || 'prochattools/prokit'
+        : productSlug === 'saaskit'
+          ? process.env.GITHUB_SAASKIT_REPO || 'prochattools/saaskit'
+          : undefined;
+
+    const successUrl = productSlug
+      ? `${origin}/store/${productSlug}/finish?session_id={CHECKOUT_SESSION_ID}`
+      : `${origin}/dashboard?session_id={CHECKOUT_SESSION_ID}`;
+
+    const cancelUrl = productSlug
+      ? `${origin}/store/${productSlug}`
+      : `${origin}/cancel?session_id={CHECKOUT_SESSION_ID}`;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -36,14 +81,21 @@ export async function POST(req: Request) {
         },
       ],
       mode,
-      success_url: `${req.headers.get('origin')}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.get('origin')}/cancel?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: successUrl,
+      cancel_url: cancelUrl,
       ...(customerEmail ? { customer_email: customerEmail } : {}),
       metadata: {
         priceId: priceId,
         productId: currentProduct.productId,
         userId: userId || 'anonymous',
         ...(isSub ? {planType} : {}),
+        ...(productSlug
+          ? {
+              product_slug: productSlug,
+              entitlement_type: 'github_repo',
+              ...(githubRepo ? { github_repo: githubRepo } : {}),
+            }
+          : {}),
       },
     });
 
