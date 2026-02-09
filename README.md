@@ -1,8 +1,8 @@
-# ProKit Boilerplate
+# ProChat Boilerplate (built on ProKit)
 
-ProKit is ProChat’s **developer core boilerplate** for building SaaS apps.
+ProChat is the **SaaS boilerplate built on the ProKit engine** for building apps fast.
 
-It is intentionally lean: ProKit is the engine only (no marketing layer, no funnels, no SEO/blog/content system).
+It is intentionally lean: the ProKit engine ships the core (auth, billing, database, deploy gate) and ProChat keeps it focused—no marketing layer, no funnels, no SEO/blog/content system.
 
 This repo is optimized for Dokploy + Nixpacks. The `Dockerfile` exists as an optional fallback only.
 
@@ -26,4 +26,3 @@ The canonical release version is the git tag (for example `v1.0.0`). `PROCHAT_VE
 ## Deploy Policy
 
 Production deploys are tag-gated. Push to `main`, then create a release tag (for example `v1.0.0`) to trigger a production deploy. The runtime deploy gate runs provisioning + migrations automatically; do not run manual database commands in production.
-

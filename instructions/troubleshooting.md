@@ -1,4 +1,4 @@
-# ProKit - Troubleshooting
+# ProChat - Troubleshooting (ProKit engine)
 
 Short, repo-specific checks for common failures.
 

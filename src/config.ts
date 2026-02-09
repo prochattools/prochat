@@ -2,12 +2,12 @@ import { ConfigProps } from '@/types'
 
 const config: ConfigProps = {
   // REQUIRED
-  appName: 'ProKit',
+  appName: 'ProChat',
 
   // REQUIRED: used for metadata + default descriptions.
   // Keep this engine-focused (ProKit ships without a marketing layer).
   appDescription:
-    "ProKit is ProChat's developer core boilerplate for building SaaS apps.",
+    'ProChat is the SaaS boilerplate built on the ProKit engine (auth, billing, database, deploy gate).',
 
   // REQUIRED (no https://, no trailing slash)
   domainName: 'prochat.tools',
@@ -27,14 +27,13 @@ const config: ConfigProps = {
 
   resend: {
     // Used when sending transactional emails (optional).
-    fromAdmin: `ProKit <info@prochat.tools>`,
+    fromAdmin: `ProChat <info@prochat.tools>`,
     supportEmail: 'info@prochat.tools',
     forwardRepliesTo: 'info@prochat.tools',
     subjects: {
-      thankYou: 'Welcome to ProKit',
+      thankYou: 'Welcome to ProChat',
     },
   },
 }
 
 export default config
-

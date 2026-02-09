@@ -1,8 +1,8 @@
 # Architecture
 
-This repo is **ProKit**: ProChat’s developer core boilerplate for building SaaS apps.
+This repo is **ProChat** built on the ProKit engine: the developer core boilerplate for building SaaS apps.
 
-ProKit is intentionally lean. It ships the SaaS engine only:
+ProChat is intentionally lean. It ships the ProKit SaaS engine only:
 
 - Next.js (App Router) + TypeScript
 - Tailwind + shadcn UI foundation
@@ -47,4 +47,3 @@ ProKit wraps production starts with a runtime deploy gate:
 - `npm start` -> `scripts/runtime/start-prod.sh` -> `scripts/db/deploy-prod.sh`
 
 The gate runs provisioning + migrations automatically, and only starts the app if the deploy checks pass.
-

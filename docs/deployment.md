@@ -1,6 +1,6 @@
 # Deployment (Dokploy + Nixpacks)
 
-Dokploy is the canonical production target for ProKit apps.
+Dokploy is the canonical production target for ProChat apps (built on ProKit).
 
 ## Non-Negotiables
 

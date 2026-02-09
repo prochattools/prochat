@@ -1,4 +1,4 @@
-// ProKit – ProChat's developer core boilerplate
+// ProChat – built on the ProKit engine
 // (c) 2025 Steve Westhoek / ProChat
 // scripts/db/cleanup-tenant.js
 // Deletes a tenant schema + user + registry row.

@@ -1,4 +1,4 @@
-# ProKit - Stripe Integration
+# ProChat - Stripe Integration (ProKit engine)
 
 Stripe powers billing in this repo.
 
@@ -26,4 +26,3 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 
 - Success URL points to: `/dashboard?session_id=...`
 - Cancel URL points to: `/cancel?session_id=...`
-

@@ -56,12 +56,12 @@ export default function HomePage() {
             <div className="mx-auto max-w-5xl text-center">
               <div className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-600 backdrop-blur">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#5b49f5]" />
-                ProKit Developer Core
+                ProChat Boilerplate
               </div>
 
               <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-6xl">
-                Build your SaaS engine
-                <span className="block text-slate-400">without the marketing bloat</span>
+                Build your SaaS faster
+                <span className="block text-slate-400">powered by the ProKit engine</span>
               </h1>
 
               <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
@@ -103,7 +103,7 @@ export default function HomePage() {
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-white/90 p-5">
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Lean</p>
-                <p className="mt-2 text-sm text-slate-700">No blog, no funnel, no launch pages in the ProKit base.</p>
+                <p className="mt-2 text-sm text-slate-700">No blog, no funnel, no launch pages in the ProChat base.</p>
               </div>
               <div className="rounded-2xl border border-slate-200/70 bg-white/90 p-5">
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Branded</p>

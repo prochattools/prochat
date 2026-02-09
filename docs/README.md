@@ -1,8 +1,8 @@
-# ProKit Docs
+# ProChat Docs (built on ProKit)
 
-ProKit is ProChat’s **developer core boilerplate** for building SaaS apps.
+ProChat is the **SaaS boilerplate built on the ProKit engine** for building SaaS apps.
 
-It is intentionally lean: ProKit is the engine only (no marketing layer, no funnels, no SEO/blog/content system).
+It is intentionally lean: ProKit is the engine only (auth, billing, database, deploy gate). ProChat keeps it focused—no marketing layer, no funnels, no SEO/blog/content system.
 
 ## Contents
 
@@ -23,4 +23,3 @@ It is intentionally lean: ProKit is the engine only (no marketing layer, no funn
 - Production deploys are tag-gated.
 - Production is hands-off: provisioning and migrations run automatically via the runtime deploy gate on deploy. Do not run manual commands in production.
 - Database model is fixed: one shared Supabase/Postgres database per environment, schema-per-app isolation only (no per-app databases).
-

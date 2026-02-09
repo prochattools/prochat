@@ -1,6 +1,6 @@
 # Development
 
-Local development workflow for ProKit.
+Local development workflow for ProChat (built on the ProKit engine).
 
 ## Prerequisites
 
@@ -10,12 +10,12 @@ Local development workflow for ProKit.
 ## Shared Database Rule (Required)
 
 - Dev and prod each use one shared Supabase/Postgres database.
-- ProKit creates only `tenant_<slug>` schema and `tenant_<slug>_user` role in that shared database.
+- ProChat creates only `tenant_<slug>` schema and `tenant_<slug>_user` role in that shared database.
 - Never create a dedicated database per app.
 
 ## Slug Rule (Required)
 
-ProKit derives tenancy from the repo name:
+ProChat derives tenancy from the repo name:
 
 - Repo folder name must match `[a-z0-9_]+`.
 - `APP_SLUG` must match the repo folder name.
@@ -35,7 +35,7 @@ npm run dev
 
 ### What `npm run dev` is expected to do
 
-By convention ProKit wires `predev` to bootstrap the local environment:
+By convention ProChat wires `predev` to bootstrap the local environment:
 
 - Create `.env` if missing (`scripts/dev/bootstrap-env.js`)
 - Provision the tenant schema/user (`npm run db:init`)
@@ -86,4 +86,3 @@ npm run db:rename -- --from <old> --to <new> [--apply]
   - Ensure `SHADOW_DATABASE_URL` is set to an admin connection (same as `SYSTEM_DATABASE_URL`).
 - APP_SLUG mismatch:
   - Rename the repo folder to the slug you want, then rerun `npm run dev`.
-

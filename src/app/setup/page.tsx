@@ -11,7 +11,7 @@ export default function SetupPage() {
           <div className="rounded-2xl border bg-white p-8 shadow-sm">
             <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Setup</h1>
             <p className="mt-2 text-slate-600">
-              ProKit runs against a shared Supabase/Postgres database. Each app uses its own
+              ProChat (built on ProKit) runs against a shared Supabase/Postgres database. Each app uses its own
               tenant schema and role.
             </p>
 

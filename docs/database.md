@@ -1,6 +1,6 @@
 # Database
 
-ProKit uses a single-tenant schema-per-app model in Postgres.
+ProChat (built on the ProKit engine) uses a single-tenant schema-per-app model in Postgres.
 
 ## Model Summary
 
@@ -14,7 +14,7 @@ ProKit uses a single-tenant schema-per-app model in Postgres.
 - Exactly one Supabase/Postgres database is used per environment (dev and prod).
 - Every app in that environment gets only a dedicated schema and role inside that same database.
 - Never create a separate database per app.
-- ProKit scripts may create/update only tenant schema objects (`tenant_<slug>` and `tenant_<slug>_user`), never a new app database.
+- ProChat/ProKit scripts may create/update only tenant schema objects (`tenant_<slug>` and `tenant_<slug>_user`), never a new app database.
 
 ## Slug Contract (Required)
 
@@ -46,7 +46,7 @@ Other required vars:
 - `APP_SLUG`
 - `TENANT_DB_PASSWORD` (optional override; if not set, provisioning generates one)
 
-Note: ProKit uses Prisma's `?schema=` connection parameter in `DATABASE_URL`. `psql` tools do not understand `schema=...`; ProKit scripts automatically strip it when calling `psql`/`pg_dump`/`pg_restore`.
+Note: ProKit uses Prisma's `?schema=` connection parameter in `DATABASE_URL`. `psql` tools do not understand `schema=...`; ProChat/ProKit scripts automatically strip it when calling `psql`/`pg_dump`/`pg_restore`.
 
 ## Development Defaults
 

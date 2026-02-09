@@ -1,10 +1,10 @@
-# ProKit - Clerk Authentication
+# ProChat - Clerk Authentication (ProKit engine)
 
 Clerk powers authentication in this repo.
 
 Goal: keep auth predictable and avoid hard failures when keys are missing in development.
 
-## What ProKit does by default
+## What ProChat does by default (via ProKit engine)
 
 - Uses Clerk for authentication (App Router).
 - Protects routes via `src/middleware.ts` when keys are present.
@@ -38,4 +38,3 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 - Sign-in / sign-up pages:
   - `src/app/(app)/sign-in/[[...sign-in]]/page.tsx`
   - `src/app/(app)/sign-up/[[...sign-up]]/page.tsx`
-

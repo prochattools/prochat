@@ -1,4 +1,4 @@
-# Optional Features
+# Optional Features (ProChat)
 
 Rule of thumb:
 
@@ -16,7 +16,7 @@ CLERK_SECRET_KEY=sk_...
 
 Notes:
 
-- ProKit supports a safe mock mode in local dev when Clerk keys are missing.
+- ProChat/ProKit supports a safe mock mode in local dev when Clerk keys are missing.
 - Production should always configure real Clerk keys.
 
 ## Stripe (Billing)
@@ -51,4 +51,3 @@ Notes:
 
 - Email is optional. If `RESEND_API_KEY` is missing, email features should fail with a clear message.
 - Sender config lives in `src/config.ts` (`config.resend.*`).
-

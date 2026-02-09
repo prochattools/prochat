@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ProKit – ProChat's developer core boilerplate
+// ProChat – built on the ProKit engine
 // (c) 2025 Steve Westhoek / ProChat
 
 const fs = require('fs')
