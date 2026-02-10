@@ -28,7 +28,7 @@ export const RoutingTiles: React.FC = () => {
               title: "SaaSKit",
               body: "The SaaS Launch Kit. For people who already have an audience or idea. Skip the setup and launch your product using our proven infrastructure.",
               cta: "Start with SaaSkit",
-              href: "/store/saaskit",
+              href: "/kits/saaskit",
               anchorId: "saaskit"
             },
             {

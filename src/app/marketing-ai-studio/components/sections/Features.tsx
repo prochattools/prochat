@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { BlueprintCard } from '../ui/Scaffolding';
-import { Layout, Users, Mail, CreditCard, Search, FileText, Database, Share2, ArrowRight } from 'lucide-react';
+import { Users, CreditCard, Search, Database, ArrowRight } from 'lucide-react';
 import { Reveal } from '../ui/Reveal';
 import Link from 'next/link';
 
@@ -28,24 +28,36 @@ const SYSTEMS = [
     },
 ];
 
-export const Features: React.FC = () => {
+interface FeaturesProps {
+  sectionTitle?: string;
+  sectionDescription?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+export const Features: React.FC<FeaturesProps> = ({
+  sectionTitle = "Standardized infrastructure.",
+  sectionDescription = "The system demands speed. To achieve it, we eliminated architectural decisions by standardizing the engine (ProKit) that powers every kit.",
+  ctaLabel = "View the engine",
+  ctaHref = "/kits/prokit",
+}) => {
   return (
     <section className="py-32 relative">
         <div className="max-w-7xl mx-auto px-6 mb-20">
             <Reveal>
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
-                  Standardized infrastructure.
+                  {sectionTitle}
               </h2>
             </Reveal>
             <Reveal delay={0.3}>
               <p className="text-slate-500 mt-4 max-w-2xl font-light dark:text-slate-400">
-                  The system demands speed. To achieve it, we eliminated architectural decisions by standardizing the engine (ProKit) that powers every kit.
+                  {sectionDescription}
               </p>
             </Reveal>
             <Reveal delay={0.4}>
               <div className="mt-8">
-                <Link href="/kits/prokit" className="text-[#5b49f5] font-bold hover:underline inline-flex items-center gap-2 dark:text-[#9b8bff]">
-                  View the engine <ArrowRight size={16} />
+                <Link href={ctaHref} className="text-[#5b49f5] font-bold hover:underline inline-flex items-center gap-2 dark:text-[#9b8bff]">
+                  {ctaLabel} <ArrowRight size={16} />
                 </Link>
               </div>
             </Reveal>

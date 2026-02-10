@@ -21,7 +21,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
   secondaryCtaLabel = "Start with Clients (WaaSKit)",
   secondaryCtaLink = "/kits",
   primaryCtaLabel = "Start with SaaSkit",
-  primaryCtaLink = "/store/saaskit",
+  primaryCtaLink = "/kits/saaskit",
   onSecondaryCtaClick,
   onPrimaryCtaClick
 }) => {

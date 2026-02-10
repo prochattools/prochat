@@ -194,7 +194,7 @@ export default function ProofPageContent() {
 					primaryCtaLabel={FINAL_PRIMARY_CTA}
 					primaryCtaLink="/kits#waaskit"
 					secondaryCtaLabel={FINAL_SECONDARY_CTA}
-					secondaryCtaLink="/store/saaskit"
+					secondaryCtaLink="/kits/saaskit"
 					onPrimaryCtaClick={handleCtaClick(FINAL_PRIMARY_CTA)}
 					onSecondaryCtaClick={handleCtaClick(FINAL_SECONDARY_CTA)}
 				/>
