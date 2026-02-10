@@ -3,10 +3,11 @@
  * Used by middleware and server utilities.
  */
 const isProduction = process.env.NODE_ENV === 'production'
+const isCiBuild =
+  process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true'
 const isClerkDisabled =
-  !isProduction &&
-  (process.env.CLERK_DISABLED === 'true' ||
-    process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true')
+  process.env.CLERK_DISABLED === 'true' ||
+  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
 const hasServerKeys =
   !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
   !!process.env.CLERK_SECRET_KEY
@@ -16,7 +17,7 @@ export const isClerkEnabled = (): boolean => {
     return false
   }
 
-  if (isProduction && !hasServerKeys) {
+  if (isProduction && !isCiBuild && !hasServerKeys) {
     throw new Error(
       'Clerk is required in production but Clerk environment variables are missing.'
     )
@@ -31,10 +32,10 @@ export const isClerkEnabled = (): boolean => {
  */
 export async function authenticateRequest() {
   if (!isClerkEnabled()) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (!isProduction) {
       console.warn('⚠️ Clerk keys missing — skipping authentication.')
-      return { userId: null }
     }
+    return { userId: null }
   }
 
   try {

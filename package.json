@@ -1,6 +1,6 @@
 {
   "name": "@prochat/prokit",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "private": true,
   "description": "ProKit – ProChat’s SaaS starter for micro-SaaS apps.",
   "author": "Steve Westhoek",

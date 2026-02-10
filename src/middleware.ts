@@ -2,15 +2,16 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 const isProduction = process.env.NODE_ENV === 'production'
+const isCiBuild =
+  process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true'
 const isClerkDisabled =
-  !isProduction &&
-  (process.env.CLERK_DISABLED === 'true' ||
-    process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true')
+  process.env.CLERK_DISABLED === 'true' ||
+  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
 const hasClerkKeys =
   !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
   !!process.env.CLERK_SECRET_KEY
 
-if (isProduction && !hasClerkKeys) {
+if (isProduction && !isCiBuild && !isClerkDisabled && !hasClerkKeys) {
   throw new Error(
     'Clerk is required in production but Clerk environment variables are missing.'
   )

@@ -30,27 +30,31 @@ interface SafeUserResult {
  * Detect if Clerk is properly configured.
  */
 const isProduction = process.env.NODE_ENV === 'production'
+const isCiBuild =
+  process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true'
 const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''
 const hasValidPublishableKey = publishableKey.startsWith('pk_')
+const isClerkExplicitlyDisabled =
+  process.env.CLERK_DISABLED === 'true' ||
+  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
 
-export const isClerkDisabled =
-  !isProduction && process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+export const isClerkDisabled = isClerkExplicitlyDisabled
 
 export const isClerkEnabled = (() => {
   if (isClerkDisabled) {
     return false
   }
 
-  if (isProduction) {
-    if (!hasValidPublishableKey) {
+  if (!hasValidPublishableKey) {
+    if (isProduction && !isCiBuild) {
       throw new Error(
         'Clerk is required in production but NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is missing or invalid.'
       )
     }
-    return true
+    return false
   }
 
-  return hasValidPublishableKey
+  return true
 })()
 
 /**

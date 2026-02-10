@@ -32,6 +32,8 @@ jobs:
       APP_SLUG: ci
       TENANT_DB_PASSWORD: ci-pass
       RESEND_API_KEY: dummy-ci-key
+      CLERK_DISABLED: 'true'
+      NEXT_PUBLIC_CLERK_DISABLED: 'true'
 
     steps:
       - name: Checkout
