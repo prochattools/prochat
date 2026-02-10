@@ -10,7 +10,12 @@ const isPublicRoute = createRouteMatcher([
   '/api/health',
 ])
 
+const isClerkDisabled =
+  process.env.CLERK_DISABLED === 'true' ||
+  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+
 const hasClerkKeys =
+  !isClerkDisabled &&
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.startsWith('pk_') &&
   process.env.CLERK_SECRET_KEY?.startsWith('sk_')
 

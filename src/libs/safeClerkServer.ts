@@ -4,7 +4,12 @@ export type SafeAuthResult = {
   userId: string | null
 }
 
+export const isClerkDisabled =
+  process.env.CLERK_DISABLED === 'true' ||
+  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+
 export const hasClerkServerKeys =
+  !isClerkDisabled &&
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.startsWith('pk_') &&
   process.env.CLERK_SECRET_KEY?.startsWith('sk_')
 

@@ -30,7 +30,15 @@ interface SafeUserResult {
  *
  * Client-side we can only rely on NEXT_PUBLIC_* env vars.
  */
+export const isClerkDisabled =
+  process.env.CLERK_DISABLED === 'true' ||
+  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+
 export const isClerkEnabled = (() => {
+  if (isClerkDisabled) {
+    return false
+  }
+
   const pk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''
   return pk.startsWith('pk_')
 })()
@@ -64,9 +72,11 @@ export const SafeClerkProvider = ({
   children: React.ReactNode
 }) => {
   if (!isClerkEnabled) {
-    console.warn(
-      '⚠️ Clerk publishable key missing/invalid — skipping ClerkProvider and using mock mode.'
-    )
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(
+        '⚠️ Clerk publishable key missing/invalid — skipping ClerkProvider and using mock mode.'
+      )
+    }
     return <>{children}</>
   }
 

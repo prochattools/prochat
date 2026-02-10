@@ -1,9 +1,9 @@
 "use server"
 import prisma from "@/libs/prisma";
-import { clerkClient } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import configFile from "@/config";
+import { hasClerkServerKeys } from '@/libs/safeClerkServer'
 import { getStripeClient, stripeService } from '@/libs/stripe';
 import emailEvents from "@/events/email-events";
 import { randomUUID } from 'crypto';
@@ -55,6 +55,13 @@ return new Response('Product not found', {
 
 const subsType = product.metadata.subscription_type || 'default'
 const customerEmail = customer.email;
+if (!hasClerkServerKeys) {
+  return NextResponse.json(
+    { error: 'Clerk is not configured for customer lookup' },
+    { status: 501 }
+  )
+}
+const { clerkClient } = await import('@clerk/nextjs/server')
 const users = await clerkClient.users.getUserList({emailAddress:[customerEmail]})
 
 if (!users.data.length) {
