@@ -20,8 +20,8 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
   subhead = "You understand the system. Choose the path that matches your stage.",
   secondaryCtaLabel = "Start with Clients (WaaSKit)",
   secondaryCtaLink = "/kits",
-  primaryCtaLabel = "Start with SaaS (SaaSKit)",
-  primaryCtaLink = "/kits/saaskit",
+  primaryCtaLabel = "Start with SaaSkit",
+  primaryCtaLink = "/store/saaskit",
   onSecondaryCtaClick,
   onPrimaryCtaClick
 }) => {

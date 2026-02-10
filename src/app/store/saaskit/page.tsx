@@ -8,6 +8,8 @@ const benefitList = [
   "Reusable sections, pricing, FAQs, ops checklists",
 ];
 
+const SAASKIT_PRICE = "€197";
+
 async function startCheckout(setLoading: (v: boolean) => void) {
   setLoading(true);
   try {
@@ -41,7 +43,11 @@ export default function SaaskitPage() {
 
       <div className="border rounded-2xl p-8 shadow-sm bg-white dark:bg-[#0B111B] dark:border-[#1f2937] space-y-6">
         <div className="flex items-baseline gap-2">
-          <div className="text-3xl font-bold text-slate-900 dark:text-white">One-time purchase</div>
+          <div className="text-3xl font-bold text-slate-900 dark:text-white">{SAASKIT_PRICE}</div>
+          <div className="text-slate-500 text-sm">one-time</div>
+        </div>
+        <div className="flex items-baseline gap-2">
+          <div className="text-lg font-semibold text-slate-900 dark:text-white">One-time purchase</div>
           <div className="text-slate-500 text-sm">(includes updates)</div>
         </div>
 

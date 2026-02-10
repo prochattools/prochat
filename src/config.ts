@@ -35,7 +35,7 @@ const config: ConfigProps = {
 				title: 'ProChat SaaSkit',
 				productId: process.env.STRIPE_PRODUCT_SAASKIT,
 				subtitle: 'Lifetime access',
-				price: 147,
+				price: 197,
 				isBest: false,
 				linkTitle: 'Get SaaSkit',
 				featuresTitle: 'Features',

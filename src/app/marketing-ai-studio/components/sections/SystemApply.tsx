@@ -25,7 +25,7 @@ export const SystemApply: React.FC = () => {
           </Reveal>
           <Reveal width="100%" delay={0.4}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                 <Link href="/kits/saaskit">
+                 <Link href="/store/saaskit">
                     <Button className="bg-[#5b49f5] hover:bg-[#4a3bd1] text-white h-14 px-8 text-lg border-none shadow-lg shadow-[#5b49f5]/20 dark:shadow-[0_0_20px_rgba(91,73,245,0.35)] dark:hover:shadow-[0_0_28px_rgba(91,73,245,0.45)]">
                         Explore SaaSKit
                     </Button>
