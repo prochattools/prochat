@@ -27,6 +27,8 @@ jobs:
 
     env:
       NODE_ENV: test
+      CLERK_DISABLED: 'true'
+      NEXT_PUBLIC_CLERK_DISABLED: 'true'
 
       # CI runs in a non-prod environment, so ProKit enforces APP_SLUG == repo name.
       APP_SLUG: prokit
