@@ -1,6 +1,6 @@
 {
 	"name": "@prochat/boilerplate",
-	"version": "1.0.59",
+	"version": "1.0.60",
 	"private": true,
 	"description": "ProChat is the SaaS boilerplate built on the ProKit engine for building SaaS apps.",
 	"author": "Steve Westhoek",
