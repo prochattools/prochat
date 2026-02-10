@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     const productSlug = resolveStoreProductSlug(priceId, currentProduct.productId);
     const githubRepo =
       productSlug === 'prokit'
-        ? process.env.GITHUB_PROKIT_REPO || 'prochattools/prokit'
+        ? process.env.GITHUB_PROKIT_REPO || 'prochattools/prokit-core'
         : productSlug === 'saaskit'
           ? process.env.GITHUB_SAASKIT_REPO || 'prochattools/saaskit'
           : undefined;

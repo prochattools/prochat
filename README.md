@@ -1,6 +1,6 @@
 # ProChat (marketing + sales site) — powered by the ProKit engine
 
-Repository: `prochattools/prochat` (renamed from `prochattools/prochat-tools` on February 9, 2026).
+Repository: `prochattools/prochat` (renamed from `prochattools/prochat-core` on February 10, 2026; previously `prochattools/prochat-tools`).
 
 ProChat is the business owned by Steve Westhoek (info@prochat.tools). ProChat sells three kit products built on the same ProKit engine: **ProKit** (engine-only), **SaaSKit** (ProKit + marketing layer), and **WaaSKit** (service/agency flavor). This repo is the ProChat marketing/sales application built on the shared ProKit codebase; internal modules still use ProKit naming because the engine is shared.
 
@@ -107,7 +107,7 @@ Commands:
 ### 2. Clone and install
 
 ```
-git clone https://github.com/prochattools/prokit.git my-new-app
+git clone https://github.com/prochattools/prochat.git my-new-app
 cd my-new-app
 npm install
 ```

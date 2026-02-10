@@ -41,7 +41,7 @@ AI/agents must use these commands (or MCP wrappers), not raw SQL.
 ## Starting a new project
 1) Clone + install  
 ```
-git clone https://github.com/prochattools/prokit.git my-new-app
+git clone https://github.com/prochattools/prokit-core.git my-new-app
 cd my-new-app
 npm install
 ```

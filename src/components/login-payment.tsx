@@ -30,7 +30,7 @@ const links = [
   {
     icon: <Typescript2 />,
     name: "ProKit repo",
-    link: "https://github.com/prochattools/prokit",
+    link: "https://github.com/prochattools/prokit-core",
   },
   {
     icon: <Document />,
@@ -261,8 +261,8 @@ const LoginPayment = ({ user }: any) => {
                       href={
                         index === 0 && user?.stripeEmail
                           ? user?.amountPaid === "247"
-                            ? "https://github.com/prochattools/prokit"
-                            : "https://github.com/prochattools/prokit"
+                            ? "https://github.com/prochattools/prokit-core"
+                            : "https://github.com/prochattools/prokit-core"
                           : item?.link
                       }
                       target="_blank"

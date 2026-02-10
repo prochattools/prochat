@@ -9,8 +9,8 @@ Follow these steps to run ProKit locally and complete the first sign-in/checkout
 
 ## 1) Clone & install
 ```bash
-git clone https://github.com/prochattools/prokit.git prokit
-cd prokit
+git clone https://github.com/prochattools/prokit-core.git prokit-core
+cd prokit-core
 npm install
 ```
 
