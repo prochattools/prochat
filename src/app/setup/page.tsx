@@ -17,7 +17,7 @@ export default function SetupPage() {
 
             <div className="mt-6 rounded-lg border bg-slate-900 p-4 text-sm text-slate-100">
               <pre className="overflow-x-auto">
-                <code>{`npm run db:init -- --slug prokit
+                <code>{`npm run db:init -- --slug prokitcore
 npm run db:migrate:dev
 npm run dev`}</code>
               </pre>

@@ -46,14 +46,14 @@ export const isClerkEnabled = (() => {
 /**
  * Mock fallbacks for missing Clerk setup.
  */
-function useUserMock(): SafeUserResult {
+function mockUser(): SafeUserResult {
   if (process.env.NODE_ENV !== 'production') {
     console.warn('⚠️ useUser() called while Clerk is disabled — returning mock user.')
   }
   return { isSignedIn: false, user: null }
 }
 
-function useClerkMock() {
+function mockClerk() {
   if (process.env.NODE_ENV !== 'production') {
     console.warn('⚠️ useClerk() called while Clerk is disabled — returning mock client.')
   }
@@ -92,21 +92,25 @@ export const SafeClerkProvider = ({
  * Safe versions of Clerk hooks with automatic mock fallback.
  */
 export const useUser = (): SafeUserResult => {
+  const hook = useClerkUser as unknown as () => SafeUserResult
+  if (!isClerkEnabled) return mockUser()
+
   try {
-    if (!isClerkEnabled) return useUserMock()
-    return useClerkUser() as unknown as SafeUserResult
+    return hook()
   } catch (err) {
     console.warn('⚠️ useUser() failed, falling back to mock mode:', err)
-    return useUserMock()
+    return mockUser()
   }
 }
 
 export const useClerk = () => {
+  const hook = useClerkClient
+  if (!isClerkEnabled) return mockClerk()
+
   try {
-    if (!isClerkEnabled) return useClerkMock()
-    return useClerkClient()
+    return hook()
   } catch (err) {
     console.warn('⚠️ useClerk() failed, falling back to mock mode:', err)
-    return useClerkMock()
+    return mockClerk()
   }
 }

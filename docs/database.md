@@ -18,8 +18,9 @@ ProChat (built on the ProKit engine) uses a single-tenant schema-per-app model i
 
 ## Slug Contract (Required)
 
-- The repo/project name is the app slug.
-- `APP_SLUG` must match the repo folder name.
+- Repo folder name must match `[a-z0-9_-]+`.
+- The app slug is repo-derived: repo folder name with hyphens removed.
+- `APP_SLUG` must match the repo-derived slug.
 - Slug must be DB-safe: `[a-z0-9_]+`.
 
 Database objects are derived from the slug:
@@ -55,14 +56,14 @@ Note: ProKit uses Prisma's `?schema=` connection parameter in `DATABASE_URL`. `p
 Example `.env` (development):
 
 ```bash
-APP_SLUG=prokit
+APP_SLUG=prokitcore
 NODE_ENV=development
 POSTGRES_PORT=5433
 
 SYSTEM_DATABASE_URL=postgresql://postgres:postgres@localhost:5433/postgres?schema=public
 SHADOW_DATABASE_URL=postgresql://postgres:postgres@localhost:5433/postgres?schema=public
 
-DATABASE_URL=postgresql://tenant_prokit_user:<password>@localhost:5433/postgres?schema=tenant_prokit
+DATABASE_URL=postgresql://tenant_prokitcore_user:<password>@localhost:5433/postgres?schema=tenant_prokitcore
 ```
 
 ## Provisioning + Migrations (Local)
@@ -102,7 +103,7 @@ Fix options:
 1. **Reset the tenant schema (data loss)**: set `PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH=1` in Dokploy env and redeploy a tag.
 2. **Keep data**: restore the missing migration directories on disk (must match the checksums stored in the database).
 
-## Rename Flow (Repo Slug Changes)
+## Rename Flow (Repo Name / Slug Changes)
 
 If you rename a repo that already has data, use one of these:
 
@@ -110,3 +111,4 @@ If you rename a repo that already has data, use one of these:
 - Hands-off production path: set `LEGACY_APP_SLUG=<old_slug>` in Dokploy env for the next deploy.
   - The deploy gate will rename `tenant_<old_slug>` -> `tenant_<new_slug>` if the target schema does not already exist.
   - Remove `LEGACY_APP_SLUG` after a successful deploy.
+- Destructive cleanup (data loss): set `LEGACY_APP_SLUG=<old_slug>` + `PROKIT_DROP_LEGACY_TENANT=1` for one deploy (or run `npm run db:cleanup -- --slug <old_slug> --force`).

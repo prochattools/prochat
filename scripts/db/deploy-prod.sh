@@ -10,6 +10,7 @@ MIGRATIONS_DIR="${MIGRATIONS_DIR:-prisma/migrations}"
 
 APP_SCHEMA="tenant_${APP_SLUG}"
 LEGACY_APP_SLUG="${LEGACY_APP_SLUG:-}"
+DROP_LEGACY_TENANT="${PROKIT_DROP_LEGACY_TENANT:-}"
 BACKUP_DIR="${BACKUP_ROOT}/${APP_SLUG}"
 TS="$(date -u +%Y%m%dT%H%M%SZ)"
 LOG_FILE="${BACKUP_DIR}/deploy_${TS}.log"
@@ -25,6 +26,8 @@ BACKUP_ELIGIBLE="yes"
 RESET_TENANT="no"
 EXTRA_MIGRATIONS_IN_DB=""
 RESET_FLAG="${PROKIT_RESET_TENANT_ON_MIGRATION_MISMATCH:-}"
+DROP_LEGACY_STATUS="not_run"
+DROP_LEGACY_SLUG="${LEGACY_APP_SLUG}"
 
 normalize_psql_url() {
   local url="$1"
@@ -67,6 +70,8 @@ write_status() {
     printf 'MIGRATION_STATUS=%q\n' "$MIGRATION_STATUS"
     printf 'SMOKE_STATUS=%q\n' "$SMOKE_STATUS"
     printf 'RESTORE_STATUS=%q\n' "$RESTORE_STATUS"
+    printf 'DROP_LEGACY_SLUG=%q\n' "$DROP_LEGACY_SLUG"
+    printf 'DROP_LEGACY_STATUS=%q\n' "$DROP_LEGACY_STATUS"
     printf 'LOG_FILE=%q\n' "$LOG_FILE"
   } > "$STATUS_FILE"
 }
@@ -148,6 +153,11 @@ maybe_rename_legacy_tenant() {
     return 0
   fi
 
+  if [[ "$DROP_LEGACY_TENANT" == "1" ]]; then
+    echo "[deploy] legacy rename skipped: PROKIT_DROP_LEGACY_TENANT=1"
+    return 0
+  fi
+
   validate_slug "$legacy_slug"
   validate_slug "$APP_SLUG"
 
@@ -174,6 +184,45 @@ maybe_rename_legacy_tenant() {
 }
 
 maybe_rename_legacy_tenant "$LEGACY_APP_SLUG"
+
+maybe_drop_legacy_tenant() {
+  local legacy_slug="$1"
+
+  if [[ "$DROP_LEGACY_TENANT" != "1" ]]; then
+    return 0
+  fi
+
+  DROP_LEGACY_SLUG="$legacy_slug"
+  if [[ -z "$legacy_slug" ]]; then
+    echo "[deploy] legacy drop requested but LEGACY_APP_SLUG is empty; skipping" >&2
+    DROP_LEGACY_STATUS="skipped_missing_slug"
+    write_status
+    return 0
+  fi
+
+  if [[ "$legacy_slug" == "$APP_SLUG" ]]; then
+    DROP_LEGACY_STATUS="skipped_same_slug"
+    write_status
+    return 0
+  fi
+
+  validate_slug "$legacy_slug"
+  validate_slug "$APP_SLUG"
+
+  echo "[deploy] dropping legacy tenant: ${legacy_slug}"
+  DROP_LEGACY_STATUS="running"
+  write_status
+
+  if NODE_ENV=production npm run -s db:cleanup -- --slug "$legacy_slug" --force; then
+    DROP_LEGACY_STATUS="success"
+    write_status
+    echo "[deploy] legacy tenant dropped: ${legacy_slug}"
+  else
+    DROP_LEGACY_STATUS="failed"
+    write_status
+    echo "[deploy] warning: failed to drop legacy tenant: ${legacy_slug}" >&2
+  fi
+}
 
 detect_migrations() {
   if [[ ! -d "$MIGRATIONS_DIR" ]]; then
@@ -406,6 +455,7 @@ if smoke_check; then
   SMOKE_STATUS="success"
   write_status
   echo "[deploy] smoke check passed"
+  maybe_drop_legacy_tenant "$LEGACY_APP_SLUG"
 else
   SMOKE_STATUS="failed"
   write_status
@@ -421,6 +471,7 @@ else
         SMOKE_STATUS="success"
         write_status
         echo "[deploy] smoke check passed after restore"
+        maybe_drop_legacy_tenant "$LEGACY_APP_SLUG"
       else
         SMOKE_STATUS="failed"
         RESTORE_STATUS="failed"

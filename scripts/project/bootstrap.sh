@@ -2,7 +2,7 @@
 set -euo pipefail
 
 slug="${1:-${APP_SLUG:-}}"
-repo_slug="$(basename "$(pwd)")"
+repo_name="$(basename "$(pwd)")"
 
 if [[ -z "$slug" ]]; then
   echo "usage: ./scripts/project/bootstrap.sh <app-slug>" >&2
@@ -15,13 +15,19 @@ if [[ ! "$slug" =~ ^[a-z0-9_]+$ ]]; then
   exit 1
 fi
 
-if [[ ! "$repo_slug" =~ ^[a-z0-9_]+$ ]]; then
-  echo "invalid repo folder name: $repo_slug (allowed: [a-z0-9_]+)" >&2
+if [[ ! "$repo_name" =~ ^[a-z0-9_][a-z0-9_-]*$ ]]; then
+  echo "invalid repo folder name: $repo_name (allowed: [a-z0-9_-]+)" >&2
   exit 1
 fi
 
-if [[ "$slug" != "$repo_slug" ]]; then
-  echo "APP_SLUG mismatch. Expected \"$repo_slug\" (repo name), got \"$slug\"." >&2
+expected_slug="${repo_name//-/}"
+if [[ ! "$expected_slug" =~ ^[a-z0-9_]+$ ]]; then
+  echo "invalid derived APP_SLUG: $expected_slug (derived from repo name \"$repo_name\")" >&2
+  exit 1
+fi
+
+if [[ "$slug" != "$expected_slug" ]]; then
+  echo "APP_SLUG mismatch. Expected \"$expected_slug\" (derived from repo name \"$repo_name\"), got \"$slug\"." >&2
   exit 1
 fi
 

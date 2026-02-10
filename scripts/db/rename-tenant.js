@@ -127,10 +127,11 @@ async function main() {
   const fromUser = `${fromSchema}_user`
   const toUser = `${toSchema}_user`
 
-  const repoSlug = path.basename(process.cwd())
-  if (!isProd && repoSlug !== to) {
+  const repoName = path.basename(process.cwd()).trim()
+  const repoDerivedSlug = repoName.replace(/-/g, '')
+  if (!isProd && repoDerivedSlug !== to) {
     info(
-      `Repo folder is "${repoSlug}". After rename, the repo/app slug is expected to be "${to}".`
+      `Repo folder is "${repoName}" (derived slug "${repoDerivedSlug}"). After rename, the app slug is expected to be "${to}".`
     )
   }
 

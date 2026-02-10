@@ -5,7 +5,7 @@
  * Provision a single-tenant schema + user + registry entry.
  *
  * Flags:
- *   --slug <slug>      (required in prod; defaults to repo name in development)
+ *   --slug <slug>      (required in prod; defaults to repo-derived slug in development)
  *   --preview          (optional; marks tenant type = "preview")
  *   --external-id <id> (optional; stored in registry)
  *
@@ -56,17 +56,21 @@ function validateSlug(slug) {
   }
 }
 
-function getRepoSlug() {
-  return path.basename(process.cwd())
+function getRepoName() {
+  return path.basename(process.cwd()).trim()
 }
 
-function validateRepoSlug(slug) {
-  const safe = /^[a-z0-9_]+$/
-  if (!safe.test(slug)) {
+function validateRepoName(repoName) {
+  const safe = /^[a-z0-9_][a-z0-9_-]*$/
+  if (!safe.test(repoName)) {
     fail(
-      `Repo folder name "${slug}" is not a valid APP_SLUG. Rename the repo to match [a-z0-9_]+.`
+      `Repo folder name "${repoName}" is not valid. It must match [a-z0-9_-]+ (lowercase letters, numbers, underscores, hyphens).`
     )
   }
+}
+
+function deriveSlugFromRepoName(repoName) {
+  return repoName.replace(/-/g, '')
 }
 
 function validatePassword(password) {
@@ -153,22 +157,26 @@ async function main() {
     if (isProd) {
       fail('No tenant slug provided. Use --slug <slug> or set APP_SLUG.')
     }
-    const repoSlug = getRepoSlug()
-    validateRepoSlug(repoSlug)
-    slug = repoSlug
+    const repoName = getRepoName()
+    validateRepoName(repoName)
+    const derivedSlug = deriveSlugFromRepoName(repoName)
+    validateSlug(derivedSlug)
+    slug = derivedSlug
     console.log(
-      `ℹ️ No slug provided, defaulting to repo name "${repoSlug}" in development`
+      `ℹ️ No slug provided, defaulting to "${slug}" (derived from repo name "${repoName}") in development`
     )
   }
   validateSlug(slug)
 
-  // Enforce APP_SLUG == repo folder name in local/dev (repo rule).
+  // Enforce APP_SLUG == repo-derived slug in local/dev (repo rule).
   if (!isProd && !preview) {
-    const repoSlug = getRepoSlug()
-    validateRepoSlug(repoSlug)
-    if (slug !== repoSlug) {
+    const repoName = getRepoName()
+    validateRepoName(repoName)
+    const expectedSlug = deriveSlugFromRepoName(repoName)
+    validateSlug(expectedSlug)
+    if (slug !== expectedSlug) {
       fail(
-        `APP_SLUG mismatch. Expected "${repoSlug}" (repo name), got "${slug}".`
+        `APP_SLUG mismatch. Expected "${expectedSlug}" (derived from repo name "${repoName}"), got "${slug}".`
       )
     }
   }

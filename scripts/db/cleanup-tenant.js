@@ -5,7 +5,7 @@
 //
 // Usage:
 //   node scripts/db/cleanup-tenant.js --slug pr_42
-//   node scripts/db/cleanup-tenant.js --slug prokit --force   # dangerous
+//   node scripts/db/cleanup-tenant.js --slug prokitcore --force   # dangerous
 
 const { Client } = require('pg')
 const fs = require('fs')
@@ -108,7 +108,33 @@ async function main() {
     )
 
     if (rows.length === 0) {
-      console.log('ℹ️ No tenant row found; nothing to clean up.')
+      if (!force) {
+        console.log('ℹ️ No tenant row found; nothing to clean up.')
+        return
+      }
+
+      console.log(
+        'ℹ️ No tenant row found; falling back to derived schema/user because --force was provided.'
+      )
+
+      const schemaName = `tenant_${slug}`
+      const dbUser = `${schemaName}_user`
+
+      console.log(`Schema: ${schemaName}`)
+      console.log(`User:   ${dbUser}`)
+
+      const identSafe = /^[a-z0-9_]+$/
+      if (!identSafe.test(schemaName) || !identSafe.test(dbUser)) {
+        throw new Error(
+          `Refusing to operate on unsafe identifiers (schema="${schemaName}", role="${dbUser}")`
+        )
+      }
+
+      await client.query(`DROP SCHEMA IF EXISTS ${schemaName} CASCADE;`)
+      await client.query(`DROP ROLE IF EXISTS ${dbUser};`)
+      await client.query(`DELETE FROM public.tenants WHERE slug = $1`, [slug])
+
+      console.log('✅ Tenant cleanup completed.')
       return
     }
 

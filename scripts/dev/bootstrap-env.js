@@ -14,20 +14,28 @@ if (fs.existsSync(envPath)) {
 
 const postgresPort = (process.env.POSTGRES_PORT || '5433').trim()
 
-// Default dev slug (repo folder name) + system connection
-const repoSlug = path.basename(process.cwd())
-const slug = repoSlug.trim()
+// Default dev slug (derived from repo folder name) + system connection
+const repoName = path.basename(process.cwd()).trim()
+
+if (!/^[a-z0-9_][a-z0-9_-]*$/.test(repoName)) {
+  console.error(
+    `❌ Repo folder name "${repoName}" is not valid. It must match [a-z0-9_-]+ (lowercase letters, numbers, underscores, hyphens).`
+  )
+  process.exit(1)
+}
+
+const slug = repoName.replace(/-/g, '')
 
 if (!/^[a-z0-9_]+$/.test(slug)) {
   console.error(
-    `❌ Repo folder name "${slug}" is not a valid APP_SLUG. Rename the repo to match [a-z0-9_]+.`
+    `❌ Derived APP_SLUG "${slug}" (from repo name "${repoName}") is invalid. Set APP_SLUG explicitly or rename the repo folder.`
   )
   process.exit(1)
 }
 
 if (process.env.APP_SLUG && process.env.APP_SLUG !== slug) {
   console.error(
-    `❌ APP_SLUG mismatch. Expected "${slug}" (repo name), got "${process.env.APP_SLUG}".`
+    `❌ APP_SLUG mismatch. Expected "${slug}" (derived from repo name "${repoName}"), got "${process.env.APP_SLUG}".`
   )
   process.exit(1)
 }
