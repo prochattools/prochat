@@ -27,9 +27,10 @@ jobs:
 
     env:
       NODE_ENV: test
-      DATABASE_URL: postgresql://tenant_ci_user:ci-pass@localhost:5433/postgres?schema=tenant_ci
+      DATABASE_URL: postgresql://tenant_prochat_user:ci-pass@localhost:5433/postgres?schema=tenant_prochat
+      SHADOW_DATABASE_URL: postgresql://postgres:postgres@localhost:5433/postgres?schema=public
       SYSTEM_DATABASE_URL: postgresql://postgres:postgres@localhost:5433/postgres?schema=public
-      APP_SLUG: ci
+      APP_SLUG: prochat
       TENANT_DB_PASSWORD: ci-pass
       RESEND_API_KEY: dummy-ci-key
       CLERK_DISABLED: 'true'
@@ -49,7 +50,7 @@ jobs:
         run: npm ci
 
       - name: Provision tenant schema
-        run: npm run db:init -- --slug ci
+        run: npm run db:init -- --slug "$APP_SLUG"
 
       - name: Generate Prisma client
         run: npx prisma generate --schema=prisma/system.prisma
