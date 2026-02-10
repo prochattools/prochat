@@ -1,22 +1,21 @@
 #!/usr/bin/env node
-// ProChat – built on the ProKit engine
+// ProChat marketing site – powered by the ProKit engine
 // (c) 2025 Steve Westhoek / ProChat
 /**
  * Provision a single-tenant schema + user + registry entry.
  *
  * Flags:
- *   --slug <slug>      (required in prod; defaults to repo-derived slug in development)
+ *   --slug <slug>      (required in prod; defaults to "dev" in development)
  *   --preview          (optional; marks tenant type = "preview")
  *   --external-id <id> (optional; stored in registry)
  *
  * Env:
  *   APP_SLUG            used as a fallback slug
- *   TENANT_DB_PASSWORD  optional override; if not set, provisioning generates one
+ *   TENANT_DB_PASSWORD  required in production, defaults to "devpass" in dev
  *   SYSTEM_DATABASE_URL admin connection for provisioning (required in prod)
  */
 
 const { Client } = require('pg')
-const crypto = require('crypto')
 const fs = require('fs')
 const path = require('path')
 
@@ -56,40 +55,6 @@ function validateSlug(slug) {
   }
 }
 
-function getRepoName() {
-  return path.basename(process.cwd()).trim()
-}
-
-function validateRepoName(repoName) {
-  const safe = /^[a-z0-9_][a-z0-9_-]*$/
-  if (!safe.test(repoName)) {
-    fail(
-      `Repo folder name "${repoName}" is not valid. It must match [a-z0-9_-]+ (lowercase letters, numbers, underscores, hyphens).`
-    )
-  }
-}
-
-function deriveSlugFromRepoName(repoName) {
-  return repoName.replace(/-/g, '')
-}
-
-function validatePassword(password) {
-  const safe = /^[a-zA-Z0-9]+$/
-  if (!safe.test(password)) {
-    fail('TENANT_DB_PASSWORD must be alphanumeric only (no special characters).')
-  }
-}
-
-function generatePassword(length = 24) {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-  const bytes = crypto.randomBytes(length)
-  let out = ''
-  for (let i = 0; i < length; i++) {
-    out += alphabet[bytes[i] % alphabet.length]
-  }
-  return out
-}
-
 function loadEnvFile(envPath) {
   if (!fs.existsSync(envPath)) return {}
   const lines = fs
@@ -108,15 +73,6 @@ function loadEnvFile(envPath) {
   return map
 }
 
-function hydrateProcessEnvFromDotenv(dotenvPath) {
-  const fileEnv = loadEnvFile(dotenvPath)
-  for (const [key, value] of Object.entries(fileEnv)) {
-    if (!process.env[key] && typeof value === 'string' && value.length > 0) {
-      process.env[key] = value
-    }
-  }
-}
-
 function persistEnv(envPath, updates) {
   const existing = loadEnvFile(envPath)
   const merged = { ...existing, ...updates }
@@ -131,19 +87,13 @@ async function main() {
   const env = process.env.NODE_ENV || 'development'
   const isProd = env === 'production'
 
-  // In local/dev, allow configuring scripts via .env without needing to export vars.
-  if (!isProd) {
-    hydrateProcessEnvFromDotenv(path.join(process.cwd(), '.env'))
-  }
-
   let systemUrl = process.env.SYSTEM_DATABASE_URL
   if (!systemUrl) {
     if (isProd) {
       fail('SYSTEM_DATABASE_URL is required in production')
     } else {
-      const postgresPort = (process.env.POSTGRES_PORT || '5433').trim()
       systemUrl =
-        `postgresql://postgres:postgres@localhost:${postgresPort}/postgres?schema=public`
+        'postgresql://postgres:postgres@localhost:5433/postgres?schema=public'
       console.log(
         'ℹ️ SYSTEM_DATABASE_URL not set, using default local Docker Postgres:',
         systemUrl
@@ -157,40 +107,25 @@ async function main() {
     if (isProd) {
       fail('No tenant slug provided. Use --slug <slug> or set APP_SLUG.')
     }
-    const repoName = getRepoName()
-    validateRepoName(repoName)
-    const derivedSlug = deriveSlugFromRepoName(repoName)
-    validateSlug(derivedSlug)
-    slug = derivedSlug
-    console.log(
-      `ℹ️ No slug provided, defaulting to "${slug}" (derived from repo name "${repoName}") in development`
-    )
+    slug = 'dev'
+    console.log('ℹ️ No slug provided, defaulting to "dev" in development')
   }
   validateSlug(slug)
-
-  // Enforce APP_SLUG == repo-derived slug in local/dev (repo rule).
-  if (!isProd && !preview) {
-    const repoName = getRepoName()
-    validateRepoName(repoName)
-    const expectedSlug = deriveSlugFromRepoName(repoName)
-    validateSlug(expectedSlug)
-    if (slug !== expectedSlug) {
-      fail(
-        `APP_SLUG mismatch. Expected "${expectedSlug}" (derived from repo name "${repoName}"), got "${slug}".`
-      )
-    }
-  }
 
   const schema = `tenant_${slug}`
   const user = `${schema}_user`
   const tenantType = preview ? 'preview' : 'prod'
 
-  let password = (process.env.TENANT_DB_PASSWORD || '').trim()
-  if (password) {
-    validatePassword(password)
-  } else {
-    password = generatePassword()
-    console.log('ℹ️ TENANT_DB_PASSWORD not set, generated a new tenant password.')
+  let password = process.env.TENANT_DB_PASSWORD
+  if (!password) {
+    if (isProd) {
+      fail('TENANT_DB_PASSWORD is required in production')
+    } else {
+      password = 'devpass'
+      console.log(
+        'ℹ️ TENANT_DB_PASSWORD not set, using default dev password "devpass".'
+      )
+    }
   }
 
   console.log('--------------------------------------------------')
@@ -220,13 +155,9 @@ async function main() {
       END
       $$;
 
-      -- Enforce tenant isolation (no public schema access)
-      REVOKE USAGE, CREATE ON SCHEMA public FROM PUBLIC;
-      REVOKE USAGE, CREATE ON SCHEMA public FROM ${user};
-
       GRANT USAGE ON SCHEMA ${schema} TO ${user};
+      ALTER ROLE ${user} SET search_path = ${schema};
       GRANT ALL PRIVILEGES ON SCHEMA ${schema} TO ${user};
-      ALTER ROLE ${user} SET search_path = ${schema}, pg_catalog;
     `
 
     await client.query(ddlSql)
@@ -350,49 +281,33 @@ async function main() {
 
     const parsedUrl = new URL(systemUrl)
     const host = parsedUrl.hostname
-    const port = parsedUrl.port || (process.env.POSTGRES_PORT || '5433')
+    const port = parsedUrl.port || '5433'
     const runtimeDbUrl = `postgresql://${user}:${password}@${host}:${port}/postgres?schema=${schema}`
-    // .env.production is a copy/paste reference for Dokploy. Avoid duplicating secrets:
-    // keep TENANT_DB_PASSWORD as the single password source and reference it in DATABASE_URL.
-    const prodHost = (process.env.PRODUCTION_DB_HOST || '10.0.2.4').trim()
-    const prodPort = (process.env.PRODUCTION_DB_PORT || '5433').trim()
-    const runtimeDbUrlProd = `postgresql://${user}:\${TENANT_DB_PASSWORD}@${prodHost}:${prodPort}/postgres?schema=${schema}`
-    const systemDbUrlProd = `postgresql://supabase_admin:CHANGE_ME@${prodHost}:${prodPort}/postgres?schema=public`
 
-    const envPath = path.join(process.cwd(), '.env')
-    const prodEnvPath = path.join(process.cwd(), '.env.production')
+    if (!isProd) {
+      const envPath = path.join(process.cwd(), '.env')
+      const updates = {
+        APP_SLUG: slug,
+        NODE_ENV: 'development',
+        DATABASE_URL: runtimeDbUrl
+      }
 
-    const exampleEnvPath = path.join(process.cwd(), '.env.example')
-    const exampleEnv = loadEnvFile(exampleEnvPath)
-    const envProchatVersion = (process.env.PROCHAT_VERSION || '').trim()
-    const exampleProchatVersion = (exampleEnv.PROCHAT_VERSION || '').trim()
-    const prochatVersion = (
-      isProd ? envProchatVersion || exampleProchatVersion : exampleProchatVersion || envProchatVersion
-    ).trim()
+      if (!loadEnvFile(envPath).SYSTEM_DATABASE_URL) {
+        updates.SYSTEM_DATABASE_URL = systemUrl
+      }
+      if (!loadEnvFile(envPath).SHADOW_DATABASE_URL) {
+        updates.SHADOW_DATABASE_URL = systemUrl
+      }
 
-    const baseUpdates = {
-      APP_SLUG: slug,
-      DATABASE_URL: runtimeDbUrl,
-      SYSTEM_DATABASE_URL: systemUrl,
-      TENANT_DB_PASSWORD: password,
-      ...(prochatVersion ? { PROCHAT_VERSION: prochatVersion } : {})
+      persistEnv(envPath, updates)
+      console.log('✅ Updated .env for development')
+      console.log('   DATABASE_URL=', runtimeDbUrl)
+      console.log('--------------------------------------------------')
+    } else {
+      console.log('🔑 Suggested DATABASE_URL (production):')
+      console.log(runtimeDbUrl)
+      console.log('--------------------------------------------------')
     }
-
-    persistEnv(envPath, {
-      ...baseUpdates,
-      SHADOW_DATABASE_URL: systemUrl,
-      NODE_ENV: isProd ? 'production' : 'development'
-    })
-    persistEnv(prodEnvPath, {
-      ...baseUpdates,
-      DATABASE_URL: runtimeDbUrlProd,
-      SYSTEM_DATABASE_URL: systemDbUrlProd,
-      NODE_ENV: 'production'
-    })
-
-    console.log('✅ Updated .env and .env.production')
-    console.log('   DATABASE_URL=', runtimeDbUrl)
-    console.log('--------------------------------------------------')
   } catch (err) {
     console.error('❌ Error provisioning tenant:', err)
     process.exit(1)

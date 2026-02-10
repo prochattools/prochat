@@ -7,22 +7,6 @@ import config from '@/config'
 export default function PricingSection() {
 	const products = config.stripe.products
 
-	if (!products.length) {
-		return (
-			<section className="py-16">
-				<div className="container mx-auto px-4">
-					<div className="max-w-2xl mx-auto rounded-lg border bg-card p-6">
-						<h2 className="text-xl font-semibold mb-2">Stripe not configured</h2>
-						<p className="text-muted-foreground">
-							Add at least one product to <code>src/config.ts</code> and set your
-							Stripe environment variables to enable checkout.
-						</p>
-					</div>
-				</div>
-			</section>
-		)
-	}
-
 	return (
 		<section className='py-16'>
 			<div className='container mx-auto px-4'>
@@ -43,7 +27,7 @@ export default function PricingSection() {
 							)}
 							<h3 className='text-2xl font-semibold mb-4'>{product.title}</h3>
 							<p className='text-4xl font-bold mb-6'>
-								${product.price}
+								€{product.price}
 								<span className='text-xl dark:text-gray-500 text-black1/70 font-normal'>
 									/{product.type === 'subscription' ? product.period : 'once'}
 								</span>

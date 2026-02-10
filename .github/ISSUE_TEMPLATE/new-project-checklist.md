@@ -3,18 +3,18 @@ name: "✅ New SaaS Project Checklist"
 about: "Checklist for setting up a new SaaS project from boilerplate-saas"
 title: "New SaaS Setup"
 labels:
- - "setup"
+  - "setup"
 assignees: []
 ---
 
 ## New SaaS Project Setup Checklist
-- [ ] Created repo from the SaaSKit template
+- [ ] Created repo from boilerplate-saas template
 - [ ] Cloned repo locally
-- [ ] Provisioned a Postgres database (Supabase or any managed Postgres)
-- [ ] Added required env vars to `.env` (at minimum: `APP_SLUG`, `DATABASE_URL`, `SYSTEM_DATABASE_URL`, `SHADOW_DATABASE_URL`)
-- [ ] (Optional) Added optional feature env vars (for example `RESEND_API_KEY`, `WP_REST_ENDPOINT`, Clerk, Stripe)
-- [ ] Configured DNS + TLS for your app domain
-- [ ] Set up Dokploy app with tag-gated deploys 
-- [ ] Deployed to Dokploy via release tag
+- [ ] Provisioned new Supabase project
+- [ ] Added DATABASE_URL, NEXTAUTH_SECRET, RESEND_API_KEY, etc. to .env
+- [ ] Configured Cloudflare tunnel and DNS
+- [ ] Set up Dokploy app with branch = main and PR previews enabled
+- [ ] Deployed to Dokploy and ran `npx prisma migrate deploy && npm run start`
 - [ ] Verified `/api/health` endpoint works
-- [ ] Updated `README.md` project name (keep `package.json` as-is; it is the ProKit engine package)
+- [ ] Opened first PR to test preview deployment
+- [ ] Updated `package.json` and `README.md` project name

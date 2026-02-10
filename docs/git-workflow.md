@@ -1,19 +1,36 @@
-# Git Workflow (Tag-Gated Deploys)
+# Git + Dokploy Workflow Guide
 
-Production deploys are triggered only by pushing a release tag.
+## Rules
+- Never push directly to `main`.
+- Always create a feature branch for new work.
+- Dokploy Preview Deployments are enabled: each branch auto-deploys to its own preview domain.
+- Merge to `main` only after testing preview.
 
-## Daily workflow
-1. Commit to `main` as usual.
-2. When ready to deploy, create a version tag.
-3. Push the tag to trigger the production deploy.
+## Steps
+1. git checkout main && git pull origin main
+2. git checkout -b feature/branch-name
+3. git add . && git commit -m "Message"
+4. git push origin feature/branch-name
+5. Test preview deployment in Dokploy
+6. Merge into main → deploys to production
+7. git branch -d feature/branch-name && git push origin --delete feature/branch-name
 
-Keep `PROCHAT_VERSION` aligned with the release tag (without the leading `v`).
+## Automation Tasks
 
-## Create a release tag
+### Start Feature Branch
 ```bash
-git tag -a v1.0.1 -m "Release v1.0.1"
-git push origin v1.0.1
+# Create and push a new feature branch
+git checkout main
+git pull origin main
+git checkout -b feature/${FEATURE_NAME}
+git push origin feature/${FEATURE_NAME}
 ```
 
-## Rollback
-To roll back, deploy the previous tag (or create a new tag pointing at the previous stable commit). Avoid rewriting `main` history.
+### Merge to Main
+```bash
+# Merge a feature branch into main and push
+git checkout main
+git pull origin main
+git merge feature/${FEATURE_NAME}
+git push origin main
+```

@@ -8,7 +8,7 @@ import {
 } from '@clerk/nextjs'
 
 /**
- * Minimal safe subset of Clerk's user fields, compatible with mock mode.
+ * Minimal safe subset of Clerk’s user fields, compatible with mock mode.
  */
 interface SafeUser {
   id?: string
@@ -21,39 +21,53 @@ interface SafeUser {
 }
 
 interface SafeUserResult {
+  isLoaded: boolean
   isSignedIn: boolean
   user: SafeUser | null
 }
 
 /**
- * Detect if Clerk is enabled.
- *
- * Client-side we can only rely on NEXT_PUBLIC_* env vars.
+ * Detect if Clerk is properly configured.
  */
-export const isClerkDisabled =
+const isProduction = process.env.NODE_ENV === 'production'
+const isCiBuild =
+  process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true'
+const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''
+const hasValidPublishableKey = publishableKey.startsWith('pk_')
+const isClerkExplicitlyDisabled =
   process.env.CLERK_DISABLED === 'true' ||
   process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+
+export const isClerkDisabled = isClerkExplicitlyDisabled
 
 export const isClerkEnabled = (() => {
   if (isClerkDisabled) {
     return false
   }
 
-  const pk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''
-  return pk.startsWith('pk_')
+  if (!hasValidPublishableKey) {
+    if (isProduction && !isCiBuild) {
+      throw new Error(
+        'Clerk is required in production but NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is missing or invalid.'
+      )
+    }
+    return false
+  }
+
+  return true
 })()
 
 /**
  * Mock fallbacks for missing Clerk setup.
  */
-function mockUser(): SafeUserResult {
+function useUserMock(): SafeUserResult {
   if (process.env.NODE_ENV !== 'production') {
     console.warn('⚠️ useUser() called while Clerk is disabled — returning mock user.')
   }
-  return { isSignedIn: false, user: null }
+  return { isLoaded: true, isSignedIn: false, user: null }
 }
 
-function mockClerk() {
+function useClerkMock() {
   if (process.env.NODE_ENV !== 'production') {
     console.warn('⚠️ useClerk() called while Clerk is disabled — returning mock client.')
   }
@@ -64,18 +78,12 @@ function mockClerk() {
 }
 
 /**
- * Safe ClerkProvider wrapper — disables Clerk entirely when publishable key is missing.
+ * Safe ClerkProvider wrapper — disables Clerk entirely when keys are invalid.
  */
-export const SafeClerkProvider = ({
-  children,
-}: {
-  children: React.ReactNode
-}) => {
+export const SafeClerkProvider = ({ children }: { children: React.ReactNode }) => {
   if (!isClerkEnabled) {
     if (process.env.NODE_ENV !== 'production') {
-      console.warn(
-        '⚠️ Clerk publishable key missing/invalid — skipping ClerkProvider and using mock mode.'
-      )
+      console.warn('⚠️ Clerk keys missing or invalid — skipping ClerkProvider and using mock mode.')
     }
     return <>{children}</>
   }
@@ -84,6 +92,9 @@ export const SafeClerkProvider = ({
     return <ClerkProvider>{children}</ClerkProvider>
   } catch (err) {
     console.error('❌ ClerkProvider initialization failed:', err)
+    if (isProduction) {
+      throw err
+    }
     return <>{children}</>
   }
 }
@@ -92,25 +103,27 @@ export const SafeClerkProvider = ({
  * Safe versions of Clerk hooks with automatic mock fallback.
  */
 export const useUser = (): SafeUserResult => {
-  const hook = useClerkUser as unknown as () => SafeUserResult
-  if (!isClerkEnabled) return mockUser()
-
   try {
-    return hook()
+    if (!isClerkEnabled) return useUserMock()
+    return useClerkUser() as unknown as SafeUserResult
   } catch (err) {
     console.warn('⚠️ useUser() failed, falling back to mock mode:', err)
-    return mockUser()
+    if (isProduction) {
+      throw err
+    }
+    return useUserMock()
   }
 }
 
 export const useClerk = () => {
-  const hook = useClerkClient
-  if (!isClerkEnabled) return mockClerk()
-
   try {
-    return hook()
+    if (!isClerkEnabled) return useClerkMock()
+    return useClerkClient()
   } catch (err) {
     console.warn('⚠️ useClerk() failed, falling back to mock mode:', err)
-    return mockClerk()
+    if (isProduction) {
+      throw err
+    }
+    return useClerkMock()
   }
 }

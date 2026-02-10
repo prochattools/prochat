@@ -1,33 +1,54 @@
-import { auth } from '@clerk/nextjs/server'
-
-export type SafeAuthResult = {
-  userId: string | null
-}
-
-export const isClerkDisabled =
+/**
+ * Checks whether Clerk keys are configured.
+ * Used by middleware and server utilities.
+ */
+const isProduction = process.env.NODE_ENV === 'production'
+const isCiBuild =
+  process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true'
+const isClerkDisabled =
   process.env.CLERK_DISABLED === 'true' ||
   process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+const hasServerKeys =
+  !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
+  !!process.env.CLERK_SECRET_KEY
 
-export const hasClerkServerKeys =
-  !isClerkDisabled &&
-  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.startsWith('pk_') &&
-  process.env.CLERK_SECRET_KEY?.startsWith('sk_')
+export const isClerkEnabled = (): boolean => {
+  if (isClerkDisabled) {
+    return false
+  }
+
+  if (isProduction && !isCiBuild && !hasServerKeys) {
+    throw new Error(
+      'Clerk is required in production but Clerk environment variables are missing.'
+    )
+  }
+
+  return hasServerKeys
+}
 
 /**
- * Server-safe auth helper.
- * Returns null user when Clerk is not configured or middleware is unavailable.
+ * Safe wrapper for Clerk's server-side authentication.
+ * Works even when Clerk keys are missing (local, CI, or first-time setup).
  */
-export function safeAuth(): SafeAuthResult {
-  if (!hasClerkServerKeys) {
+export async function authenticateRequest() {
+  if (!isClerkEnabled()) {
+    if (!isProduction) {
+      console.warn('⚠️ Clerk keys missing — skipping authentication.')
+    }
     return { userId: null }
   }
 
   try {
+    // Dynamically import to avoid hard failure in environments without Clerk.
+    const { auth } = await import('@clerk/nextjs/server')
+
+    // New Clerk API: `auth()` instead of `authenticateRequest(req)`
     const { userId } = auth()
     return { userId: userId ?? null }
-  } catch (error) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn('Clerk auth() unavailable; falling back to public mode.', error)
+  } catch (err) {
+    console.error('❌ Clerk server auth failed:', err)
+    if (process.env.NODE_ENV === 'production') {
+      throw err
     }
     return { userId: null }
   }

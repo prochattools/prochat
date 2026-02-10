@@ -1,19 +1,15 @@
 // src/app/layout.tsx
 import { Providers } from '@/components/providers'
+import AppShell from '@/components/AppShell'
 import { getSEOTags } from '@/libs/seo'
 import { SafeClerkProvider } from '@/libs/safeClerk'
 import { Viewport } from 'next'
-import { Golos_Text, Inter } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { ReactNode } from 'react'
 
 import '@/assets/styles/globals.scss'
 
-const inter = Inter({ subsets: ['latin'] })
-const golos = Golos_Text({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-golos',
-})
+const font = Inter({ subsets: ['latin'] })
 
 export const viewport: Viewport = {
   themeColor: '#000000',
@@ -26,9 +22,11 @@ export const metadata = getSEOTags()
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} ${golos.variable}`}>
+      <body className={font.className}>
         <Providers>
-          <SafeClerkProvider>{children}</SafeClerkProvider>
+          <SafeClerkProvider>
+            <AppShell>{children}</AppShell>
+          </SafeClerkProvider>
         </Providers>
       </body>
     </html>

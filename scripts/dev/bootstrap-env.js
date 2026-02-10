@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ProChat – built on the ProKit engine
+// ProChat marketing site – powered by the ProKit engine
 // (c) 2025 Steve Westhoek / ProChat
 
 const fs = require('fs')
@@ -12,42 +12,17 @@ if (fs.existsSync(envPath)) {
   process.exit(0)
 }
 
-const postgresPort = (process.env.POSTGRES_PORT || '5433').trim()
-
-// Default dev slug (derived from repo folder name) + system connection
-const repoName = path.basename(process.cwd()).trim()
-
-if (!/^[a-z0-9_][a-z0-9_-]*$/.test(repoName)) {
-  console.error(
-    `❌ Repo folder name "${repoName}" is not valid. It must match [a-z0-9_-]+ (lowercase letters, numbers, underscores, hyphens).`
-  )
-  process.exit(1)
-}
-
-const slug = repoName.replace(/-/g, '')
-
-if (!/^[a-z0-9_]+$/.test(slug)) {
-  console.error(
-    `❌ Derived APP_SLUG "${slug}" (from repo name "${repoName}") is invalid. Set APP_SLUG explicitly or rename the repo folder.`
-  )
-  process.exit(1)
-}
-
-if (process.env.APP_SLUG && process.env.APP_SLUG !== slug) {
-  console.error(
-    `❌ APP_SLUG mismatch. Expected "${slug}" (derived from repo name "${repoName}"), got "${process.env.APP_SLUG}".`
-  )
-  process.exit(1)
-}
+// Default dev slug + system connection
+const rawSlug = process.env.APP_SLUG || 'dev'
+const slug = rawSlug.trim() || 'dev'
 
 const systemUrl =
   process.env.SYSTEM_DATABASE_URL ||
-  `postgresql://postgres:postgres@localhost:${postgresPort}/postgres?schema=public`
+  'postgresql://postgres:postgres@localhost:5433/postgres?schema=public'
 
 const content = [
   `APP_SLUG=${slug}`,
   `NODE_ENV=development`,
-  `POSTGRES_PORT=${postgresPort}`,
   `SYSTEM_DATABASE_URL=${systemUrl}`,
   `SHADOW_DATABASE_URL=${systemUrl}`,
   `# DATABASE_URL will be populated automatically after the first "npm run db:init"`,

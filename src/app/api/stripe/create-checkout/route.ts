@@ -1,51 +1,76 @@
-import { NextResponse } from 'next/server'
-import Stripe from 'stripe'
-import config from '@/config'
+import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
+import config from "@/config";
 
-export async function POST(req: Request) {
-  const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2024-06-20',
+});
 
-  if (!stripeSecretKey) {
-    return NextResponse.json(
-      {
-        error:
-          'Stripe is not configured. Set STRIPE_SECRET_KEY to enable checkout sessions.',
-      },
-      { status: 501 }
-    )
+const getOrigin = (req: Request) => {
+  const directOrigin = req.headers.get('origin');
+  if (directOrigin) {
+    return directOrigin;
+  }
+  const host = req.headers.get('host') || '';
+  const proto =
+    req.headers.get('x-forwarded-proto') ||
+    (host.startsWith('localhost') ? 'http' : 'https');
+  return `${proto}://${host}`;
+};
+
+const resolveStoreProductSlug = (priceId: string, productId?: string) => {
+  const prokitPrice = process.env.STRIPE_PRICE_PROKIT;
+  const saaskitPrice = process.env.STRIPE_PRICE_SAASKIT;
+  const prokitProduct = process.env.STRIPE_PRODUCT_PROKIT;
+  const saaskitProduct = process.env.STRIPE_PRODUCT_SAASKIT;
+
+  if (priceId === prokitPrice || (productId && productId === prokitProduct)) {
+    return 'prokit' as const;
   }
 
-  const stripe = new Stripe(stripeSecretKey, {
-    apiVersion: '2024-06-20',
-  })
+  if (priceId === saaskitPrice || (productId && productId === saaskitProduct)) {
+    return 'saaskit' as const;
+  }
 
+  return null;
+};
+
+export async function POST(req: Request) {
   try {
-    const { priceId, email, userId } = (await req.json()) as {
-      priceId?: string
-      email?: string
-      userId?: string
-    }
+    const { priceId, email, userId } = await req.json() as { priceId?: string; email?: string; userId?: string };
 
     if (!priceId) {
-      return NextResponse.json({ error: 'priceId is required' }, { status: 400 })
+      return NextResponse.json({ error: 'Price ID is required' }, { status: 400 });
     }
 
-    const currentProduct = config.stripe.products.find(
-      (prod) => prod.priceId === priceId
-    )
+    const currentProduct = config.stripe.products.find((prod) => prod.priceId === priceId)
 
-    if (!currentProduct) {
-      return NextResponse.json({ error: 'Product not found' }, { status: 400 })
-    }
-
-    if (!email) {
-      return NextResponse.json({ error: 'email is required' }, { status: 400 })
+    if(!currentProduct) {
+      return NextResponse.json({ error: 'Product not found' }, { status: 400 });
     }
 
     const isSub = currentProduct.type === 'subscription'
-    const planType = priceId.includes('monthly') ? 'monthly' : 'yearly'
+    const planType = priceId.includes('monthly') ? 'monthly' : 'yearly';
 
-    const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL || ''
+    const mode = isSub ? 'subscription' : 'payment'
+
+    const customerEmail = email || undefined
+    const origin = getOrigin(req);
+    const productSlug = resolveStoreProductSlug(priceId, currentProduct.productId);
+    const githubRepo =
+      productSlug === 'prokit'
+        ? process.env.GITHUB_PROKIT_REPO || 'prochattools/prokit'
+        : productSlug === 'saaskit'
+          ? process.env.GITHUB_SAASKIT_REPO || 'prochattools/saaskit'
+          : undefined;
+
+    const successUrl = productSlug
+      ? `${origin}/store/${productSlug}/finish?session_id={CHECKOUT_SESSION_ID}`
+      : `${origin}/dashboard?session_id={CHECKOUT_SESSION_ID}`;
+
+    const cancelUrl = productSlug
+      ? `${origin}/store/${productSlug}`
+      : `${origin}/cancel?session_id={CHECKOUT_SESSION_ID}`;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -55,32 +80,38 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      mode: isSub ? 'subscription' : 'payment',
-      success_url: `${origin}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/cancel?session_id={CHECKOUT_SESSION_ID}`,
-      customer_email: email,
+      mode,
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+      ...(customerEmail ? { customer_email: customerEmail } : {}),
       metadata: {
-        priceId,
+        priceId: priceId,
         productId: currentProduct.productId,
         userId: userId || 'anonymous',
-        ...(isSub ? { planType } : {}),
+        ...(isSub ? {planType} : {}),
+        ...(productSlug
+          ? {
+              product_slug: productSlug,
+              entitlement_type: 'github_repo',
+              ...(githubRepo ? { github_repo: githubRepo } : {}),
+            }
+          : {}),
       },
-    })
+    });
 
-    return NextResponse.json({ sessionId: session.id, checkoutUrl: session.url })
-  } catch (err: any) {
-    console.error('Stripe API error:', err)
+    console.log('Created Stripe session:', {
+      id: session.id,
+      customer_email: session.customer_email,
+      payment_status: session.payment_status,
+      url: session.url
+    });
 
+    return NextResponse.json({ sessionId: session.id, checkoutUrl: session.url });
+  } catch (err) {
+    console.error('Stripe API error:', err);
     if (err instanceof Stripe.errors.StripeError) {
-      return NextResponse.json(
-        { error: err.message },
-        { status: err.statusCode || 500 }
-      )
+      return NextResponse.json({ error: err.message }, { status: err.statusCode || 500 });
     }
-
-    return NextResponse.json(
-      { error: 'An unexpected error occurred' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'An unexpected error occurred' }, { status: 500 });
   }
 }

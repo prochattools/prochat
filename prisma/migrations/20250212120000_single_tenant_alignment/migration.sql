@@ -1,0 +1,1 @@
+-- No-op: registry is managed by infra scripts; Prisma schema already reflects runtime tables.

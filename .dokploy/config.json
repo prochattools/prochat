@@ -1,4 +1,5 @@
 {
-  "main_deploy": "tag-gated",
-  "notes": "Production deploys are triggered only by pushing a release tag (e.g. v1.0.0)."
+  "main_deploy": "dockerfile + GHCR",
+  "preview_deploy": "github app",
+  "notes": "Switch to container images for preview once Dokploy supports it."
 }

@@ -1,0 +1,14 @@
+.marketingRoot {
+  font-family: var(--font-golos), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.marketingRoot :global(.font-sans) {
+  font-family: inherit;
+}
+
+.marketingRoot ::selection {
+  background: #885efe;
+  color: #ffffff;
+}

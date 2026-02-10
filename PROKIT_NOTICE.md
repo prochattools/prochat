@@ -1,7 +1,5 @@
-# ProChat Notice (built on the ProKit engine)
+# ProChat Notice (powered by the ProKit engine)
 
-ProKit is the core SaaS engine maintained and sold by ProChat (founded by Steve Westhoek, info@prochat.tools). SaaSKit and WaaSKit are packaged offerings built on the same ProKit engine; this repo is the bare ProKit boilerplate.
+ProChat (Steve Westhoek, info@prochat.tools) owns the ProKit engine and sells kit products built on it: ProKit (engine-only), SaaSKit (ProKit + marketing layer), and WaaSKit (service/agency flavor). This repository is the ProChat marketing/sales application running on the shared ProKit codebase; engine naming remains ProKit internally.
 
-The engine is intentionally lean: auth, billing wiring, database lifecycle, and the runtime deploy gate—no marketing layer or SEO/blog/content systems.
-
-Production deploys are tag-gated. Provisioning + migrations run automatically via the runtime deploy gate; do not run ad-hoc database commands in production.
+Copyright (c) 2025 Steve Westhoek / ProChat. All rights reserved.

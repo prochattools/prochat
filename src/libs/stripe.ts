@@ -1,61 +1,40 @@
-import Stripe from 'stripe'
-
-let stripeClient: Stripe | null = null
-
-export function getStripeClient(): Stripe {
-  const key = process.env.STRIPE_SECRET_KEY
-  if (!key) {
-    throw new Error(
-      'Stripe is not configured. Set STRIPE_SECRET_KEY to enable billing.'
-    )
-  }
-
-  if (!stripeClient) {
-    stripeClient = new Stripe(key, {
-      apiVersion: '2024-06-20',
-      typescript: true,
-    })
-  }
-
-  return stripeClient
-}
-
-export function getStripeWebhookSecret(): string {
-  return process.env.STRIPE_WEBHOOK_SECRET || ''
-}
+import Stripe from "stripe";
 
 class StripeService {
-  // Create Customer Portal sessions so users can manage subscriptions.
-  public async createCustomerPortal(
-    customerId: string,
-    returnUrl: string
-  ): Promise<string> {
-    const portalSession = await getStripeClient().billingPortal.sessions.create({
+  private stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    typescript: true,
+  });
+
+  // This is used to create Customer Portal sessions, so users can manage their subscriptions (payment methods, cancel, etc..)
+  public async createCustomerPortal(customerId: string, returnUrl: string): Promise<string> {
+    const portalSession = await this.stripe.billingPortal.sessions.create({
       customer: customerId,
       return_url: returnUrl,
-    })
-    return portalSession.url
+    });
+    return portalSession.url;
   }
 
+// This is used to get the uesr checkout session and populate the data so we get the planId the user subscribed to
   public async findCheckoutSession(sessionId: string) {
-    try {
-      const session = await getStripeClient().checkout.sessions.retrieve(sessionId, {
-        expand: ['line_items'],
-      })
-      return session
-    } catch (e) {
-      console.error(e)
-      return null
-    }
+  try {
+  const session = await this.stripe.checkout.sessions.retrieve(sessionId, {
+    expand: ["line_items"],
+  });
+  return session;
+} catch (e) {
+  console.error(e);
+  return null;
+   }
   }
 
   public async getSubscription(subId: string) {
-    return getStripeClient().subscriptions.retrieve(subId)
+    return this.stripe.subscriptions.retrieve(subId)
   }
 
   public async getCheckoutSession(csId: string) {
-    return getStripeClient().checkout.sessions.retrieve(csId)
+    return this.stripe.checkout.sessions.retrieve(csId)
   }
+
 }
 
 export const stripeService = new StripeService()
