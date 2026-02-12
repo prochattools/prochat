@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Idempotent provisioning for ProChat / ProKit.
- * - Derives slug from APP_SLUG or repo name (sanitized: letters/numbers).
+ * - Derives slug from APP_SLUG or defaults to "prochat".
  * - In dev: runs db:init + db:migrate:dev.
  * - In prod: runs db:init + db:migrate:prod using SYSTEM_DATABASE_URL/SHADOW_DATABASE_URL inside Dokploy VNet.
  */
@@ -10,15 +10,7 @@ const { spawnSync } = require('child_process')
 const path = require('path')
 
 const env = process.env.NODE_ENV || 'development'
-function sanitizeSlug(input) {
-  return (input || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '') || 'app'
-}
-
-const defaultSlug = sanitizeSlug((process.env.APP_SLUG || '').trim()) ||
-  sanitizeSlug(path.basename(process.cwd()))
-const slug = defaultSlug
+const slug = (process.env.APP_SLUG || 'prochat').trim()
 
 if (!slug) {
   console.error('APP_SLUG is required to provision the database.')

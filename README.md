@@ -72,16 +72,16 @@ Example environment variables (conceptual):
 
 ```
 # .env (development)
-APP_SLUG=prochat            # default is repo name, sanitized (letters/numbers only)
-DATABASE_URL=postgresql://tenant_prochat_user:devpass@localhost:5433/postgres?schema=tenant_prochat
+DATABASE_URL=postgresql://tenant_dev_user:devpass@localhost:5433/postgres?schema=tenant_dev
 SYSTEM_DATABASE_URL=postgresql://postgres:postgres@localhost:5433/postgres?schema=public
 SHADOW_DATABASE_URL=postgresql://postgres:postgres@localhost:5433/postgres?schema=public
+APP_SLUG=dev
 
 # Production (Dokploy env)
 NODE_ENV=production
-APP_SLUG=prochat
+APP_SLUG=myapp
 TENANT_DB_PASSWORD=<strong-password>
-DATABASE_URL=postgresql://tenant_prochat_user:<TENANT_DB_PASSWORD>@10.0.2.4:5433/postgres?schema=tenant_prochat
+DATABASE_URL=postgresql://tenant_myapp_user:<TENANT_DB_PASSWORD>@10.0.2.4:5433/postgres?schema=tenant_myapp
 SYSTEM_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public
 SHADOW_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public
 ```
@@ -125,11 +125,11 @@ npm run dev
 Under the hood:
 
 1) `scripts/dev/bootstrap-env.js`
-   - If `.env` does not exist, writes defaults with `NODE_ENV=development`, `APP_SLUG=<sanitized repo name>`, `SYSTEM_DATABASE_URL`, and `SHADOW_DATABASE_URL` pointing at `localhost:5433`.
+   - If `.env` does not exist, writes defaults with `NODE_ENV=development`, `APP_SLUG=dev`, `SYSTEM_DATABASE_URL`, and `SHADOW_DATABASE_URL` pointing at `localhost:5433`.
 
 2) `npm run db:init`
    - Parses `--slug <slug>` (preferred) or `APP_SLUG`.
-   - Defaults to the sanitized repo name in development if nothing is provided.
+   - Defaults to `dev` in development if nothing is provided.
    - Creates `tenant_<slug>` schema, `tenant_<slug>_user`, grants, and `public.tenants` row with metadata (type `prod` by default, `preview` if `--preview` is passed).
    - Updates `.env` with `APP_SLUG` and `DATABASE_URL`; only sets `SYSTEM_DATABASE_URL`/`SHADOW_DATABASE_URL` if missing.
 
@@ -205,7 +205,7 @@ Notes:
 
 `.github/workflows/ci.yml`:
 - Postgres 16 mapped to host port 5433.
-- Provision tenant (`npm run db:init -- --slug $APP_SLUG`).
+- Provision tenant (`npm run db:init -- --slug ci`).
 - Run `npm run db:migrate:dev` (uses `prisma migrate dev`).
 - Build the app.
 

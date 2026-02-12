@@ -7,21 +7,14 @@ const path = require('path')
 
 const envPath = path.join(process.cwd(), '.env')
 
-function sanitizeSlug(input) {
-  return (input || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '') || 'app'
-}
-
 if (fs.existsSync(envPath)) {
   console.log('✅ .env already exists, skipping bootstrap')
   process.exit(0)
 }
 
-// Default slug: sanitized repo folder name (no hyphens/underscores/dots)
-const repoName = path.basename(process.cwd())
-const rawSlug = process.env.APP_SLUG || repoName
-const slug = sanitizeSlug(rawSlug)
+// Default dev slug + system connection
+const rawSlug = process.env.APP_SLUG || 'dev'
+const slug = rawSlug.trim() || 'dev'
 
 const systemUrl =
   process.env.SYSTEM_DATABASE_URL ||
