@@ -1,4 +1,3 @@
-import config from '@/config'
 import { getSEOTags } from '@/libs/seo'
 import SaaSkitPageContent from './SaaSkitPageContent'
 
@@ -17,12 +16,5 @@ export const metadata = getSEOTags({
 })
 
 export default function SaaSkitPage() {
-	const saaskitProduct =
-		config.stripe.products.find(product =>
-			product.title.toLowerCase().includes('saaskit')
-		) ?? null
-	const priceId = saaskitProduct?.priceId ?? null
-
-	return <SaaSkitPageContent priceId={priceId} />
+	return <SaaSkitPageContent />
 }
-
