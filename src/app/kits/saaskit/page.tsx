@@ -1,3 +1,4 @@
+import config from '@/config'
 import { getSEOTags } from '@/libs/seo'
 import SaaSkitPageContent from './SaaSkitPageContent'
 
@@ -16,5 +17,15 @@ export const metadata = getSEOTags({
 })
 
 export default function SaaSkitPage() {
-	return <SaaSkitPageContent />
+	const saaskitProduct =
+		config.stripe.products.find(product =>
+			product.title.toLowerCase().includes('saaskit')
+		) ?? null
+	const envPriceId =
+		process.env.STRIPE_PRICE_SAASKIT ||
+		process.env.NEXT_PUBLIC_STRIPE_PRICE_SAASKIT ||
+		null
+	const priceId = saaskitProduct?.priceId || envPriceId
+
+	return <SaaSkitPageContent priceId={priceId} />
 }

@@ -3,7 +3,8 @@ import { SignIn } from '@clerk/nextjs'
 export default function Page() {
   const clerkDisabled =
     process.env.CLERK_DISABLED === 'true' ||
-    process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+    process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true' ||
+    (process.env.NODE_ENV !== 'production' && process.env.CLERK_ENABLE_DEV !== 'true')
 
   if (clerkDisabled) {
     return (

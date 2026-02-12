@@ -27,9 +27,9 @@ function parseArgs() {
     process.exit(1)
   }
 
-  if (!/^[a-z0-9_]+$/.test(result.slug)) {
+  if (!/^[a-z0-9]+$/.test(result.slug)) {
     console.error(
-      `❌ Invalid slug "${result.slug}". Only lowercase letters, numbers and underscores are allowed.`
+      `❌ Invalid slug "${result.slug}". Only lowercase letters and numbers are allowed.`
     )
     process.exit(1)
   }

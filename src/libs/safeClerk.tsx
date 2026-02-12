@@ -34,11 +34,13 @@ const isCiBuild =
   process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true'
 const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''
 const hasValidPublishableKey = publishableKey.startsWith('pk_')
+const allowDevClerk = process.env.CLERK_ENABLE_DEV === 'true'
 const isClerkExplicitlyDisabled =
   process.env.CLERK_DISABLED === 'true' ||
   process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
 
-export const isClerkDisabled = isClerkExplicitlyDisabled
+export const isClerkDisabled =
+  isClerkExplicitlyDisabled || (!isProduction && !allowDevClerk)
 
 export const isClerkEnabled = (() => {
   if (isClerkDisabled) {
@@ -60,14 +62,14 @@ export const isClerkEnabled = (() => {
 /**
  * Mock fallbacks for missing Clerk setup.
  */
-function useUserMock(): SafeUserResult {
+function mockUser(): SafeUserResult {
   if (process.env.NODE_ENV !== 'production') {
     console.warn('⚠️ useUser() called while Clerk is disabled — returning mock user.')
   }
   return { isLoaded: true, isSignedIn: false, user: null }
 }
 
-function useClerkMock() {
+function mockClerk() {
   if (process.env.NODE_ENV !== 'production') {
     console.warn('⚠️ useClerk() called while Clerk is disabled — returning mock client.')
   }
@@ -104,26 +106,26 @@ export const SafeClerkProvider = ({ children }: { children: React.ReactNode }) =
  */
 export const useUser = (): SafeUserResult => {
   try {
-    if (!isClerkEnabled) return useUserMock()
+    if (!isClerkEnabled) return mockUser()
     return useClerkUser() as unknown as SafeUserResult
   } catch (err) {
     console.warn('⚠️ useUser() failed, falling back to mock mode:', err)
     if (isProduction) {
       throw err
     }
-    return useUserMock()
+    return mockUser()
   }
 }
 
 export const useClerk = () => {
   try {
-    if (!isClerkEnabled) return useClerkMock()
+    if (!isClerkEnabled) return mockClerk()
     return useClerkClient()
   } catch (err) {
     console.warn('⚠️ useClerk() failed, falling back to mock mode:', err)
     if (isProduction) {
       throw err
     }
-    return useClerkMock()
+    return mockClerk()
   }
 }

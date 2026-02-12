@@ -24,6 +24,12 @@ function fail(msg) {
   process.exit(1)
 }
 
+function sanitizeSlug(input) {
+  return (input || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '') || 'app'
+}
+
 function parseArgs() {
   const args = process.argv.slice(2)
   const result = {
@@ -47,10 +53,10 @@ function parseArgs() {
 }
 
 function validateSlug(slug) {
-  const safe = /^[a-z0-9_]+$/
+  const safe = /^[a-z0-9]+$/
   if (!safe.test(slug)) {
     fail(
-      `Invalid slug "${slug}". Only lowercase letters, numbers and underscores are allowed.`
+      `Invalid slug "${slug}". Only lowercase letters and numbers are allowed.`
     )
   }
 }
@@ -102,13 +108,14 @@ async function main() {
   }
 
   const { slug: rawSlug, preview, externalId } = parseArgs()
-  let slug = (rawSlug || '').trim()
+  let slug = sanitizeSlug((rawSlug || '').trim())
   if (!slug) {
-    if (isProd) {
+    const repoName = path.basename(process.cwd())
+    slug = sanitizeSlug(repoName)
+    if (!slug) {
       fail('No tenant slug provided. Use --slug <slug> or set APP_SLUG.')
     }
-    slug = 'dev'
-    console.log('ℹ️ No slug provided, defaulting to "dev" in development')
+    console.log(`ℹ️ No slug provided, defaulting to repo-based slug "${slug}"`)
   }
   validateSlug(slug)
 

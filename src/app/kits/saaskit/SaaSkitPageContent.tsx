@@ -7,6 +7,12 @@ import { Features } from '@/app/marketing-ai-studio/components/sections/Features
 import { Proof } from '@/app/marketing-ai-studio/components/sections/Expansions'
 import { Pricing } from '@/app/marketing-ai-studio/components/sections/Pricing'
 import { trackEvent } from '@/utils/analytics'
+import { handleCheckoutProcess } from '@/helpers/checkout'
+import { useUser } from '@/libs/safeClerk'
+
+interface SaaSkitPageContentProps {
+	priceId: string | null
+}
 
 const SAASKIT_FEATURES = [
 	'Service-to-SaaS offer blueprint',
@@ -17,7 +23,8 @@ const SAASKIT_FEATURES = [
 	'Commercial usage license',
 ]
 
-const SaaSkitPageContent = () => {
+const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
+	const { isLoaded, isSignedIn, user } = useUser()
 	const [isCheckingOut, setIsCheckingOut] = useState(false)
 	const [, setCheckoutError] = useState<string | null>(null)
 
@@ -44,31 +51,20 @@ const SaaSkitPageContent = () => {
 			cta: 'pricing_get_saaskit',
 			page: '/kits/saaskit',
 		})
-		if (isCheckingOut) return
+		if (!priceId || isCheckingOut) return
 
-		setIsCheckingOut(true)
-		setCheckoutError(null)
+		const userId = isLoaded && isSignedIn ? user?.id || null : null
+		const email =
+			isLoaded && isSignedIn ? user?.primaryEmailAddress?.emailAddress || null : null
 
-		void (async () => {
-			try {
-				const response = await fetch('/api/store/checkout/saaskit', {
-					method: 'POST',
-				})
-				if (!response.ok) {
-					throw new Error('Failed to start SaaSkit checkout')
-				}
-				const data = (await response.json()) as { url?: string }
-				if (!data.url) {
-					throw new Error('Checkout URL missing')
-				}
-				window.location.href = data.url
-			} catch (error) {
-				console.error('[kits/saaskit] checkout error', error)
-				setCheckoutError('Could not start checkout. Please try again.')
-				setIsCheckingOut(false)
-			}
-		})()
-	}, [isCheckingOut])
+		handleCheckoutProcess(
+			priceId,
+			userId,
+			email,
+			setIsCheckingOut,
+			setCheckoutError
+		)
+	}, [priceId, isCheckingOut, isLoaded, isSignedIn, user])
 
 	return (
 		<KitsShell>
