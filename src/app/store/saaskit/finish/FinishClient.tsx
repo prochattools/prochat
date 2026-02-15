@@ -17,7 +17,7 @@ const GITHUB_USERNAME_PATTERN = /^[A-Za-z0-9-]{1,39}$/;
 
 export default function FinishClient() {
   const searchParams = useSearchParams();
-  const sessionId = searchParams.get("session_id")?.trim() || "";
+  const sessionId = searchParams?.get("session_id")?.trim() || "";
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");

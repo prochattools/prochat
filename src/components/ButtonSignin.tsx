@@ -52,7 +52,7 @@ const ButtonSignin = ({
 					extraStyle ? extraStyle : ''
 				} flex items-center gap-2 max-w-[200px]`}
 			>
-				{user.hasImage ? (
+				{user.hasImage && user.imageUrl ? (
 					<Image
 						src={user.imageUrl}
 						alt={user.firstName || 'Account'}

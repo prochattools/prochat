@@ -13,9 +13,9 @@ export default function Home() {
 	const clerkEnabled = isClerkEnabled
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
-	const queryString = searchParams.toString()
+	const queryString = searchParams?.toString() ?? ''
 	const fullPath = queryString ? `${pathname}?${queryString}` : pathname
-	const priceId = searchParams.get('priceId')
+	const priceId = searchParams?.get('priceId') ?? null
 
 	const priceIdFromLocal = useMemo(() => {
 		if (typeof window === 'undefined') return null
@@ -49,8 +49,8 @@ export default function Home() {
 			setTimeout(() => {
 				handleCheckoutProcess(
 					priceIdFromLocal as string,
-					user.id,
-					user.primaryEmailAddress?.emailAddress || null,
+					user?.id || null,
+					user?.primaryEmailAddress?.emailAddress || null,
 					() => {},
 					() => {}
 				)

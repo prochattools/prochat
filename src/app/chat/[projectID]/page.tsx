@@ -18,7 +18,9 @@ interface MessageFormValues {
 }
 
 export default function ChatPage() {
-	const { projectID } = useParams()
+	const params = useParams<{ projectID?: string | string[] }>()
+	const projectIDParam = params?.projectID
+	const projectID = Array.isArray(projectIDParam) ? projectIDParam[0] : projectIDParam
 	const [messages, setMessages] = useState<
 		Array<{
 			id: string
@@ -31,6 +33,11 @@ export default function ChatPage() {
 	const [isLoading, setIsLoading] = useState(true)
 
 	const getWebhookLink = async () => {
+		if (!projectID) {
+			setIsLoading(false)
+			return
+		}
+
 		try {
 			const response = await axios.get(`/api/link?projectID=${projectID}`)
 			console.log(response.data)
@@ -46,7 +53,7 @@ export default function ChatPage() {
 
 	useEffect(() => {
 		getWebhookLink()
-	}, [])
+	}, [projectID])
 
 	const fetchMessage = async (message: string) => {
 		const response = await axios.post(webhookLink, {

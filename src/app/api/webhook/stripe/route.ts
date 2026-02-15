@@ -10,13 +10,22 @@ export async function POST(req: NextRequest) {
   const signature = headers().get("stripe-signature");
   let event: Stripe.Event;
 
+  if (!signature) {
+    return NextResponse.json({ error: 'Missing stripe-signature header' }, { status: 400 });
+  }
+
+  if (!webhookSecret) {
+    return NextResponse.json({ error: 'Missing STRIPE_WEBHOOK_SECRET' }, { status: 500 });
+  }
+
   console.log('1 POST', textParsedBody)
   console.log('2 signature', signature)
   try {
     event = stripe.webhooks.constructEvent(textParsedBody, signature, webhookSecret);
   } catch (err) {
-    console.error(`Webhook signature verification failed. ${err.message}`);
-    return NextResponse.json({ error: err.message }, { status: 400 });
+    const message = err instanceof Error ? err.message : 'Unknown webhook signature error';
+    console.error(`Webhook signature verification failed. ${message}`);
+    return NextResponse.json({ error: message }, { status: 400 });
   }
   try {
     switch (event.type) {
@@ -55,7 +64,8 @@ export async function POST(req: NextRequest) {
       // Unhandled event type
     }
   } catch (e) {
-    console.error("stripe error: ", e.message);
+    const message = e instanceof Error ? e.message : 'Unknown stripe error';
+    console.error("stripe error: ", message);
   }
   return NextResponse.json({});
 }

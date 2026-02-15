@@ -101,16 +101,23 @@ export async function GET(req: NextRequest) {
 	try {
 		const user = await currentUser()
 		const { searchParams } = new URL(req.url)
+		const projectId = searchParams.get('id') || undefined
+
+		if (!user || !projectId) {
+			return NextResponse.json(
+				{ error: 'Unauthorized or missing project ID' },
+				{ status: 401 }
+			)
+		}
 
 		const project = await prisma.project.findUnique({
 			where: {
-				id: searchParams.get('id'),
+				id: projectId,
 			},
 		})
 
-		const scenarioId = project.scenario_id
-
-		if (!user || !scenarioId) {
+		const scenarioId = project?.scenario_id
+		if (!scenarioId) {
 			throw new Error('Something went wrong')
 		}
 

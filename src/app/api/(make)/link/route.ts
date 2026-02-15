@@ -9,10 +9,13 @@ export async function GET(req: NextRequest) {
 	try {
 		const user = await currentUser()
 		// Take projectID from the query params
-		const projectID = req.nextUrl.searchParams.get('projectID')
+		const projectID = req.nextUrl.searchParams.get('projectID') || undefined
 
-		if (!user) {
-			throw new Error('user in undefined')
+		if (!user || !projectID) {
+			return NextResponse.json(
+				{ error: 'Unauthorized or missing project ID' },
+				{ status: 401 }
+			)
 		}
 
 		const project = await prisma.project.findUnique({
@@ -21,8 +24,11 @@ export async function GET(req: NextRequest) {
 			},
 		})
 
-		if (!project.webhookLink) {
-			throw new Error('Project not found')
+		if (!project || !project.webhookLink) {
+			return NextResponse.json(
+				{ error: 'Project not found' },
+				{ status: 404 }
+			)
 		}
 
 		return NextResponse.json({ success: true, webhookLink: project.webhookLink })

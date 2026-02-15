@@ -1,5 +1,10 @@
 import { ConfigProps } from '@/types'
 
+const STRIPE_PRODUCT_PROKIT = process.env.STRIPE_PRODUCT_PROKIT ?? ''
+const STRIPE_PRICE_PROKIT = process.env.STRIPE_PRICE_PROKIT ?? ''
+const STRIPE_PRODUCT_SAASKIT = process.env.STRIPE_PRODUCT_SAASKIT ?? ''
+const STRIPE_PRICE_SAASKIT = process.env.STRIPE_PRICE_SAASKIT ?? ''
+
 const config: ConfigProps = {
 	// REQUIRED
 	appName: 'ProChat',
@@ -14,13 +19,13 @@ const config: ConfigProps = {
 			{
 				type: 'one-time', // one-time, subscription
 				title: 'ProChat ProKit',
-				productId: process.env.STRIPE_PRODUCT_PROKIT,
+				productId: STRIPE_PRODUCT_PROKIT,
 				subtitle: 'Lifetime access',
 				price: 97,
 				isBest: true,
 				linkTitle: 'Get ProChat ProKit',
 				featuresTitle: 'Features',
-				priceId: process.env.STRIPE_PRICE_PROKIT,
+				priceId: STRIPE_PRICE_PROKIT,
 				features: [
 					{ title: 'Unlimited Projects' },
 					{ title: 'Full Source Code' },
@@ -33,13 +38,13 @@ const config: ConfigProps = {
 			{
 				type: 'one-time',
 				title: 'ProChat SaaSkit',
-				productId: process.env.STRIPE_PRODUCT_SAASKIT,
+				productId: STRIPE_PRODUCT_SAASKIT,
 				subtitle: 'Lifetime access',
 				price: 197,
 				isBest: false,
 				linkTitle: 'Get SaaSkit',
 				featuresTitle: 'Features',
-				priceId: process.env.STRIPE_PRICE_SAASKIT,
+				priceId: STRIPE_PRICE_SAASKIT,
 				features: [
 					{ title: 'Client service funnel + delivery' },
 					{ title: 'Ready-to-sell SaaS kit templates' },

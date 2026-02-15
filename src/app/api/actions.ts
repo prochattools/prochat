@@ -22,13 +22,26 @@ export async function processCheckoutSuccessWebhook(body: any, event: Stripe.Eve
   .object as Stripe.Checkout.Session;
 const session = await stripeService.findCheckoutSession(stripeObject.id);
 const customerId = session?.customer;
-const priceId = session?.line_items?.data[0]?.price.id;
+const firstLineItem = session?.line_items?.data?.[0];
+const priceId = typeof firstLineItem?.price === 'string'
+  ? firstLineItem.price
+  : firstLineItem?.price?.id;
+
+if (!priceId) {
+  return NextResponse.json({ error: 'Missing price ID' }, { status: 400 });
+}
+
+const customerIdValue = typeof customerId === 'string' ? customerId : customerId?.id;
+if (!customerIdValue) {
+  return NextResponse.json({ error: 'Missing customer ID' }, { status: 400 });
+}
+
 const plan = configFile.stripe.products.find((p) => p.priceId === priceId);
 if (!plan) {
   return NextResponse.json({ error: 'Plan not found' }, { status: 400 });
 }
 const customer = (await stripe.customers.retrieve(
-  customerId as string
+  customerIdValue
 )) as Stripe.Customer;
 
 if (!customer || !customer.email) {
@@ -104,6 +117,11 @@ export async function processSubscriptonDelete(event: Stripe.Event) {
         const prismaSub = await prisma.subscription.findFirst({
           where: { sub_stripe_id: subscription.id },
         });
+
+        if (!prismaSub) {
+          return new Response('Subscription not found', { status: 404 });
+        }
+
         // Revoke access to your product
         await prisma.subscription.update({
           where: { id: prismaSub.id },
@@ -116,9 +134,23 @@ export async function processInvoicePaid(body: any, event: Stripe.Event) {
         // ✅ Grant access to the product
         const stripeObject: Stripe.Invoice = event.data
           .object as Stripe.Invoice;
+        const stripeCustomerId = stripeObject.customer?.toString()
+
+        if (!stripeCustomerId) {
+          return new Response('Stripe customer is missing', {
+            status: 400
+          })
+        }
+
         const subscription = await prisma.subscription.findFirst({
-          where: { stripe_customer_id: stripeObject.customer.toString() },
+          where: { stripe_customer_id: stripeCustomerId },
         });
+
+        if (!subscription) {
+          return new Response('Subscription not found', {
+            status: 404
+          })
+        }
 
         const subsId = body?.data?.object?.subscription as string
   

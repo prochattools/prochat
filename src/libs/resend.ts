@@ -5,14 +5,21 @@ import prisma from '@/libs/prisma'
 import { Resend } from 'resend'
 
 class ResendService {
-	private resend = new Resend(process.env.RESEND_API_KEY)
+	private getResendClient() {
+		const apiKey = process.env.RESEND_API_KEY
+		if (!apiKey) {
+			throw new Error('Missing RESEND_API_KEY')
+		}
+		return new Resend(apiKey)
+	}
 
 	public async sendThanksYouEmail(toMail: string) {
-		const { data, error } = await this.resend.emails.send({
+		const resend = this.getResendClient()
+		const { data, error } = await resend.emails.send({
 			from: config.resend.fromAdmin,
 			to: [toMail],
 			replyTo: config.resend.forwardRepliesTo,
-			subject: config.resend.subjects.thankYou,
+			subject: config.resend.subjects?.thankYou ?? 'Welcome to ProChat',
 			react: ThankYouTemplate({ email: toMail }),
 		})
 
@@ -24,7 +31,8 @@ class ResendService {
 	}
 
 	public async sendInvoice(toMail: string, renderData: any) {
-		const { data, error } = await this.resend.emails.send({
+		const resend = this.getResendClient()
+		const { data, error } = await resend.emails.send({
 			from: config.resend.fromAdmin,
 			to: [toMail],
 			replyTo: config.resend.forwardRepliesTo,
@@ -41,7 +49,8 @@ class ResendService {
 
 	public async addNewEmailAddress(email: string) {
 		const audience = await this.upsertAudience()
-		return this.resend.contacts.create({
+		const resend = this.getResendClient()
+		return resend.contacts.create({
 			email,
 			unsubscribed: false,
 			audienceId: audience.resend_id,
@@ -55,12 +64,18 @@ class ResendService {
 			return audience
 		}
 
-		const resendAudience = await this.resend.audiences.create({
+		const resend = this.getResendClient()
+		const resendAudience = await resend.audiences.create({
 			name: 'Waiting List',
 		})
-		const {
-			data: { id, name },
-		} = resendAudience
+
+		const id = resendAudience.data?.id
+		const name = resendAudience.data?.name
+
+		if (!id || !name) {
+			throw new Error('Failed to create Resend audience')
+		}
+
 		return prisma.audiences.create({
 			data: {
 				id: crypto.randomUUID(),

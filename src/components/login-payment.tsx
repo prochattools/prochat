@@ -46,11 +46,13 @@ const LoginPayment = ({ user }: any) => {
   const [isSubmited, setIsSubmited] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const params = useParams();
+  const params = useParams<{ token?: string | string[] }>();
+  const tokenParam = params?.token;
+  const token = Array.isArray(tokenParam) ? tokenParam[0] : tokenParam;
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.get("invoice") === "true") {
+    if (searchParams?.get("invoice") === "true") {
       setIsInvoiceOpen(true); // Open the modal if invoice=true in search params
     }
   }, [searchParams]);
@@ -71,7 +73,7 @@ const LoginPayment = ({ user }: any) => {
 
   const handleClick = async () => {
     setIsLoading(true);
-    const resp = await postSignUp(username, params?.token);
+    const resp = await postSignUp(username, token);
     if (resp?.email) {
       toast.success(
         "Access to the GitHub repo has been granted. You should receive the invitation shortly."

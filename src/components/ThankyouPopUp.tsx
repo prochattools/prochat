@@ -8,7 +8,7 @@ export default function ThankYouPopup() {
 	const pathname = usePathname();
 
     const searchParams = useSearchParams();
-    const sessionId = searchParams.get('session_id')
+    const sessionId = searchParams?.get('session_id')
   const [isOpen, setIsOpen] = useState(!!sessionId);
 
 useEffect(() => {
@@ -16,7 +16,7 @@ useEffect(() => {
 }, [])
 
   const closePopup = () => {
-    router.replace(pathname);
+    router.replace(pathname || '/');
     setIsOpen(false);
   };
 

@@ -10,11 +10,9 @@ export async function POST(req: NextRequest) {
 
   try {
     const createdContact = await resendService.addNewEmailAddress(email)
+    const contactId = createdContact?.data?.id ?? null
 
-    return NextResponse.json(
-      {},
-      { status: 200, statusText: 'Contact created: ' + createdContact.data.id }
-    )
+    return NextResponse.json({ success: true, contactId }, { status: 200 })
   } catch (e) {
     console.error(e)
     return NextResponse.json(
