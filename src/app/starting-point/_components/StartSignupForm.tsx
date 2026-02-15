@@ -2,6 +2,7 @@
 
 import { FormEvent, useId, useState } from 'react'
 import { Loader2 } from 'lucide-react'
+import { Button } from '@/app/marketing-ai-studio/components/ui/Button'
 
 interface StartSignupFormProps {
   buttonLabel?: string
@@ -70,10 +71,10 @@ export default function StartSignupForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 text-left">
+    <form onSubmit={handleSubmit} className="space-y-5 text-left">
       <label
         htmlFor={inputId}
-        className="block text-xs font-semibold uppercase tracking-wide text-slate-500"
+        className="block text-sm font-semibold uppercase tracking-[0.16em] text-slate-600"
       >
         Email Address
       </label>
@@ -87,21 +88,22 @@ export default function StartSignupForm({
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           disabled={isSubmitting}
-          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-slate-900 outline-none transition focus:border-[#5b49f5] focus:ring-2 focus:ring-[#885efe]/20 disabled:cursor-not-allowed disabled:opacity-60"
+          className="h-14 w-full rounded-full border border-slate-300 bg-white px-6 text-base text-slate-900 placeholder:text-slate-500 outline-none transition-all duration-300 focus:border-[#5b49f5] focus:ring-2 focus:ring-[#5b49f5]/30 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-60"
         />
 
-        <button
+        <Button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#885efe] to-[#5b49f5] px-5 font-semibold text-white shadow-[0_10px_24px_-12px_rgba(91,73,245,0.8)] transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+          size="lg"
+          className="h-14 w-full sm:w-auto sm:min-w-[220px] px-10 text-base sm:text-lg bg-[#5b49f5] hover:bg-[#4a3bd1] shadow-[0_0_26px_-12px_rgba(91,73,245,0.45)] hover:shadow-[0_0_34px_-10px_rgba(91,73,245,0.55)]"
         >
           {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
           {isSubmitting ? 'Submitting...' : buttonLabel}
-        </button>
+        </Button>
       </div>
 
-      {error && <p className="text-sm font-medium text-red-500">{error}</p>}
-      {success && <p className="text-sm font-medium text-emerald-600">{success}</p>}
+      {error && <p className="text-base font-medium text-red-500">{error}</p>}
+      {success && <p className="text-base font-medium text-emerald-600">{success}</p>}
     </form>
   )
 }
