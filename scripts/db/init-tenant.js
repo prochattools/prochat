@@ -2,7 +2,8 @@
 // ProChat marketing site – powered by the ProKit engine
 // (c) 2025 Steve Westhoek / ProChat
 /**
- * Provision a single-tenant schema + user + registry entry.
+ * Provision a single-tenant schema + user + registry entry in an existing database.
+ * This script never creates a database.
  *
  * Flags:
  *   --slug <slug>      (required in prod; defaults to "dev" in development)
@@ -53,6 +54,14 @@ function validateSlug(slug) {
       `Invalid slug "${slug}". Only lowercase letters, numbers and underscores are allowed.`
     )
   }
+}
+
+function quoteIdent(value) {
+  return `"${String(value).replace(/"/g, '""')}"`
+}
+
+function quoteLiteral(value) {
+  return `'${String(value).replace(/'/g, "''")}'`
 }
 
 function loadEnvFile(envPath) {
@@ -115,6 +124,8 @@ async function main() {
   const schema = `tenant_${slug}`
   const user = `${schema}_user`
   const tenantType = preview ? 'preview' : 'prod'
+  const parsedSystemUrl = new URL(systemUrl)
+  const dbName = parsedSystemUrl.pathname.replace(/^\/+/, '') || 'postgres'
 
   let password = process.env.TENANT_DB_PASSWORD
   if (!password) {
@@ -128,8 +139,16 @@ async function main() {
     }
   }
 
+  const dbIdent = quoteIdent(dbName)
+  const schemaIdent = quoteIdent(schema)
+  const schemaLit = quoteLiteral(schema)
+  const userIdent = quoteIdent(user)
+  const userLit = quoteLiteral(user)
+  const passwordLit = quoteLiteral(password)
+
   console.log('--------------------------------------------------')
   console.log(`🚀 Provisioning tenant "${slug}" (${env})`)
+  console.log(`Database: ${dbName} (existing DB, schema-only provisioning)`)
   console.log(`Schema: ${schema}`)
   console.log(`User:   ${user}`)
   console.log(`Type:   ${tenantType}`)
@@ -141,23 +160,65 @@ async function main() {
     await client.connect()
 
     const ddlSql = `
-      CREATE SCHEMA IF NOT EXISTS ${schema};
+      CREATE SCHEMA IF NOT EXISTS ${schemaIdent};
 
       DO $$
       BEGIN
         IF NOT EXISTS (
-          SELECT FROM pg_catalog.pg_roles WHERE rolname = '${user}'
+          SELECT FROM pg_catalog.pg_roles WHERE rolname = ${userLit}
         ) THEN
-          CREATE USER ${user} WITH PASSWORD '${password}';
+          CREATE ROLE ${userIdent}
+          WITH LOGIN PASSWORD ${passwordLit}
+          NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS;
         ELSE
-          ALTER USER ${user} WITH PASSWORD '${password}';
+          ALTER ROLE ${userIdent}
+          WITH LOGIN PASSWORD ${passwordLit}
+          NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS;
         END IF;
       END
       $$;
 
-      GRANT USAGE ON SCHEMA ${schema} TO ${user};
-      ALTER ROLE ${user} SET search_path = ${schema};
-      GRANT ALL PRIVILEGES ON SCHEMA ${schema} TO ${user};
+      -- Restrict DB-level privileges: connect only.
+      REVOKE ALL PRIVILEGES ON DATABASE ${dbIdent} FROM ${userIdent};
+      GRANT CONNECT ON DATABASE ${dbIdent} TO ${userIdent};
+
+      -- Lock down access outside the tenant schema.
+      REVOKE ALL ON SCHEMA public FROM ${userIdent};
+      REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM ${userIdent};
+      REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public FROM ${userIdent};
+      REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public FROM ${userIdent};
+
+      DO $$
+      DECLARE
+        other_schema text;
+      BEGIN
+        FOR other_schema IN
+          SELECT nspname
+          FROM pg_namespace
+          WHERE nspname LIKE 'tenant\\_%' ESCAPE '\\'
+            AND nspname <> ${schemaLit}
+        LOOP
+          EXECUTE format('REVOKE ALL ON SCHEMA %I FROM %I', other_schema, ${userLit});
+          EXECUTE format('REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA %I FROM %I', other_schema, ${userLit});
+          EXECUTE format('REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA %I FROM %I', other_schema, ${userLit});
+          EXECUTE format('REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA %I FROM %I', other_schema, ${userLit});
+        END LOOP;
+      END
+      $$;
+
+      -- Tenant schema privileges only.
+      REVOKE ALL ON SCHEMA ${schemaIdent} FROM PUBLIC;
+      GRANT USAGE, CREATE ON SCHEMA ${schemaIdent} TO ${userIdent};
+      GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA ${schemaIdent} TO ${userIdent};
+      GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA ${schemaIdent} TO ${userIdent};
+      GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA ${schemaIdent} TO ${userIdent};
+      ALTER DEFAULT PRIVILEGES IN SCHEMA ${schemaIdent}
+        GRANT ALL PRIVILEGES ON TABLES TO ${userIdent};
+      ALTER DEFAULT PRIVILEGES IN SCHEMA ${schemaIdent}
+        GRANT ALL PRIVILEGES ON SEQUENCES TO ${userIdent};
+      ALTER DEFAULT PRIVILEGES IN SCHEMA ${schemaIdent}
+        GRANT ALL PRIVILEGES ON FUNCTIONS TO ${userIdent};
+      ALTER ROLE ${userIdent} SET search_path = ${schemaIdent};
     `
 
     await client.query(ddlSql)
@@ -279,10 +340,11 @@ async function main() {
     console.log(`- tenant type: ${tenantType}`)
     console.log('--------------------------------------------------')
 
-    const parsedUrl = new URL(systemUrl)
-    const host = parsedUrl.hostname
-    const port = parsedUrl.port || '5433'
-    const runtimeDbUrl = `postgresql://${user}:${password}@${host}:${port}/postgres?schema=${schema}`
+    const host = parsedSystemUrl.hostname
+    const port = parsedSystemUrl.port || '5433'
+    const runtimeDbUrl = `postgresql://${encodeURIComponent(
+      user
+    )}:${encodeURIComponent(password)}@${host}:${port}/${dbName}?schema=${schema}`
 
     if (!isProd) {
       const envPath = path.join(process.cwd(), '.env')

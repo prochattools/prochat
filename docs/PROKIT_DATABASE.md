@@ -6,7 +6,7 @@ This is the authoritative reference for how ProKit talks to Postgres: the schema
 - Single, consistent model for local and production.
 - One app per schema (`tenant_<APP_SLUG>`) with a dedicated DB role (`tenant_<APP_SLUG>_user`).
 - Registry table `public.tenants` is for infra scripts only; runtime never touches it.
-- Deterministic scripts for provisioning, migrations, and cleanup.
+- Deterministic scripts for schema/role provisioning, migrations, and cleanup.
 - Safe-by-default: dev on Docker Postgres at `localhost:5433`, prod on Supabase reachable only inside the Dokploy VNet.
 - AI-friendly: assistants call scripts, not ad-hoc SQL.
 - Optional PR preview tenants with scripted create/cleanup.
@@ -14,7 +14,9 @@ This is the authoritative reference for how ProKit talks to Postgres: the schema
 ## Platform Layout
 
 ### Postgres instances
-- Each environment has one Postgres database named `postgres`.
+- Each environment uses an already existing Postgres database.
+- Production uses the already existing Supabase Postgres database.
+- No database provisioning is performed by ProKit scripts.
 - Per-app schema: `tenant_<slug>`.
 - Per-app DB user: `tenant_<slug>_user` scoped to that schema.
 - Registry lives in `public.tenants` for infra (provision/cleanup) only.
@@ -68,21 +70,26 @@ Implemented in `scripts/db/init-tenant.js` and `scripts/db/cleanup-tenant.js`.
 2) Password  
    - `TENANT_DB_PASSWORD` required in production; defaults to `devpass` locally.
 
-3) Create schema + user (idempotent)  
+3) Create schema + user (idempotent, schema-only)  
 ```
 CREATE SCHEMA IF NOT EXISTS tenant_<slug>;
-CREATE/ALTER USER tenant_<slug>_user WITH PASSWORD '<password>';
-GRANT USAGE ON SCHEMA tenant_<slug> TO tenant_<slug>_user;
+CREATE/ALTER ROLE tenant_<slug>_user WITH LOGIN PASSWORD '<password>' NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION;
+REVOKE ALL PRIVILEGES ON DATABASE <existing_db> FROM tenant_<slug>_user;
+GRANT CONNECT ON DATABASE <existing_db> TO tenant_<slug>_user;
+REVOKE ALL ON SCHEMA public FROM tenant_<slug>_user;
+REVOKE ALL ON SCHEMA tenant_<other_slug> FROM tenant_<slug>_user;
+GRANT USAGE, CREATE ON SCHEMA tenant_<slug> TO tenant_<slug>_user;
 ALTER ROLE tenant_<slug>_user SET search_path = tenant_<slug>;
-GRANT ALL PRIVILEGES ON SCHEMA tenant_<slug> TO tenant_<slug>_user;
 ```
+- This flow does not create a database.
+- Tenant user access is restricted to its own schema; cross-schema privileges are revoked.
 
 4) Registry (infra only)  
    - Ensure `public.tenants` exists with canonical columns.  
    - Upsert row with slug, schema_name, db_user, db_password, type (`prod` by default, `preview` when flagged), external_id, timestamps.
 
 5) Output connection URL  
-   - Logs `postgresql://tenant_<slug>_user:<password>@<host>:<port>/postgres?schema=tenant_<slug>`.  
+   - Logs `postgresql://tenant_<slug>_user:<password>@<host>:<port>/<existing_db>?schema=tenant_<slug>`.  
    - In dev, writes `APP_SLUG` + `DATABASE_URL` (and sets `SYSTEM_DATABASE_URL`/`SHADOW_DATABASE_URL` if missing) into `.env`.
 
 ### Cleanup flow
@@ -108,7 +115,8 @@ Command: `npm run db:cleanup -- --slug <slug> [--force]`
 ## Migrations & Schema Sync
 - Prisma schema: `prisma/system.prisma`.  
 - Dev: `npm run db:migrate:dev` → `prisma migrate dev --schema=prisma/system.prisma` against `localhost:5433` (uses `SHADOW_DATABASE_URL`).  
-- Prod: `NODE_ENV=production npm run db:migrate:prod` → `prisma migrate deploy --schema=prisma/system.prisma` inside Dokploy.  
+- Prod: Dokploy runs `npm run build`, which triggers npm `prebuild`; `prebuild` runs `NODE_ENV=production npm run provision:auto` (`db:init` + `db:migrate:prod`) before `next build`.  
+- No manual DB command is required in Dokploy production deployments.
 - Contract: new app versions must not boot without successful `db:migrate:prod`; no raw SQL migrations outside Prisma; `prisma/system.prisma` and `prisma/migrations` stay aligned.
 
 ## Optional MCP / Automation Bridge

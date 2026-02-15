@@ -14,13 +14,15 @@ ProKit is ProChat’s internal SaaS starter (built by Steve Westhoek) for launch
 
 ## Tenant model (what never changes)
 - Single-tenant runtime: one schema per app (`tenant_<APP_SLUG>`) and one DB role (`tenant_<APP_SLUG>_user`).  
+- The database already exists in both dev and prod; scripts provision schema + role only (no database provisioning).  
 - Runtime uses only `DATABASE_URL`; scripts use `SYSTEM_DATABASE_URL`; `migrate dev` uses `SHADOW_DATABASE_URL`.  
 - Registry `public.tenants` is infra-only (provision/cleanup).
+- Tenant DB users are scoped to their own schema; access to `public` and other tenant schemas is revoked.
 - Provision with `npm run db:init -- --slug <slug> [--preview]`; cleanup with `npm run db:cleanup -- --slug <slug> [--force]`; migrations via `npm run db:migrate:dev|prod`.
 
 ## Infra expectations
 - Dev: Docker Postgres on `localhost:5433`; `npm run dev` bootstraps `.env`, provisions default tenant, runs migrations, and starts Next.js dev server.  
-- Prod: Dokploy containers inside a VNet with Supabase Postgres at `10.0.2.4:5433`; Dokploy jobs run the same scripts for provisioning/cleanup and apply migrations via `db:migrate:prod`. Optional MCP bridge can trigger those scripts remotely.
+- Prod: Dokploy containers inside a VNet with Supabase Postgres at `10.0.2.4:5433`; Dokploy build command is `npm run build` and start command is `npm run start`. Build automatically runs `prebuild` (`provision:auto` => `db:init` + `db:migrate:prod`). No manual DB commands are required for normal production deploys. Optional MCP bridge can trigger the same scripts remotely.
 
 ## Day-to-day dev workflow
 1. `npm install`  

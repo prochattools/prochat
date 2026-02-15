@@ -24,7 +24,7 @@ For rules governing how AI assistants may modify this boilerplate—including ar
 
 - Single-tenant runtime using one schema (`tenant_<APP_SLUG>`) and one DB user (`tenant_<APP_SLUG>_user`)
 - Registry table `public.tenants` used only by infra scripts (provision/cleanup), never by runtime
-- Shared `postgres` database per environment (dev + prod), canonical port `5433`
+- Shared existing Postgres database per environment (dev + prod), canonical port `5433`
 - Local development using Docker Postgres on `localhost:5433`
 - Production Postgres on a private Supabase instance (no public DB access)
 - Prisma migrations:
@@ -33,7 +33,7 @@ For rules governing how AI assistants may modify this boilerplate—including ar
 - Deterministic scripts:
   - Provisioning: `npm run db:init -- --slug <slug> [--preview] [--external-id <id>]`
   - Cleanup (preview or forced prod): `npm run db:cleanup -- --slug <slug> [--force]`
-- Dokploy integration for pre-deploy migrations and provisioning in the same VNet as Supabase
+- Dokploy integration for pre-deploy migrations and schema provisioning in the same VNet as Supabase
 - Optional MCP bridge (`https://mcp.prochat.tools`) to trigger these scripts remotely (replaceable)
 - Optional modules (trustless patterns, idea factory) that can be layered on without touching the core
 
@@ -63,8 +63,11 @@ The full database model and automation behavior is documented in:
 
 ### Architecture
 
-- Each environment (development, production) has its own Postgres instance with a database named `postgres`.
+- Each environment (development, production) uses an already existing Postgres database.
+- In production this is the existing Supabase Postgres database (no database provisioning).
 - One app → one schema (`tenant_<APP_SLUG>`) → one DB user (`tenant_<APP_SLUG>_user`).
+- `db:init` provisions schema + role only. It never creates databases.
+- Tenant DB users are restricted to their own schema and are explicitly revoked from `public` and other `tenant_*` schemas.
 - Runtime uses only `DATABASE_URL` (tenant user + tenant schema). Runtime must NOT read hostnames, `SYSTEM_DATABASE_URL`, `SHADOW_DATABASE_URL`, or `public.tenants`.
 - Registry (`public.tenants`) is infra-only (provision/cleanup). Columns: slug, schema_name, db_user, db_password, type (`prod`/`preview`), external_id, created_at, updated_at.
 
@@ -90,7 +93,7 @@ Commands:
 
 - Provision tenant: `npm run db:init -- --slug <slug> [--preview] [--external-id <id>]`
 - Migrate schema (development): `npm run db:migrate:dev`
-- Migrate schema (production, in Dokploy): `npm run db:migrate:prod`
+- Migrate schema (production command used by Dokploy prebuild): `npm run db:migrate:prod`
 - Cleanup preview tenant: `npm run db:cleanup -- --slug <slug> [--force]`
 
 ---
@@ -130,7 +133,8 @@ Under the hood:
 2) `npm run db:init`
    - Parses `--slug <slug>` (preferred) or `APP_SLUG`.
    - Defaults to `dev` in development if nothing is provided.
-   - Creates `tenant_<slug>` schema, `tenant_<slug>_user`, grants, and `public.tenants` row with metadata (type `prod` by default, `preview` if `--preview` is passed).
+   - Creates `tenant_<slug>` schema, `tenant_<slug>_user`, least-privilege grants, and `public.tenants` row with metadata (type `prod` by default, `preview` if `--preview` is passed).
+   - Never creates a database. Dev and production both assume the database already exists.
    - Updates `.env` with `APP_SLUG` and `DATABASE_URL`; only sets `SYSTEM_DATABASE_URL`/`SHADOW_DATABASE_URL` if missing.
 
 3) `npm run db:migrate:dev`
@@ -147,6 +151,7 @@ npx prisma migrate reset --schema=prisma/system.prisma
 
 ### 4. Manual dev commands (optional)
 
+- Auto provision local DB: `npm run db:provision:local`
 - Provision: `npm run db:init -- --slug myapp`
 - Migrate: `npm run db:migrate:dev`
 - Start dev server: `npm run dev`
@@ -175,6 +180,8 @@ Result:
 ### Production deployment (Dokploy + Supabase)
 
 1) Configure Dokploy env:
+   - Use the existing Supabase Postgres database.
+   - Do not provision/create a new database.
    - `NODE_ENV=production`
    - `APP_SLUG=myapp`
    - `TENANT_DB_PASSWORD=<strong-password>`
@@ -184,13 +191,14 @@ Result:
    - `NEXT_PUBLIC_APP_URL=https://myapp.example.com`
    - `PORT=3000`
 
-2) Dokploy run command (example):
-
-```
-npm run db:init -- --slug $APP_SLUG && npm run db:migrate:prod && npm start
-```
+2) Dokploy commands:
+   - Build command: `npm run build`
+   - Start command: `npm run start`
 
 Notes:
+- `npm run build` automatically runs `prebuild` first.
+- `prebuild` runs `NODE_ENV=production npm run provision:auto`, which runs `db:init` + `db:migrate:prod` before `next build`.
+- In Dokploy production deployments, no manual database action is required. Do not add manual `db:init` or `db:migrate:prod` commands to deployment hooks.
 - `npm run db:init` is idempotent; it reconciles schema, user, and registry row.
 - Runtime must only use `DATABASE_URL` (tenant user). `SYSTEM_DATABASE_URL` is for scripts; `SHADOW_DATABASE_URL` is for Prisma dev migrations.
 

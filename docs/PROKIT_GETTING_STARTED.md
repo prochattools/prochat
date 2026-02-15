@@ -34,6 +34,8 @@ Reference: `.env.example`.
 npm run db:init -- --slug dev       # creates schema/user + registry row
 npm run db:migrate:dev              # runs Prisma migrate dev (uses SHADOW_DATABASE_URL)
 ```
+Important: this flow provisions a tenant schema and tenant role inside an existing Postgres database. It never creates a database.
+
 For new projects or when you need `.env.production` updated, run:
 ```bash
 ./scripts/provision-saas.sh <project-slug>
@@ -54,9 +56,18 @@ npm run dev
 6. Refresh `/dashboard` to access the Scenarios UI (Make/n8n project cloning).
 
 ## 6) Common commands
+- Auto provision local: `npm run db:provision:local`
 - Provision: `npm run db:init -- --slug <slug> [--preview] [--external-id <id>]`
 - Migrate (dev): `npm run db:migrate:dev`
 - Migrate (prod): `npm run db:migrate:prod`
 - Cleanup preview: `npm run db:cleanup -- --slug <slug> [--force]`
+
+## 7) Dokploy production deployment (no manual DB step)
+- Build command: `npm run build`
+- Start command: `npm run start`
+- `npm run build` automatically runs npm `prebuild`.
+- `prebuild` runs `NODE_ENV=production npm run provision:auto` (`db:init` + `db:migrate:prod`).
+- Production assumes the existing Supabase Postgres database is already present; only schema/role provisioning is performed.
+- Do not add manual production hooks for `db:init` or `db:migrate:prod`.
 
 If you hit issues, see `docs/PROKIT_INFRASTRUCTURE.md` and `instructions/troubleshooting.md`.

@@ -1,40 +1,86 @@
 #!/usr/bin/env node
 /**
  * Idempotent provisioning for ProChat / ProKit.
- * - Derives slug from APP_SLUG or defaults to "prochat".
+ * - Provisions tenant schema/role in an existing database (never creates a database).
+ * - Resolves APP_SLUG from process env first, then .env/.env.production.
  * - In dev: runs db:init + db:migrate:dev.
- * - In prod: runs db:init + db:migrate:prod using SYSTEM_DATABASE_URL/SHADOW_DATABASE_URL inside Dokploy VNet.
+ * - In prod: runs db:init + db:migrate:prod (Dokploy / VNet flow).
  */
 
-const { spawnSync } = require('child_process')
+const fs = require('fs')
 const path = require('path')
+const { spawnSync } = require('child_process')
 
-const env = process.env.NODE_ENV || 'development'
-const slug = (process.env.APP_SLUG || 'prochat').trim()
+const repoRoot = path.join(__dirname, '..')
+
+function readEnvFile(filePath) {
+  if (!fs.existsSync(filePath)) return {}
+
+  const values = {}
+  const lines = fs.readFileSync(filePath, 'utf8').split('\n')
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim()
+    if (!line || line.startsWith('#')) continue
+
+    const separator = line.indexOf('=')
+    if (separator <= 0) continue
+
+    const key = line.slice(0, separator).trim()
+    const value = line.slice(separator + 1).trim()
+    values[key] = value
+  }
+
+  return values
+}
+
+const envFromDotEnv = readEnvFile(path.join(repoRoot, '.env'))
+const envFromDotEnvProd = readEnvFile(path.join(repoRoot, '.env.production'))
+
+const nodeEnv =
+  (process.env.NODE_ENV ||
+    envFromDotEnv.NODE_ENV ||
+    envFromDotEnvProd.NODE_ENV ||
+    'development')
+    .trim()
+
+const isProd = nodeEnv === 'production'
+
+const slugFromFiles = isProd
+  ? envFromDotEnvProd.APP_SLUG || envFromDotEnv.APP_SLUG
+  : envFromDotEnv.APP_SLUG || envFromDotEnvProd.APP_SLUG
+
+const slug = (process.env.APP_SLUG || slugFromFiles || (isProd ? '' : 'dev')).trim()
 
 if (!slug) {
-  console.error('APP_SLUG is required to provision the database.')
+  console.error('APP_SLUG is required in production. Set APP_SLUG in Dokploy env.')
   process.exit(1)
 }
 
+const baseEnv = {
+  ...process.env,
+  NODE_ENV: nodeEnv,
+  APP_SLUG: slug,
+}
+
 const run = (cmd, args) => {
-  const { status, stdout, stderr } = spawnSync(cmd, args, {
+  const { status } = spawnSync(cmd, args, {
     stdio: 'inherit',
-    env: process.env,
-    cwd: path.join(__dirname, '..'),
+    env: baseEnv,
+    cwd: repoRoot,
   })
+
   if (status !== 0) {
     process.exit(status || 1)
   }
 }
 
-// Always init tenant; scripts are idempotent.
 run('npm', ['run', 'db:init', '--', '--slug', slug])
 
-if (env === 'production') {
+if (isProd) {
   run('npm', ['run', 'db:migrate:prod'])
 } else {
   run('npm', ['run', 'db:migrate:dev'])
 }
 
-console.log(`✅ Provisioned tenant "${slug}" for ${env}`)
+console.log(`✅ Provisioned tenant "${slug}" for ${nodeEnv}`)

@@ -38,19 +38,22 @@ This file captures the contracts that must stay stable while rebranding the boil
 - `npm run dev` – runs `predev`, then starts Next.js dev server on port 3000.  
   - `predev` → `scripts/dev/bootstrap-env.js` (writes `.env` if missing with dev defaults) → `db:init` → `db:migrate:dev`.
 - `npm run build` – Next.js production build.  
+  - `prebuild` → `NODE_ENV=production npm run provision:auto` (provisions tenant + runs `db:migrate:prod` before build).
 - `npm start` – Next.js server (`next start -p 3000`).  
+- `npm run db:provision:local` – local idempotent provisioning (`NODE_ENV=development npm run provision:auto`).  
 - `npm run db:init` – `scripts/db/init-tenant.js`; provisions schema/user/registry row for `APP_SLUG` or `--slug`; writes `.env` in dev; prints runtime `DATABASE_URL` in prod.  
 - `./scripts/provision-saas.sh <project-slug>` – required for new apps; wraps `db:init` + migrations and updates `.env.production`.  
 - `npm run db:cleanup` – `scripts/db/cleanup-tenant.js`; drops schema/user and registry row (preview-only unless `--force`).  
 - `npm run db:migrate:dev` – `prisma migrate dev --schema=prisma/system.prisma` (creates/applies dev migrations; uses `SHADOW_DATABASE_URL`).  
-- `npm run db:migrate:prod` – same deploy command targeting production connection.  
+- `npm run db:migrate:prod` – production deploy command (`prisma migrate deploy`), normally invoked by `prebuild` in Dokploy.
 - `npm run postinstall` – `prisma generate --schema=prisma/system.prisma`.
 
 ## Runtime & Infra Assumptions
-- One Postgres database per environment (`postgres`), one schema per app: `tenant_<APP_SLUG>`, and one DB role: `tenant_<APP_SLUG>_user`.
+- One already existing Postgres database per environment, one schema per app: `tenant_<APP_SLUG>`, and one DB role: `tenant_<APP_SLUG>_user`.
+- Production uses an already existing Supabase Postgres database; scripts must not create databases.
 - Registry `public.tenants` exists for infra scripts only (provision/cleanup). Runtime never reads or writes it.
 - Runtime uses only `DATABASE_URL` (tenant user scoped to tenant schema). Scripts use `SYSTEM_DATABASE_URL`; Prisma `migrate dev` uses `SHADOW_DATABASE_URL`.
-- Provisioning (`db:init`): validates slug, uses `TENANT_DB_PASSWORD` (prod) or `devpass` (dev), creates schema/user, ensures registry row (type `prod` unless `--preview`), and in dev writes `.env` defaults.
+- Provisioning (`db:init`): validates slug, uses `TENANT_DB_PASSWORD` (prod) or `devpass` (dev), creates schema/user in the existing database, revokes access outside the tenant schema, ensures registry row (type `prod` unless `--preview`), and in dev writes `.env` defaults.
 - Cleanup (`db:cleanup`): looks up `public.tenants`, refuses non-preview unless `--force`, drops schema/user, deletes registry row. Runs against `SYSTEM_DATABASE_URL`.
 - Migrations: Prisma schema at `prisma/system.prisma`; migrations live under `prisma/migrations`; `db:migrate:dev` runs `prisma migrate dev` and `db:migrate:prod` runs `prisma migrate deploy`.
 - CI/Dokploy: expect Postgres reachable on port 5433, and Dokploy jobs run the same scripts inside the VNet for Supabase.
@@ -62,7 +65,7 @@ This file captures the contracts that must stay stable while rebranding the boil
   - “Workspace” is the app-level tenant created by `db:init` (one schema/user per app); no per-user multitenancy in runtime.
 - **Workspace / tenant DB creation / migration**  
   - Dev: `npm run dev` → `predev` writes `.env`, provisions `tenant_dev`, applies migrations to local Postgres on `localhost:5433`.  
-  - Prod: Dokploy job runs `NODE_ENV=production npm run db:init -- --slug <slug>` followed by `npm run db:migrate:prod` against Supabase at `10.0.2.4:5433`.
+  - Prod: Dokploy runs `npm run build`; npm lifecycle runs `prebuild` automatically, which executes `NODE_ENV=production npm run provision:auto` (`db:init` + `db:migrate:prod`) against Supabase at `10.0.2.4:5433`. No manual DB commands are required in Dokploy.
 - **Subscription flow (Stripe)**  
   - Checkout initiated client-side via `CheckoutButton` → `/api/stripe/create-checkout` (uses config price IDs) → Stripe Checkout.  
   - Webhook (`/api/webhook/stripe`) verifies with `STRIPE_WEBHOOK_SECRET` and dispatches:  
