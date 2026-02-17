@@ -6,6 +6,25 @@ const nextConfig = {
 		ignoreDuringBuilds: true,
 	},
 	reactStrictMode: true,
+	async redirects() {
+		return [
+			{
+				source: '/store',
+				destination: '/kits',
+				permanent: true,
+			},
+			{
+				source: '/store/saaskit',
+				destination: '/kits/saaskit',
+				permanent: true,
+			},
+			{
+				source: '/store/prokit',
+				destination: '/kits/prokit',
+				permanent: true,
+			},
+		]
+	},
 	images: {
 		remotePatterns: [
 			// NextJS <Image> component needs to whitelist domains for src={}

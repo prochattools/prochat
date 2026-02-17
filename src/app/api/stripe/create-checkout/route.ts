@@ -18,7 +18,7 @@ const getOrigin = (req: Request) => {
   return `${proto}://${host}`;
 };
 
-const resolveStoreProductSlug = (priceId: string, productId?: string) => {
+const resolveKitProductSlug = (priceId: string, productId?: string) => {
   const prokitPrice = process.env.STRIPE_PRICE_PROKIT;
   const saaskitPrice = process.env.STRIPE_PRICE_SAASKIT;
   const prokitProduct = process.env.STRIPE_PRODUCT_PROKIT;
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
 
     const customerEmail = email || undefined
     const origin = getOrigin(req);
-    const productSlug = resolveStoreProductSlug(priceId, currentProduct.productId);
+    const productSlug = resolveKitProductSlug(priceId, currentProduct.productId);
     const githubRepo =
       productSlug === 'prokit'
         ? process.env.GITHUB_PROKIT_REPO || 'prochattools/prokit-core'
@@ -65,11 +65,11 @@ export async function POST(req: Request) {
           : undefined;
 
     const successUrl = productSlug
-      ? `${origin}/store/${productSlug}/finish?session_id={CHECKOUT_SESSION_ID}`
+      ? `${origin}/kits/${productSlug}?session_id={CHECKOUT_SESSION_ID}`
       : `${origin}/dashboard?session_id={CHECKOUT_SESSION_ID}`;
 
     const cancelUrl = productSlug
-      ? `${origin}/store/${productSlug}`
+      ? `${origin}/kits/${productSlug}`
       : `${origin}/cancel?session_id={CHECKOUT_SESSION_ID}`;
 
     const session = await stripe.checkout.sessions.create({

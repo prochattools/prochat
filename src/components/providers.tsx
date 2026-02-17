@@ -10,11 +10,11 @@ export function Providers({ children }: { children: ReactNode }) {
     <>
       <ThemeProvider
         attribute="class"
-        defaultTheme="system"
-        enableSystem
+        defaultTheme="light"
+        enableSystem={false}
         disableTransitionOnChange
       >
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-gray-50 text-slate-900 dark:bg-[#010814] dark:text-slate-100">
           {children}
         </div>
       </ThemeProvider>

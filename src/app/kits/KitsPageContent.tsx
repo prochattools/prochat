@@ -16,7 +16,7 @@ const KitsPageContent = () => {
 				secondaryCtaLink="/kits/prokit"
 				microProof="Proven foundations for every stage"
 			/>
-			<div className="-mt-32">
+			<div>
 				<RoutingTiles />
 			</div>
 		</KitsShell>

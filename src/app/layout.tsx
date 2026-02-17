@@ -16,6 +16,7 @@ const ROOT_DESCRIPTION =
 
 const TAILWIND_RUNTIME_CONFIG = `
   tailwind.config = {
+    darkMode: 'class',
     theme: {
       extend: {
         fontFamily: {
@@ -104,7 +105,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
         <style dangerouslySetInnerHTML={{ __html: BASE_STYLE_OVERRIDES }} />
       </head>
-      <body className="bg-gray-50 text-slate-900 selection:bg-purple-200">
+      <body className="bg-gray-50 text-slate-900 dark:bg-[#010814] dark:text-slate-100 selection:bg-purple-200 dark:selection:bg-[#5b49f5]/40">
         <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
           <Scaffolding opacity={0.6} />
         </div>

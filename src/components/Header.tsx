@@ -16,10 +16,10 @@ import {
 	SheetTrigger,
 } from '@/components/ui/sheet'
 import { Blog, Demo, Landing, Moon, OpenNav, Pricing, RightArrow, Sun } from '@/icons'
+import { useThemeMode } from '@/utils/themeMode'
 import { ScrollToSection } from '@/utils/scroll-to-section'
-import { useTheme } from 'next-themes'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const nav_links = [
 	{
@@ -49,27 +49,16 @@ const nav_links = [
 ]
 
 const ThemeSwitch = () => {
-	const { setTheme } = useTheme()
+	const { mounted, isDark, toggleTheme } = useThemeMode()
 
-	useEffect(() => {
-		setTheme('system')
-	}, [])
-
-	const handleChnage = (e: any) => {
-		const isDark = e.target.checked
-		console.log(isDark)
-		if (isDark) {
-			setTheme('dark')
-		} else {
-			setTheme('light')
-		}
-	}
 	return (
 		<label className='flex items-center relative w-max cursor-pointer select-none'>
 			<input
 				type='checkbox'
 				id='theme-toggle'
-				onChange={handleChnage}
+				checked={mounted ? isDark : false}
+				onChange={toggleTheme}
+				disabled={!mounted}
 				className='appearance-none transition-colors cursor-pointer w-14 h-[30px] rounded-full focus:outline-none border border-[#B7B8BB] dark:border-[#373C53] bg-white'
 			/>
 			<span className='absolute font-medium text-xs uppercase right-1 text-white'>
@@ -121,9 +110,24 @@ const MobileNav = () => {
 }
 
 const Header = () => {
+	const [isScrolled, setIsScrolled] = useState(false)
+
+	useEffect(() => {
+		const handleScroll = () => setIsScrolled(window.scrollY > 20)
+		handleScroll()
+		window.addEventListener('scroll', handleScroll)
+		return () => window.removeEventListener('scroll', handleScroll)
+	}, [])
+
 	return (
-		<div className='flex justify-center items-center w-full fixed top-0 z-50 bg-white dark:bg-[#010814]'>
-			<div className='max-w-[1440px] w-full flex justify-between items-center gap-4 px-4 sm:px-12 py-6'>
+		<div
+			className={`flex justify-center items-center w-full fixed top-0 z-50 border-b transition-all duration-500 ${
+				isScrolled
+					? 'bg-white/70 backdrop-blur-xl border-slate-200/60 py-3 shadow-[0_2px_20px_-12px_rgba(0,0,0,0.05)] dark:bg-[#0B111B]/70 dark:border-[#1E242D] dark:shadow-none'
+					: 'bg-transparent border-transparent py-6 dark:bg-transparent dark:border-transparent'
+			}`}
+		>
+			<div className='max-w-[1440px] w-full flex justify-between items-center gap-4 px-4 sm:px-12'>
 				<Link href='/'>
 					<Logo scale={1.3} />
 				</Link>

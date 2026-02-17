@@ -13,7 +13,12 @@
 	width: 0px;
 }
 
-.dark {
+html {
+	color-scheme: light;
+}
+
+html.dark {
+	color-scheme: dark;
 	background: rgb(1 8 20 / var(--tw-bg-opacity, 1))
 }
 

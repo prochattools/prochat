@@ -29,10 +29,10 @@ export const Hero: React.FC<HeroProps> = ({
   onSecondaryCtaClick
 }) => {
   return (
-    <section className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden pt-20">
       
       {/* Cinematic Spotlight */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[800px] bg-gradient-to-b from-indigo-50/50 via-white/20 to-transparent pointer-events-none opacity-60 dark:from-[#1C2140]/50 dark:via-[#0B111B]/30" />
+      <div className="absolute inset-x-0 top-0 h-[800px] bg-gradient-to-b from-indigo-50/50 via-white/20 to-transparent pointer-events-none opacity-60 dark:from-[#1C2140]/50 dark:via-[#0B111B]/30" />
 
       <div className="relative z-20 max-w-5xl mx-auto px-8 w-full flex flex-col items-center text-center space-y-10 mt-12 md:mt-0">
         
