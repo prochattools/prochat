@@ -1,7 +1,7 @@
 'use client'
 
-import { Scaffolding, BlueprintCard } from '@/app/marketing-ai-studio/components/ui/Scaffolding'
-import { Reveal } from '@/app/marketing-ai-studio/components/ui/Reveal'
+import { Scaffolding, BlueprintCard } from '@/app/(marketing)/components/ui/Scaffolding'
+import { Reveal } from '@/app/(marketing)/components/ui/Reveal'
 
 const EVENTS = [
 	{

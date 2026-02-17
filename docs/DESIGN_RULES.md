@@ -1,8 +1,8 @@
 # Design Rules
 
 ## Source of truth
-- The home page is canonical: `src/app/page.tsx` (MarketingApp) and its imported sections under `src/app/marketing-ai-studio/components/sections/`.
-- Shared layout is canonical: `src/app/layout.tsx` + `src/components/AppShell.tsx` + `src/app/marketing-ai-studio/components/layout/`.
+- The home page is canonical: `src/app/page.tsx` (MarketingApp) and its imported sections under `src/app/(marketing)/components/sections/`.
+- Shared layout is canonical: `src/app/layout.tsx` + `src/components/AppShell.tsx` + `src/app/(marketing)/components/layout/`.
 
 ## Do
 - Reuse existing section components or their exact patterns from the home page.

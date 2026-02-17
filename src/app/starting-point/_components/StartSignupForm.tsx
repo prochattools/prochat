@@ -2,7 +2,7 @@
 
 import { FormEvent, useId, useState } from 'react'
 import { Loader2 } from 'lucide-react'
-import { Button } from '@/app/marketing-ai-studio/components/ui/Button'
+import { Button } from '@/app/(marketing)/components/ui/Button'
 
 interface StartSignupFormProps {
   buttonLabel?: string

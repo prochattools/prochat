@@ -16,8 +16,8 @@ import {
 	SheetTrigger,
 } from '@/components/ui/sheet'
 import { Blog, Demo, Landing, Moon, OpenNav, Pricing, RightArrow, Sun } from '@/icons'
-import { useThemeMode } from '@/utils/themeMode'
 import { ScrollToSection } from '@/utils/scroll-to-section'
+import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -49,16 +49,28 @@ const nav_links = [
 ]
 
 const ThemeSwitch = () => {
-	const { mounted, isDark, toggleTheme } = useThemeMode()
+	const { resolvedTheme, setTheme } = useTheme()
+	const [mounted, setMounted] = useState(false)
+
+	useEffect(() => {
+		setMounted(true)
+	}, [])
+
+	const toggleTheme = () => {
+		const isDarkTheme =
+			resolvedTheme === 'dark' ||
+			(typeof document !== 'undefined' &&
+				document.documentElement.classList.contains('dark'))
+		setTheme(isDarkTheme ? 'light' : 'dark')
+	}
 
 	return (
 		<label className='flex items-center relative w-max cursor-pointer select-none'>
 			<input
 				type='checkbox'
 				id='theme-toggle'
-				checked={mounted ? isDark : false}
+				checked={mounted ? resolvedTheme === 'dark' : false}
 				onChange={toggleTheme}
-				disabled={!mounted}
 				className='appearance-none transition-colors cursor-pointer w-14 h-[30px] rounded-full focus:outline-none border border-[#B7B8BB] dark:border-[#373C53] bg-white'
 			/>
 			<span className='absolute font-medium text-xs uppercase right-1 text-white'>

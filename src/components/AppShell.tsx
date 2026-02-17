@@ -2,8 +2,8 @@
 
 import { ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
-import { Navbar } from '@/app/marketing-ai-studio/components/layout/Navbar'
-import { Footer } from '@/app/marketing-ai-studio/components/layout/Footer'
+import { Navbar } from '@/app/(marketing)/components/layout/Navbar'
+import { Footer } from '@/app/(marketing)/components/layout/Footer'
 
 const CHROMELESS_ROUTES = ['/starting-point']
 

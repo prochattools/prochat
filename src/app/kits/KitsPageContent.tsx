@@ -1,8 +1,8 @@
 'use client'
 
 import KitsShell from './_components/KitsShell'
-import { Hero } from '@/app/marketing-ai-studio/components/sections/Hero'
-import { RoutingTiles } from '@/app/marketing-ai-studio/components/sections/RoutingTiles'
+import { Hero } from '@/app/(marketing)/components/sections/Hero'
+import { RoutingTiles } from '@/app/(marketing)/components/sections/RoutingTiles'
 
 const KitsPageContent = () => {
 	return (

@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Button } from '@/app/marketing-ai-studio/components/ui/Button'
-import { Scaffolding } from '@/app/marketing-ai-studio/components/ui/Scaffolding'
+import { Button } from '@/app/(marketing)/components/ui/Button'
+import { Scaffolding } from '@/app/(marketing)/components/ui/Scaffolding'
 
 export default function ContactPage() {
 	const [isLoading, setIsLoading] = useState(false)

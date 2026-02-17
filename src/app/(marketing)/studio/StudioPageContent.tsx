@@ -11,10 +11,10 @@ import {
 	Workflow,
 	X,
 } from 'lucide-react'
-import { Hero } from '@/app/marketing-ai-studio/components/sections/Hero'
-import { Button } from '@/app/marketing-ai-studio/components/ui/Button'
-import { Reveal } from '@/app/marketing-ai-studio/components/ui/Reveal'
-import { BlueprintCard, Scaffolding } from '@/app/marketing-ai-studio/components/ui/Scaffolding'
+import { Hero } from '@/app/(marketing)/components/sections/Hero'
+import { Button } from '@/app/(marketing)/components/ui/Button'
+import { Reveal } from '@/app/(marketing)/components/ui/Reveal'
+import { BlueprintCard, Scaffolding } from '@/app/(marketing)/components/ui/Scaffolding'
 
 const STUDIO_CONSTRAINTS = [
 	'Fixed scope',

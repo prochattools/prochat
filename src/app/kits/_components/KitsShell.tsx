@@ -1,7 +1,7 @@
 'use client'
 
 import { ReactNode } from 'react'
-import { Scaffolding } from '@/app/marketing-ai-studio/components/ui/Scaffolding'
+import { Scaffolding } from '@/app/(marketing)/components/ui/Scaffolding'
 
 const KitsShell = ({ children }: { children: ReactNode }) => {
 	return (
