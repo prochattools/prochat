@@ -55,7 +55,7 @@ export default function FinishClient() {
         setErrorCode(nextErrorCode);
         setErrorMessage(
           data.message ||
-            "Something went wrong while linking your GitHub account. Please retry or contact support."
+          "Something went wrong while linking your GitHub account. Please retry or contact support."
         );
         if (nextErrorCode === "invalid_session") {
           setFallbackVisible(true);

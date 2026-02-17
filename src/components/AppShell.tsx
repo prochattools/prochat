@@ -6,7 +6,7 @@ import { Navbar } from '@/app/marketing-ai-studio/components/layout/Navbar'
 import { Footer } from '@/app/marketing-ai-studio/components/layout/Footer'
 
 const HOME_ROUTE = '/'
-const CHROMELESS_ROUTES = ['/starting-point']
+const CHROMELESS_ROUTES = ['/starting-point', '/store/prokit', '/store/saaskit']
 
 export default function AppShell({ children }: { children: ReactNode }) {
 	const pathname = usePathname() || ''
