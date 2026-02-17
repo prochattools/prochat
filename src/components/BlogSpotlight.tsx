@@ -1,4 +1,3 @@
-import BackArrow from '@/assets/images/back-arrow.svg'
 import { convertToReadableDate } from '@/utils/functions'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -24,7 +23,9 @@ const BlogSpotlight: FC<AuthorAvatarProps> = ({ post }) => {
 				href='/blog'
 				className='flex items-center dark:text-gray-500 text-black1/70 gap-2 mb-4'
 			>
-				<Image alt='Back Arrow' src={BackArrow} height={10} width={15} />
+				<span aria-hidden='true' className='text-base leading-none'>
+					←
+				</span>
 				<span>Back to blog</span>
 			</Link>
 			<h1 className='text-[42px] !leading-[1.19] font-bold mb-2'>

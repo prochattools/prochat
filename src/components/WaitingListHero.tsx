@@ -1,8 +1,4 @@
 'use client'
-import heroBg from '@/assets/images/hero-bg1.svg'
-import heroBgDark from '@/assets/images/hero-bg2.svg'
-import toolsImageDark from '@/assets/images/tools1.png'
-import toolsImageLight from '@/assets/images/tools2.png'
 import IconButton from '@/components/icon-button'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -135,21 +131,21 @@ const WaitingListHero = () => {
 	}
 	return (
 		<div className='relative flex justify-center items-center w-full'>
-			<Image
-				src={heroBg}
-				alt='background'
-				fill
-				style={{ objectFit: 'cover' }}
-				priority={true}
-				className='z-0 block dark:hidden'
+			<div
+				className='absolute inset-0 z-0 block dark:hidden'
+				style={{
+					backgroundImage:
+						'linear-gradient(180deg, #f6f8fb 0%, #edf2f7 100%), linear-gradient(90deg, rgba(120,130,150,0.12) 1px, transparent 1px), linear-gradient(0deg, rgba(120,130,150,0.12) 1px, transparent 1px)',
+					backgroundSize: 'auto, 48px 48px, 48px 48px',
+				}}
 			/>
-			<Image
-				src={heroBgDark}
-				alt='background'
-				fill
-				style={{ objectFit: 'cover' }}
-				priority={true}
-				className='z-0 hidden dark:block'
+			<div
+				className='absolute inset-0 z-0 hidden dark:block'
+				style={{
+					backgroundImage:
+						'linear-gradient(180deg, #060d1d 0%, #08142e 100%), linear-gradient(90deg, rgba(95,128,184,0.14) 1px, transparent 1px), linear-gradient(0deg, rgba(95,128,184,0.14) 1px, transparent 1px)',
+					backgroundSize: 'auto, 48px 48px, 48px 48px',
+				}}
 			/>
 			<div className='relative z-10 max-w-[1440px] w-full px-4 sm:px-12 pb-12 mt-40'>
 				<div className='flex justify-between lg:items-center flex-col lg:flex-row gap-8'>
@@ -198,7 +194,7 @@ const WaitingListHero = () => {
 					</div>
 					<div className=''>
 						<Image
-							src={toolsImageDark}
+							src='/logo/prochat_logo_dark.png'
 							alt='tools'
 							width={550}
 							height={550}
@@ -207,7 +203,7 @@ const WaitingListHero = () => {
 							className='object-contain lg:w-[550px] mx-auto block dark:hidden'
 						/>
 						<Image
-							src={toolsImageLight}
+							src='/logo/prochat_logo_light.png'
 							alt='tools'
 							width={550}
 							height={550}
