@@ -65,7 +65,7 @@ export async function POST(req: Request) {
           : undefined;
 
     const successUrl = productSlug
-      ? `${origin}/kits/${productSlug}?session_id={CHECKOUT_SESSION_ID}`
+      ? `${origin}/kits/${productSlug}/finish?session_id={CHECKOUT_SESSION_ID}`
       : `${origin}/dashboard?session_id={CHECKOUT_SESSION_ID}`;
 
     const cancelUrl = productSlug

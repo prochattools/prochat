@@ -23,6 +23,16 @@ const nextConfig = {
 				destination: '/kits/prokit',
 				permanent: true,
 			},
+			{
+				source: '/store/prokit/finish',
+				destination: '/kits/prokit/finish',
+				permanent: true,
+			},
+			{
+				source: '/store/saaskit/finish',
+				destination: '/kits/saaskit/finish',
+				permanent: true,
+			},
 		]
 	},
 	images: {

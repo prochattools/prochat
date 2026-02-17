@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import Stripe from "stripe";
 import { stripe, webhookSecret } from "@/constants/stripe";
 import { processSubscriptonDelete, processInvoicePaid, processCheckoutSuccessWebhook } from "../../actions";
+import { markSessionPaid } from "@/lib/store/stripe";
 // This is where we receive Stripe webhook events. / It used to update the user data, send emails, etc...
 // By default, it'll store the user in the database. 
 export async function POST(req: NextRequest) {
@@ -30,6 +31,13 @@ export async function POST(req: NextRequest) {
   try {
     switch (event.type) {
       case "checkout.session.completed": {
+        const checkoutSession = event.data.object as Stripe.Checkout.Session;
+
+        if (checkoutSession.metadata?.entitlement_type === "github_repo") {
+          await markSessionPaid(checkoutSession);
+          break;
+        }
+
         const body = JSON.parse(textParsedBody);
         return processCheckoutSuccessWebhook(body, event)
       }
