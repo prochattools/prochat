@@ -1,16 +1,8 @@
 import { loadStripe } from '@stripe/stripe-js';
+import { getStripePublishableKey } from '@/libs/stripe-env';
 
-const stripeModeRaw = (process.env.NEXT_PUBLIC_STRIPE_MODE || '').toLowerCase();
-const stripeMode =
-  stripeModeRaw === 'live' || stripeModeRaw === 'life' || stripeModeRaw === 'prod' || stripeModeRaw === 'production'
-    ? 'live'
-    : 'test';
-const stripePublishableKey =
-  stripeMode === 'live'
-    ? process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE
-    : process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST;
-
-const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : Promise.resolve(null);
+const stripePublishableKey = getStripePublishableKey();
+const stripePromise = loadStripe(stripePublishableKey);
 
 export const handleCheckoutProcess = async (
     priceId: string,
@@ -60,7 +52,7 @@ export const handleCheckoutProcess = async (
       const stripe = await stripePromise;
       if (!stripe) {
         throw new Error(
-          'Failed to load Stripe. Configure NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST/NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE.'
+          'Failed to load Stripe. Verify NEXT_PUBLIC_STRIPE_MODE and mode-specific publishable key values.'
         );
       }
   

@@ -1,32 +1,70 @@
 type StripeMode = 'test' | 'live'
 
-const DEFAULT_MODE: StripeMode = 'test'
-
 const normalize = (value?: string | null): string => (value || '').trim()
 
-const resolveModeAlias = (mode: string): StripeMode => {
+const resolveModeAlias = (mode: string): StripeMode | null => {
 	if (['live', 'life', 'prod', 'production'].includes(mode)) return 'live'
 	if (['test', 'sandbox', 'dev', 'development'].includes(mode)) return 'test'
-	return DEFAULT_MODE
+	return null
 }
 
-const resolveMode = (): StripeMode => {
-	const mode = normalize(process.env.STRIPE_MODE).toLowerCase()
-	return resolveModeAlias(mode)
+function getCaseHint(envName: 'STRIPE_MODE' | 'NEXT_PUBLIC_STRIPE_MODE'): string {
+	if (envName === 'STRIPE_MODE' && normalize(process.env.STRIPE_mode)) {
+		return ' Found STRIPE_mode in env, but environment variable names are case-sensitive.'
+	}
+	if (
+		envName === 'NEXT_PUBLIC_STRIPE_MODE' &&
+		normalize(process.env.NEXT_PUBLIC_STRIPE_mode)
+	) {
+		return ' Found NEXT_PUBLIC_STRIPE_mode in env, but environment variable names are case-sensitive.'
+	}
+	return ''
 }
 
-const byMode = (testValue?: string | null, liveValue?: string | null): string => {
-	const mode = resolveMode()
+function parseMode(
+	rawValue: string | undefined,
+	envName: 'STRIPE_MODE' | 'NEXT_PUBLIC_STRIPE_MODE'
+): StripeMode {
+	const mode = normalize(rawValue).toLowerCase()
+	if (!mode) {
+		throw new Error(
+			`[stripe-env] Missing ${envName}. Set ${envName}=test or ${envName}=live.${getCaseHint(
+				envName
+			)}`
+		)
+	}
+	const resolved = resolveModeAlias(mode)
+	if (!resolved) {
+		throw new Error(
+			`[stripe-env] Invalid ${envName}="${mode}". Use one of: test, live.`
+		)
+	}
+	return resolved
+}
+
+function requiredByMode(
+	mode: StripeMode,
+	testEnvName: string,
+	liveEnvName: string,
+	testValue?: string | null,
+	liveValue?: string | null
+): string {
 	const modeValue = mode === 'live' ? normalize(liveValue) : normalize(testValue)
-	return modeValue || ''
+	if (!modeValue) {
+		throw new Error(
+			`[stripe-env] Missing ${
+				mode === 'live' ? liveEnvName : testEnvName
+			} for STRIPE_MODE=${mode}.`
+		)
+	}
+	return modeValue
 }
 
-export const getStripeMode = (): StripeMode => resolveMode()
+export const getStripeMode = (): StripeMode =>
+	parseMode(process.env.STRIPE_MODE, 'STRIPE_MODE')
 
 export const getClientStripeMode = (): StripeMode => {
-	const clientMode = normalize(process.env.NEXT_PUBLIC_STRIPE_MODE).toLowerCase()
-	if (clientMode) return resolveModeAlias(clientMode)
-	return resolveMode()
+	return parseMode(process.env.NEXT_PUBLIC_STRIPE_MODE, 'NEXT_PUBLIC_STRIPE_MODE')
 }
 
 const getSecretKeyMode = (key: string): StripeMode | 'unknown' => {
@@ -63,7 +101,10 @@ function assertModeMatchesKeyType(
 export const getStripeSecretKey = (): string =>
 	(() => {
 		const mode = getStripeMode()
-		const key = byMode(
+		const key = requiredByMode(
+			mode,
+			'STRIPE_SECRET_KEY_TEST',
+			'STRIPE_SECRET_KEY_LIVE',
 			process.env.STRIPE_SECRET_KEY_TEST,
 			process.env.STRIPE_SECRET_KEY_LIVE
 		)
@@ -71,13 +112,24 @@ export const getStripeSecretKey = (): string =>
 		return key
 	})()
 
-export const getStripeWebhookSecret = (): string =>
-	byMode(process.env.STRIPE_WEBHOOK_SECRET_TEST, process.env.STRIPE_WEBHOOK_SECRET_LIVE)
+export const getStripeWebhookSecret = (): string => {
+	const mode = getStripeMode()
+	return requiredByMode(
+		mode,
+		'STRIPE_WEBHOOK_SECRET_TEST',
+		'STRIPE_WEBHOOK_SECRET_LIVE',
+		process.env.STRIPE_WEBHOOK_SECRET_TEST,
+		process.env.STRIPE_WEBHOOK_SECRET_LIVE
+	)
+}
 
 export const getStripePublishableKey = (): string =>
 	(() => {
 		const mode = getClientStripeMode()
-		const key = byMode(
+		const key = requiredByMode(
+			mode,
+			'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST',
+			'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE',
 			process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST,
 			process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE
 		)
@@ -86,13 +138,49 @@ export const getStripePublishableKey = (): string =>
 	})()
 
 export const getStripePriceProkit = (): string =>
-	byMode(process.env.STRIPE_PRICE_PROKIT_TEST, process.env.STRIPE_PRICE_PROKIT_LIVE)
+	(() => {
+		const mode = getStripeMode()
+		return requiredByMode(
+			mode,
+			'STRIPE_PRICE_PROKIT_TEST',
+			'STRIPE_PRICE_PROKIT_LIVE',
+			process.env.STRIPE_PRICE_PROKIT_TEST,
+			process.env.STRIPE_PRICE_PROKIT_LIVE
+		)
+	})()
 
 export const getStripeProductProkit = (): string =>
-	byMode(process.env.STRIPE_PRODUCT_PROKIT_TEST, process.env.STRIPE_PRODUCT_PROKIT_LIVE)
+	(() => {
+		const mode = getStripeMode()
+		return requiredByMode(
+			mode,
+			'STRIPE_PRODUCT_PROKIT_TEST',
+			'STRIPE_PRODUCT_PROKIT_LIVE',
+			process.env.STRIPE_PRODUCT_PROKIT_TEST,
+			process.env.STRIPE_PRODUCT_PROKIT_LIVE
+		)
+	})()
 
 export const getStripePriceSaaskit = (): string =>
-	byMode(process.env.STRIPE_PRICE_SAASKIT_TEST, process.env.STRIPE_PRICE_SAASKIT_LIVE)
+	(() => {
+		const mode = getStripeMode()
+		return requiredByMode(
+			mode,
+			'STRIPE_PRICE_SAASKIT_TEST',
+			'STRIPE_PRICE_SAASKIT_LIVE',
+			process.env.STRIPE_PRICE_SAASKIT_TEST,
+			process.env.STRIPE_PRICE_SAASKIT_LIVE
+		)
+	})()
 
 export const getStripeProductSaaskit = (): string =>
-	byMode(process.env.STRIPE_PRODUCT_SAASKIT_TEST, process.env.STRIPE_PRODUCT_SAASKIT_LIVE)
+	(() => {
+		const mode = getStripeMode()
+		return requiredByMode(
+			mode,
+			'STRIPE_PRODUCT_SAASKIT_TEST',
+			'STRIPE_PRODUCT_SAASKIT_LIVE',
+			process.env.STRIPE_PRODUCT_SAASKIT_TEST,
+			process.env.STRIPE_PRODUCT_SAASKIT_LIVE
+		)
+	})()
