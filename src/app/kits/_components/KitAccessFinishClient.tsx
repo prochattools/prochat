@@ -3,6 +3,11 @@
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+
+import {
+	isValidGithubUsernameInput,
+	parseGithubUsername,
+} from '@/lib/store/github-username'
 import type { ProductSlug } from '@/lib/store/types'
 
 type ClaimResponse = {
@@ -17,8 +22,6 @@ type ClaimResponse = {
 interface KitAccessFinishClientProps {
 	productSlug: ProductSlug
 }
-
-const GITHUB_USERNAME_PATTERN = /^[A-Za-z0-9-]{1,39}$/
 
 const productLabelMap: Record<ProductSlug, string> = {
 	prokit: 'ProKit',
@@ -42,15 +45,12 @@ export default function KitAccessFinishClient({
 	const [fallbackVisible, setFallbackVisible] = useState(!sessionId)
 
 	const canSubmitSession = useMemo(
-		() =>
-			!!sessionId &&
-			GITHUB_USERNAME_PATTERN.test(username.trim()) &&
-			!submitting,
+		() => !!sessionId && isValidGithubUsernameInput(username) && !submitting,
 		[sessionId, username, submitting]
 	)
 
 	const canSubmitEmailFallback = useMemo(() => {
-		return !!email.trim() && GITHUB_USERNAME_PATTERN.test(username.trim()) && !submitting
+		return !!email.trim() && isValidGithubUsernameInput(username) && !submitting
 	}, [email, username, submitting])
 
 	async function submitClaim(payload: {
@@ -93,7 +93,7 @@ export default function KitAccessFinishClient({
 			} else {
 				const collaboratorLine = data.alreadyCollaborator
 					? 'You already had collaborator access.'
-					: 'You will receive an invite email from GitHub.'
+					: 'You will receive a GitHub invite in your notifications or email.'
 				setSuccessMessage(
 					`We've requested GitHub access for @${payload.github_username}. ${collaboratorLine} Once you accept it, you can clone the repository from your GitHub account.`
 				)
@@ -113,16 +113,24 @@ export default function KitAccessFinishClient({
 		if (!canSubmitSession) {
 			return
 		}
-		submitClaim({ session_id: sessionId, github_username: username.trim() })
+		const parsedUsername = parseGithubUsername(username)
+		if (!parsedUsername) {
+			return
+		}
+		submitClaim({ session_id: sessionId, github_username: parsedUsername })
 	}
 
 	function onFallbackSubmit() {
 		if (!canSubmitEmailFallback) {
 			return
 		}
+		const parsedUsername = parseGithubUsername(username)
+		if (!parsedUsername) {
+			return
+		}
 		submitClaim({
 			email: email.trim(),
-			github_username: username.trim(),
+			github_username: parsedUsername,
 		})
 	}
 
@@ -151,7 +159,7 @@ export default function KitAccessFinishClient({
 					</Link>
 				</li>
 				<li>2. Tell us your GitHub username.</li>
-				<li>3. Accept the invite email from GitHub.</li>
+				<li>3. Accept the GitHub invite from your notifications or email.</li>
 			</ol>
 
 			{sessionId ? (

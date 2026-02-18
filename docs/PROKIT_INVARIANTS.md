@@ -16,9 +16,9 @@ This file captures the contracts that must stay stable while rebranding the boil
   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` – turn on Clerk middleware + components.  
   - `NEXT_PUBLIC_CLERK_SIGN_IN_URL`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL`, `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL`, `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL` – optional route overrides.
 - Billing (Stripe)  
-  - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` – client checkout.  
-  - `STRIPE_SECRET_KEY` – server Stripe client.  
-  - `STRIPE_WEBHOOK_SECRET` – webhook signature verification.  
+  - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE` – client checkout.  
+  - `STRIPE_SECRET_KEY_TEST`, `STRIPE_SECRET_KEY_LIVE` – server Stripe client.  
+  - `STRIPE_WEBHOOK_SECRET_TEST`, `STRIPE_WEBHOOK_SECRET_LIVE` – webhook signature verification.  
   - Pricing/plan IDs live in `src/config.ts` and are treated as the source of truth.
 - Email (Resend)  
   - `RESEND_API_KEY` – used by `resendService` for waiting list + thank-you emails.
@@ -68,7 +68,7 @@ This file captures the contracts that must stay stable while rebranding the boil
   - Prod: Dokploy runs `npm run build`; npm lifecycle runs `prebuild` automatically, which executes `NODE_ENV=production npm run provision:auto` (`db:init` + `db:migrate:prod`) against Supabase at `10.0.2.4:5433`. No manual DB commands are required in Dokploy.
 - **Subscription flow (Stripe)**  
   - Checkout initiated client-side via `CheckoutButton` → `/api/stripe/create-checkout` (uses config price IDs) → Stripe Checkout.  
-  - Webhook (`/api/webhook/stripe`) verifies with `STRIPE_WEBHOOK_SECRET` and dispatches:  
+- Webhook (`/api/webhook/stripe`) verifies with the mode-specific Stripe webhook secret and dispatches:  
     - `checkout.session.completed` → `processCheckoutSuccessWebhook` upserts `subscription` row (active, links Stripe customer + optional subscription ID), then emits thank-you email via Resend.  
     - `invoice.paid` keeps subscription `active`; `customer.subscription.deleted` marks it `inactive`.  
   - Billing portal: `/api/stripe/create-portal` uses stored `stripe_customer_id` to create a customer portal session.  

@@ -6,10 +6,10 @@ import {
 	getStripeProductSaaskit,
 } from '@/libs/stripe-env'
 
-const STRIPE_PRODUCT_PROKIT = getStripeProductProkit()
-const STRIPE_PRICE_PROKIT = getStripePriceProkit()
-const STRIPE_PRODUCT_SAASKIT = getStripeProductSaaskit()
-const STRIPE_PRICE_SAASKIT = getStripePriceSaaskit()
+const STRIPE_PRODUCT_ID_PROKIT = getStripeProductProkit()
+const STRIPE_PRICE_ID_PROKIT = getStripePriceProkit()
+const STRIPE_PRODUCT_ID_SAASKIT = getStripeProductSaaskit()
+const STRIPE_PRICE_ID_SAASKIT = getStripePriceSaaskit()
 
 const config: ConfigProps = {
 	// REQUIRED
@@ -25,13 +25,13 @@ const config: ConfigProps = {
 			{
 				type: 'one-time', // one-time, subscription
 				title: 'ProChat ProKit',
-				productId: STRIPE_PRODUCT_PROKIT,
+					productId: STRIPE_PRODUCT_ID_PROKIT,
 				subtitle: 'Lifetime access',
 				price: 97,
 				isBest: true,
 				linkTitle: 'Get ProChat ProKit',
 				featuresTitle: 'Features',
-				priceId: STRIPE_PRICE_PROKIT,
+					priceId: STRIPE_PRICE_ID_PROKIT,
 				features: [
 					{ title: 'Unlimited Projects' },
 					{ title: 'Full Source Code' },
@@ -44,13 +44,13 @@ const config: ConfigProps = {
 			{
 				type: 'one-time',
 				title: 'ProChat SaaSkit',
-				productId: STRIPE_PRODUCT_SAASKIT,
+					productId: STRIPE_PRODUCT_ID_SAASKIT,
 				subtitle: 'Lifetime access',
 				price: 197,
 				isBest: false,
 				linkTitle: 'Get SaaSkit',
 				featuresTitle: 'Features',
-				priceId: STRIPE_PRICE_SAASKIT,
+					priceId: STRIPE_PRICE_ID_SAASKIT,
 				features: [
 					{ title: 'Client service funnel + delivery' },
 					{ title: 'Ready-to-sell SaaS kit templates' },

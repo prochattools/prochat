@@ -16,7 +16,10 @@ export async function POST(req: NextRequest) {
   }
 
   if (!webhookSecret) {
-    return NextResponse.json({ error: 'Missing STRIPE_WEBHOOK_SECRET' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Missing STRIPE_WEBHOOK_SECRET_TEST/STRIPE_WEBHOOK_SECRET_LIVE' },
+      { status: 500 }
+    );
   }
 
   console.log('1 POST', textParsedBody)

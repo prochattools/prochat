@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server'
 import type Stripe from 'stripe'
 
+import {
+	isValidGithubUsernameInput,
+	normalizeGithubUsernameForComparison,
+	parseGithubUsername,
+} from '@/lib/store/github-username'
 import { addCollaborator } from '@/lib/store/github'
 import {
 	findLatestPaidUnprovisionedSessionByEmail,
@@ -17,18 +22,18 @@ type ClaimBody = {
 }
 
 const PRODUCT_SLUG: ProductSlug = 'prokit'
-const GITHUB_USERNAME_PATTERN = /^[A-Za-z0-9-]{1,39}$/
 
 export async function POST(req: Request) {
 	try {
 		const body = (await req.json()) as ClaimBody
 		const sessionId = body.session_id?.trim() || ''
 		const email = body.email?.trim() || ''
-		const githubUsername = body.github_username?.trim() || ''
+		const githubUsernameInput = body.github_username || ''
+		const githubUsername = parseGithubUsername(githubUsernameInput)
 
 		if (
 			!githubUsername ||
-			!GITHUB_USERNAME_PATTERN.test(githubUsername) ||
+			!isValidGithubUsernameInput(githubUsernameInput) ||
 			(!sessionId && !email)
 		) {
 			return NextResponse.json(
@@ -64,6 +69,7 @@ export async function POST(req: Request) {
 					{
 						error: 'unpaid',
 						message:
+							status.message ||
 							"We can't confirm your payment yet. If you just paid, wait a minute and refresh this page.",
 					},
 					{ status: 400 }
@@ -85,7 +91,8 @@ export async function POST(req: Request) {
 				const existingUsername = (status.githubUsername || '').trim()
 				if (
 					existingUsername &&
-					existingUsername.toLowerCase() !== githubUsername.toLowerCase()
+					normalizeGithubUsernameForComparison(existingUsername) !==
+						normalizeGithubUsernameForComparison(githubUsername)
 				) {
 					return NextResponse.json(
 						{
@@ -121,6 +128,18 @@ export async function POST(req: Request) {
 			)
 
 			if (!lookup.session) {
+				if (lookup.status.state === 'unpaid') {
+					return NextResponse.json(
+						{
+							error: 'unpaid',
+							message:
+								lookup.status.message ||
+								"We can't confirm your payment yet. If you just paid, wait a minute and refresh this page.",
+						},
+						{ status: 400 }
+					)
+				}
+
 				const statusCode = lookup.status.state === 'error' ? 500 : 404
 				return NextResponse.json(
 					{
@@ -166,7 +185,7 @@ export async function POST(req: Request) {
 				{
 					error: 'github_user_not_found',
 					message:
-						'GitHub username not found. Double-check the spelling or create your GitHub account first.',
+						'GitHub username not found, or the repository is not installed to our GitHub App yet.',
 				},
 				{ status: 400 }
 			)
@@ -175,12 +194,15 @@ export async function POST(req: Request) {
 		if (provisionResult.error === 'forbidden') {
 			console.error('[store/prokit/claim] GitHub permission error', {
 				sessionId: targetSessionId,
+				productSlug: PRODUCT_SLUG,
+				githubUsername,
+				details: provisionResult.message,
 			})
 			return NextResponse.json(
 				{
 					error: 'server_error',
 					message:
-						"We couldn't add this GitHub username automatically. Please contact support so we can fix your access.",
+						"We couldn't send your GitHub repository invite automatically. Please contact support so we can fix your access.",
 				},
 				{ status: 500 }
 			)
@@ -194,7 +216,7 @@ export async function POST(req: Request) {
 			{
 				error: 'server_error',
 				message:
-					"We couldn't add this GitHub username automatically. Please contact support so we can fix your access.",
+					"We couldn't send your GitHub repository invite automatically. Please contact support so we can fix your access.",
 			},
 			{ status: 500 }
 		)

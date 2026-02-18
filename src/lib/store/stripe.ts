@@ -8,7 +8,7 @@ const PRODUCT_MAP: Record<
 	Omit<ProductConfig, 'priceId' | 'githubRepo' | 'productSlug'>
 > = {
 	prokit: {
-		priceEnv: 'STRIPE_PRICE_PROKIT',
+		priceEnv: 'STRIPE_PRICE_PROKIT_TEST/STRIPE_PRICE_PROKIT_LIVE',
 		githubRepoEnv: 'GITHUB_PROKIT_REPO',
 		paidKey: 'prochat_prokit_paid',
 		provisionedKey: 'prochat_prokit_github_provisioned',
@@ -16,7 +16,7 @@ const PRODUCT_MAP: Record<
 		lastSessionKey: 'prochat_prokit_last_session',
 	},
 	saaskit: {
-		priceEnv: 'STRIPE_PRICE_SAASKIT',
+		priceEnv: 'STRIPE_PRICE_SAASKIT_TEST/STRIPE_PRICE_SAASKIT_LIVE',
 		githubRepoEnv: 'GITHUB_SAASKIT_REPO',
 		paidKey: 'prochat_saaskit_paid',
 		provisionedKey: 'prochat_saaskit_github_provisioned',
@@ -26,8 +26,8 @@ const PRODUCT_MAP: Record<
 }
 
 const DEFAULT_REPOS: Record<ProductSlug, string> = {
-	prokit: 'prochattools/prokit-core',
-	saaskit: 'prochattools/saaskit',
+	prokit: 'stevewesthoek/prokit',
+	saaskit: 'stevewesthoek/saaskit',
 }
 
 let cachedStripe: Stripe | null = null
@@ -162,6 +162,16 @@ export async function getSessionStatusById(
 			}
 		}
 
+		if (getMetadataValue(session, productConfig.paidKey) !== 'true') {
+			return {
+				state: 'unpaid',
+				message:
+					'Payment is still being verified by Stripe webhook. If you just paid, wait a minute and refresh this page.',
+				productSlug: expectedProduct,
+				email: getSessionEmail(session),
+			}
+		}
+
 		const email = getSessionEmail(session)
 		const githubUsername =
 			getMetadataValue(session, productConfig.usernameKey) || null
@@ -203,6 +213,7 @@ export async function findLatestPaidUnprovisionedSessionByEmail(
 
 		const normalizedEmail = email.trim().toLowerCase()
 		const sessionList = await stripe.checkout.sessions.list({ limit: 20 })
+		let pendingVerificationStatus: EntitlementStatus | null = null
 
 		for (const listedSession of sessionList.data) {
 			if (listedSession.metadata?.product_slug !== productSlug) {
@@ -219,6 +230,12 @@ export async function findLatestPaidUnprovisionedSessionByEmail(
 
 			const status = await getSessionStatusById(session.id, productSlug)
 			if (status.state !== 'paid_unclaimed') {
+				if (
+					status.state === 'unpaid' &&
+					(status.email || '').trim().toLowerCase() === normalizedEmail
+				) {
+					pendingVerificationStatus = status
+				}
 				continue
 			}
 
@@ -227,6 +244,13 @@ export async function findLatestPaidUnprovisionedSessionByEmail(
 			}
 
 			return { session, status }
+		}
+
+		if (pendingVerificationStatus) {
+			return {
+				session: null,
+				status: pendingVerificationStatus,
+			}
 		}
 
 		return {

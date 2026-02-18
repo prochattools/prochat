@@ -7,10 +7,8 @@ const stripeMode =
     : 'test';
 const stripePublishableKey =
   stripeMode === 'live'
-    ? process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE ||
-      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-    : process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST ||
-      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    ? process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE
+    : process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST;
 
 const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : Promise.resolve(null);
 
@@ -61,7 +59,9 @@ export const handleCheckoutProcess = async (
 
       const stripe = await stripePromise;
       if (!stripe) {
-        throw new Error('Failed to load Stripe. Configure NEXT_PUBLIC Stripe publishable key.');
+        throw new Error(
+          'Failed to load Stripe. Configure NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST/NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE.'
+        );
       }
   
       const { error: stripeError } = await stripe.redirectToCheckout({ sessionId: data.sessionId });

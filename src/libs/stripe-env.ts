@@ -15,20 +15,10 @@ const resolveMode = (): StripeMode => {
 	return resolveModeAlias(mode)
 }
 
-const byMode = (
-	testValue?: string | null,
-	liveValue?: string | null,
-	legacyValue?: string | null,
-	legacyPublicValue?: string | null
-): string => {
+const byMode = (testValue?: string | null, liveValue?: string | null): string => {
 	const mode = resolveMode()
 	const modeValue = mode === 'live' ? normalize(liveValue) : normalize(testValue)
-	return (
-		modeValue ||
-		normalize(legacyValue) ||
-		normalize(legacyPublicValue) ||
-		''
-	)
+	return modeValue || ''
 }
 
 export const getStripeMode = (): StripeMode => resolveMode()
@@ -74,61 +64,35 @@ export const getStripeSecretKey = (): string =>
 	(() => {
 		const mode = getStripeMode()
 		const key = byMode(
-		process.env.STRIPE_SECRET_KEY_TEST,
-		process.env.STRIPE_SECRET_KEY_LIVE,
-		process.env.STRIPE_SECRET_KEY
+			process.env.STRIPE_SECRET_KEY_TEST,
+			process.env.STRIPE_SECRET_KEY_LIVE
 		)
 		assertModeMatchesKeyType(mode, key, 'secret')
 		return key
 	})()
 
 export const getStripeWebhookSecret = (): string =>
-	byMode(
-		process.env.STRIPE_WEBHOOK_SECRET_TEST,
-		process.env.STRIPE_WEBHOOK_SECRET_LIVE,
-		process.env.STRIPE_WEBHOOK_SECRET
-	)
+	byMode(process.env.STRIPE_WEBHOOK_SECRET_TEST, process.env.STRIPE_WEBHOOK_SECRET_LIVE)
 
 export const getStripePublishableKey = (): string =>
 	(() => {
 		const mode = getClientStripeMode()
 		const key = byMode(
-		process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST,
-		process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE,
-		process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+			process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST,
+			process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE
 		)
 		assertModeMatchesKeyType(mode, key, 'publishable')
 		return key
 	})()
 
 export const getStripePriceProkit = (): string =>
-	byMode(
-		process.env.STRIPE_PRICE_PROKIT_TEST,
-		process.env.STRIPE_PRICE_PROKIT_LIVE,
-		process.env.STRIPE_PRICE_PROKIT,
-		process.env.NEXT_PUBLIC_STRIPE_PRICE_PROKIT
-	)
+	byMode(process.env.STRIPE_PRICE_PROKIT_TEST, process.env.STRIPE_PRICE_PROKIT_LIVE)
 
 export const getStripeProductProkit = (): string =>
-	byMode(
-		process.env.STRIPE_PRODUCT_PROKIT_TEST,
-		process.env.STRIPE_PRODUCT_PROKIT_LIVE,
-		process.env.STRIPE_PRODUCT_PROKIT,
-		process.env.NEXT_PUBLIC_STRIPE_PRODUCT_PROKIT
-	)
+	byMode(process.env.STRIPE_PRODUCT_PROKIT_TEST, process.env.STRIPE_PRODUCT_PROKIT_LIVE)
 
 export const getStripePriceSaaskit = (): string =>
-	byMode(
-		process.env.STRIPE_PRICE_SAASKIT_TEST,
-		process.env.STRIPE_PRICE_SAASKIT_LIVE,
-		process.env.STRIPE_PRICE_SAASKIT,
-		process.env.NEXT_PUBLIC_STRIPE_PRICE_SAASKIT
-	)
+	byMode(process.env.STRIPE_PRICE_SAASKIT_TEST, process.env.STRIPE_PRICE_SAASKIT_LIVE)
 
 export const getStripeProductSaaskit = (): string =>
-	byMode(
-		process.env.STRIPE_PRODUCT_SAASKIT_TEST,
-		process.env.STRIPE_PRODUCT_SAASKIT_LIVE,
-		process.env.STRIPE_PRODUCT_SAASKIT,
-		process.env.NEXT_PUBLIC_STRIPE_PRODUCT_SAASKIT
-	)
+	byMode(process.env.STRIPE_PRODUCT_SAASKIT_TEST, process.env.STRIPE_PRODUCT_SAASKIT_LIVE)
