@@ -1,4 +1,5 @@
 import Stripe from 'stripe'
+import { getStripePriceProkit, getStripePriceSaaskit, getStripeSecretKey } from '@/libs/stripe-env'
 
 import { EntitlementStatus, ProductConfig, ProductSlug } from './types'
 
@@ -37,6 +38,14 @@ function getRequiredEnv(name: string): string {
 		throw new Error(`[store] Missing required environment variable: ${name}`)
 	}
 	return value
+}
+
+function getRequiredValue(label: string, value: string): string {
+	const normalized = value.trim()
+	if (!normalized) {
+		throw new Error(`[store] Missing required configuration value: ${label}`)
+	}
+	return normalized
 }
 
 function toCustomer(
@@ -83,7 +92,7 @@ export function getStripeClient(): Stripe {
 	if (cachedStripe) {
 		return cachedStripe
 	}
-	const secret = getRequiredEnv('STRIPE_SECRET_KEY')
+	const secret = getRequiredValue('STRIPE secret key', getStripeSecretKey())
 	cachedStripe = new Stripe(secret, { apiVersion: '2024-06-20' })
 	return cachedStripe
 }
@@ -93,7 +102,10 @@ export function getProductConfig(productSlug: ProductSlug): ProductConfig {
 	if (!baseConfig) {
 		throw new Error(`[store] Unsupported product slug: ${productSlug}`)
 	}
-	const priceId = getRequiredEnv(baseConfig.priceEnv)
+	const priceId =
+		productSlug === 'prokit'
+			? getRequiredValue(baseConfig.priceEnv, getStripePriceProkit())
+			: getRequiredValue(baseConfig.priceEnv, getStripePriceSaaskit())
 	const githubRepo =
 		process.env[baseConfig.githubRepoEnv]?.trim() || DEFAULT_REPOS[productSlug]
 

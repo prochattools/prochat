@@ -1,7 +1,8 @@
 import Stripe from "stripe";
+import { getStripeSecretKey } from "@/libs/stripe-env";
 
 class StripeService {
-  private stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
+  private stripe = new Stripe(getStripeSecretKey(), {
     typescript: true,
   });
 

@@ -1,9 +1,10 @@
 import Stripe from "stripe";
+import { getStripeSecretKey, getStripeWebhookSecret } from "@/libs/stripe-env";
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY ?? "";
+const stripeSecretKey = getStripeSecretKey();
 
 export const stripe = new Stripe(stripeSecretKey, {
   typescript: true,
 });
 
-export const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET ?? "";
+export const webhookSecret = getStripeWebhookSecret();

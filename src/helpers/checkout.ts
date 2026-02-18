@@ -1,6 +1,14 @@
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+const stripeMode = (process.env.NEXT_PUBLIC_STRIPE_MODE || 'test').toLowerCase();
+const stripePublishableKey =
+  stripeMode === 'live'
+    ? process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE ||
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+    : process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST ||
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+
+const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : Promise.resolve(null);
 
 export const handleCheckoutProcess = async (
     priceId: string,
@@ -37,14 +45,19 @@ export const handleCheckoutProcess = async (
       const data = await response.json();
       console.log('Received data from server:', data);
   
+      if (data.checkoutUrl) {
+        window.location.assign(data.checkoutUrl);
+        return;
+      }
+
       if (!data.sessionId) {
         console.error('Server response:', data);
-        throw new Error('No sessionId received from the server');
+        throw new Error('No checkoutUrl or sessionId received from the server');
       }
-  
+
       const stripe = await stripePromise;
       if (!stripe) {
-        throw new Error('Failed to load Stripe');
+        throw new Error('Failed to load Stripe. Configure NEXT_PUBLIC Stripe publishable key.');
       }
   
       const { error: stripeError } = await stripe.redirectToCheckout({ sessionId: data.sessionId });

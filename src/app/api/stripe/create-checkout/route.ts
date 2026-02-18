@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import config from "@/config";
+import {
+  getStripePriceProkit,
+  getStripePriceSaaskit,
+  getStripeProductProkit,
+  getStripeProductSaaskit,
+  getStripeSecretKey,
+} from '@/libs/stripe-env';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(getStripeSecretKey(), {
   apiVersion: '2024-06-20',
 });
 
@@ -19,10 +26,10 @@ const getOrigin = (req: Request) => {
 };
 
 const resolveKitProductSlug = (priceId: string, productId?: string) => {
-  const prokitPrice = process.env.STRIPE_PRICE_PROKIT;
-  const saaskitPrice = process.env.STRIPE_PRICE_SAASKIT;
-  const prokitProduct = process.env.STRIPE_PRODUCT_PROKIT;
-  const saaskitProduct = process.env.STRIPE_PRODUCT_SAASKIT;
+  const prokitPrice = getStripePriceProkit();
+  const saaskitPrice = getStripePriceSaaskit();
+  const prokitProduct = getStripeProductProkit();
+  const saaskitProduct = getStripeProductSaaskit();
 
   if (priceId === prokitPrice || (productId && productId === prokitProduct)) {
     return 'prokit' as const;

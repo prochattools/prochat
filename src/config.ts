@@ -1,9 +1,15 @@
 import { ConfigProps } from '@/types'
+import {
+	getStripePriceProkit,
+	getStripePriceSaaskit,
+	getStripeProductProkit,
+	getStripeProductSaaskit,
+} from '@/libs/stripe-env'
 
-const STRIPE_PRODUCT_PROKIT = process.env.STRIPE_PRODUCT_PROKIT ?? ''
-const STRIPE_PRICE_PROKIT = process.env.STRIPE_PRICE_PROKIT ?? ''
-const STRIPE_PRODUCT_SAASKIT = process.env.STRIPE_PRODUCT_SAASKIT ?? ''
-const STRIPE_PRICE_SAASKIT = process.env.STRIPE_PRICE_SAASKIT ?? ''
+const STRIPE_PRODUCT_PROKIT = getStripeProductProkit()
+const STRIPE_PRICE_PROKIT = getStripePriceProkit()
+const STRIPE_PRODUCT_SAASKIT = getStripeProductSaaskit()
+const STRIPE_PRICE_SAASKIT = getStripePriceSaaskit()
 
 const config: ConfigProps = {
 	// REQUIRED

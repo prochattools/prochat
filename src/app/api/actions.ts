@@ -7,8 +7,9 @@ import configFile from "@/config";
 import { stripeService } from '@/libs/stripe';
 import emailEvents from "@/events/email-events";
 import { randomUUID } from 'crypto';
+import { getStripeSecretKey } from '@/libs/stripe-env';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2024-06-20' });
+const stripe = new Stripe(getStripeSecretKey(), { apiVersion: '2024-06-20' });
 
 export async function getSubscriptionByUserId(userId: string) {
     const existingSubscription = await prisma.subscription.findFirst({

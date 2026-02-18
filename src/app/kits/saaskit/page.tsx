@@ -1,5 +1,6 @@
 import config from '@/config'
 import { getSEOTags } from '@/libs/seo'
+import { getStripePriceSaaskit } from '@/libs/stripe-env'
 import SaaSkitPageContent from './SaaSkitPageContent'
 
 const saaskitTitle = 'SaaSkit — SaaS Launch Kit | ProChat'
@@ -21,10 +22,7 @@ export default function SaaSkitPage() {
 		config.stripe.products.find(product =>
 			product.title.toLowerCase().includes('saaskit')
 		) ?? null
-	const envPriceId =
-		process.env.STRIPE_PRICE_SAASKIT ||
-		process.env.NEXT_PUBLIC_STRIPE_PRICE_SAASKIT ||
-		null
+	const envPriceId = getStripePriceSaaskit() || null
 	const priceId = saaskitProduct?.priceId || envPriceId
 
 	return <SaaSkitPageContent priceId={priceId} />
