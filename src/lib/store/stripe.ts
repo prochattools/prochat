@@ -1,6 +1,7 @@
 import Stripe from 'stripe'
 import { getStripePriceProkit, getStripePriceSaaskit, getStripeSecretKey } from '@/libs/stripe-env'
 
+import { getGithubConfig } from './github'
 import { EntitlementStatus, ProductConfig, ProductSlug } from './types'
 
 const PRODUCT_MAP: Record<
@@ -9,7 +10,6 @@ const PRODUCT_MAP: Record<
 > = {
 	prokit: {
 		priceEnv: 'STRIPE_PRICE_PROKIT_TEST/STRIPE_PRICE_PROKIT_LIVE',
-		githubRepoEnv: 'GITHUB_PROKIT_REPO',
 		paidKey: 'prochat_prokit_paid',
 		provisionedKey: 'prochat_prokit_github_provisioned',
 		usernameKey: 'prochat_prokit_github_username',
@@ -17,7 +17,6 @@ const PRODUCT_MAP: Record<
 	},
 	saaskit: {
 		priceEnv: 'STRIPE_PRICE_SAASKIT_TEST/STRIPE_PRICE_SAASKIT_LIVE',
-		githubRepoEnv: 'GITHUB_SAASKIT_REPO',
 		paidKey: 'prochat_saaskit_paid',
 		provisionedKey: 'prochat_saaskit_github_provisioned',
 		usernameKey: 'prochat_saaskit_github_username',
@@ -25,20 +24,7 @@ const PRODUCT_MAP: Record<
 	},
 }
 
-const DEFAULT_REPOS: Record<ProductSlug, string> = {
-	prokit: 'stevewesthoek/prokit',
-	saaskit: 'stevewesthoek/saaskit',
-}
-
 let cachedStripe: Stripe | null = null
-
-function getRequiredEnv(name: string): string {
-	const value = process.env[name]?.trim()
-	if (!value) {
-		throw new Error(`[store] Missing required environment variable: ${name}`)
-	}
-	return value
-}
 
 function getRequiredValue(label: string, value: string): string {
 	const normalized = value.trim()
@@ -106,8 +92,8 @@ export function getProductConfig(productSlug: ProductSlug): ProductConfig {
 		productSlug === 'prokit'
 			? getRequiredValue(baseConfig.priceEnv, getStripePriceProkit())
 			: getRequiredValue(baseConfig.priceEnv, getStripePriceSaaskit())
-	const githubRepo =
-		process.env[baseConfig.githubRepoEnv]?.trim() || DEFAULT_REPOS[productSlug]
+	const { repoOwner, repoName } = getGithubConfig(productSlug)
+	const githubRepo = `${repoOwner}/${repoName}`
 
 	return {
 		productSlug,

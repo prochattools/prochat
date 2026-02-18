@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import config from "@/config";
+import { getGithubConfig } from '@/lib/store/github'
 import {
   getStripeMode,
   getStripePriceProkit,
@@ -66,12 +67,12 @@ export async function POST(req: Request) {
     const customerEmail = email || undefined
     const origin = getOrigin(req);
     const productSlug = resolveKitProductSlug(priceId, currentProduct.productId);
-    const githubRepo =
-      productSlug === 'prokit'
-        ? process.env.GITHUB_PROKIT_REPO || 'stevewesthoek/prokit'
-        : productSlug === 'saaskit'
-          ? process.env.GITHUB_SAASKIT_REPO || 'stevewesthoek/saaskit'
-          : undefined;
+    const githubRepo = productSlug
+      ? (() => {
+          const { repoOwner, repoName } = getGithubConfig(productSlug);
+          return `${repoOwner}/${repoName}`;
+        })()
+      : undefined;
 
     const successUrl = productSlug
       ? `${origin}/kits/${productSlug}/finish?session_id={CHECKOUT_SESSION_ID}`

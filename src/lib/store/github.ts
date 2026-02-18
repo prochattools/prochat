@@ -18,14 +18,26 @@ type GithubInstallationTokenResponse = {
 	expires_at?: string
 }
 
+type GithubRepositoryInstallationResponse = {
+	id?: number
+}
+
 type CachedInstallationToken = {
 	token: string
 	expiresAtMs: number
+	installationId: string
+	repoKey: string
 }
 
-const DEFAULT_REPOS: Record<ProductSlug, string> = {
-	prokit: 'stevewesthoek/prokit',
-	saaskit: 'stevewesthoek/saaskit',
+const PRODUCT_REPOS: Record<ProductSlug, GithubConfig> = {
+	prokit: {
+		repoOwner: 'stevewesthoek',
+		repoName: 'prokit',
+	},
+	saaskit: {
+		repoOwner: 'stevewesthoek',
+		repoName: 'saaskit',
+	},
 }
 
 let cachedInstallationToken: CachedInstallationToken | null = null
@@ -84,65 +96,242 @@ function createGithubAppJwt(): string {
 	return `${unsignedToken}.${signature}`
 }
 
-async function getGithubInstallationToken(): Promise<string> {
-	if (cachedInstallationToken && Date.now() < cachedInstallationToken.expiresAtMs) {
-		return cachedInstallationToken.token
+function buildGithubApiHeaders(authToken: string): Record<string, string> {
+	return {
+		Authorization: `Bearer ${authToken}`,
+		Accept: 'application/vnd.github+json',
+		'X-GitHub-Api-Version': '2022-11-28',
 	}
+}
 
-	const installationId = getRequiredEnv('GITHUB_APP_INSTALLATION_ID')
-	const appJwt = createGithubAppJwt()
+function computeTokenExpiryMs(expiresAt: string | undefined): number {
+	const expiresAtMs = Date.parse(expiresAt || '')
+	return Number.isFinite(expiresAtMs)
+		? Math.max(Date.now() + 1_000, expiresAtMs - 60_000)
+		: Date.now() + 4 * 60_000
+}
+
+async function requestInstallationAccessToken(
+	appJwt: string,
+	installationId: string
+): Promise<
+	| {
+			ok: true
+			token: string
+			expiresAtMs: number
+			githubRequestId: string | null
+	  }
+	| {
+			ok: false
+			statusCode: number
+			githubRequestId: string | null
+			bodyText: string
+	  }
+> {
 	const response = await fetch(
 		`https://api.github.com/app/installations/${installationId}/access_tokens`,
 		{
 			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${appJwt}`,
-				Accept: 'application/vnd.github+json',
-				'X-GitHub-Api-Version': '2022-11-28',
-			},
+			headers: buildGithubApiHeaders(appJwt),
 		}
 	)
 
+	const githubRequestId = response.headers.get('x-github-request-id') || null
 	if (!response.ok) {
-		const bodyText = await response.text()
-		console.error('[store] Failed to fetch GitHub App installation token', {
+		return {
+			ok: false,
 			statusCode: response.status,
-			githubRequestId: response.headers.get('x-github-request-id') || null,
-			body: bodyText.slice(0, 500),
-		})
-		throw new Error(
-			`[store] Unable to fetch GitHub installation token (status ${response.status})`
-		)
+			githubRequestId,
+			bodyText: (await response.text()).slice(0, 500),
+		}
 	}
 
 	const data = (await response.json()) as GithubInstallationTokenResponse
 	const token = data.token?.trim()
 	if (!token) {
-		throw new Error('[store] GitHub installation token response missing token')
+		return {
+			ok: false,
+			statusCode: 500,
+			githubRequestId,
+			bodyText: 'GitHub installation token response missing token',
+		}
 	}
 
-	const expiresAtMs = Date.parse(data.expires_at || '')
-	cachedInstallationToken = {
+	return {
+		ok: true,
 		token,
-		expiresAtMs: Number.isFinite(expiresAtMs)
-			? Math.max(Date.now() + 1_000, expiresAtMs - 60_000)
-			: Date.now() + 4 * 60_000,
+		expiresAtMs: computeTokenExpiryMs(data.expires_at),
+		githubRequestId,
+	}
+}
+
+async function discoverInstallationIdForRepository(
+	appJwt: string,
+	repoOwner: string,
+	repoName: string
+): Promise<
+	| {
+			ok: true
+			installationId: string
+			githubRequestId: string | null
+	  }
+	| {
+			ok: false
+			statusCode: number
+			githubRequestId: string | null
+			bodyText: string
+	  }
+> {
+	const response = await fetch(
+		`https://api.github.com/repos/${repoOwner}/${repoName}/installation`,
+		{
+			method: 'GET',
+			headers: buildGithubApiHeaders(appJwt),
+		}
+	)
+
+	const githubRequestId = response.headers.get('x-github-request-id') || null
+	if (!response.ok) {
+		return {
+			ok: false,
+			statusCode: response.status,
+			githubRequestId,
+			bodyText: (await response.text()).slice(0, 500),
+		}
 	}
 
-	return token
+	const data = (await response.json()) as GithubRepositoryInstallationResponse
+	if (!data.id) {
+		return {
+			ok: false,
+			statusCode: 500,
+			githubRequestId,
+			bodyText: 'GitHub repository installation lookup returned no installation id',
+		}
+	}
+
+	return {
+		ok: true,
+		installationId: String(data.id),
+		githubRequestId,
+	}
+}
+
+async function getGithubInstallationTokenForRepo(
+	repoOwner: string,
+	repoName: string,
+	requestId: string,
+	productSlug: ProductSlug
+): Promise<string> {
+	const repoKey = `${repoOwner}/${repoName}`
+	const configuredInstallationId = getRequiredEnv('GITHUB_APP_INSTALLATION_ID')
+	if (
+		cachedInstallationToken &&
+		Date.now() < cachedInstallationToken.expiresAtMs &&
+		(cachedInstallationToken.installationId === configuredInstallationId ||
+			cachedInstallationToken.repoKey === repoKey)
+	) {
+		return cachedInstallationToken.token
+	}
+
+	const appJwt = createGithubAppJwt()
+	const configuredAttempt = await requestInstallationAccessToken(
+		appJwt,
+		configuredInstallationId
+	)
+
+	if (configuredAttempt.ok) {
+		cachedInstallationToken = {
+			token: configuredAttempt.token,
+			expiresAtMs: configuredAttempt.expiresAtMs,
+			installationId: configuredInstallationId,
+			repoKey,
+		}
+		return configuredAttempt.token
+	}
+
+	if (configuredAttempt.statusCode === 404) {
+		const discoveredAttempt = await discoverInstallationIdForRepository(
+			appJwt,
+			repoOwner,
+			repoName
+		)
+
+		if (discoveredAttempt.ok) {
+			const discoveredInstallationId = discoveredAttempt.installationId
+			if (
+				cachedInstallationToken &&
+				Date.now() < cachedInstallationToken.expiresAtMs &&
+				cachedInstallationToken.installationId === discoveredInstallationId
+			) {
+				return cachedInstallationToken.token
+			}
+
+			const fallbackTokenAttempt = await requestInstallationAccessToken(
+				appJwt,
+				discoveredInstallationId
+			)
+			if (fallbackTokenAttempt.ok) {
+				console.warn('[store] Falling back to discovered GitHub installation id', {
+					requestId,
+					productSlug,
+					repo: `${repoOwner}/${repoName}`,
+					configuredInstallationId,
+					discoveredInstallationId,
+					configuredStatusCode: configuredAttempt.statusCode,
+				})
+				cachedInstallationToken = {
+					token: fallbackTokenAttempt.token,
+					expiresAtMs: fallbackTokenAttempt.expiresAtMs,
+					installationId: discoveredInstallationId,
+					repoKey,
+				}
+				return fallbackTokenAttempt.token
+			}
+
+			console.error('[store] Discovered installation token fetch failed', {
+				requestId,
+				productSlug,
+				repo: `${repoOwner}/${repoName}`,
+				configuredInstallationId,
+				discoveredInstallationId,
+				statusCode: fallbackTokenAttempt.statusCode,
+				githubRequestId: fallbackTokenAttempt.githubRequestId,
+				body: fallbackTokenAttempt.bodyText,
+			})
+		} else {
+			console.error('[store] GitHub repository installation discovery failed', {
+				requestId,
+				productSlug,
+				repo: `${repoOwner}/${repoName}`,
+				configuredInstallationId,
+				statusCode: discoveredAttempt.statusCode,
+				githubRequestId: discoveredAttempt.githubRequestId,
+				body: discoveredAttempt.bodyText,
+			})
+		}
+	}
+
+	console.error('[store] Failed to fetch GitHub App installation token', {
+		requestId,
+		productSlug,
+		repo: `${repoOwner}/${repoName}`,
+		configuredInstallationId,
+		statusCode: configuredAttempt.statusCode,
+		githubRequestId: configuredAttempt.githubRequestId,
+		body: configuredAttempt.bodyText,
+	})
+	throw new Error(
+		`[store] Unable to fetch GitHub installation token (status ${configuredAttempt.statusCode})`
+	)
 }
 
 export function getGithubConfig(productSlug: ProductSlug): GithubConfig {
-	const repoEnvName =
-		productSlug === 'prokit' ? 'GITHUB_PROKIT_REPO' : 'GITHUB_SAASKIT_REPO'
-	const repo = process.env[repoEnvName]?.trim() || DEFAULT_REPOS[productSlug]
-
-	const [repoOwner, repoName] = repo.split('/')
-	if (!repoOwner || !repoName) {
-		throw new Error(`[store] Invalid repository format in ${repoEnvName}`)
+	const repo = PRODUCT_REPOS[productSlug]
+	if (!repo) {
+		throw new Error(`[store] Unsupported product slug: ${productSlug}`)
 	}
-
-	return { repoOwner, repoName }
+	return repo
 }
 
 export async function addCollaborator(
@@ -167,7 +356,12 @@ export async function addCollaborator(
 			return { error: 'not_found' }
 		}
 
-		const installationToken = await getGithubInstallationToken()
+		const installationToken = await getGithubInstallationTokenForRepo(
+			repoOwner,
+			repoName,
+			requestId,
+			productSlug
+		)
 		const endpoint = `https://api.github.com/repos/${repoOwner}/${repoName}/collaborators/${normalizedUsername}`
 
 		const response = await fetch(endpoint, {

@@ -16,7 +16,6 @@ export interface EntitlementStatus {
 export type ProductConfig = {
 	productSlug: ProductSlug
 	priceEnv: string
-	githubRepoEnv: string
 	paidKey: string
 	provisionedKey: string
 	usernameKey: string
