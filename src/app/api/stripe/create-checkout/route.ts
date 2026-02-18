@@ -2,16 +2,13 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import config from "@/config";
 import {
+  getStripeMode,
   getStripePriceProkit,
   getStripePriceSaaskit,
   getStripeProductProkit,
   getStripeProductSaaskit,
   getStripeSecretKey,
 } from '@/libs/stripe-env';
-
-const stripe = new Stripe(getStripeSecretKey(), {
-  apiVersion: '2024-06-20',
-});
 
 const getOrigin = (req: Request) => {
   const directOrigin = req.headers.get('origin');
@@ -44,6 +41,11 @@ const resolveKitProductSlug = (priceId: string, productId?: string) => {
 
 export async function POST(req: Request) {
   try {
+    const stripeMode = getStripeMode();
+    const stripe = new Stripe(getStripeSecretKey(), {
+      apiVersion: '2024-06-20',
+    });
+
     const { priceId, email, userId } = await req.json() as { priceId?: string; email?: string; userId?: string };
 
     if (!priceId) {
@@ -106,8 +108,24 @@ export async function POST(req: Request) {
       },
     });
 
+    if ((stripeMode === 'live') !== session.livemode) {
+      console.error('Stripe mode mismatch detected after session creation', {
+        stripeMode,
+        sessionLivemode: session.livemode,
+        sessionId: session.id,
+      });
+      return NextResponse.json(
+        {
+          error:
+            'Stripe is misconfigured: checkout mode does not match STRIPE_MODE. Verify live/test keys and mode variables.',
+        },
+        { status: 500 }
+      );
+    }
+
     console.log('Created Stripe session:', {
       id: session.id,
+      livemode: session.livemode,
       customer_email: session.customer_email,
       payment_status: session.payment_status,
       url: session.url

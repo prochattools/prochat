@@ -1,6 +1,10 @@
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripeMode = (process.env.NEXT_PUBLIC_STRIPE_MODE || 'test').toLowerCase();
+const stripeModeRaw = (process.env.NEXT_PUBLIC_STRIPE_MODE || '').toLowerCase();
+const stripeMode =
+  stripeModeRaw === 'live' || stripeModeRaw === 'life' || stripeModeRaw === 'prod' || stripeModeRaw === 'production'
+    ? 'live'
+    : 'test';
 const stripePublishableKey =
   stripeMode === 'live'
     ? process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE ||

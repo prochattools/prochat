@@ -4,10 +4,15 @@ const DEFAULT_MODE: StripeMode = 'test'
 
 const normalize = (value?: string | null): string => (value || '').trim()
 
+const resolveModeAlias = (mode: string): StripeMode => {
+	if (['live', 'life', 'prod', 'production'].includes(mode)) return 'live'
+	if (['test', 'sandbox', 'dev', 'development'].includes(mode)) return 'test'
+	return DEFAULT_MODE
+}
+
 const resolveMode = (): StripeMode => {
 	const mode = normalize(process.env.STRIPE_MODE).toLowerCase()
-	if (mode === 'live') return 'live'
-	return DEFAULT_MODE
+	return resolveModeAlias(mode)
 }
 
 const byMode = (
@@ -28,12 +33,54 @@ const byMode = (
 
 export const getStripeMode = (): StripeMode => resolveMode()
 
+export const getClientStripeMode = (): StripeMode => {
+	const clientMode = normalize(process.env.NEXT_PUBLIC_STRIPE_MODE).toLowerCase()
+	if (clientMode) return resolveModeAlias(clientMode)
+	return resolveMode()
+}
+
+const getSecretKeyMode = (key: string): StripeMode | 'unknown' => {
+	if (key.startsWith('sk_live_')) return 'live'
+	if (key.startsWith('sk_test_')) return 'test'
+	return 'unknown'
+}
+
+const getPublishableKeyMode = (key: string): StripeMode | 'unknown' => {
+	if (key.startsWith('pk_live_')) return 'live'
+	if (key.startsWith('pk_test_')) return 'test'
+	return 'unknown'
+}
+
+function assertModeMatchesKeyType(
+	mode: StripeMode,
+	key: string,
+	keyType: 'secret' | 'publishable'
+): void {
+	const resolved = normalize(key)
+	if (!resolved) return
+
+	const inferred =
+		keyType === 'secret' ? getSecretKeyMode(resolved) : getPublishableKeyMode(resolved)
+	if (inferred === 'unknown') return
+
+	if (inferred !== mode) {
+		throw new Error(
+			`[stripe-env] STRIPE_MODE=${mode} but resolved ${keyType} key is ${inferred}.`
+		)
+	}
+}
+
 export const getStripeSecretKey = (): string =>
-	byMode(
+	(() => {
+		const mode = getStripeMode()
+		const key = byMode(
 		process.env.STRIPE_SECRET_KEY_TEST,
 		process.env.STRIPE_SECRET_KEY_LIVE,
 		process.env.STRIPE_SECRET_KEY
-	)
+		)
+		assertModeMatchesKeyType(mode, key, 'secret')
+		return key
+	})()
 
 export const getStripeWebhookSecret = (): string =>
 	byMode(
@@ -43,11 +90,16 @@ export const getStripeWebhookSecret = (): string =>
 	)
 
 export const getStripePublishableKey = (): string =>
-	byMode(
+	(() => {
+		const mode = getClientStripeMode()
+		const key = byMode(
 		process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST,
 		process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE,
 		process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-	)
+		)
+		assertModeMatchesKeyType(mode, key, 'publishable')
+		return key
+	})()
 
 export const getStripePriceProkit = (): string =>
 	byMode(
