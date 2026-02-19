@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+	--font-sans: 'Host Grotesk';
+}
 
 @layer base {
 	body {

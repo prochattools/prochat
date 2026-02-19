@@ -4,7 +4,7 @@ import AppShell from '@/components/AppShell'
 import { Scaffolding } from '@/components/ui/Scaffolding'
 import { getSEOTags } from '@/libs/seo'
 import { SafeClerkProvider } from '@/libs/safeClerk'
-import { Figtree, Golos_Text, JetBrains_Mono } from 'next/font/google'
+import { Golos_Text, JetBrains_Mono } from 'next/font/google'
 import { Viewport } from 'next'
 import { ReactNode } from 'react'
 
@@ -14,12 +14,7 @@ const ROOT_TITLE = 'ProChat - Build SaaS without guessing'
 const ROOT_DESCRIPTION =
   'ProChat is a practical system: start with paid clients, extract repeating pain, then ship SaaS on a proven stack.'
 
-const fontSans = Figtree({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-sans',
-  display: 'swap',
-})
+const fontSans = { variable: '' }
 
 const fontBrand = Golos_Text({
   subsets: ['latin'],
