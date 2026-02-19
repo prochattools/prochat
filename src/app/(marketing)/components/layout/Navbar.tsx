@@ -72,7 +72,7 @@ export const Navbar: React.FC = () => {
         {/* Right Actions */}
         <div className="hidden md:flex items-center gap-4">
            <Link href="/kits">
-             <Button variant="primary" size="sm" className="shadow-[#885efe]/20 shadow-lg">
+             <Button variant="primary" size="sm" className="shadow-[#2563EB]/20 shadow-lg">
                Explore kits
              </Button>
            </Link>

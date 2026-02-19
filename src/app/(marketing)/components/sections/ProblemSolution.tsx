@@ -83,9 +83,9 @@ export const ProblemSolution: React.FC<ProblemSolutionProps> = ({
 
                     {/* Right: The System Way (Unified) */}
                     <div className="flex flex-col gap-3 relative">
-                        <div className="text-[10px] font-mono uppercase tracking-widest text-[#5b49f5] text-center mb-1 dark:text-[#9b8bff]">System Core</div>
-                        <div className="bg-white border border-slate-200/80 shadow-[0_8px_30px_-6px_rgba(91,73,245,0.15)] rounded-xl p-4 h-full relative overflow-hidden group-hover:border-[#5b49f5]/30 transition-colors dark:bg-[#0B111B] dark:border-[#2A3445] dark:shadow-none">
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#5b49f5] to-[#885efe]" />
+                        <div className="text-[10px] font-mono uppercase tracking-widest text-[#1D4ED8] text-center mb-1 dark:text-[#2563EB]">System Core</div>
+                        <div className="bg-white border border-slate-200/80 shadow-[0_8px_30px_-6px_rgba(29,78,216,0.15)] rounded-xl p-4 h-full relative overflow-hidden group-hover:border-[#1D4ED8]/30 transition-colors dark:bg-[#0B111B] dark:border-[#2A3445] dark:shadow-none">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#1D4ED8] to-[#2563EB]" />
                             <div className="space-y-3 pt-2">
                                 {[
                                     "Identity System",
@@ -94,7 +94,7 @@ export const ProblemSolution: React.FC<ProblemSolutionProps> = ({
                                     "Comms Engine"
                                 ].map((feature, j) => (
                                     <div key={j} className="flex items-center gap-2.5">
-                                        <div className="w-4 h-4 rounded-full bg-[#5b49f5]/10 flex items-center justify-center text-[#5b49f5] dark:bg-[#5b49f5]/20">
+                                        <div className="w-4 h-4 rounded-full bg-[#1D4ED8]/10 flex items-center justify-center text-[#1D4ED8] dark:bg-[#1D4ED8]/20">
                                             <Check size={10} strokeWidth={3} />
                                         </div>
                                         <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200">{feature}</span>

@@ -41,7 +41,7 @@ const ProofTimeline: React.FC = () => {
                         ${s.status === 'complete' ? 'border-slate-900 text-slate-900 dark:border-slate-100 dark:text-slate-100' : ''}
                         ${
                             s.status === 'active'
-                                ? 'border-[#5b49f5] text-[#5b49f5] shadow-[0_0_0_8px_rgba(91,73,245,0.15)] scale-110'
+                                ? 'border-[#1D4ED8] text-[#1D4ED8] shadow-[0_0_0_8px_rgba(29,78,216,0.15)] scale-110'
                                 : ''
                         }
                         ${s.status === 'locked' ? 'border-slate-100 text-slate-300 dark:border-[#1E242D] dark:text-slate-600' : ''}
@@ -60,7 +60,7 @@ const ProofTimeline: React.FC = () => {
                                             <div
                                                 className={`text-sm font-bold uppercase tracking-wider ${
                                                     s.status === 'active'
-                                                        ? 'text-[#5b49f5]'
+                                                        ? 'text-[#1D4ED8]'
                                                         : s.status === 'locked'
                                                             ? 'text-slate-300 dark:text-slate-600'
                                                             : 'text-slate-900 dark:text-slate-100'

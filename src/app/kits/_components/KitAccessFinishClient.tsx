@@ -153,7 +153,7 @@ export default function KitAccessFinishClient({
 					<Link
 						href='https://github.com/join'
 						target='_blank'
-						className='text-blue-600 underline'
+						className='text-[#2563EB] underline'
 					>
 						Create account
 					</Link>
@@ -177,14 +177,14 @@ export default function KitAccessFinishClient({
 								value={username}
 								onChange={event => setUsername(event.target.value)}
 								placeholder='your-github-username'
-								className='mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-blue-600 dark:border-slate-600 dark:bg-[#0B111B] dark:text-white'
+								className='mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-[#2563EB]/50 dark:border-slate-600 dark:bg-[#0B111B] dark:text-white'
 							/>
 						</label>
 						<button
 							type='button'
 							onClick={onSessionSubmit}
 							disabled={!canSubmitSession}
-							className='inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60'
+							className='inline-flex items-center justify-center rounded-lg bg-[#1D4ED8] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2563EB] disabled:cursor-not-allowed disabled:opacity-60'
 						>
 							{submitting ? 'Submitting...' : 'Link GitHub username'}
 						</button>
@@ -214,7 +214,7 @@ export default function KitAccessFinishClient({
 								value={email}
 								onChange={event => setEmail(event.target.value)}
 								placeholder='you@company.com'
-								className='mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-blue-600 dark:border-slate-600 dark:bg-[#0B111B] dark:text-white'
+								className='mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-[#2563EB]/50 dark:border-slate-600 dark:bg-[#0B111B] dark:text-white'
 							/>
 						</label>
 						<label className='block text-sm font-medium text-slate-700 dark:text-slate-200'>
@@ -223,7 +223,7 @@ export default function KitAccessFinishClient({
 								value={username}
 								onChange={event => setUsername(event.target.value)}
 								placeholder='your-github-username'
-								className='mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-blue-600 dark:border-slate-600 dark:bg-[#0B111B] dark:text-white'
+								className='mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-[#2563EB]/50 dark:border-slate-600 dark:bg-[#0B111B] dark:text-white'
 							/>
 						</label>
 						<button

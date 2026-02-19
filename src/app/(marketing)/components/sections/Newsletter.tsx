@@ -23,9 +23,9 @@ export const Newsletter: React.FC = () => {
              <input 
                type="email" 
                placeholder="Enter your email address"
-               className="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#5b49f5]/20 focus:border-[#5b49f5] transition-all duration-300"
+               className="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/20 focus:border-[#1D4ED8] transition-all duration-300"
              />
-             <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+             <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#1D4ED8]/10 to-[#2563EB]/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
           </div>
           <Button>
             Subscribe

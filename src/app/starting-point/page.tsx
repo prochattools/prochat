@@ -76,7 +76,7 @@ const FAQ_ITEMS = [
 const BG_PAGE = 'bg-[#F8FAFC] dark:bg-[#F8FAFC]'
 const TEXT_PRIMARY = 'text-[#0F172A] dark:text-[#0F172A]'
 const TEXT_SECONDARY = 'text-[#475569] dark:text-[#475569]'
-const TEXT_ACCENT = 'text-[#4338CA] dark:text-[#4338CA]'
+const TEXT_ACCENT = 'text-[#1D4ED8] dark:text-[#1D4ED8]'
 
 // Shadows
 const SHADOW_CARD_ELEVATED =
@@ -87,7 +87,7 @@ const CARD_BASE = `bg-white dark:bg-white rounded-2xl border border-slate-200 da
 
 export default function StartHerePage() {
     return (
-        <main className={`min-h-screen ${BG_PAGE} font-sans selection:bg-indigo-100 selection:text-indigo-900`}>
+        <main className={`min-h-screen ${BG_PAGE} font-sans selection:bg-[#2563EB]/20 selection:text-[#0F172A]`}>
 
             {/* --- HERO SECTION (100vh) --- */}
             <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden py-12 lg:py-0">
@@ -120,7 +120,7 @@ export default function StartHerePage() {
                             </div>
 
                             {/* Separation of Concerns Badge/Alert */}
-                            <div className="flex items-start gap-4 p-5 rounded-xl bg-indigo-50/50 dark:bg-indigo-50/50 border border-indigo-100 dark:border-indigo-100 max-w-lg">
+                            <div className="flex items-start gap-4 p-5 rounded-xl bg-[#1D4ED8]/5 dark:bg-[#1D4ED8]/5 border border-[#1D4ED8]/10 dark:border-[#1D4ED8]/10 max-w-lg">
                                 <AlertCircle className={`w-5 h-5 mt-0.5 ${TEXT_ACCENT} flex-shrink-0`} />
                                 <div className="space-y-1">
                                     <p className={`text-sm font-semibold ${TEXT_PRIMARY}`}>
@@ -138,7 +138,7 @@ export default function StartHerePage() {
                         {/* Right: Form Card */}
                         <div className="relative order-2 w-full max-w-lg mx-auto lg:max-w-none">
                             <div
-                                className="absolute -top-12 -right-12 w-64 h-64 bg-indigo-50 rounded-full blur-3xl opacity-60 pointer-events-none"
+                                className="absolute -top-12 -right-12 w-64 h-64 bg-[#1D4ED8]/10 rounded-full blur-3xl opacity-60 pointer-events-none"
                                 aria-hidden="true"
                             />
                             <div className={`relative bg-white dark:bg-white p-8 lg:p-10 rounded-2xl border border-slate-100 dark:border-slate-100 ${SHADOW_CARD_ELEVATED}`}>
@@ -168,7 +168,7 @@ export default function StartHerePage() {
                                             'Clear next steps'
                                         ].map((item, i) => (
                                             <li key={i} className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-700">
-                                                <Check className="w-4 h-4 text-indigo-500" strokeWidth={2.5} />
+                                                <Check className="w-4 h-4 text-[#1D4ED8]" strokeWidth={2.5} />
                                                 <span>{item}</span>
                                             </li>
                                         ))}
@@ -228,10 +228,10 @@ export default function StartHerePage() {
                         {/* Left: Preparation (PDF) */}
                         <div className="relative flex justify-center md:block">
                             <div className="max-w-sm mx-auto md:mx-0">
-                                <div className="absolute -left-4 top-0 bottom-0 w-1 bg-indigo-500 rounded-full opacity-20 hidden md:block"></div>
+                                <div className="absolute -left-4 top-0 bottom-0 w-1 bg-[#1D4ED8] rounded-full opacity-20 hidden md:block"></div>
                                 <div className="md:pl-8 space-y-6">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <div className="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-100 text-indigo-700">
+                                        <div className="p-2 rounded-lg bg-[#1D4ED8]/10 dark:bg-[#1D4ED8]/10 text-[#1E3A8A]">
                                             <BookOpen className="w-5 h-5" />
                                         </div>
                                         <h3 className={`text-xl font-bold ${TEXT_PRIMARY}`}>Inside the PDF</h3>
@@ -325,8 +325,8 @@ export default function StartHerePage() {
                         Built by Steve Westhoek — Structure first. SaaS second.
                     </p>
                     <div className={`flex items-center justify-center gap-6 text-sm font-medium ${TEXT_SECONDARY}`}>
-                        <Link href="/privacy" className="hover:text-indigo-600 transition-colors">Privacy</Link>
-                        <Link href="/terms" className="hover:text-indigo-600 transition-colors">Terms</Link>
+                        <Link href="/privacy" className="hover:text-[#2563EB] transition-colors">Privacy</Link>
+                        <Link href="/terms" className="hover:text-[#2563EB] transition-colors">Terms</Link>
                     </div>
                 </div>
             </footer>

@@ -5,7 +5,7 @@ import { Scaffolding } from '@/app/(marketing)/components/ui/Scaffolding'
 
 const KitsShell = ({ children }: { children: ReactNode }) => {
 	return (
-		<div className="min-h-screen bg-white text-slate-900 dark:bg-[#010814] dark:text-white selection:bg-[#885efe] selection:text-white overflow-x-hidden relative">
+		<div className="min-h-screen bg-white text-slate-900 dark:bg-[#010814] dark:text-white selection:bg-[#2563EB] selection:text-white overflow-x-hidden relative">
 			<div className="fixed inset-0 pointer-events-none z-0">
 				<Scaffolding opacity={0.6} />
 			</div>

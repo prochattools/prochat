@@ -40,7 +40,7 @@ const ProofLive: React.FC = () => {
                             <Button
                                 variant="primary"
                                 size="lg"
-                                className="h-12 px-8 shadow-xl shadow-[#5b49f5]/20 hover:shadow-[#5b49f5]/40"
+                                className="h-12 px-8 shadow-xl shadow-[#1D4ED8]/20 hover:shadow-[#1D4ED8]/40"
                                 withArrow
                             >
                                 View the live accountant funnel
@@ -86,7 +86,7 @@ const ProofLive: React.FC = () => {
                                         <div className="w-3/4 h-16 bg-slate-900 rounded-lg mx-auto shadow-md dark:bg-slate-700" />
                                         <div className="w-1/2 h-4 bg-slate-300 rounded mx-auto dark:bg-slate-600" />
                                         <div className="flex justify-center gap-4 pt-2">
-                                            <div className="w-32 h-10 bg-[#5b49f5] rounded-lg shadow-lg" />
+                                            <div className="w-32 h-10 bg-[#1D4ED8] rounded-lg shadow-lg" />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-3 gap-6 pt-8">

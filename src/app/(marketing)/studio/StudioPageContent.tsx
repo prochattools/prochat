@@ -65,7 +65,7 @@ const STUDIO_NOT_FIT = [
 
 export default function StudioPageContent() {
 	return (
-		<main className="min-h-screen bg-gray-50 text-slate-900 font-sans selection:bg-purple-200 dark:bg-[#0B111B] dark:text-[#E6EAF2] dark:selection:bg-[#5b49f5]/40 overflow-x-hidden relative">
+		<main className="min-h-screen bg-gray-50 text-slate-900 font-sans selection:bg-[#2563EB]/20 dark:bg-[#0B111B] dark:text-[#E6EAF2] dark:selection:bg-[#1D4ED8]/40 overflow-x-hidden relative">
 			<div className="fixed inset-0 pointer-events-none z-0">
 				<Scaffolding opacity={0.6} />
 			</div>
@@ -73,7 +73,7 @@ export default function StudioPageContent() {
 				<Hero
 					headline={
 						<span className="flex flex-col items-center gap-6">
-							<span className="text-xs md:text-sm font-bold uppercase tracking-widest text-[#5b49f5] bg-[#5b49f5]/10 px-3 py-1 rounded-full border border-[#5b49f5]/20 dark:text-[#9b8bff] dark:bg-[#5b49f5]/20 dark:border-[#5b49f5]/30">
+							<span className="text-xs md:text-sm font-bold uppercase tracking-widest text-[#1D4ED8] bg-[#1D4ED8]/10 px-3 py-1 rounded-full border border-[#1D4ED8]/20 dark:text-[#2563EB] dark:bg-[#1D4ED8]/20 dark:border-[#1D4ED8]/30">
 								Live client work · Limited intake
 							</span>
 							<span className="block">Studio is where the system gets applied.</span>
@@ -117,7 +117,7 @@ export default function StudioPageContent() {
 								{STUDIO_CONSTRAINTS.map((item, i) => (
 									<Reveal key={item} delay={0.4 + i * 0.1}>
 										<div className="flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-lg dark:bg-[#0F1626] dark:border-[#1E242D]">
-											<div className="w-1.5 h-1.5 rounded-full bg-[#5b49f5]" />
+											<div className="w-1.5 h-1.5 rounded-full bg-[#1D4ED8]" />
 											<span className="font-medium text-slate-900 dark:text-slate-100">
 												{item}
 											</span>
@@ -145,7 +145,7 @@ export default function StudioPageContent() {
 						<div className="grid md:grid-cols-4 gap-6">
 							{STUDIO_STEPS.map((step, i) => (
 								<Reveal key={step.title} delay={i * 0.1}>
-									<BlueprintCard className="h-full p-6 flex flex-col hover:border-[#5b49f5]/30">
+									<BlueprintCard className="h-full p-6 flex flex-col hover:border-[#1D4ED8]/30">
 										<div className="text-4xl font-bold text-slate-100 mb-4 font-mono dark:text-slate-700">
 											0{i + 1}
 										</div>
@@ -174,7 +174,7 @@ export default function StudioPageContent() {
 							{STUDIO_ARTIFACTS.map((item, i) => (
 								<Reveal key={item.label} delay={i * 0.1}>
 									<BlueprintCard className="p-6 flex flex-col items-center text-center gap-4 bg-slate-50 border-slate-200 h-full justify-center transition-colors hover:bg-white dark:bg-[#0F1626] dark:border-[#1E242D] dark:hover:bg-[#0B111B]">
-										<div className="text-slate-400 transition-colors group-hover:text-[#5b49f5] dark:text-slate-500 dark:group-hover:text-[#9b8bff]">
+										<div className="text-slate-400 transition-colors group-hover:text-[#1D4ED8] dark:text-slate-500 dark:group-hover:text-[#2563EB]">
 											{item.icon}
 										</div>
 										<span className="font-bold text-slate-700 text-sm dark:text-slate-200">
@@ -199,7 +199,7 @@ export default function StudioPageContent() {
 						<div className="grid md:grid-cols-2 gap-12">
 							<Reveal width="100%">
 								<div className="p-8 bg-slate-50 border border-slate-200 rounded-2xl h-full dark:bg-[#0F1626] dark:border-[#1E242D]">
-									<h3 className="text-lg font-bold text-[#5b49f5] mb-6 flex items-center gap-2 dark:text-[#9b8bff]">
+									<h3 className="text-lg font-bold text-[#1D4ED8] mb-6 flex items-center gap-2 dark:text-[#2563EB]">
 										Studio is for you if:
 									</h3>
 									<ul className="space-y-4">
@@ -210,7 +210,7 @@ export default function StudioPageContent() {
 											>
 												<Check
 													size={16}
-													className="mt-0.5 text-[#5b49f5] shrink-0 dark:text-[#9b8bff]"
+													className="mt-0.5 text-[#1D4ED8] shrink-0 dark:text-[#2563EB]"
 												/>
 												<span>{item}</span>
 											</li>
@@ -258,7 +258,7 @@ export default function StudioPageContent() {
 										System defines the rules
 									</span>
 									<ArrowRight className="text-slate-300 hidden md:block dark:text-slate-600" />
-									<span className="bg-[#5b49f5]/5 px-4 py-2 rounded-full border border-[#5b49f5]/20 text-[#5b49f5] font-bold dark:bg-[#5b49f5]/20 dark:border-[#5b49f5]/30 dark:text-[#9b8bff]">
+									<span className="bg-[#1D4ED8]/5 px-4 py-2 rounded-full border border-[#1D4ED8]/20 text-[#1D4ED8] font-bold dark:bg-[#1D4ED8]/20 dark:border-[#1D4ED8]/30 dark:text-[#2563EB]">
 										Studio applies the rules
 									</span>
 									<ArrowRight className="text-slate-300 hidden md:block dark:text-slate-600" />

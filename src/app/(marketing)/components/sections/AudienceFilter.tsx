@@ -35,7 +35,7 @@ export const AudienceFilter: React.FC = () => {
 
           {/* IS FOR YOU */}
           <BlueprintCard className="p-8 bg-white border-slate-200 shadow-sm">
-            <h3 className="text-sm font-bold text-[#5b49f5] mb-6 flex items-center gap-2 uppercase tracking-wide">
+            <h3 className="text-sm font-bold text-[#1D4ED8] mb-6 flex items-center gap-2 uppercase tracking-wide">
               ProKit is for you if...
             </h3>
             <ul className="space-y-4">
@@ -45,7 +45,7 @@ export const AudienceFilter: React.FC = () => {
                 "You want agency-grade results without agency costs"
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm text-slate-800 font-medium">
-                  <Check size={14} className="mt-0.5 text-[#5b49f5] shrink-0" />
+                  <Check size={14} className="mt-0.5 text-[#1D4ED8] shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}

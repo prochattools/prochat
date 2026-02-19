@@ -36,14 +36,14 @@ export const Footer: React.FC = () => {
            <div>
               <h4 className="font-bold text-slate-900 mb-4 dark:text-white">System</h4>
               <ul className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
-                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">System notes</a></li>
+                 <li><a href="#" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">System notes</a></li>
                  <li>
-                    <Link href="/proof" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">
+                    <Link href="/proof" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">
                       Proof
                     </Link>
                  </li>
                  <li>
-                    <Link href="/contact" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">
+                    <Link href="/contact" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">
                       Contact
                     </Link>
                  </li>
@@ -52,7 +52,7 @@ export const Footer: React.FC = () => {
                       href="https://accountant.prochat.tools"
                       target="_blank"
                       rel="nofollow noopener noreferrer"
-                      className="opacity-70 hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]"
+                      className="opacity-70 hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]"
                       eventName="cta_click"
                       eventPayload={{
                         location: 'footer',
@@ -71,16 +71,16 @@ export const Footer: React.FC = () => {
               <h4 className="font-bold text-slate-900 mb-4 dark:text-white">Legal</h4>
               <ul className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
                  <li>
-                    <Link href="/terms" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">
+                    <Link href="/terms" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">
                       Terms of services
                     </Link>
                  </li>
                  <li>
-                    <Link href="/privacy" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">
+                    <Link href="/privacy" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">
                       Privacy Policy
                     </Link>
                  </li>
-                 <li><a href="#" className="hover:text-[#5b49f5] transition-colors dark:hover:text-[#9b8bff]">Licences</a></li>
+                 <li><a href="#" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">Licences</a></li>
               </ul>
            </div>
 
@@ -97,7 +97,7 @@ export const Footer: React.FC = () => {
                    target="_blank"
                    rel="noopener noreferrer"
                    aria-label="Steve Westhoek on YouTube"
-                   className="relative inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-900 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#5b49f5] hover:text-[#5b49f5] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-[#0B111B] dark:bg-white/10 dark:text-slate-100 dark:border-white/15 dark:hover:bg-white/15 dark:hover:border-white/30 dark:hover:text-white"
+                   className="relative inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-900 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#1D4ED8] hover:text-[#1D4ED8] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-[#0B111B] dark:bg-white/10 dark:text-slate-100 dark:border-white/15 dark:hover:bg-white/15 dark:hover:border-white/30 dark:hover:text-white"
                  >
                    <Youtube size={16} />
                  </Link>

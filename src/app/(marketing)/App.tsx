@@ -16,7 +16,7 @@ import { Scaffolding } from './components/ui/Scaffolding';
 
 const App: React.FC = () => {
   return (
-    <main className="min-h-screen bg-gray-50 text-slate-900 font-sans selection:bg-purple-200 dark:bg-[#0B111B] dark:text-[#E6EAF2] dark:selection:bg-[#5b49f5]/40 overflow-x-hidden relative">
+    <main className="min-h-screen bg-gray-50 text-slate-900 font-sans selection:bg-[#2563EB]/20 dark:bg-[#0B111B] dark:text-[#E6EAF2] dark:selection:bg-[#1D4ED8]/40 overflow-x-hidden relative">
       <div className="fixed inset-0 pointer-events-none z-0">
         <Scaffolding opacity={0.6} />
       </div>

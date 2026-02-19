@@ -88,14 +88,14 @@ export default function StartSignupForm({
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           disabled={isSubmitting}
-          className="h-14 w-full rounded-full border border-slate-300 bg-white px-6 text-base text-slate-900 placeholder:text-slate-500 outline-none transition-all duration-300 focus:border-[#5b49f5] focus:ring-2 focus:ring-[#5b49f5]/30 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-60"
+          className="h-14 w-full rounded-full border border-slate-300 bg-white px-6 text-base text-slate-900 placeholder:text-slate-500 outline-none transition-all duration-300 focus:border-[#1D4ED8] focus:ring-2 focus:ring-[#1D4ED8]/30 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-60"
         />
 
         <Button
           type="submit"
           disabled={isSubmitting}
           size="lg"
-          className="h-14 w-full sm:w-auto sm:min-w-[220px] px-10 text-base sm:text-lg bg-[#5b49f5] hover:bg-[#4a3bd1] shadow-[0_0_26px_-12px_rgba(91,73,245,0.45)] hover:shadow-[0_0_34px_-10px_rgba(91,73,245,0.55)]"
+          className="h-14 w-full sm:w-auto sm:min-w-[220px] px-10 text-base sm:text-lg bg-[#1D4ED8] hover:bg-[#2563EB] shadow-[0_0_26px_-12px_rgba(29,78,216,0.45)] hover:shadow-[0_0_34px_-10px_rgba(29,78,216,0.55)]"
         >
           {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
           {isSubmitting ? 'Submitting...' : buttonLabel}

@@ -56,7 +56,7 @@ export const Features: React.FC<FeaturesProps> = ({
             </Reveal>
             <Reveal delay={0.4}>
               <div className="mt-8">
-                <Link href={ctaHref} className="text-[#5b49f5] font-bold hover:underline inline-flex items-center gap-2 dark:text-[#9b8bff]">
+                <Link href={ctaHref} className="text-[#1D4ED8] font-bold hover:underline inline-flex items-center gap-2 dark:text-[#2563EB]">
                   {ctaLabel} <ArrowRight size={16} />
                 </Link>
               </div>
@@ -66,10 +66,10 @@ export const Features: React.FC<FeaturesProps> = ({
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {SYSTEMS.map((feature, idx) => (
                 <Reveal key={idx} delay={idx * 0.1}>
-                  <BlueprintCard className="flex flex-col h-full group hover:border-[#5b49f5]/30">
+                  <BlueprintCard className="flex flex-col h-full group hover:border-[#1D4ED8]/30">
                       <div className="p-6 flex flex-col h-full">
                           <div className="flex items-center justify-between mb-4">
-                              <div className="w-10 h-10 bg-slate-50 rounded-lg border border-slate-100 flex items-center justify-center group-hover:bg-[#5b49f5]/5 group-hover:text-[#5b49f5] transition-colors duration-300 dark:bg-[#0F1626] dark:border-[#2A3445] dark:group-hover:bg-[#5b49f5]/10">
+                              <div className="w-10 h-10 bg-slate-50 rounded-lg border border-slate-100 flex items-center justify-center group-hover:bg-[#1D4ED8]/5 group-hover:text-[#1D4ED8] transition-colors duration-300 dark:bg-[#0F1626] dark:border-[#2A3445] dark:group-hover:bg-[#1D4ED8]/10">
                                   {feature.icon}
                               </div>
                               <div className="w-2 h-2 rounded-full bg-[#61ce70] shadow-[0_0_8px_rgba(97,206,112,0.4)] dark:shadow-none" title="Standard" />

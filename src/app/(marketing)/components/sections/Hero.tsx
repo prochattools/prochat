@@ -32,7 +32,7 @@ export const Hero: React.FC<HeroProps> = ({
     <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden pt-20">
       
       {/* Cinematic Spotlight */}
-      <div className="absolute inset-x-0 top-0 h-[800px] bg-gradient-to-b from-indigo-50/50 via-white/20 to-transparent pointer-events-none opacity-60 dark:from-[#1C2140]/50 dark:via-[#0B111B]/30" />
+      <div className="absolute inset-x-0 top-0 h-[800px] bg-gradient-to-b from-gray-50/60 via-white/20 to-transparent pointer-events-none opacity-60 dark:from-[#1C2140]/50 dark:via-[#0B111B]/30" />
 
       <div className="relative z-20 max-w-5xl mx-auto px-8 w-full flex flex-col items-center text-center space-y-10 mt-12 md:mt-0">
         
@@ -68,7 +68,7 @@ export const Hero: React.FC<HeroProps> = ({
         >
           <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto justify-center">
             <Link href={primaryCtaLink} className="w-full md:w-auto" onClick={onPrimaryCtaClick}>
-              <Button size="lg" className="w-full md:w-auto h-16 px-12 text-lg bg-[#5b49f5] hover:bg-[#4a3bd1] shadow-[0_0_40px_-10px_rgba(91,73,245,0.4)] hover:shadow-[0_0_60px_-10px_rgba(91,73,245,0.5)] transition-all duration-300 dark:shadow-[0_0_26px_-12px_rgba(91,73,245,0.35)] dark:hover:shadow-[0_0_36px_-12px_rgba(91,73,245,0.45)]">
+              <Button size="lg" className="w-full md:w-auto h-16 px-12 text-lg bg-[#1D4ED8] hover:bg-[#2563EB] shadow-[0_0_40px_-10px_rgba(29,78,216,0.4)] hover:shadow-[0_0_60px_-10px_rgba(29,78,216,0.5)] transition-all duration-300 dark:shadow-[0_0_26px_-12px_rgba(29,78,216,0.35)] dark:hover:shadow-[0_0_36px_-12px_rgba(29,78,216,0.45)]">
                 {primaryCta}
               </Button>
             </Link>

@@ -50,7 +50,7 @@ export default function ProofPageContent() {
 	}
 
 	return (
-		<main className="min-h-screen bg-gray-50 text-slate-900 font-sans selection:bg-purple-200 dark:bg-[#0B111B] dark:text-[#E6EAF2] dark:selection:bg-[#5b49f5]/40 overflow-x-hidden relative">
+		<main className="min-h-screen bg-gray-50 text-slate-900 font-sans selection:bg-[#2563EB]/20 dark:bg-[#0B111B] dark:text-[#E6EAF2] dark:selection:bg-[#1D4ED8]/40 overflow-x-hidden relative">
 			<div className="fixed inset-0 pointer-events-none z-0">
 				<Scaffolding opacity={0.6} />
 			</div>
@@ -89,7 +89,7 @@ export default function ProofPageContent() {
 								</Reveal>
 
 								<Reveal delay={0.1}>
-									<div className="pl-6 border-l-2 border-[#5b49f5] italic text-slate-700 text-lg font-medium leading-relaxed dark:text-slate-200">
+									<div className="pl-6 border-l-2 border-[#1D4ED8] italic text-slate-700 text-lg font-medium leading-relaxed dark:text-slate-200">
 										&quot;This page does not show a highlight reel. It shows evidence
 										that a real system exists, is being followed, and constrains
 										decisions.&quot;
@@ -112,7 +112,7 @@ export default function ProofPageContent() {
 													key={i}
 													className="flex items-center gap-3 text-slate-900 font-medium dark:text-white"
 												>
-													<Check size={18} className="text-[#5b49f5] shrink-0" />
+													<Check size={18} className="text-[#1D4ED8] shrink-0" />
 													{item}
 												</li>
 											))}
@@ -141,15 +141,15 @@ export default function ProofPageContent() {
 											</div>
 
 											{/* P2 - Active */}
-											<div className="p-6 bg-white border border-[#5b49f5]/20 shadow-xl shadow-[#5b49f5]/5 rounded-xl relative scale-105 dark:bg-[#0F1424]">
-												<div className="absolute -top-3 right-4 px-3 py-1 bg-[#5b49f5] text-white text-[10px] font-bold uppercase tracking-wide rounded-full">
+											<div className="p-6 bg-white border border-[#1D4ED8]/20 shadow-xl shadow-[#1D4ED8]/5 rounded-xl relative scale-105 dark:bg-[#0F1424]">
+												<div className="absolute -top-3 right-4 px-3 py-1 bg-[#1D4ED8] text-white text-[10px] font-bold uppercase tracking-wide rounded-full">
 													Current Phase
 												</div>
 												<div className="flex items-center gap-3 mb-3">
-													<div className="w-8 h-8 rounded-full bg-[#5b49f5] flex items-center justify-center text-xs font-bold text-white">
+													<div className="w-8 h-8 rounded-full bg-[#1D4ED8] flex items-center justify-center text-xs font-bold text-white">
 														02
 													</div>
-													<span className="text-sm font-bold text-[#5b49f5]">
+													<span className="text-sm font-bold text-[#1D4ED8]">
 														SYSTEM CONSTRUCTION
 													</span>
 												</div>

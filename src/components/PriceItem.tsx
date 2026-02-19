@@ -141,11 +141,11 @@ export default PriceItem;
 //   return (
 //     <div
 //       className={`bg-white rounded-lg shadow-md p-8 ${
-//         item?.isBest ? "border-4 border-blue-500 relative" : ""
+//         item?.isBest ? "border-4 border-[#1D4ED8] relative" : ""
 //       }`}
 //     >
 //       {item?.isBest && (
-//         <div className="absolute top-0 right-0 bg-blue-500 text-white py-1 px-4 rounded-bl-lg text-sm font-semibold">
+//         <div className="absolute top-0 right-0 bg-[#1D4ED8] text-white py-1 px-4 rounded-bl-lg text-sm font-semibold">
 //           Best Value
 //         </div>
 //       )}
@@ -176,7 +176,7 @@ export default PriceItem;
 //       {isLink ? (
 //         <Link
 //           href={`/processing-page?priceId=${item.priceId}`}
-//           className="block w-full bg-blue-500 text-white text-center py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
+//           className="block w-full bg-[#1D4ED8] text-white text-center py-2 px-4 rounded hover:bg-[#2563EB] transition duration-200"
 //         >
 //           {item.linkTitle}
 //         </Link>

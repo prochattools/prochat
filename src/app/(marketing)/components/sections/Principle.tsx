@@ -8,7 +8,7 @@ export const Principle: React.FC = () => {
     <section className="py-24 bg-white border-b border-slate-100 dark:bg-[#0B111B] dark:border-[#1E242D]">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <Reveal>
-          <div className="inline-block px-3 py-1 mb-6 rounded-full bg-purple-50 text-[#5b49f5] text-xs font-bold uppercase tracking-wider dark:bg-[#5b49f5]/10 dark:text-[#9b8bff]">
+          <div className="inline-block px-3 py-1 mb-6 rounded-full bg-gray-50 text-[#1D4ED8] text-xs font-bold uppercase tracking-wider dark:bg-[#1D4ED8]/10 dark:text-[#2563EB]">
             The Principle
           </div>
         </Reveal>
@@ -25,7 +25,7 @@ export const Principle: React.FC = () => {
             <ArrowRight size={20} className="text-slate-300 dark:text-slate-600" />
             <span className="text-slate-900 dark:text-white">Pain</span>
             <ArrowRight size={20} className="text-slate-300 dark:text-slate-600" />
-            <span className="text-[#5b49f5] font-bold bg-[#5b49f5]/10 px-3 py-1 rounded-lg dark:text-[#9b8bff] dark:bg-[#5b49f5]/20">SaaS</span>
+            <span className="text-[#1D4ED8] font-bold bg-[#1D4ED8]/10 px-3 py-1 rounded-lg dark:text-[#2563EB] dark:bg-[#1D4ED8]/20">SaaS</span>
           </div>
         </Reveal>
 

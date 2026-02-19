@@ -37,7 +37,7 @@ export const Trust: React.FC<TrustProps> = ({
               <ul className="space-y-4 mb-10">
                   {bullets.map((item, i) => (
                       <li key={i} className="flex items-start gap-3 text-slate-600 font-light text-lg dark:text-slate-300">
-                          <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#5b49f5]" />
+                          <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#1D4ED8]" />
                           {item}
                       </li>
                   ))}

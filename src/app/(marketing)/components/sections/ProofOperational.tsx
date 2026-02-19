@@ -135,7 +135,7 @@ const ProofOperational: React.FC = () => {
                             >
                                 <div className="p-4 border-b border-slate-700/50 bg-[#1e293b] flex items-center justify-between shrink-0">
                                     <div className="flex items-center gap-2">
-                                        <Activity size={14} className="text-indigo-400" />
+                                        <Activity size={14} className="text-[#2563EB]" />
                                         <span className="text-xs font-bold text-white tracking-wide">
                                             Live Traffic
                                         </span>
@@ -163,9 +163,9 @@ const ProofOperational: React.FC = () => {
                                                 <span
                                                     className={`break-all ${
                                                         log.includes('POST')
-                                                            ? 'text-indigo-400'
+                                                            ? 'text-[#2563EB]'
                                                             : log.includes('AUTH')
-                                                                ? 'text-purple-400'
+                                                                ? 'text-[#2563EB]'
                                                                 : 'text-emerald-400'
                                                     }`}
                                                 >

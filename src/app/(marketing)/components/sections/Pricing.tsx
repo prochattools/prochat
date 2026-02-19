@@ -31,7 +31,7 @@ export const Pricing: React.FC<PricingProps> = ({
     <section id="pricing" className="py-32 bg-[#0a0a0a] dark:bg-[#0B111B] relative overflow-hidden text-white">
       {/* Dark Blueprint Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(91,73,245,0.08),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(29,78,216,0.08),transparent_70%)]" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         
@@ -47,14 +47,14 @@ export const Pricing: React.FC<PricingProps> = ({
         </div>
 
         <div className="max-w-md mx-auto">
-            <div className="bg-[#111] rounded-2xl border border-white/10 dark:border-[#373C53] p-8 shadow-2xl relative overflow-hidden group hover:border-[#5b49f5]/50 transition-colors duration-500 transform-gpu">
+            <div className="bg-[#111] rounded-2xl border border-white/10 dark:border-[#373C53] p-8 shadow-2xl relative overflow-hidden group hover:border-[#1D4ED8]/50 transition-colors duration-500 transform-gpu">
                 
                 {/* Gradient Top Line - perfectly contained */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#5b49f5] to-[#885efe]" />
-                <div className="absolute inset-0 bg-gradient-to-b from-[#5b49f5]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1D4ED8] to-[#2563EB]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#1D4ED8]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                 <div className="mb-8 text-center relative z-10">
-                    <div className="text-xs font-bold text-[#5b49f5] uppercase tracking-widest mb-4 bg-[#5b49f5]/10 inline-block px-3 py-1 rounded-full border border-[#5b49f5]/20">Lifetime Access</div>
+                    <div className="text-xs font-bold text-[#1D4ED8] uppercase tracking-widest mb-4 bg-[#1D4ED8]/10 inline-block px-3 py-1 rounded-full border border-[#1D4ED8]/20">Lifetime Access</div>
                     <div className="flex items-baseline justify-center gap-3">
                         <span className="text-6xl font-bold text-white tracking-tighter">{priceText}</span>
                         <span className="text-slate-500 dark:text-slate-400 line-through text-xl"></span>
@@ -74,7 +74,7 @@ export const Pricing: React.FC<PricingProps> = ({
                 </div>
 
                 <Button
-                    className="w-full bg-[#5b49f5] hover:bg-[#4a3bd1] border-0 h-14 text-lg font-bold shadow-lg shadow-[#5b49f5]/20 hover:shadow-[#5b49f5]/40 transition-all relative z-10"
+                    className="w-full bg-[#1D4ED8] hover:bg-[#2563EB] border-0 h-14 text-lg font-bold shadow-lg shadow-[#1D4ED8]/20 hover:shadow-[#1D4ED8]/40 transition-all relative z-10"
                     onClick={onCtaClick}
                     type="button"
                 >

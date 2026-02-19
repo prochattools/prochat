@@ -29,7 +29,7 @@ useEffect(() => {
         <p className="mb-6">We appreciate your support.</p>
         <button
           onClick={closePopup}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105"
+          className="bg-[#1D4ED8] hover:bg-[#2563EB] text-white font-bold py-3 px-6 rounded-full text-lg transition duration-300 ease-in-out transform hover:scale-105"
         >
           Start
         </button>

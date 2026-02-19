@@ -43,23 +43,23 @@ export const BlueprintCard: React.FC<BlueprintCardProps> = ({ children, classNam
     <div
         onClick={onClick}
         className={`
-      relative bg-white 
-      border border-slate-200 
-      shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] 
-      rounded-2xl 
-      overflow-hidden 
+      relative bg-white
+      border border-slate-200
+      shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]
+      rounded-2xl
+      overflow-hidden
       transition-all duration-300 ease-out
-      hover:shadow-[0_12px_40px_-12px_rgba(91,73,245,0.15)] 
+      hover:shadow-[0_12px_40px_-12px_rgba(29,78,216,0.15)]
       hover:border-slate-300
       hover:-translate-y-[2px]
       transform-gpu
-      group 
+      group
       ${className}
     `}
     >
         {/* Label */}
         {label && (
-            <div className="absolute top-4 right-5 text-[9px] font-mono text-slate-400 uppercase tracking-wider group-hover:text-[#5b49f5] transition-colors z-20 pointer-events-none">
+            <div className="absolute top-4 right-5 text-[9px] font-mono text-slate-400 uppercase tracking-wider group-hover:text-[#1D4ED8] transition-colors z-20 pointer-events-none">
                 {label}
             </div>
         )}

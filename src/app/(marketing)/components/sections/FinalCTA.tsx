@@ -48,7 +48,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
                     </Button>
                  </Link>
                  <Link href={primaryCtaLink} onClick={onPrimaryCtaClick}>
-                    <Button size="lg" className="h-16 px-12 text-lg bg-[#5b49f5] hover:bg-[#4a3bd1] text-white shadow-xl shadow-[#5b49f5]/20 hover:shadow-[#5b49f5]/40 transition-all dark:shadow-[0_0_24px_-12px_rgba(91,73,245,0.35)] dark:hover:shadow-[0_0_34px_-12px_rgba(91,73,245,0.45)]">
+                    <Button size="lg" className="h-16 px-12 text-lg bg-[#1D4ED8] hover:bg-[#2563EB] text-white shadow-xl shadow-[#1D4ED8]/20 hover:shadow-[#1D4ED8]/40 transition-all dark:shadow-[0_0_24px_-12px_rgba(29,78,216,0.35)] dark:hover:shadow-[0_0_34px_-12px_rgba(29,78,216,0.45)]">
                         {primaryCtaLabel}
                     </Button>
                  </Link>

@@ -46,7 +46,7 @@ export const RoutingTiles: React.FC = () => {
                   <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 dark:text-slate-500">{tile.label}</div>
                   <h3 className="text-2xl font-bold text-slate-900 mb-4 dark:text-white">{tile.title}</h3>
                   <p className="text-slate-500 mb-8 flex-grow leading-relaxed font-light dark:text-slate-400">{tile.body}</p>
-                  <Link href={tile.href} className="inline-flex items-center gap-2 text-[#5b49f5] font-bold hover:gap-3 transition-all dark:text-[#9b8bff]">
+                  <Link href={tile.href} className="inline-flex items-center gap-2 text-[#1D4ED8] font-bold hover:gap-3 transition-all dark:text-[#2563EB]">
                     {tile.cta} <ArrowRight size={16} />
                   </Link>
                 </BlueprintCard>

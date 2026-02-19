@@ -36,12 +36,12 @@ export default function ContactPage() {
 	}
 
 	const inputClasses =
-		'w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#5b49f5]/20 focus:border-[#5b49f5] transition-all duration-300 text-sm dark:bg-[#0F1626] dark:border-[#1E242D] dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-[#5b49f5]/30'
+		'w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/20 focus:border-[#1D4ED8] transition-all duration-300 text-sm dark:bg-[#0F1626] dark:border-[#1E242D] dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-[#1D4ED8]/30'
 	const labelClasses =
 		'block text-sm font-bold text-slate-700 mb-2 dark:text-slate-200'
 
 	return (
-		<main className="min-h-screen bg-gray-50 text-slate-900 font-sans selection:bg-purple-200 dark:bg-[#0B111B] dark:text-[#E6EAF2] dark:selection:bg-[#5b49f5]/40 overflow-x-hidden relative">
+		<main className="min-h-screen bg-gray-50 text-slate-900 font-sans selection:bg-[#2563EB]/20 dark:bg-[#0B111B] dark:text-[#E6EAF2] dark:selection:bg-[#1D4ED8]/40 overflow-x-hidden relative">
 			<div className="fixed inset-0 pointer-events-none z-0">
 				<Scaffolding opacity={0.6} />
 			</div>
@@ -193,7 +193,7 @@ export default function ContactPage() {
 									<li>
 										<a
 											href="mailto:support@prochat.tools"
-											className="hover:text-[#5b49f5] dark:hover:text-[#9b8bff]"
+											className="hover:text-[#1D4ED8] dark:hover:text-[#2563EB]"
 										>
 											support@prochat.tools
 										</a>
@@ -201,7 +201,7 @@ export default function ContactPage() {
 									<li>
 										<a
 											href="mailto:privacy@prochat.tools"
-											className="hover:text-[#5b49f5] dark:hover:text-[#9b8bff]"
+											className="hover:text-[#1D4ED8] dark:hover:text-[#2563EB]"
 										>
 											privacy@prochat.tools
 										</a>
