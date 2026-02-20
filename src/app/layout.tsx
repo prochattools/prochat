@@ -68,7 +68,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <style dangerouslySetInnerHTML={{ __html: BASE_STYLE_OVERRIDES }} />
       </head>
-      <body className="font-body bg-gray-50 text-slate-900 dark:bg-[#010814] dark:text-slate-100 selection:bg-[#2563EB]/20 dark:selection:bg-[#1D4ED8]/40">
+      <body className="font-body bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
         <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
           <Scaffolding opacity={0.6} />
         </div>

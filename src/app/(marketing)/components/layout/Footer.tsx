@@ -6,7 +6,7 @@ import TrackedOutboundLink from '@/components/TrackedOutboundLink';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-white pt-20 pb-10 border-t border-slate-200 dark:bg-[#0B111B] dark:border-[#1E242D]">
+    <footer className="font-marketing bg-background pt-20 pb-10 border-t border-border">
       <div className="max-w-7xl mx-auto px-8">
         
         <div className="grid md:grid-cols-4 gap-12 mb-16">
@@ -29,21 +29,21 @@ export const Footer: React.FC = () => {
                    className="h-[58.5px] w-auto hidden dark:block"
                  />
               </Link>
-              <p className="text-slate-500 text-sm dark:text-slate-400">A system for turning service into SaaS.</p>
+              <p className="text-muted-foreground text-sm">A system for turning service into SaaS.</p>
            </div>
 
            {/* Links */}
            <div>
-              <h4 className="font-bold text-slate-900 mb-4 dark:text-white">System</h4>
-              <ul className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
-                 <li><a href="#" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">System notes</a></li>
+              <h4 className="font-bold text-foreground mb-4">System</h4>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                 <li><a href="#" className="hover:text-primary transition-colors">System notes</a></li>
                  <li>
-                    <Link href="/proof" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">
+                    <Link href="/proof" className="hover:text-primary transition-colors">
                       Proof
                     </Link>
                  </li>
                  <li>
-                    <Link href="/contact" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">
+                    <Link href="/contact" className="hover:text-primary transition-colors">
                       Contact
                     </Link>
                  </li>
@@ -52,7 +52,7 @@ export const Footer: React.FC = () => {
                       href="https://accountant.prochat.tools"
                       target="_blank"
                       rel="nofollow noopener noreferrer"
-                      className="opacity-70 hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]"
+                      className="opacity-70 hover:text-primary transition-colors"
                       eventName="cta_click"
                       eventPayload={{
                         location: 'footer',
@@ -68,27 +68,27 @@ export const Footer: React.FC = () => {
 
            {/* Legal */}
            <div>
-              <h4 className="font-bold text-slate-900 mb-4 dark:text-white">Legal</h4>
-              <ul className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
+              <h4 className="font-bold text-foreground mb-4">Legal</h4>
+              <ul className="space-y-3 text-sm text-muted-foreground">
                  <li>
-                    <Link href="/terms" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">
+                    <Link href="/terms" className="hover:text-primary transition-colors">
                       Terms of services
                     </Link>
                  </li>
                  <li>
-                    <Link href="/privacy" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">
+                    <Link href="/privacy" className="hover:text-primary transition-colors">
                       Privacy Policy
                     </Link>
                  </li>
-                 <li><a href="#" className="hover:text-[#1D4ED8] transition-colors dark:hover:text-[#2563EB]">Licences</a></li>
+                 <li><a href="#" className="hover:text-primary transition-colors">Licences</a></li>
               </ul>
            </div>
 
            {/* Contact / Maker */}
            <div>
-              <h4 className="font-bold text-slate-900 mb-4 dark:text-white">Contact the maker</h4>
-              <ul className="space-y-3 text-sm text-slate-500 mb-6 dark:text-slate-400">
-                 <li className="font-medium text-slate-900 dark:text-white">Steve Westhoek</li>
+              <h4 className="font-bold text-foreground mb-4">Contact the maker</h4>
+              <ul className="space-y-3 text-sm text-muted-foreground mb-6">
+                 <li className="font-medium text-foreground">Steve Westhoek</li>
                  <li>ProChat</li>
               </ul>
               <div className="flex gap-2">
@@ -97,7 +97,7 @@ export const Footer: React.FC = () => {
                    target="_blank"
                    rel="noopener noreferrer"
                    aria-label="Steve Westhoek on YouTube"
-                   className="relative inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-900 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#1D4ED8] hover:text-[#1D4ED8] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-[#0B111B] dark:bg-white/10 dark:text-slate-100 dark:border-white/15 dark:hover:bg-white/15 dark:hover:border-white/30 dark:hover:text-white"
+                   className="relative inline-flex items-center justify-center rounded-full border border-border bg-background px-3 py-2 text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:text-primary hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background"
                  >
                    <Youtube size={16} />
                  </Link>
@@ -106,7 +106,7 @@ export const Footer: React.FC = () => {
 
         </div>
 
-        <div className="pt-8 border-t border-slate-100 dark:border-[#1E242D]">
+        <div className="pt-8 border-t border-border">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex w-full items-center justify-center sm:w-auto sm:justify-start">
               <div className="w-full max-w-[250px]">
@@ -155,7 +155,7 @@ export const Footer: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="text-center text-slate-400 text-sm dark:text-slate-500 sm:text-right">
+            <div className="text-center text-muted-foreground text-sm sm:text-right">
               © {new Date().getFullYear()} ProChat - All rights reserved
             </div>
           </div>

@@ -15,7 +15,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
 	if (isChromeless) {
 		return (
-			<main className="min-h-screen bg-gray-50 text-slate-900 dark:bg-[#010814] dark:text-slate-100">
+			<main className="font-marketing min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
 				{children}
 			</main>
 		)
@@ -24,7 +24,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
 	return (
 		<>
 			<Navbar />
-			<main className="min-h-screen bg-gray-50 text-slate-900 dark:bg-[#010814] dark:text-slate-100">
+			<main className="font-marketing min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
 				{children}
 			</main>
 			<Footer />
