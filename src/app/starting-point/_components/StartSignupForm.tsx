@@ -11,7 +11,7 @@ interface StartSignupFormProps {
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function StartSignupForm({
-  buttonLabel = 'Send me the PDF',
+  buttonLabel = 'Get the PDF',
 }: StartSignupFormProps) {
   const inputId = useId()
   const [email, setEmail] = useState('')
@@ -79,7 +79,7 @@ export default function StartSignupForm({
         Email Address
       </label>
 
-      <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
         <input
           id={inputId}
           type="email"
@@ -88,14 +88,14 @@ export default function StartSignupForm({
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           disabled={isSubmitting}
-          className="h-14 w-full rounded-full border border-slate-300 bg-white px-6 text-base text-slate-900 placeholder:text-slate-500 outline-none transition-all duration-300 focus:border-[#1D4ED8] focus:ring-2 focus:ring-[#1D4ED8]/30 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-60"
+          className="h-12 w-full rounded-full border border-slate-300 bg-white px-5 text-base text-slate-900 placeholder:text-slate-500 outline-none transition-all duration-300 focus:border-[#1D4ED8] focus:ring-2 focus:ring-[#1D4ED8]/30 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-60"
         />
 
         <Button
           type="submit"
           disabled={isSubmitting}
-          size="lg"
-          className="h-14 w-full sm:w-auto sm:min-w-[220px] px-10 text-base sm:text-lg bg-[#1D4ED8] hover:bg-[#2563EB] shadow-[0_0_26px_-12px_rgba(29,78,216,0.45)] hover:shadow-[0_0_34px_-10px_rgba(29,78,216,0.55)]"
+          size="md"
+          className="h-12 w-full whitespace-nowrap px-6 text-base sm:w-auto sm:min-w-[170px] sm:px-7 bg-[#1D4ED8] hover:bg-[#2563EB] shadow-[0_0_26px_-12px_rgba(29,78,216,0.45)] hover:shadow-[0_0_34px_-10px_rgba(29,78,216,0.55)]"
         >
           {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
           {isSubmitting ? 'Submitting...' : buttonLabel}

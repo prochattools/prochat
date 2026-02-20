@@ -3,385 +3,363 @@ import Link from 'next/link'
 import StartSignupForm from './_components/StartSignupForm'
 import { Card, CardContent } from '@/components/ui/card'
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from '@/components/ui/accordion'
-import { Check, BookOpen, MonitorPlay, AlertCircle } from 'lucide-react'
+import { AlertCircle, BookOpen, Check, MonitorPlay } from 'lucide-react'
 
 export const metadata: Metadata = {
-    title: 'The SaaS Starting Point | ProChat',
-    description:
-        'Structure first. SaaS second. The preparation framework for serious builders.',
+  title: 'The SaaS Starting Point | ProChat',
+  description:
+    'Test first. SaaS second. A preparation framework to reduce risk before you build.',
 }
 
 const AUDIENCE_CARDS = [
-    {
-        title: 'Builder Starting from Zero',
-        desc: 'You see the opportunity AI created. Your risk is confusion and impulsive experimentation. Your task is clarity.',
-    },
-    {
-        title: 'Time-Constrained Solo Builder',
-        desc: 'You have 5–10 hours per week. Your risk is scope inflation. Your task is reduction.',
-    },
-    {
-        title: 'Niche Insider',
-        desc: 'You understand a specific industry. Your risk is overbuilding for edge cases. Your task is boundary definition.',
-    },
+  {
+    title: 'Builder Starting from Zero',
+    desc: 'You see the opportunity AI created, but every option looks urgent. The risk is impulsive experimentation that creates noise instead of progress. Your task is clarity before action.',
+  },
+  {
+    title: 'Time-Constrained Solo Builder',
+    desc: 'You have 5-10 hours per week and cannot afford broad scope. The risk is scope inflation that steals momentum. Your task is reduction and sequence discipline.',
+  },
+  {
+    title: 'Niche Insider',
+    desc: 'You understand a specific market and where pain is real. The risk is overbuilding for edge cases too early. Your task is boundary definition before infrastructure.',
+  },
 ]
 
 const PREPARATION_POINTS = [
-    'Narrow your outcome',
-    'Define a Minimal Viable Outcome',
-    'Calculate real cost',
-    'Validate commitment',
-    'Reduce structural fragility',
+  'Narrow your outcome',
+  'Define a Minimal Viable Outcome',
+  'Calculate real cost',
+  'Validate commitment',
+  'Reduce structural fragility',
 ]
 
 const EXECUTION_POINTS = [
-    'Infrastructure walkthroughs',
-    'Deployment systems',
-    'Backup logic',
-    'Vendor decisions',
-    'Real builds, live',
+  'Infrastructure walkthroughs',
+  'Deployment systems',
+  'Backup logic',
+  'Vendor decisions',
+  'Real builds, live',
 ]
 
 const PDF_ITEMS = [
-    'Risk × Impact framework',
-    'Minimal Viable Outcome definition',
-    'Cost exposure calculation',
-    'Manual validation strategy',
-    'Scope reduction discipline',
+  'Risk x Impact framework',
+  'Minimal Viable Outcome definition',
+  'Cost exposure calculation',
+  'Manual validation strategy',
+  'Scope reduction discipline',
 ]
 
 const FAQ_ITEMS = [
-    {
-        question: 'Is this technical?',
-        answer: 'No. It is structural.',
-    },
-    {
-        question: 'Is this a make-money guide?',
-        answer: 'No. It prevents wasted effort.',
-    },
-    {
-        question: 'Do I need money to start?',
-        answer: 'Preparation phase: €0–€50.',
-    },
-    {
-        question: 'Should I watch YouTube first?',
-        answer: 'No. Read the PDF first.',
-    },
-    {
-        question: 'What happens if I skip preparation?',
-        answer:
-            'Higher risk. Higher rebuild cost. Higher emotional burnout.',
-    },
+  {
+    question: 'Is this technical?',
+    answer:
+      'Not in the coding sense. This is structural preparation: risk, scope, cost, and decision quality before you build.',
+  },
+  {
+    question: 'Is this a make-money guide?',
+    answer:
+      'No. It does not teach growth tactics or revenue shortcuts. It prevents wasted effort before execution starts.',
+  },
+  {
+    question: 'Do I need money to start?',
+    answer:
+      'Preparation phase: EUR0-EUR50. You can validate commitment and define scope before meaningful infrastructure spend.',
+  },
+  {
+    question: 'Should I watch YouTube first?',
+    answer:
+      'No. Read the PDF first. YouTube makes more sense once your outcome, boundaries, and risk profile are clear.',
+  },
+  {
+    question: 'What happens if I skip preparation?',
+    answer:
+      'Risk rises quickly. Rebuild cost rises with it, and emotional burnout follows when effort compounds in the wrong direction.',
+  },
 ]
 
-const BG_PAGE = 'bg-[#F8FAFC] dark:bg-[#F8FAFC]'
-const TEXT_PRIMARY = 'text-[#0F172A] dark:text-[#0F172A]'
-const TEXT_SECONDARY = 'text-[#475569] dark:text-[#475569]'
-const TEXT_ACCENT = 'text-[#1D4ED8] dark:text-[#1D4ED8]'
-
-const SHADOW_CARD_ELEVATED =
-    'shadow-[0_20px_60px_rgba(15,23,42,0.08)]'
-const SHADOW_CARD_SUBTLE = 'shadow-[0_4px_16px_rgba(0,0,0,0.04)]'
-
-const CARD_BASE = `bg-white dark:bg-white rounded-2xl border border-slate-200 dark:border-slate-200 ${SHADOW_CARD_SUBTLE}`
+const CARD_BASE = 'rounded-2xl border border-border bg-card shadow-sm'
+const CARD_ELEVATED =
+  'rounded-2xl border border-border bg-card shadow-[0_24px_60px_rgba(15,23,42,0.08)]'
 
 export default function StartHerePage() {
-    return (
-        <main className={`min-h-screen ${BG_PAGE} font-sans selection:bg-[#2563EB]/20 selection:text-[#0F172A]`}>
+  return (
+    <main className="min-h-screen bg-background text-foreground font-brand selection:bg-primary/20 selection:text-foreground">
+      <section className="relative flex min-h-[100svh] items-center overflow-hidden border-b border-border bg-background py-12 lg:py-0">
+        <div className="pointer-events-none absolute inset-0 z-0">
+          <div
+            className="absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.03)_1px,transparent_1px)] bg-[size:36px_36px]"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute left-1/2 top-0 h-[760px] w-full -translate-x-1/2 bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,0.12)_0%,transparent_52%)]"
+            aria-hidden="true"
+          />
+        </div>
 
-            <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden py-12 lg:py-0">
-                <div className="absolute inset-0 z-0 pointer-events-none">
-                    <div
-                        className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px] opacity-[0.4]"
-                        aria-hidden="true"
-                    />
-                    <div
-                        className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-[radial-gradient(circle_at_50%_0%,rgba(224,231,255,0.6)_0%,transparent_50%)] opactiy-60"
-                        aria-hidden="true"
-                    />
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-8 md:px-12 lg:grid-cols-2 lg:gap-20">
+          <div className="order-1 space-y-8 lg:space-y-10">
+            <div className="space-y-6">
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+                Preparation Layer
+              </p>
+              <h1 className="font-sans text-[2.75rem] font-extrabold leading-[1.08] tracking-[-0.02em] text-foreground md:text-[4.25rem]">
+                Test first.
+                <br className="hidden lg:block" />
+                SaaS second.
+              </h1>
+              <p className="font-sans max-w-[40ch] text-xl font-semibold leading-[1.45] text-foreground md:text-2xl">
+                AI removed the coding barrier.
+                <br />
+                It did not remove consequences.
+              </p>
+              <p className="max-w-[52ch] text-lg leading-[1.7] text-muted-foreground md:text-xl">
+                Building software is accessible now, which means mistakes scale faster too. Overbuilding can happen in days when boundaries are unclear.
+                This page gives you a preparation system to reduce fragility before you deploy anything.
+              </p>
+            </div>
+
+            <div className="flex max-w-lg items-start gap-4 rounded-xl border border-primary/15 bg-primary/5 p-5">
+              <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" strokeWidth={2.25} />
+              <div className="space-y-1.5">
+                <p className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">
+                  Strict Separation
+                </p>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  PDF = preparation.
+                  <br />
+                  YouTube = execution.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="order-2 mx-auto w-full max-w-lg lg:max-w-none">
+            <div className="relative">
+              <div
+                className="pointer-events-none absolute -right-12 -top-12 h-64 w-64 rounded-full bg-primary/10 blur-3xl"
+                aria-hidden="true"
+              />
+              <div className={`${CARD_ELEVATED} relative p-8 lg:p-10`}>
+                <div className="mb-6 space-y-3">
+                  <p className="font-mono text-xs font-bold uppercase tracking-[0.1em] text-primary">
+                    Free PDF
+                  </p>
+                  <h3 className="font-sans text-2xl font-bold leading-tight text-foreground lg:text-3xl">
+                    Get The SaaS Starting Point
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    This is the preparation phase. It helps you define a viable outcome before technical execution starts.
+                  </p>
                 </div>
 
-                <div className="container mx-auto px-8 md:px-12 max-w-7xl relative z-10 w-full">
-                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                        <div className="space-y-8 lg:space-y-10 order-1">
-                            <div className="space-y-6">
-                                <h1 className={`font-extrabold tracking-tight ${TEXT_PRIMARY} leading-[1.1] text-[2.75rem] md:text-[4.25rem]`}>
-                                    Structure first. <br className="hidden lg:block" />
-                                    SaaS second.
-                                </h1>
-                                <p className={`text-xl md:text-2xl leading-[1.45] ${TEXT_PRIMARY} max-w-[40ch]`}>
-                                    AI removed the coding barrier.
-                                    <br />
-                                    It did not remove consequences.
-                                </p>
-                                <p className={`text-lg md:text-xl leading-[1.6] ${TEXT_SECONDARY} max-w-[50ch]`}>
-                                    Building SaaS is now accessible.
-                                    <br className="hidden md:block" />
-                                    Overbuilding is now faster.
-                                    <br className="hidden md:block" />
-                                    This guide exists to prevent fragility before you deploy anything.
-                                </p>
-                            </div>
-
-                            <div className="flex items-start gap-4 p-5 rounded-xl bg-[#1D4ED8]/5 border border-[#1D4ED8]/10 max-w-lg">
-                                <AlertCircle className={`w-5 h-5 mt-0.5 ${TEXT_ACCENT} flex-shrink-0`} />
-                                <div className="space-y-1.5">
-                                    <p className={`text-sm font-semibold ${TEXT_PRIMARY}`}>
-                                        Preparation before execution
-                                    </p>
-                                    <p className={`text-sm ${TEXT_SECONDARY} leading-relaxed`}>
-                                        This page is preparation.
-                                        <br />
-                                        YouTube is execution.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="relative order-2 w-full max-w-lg mx-auto lg:max-w-none">
-                            <div
-                                className="absolute -top-12 -right-12 w-64 h-64 bg-[#1D4ED8]/10 rounded-full blur-3xl opacity-60 pointer-events-none"
-                                aria-hidden="true"
-                            />
-                            <div className={`relative bg-white dark:bg-white p-8 lg:p-10 rounded-2xl border border-slate-100 dark:border-slate-100 ${SHADOW_CARD_ELEVATED}`}>
-                                <div className="mb-6">
-                                    <p className={`text-xs font-bold uppercase tracking-[0.1em] ${TEXT_ACCENT} mb-3`}>
-                                        Free PDF Guide
-                                    </p>
-                                    <h3 className={`text-2xl lg:text-3xl font-bold ${TEXT_PRIMARY} leading-tight`}>
-                                        Get the Free PDF – The SaaS Starting Point
-                                    </h3>
-                                </div>
-
-                                <div className="[&_input]:!h-12 [&_input]:!text-base [&_input]:!bg-white [&_input]:!text-slate-900 [&_input]:!border-slate-200 [&_button]:!h-12 [&_button]:!text-base [&_button]:!text-white mb-6">
-                                    <StartSignupForm buttonLabel="Get the Free PDF – The SaaS Starting Point" />
-                                </div>
-
-                                <div className="pt-6 border-t border-slate-100 dark:border-slate-100">
-                                    <p className={`text-sm leading-relaxed ${TEXT_SECONDARY}`}>
-                                        Preparation before infrastructure.
-                                        <br />
-                                        Clarity before complexity.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div className="mb-6 [&_input]:!h-12 [&_input]:!bg-background [&_input]:!border-border [&_input]:!text-foreground [&_input]:!text-base [&_button]:!h-12 [&_button]:!text-base [&_button]:!font-semibold [&_button]:!whitespace-nowrap [&_button]:!px-6">
+                  <StartSignupForm buttonLabel="Get the PDF" />
                 </div>
-            </section>
 
-            <section className="py-24 bg-slate-50/50 dark:bg-slate-50/50 border-t border-slate-200/60 dark:border-slate-200/60">
-                <div className="container mx-auto px-6 max-w-6xl">
-                    <div className="mb-16 md:text-center max-w-3xl mx-auto">
-                        <h2 className={`${TEXT_PRIMARY} text-3xl md:text-4xl font-bold tracking-tight mb-4`}>
-                            Preparation and Execution Are Not the Same
-                        </h2>
-                        <p className={`${TEXT_SECONDARY} text-lg`}>
-                            The PDF is preparation.
-                            <br />
-                            YouTube is execution.
-                        </p>
-                        <p className={`${TEXT_SECONDARY} text-base mt-4`}>
-                            Built from a software tester lens: Risk × Impact, scope reduction, fragility detection, and cost calculation.
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-start justify-center">
-                        <div className="relative flex justify-center md:block">
-                            <div className="max-w-sm mx-auto md:mx-0">
-                                <div className="absolute -left-4 top-0 bottom-0 w-1 bg-[#1D4ED8] rounded-full opacity-20 hidden md:block"></div>
-                                <div className="md:pl-8 space-y-6">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <div className="p-2 rounded-lg bg-[#1D4ED8]/10 text-[#1E3A8A]">
-                                            <BookOpen className="w-5 h-5" />
-                                        </div>
-                                        <h3 className={`text-xl font-bold ${TEXT_PRIMARY}`}>The PDF helps you</h3>
-                                    </div>
-                                    <ul className="space-y-4">
-                                        {PREPARATION_POINTS.map((item, i) => (
-                                            <li key={i} className={`flex items-start gap-3 text-base ${TEXT_SECONDARY}`}>
-                                                <Check className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
-                                                <span>{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="relative flex justify-center md:block">
-                            <div className="max-w-sm mx-auto md:mx-0">
-                                <div className="md:pl-8 space-y-6">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <div className="p-2 rounded-lg bg-slate-100 text-slate-700">
-                                            <MonitorPlay className="w-5 h-5" />
-                                        </div>
-                                        <h3 className={`text-xl font-bold ${TEXT_PRIMARY}`}>The YouTube channel shows</h3>
-                                    </div>
-                                    <ul className="space-y-4">
-                                        {EXECUTION_POINTS.map((item, i) => (
-                                            <li key={i} className={`flex items-start gap-3 text-base ${TEXT_SECONDARY}`}>
-                                                <Check className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
-                                                <span>{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p className={`${TEXT_PRIMARY} text-base font-medium mt-12 text-center`}>
-                        Execution does not fix a vague idea.
-                        <br />
-                        Preparation prevents rebuild cycles.
-                    </p>
+                <div className="border-t border-border pt-5">
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Preparation before infrastructure.
+                    <br />
+                    Clarity before complexity.
+                  </p>
                 </div>
-            </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <section className="py-24 bg-white dark:bg-white border-t border-slate-100 dark:border-slate-100">
-                <div className="container mx-auto px-6 max-w-6xl">
-                    <div className="mb-16 md:text-center max-w-3xl mx-auto">
-                        <h2 className={`${TEXT_PRIMARY} text-3xl md:text-4xl font-bold tracking-tight mb-4`}>
-                            This Is Not for Everyone
-                        </h2>
-                        <p className={`${TEXT_SECONDARY} text-lg`}>
-                            This framework filters for seriousness.
-                        </p>
-                    </div>
+      <section className="border-b border-border bg-muted/60 py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="font-sans mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
+              Preparation and Execution Are Not the Same
+            </h2>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              The PDF is preparation. YouTube is execution.
+              Both are necessary, but they solve different problems in a different order.
+            </p>
+          </div>
 
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {AUDIENCE_CARDS.map((card, i) => (
-                            <Card key={i} className={`${CARD_BASE} hover:shadow-md transition-shadow duration-300`}>
-                                <CardContent className="p-8">
-                                    <h3 className={`text-lg font-bold ${TEXT_PRIMARY} mb-4`}>
-                                        {card.title}
-                                    </h3>
-                                    <p className={`${TEXT_SECONDARY} text-base leading-relaxed`}>
-                                        {card.desc}
-                                    </p>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-
-                    <p className={`${TEXT_PRIMARY} text-base font-medium mt-12 text-center`}>
-                        If you are chasing fast money, this is not for you.
-                        <br />
-                        If you are willing to think before building, continue.
-                    </p>
+          <div className="grid items-start gap-10 md:grid-cols-2 lg:gap-16">
+            <div className="flex justify-center md:block">
+              <div className="max-w-sm space-y-6 md:pl-8">
+                <div className="mb-2 flex items-center gap-3">
+                  <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                    <BookOpen className="h-5 w-5" strokeWidth={2.25} />
+                  </div>
+                  <h3 className="font-sans text-xl font-bold text-foreground">The PDF helps you</h3>
                 </div>
-            </section>
+                <ul className="space-y-4">
+                  {PREPARATION_POINTS.map(item => (
+                    <li key={item} className="flex items-start gap-3 text-base text-muted-foreground">
+                      <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary/70" strokeWidth={2.25} />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
 
-            <section className="py-24 bg-slate-50/50 dark:bg-slate-50/50 border-t border-slate-200/60 dark:border-slate-200/60">
-                <div className="container mx-auto px-6 max-w-4xl">
-                    <div className="mb-12 text-center max-w-2xl mx-auto">
-                        <h2 className={`${TEXT_PRIMARY} text-3xl md:text-4xl font-bold tracking-tight mb-4`}>
-                            Inside the PDF
-                        </h2>
-                    </div>
-
-                    <div className={`${CARD_BASE} p-8 md:p-10`}>
-                        <ul className="space-y-4">
-                            {PDF_ITEMS.map((item, i) => (
-                                <li key={i} className={`flex items-start gap-3 text-base ${TEXT_SECONDARY}`}>
-                                    <Check className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-
-                        <p className={`${TEXT_PRIMARY} text-base font-medium mt-8`}>
-                            This is not motivational.
-                            <br />
-                            It is protective.
-                        </p>
-                    </div>
+            <div className="flex justify-center md:block">
+              <div className="max-w-sm space-y-6 md:pl-8">
+                <div className="mb-2 flex items-center gap-3">
+                  <div className="rounded-lg bg-background p-2 text-muted-foreground border border-border">
+                    <MonitorPlay className="h-5 w-5" strokeWidth={2.25} />
+                  </div>
+                  <h3 className="font-sans text-xl font-bold text-foreground">The YouTube channel shows</h3>
                 </div>
-            </section>
+                <ul className="space-y-4">
+                  {EXECUTION_POINTS.map(item => (
+                    <li key={item} className="flex items-start gap-3 text-base text-muted-foreground">
+                      <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary/70" strokeWidth={2.25} />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
 
-            <section className="py-24 bg-white dark:bg-white border-t border-slate-100 dark:border-slate-100">
-                <div className="container mx-auto px-6 max-w-4xl">
-                    <div className={`${CARD_BASE} p-8 md:p-10`}>
-                        <h2 className={`${TEXT_PRIMARY} text-3xl md:text-4xl font-bold tracking-tight mb-6`}>
-                            Why This Matters Now
-                        </h2>
+          <p className="mt-12 text-center text-base font-medium text-foreground">
+            Execution does not fix a vague idea.
+            <br />
+            Preparation prevents rebuild cycles.
+          </p>
+        </div>
+      </section>
 
-                        <p className={`${TEXT_SECONDARY} text-lg mb-6`}>
-                            Five years ago, building SaaS required:
-                        </p>
-                        <ul className="mb-8 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-                            <li className={TEXT_SECONDARY}>Developers</li>
-                            <li className={TEXT_SECONDARY}>Capital</li>
-                            <li className={TEXT_SECONDARY}>Months of waiting</li>
-                        </ul>
+      <section className="border-b border-border bg-background py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="mx-auto mb-16 max-w-3xl text-center">
+            <h2 className="font-sans mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
+              This Is Not for Everyone
+            </h2>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              This framework filters for seriousness. It is for builders who want fewer blind spots, not louder motivation.
+            </p>
+          </div>
 
-                        <p className={`${TEXT_SECONDARY} text-lg mb-4`}>
-                            Today, AI removed that barrier.
-                        </p>
-                        <p className={`${TEXT_SECONDARY} text-lg mb-4`}>
-                            Now anyone can build.
-                        </p>
-                        <p className={`${TEXT_SECONDARY} text-lg mb-4`}>
-                            But when building becomes easy,
-                            <br />
-                            overbuilding becomes dangerous.
-                        </p>
-                        <p className={`${TEXT_PRIMARY} text-lg font-medium`}>
-                            Structure is no longer optional.
-                            <br />
-                            It is the survival filter.
-                        </p>
-                    </div>
-                </div>
-            </section>
+          <div className="grid gap-8 md:grid-cols-3">
+            {AUDIENCE_CARDS.map(card => (
+              <Card key={card.title} className={`${CARD_BASE} transition-shadow duration-300 hover:shadow-md`}>
+                <CardContent className="space-y-4 p-8">
+                  <h3 className="font-sans text-lg font-bold text-foreground">{card.title}</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground">{card.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
 
-            <section className="py-24 bg-white dark:bg-white border-t border-slate-100 dark:border-slate-100">
-                <div className="container mx-auto px-6 max-w-3xl">
-                    <h2 className={`${TEXT_PRIMARY} text-3xl font-bold text-center mb-12`}>FAQ</h2>
+          <p className="mt-12 text-center text-base font-medium text-foreground">
+            If you are chasing fast money, this is not for you.
+            <br />
+            If you are willing to think before building, continue.
+          </p>
+        </div>
+      </section>
 
-                    <div className={`${CARD_BASE} overflow-hidden`}>
-                        <Accordion type="single" collapsible className="w-full">
-                            {FAQ_ITEMS.map((item, index) => (
-                                <AccordionItem
-                                    key={index}
-                                    value={`item-${index}`}
-                                    className="border-b border-slate-100 dark:border-slate-100 last:border-0 px-6"
-                                >
-                                    <AccordionTrigger className="hover:no-underline py-5 text-left text-base font-semibold">
-                                        <span className="pr-4 text-slate-900 dark:text-slate-900">{item.question}</span>
-                                    </AccordionTrigger>
-                                    <AccordionContent className={`${TEXT_SECONDARY} text-[15px] leading-relaxed pb-5`}>
-                                        {item.answer}
-                                    </AccordionContent>
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
-                    </div>
-                </div>
-            </section>
+      <section className="border-b border-border bg-muted/60 py-24">
+        <div className="mx-auto max-w-4xl px-6">
+          <div className="mx-auto mb-12 max-w-2xl text-center">
+            <h2 className="font-sans text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
+              Inside the PDF
+            </h2>
+          </div>
 
-            <footer className="py-12 border-t border-slate-200 dark:border-slate-200 bg-slate-50 dark:bg-slate-50 text-center">
-                <div className="container mx-auto px-6">
-                    <p className={`text-sm ${TEXT_SECONDARY} mb-4`}>
-                        Built by Steve Westhoek.
-                        <br />
-                        Software tester.
-                        <br />
-                        Structure first. SaaS second.
-                    </p>
-                    <div className={`flex items-center justify-center gap-6 text-sm font-medium ${TEXT_SECONDARY}`}>
-                        <Link href="/privacy" className="hover:text-[#2563EB] transition-colors">Privacy</Link>
-                        <Link href="/terms" className="hover:text-[#2563EB] transition-colors">Terms</Link>
-                    </div>
-                </div>
-            </footer>
+          <div className={`${CARD_BASE} p-8 md:p-10`}>
+            <ul className="space-y-4">
+              {PDF_ITEMS.map(item => (
+                <li key={item} className="flex items-start gap-3 text-base text-muted-foreground">
+                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary/70" strokeWidth={2.25} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
 
-        </main>
-    )
+            <p className="mt-8 text-base font-medium text-foreground">
+              This is not motivational.
+              <br />
+              It is protective.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-border bg-background py-24">
+        <div className="mx-auto max-w-4xl px-6">
+          <div className={`${CARD_BASE} p-8 md:p-10`}>
+            <h2 className="font-sans mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
+              Why This Matters Now
+            </h2>
+
+            <p className="mb-6 text-lg leading-relaxed text-muted-foreground">
+              Five years ago, building SaaS required developers, capital, and long timelines. That barrier was high, and it filtered who could execute.
+            </p>
+            <ul className="mb-8 list-disc space-y-2 pl-5 marker:text-border">
+              <li className="text-muted-foreground">Developers</li>
+              <li className="text-muted-foreground">Capital</li>
+              <li className="text-muted-foreground">Months of waiting</li>
+            </ul>
+
+            <p className="mb-4 text-lg leading-relaxed text-muted-foreground">
+              Today, AI removed that barrier. Anyone can build quickly, which means overbuilding can happen just as quickly.
+            </p>
+            <p className="text-lg font-medium leading-relaxed text-foreground">
+              Structure is no longer optional.
+              <br />
+              It is the survival filter.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-border bg-muted/40 py-24">
+        <div className="mx-auto max-w-3xl px-6">
+          <h2 className="font-sans mb-12 text-center text-3xl font-bold text-foreground">FAQ</h2>
+
+          <div className={`${CARD_BASE} overflow-hidden`}>
+            <Accordion type="single" collapsible className="w-full">
+              {FAQ_ITEMS.map((item, index) => (
+                <AccordionItem
+                  key={item.question}
+                  value={`item-${index}`}
+                  className="border-b border-border px-6 last:border-0"
+                >
+                  <AccordionTrigger className="py-5 text-left text-base font-semibold text-foreground hover:no-underline">
+                    <span className="pr-4">{item.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-5 text-[15px] leading-relaxed text-muted-foreground">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
+      <footer className="bg-muted/70 py-8 text-center">
+        <div className="mx-auto px-6">
+          <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
+            Built by Steve Westhoek. Software tester. Test first. SaaS second.
+          </p>
+          <div className="flex items-center justify-center gap-5 text-xs font-medium text-muted-foreground">
+            <Link href="/privacy" className="transition-colors hover:text-primary">
+              Privacy
+            </Link>
+            <Link href="/terms" className="transition-colors hover:text-primary">
+              Terms
+            </Link>
+          </div>
+        </div>
+      </footer>
+    </main>
+  )
 }
