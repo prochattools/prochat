@@ -80,7 +80,14 @@ export const Footer: React.FC = () => {
                       Privacy Policy
                     </Link>
                  </li>
-                 <li><a href="#" className="hover:text-primary transition-colors">Licences</a></li>
+                 <li>
+                    <a
+                      href="https://prochat.tools/terms#digital-product-license"
+                      className="hover:text-primary transition-colors"
+                    >
+                      Licences
+                    </a>
+                 </li>
               </ul>
            </div>
 

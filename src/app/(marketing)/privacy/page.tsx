@@ -13,242 +13,297 @@ export const metadata = getSEOTags({
 
 export default function PrivacyPage() {
 	return (
-		<section className="py-24 bg-white relative dark:bg-[#0B111B]">
+		<section className="relative bg-white py-24 dark:bg-[#0B111B]">
 			<main className="mx-auto w-full max-w-3xl px-6 sm:px-8">
-				<article className="space-y-10 text-slate-600 dark:text-slate-300 leading-relaxed">
+				<article className="space-y-10 leading-relaxed text-slate-600 dark:text-slate-300">
 					<header className="mb-12">
-						<h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 dark:text-white">
+						<h1 className="mb-4 text-3xl font-bold text-slate-900 dark:text-white md:text-4xl">
 							PRIVACY POLICY
 						</h1>
-						<p className="text-slate-500 text-sm font-medium dark:text-slate-400">
-							Last updated: 28 October 2025
+						<p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+							Last updated: 20 February 2026
 						</p>
 					</header>
 
 					<div className="space-y-4">
-						<p className="font-bold text-slate-900 uppercase tracking-wide text-xs md:text-sm dark:text-white">
-							PLEASE READ THIS TERMS OF SERVICE AGREEMENT CAREFULLY, AS IT
-							CONTAINS IMPORTANT INFORMATION REGARDING YOUR LEGAL RIGHTS AND
-							REMEDIES.
+						<p>
+							This Privacy Policy explains how personal data is collected and
+							processed by:
+						</p>
+						<p className="font-medium text-slate-900 dark:text-white">
+							Steve Westhoek, trading as ProChat (ENI)
+							<br />
+							Porto, Portugal
+							<br />
+							Email: support@prochat.tools
 						</p>
 						<p>
-							These Terms of Service (“Terms”) govern your access to and use of
-							ProChat™ provided by ArkWare Solutions (“Company”, “we”, “our”). By
-							using the Service, you agree to these Terms.
+							By using this website or purchasing any Product, you agree to this
+							Policy.
 						</p>
-						<p>By using the Service, you consent to this Privacy Policy.</p>
 					</div>
 
 					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-3 dark:text-white">
-							1. Data Controller
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							1. DATA CONTROLLER
 						</h2>
-						<div className="pl-1">
-							<p className="font-medium text-slate-900 dark:text-white">
-								ArkWare Solutions
-							</p>
-							<p>Arnhem, The Netherlands</p>
-							<p className="mt-1">
-								<span className="text-slate-400 dark:text-slate-500">
-									Contact:
-								</span>{' '}
-								submit a ticket
-							</p>
+						<p>The data controller is:</p>
+						<div className="mt-4">
+							<p className="font-medium text-slate-900 dark:text-white">Steve Westhoek (ENI)</p>
+							<p>Trading as ProChat</p>
+							<p>Porto, Portugal</p>
+							<p>support@prochat.tools</p>
 						</div>
 					</article>
 
 					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-4 dark:text-white">
-							2. Data We Collect
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							2. DATA WE COLLECT
 						</h2>
-						<p className="mb-6">We may collect the following information:</p>
+						<p>
+							We collect only data necessary to operate our business and deliver
+							our digital products.
+						</p>
 
-						<div className="space-y-6 pl-1">
-							<div>
-								<h3 className="font-bold text-slate-900 text-sm uppercase tracking-wide mb-1 dark:text-white">
-									Account Information
-								</h3>
-								<p>Name, email address, password, and profile details.</p>
-							</div>
-							<div>
-								<h3 className="font-bold text-slate-900 text-sm uppercase tracking-wide mb-1 dark:text-white">
-									Payment Information
-								</h3>
-								<p>
-									If you purchase a subscription, payment details are processed
-									securely by Stripe. We do not store full credit card information.
-								</p>
-							</div>
-							<div>
-								<h3 className="font-bold text-slate-900 text-sm uppercase tracking-wide mb-1 dark:text-white">
-									Usage Information
-								</h3>
-								<p>
-									IP address, browser type, device information, pages visited, and
-									timestamps for security and analytics.
-								</p>
-							</div>
-							<div>
-								<h3 className="font-bold text-slate-900 text-sm uppercase tracking-wide mb-1 dark:text-white">
-									Chat Content
-								</h3>
-								<p>Messages and files you send or upload are stored until you delete them.</p>
-							</div>
-							<div>
-								<h3 className="font-bold text-slate-900 text-sm uppercase tracking-wide mb-1 dark:text-white">
-									Cookies & Similar Technologies
-								</h3>
-								<p>
-									Used for authentication, functionality, and analytics via Google
-									Analytics.
-								</p>
-							</div>
-						</div>
+						<h3 className="mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white">
+							A. Purchase &amp; Account Data
+						</h3>
+						<p>When you purchase a Product:</p>
+						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
+							<li>Name</li>
+							<li>Email address</li>
+							<li>Billing information</li>
+							<li>Company name (if provided)</li>
+							<li>Transaction details</li>
+						</ul>
+						<p>
+							Payments are processed securely by Stripe. We do not store full
+							credit card details.
+						</p>
+						<p className="mt-4">
+							Stripe may store transaction metadata necessary for licensing and
+							fraud prevention.
+						</p>
+
+						<h3 className="mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white">
+							B. GitHub Access
+						</h3>
+						<p>If Product access includes a private repository:</p>
+						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
+							<li>Your GitHub username</li>
+							<li>Associated email (via GitHub OAuth)</li>
+						</ul>
+						<p>
+							This is used solely to grant and manage repository access.
+						</p>
+						<p className="mt-4">
+							GitHub processes your data under its own Privacy Policy.
+						</p>
+
+						<h3 className="mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white">
+							C. Email Communications
+						</h3>
+						<p>We use:</p>
+						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
+							<li>
+								Resend for transactional emails (receipts, product access,
+								system notifications)
+							</li>
+							<li>
+								MailerLite for newsletters and marketing communications (if you
+								opt in)
+							</li>
+						</ul>
+						<p>You may unsubscribe from marketing emails at any time.</p>
+
+						<h3 className="mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white">
+							D. Technical &amp; Usage Data
+						</h3>
+						<p>We collect limited technical data:</p>
+						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
+							<li>IP address</li>
+							<li>Browser type</li>
+							<li>Device information</li>
+							<li>Pages visited</li>
+							<li>Timestamps</li>
+						</ul>
+						<p>Used for security, fraud prevention, and analytics.</p>
+
+						<h3 className="mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white">
+							E. Analytics
+						</h3>
+						<p>
+							We use Google Analytics to understand website performance and usage
+							trends.
+						</p>
+						<p className="mt-4">Analytics data may include:</p>
+						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
+							<li>Page interactions</li>
+							<li>Session duration</li>
+							<li>Approximate geographic location</li>
+							<li>Device type</li>
+						</ul>
+						<p>
+							Google may process data outside the EU in accordance with its own
+							safeguards.
+						</p>
 					</article>
 
 					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-3 dark:text-white">
-							3. Lawful Basis for Processing (GDPR)
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							3. PURPOSE OF PROCESSING
 						</h2>
-						<p className="mb-4">
-							We process personal data under one or more of the following legal bases:
-						</p>
-						<ul className="list-disc pl-5 space-y-2 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Performance of a contract (providing the Service)</li>
-							<li>Legitimate interests (security, fraud prevention, product improvements)</li>
-							<li>Consent (newsletter marketing, optional cookies)</li>
-							<li>Compliance with legal obligations</li>
+						<p>We process personal data to:</p>
+						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
+							<li>Deliver digital products</li>
+							<li>Grant GitHub repository access</li>
+							<li>Process payments</li>
+							<li>Provide transactional communications</li>
+							<li>Send marketing communications (if consented)</li>
+							<li>Prevent fraud and abuse</li>
+							<li>Improve website performance</li>
 						</ul>
 					</article>
 
 					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-3 dark:text-white">
-							4. How We Use Data
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							4. LEGAL BASIS (GDPR)
 						</h2>
-						<ul className="list-disc pl-5 space-y-2 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Provide and maintain the Service</li>
-							<li>Authenticate user accounts</li>
-							<li>Process subscriptions and billing</li>
-							<li>Improve performance and security</li>
-							<li>Communicate updates and marketing messages (opt-out available)</li>
-							<li>Analyze usage trends with Google Analytics</li>
+						<p>We process personal data under:</p>
+						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
+							<li>
+								Contractual necessity (product delivery and payment processing)
+							</li>
+							<li>
+								Legitimate interest (security, fraud prevention, analytics)
+							</li>
+							<li>Consent (marketing emails and optional cookies)</li>
+							<li>
+								Legal obligations (tax and accounting compliance under Portuguese
+								law)
+							</li>
 						</ul>
 					</article>
 
 					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-3 dark:text-white">
-							5. Sharing Your Information
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							5. DATA SHARING
 						</h2>
-						<p className="mb-4">
-							We only share data with trusted service providers who assist in
-							operating the Service:
+						<p>
+							We share personal data only with necessary service providers:
 						</p>
-						<ul className="list-disc pl-5 space-y-2 mb-6 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Stripe (payments)</li>
-							<li>Google Analytics (usage metrics)</li>
-							<li>Hosting and infrastructure providers</li>
+						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
+							<li>Stripe (payment processing)</li>
+							<li>GitHub (repository access)</li>
+							<li>MailerLite (email marketing)</li>
+							<li>Resend (transactional email)</li>
+							<li>Google Analytics (usage analytics)</li>
+							<li>Hosting providers (website infrastructure)</li>
 						</ul>
-						<p className="font-medium text-slate-900 dark:text-white">
-							We do not sell or rent personal data.
-						</p>
+						<p>We do not sell, rent, or trade personal data.</p>
 					</article>
 
 					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-3 dark:text-white">
-							6. Data Retention
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							6. DATA RETENTION
+						</h2>
+						<p>We retain:</p>
+						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
+							<li>
+								Purchase and invoice records as required by Portuguese tax law
+							</li>
+							<li>
+								License-related data while Product access is active
+							</li>
+							<li>Marketing data until consent is withdrawn</li>
+						</ul>
+						<p>You may request deletion where legally permissible.</p>
+					</article>
+
+					<article>
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							7. INTERNATIONAL TRANSFERS
 						</h2>
 						<p>
-							Account and chat data are stored until the user deletes them or closes
-							their account, unless retention is required for legal obligations.
+							Some service providers (Stripe, GitHub, Google, MailerLite,
+							Resend) may process data outside the EU.
+						</p>
+						<p className="mt-4">
+							Where required, appropriate safeguards such as Standard
+							Contractual Clauses are relied upon.
 						</p>
 					</article>
 
 					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-3 dark:text-white">
-							7. International Transfers
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							8. SECURITY
 						</h2>
 						<p>
-							Your data may be processed outside the EU. We ensure appropriate
-							safeguards such as Standard Contractual Clauses where required.
+							We implement reasonable technical and organizational safeguards to
+							protect personal data.
+						</p>
+						<p className="mt-4">
+							However, no online transmission can be guaranteed 100% secure.
 						</p>
 					</article>
 
 					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-3 dark:text-white">
-							8. Security
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							9. YOUR RIGHTS (GDPR)
 						</h2>
-						<p>
-							We implement industry-standard measures to protect your data but
-							cannot guarantee absolute security of information transmitted online.
-						</p>
-					</article>
-
-					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-3 dark:text-white">
-							9. Your Rights (GDPR)
-						</h2>
-						<p className="mb-4">You may:</p>
-						<ul className="list-disc pl-5 space-y-2 mb-6 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Request access to your data</li>
-							<li>Request correction or deletion</li>
+						<p>You have the right to:</p>
+						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
+							<li>Access your personal data</li>
+							<li>Request correction</li>
+							<li>Request deletion (where legally permitted)</li>
 							<li>Withdraw consent for marketing</li>
 							<li>Object to certain processing</li>
 							<li>Request data portability</li>
 							<li>Lodge a complaint with a supervisory authority</li>
 						</ul>
-						<p className="bg-slate-50 p-3 rounded-lg border border-slate-100 inline-block text-sm dark:bg-[#0F1626] dark:border-[#1E242D]">
-							To exercise rights:{' '}
-							<span className="font-bold text-slate-900 dark:text-white">
-								submit a ticket
-							</span>
+						<p>
+							To exercise your rights, contact:
+							<br />
+							support@prochat.tools
 						</p>
 					</article>
 
 					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-3 dark:text-white">
-							10. Children’s Privacy
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							10. COOKIES
 						</h2>
-						<p>
-							The Service is intended for adults only (18+). We do not knowingly
-							collect data from minors.
+						<p>We use essential cookies for functionality.</p>
+						<p className="mt-4">
+							Analytics cookies may be used for performance analysis.
+						</p>
+						<p className="mt-4">
+							You may disable cookies in your browser settings.
+						</p>
+						<p className="mt-4">
+							If required by EU law, a cookie consent mechanism will be
+							provided.
 						</p>
 					</article>
 
 					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-3 dark:text-white">
-							11. Third-Party Links
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							11. THIRD-PARTY LINKS
 						</h2>
 						<p>
-							We are not responsible for the privacy practices of websites linked
-							from our Service.
+							We are not responsible for third-party websites or services linked
+							from our website.
 						</p>
 					</article>
 
 					<article>
-						<h2 className="text-xl font-bold text-slate-900 mb-3 dark:text-white">
-							12. Updates to This Policy
+						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
+							12. POLICY UPDATES
 						</h2>
-						<p>
-							We may update this Privacy Policy at any time. Continued use after
-							changes indicates acceptance.
+						<p>We may update this Policy periodically.</p>
+						<p className="mt-4">
+							The latest version will always be published on this page.
 						</p>
 					</article>
-
-					<div className="pt-10 border-t border-slate-100 mt-10 dark:border-[#1E242D]">
-						<p className="mb-2">
-							For any privacy questions:{' '}
-							<span className="font-medium text-slate-900 dark:text-white">
-								submit a ticket
-							</span>
-						</p>
-						<p>
-							Still have a question? Here you can{' '}
-							<span className="font-medium text-slate-900 dark:text-white">
-								submit a ticket
-							</span>
-							.
-						</p>
-					</div>
 				</article>
 			</main>
 		</section>
