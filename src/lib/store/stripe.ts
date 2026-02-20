@@ -124,45 +124,59 @@ export async function getSessionStatusById(
 	try {
 		const productConfig = getProductConfig(expectedProduct)
 		const session = await retrieveSessionById(sessionId)
+		let effectiveSession = session
 
-		if (!session) {
+		if (!effectiveSession) {
 			return {
 				state: 'invalid_session',
 				message: 'Session not found.',
 			}
 		}
 
-		if (session.metadata?.product_slug !== expectedProduct) {
+		if (effectiveSession.metadata?.product_slug !== expectedProduct) {
 			return {
 				state: 'invalid_session',
 				message: 'This session does not match the selected product.',
 			}
 		}
 
-		if (session.payment_status !== 'paid') {
+		if (effectiveSession.payment_status !== 'paid') {
 			return {
 				state: 'unpaid',
 				message: 'Payment not completed yet.',
 				productSlug: expectedProduct,
-				email: getSessionEmail(session),
+				email: getSessionEmail(effectiveSession),
 			}
 		}
 
-		if (getMetadataValue(session, productConfig.paidKey) !== 'true') {
+		// Self-heal paid sessions when webhook delivery is delayed or unavailable.
+		if (getMetadataValue(effectiveSession, productConfig.paidKey) !== 'true') {
+			try {
+				await markSessionPaid(effectiveSession)
+				const refreshedSession = await retrieveSessionById(effectiveSession.id)
+				if (refreshedSession) {
+					effectiveSession = refreshedSession
+				}
+			} catch (error) {
+				console.error('[store] Failed to auto-mark paid session', error)
+			}
+		}
+
+		if (getMetadataValue(effectiveSession, productConfig.paidKey) !== 'true') {
 			return {
 				state: 'unpaid',
 				message:
 					'Payment is still being verified by Stripe webhook. If you just paid, wait a minute and refresh this page.',
 				productSlug: expectedProduct,
-				email: getSessionEmail(session),
+				email: getSessionEmail(effectiveSession),
 			}
 		}
 
-		const email = getSessionEmail(session)
+		const email = getSessionEmail(effectiveSession)
 		const githubUsername =
-			getMetadataValue(session, productConfig.usernameKey) || null
+			getMetadataValue(effectiveSession, productConfig.usernameKey) || null
 
-		if (isProvisioned(session, productConfig.provisionedKey)) {
+		if (isProvisioned(effectiveSession, productConfig.provisionedKey)) {
 			return {
 				state: 'provisioned',
 				productSlug: expectedProduct,
