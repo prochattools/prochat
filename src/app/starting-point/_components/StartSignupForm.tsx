@@ -59,7 +59,7 @@ export default function StartSignupForm({
       }
 
       setSuccess(
-        payload.message || 'You are in. Check your inbox for the first email.'
+        payload.message || 'Check your inbox — your copy is on its way.'
       )
       setEmail('')
     } catch (submitError) {

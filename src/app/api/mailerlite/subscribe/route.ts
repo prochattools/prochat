@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: 'Thanks. You are now subscribed.' },
+      { message: 'Check your inbox — your copy is on its way.' },
       { status: 200 }
     )
   } catch (error) {
