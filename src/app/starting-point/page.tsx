@@ -69,7 +69,7 @@ const FAQ_ITEMS = [
   {
     question: 'Do I need money to start?',
     answer:
-      'Preparation phase: EUR0-EUR50. You can validate commitment and define scope before meaningful infrastructure spend.',
+      'Preparation phase: $0-$50. You can validate commitment and define scope before meaningful infrastructure spend.',
   },
   {
     question: 'Should I watch YouTube first?',
