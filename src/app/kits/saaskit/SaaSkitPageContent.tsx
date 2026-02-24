@@ -520,7 +520,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
               </div>
               <div className="flex items-baseline justify-center gap-1">
                 <span className="font-brand rounded bg-muted px-2 text-6xl font-bold tracking-[-0.03em] text-foreground">
-                  $197
+                  $247
                 </span>
                 <span className="text-muted-foreground">/ once</span>
               </div>
