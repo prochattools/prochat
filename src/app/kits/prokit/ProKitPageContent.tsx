@@ -16,54 +16,54 @@ const techSpecs = [
     icon: <StitchIcon name="runtime" className="h-5 w-5 text-primary" />,
     title: 'Runtime Foundation',
     points: [
-      'Next.js 14 App Router config',
-      'Type-safe environment variables',
-      'Global error handling boundaries',
+      'Next.js App Router + TypeScript baseline',
+      'Prisma + Postgres integration',
+      'Production migration safeguards',
     ],
   },
   {
     icon: <StitchIcon name="auth" className="h-5 w-5 text-primary" />,
     title: 'Authentication & Access',
     points: [
-      'Magic link & social login ready',
-      'Protected route middleware',
-      'User session management',
+      'Clerk auth wiring',
+      'Route-grouped app structure ((app))',
+      'Session-ready patterns',
     ],
   },
   {
     icon: <StitchIcon name="payments" className="h-5 w-5 text-primary" />,
     title: 'Payments & Billing',
     points: [
-      'Verified Stripe webhooks',
-      'Customer portal integration',
-      'Subscription status syncing',
+      'Stripe billing wiring',
+      'Subscription persistence API',
+      'Dashboard billing flow',
     ],
   },
   {
     icon: <StitchIcon name="db" className="h-5 w-5 text-primary" />,
     title: 'Database & Migrations',
     points: [
-      'Production-ready schema',
-      'Automated migration scripts',
-      'Relationship integrity checks',
+      'Subscription Prisma model',
+      'DB verify/init scripts',
+      'Health endpoint',
     ],
   },
   {
     icon: <StitchIcon name="seo" className="h-5 w-5 text-primary" />,
-    title: 'Marketing & SEO',
+    title: 'Deployment Safeguards',
     points: [
-      'Dynamic sitemap generation',
-      'OpenGraph image generation',
-      'Structured data (JSON-LD)',
+      'Production migration guard',
+      'Vercel migration hook',
+      'Environment-driven configuration',
     ],
   },
   {
     icon: <StitchIcon name="automation" className="h-5 w-5 text-primary" />,
-    title: 'Automation & Integrations',
+    title: 'What ProKit intentionally does NOT include',
     points: [
-      'Transactional email setup',
-      'Background job processing patterns',
-      'Typed API route handlers',
+      'No built-in marketing frontend',
+      'No blog or SEO system',
+      'No workflow automation layer',
     ],
   },
 ]
@@ -136,44 +136,40 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 font-mono text-xs font-medium text-muted-foreground shadow-sm">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-            v2.0 Production Ready
+            ProKit Core Engine
           </div>
 
           <h1 className="mb-8 text-5xl font-bold leading-[1.08] tracking-[-0.02em] text-foreground md:text-7xl">
-            Launch your SaaS on
+            Core infrastructure.
             <br />
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              stable ground.
+              No marketing layer. No fluff.
             </span>
           </h1>
 
           <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
             <p>
-              5 years ago you needed a developer. Today you don&apos;t.
-              <br />
-              <strong className="font-medium text-foreground">
-                What still costs money is structural mistakes.
-              </strong>
+              ProKit gives you the production-ready engine: auth, billing, database, and app
+              structure — so you can build your product without rewriting the basics.
             </p>
             <p className="text-base text-muted-foreground">
-              ProKit gives you a production-ready base: authentication, payments, database, email,
-              and deployment already connected and verified.
+              For builders who want control — not scaffolding.
             </p>
             <div className="flex flex-col items-center justify-center py-2">
               <div className="flex min-h-11 flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-md border border-border bg-card/90 px-4 py-2 font-mono text-sm leading-none text-foreground shadow-sm backdrop-blur-sm sm:flex-nowrap">
                 <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
                   <StitchIcon name="check-green" className="h-4 w-4 text-green-600" />
-                  <span>Not a blank project.</span>
+                  <span>Core infrastructure.</span>
                 </span>
                 <span className="hidden text-border sm:inline">|</span>
                 <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
                   <StitchIcon name="check-green" className="h-4 w-4 text-green-600" />
-                  <span>Not a fragile tutorial.</span>
+                  <span>No marketing layer.</span>
                 </span>
                 <span className="hidden text-border sm:inline">|</span>
                 <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
                   <StitchIcon name="check-green" className="h-4 w-4 text-green-600" />
-                  <span>A controlled system.</span>
+                  <span>No fluff.</span>
                 </span>
               </div>
             </div>
@@ -188,10 +184,10 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
               Start with ProKit
             </a>
             <a
-              href="#tester-mindset"
+              href="#breakdown"
               className="font-brand group inline-flex items-center justify-center rounded-lg border border-border bg-background px-8 py-4 text-lg font-bold tracking-[-0.01em] text-foreground shadow-sm transition-all hover:bg-muted"
             >
-              See what&apos;s inside
+              View full system breakdown
               <StitchIcon
                 name="arrow-downward"
                 className="ml-2 h-4 w-4 transition-transform group-hover:translate-y-0.5"
@@ -200,7 +196,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           </div>
 
           <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
-            One-time payment · Unlimited reuse · Instant GitHub access
+            For builders who want control — not scaffolding.
           </p>
         </div>
       </section>
@@ -216,28 +212,27 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
             </div>
             <div className="space-y-6">
               <h2 className="text-3xl font-bold tracking-[-0.02em] text-foreground">
-                Built from a tester&apos;s mindset.
+                Build on a clean foundation.
               </h2>
               <div className="space-y-3 text-lg leading-[1.6] text-muted-foreground">
                 <p className="font-medium text-foreground">
-                  For 12 years I worked as a professional software tester.
+                  ProKit is the core runtime behind a modern SaaS application.
                 </p>
                 <p>
-                  My responsibility wasn&apos;t writing code. It was testing software in real
-                  environments, finding where it breaks and what keeps it stable under pressure.
+                  It handles the essential wiring — authentication, subscriptions, database
+                  structure, and deployment guards — without imposing a marketing layer or growth
+                  system.
                 </p>
                 <p>
-                  I learned to think in edge cases, evaluate risk against impact, and prevent
-                  failures before they ever reach users.
+                  You bring the product idea.
                 </p>
                 <p>
-                  ProKit is built through that lens. AI makes building possible, but testing
-                  discipline makes it sustainable.
+                  ProKit gives you a stable engine.
                 </p>
                 <div className="mt-6 flex items-center gap-3 border-t border-border pt-6">
-                  <span className="font-mono text-sm text-muted-foreground">STATUS:</span>
+                  <span className="font-mono text-sm text-muted-foreground">POSITIONING:</span>
                   <span className="font-brand font-extrabold uppercase tracking-[0.02em] text-primary">
-                    Not Hype. Stability.
+                    Core engine only.
                   </span>
                 </div>
               </div>
@@ -254,45 +249,43 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 <div className="mb-6 flex items-center gap-3">
                   <StitchIcon name="warning-triangle-filled" className="h-5 w-5 text-destructive" />
                   <h3 className="text-xl font-bold uppercase tracking-wider text-foreground">
-                    The Real Problem
+                    What You Get
                   </h3>
                 </div>
                 <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                  Invisible complexity.
+                  Production-ready structure
                 </h2>
                 <p className="mb-4 font-medium text-foreground">
-                  You don&apos;t know what you don&apos;t know. And that uncertainty slows momentum.
+                  Next.js App Router + TypeScript baseline
                 </p>
                 <p className="mb-6 leading-relaxed text-muted-foreground">
-                  Infrastructure failures are quiet, not loud: payments half-working, emails
-                  inconsistently delivering, database structure slowly breaking, confidence eroding.
+                  Clean route grouping for scalable apps
                 </p>
                 <p className="mb-8 font-medium leading-relaxed text-muted-foreground">
-                  Silent failures are worse than obvious ones.
+                  Error + not-found boundaries included
                 </p>
 
                 <div className="space-y-4 rounded-lg border border-destructive/30 bg-destructive/10 p-6 shadow-sm">
                   <div className="flex items-start gap-3 text-sm text-destructive/90">
                     <StitchIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Conflicting tutorials and ten tabs open</p>
+                    <p>Clerk auth wiring (configurable)</p>
                   </div>
                   <div className="flex items-start gap-3 text-sm text-destructive/90">
                     <StitchIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Unexpected production errors</p>
+                    <p>Stripe subscription persistence</p>
                   </div>
                   <div className="flex items-start gap-3 text-sm text-destructive/90">
                     <StitchIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Stripe half-configured</p>
+                    <p>Checkout success &amp; cancel flows</p>
                   </div>
                   <div className="flex items-start gap-3 text-sm font-medium text-destructive">
                     <StitchIcon name="frustrated-face" className="mt-0.5 h-4 w-4" />
-                    <p>&quot;What if this breaks in production?&quot;</p>
+                    <p>Authentication &amp; billing core</p>
                   </div>
                 </div>
 
                 <p className="mt-6 text-sm italic text-muted-foreground">
-                  Progress slows not because you lack skill, but because you&apos;re navigating
-                  complexity you can&apos;t fully see.
+                  ProKit gives you a stable engine.
                 </p>
               </div>
             </div>
@@ -314,50 +307,49 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                   <div className="mb-6 flex items-center gap-3">
                     <StitchIcon name="verified" className="h-5 w-5 text-blue-300" />
                     <h3 className="text-xl font-bold uppercase tracking-wider text-primary-foreground/80">
-                      What ProKit Gives You
+                      Database &amp; subscription layer
                     </h3>
                   </div>
                   <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-primary-foreground md:text-4xl">
-                    Reduced uncertainty.
+                    Deployment safeguards
                   </h2>
                   <p className="mb-8 leading-relaxed text-primary-foreground/90">
-                    AI allows you to build. ProKit allows you to build safely. You build your
-                    product. You don&apos;t build the wiring.
+                    Core infrastructure that stays deliberate and minimal.
                   </p>
 
                   <div className="space-y-4 rounded-lg border border-blue-700 bg-blue-800/55 p-6 shadow-inner backdrop-blur-sm">
                     <div className="flex items-center gap-3 text-primary-foreground">
                       <StitchIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Authentication wired and secure</p>
+                      <p className="text-sm font-medium">Prisma + Postgres via DATABASE_URL</p>
                     </div>
                     <div className="flex items-center gap-3 text-primary-foreground">
                       <StitchIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Database structured and verified</p>
+                      <p className="text-sm font-medium">Subscription data model</p>
                     </div>
                     <div className="flex items-center gap-3 text-primary-foreground">
                       <StitchIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Stripe payments connected</p>
+                      <p className="text-sm font-medium">DB verify/init scripts + health endpoint</p>
                     </div>
                     <div className="flex items-center gap-3 text-primary-foreground">
                       <StitchIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Email systems ready</p>
+                      <p className="text-sm font-medium">Deployment safeguards</p>
                     </div>
                   </div>
 
                   <div className="mt-8 border-t border-primary-foreground/30 pt-8">
-                    <h4 className="mb-4 font-bold text-primary-foreground">What You Actually Save</h4>
+                    <h4 className="mb-4 font-bold text-primary-foreground">Deployment safeguards</h4>
                     <ul className="space-y-2 font-mono text-sm text-primary-foreground/85">
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Momentum is what makes solo founders dangerous.
+                        Production migration guard
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        40 to 60+ hours of fragile setup.
+                        Vercel migration hook
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Weeks of trial-and-error debugging.
+                        Environment-driven configuration
                       </li>
                     </ul>
                   </div>
@@ -372,17 +364,17 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         <div className="mx-auto max-w-4xl px-6">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground">
-              Manual Setup vs ProKit
+              What ProKit intentionally does NOT include
             </h2>
             <p className="text-muted-foreground">
-              Manual setup looks cheaper until you calculate the cost of confidence.
+              ProKit is the core engine and deliberately excludes growth-layer systems.
             </p>
           </div>
 
           <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
             <div className="grid grid-cols-3 border-b border-border bg-muted text-sm font-bold uppercase tracking-wider text-muted-foreground">
-              <div className="p-6">Metric</div>
-              <div className="border-l border-border p-6 text-center">Manual Setup</div>
+              <div className="p-6">Scope</div>
+              <div className="border-l border-border p-6 text-center">Core Boundary</div>
               <div className="border-l border-border bg-primary/10 p-6 text-center text-primary">
                 ProKit
               </div>
@@ -391,46 +383,46 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
             <div className="grid grid-cols-3 border-b border-border transition-colors hover:bg-muted/60">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
                 <StitchIcon name="schedule" className="h-4 w-4 text-muted-foreground" />
-                Time Cost
+                Marketing
               </div>
               <div className="border-l border-border p-6 text-center text-muted-foreground">
-                Weeks / Months
+                Frontend Layer
               </div>
               <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
-                Immediate
+                No built-in marketing frontend
               </div>
             </div>
 
             <div className="grid grid-cols-3 border-b border-border transition-colors hover:bg-muted/60">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
                 <StitchIcon name="bug-report" className="h-4 w-4 text-muted-foreground" />
-                Error Cost
+                SEO
               </div>
               <div className="border-l border-border p-6 text-center text-muted-foreground">
-                High (Unknowns)
+                Content Discovery
               </div>
               <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
-                Minimal (Verified)
+                No blog or SEO system
               </div>
             </div>
 
             <div className="grid grid-cols-3 transition-colors hover:bg-muted/60">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
                 <StitchIcon name="psychology" className="h-4 w-4 text-muted-foreground" />
-                Confidence Cost
+                Automation
               </div>
               <div className="border-l border-border p-6 text-center text-muted-foreground">
-                Fragile / Anxious
+                Workflow Layer
               </div>
               <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
-                Stable / Focused
+                No workflow automation layer
               </div>
             </div>
           </div>
 
           <div className="mt-8 text-center">
             <p className="font-mono text-sm text-muted-foreground">
-              &quot;From a testing perspective, reducing unknowns before launch is everything.&quot;
+              What ProKit includes — and nothing more.
             </p>
           </div>
         </div>
@@ -441,45 +433,45 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
               <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] leading-tight text-foreground">
-                Who this is for.
+                For builders who want full control.
               </h2>
               <p className="mb-8 text-lg text-muted-foreground">
-                This is for serious builders, not motivation seekers. You want a controlled path to
-                launch, not a weekend experiment.
+                If you want growth modules, marketing routes, or workflow systems built-in —
+                that&apos;s a different product.
               </p>
               <div className="h-1 w-20 rounded-full bg-primary" />
             </div>
             <div className="md:col-span-7">
               <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
-                <h3 className="mb-6 text-lg font-bold text-foreground">Is this you?</h3>
+                <h3 className="mb-6 text-lg font-bold text-foreground">ProKit is ideal if:</h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-4">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                       <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="text-muted-foreground">
-                      You have a serious SaaS idea and want to build it yourself using AI.
+                      You already know your product direction
                     </span>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                       <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
-                    <span className="text-muted-foreground">You don&apos;t want to hire a developer yet.</span>
+                    <span className="text-muted-foreground">You don&apos;t need a marketing scaffold</span>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                       <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="text-muted-foreground">
-                      You feel capable, but overwhelmed by infrastructure decisions.
+                      You prefer building your own frontend
                     </span>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                       <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
-                    <span className="font-medium text-foreground">You want structure before speed.</span>
+                    <span className="font-medium text-foreground">You want a clean, reusable core engine</span>
                   </li>
                 </ul>
               </div>
@@ -505,11 +497,10 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
             Documentation & Reuse Included
           </div>
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground md:text-5xl">
-            One payment. Unlimited reuse.
+            One payment. Unlimited projects.
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
-            AI made this era possible. Structure makes it sustainable. You are not buying code;
-            you are buying reduced uncertainty.
+            Use ProKit as the core engine for as many products as you want.
           </p>
 
           <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border bg-card text-foreground shadow-xl transition-transform duration-300 hover:-translate-y-1">
@@ -520,7 +511,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
               </div>
               <div className="flex items-baseline justify-center gap-1">
                 <span className="font-brand rounded bg-muted px-2 text-6xl font-bold tracking-[-0.03em] text-foreground">
-                  $197
+                  $147
                 </span>
                 <span className="text-muted-foreground">/ once</span>
               </div>
@@ -530,19 +521,19 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
               <ul className="mb-8 space-y-3 text-left">
                 <li className="flex items-center gap-3">
                   <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Production-ready structure</span>
+                  <span className="text-muted-foreground">Production-ready infrastructure</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Verified auth, payment, and DB wiring</span>
+                  <span className="text-muted-foreground">Auth + billing wiring</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Months of hesitation removed</span>
+                  <span className="text-muted-foreground">Database baseline</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="font-bold text-foreground">Use in unlimited projects</span>
+                  <span className="font-bold text-foreground">Unlimited reuse</span>
                 </li>
               </ul>
 
@@ -574,7 +565,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 </span>
               </div>
               <div className="flex items-center gap-2 text-sm font-medium text-primary">
-                <span>See full system breakdown</span>
+                <span>View full system breakdown</span>
                 <StitchIcon
                   name="arrow-downward"
                   className="h-4 w-4 transition-transform duration-200 group-open:rotate-180"
@@ -585,10 +576,10 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
             <div className="border-t border-border">
               <div className="mb-16 px-6 pt-10 text-center md:px-8">
                 <span className="mb-2 block text-sm font-bold uppercase tracking-wide text-primary">
-                  Technical Deep Dive
+                  What ProKit includes — and nothing more.
                 </span>
                 <h2 className="text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                  Complete System Breakdown
+                  Complete Core Breakdown
                 </h2>
               </div>
 
@@ -641,25 +632,27 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-6">
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
-            You already have the idea.
+            Ship what matters.
           </h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            AI removed the coding barrier. Now remove the structural risk.
+            You don&apos;t need another idea.
             <br />
-            <span className="font-medium text-foreground">Less wiring. Less doubt. More execution.</span>
+            <span className="font-medium text-foreground">You need a stable base.</span>
+            <br />
+            ProKit removes the repetitive work so you can focus on building your product.
           </p>
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
             <a
               href="#pricing"
               className="font-brand w-full rounded-lg bg-black px-8 py-4 text-lg font-bold tracking-[-0.01em] text-white shadow-sm transition-colors hover:bg-neutral-900 sm:w-auto"
             >
-              Start with ProKit
+              Build on ProKit
             </a>
             <a
               href="#breakdown"
               className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
             >
-              Preview documentation
+              View full system breakdown
               <StitchIcon
                 name="arrow-forward"
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"
