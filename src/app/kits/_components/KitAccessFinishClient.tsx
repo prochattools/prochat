@@ -192,8 +192,16 @@ export default function KitAccessFinishClient({
 				</div>
 			) : (
 				<div className='mt-8 rounded-lg border border-amber-300 bg-amber-50 p-4 text-amber-900'>
-					No checkout session was found in this URL. Use your checkout email
-					below to recover access.
+					<p>
+						No checkout session was found in this URL. Use your checkout email
+						below to recover access.
+					</p>
+					<Link
+						href='/kits'
+						className='mt-2 inline-flex text-sm font-medium text-amber-900 underline'
+					>
+						Back to Kits
+					</Link>
 				</div>
 			)}
 
@@ -240,7 +248,15 @@ export default function KitAccessFinishClient({
 
 			{errorMessage && (
 				<div className='mt-6 rounded-lg border border-red-300 bg-red-50 p-4 text-red-800'>
-					{errorMessage}
+					<p>{errorMessage}</p>
+					{errorCode === 'invalid_session' && (
+						<Link
+							href='/kits'
+							className='mt-2 inline-flex text-sm font-medium text-red-800 underline'
+						>
+							Back to Kits
+						</Link>
+					)}
 				</div>
 			)}
 			{successMessage && (
