@@ -1,10 +1,11 @@
 import config from '@/config'
 import { getSEOTags } from '@/libs/seo'
+import { getStripePriceProkit } from '@/libs/stripe-env'
 import ProKitPageContent from './ProKitPageContent'
 
 const proKitTitle = 'ProKit — Developer Core Boilerplate | ProChat'
 const proKitDescription =
-	'ProKit is the developer core boilerplate that powers ProChat kits—ship faster with a standardized Next.js, TypeScript, Stripe, and Postgres stack.'
+	'ProKit is the production-ready core boilerplate for builders who want stable infrastructure before they scale.'
 
 export const metadata = getSEOTags({
 	title: proKitTitle,
@@ -17,10 +18,12 @@ export const metadata = getSEOTags({
 })
 
 export default function ProKitPage() {
-	const defaultProduct =
-		config.stripe.products.find(product => product.isBest) ??
-		config.stripe.products[0]
-	const priceId = defaultProduct?.priceId ?? null
+	const prokitProduct =
+		config.stripe.products.find(product =>
+			product.title.toLowerCase().includes('prokit')
+		) ?? null
+	const envPriceId = getStripePriceProkit() || null
+	const priceId = prokitProduct?.priceId || envPriceId
 
 	return <ProKitPageContent priceId={priceId} />
 }

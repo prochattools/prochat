@@ -1,78 +1,676 @@
 'use client'
 
-import { useEffect, useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
-import { Hero } from '@/app/(marketing)/components/sections/Hero'
-import { Features } from '@/app/(marketing)/components/sections/Features'
-import { Proof } from '@/app/(marketing)/components/sections/Expansions'
-import { Pricing } from '@/app/(marketing)/components/sections/Pricing'
-import { trackEvent } from '@/utils/analytics'
 import { handleCheckoutProcess } from '@/helpers/checkout'
 import { useUser } from '@/libs/safeClerk'
+import { trackEvent } from '@/utils/analytics'
+import { StitchIcon } from './_components/StitchIcon'
 
 interface ProKitPageContentProps {
-	priceId: string | null
+  priceId: string | null
 }
 
+const techSpecs = [
+  {
+    icon: <StitchIcon name="runtime" className="h-5 w-5 text-primary" />,
+    title: 'Runtime Foundation',
+    points: [
+      'Next.js 14 App Router config',
+      'Type-safe environment variables',
+      'Global error handling boundaries',
+    ],
+  },
+  {
+    icon: <StitchIcon name="auth" className="h-5 w-5 text-primary" />,
+    title: 'Authentication & Access',
+    points: [
+      'Magic link & social login ready',
+      'Protected route middleware',
+      'User session management',
+    ],
+  },
+  {
+    icon: <StitchIcon name="payments" className="h-5 w-5 text-primary" />,
+    title: 'Payments & Billing',
+    points: [
+      'Verified Stripe webhooks',
+      'Customer portal integration',
+      'Subscription status syncing',
+    ],
+  },
+  {
+    icon: <StitchIcon name="db" className="h-5 w-5 text-primary" />,
+    title: 'Database & Migrations',
+    points: [
+      'Production-ready schema',
+      'Automated migration scripts',
+      'Relationship integrity checks',
+    ],
+  },
+  {
+    icon: <StitchIcon name="seo" className="h-5 w-5 text-primary" />,
+    title: 'Marketing & SEO',
+    points: [
+      'Dynamic sitemap generation',
+      'OpenGraph image generation',
+      'Structured data (JSON-LD)',
+    ],
+  },
+  {
+    icon: <StitchIcon name="automation" className="h-5 w-5 text-primary" />,
+    title: 'Automation & Integrations',
+    points: [
+      'Transactional email setup',
+      'Background job processing patterns',
+      'Typed API route handlers',
+    ],
+  },
+]
+
 const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
-	const { isLoaded, isSignedIn, user } = useUser()
-	const [isCheckingOut, setIsCheckingOut] = useState(false)
-	const [, setCheckoutError] = useState<string | null>(null)
+  const { isLoaded, isSignedIn, user } = useUser()
+  const [isCheckingOut, setIsCheckingOut] = useState(false)
+  const [, setCheckoutError] = useState<string | null>(null)
 
-	useEffect(() => {
-		trackEvent('kit_view', { kit: 'prokit', page: '/kits/prokit' })
-	}, [])
+  useEffect(() => {
+    trackEvent('kit_view', { kit: 'prokit', page: '/kits/prokit' })
+  }, [])
 
-	const handleHeroCtaClick = useCallback(() => {
-		trackEvent('cta_click', {
-			kit: 'prokit',
-			cta: 'hero_buy_prokit',
-			page: '/kits/prokit',
-		})
-	}, [])
+  const handleHeroCtaClick = useCallback(() => {
+    trackEvent('cta_click', {
+      kit: 'prokit',
+      cta: 'hero_buy_prokit',
+      page: '/kits/prokit',
+    })
+  }, [])
 
-	const handleCheckoutClick = useCallback(() => {
-		trackEvent('cta_click', {
-			kit: 'prokit',
-			cta: 'pricing_get_prokit',
-			page: '/kits/prokit',
-		})
-		trackEvent('checkout_start', {
-			kit: 'prokit',
-			cta: 'pricing_get_prokit',
-			page: '/kits/prokit',
-		})
-		if (!priceId || isCheckingOut) return
+  const handleCheckoutClick = useCallback(() => {
+    trackEvent('cta_click', {
+      kit: 'prokit',
+      cta: 'pricing_get_prokit',
+      page: '/kits/prokit',
+    })
+    trackEvent('checkout_start', {
+      kit: 'prokit',
+      cta: 'pricing_get_prokit',
+      page: '/kits/prokit',
+    })
 
-		const userId = isLoaded && isSignedIn ? user?.id || null : null
-		const email =
-			isLoaded && isSignedIn ? user?.primaryEmailAddress?.emailAddress || null : null
+    if (!priceId || isCheckingOut) return
 
-		handleCheckoutProcess(
-			priceId,
-			userId,
-			email,
-			setIsCheckingOut,
-			setCheckoutError
-		)
-	}, [priceId, isCheckingOut, isLoaded, isSignedIn, user])
+    const userId = isLoaded && isSignedIn ? user?.id || null : null
+    const email =
+      isLoaded && isSignedIn ? user?.primaryEmailAddress?.emailAddress || null : null
 
-	return (
-		<KitsShell>
-			<Hero
-				headline="ProKit"
-				subhead="Developer Core Boilerplate for builders who want the engine without the fluff."
-				primaryCta="Buy ProKit"
-				primaryCtaLink="#pricing"
-				secondaryCta={undefined}
-				microProof="Operational Standard: Next.js / TypeScript / Stripe / Postgres"
-				onPrimaryCtaClick={handleHeroCtaClick}
-			/>
-			<Features />
-			<Proof />
-			<Pricing onCtaClick={handleCheckoutClick} ctaLabel="Get ProKit" />
-		</KitsShell>
-	)
+    handleCheckoutProcess(
+      priceId,
+      userId,
+      email,
+      setIsCheckingOut,
+      setCheckoutError
+    )
+  }, [priceId, isCheckingOut, isLoaded, isSignedIn, user])
+
+  // Visual sanity checklist:
+  // - Hero checklist icons use Stitch solid green checks.
+  // - Real Problem uses filled red warning triangle and frustrated-face risk icon.
+  // - Blue solution card uses darker outer blue + contrasted inner panel with green checks/dots.
+  // - Pricing lock icon + all breakdown icons use Stitch filled glyphs.
+  return (
+    <KitsShell>
+      <div className="[--section-bg-rgb:255_255_255] [--section-alt-bg-rgb:241_245_249] dark:[--section-bg-rgb:15_17_21] dark:[--section-alt-bg-rgb:29_37_49]">
+      <section
+        id="top"
+        className="relative flex min-h-screen scroll-mt-24 items-center overflow-hidden bg-[rgb(var(--section-bg-rgb))] px-0 pb-16 pt-28 sm:pb-20 sm:pt-32"
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-0 [mask-image:radial-gradient(circle_at_center,black_60%,transparent_100%)]"
+        >
+          <div className="absolute inset-0 z-0 blur-[0.4px] bg-[size:24px_24px] bg-[linear-gradient(to_right,rgba(15,23,42,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.025)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(148,163,184,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.05)_1px,transparent_1px)]" />
+          <div className="absolute inset-0 z-[1] blur-[0.4px] bg-[size:96px_96px] bg-[linear-gradient(to_right,rgba(15,23,42,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.045)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(148,163,184,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.07)_1px,transparent_1px)]" />
+          <div className="absolute inset-0 z-[2] bg-[radial-gradient(circle_at_50%_34%,rgba(255,255,255,0.58)_0%,rgba(255,255,255,0.30)_45%,rgba(255,255,255,0.08)_72%,rgba(255,255,255,0)_100%)] dark:hidden" />
+        </div>
+
+        <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 font-mono text-xs font-medium text-muted-foreground shadow-sm">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
+            v2.0 Production Ready
+          </div>
+
+          <h1 className="mb-8 text-5xl font-bold leading-[1.08] tracking-[-0.02em] text-foreground md:text-7xl">
+            Launch your SaaS on
+            <br />
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              stable ground.
+            </span>
+          </h1>
+
+          <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
+            <p>
+              5 years ago you needed a developer. Today you don&apos;t.
+              <br />
+              <strong className="font-medium text-foreground">
+                What still costs money is structural mistakes.
+              </strong>
+            </p>
+            <p className="text-base text-muted-foreground">
+              ProKit gives you a production-ready base: authentication, payments, database, email,
+              and deployment already connected and verified.
+            </p>
+            <div className="flex flex-col items-center justify-center py-2">
+              <div className="flex min-h-11 flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-md border border-border bg-card/90 px-4 py-2 font-mono text-sm leading-none text-foreground shadow-sm backdrop-blur-sm sm:flex-nowrap">
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+                  <StitchIcon name="check-green" className="h-4 w-4 text-green-600" />
+                  <span>Not a blank project.</span>
+                </span>
+                <span className="hidden text-border sm:inline">|</span>
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+                  <StitchIcon name="check-green" className="h-4 w-4 text-green-600" />
+                  <span>Not a fragile tutorial.</span>
+                </span>
+                <span className="hidden text-border sm:inline">|</span>
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+                  <StitchIcon name="check-green" className="h-4 w-4 text-green-600" />
+                  <span>A controlled system.</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
+            <a
+              href="#pricing"
+              onClick={handleHeroCtaClick}
+              className="font-brand inline-flex -translate-y-0 items-center justify-center rounded-lg bg-primary px-8 py-4 text-lg font-bold tracking-[-0.01em] text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-primary/90"
+            >
+              Start with ProKit
+            </a>
+            <a
+              href="#tester-mindset"
+              className="font-brand group inline-flex items-center justify-center rounded-lg border border-border bg-background px-8 py-4 text-lg font-bold tracking-[-0.01em] text-foreground shadow-sm transition-all hover:bg-muted"
+            >
+              See what&apos;s inside
+              <StitchIcon
+                name="arrow-downward"
+                className="ml-2 h-4 w-4 transition-transform group-hover:translate-y-0.5"
+              />
+            </a>
+          </div>
+
+          <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
+            One-time payment · Unlimited reuse · Instant GitHub access
+          </p>
+        </div>
+      </section>
+
+      <section id="tester-mindset" className="border-y border-border bg-[rgb(var(--section-alt-bg-rgb))] py-24">
+        <div className="mx-auto max-w-3xl px-6">
+          <div className="flex items-start gap-6">
+            <div className="hidden flex-col items-center pt-2 md:flex">
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-lg border border-border bg-card text-primary shadow-sm">
+                <StitchIcon name="shield-tester" className="h-5 w-5" />
+              </div>
+              <div className="h-32 w-px bg-gradient-to-b from-border to-transparent" />
+            </div>
+            <div className="space-y-6">
+              <h2 className="text-3xl font-bold tracking-[-0.02em] text-foreground">
+                Built from a tester&apos;s mindset.
+              </h2>
+              <div className="space-y-3 text-lg leading-[1.6] text-muted-foreground">
+                <p className="font-medium text-foreground">
+                  For 12 years I worked as a professional software tester.
+                </p>
+                <p>
+                  My responsibility wasn&apos;t writing code. It was testing software in real
+                  environments, finding where it breaks and what keeps it stable under pressure.
+                </p>
+                <p>
+                  I learned to think in edge cases, evaluate risk against impact, and prevent
+                  failures before they ever reach users.
+                </p>
+                <p>
+                  ProKit is built through that lens. AI makes building possible, but testing
+                  discipline makes it sustainable.
+                </p>
+                <div className="mt-6 flex items-center gap-3 border-t border-border pt-6">
+                  <span className="font-mono text-sm text-muted-foreground">STATUS:</span>
+                  <span className="font-brand font-extrabold uppercase tracking-[0.02em] text-primary">
+                    Not Hype. Stability.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="problem" className="relative scroll-mt-24 bg-[rgb(var(--section-bg-rgb))] py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid items-start gap-12 md:grid-cols-2 lg:gap-24">
+            <div className="relative">
+              <div className="sticky top-24">
+                <div className="mb-6 flex items-center gap-3">
+                  <StitchIcon name="warning-triangle-filled" className="h-5 w-5 text-destructive" />
+                  <h3 className="text-xl font-bold uppercase tracking-wider text-foreground">
+                    The Real Problem
+                  </h3>
+                </div>
+                <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
+                  Invisible complexity.
+                </h2>
+                <p className="mb-4 font-medium text-foreground">
+                  You don&apos;t know what you don&apos;t know. And that uncertainty slows momentum.
+                </p>
+                <p className="mb-6 leading-relaxed text-muted-foreground">
+                  Infrastructure failures are quiet, not loud: payments half-working, emails
+                  inconsistently delivering, database structure slowly breaking, confidence eroding.
+                </p>
+                <p className="mb-8 font-medium leading-relaxed text-muted-foreground">
+                  Silent failures are worse than obvious ones.
+                </p>
+
+                <div className="space-y-4 rounded-lg border border-destructive/30 bg-destructive/10 p-6 shadow-sm">
+                  <div className="flex items-start gap-3 text-sm text-destructive/90">
+                    <StitchIcon name="close" className="mt-0.5 h-4 w-4" />
+                    <p>Conflicting tutorials and ten tabs open</p>
+                  </div>
+                  <div className="flex items-start gap-3 text-sm text-destructive/90">
+                    <StitchIcon name="close" className="mt-0.5 h-4 w-4" />
+                    <p>Unexpected production errors</p>
+                  </div>
+                  <div className="flex items-start gap-3 text-sm text-destructive/90">
+                    <StitchIcon name="close" className="mt-0.5 h-4 w-4" />
+                    <p>Stripe half-configured</p>
+                  </div>
+                  <div className="flex items-start gap-3 text-sm font-medium text-destructive">
+                    <StitchIcon name="frustrated-face" className="mt-0.5 h-4 w-4" />
+                    <p>&quot;What if this breaks in production?&quot;</p>
+                  </div>
+                </div>
+
+                <p className="mt-6 text-sm italic text-muted-foreground">
+                  Progress slows not because you lack skill, but because you&apos;re navigating
+                  complexity you can&apos;t fully see.
+                </p>
+              </div>
+            </div>
+
+            <div id="solution" className="relative mt-12 md:mt-0">
+              <div className="relative overflow-hidden rounded-2xl bg-blue-900 p-8 text-primary-foreground shadow-xl transition-transform duration-500 md:p-12">
+                <div
+                  aria-hidden
+                  className="absolute inset-0 opacity-20 dark:opacity-15"
+                  style={{
+                    backgroundSize: '32px 32px',
+                    backgroundImage: [
+                      'linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px)',
+                      'linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px)',
+                    ].join(','),
+                  }}
+                />
+                <div className="relative z-10">
+                  <div className="mb-6 flex items-center gap-3">
+                    <StitchIcon name="verified" className="h-5 w-5 text-blue-300" />
+                    <h3 className="text-xl font-bold uppercase tracking-wider text-primary-foreground/80">
+                      What ProKit Gives You
+                    </h3>
+                  </div>
+                  <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-primary-foreground md:text-4xl">
+                    Reduced uncertainty.
+                  </h2>
+                  <p className="mb-8 leading-relaxed text-primary-foreground/90">
+                    AI allows you to build. ProKit allows you to build safely. You build your
+                    product. You don&apos;t build the wiring.
+                  </p>
+
+                  <div className="space-y-4 rounded-lg border border-blue-700 bg-blue-800/55 p-6 shadow-inner backdrop-blur-sm">
+                    <div className="flex items-center gap-3 text-primary-foreground">
+                      <StitchIcon name="check" className="h-4 w-4 text-green-400" />
+                      <p className="text-sm font-medium">Authentication wired and secure</p>
+                    </div>
+                    <div className="flex items-center gap-3 text-primary-foreground">
+                      <StitchIcon name="check" className="h-4 w-4 text-green-400" />
+                      <p className="text-sm font-medium">Database structured and verified</p>
+                    </div>
+                    <div className="flex items-center gap-3 text-primary-foreground">
+                      <StitchIcon name="check" className="h-4 w-4 text-green-400" />
+                      <p className="text-sm font-medium">Stripe payments connected</p>
+                    </div>
+                    <div className="flex items-center gap-3 text-primary-foreground">
+                      <StitchIcon name="check" className="h-4 w-4 text-green-400" />
+                      <p className="text-sm font-medium">Email systems ready</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 border-t border-primary-foreground/30 pt-8">
+                    <h4 className="mb-4 font-bold text-primary-foreground">What You Actually Save</h4>
+                    <ul className="space-y-2 font-mono text-sm text-primary-foreground/85">
+                      <li className="flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                        Momentum is what makes solo founders dangerous.
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                        40 to 60+ hours of fragile setup.
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                        Weeks of trial-and-error debugging.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="manual" className="scroll-mt-24 border-y border-border bg-[rgb(var(--section-alt-bg-rgb))] py-24">
+        <div className="mx-auto max-w-4xl px-6">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground">
+              Manual Setup vs ProKit
+            </h2>
+            <p className="text-muted-foreground">
+              Manual setup looks cheaper until you calculate the cost of confidence.
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
+            <div className="grid grid-cols-3 border-b border-border bg-muted text-sm font-bold uppercase tracking-wider text-muted-foreground">
+              <div className="p-6">Metric</div>
+              <div className="border-l border-border p-6 text-center">Manual Setup</div>
+              <div className="border-l border-border bg-primary/10 p-6 text-center text-primary">
+                ProKit
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 border-b border-border transition-colors hover:bg-muted/60">
+              <div className="flex items-center gap-2 p-6 font-medium text-foreground">
+                <StitchIcon name="schedule" className="h-4 w-4 text-muted-foreground" />
+                Time Cost
+              </div>
+              <div className="border-l border-border p-6 text-center text-muted-foreground">
+                Weeks / Months
+              </div>
+              <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
+                Immediate
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 border-b border-border transition-colors hover:bg-muted/60">
+              <div className="flex items-center gap-2 p-6 font-medium text-foreground">
+                <StitchIcon name="bug-report" className="h-4 w-4 text-muted-foreground" />
+                Error Cost
+              </div>
+              <div className="border-l border-border p-6 text-center text-muted-foreground">
+                High (Unknowns)
+              </div>
+              <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
+                Minimal (Verified)
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 transition-colors hover:bg-muted/60">
+              <div className="flex items-center gap-2 p-6 font-medium text-foreground">
+                <StitchIcon name="psychology" className="h-4 w-4 text-muted-foreground" />
+                Confidence Cost
+              </div>
+              <div className="border-l border-border p-6 text-center text-muted-foreground">
+                Fragile / Anxious
+              </div>
+              <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
+                Stable / Focused
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 text-center">
+            <p className="font-mono text-sm text-muted-foreground">
+              &quot;From a testing perspective, reducing unknowns before launch is everything.&quot;
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="who" className="scroll-mt-24 bg-[rgb(var(--section-bg-rgb))] py-24">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="grid gap-12 md:grid-cols-12">
+            <div className="md:col-span-5">
+              <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] leading-tight text-foreground">
+                Who this is for.
+              </h2>
+              <p className="mb-8 text-lg text-muted-foreground">
+                This is for serious builders, not motivation seekers. You want a controlled path to
+                launch, not a weekend experiment.
+              </p>
+              <div className="h-1 w-20 rounded-full bg-primary" />
+            </div>
+            <div className="md:col-span-7">
+              <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
+                <h3 className="mb-6 text-lg font-bold text-foreground">Is this you?</h3>
+                <ul className="space-y-4">
+                  <li className="flex items-start gap-4">
+                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                      <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                    </div>
+                    <span className="text-muted-foreground">
+                      You have a serious SaaS idea and want to build it yourself using AI.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                      <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                    </div>
+                    <span className="text-muted-foreground">You don&apos;t want to hire a developer yet.</span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                      <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                    </div>
+                    <span className="text-muted-foreground">
+                      You feel capable, but overwhelmed by infrastructure decisions.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                      <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                    </div>
+                    <span className="font-medium text-foreground">You want structure before speed.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" className="relative scroll-mt-24 overflow-hidden bg-[rgb(var(--section-alt-bg-rgb))] py-24">
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-40 dark:opacity-20"
+          style={{
+            backgroundSize: '32px 32px',
+            backgroundImage: [
+              'linear-gradient(to right, rgba(var(--pc-border-rgb), 0.25) 1px, transparent 1px)',
+              'linear-gradient(to bottom, rgba(var(--pc-border-rgb), 0.25) 1px, transparent 1px)',
+            ].join(','),
+          }}
+        />
+        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+          <div className="mb-8 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1 font-mono text-sm text-primary backdrop-blur-sm">
+            Documentation & Reuse Included
+          </div>
+          <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground md:text-5xl">
+            One payment. Unlimited reuse.
+          </h2>
+          <p className="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
+            AI made this era possible. Structure makes it sustainable. You are not buying code;
+            you are buying reduced uncertainty.
+          </p>
+
+          <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border bg-card text-foreground shadow-xl transition-transform duration-300 hover:-translate-y-1">
+            <div className="relative border-b border-border p-8">
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-secondary via-primary to-secondary" />
+              <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                ProKit License
+              </div>
+              <div className="flex items-baseline justify-center gap-1">
+                <span className="font-brand rounded bg-muted px-2 text-6xl font-bold tracking-[-0.03em] text-foreground">
+                  $197
+                </span>
+                <span className="text-muted-foreground">/ once</span>
+              </div>
+            </div>
+
+            <div className="bg-muted p-8">
+              <ul className="mb-8 space-y-3 text-left">
+                <li className="flex items-center gap-3">
+                  <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
+                  <span className="text-muted-foreground">Production-ready structure</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
+                  <span className="text-muted-foreground">Verified auth, payment, and DB wiring</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
+                  <span className="text-muted-foreground">Months of hesitation removed</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
+                  <span className="font-bold text-foreground">Use in unlimited projects</span>
+                </li>
+              </ul>
+
+              <button
+                type="button"
+                onClick={handleCheckoutClick}
+                disabled={!priceId || isCheckingOut}
+                className="font-brand inline-flex w-full items-center justify-center rounded-lg bg-primary py-4 text-lg font-bold tracking-[-0.01em] text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:bg-primary/60"
+              >
+                {isCheckingOut ? 'Processing...' : 'Start with ProKit'}
+              </button>
+              <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                <StitchIcon name="lock-filled" className="h-3 w-3" />
+                Secure payment · Instant GitHub access
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="breakdown" className="scroll-mt-24 border-t border-border bg-[rgb(var(--section-bg-rgb))] py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <details className="group overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow open:shadow-xl">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-left [&::-webkit-details-marker]:hidden md:px-8">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                  Technical Deep Dive
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-sm font-medium text-primary">
+                <span>See full system breakdown</span>
+                <StitchIcon
+                  name="arrow-downward"
+                  className="h-4 w-4 transition-transform duration-200 group-open:rotate-180"
+                />
+              </div>
+            </summary>
+
+            <div className="border-t border-border">
+              <div className="mb-16 px-6 pt-10 text-center md:px-8">
+                <span className="mb-2 block text-sm font-bold uppercase tracking-wide text-primary">
+                  Technical Deep Dive
+                </span>
+                <h2 className="text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
+                  Complete System Breakdown
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 divide-y divide-border border-y border-border md:grid-cols-2 md:divide-x md:divide-y-0 lg:grid-cols-3">
+                {techSpecs.slice(0, 3).map((spec) => (
+                  <div key={spec.title} className="group p-8 transition-colors hover:bg-muted/60">
+                    <div className="mb-4 flex items-center gap-3">
+                      {spec.icon}
+                      <h3 className="text-lg font-bold text-foreground">{spec.title}</h3>
+                    </div>
+                    <ul className="space-y-3 text-sm text-muted-foreground">
+                      {spec.points.map((point) => (
+                        <li key={point} className="flex items-start gap-2">
+                          <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/40 transition-colors group-hover:bg-primary" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <div className="grid grid-cols-1 divide-y divide-border md:grid-cols-2 md:divide-x md:divide-y-0 lg:grid-cols-3">
+                {techSpecs.slice(3).map((spec) => (
+                  <div key={spec.title} className="group p-8 transition-colors hover:bg-muted/60">
+                    <div className="mb-4 flex items-center gap-3">
+                      {spec.icon}
+                      <h3 className="text-lg font-bold text-foreground">{spec.title}</h3>
+                    </div>
+                    <ul className="space-y-3 text-sm text-muted-foreground">
+                      {spec.points.map((point) => (
+                        <li key={point} className="flex items-start gap-2">
+                          <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/40 transition-colors group-hover:bg-primary" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <div className="border-t border-border bg-muted p-4 text-center">
+                <p className="font-mono text-sm text-muted-foreground">
+                  Full file-level documentation included after purchase.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
+        <div className="mx-auto max-w-2xl px-6">
+          <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
+            You already have the idea.
+          </h2>
+          <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
+            AI removed the coding barrier. Now remove the structural risk.
+            <br />
+            <span className="font-medium text-foreground">Less wiring. Less doubt. More execution.</span>
+          </p>
+          <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
+            <a
+              href="#pricing"
+              className="font-brand w-full rounded-lg bg-black px-8 py-4 text-lg font-bold tracking-[-0.01em] text-white shadow-sm transition-colors hover:bg-neutral-900 sm:w-auto"
+            >
+              Start with ProKit
+            </a>
+            <a
+              href="#breakdown"
+              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
+            >
+              Preview documentation
+              <StitchIcon
+                name="arrow-forward"
+                className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              />
+            </a>
+          </div>
+        </div>
+      </section>
+      </div>
+    </KitsShell>
+  )
 }
 
 export default ProKitPageContent
