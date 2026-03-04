@@ -1,70 +1,212 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import config from '@/config'
+
+import ContactConfirmationEmail from '@/components/email-templates/ContactConfirmationEmail'
+import ContactNotificationEmail from '@/components/email-templates/ContactNotificationEmail'
+import { contactSubmissionSchema } from '@/lib/contact/schema'
+
+const RATE_LIMIT_WINDOW_MS = 60_000
+const RATE_LIMIT_MAX_REQUESTS = 6
+
+type RateLimitEntry = {
+  count: number
+  resetAt: number
+}
+
+const globalRateLimitStore = globalThis as typeof globalThis & {
+  __contactRateLimitStore?: Map<string, RateLimitEntry>
+}
+
+const rateLimitStore =
+  globalRateLimitStore.__contactRateLimitStore ??
+  new Map<string, RateLimitEntry>()
+
+if (!globalRateLimitStore.__contactRateLimitStore) {
+  globalRateLimitStore.__contactRateLimitStore = rateLimitStore
+}
+
+function getClientIp(request: Request) {
+  const forwardedFor = request.headers.get('x-forwarded-for')
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0].trim()
+  }
+
+  const realIp = request.headers.get('x-real-ip')
+  if (realIp) {
+    return realIp.trim()
+  }
+
+  return 'unknown'
+}
+
+function checkRateLimit(key: string) {
+  const now = Date.now()
+  const current = rateLimitStore.get(key)
+
+  if (!current || current.resetAt <= now) {
+    rateLimitStore.set(key, {
+      count: 1,
+      resetAt: now + RATE_LIMIT_WINDOW_MS,
+    })
+    return { limited: false, retryAfterSeconds: 0 }
+  }
+
+  if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return {
+      limited: true,
+      retryAfterSeconds: Math.max(
+        1,
+        Math.ceil((current.resetAt - now) / 1000),
+      ),
+    }
+  }
+
+  current.count += 1
+  rateLimitStore.set(key, current)
+  return { limited: false, retryAfterSeconds: 0 }
+}
 
 export async function POST(request: Request) {
-	try {
-		const body = await request.json()
-		const { name, email, reason, message } = body ?? {}
+  try {
+    const body = await request.json()
+    const parsed = contactSubmissionSchema.safeParse(body)
 
-		if (!name || !email || !reason || !message) {
-			return NextResponse.json(
-				{ error: 'Missing required fields' },
-				{ status: 400 },
-			)
-		}
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          error: 'Validation failed',
+          fieldErrors: parsed.error.flatten().fieldErrors,
+        },
+        { status: 400 },
+      )
+    }
 
-		const recipients = ['support@prochat.tools']
-		const cc: string[] = []
+    const submission = parsed.data
+    const timestampIso = new Date().toISOString()
 
-		if (reason === 'Privacy / GDPR / Legal') {
-			cc.push('privacy@prochat.tools')
-		}
+    if (submission.honeypot.trim().length > 0) {
+      return NextResponse.json({ success: true, spamFiltered: true })
+    }
 
-		const from =
-			process.env.RESEND_FROM ||
-			process.env.EMAIL_FROM ||
-			config.resend.fromAdmin ||
-			config.resend.supportEmail
+    const rateLimitKey = `${getClientIp(request)}::contact`
+    const rateLimit = checkRateLimit(rateLimitKey)
+    if (rateLimit.limited) {
+      return NextResponse.json(
+        {
+          error:
+            'Too many requests. Please wait a minute and try again.',
+          retryAfterSeconds: rateLimit.retryAfterSeconds,
+        },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(rateLimit.retryAfterSeconds),
+          },
+        },
+      )
+    }
 
-		if (!from) {
-			return NextResponse.json(
-				{ error: 'Missing sender configuration' },
-				{ status: 500 },
-			)
-		}
+    const from =
+      process.env.CONTACT_FROM_EMAIL ||
+      process.env.RESEND_FROM ||
+      process.env.EMAIL_FROM ||
+      'ProChat <info@prochat.tools>'
 
-		const resendApiKey = process.env.RESEND_API_KEY
-		if (!resendApiKey) {
-			return NextResponse.json(
-				{ error: 'Missing RESEND_API_KEY configuration' },
-				{ status: 500 },
-			)
-		}
+    const supportInbox =
+      process.env.SUPPORT_EMAIL ||
+      process.env.CONTACT_TO_EMAIL ||
+      'support@prochat.tools'
 
-		const resend = new Resend(resendApiKey)
+    if (!from) {
+      return NextResponse.json(
+        { error: 'Missing sender configuration (RESEND_FROM / EMAIL_FROM).' },
+        { status: 500 },
+      )
+    }
 
-		const data = await resend.emails.send({
-			from,
-			to: recipients,
-			cc: cc.length ? cc : undefined,
-			replyTo: email,
-			subject: `[Contact] ${reason} — ${name}`,
-			text: `
-Name: ${name}
-Email: ${email}
-Reason: ${reason}
-Page: /contact
-Timestamp: ${new Date().toISOString()}
+    const resendApiKey = process.env.RESEND_API_KEY
+    if (!resendApiKey) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.info('[contact] RESEND_API_KEY missing; dev-mode mail preview', {
+          to: supportInbox,
+          name: submission.name,
+          email: submission.email,
+          topic: submission.topic,
+          companyUrl: submission.companyUrl,
+          message: submission.message,
+          timestampIso,
+        })
+        return NextResponse.json({
+          success: true,
+          devMode: true,
+          message:
+            'Message accepted in development mode (emails not sent because RESEND_API_KEY is missing).',
+        })
+      }
 
-Message:
-${message}
-      `,
-		})
+      return NextResponse.json(
+        {
+          error:
+            'Email service is not configured. Please set RESEND_API_KEY.',
+        },
+        { status: 500 },
+      )
+    }
 
-		return NextResponse.json({ success: true, data })
-	} catch (error) {
-		console.error('Contact API Error:', error)
-		return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
-	}
+    const resend = new Resend(resendApiKey)
+
+    const [internalEmailResult, confirmationEmailResult] = await Promise.all([
+      resend.emails.send({
+        from,
+        to: [supportInbox],
+        replyTo: submission.email,
+        subject: `[Contact] ${submission.topic} — ${submission.name}`,
+        react: ContactNotificationEmail({
+          name: submission.name,
+          email: submission.email,
+          topic: submission.topic,
+          companyUrl: submission.companyUrl,
+          message: submission.message,
+          timestampIso,
+        }),
+      }),
+      resend.emails.send({
+        from,
+        to: [submission.email],
+        replyTo: supportInbox,
+        subject: 'We received your message',
+        react: ContactConfirmationEmail({
+          name: submission.name,
+          topic: submission.topic,
+          message: submission.message,
+        }),
+      }),
+    ])
+
+    if (internalEmailResult.error || confirmationEmailResult.error) {
+      console.error('Contact email send error', {
+        internalError: internalEmailResult.error,
+        confirmationError: confirmationEmailResult.error,
+      })
+      return NextResponse.json(
+        { error: 'Failed to send contact emails. Please try again shortly.' },
+        { status: 500 },
+      )
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Message sent successfully.',
+      ids: {
+        internal: internalEmailResult.data?.id ?? null,
+        confirmation: confirmationEmailResult.data?.id ?? null,
+      },
+    })
+  } catch (error) {
+    console.error('Contact API Error:', error)
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 },
+    )
+  }
 }

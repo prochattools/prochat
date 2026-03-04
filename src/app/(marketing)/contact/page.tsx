@@ -1,186 +1,242 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Button } from '@/app/(marketing)/components/ui/Button'
-import { Scaffolding } from '@/app/(marketing)/components/ui/Scaffolding'
+import { useEffect, useRef } from 'react'
+
+import { contactSubmissionSchema } from '@/lib/contact/schema'
+
+import './stitch-contact.css'
+import { STITCH_CONTACT_HTML } from './stitch-contact-html'
+
+type ContactFieldName =
+  | 'name'
+  | 'email'
+  | 'topic'
+  | 'companyOrProjectUrl'
+  | 'message'
+
+type ContactApiResponse = {
+  error?: string
+  message?: string
+  fieldErrors?: Record<string, string[] | undefined>
+  retryAfterSeconds?: number
+  devMode?: boolean
+}
+
+const FORM_FIELDS: ContactFieldName[] = [
+  'name',
+  'email',
+  'topic',
+  'companyOrProjectUrl',
+  'message',
+]
+
+function normalizeFieldName(raw: string): ContactFieldName | null {
+  if (raw === 'companyUrl') return 'companyOrProjectUrl'
+  if (FORM_FIELDS.includes(raw as ContactFieldName)) {
+    return raw as ContactFieldName
+  }
+  return null
+}
 
 export default function ContactPage() {
-	const [isLoading, setIsLoading] = useState(false)
-	const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const rootRef = useRef<HTMLElement>(null)
 
-	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault()
-		setIsLoading(true)
-		setStatus('idle')
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root) return
 
-		const formData = new FormData(e.currentTarget)
-		const data = Object.fromEntries(formData.entries())
+    const form = root.querySelector<HTMLFormElement>('form[data-contact-form]')
+    const scrollButton = root.querySelector<HTMLButtonElement>('button[data-scroll-to-form]')
+    const formCard = root.querySelector<HTMLElement>('#contact-form-card')
+    const submitButton = root.querySelector<HTMLButtonElement>('button[data-contact-submit]')
+    const submitLabel = root.querySelector<HTMLElement>('[data-contact-submit-label]')
+    const statusEl = root.querySelector<HTMLElement>('[data-contact-status]')
 
-		try {
-			const response = await fetch('/api/contact', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(data),
-			})
+    if (!form || !submitButton || !submitLabel || !statusEl) {
+      return
+    }
 
-			if (!response.ok) throw new Error('Failed to send')
+    const setStatus = (type: 'idle' | 'success' | 'error', message = '') => {
+      statusEl.textContent = message
+      statusEl.classList.remove('contact-status-success', 'contact-status-error', 'hidden')
 
-			setStatus('success')
-			;(e.target as HTMLFormElement).reset()
-		} catch (error) {
-			console.error(error)
-			setStatus('error')
-		} finally {
-			setIsLoading(false)
-		}
-	}
+      if (type === 'idle') {
+        statusEl.classList.add('hidden')
+        return
+      }
 
-	const inputClasses =
-		'w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/20 focus:border-[#1D4ED8] transition-all duration-300 text-sm dark:bg-[#0F1626] dark:border-[#1E242D] dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-[#1D4ED8]/30'
-	const labelClasses =
-		'block text-sm font-bold text-slate-700 mb-2 dark:text-slate-200'
+      statusEl.classList.add(type === 'success' ? 'contact-status-success' : 'contact-status-error')
+    }
 
-	return (
-		<main className="min-h-screen bg-gray-50 text-slate-900 font-sans selection:bg-[#2563EB]/20 dark:bg-[#0B111B] dark:text-[#E6EAF2] dark:selection:bg-[#1D4ED8]/40 overflow-x-hidden relative">
-			<div className="fixed inset-0 pointer-events-none z-0">
-				<Scaffolding opacity={0.6} />
-			</div>
-			<div className="relative z-10 min-h-screen pt-24 pb-24">
-				<div className="max-w-4xl mx-auto px-6 text-center mb-20">
-					<h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight dark:text-white">
-						Contact ProChat
-					</h1>
-					<p className="text-xl text-slate-600 mb-4 font-light leading-relaxed dark:text-slate-300">
-						Structured communication. No noise. No sales traps.
-					</p>
-					<p className="text-xs text-slate-400 uppercase tracking-widest font-bold dark:text-slate-500">
-						Clients, customers, and regulatory requests are handled here.
-					</p>
-				</div>
+    const clearFieldError = (field: ContactFieldName) => {
+      const fieldEl = form.querySelector<HTMLElement>(`[name="${field}"]`)
+      const errorEl = form.querySelector<HTMLElement>(`[data-error-for="${field}"]`)
 
-				<div className="max-w-xl mx-auto px-6">
-					<div className="mb-16">
-						<div className="mb-8">
-							<h2 className="text-2xl font-bold text-slate-900 mb-2 dark:text-white">
-								Send a message
-							</h2>
-							<p className="text-slate-500 text-sm dark:text-slate-400">
-								Use this form for product support, service inquiries, or legal
-								requests. <br />
-								We reply within 1–2 business days.
-							</p>
-						</div>
+      fieldEl?.removeAttribute('aria-invalid')
+      fieldEl?.removeAttribute('aria-describedby')
 
-						<form onSubmit={handleSubmit} className="space-y-6">
-							<div>
-								<label htmlFor="name" className={labelClasses}>
-									Name
-								</label>
-								<input
-									required
-									type="text"
-									name="name"
-									id="name"
-									className={inputClasses}
-									placeholder="Jane Doe"
-								/>
-							</div>
+      if (errorEl) {
+        errorEl.textContent = ''
+        errorEl.classList.add('hidden')
+      }
+    }
 
-							<div>
-								<label htmlFor="email" className={labelClasses}>
-									Email
-								</label>
-								<input
-									required
-									type="email"
-									name="email"
-									id="email"
-									className={inputClasses}
-									placeholder="jane@company.com"
-								/>
-							</div>
+    const setFieldError = (field: ContactFieldName, message: string) => {
+      const fieldEl = form.querySelector<HTMLElement>(`[name="${field}"]`)
+      const errorEl = form.querySelector<HTMLElement>(`[data-error-for="${field}"]`)
 
-							<div>
-								<label htmlFor="reason" className={labelClasses}>
-									Reason for contact
-								</label>
-								<div className="relative">
-									<select
-										required
-										name="reason"
-										id="reason"
-										className={`${inputClasses} appearance-none cursor-pointer`}
-										defaultValue=""
-									>
-										<option value="" disabled>
-											Select a reason...
-										</option>
-										<option value="Product support">
-											Product support (Kits / System)
-										</option>
-										<option value="Studio inquiry">Studio / Website project</option>
-										<option value="Privacy / GDPR / Legal">
-											Privacy / GDPR / Legal
-										</option>
-										<option value="General inquiry">General inquiry</option>
-									</select>
-									<div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 dark:text-slate-500">
-										<svg
-											width="12"
-											height="12"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
-										>
-											<path d="M6 9l6 6 6-6" />
-										</svg>
-									</div>
-								</div>
-							</div>
+      const errorId = `contact-error-${field}`
+      if (fieldEl) {
+        fieldEl.setAttribute('aria-invalid', 'true')
+        fieldEl.setAttribute('aria-describedby', errorId)
+      }
 
-							<div>
-								<label htmlFor="message" className={labelClasses}>
-									Message
-								</label>
-								<textarea
-									required
-									name="message"
-									id="message"
-									rows={5}
-									className={inputClasses}
-									placeholder="How can we help?"
-								/>
-							</div>
+      if (errorEl) {
+        errorEl.id = errorId
+        errorEl.textContent = message
+        errorEl.classList.remove('hidden')
+      }
+    }
 
-							<div className="pt-2">
-								<Button
-									type="submit"
-									className="w-full justify-center"
-									disabled={isLoading}
-								>
-									{isLoading ? 'Sending...' : 'Send Message'}
-								</Button>
-							</div>
+    const clearAllErrors = () => {
+      for (const field of FORM_FIELDS) {
+        clearFieldError(field)
+      }
+    }
 
-							{status === 'success' && (
-								<div className="p-4 bg-emerald-50 border border-emerald-100 rounded-lg text-emerald-700 text-sm font-medium flex items-center gap-2 dark:bg-emerald-500/10 dark:border-emerald-400/20 dark:text-emerald-200">
-									<div className="w-2 h-2 rounded-full bg-emerald-500" />
-									Message sent. We’ll reply by email.
-								</div>
-							)}
+    const setSubmitting = (isSubmitting: boolean) => {
+      submitButton.disabled = isSubmitting
+      submitLabel.textContent = isSubmitting ? 'Sending...' : 'Send Message'
+    }
 
-							{status === 'error' && (
-								<div className="p-4 bg-red-50 border border-red-100 rounded-lg text-red-700 text-sm font-medium flex items-center gap-2 dark:bg-red-500/10 dark:border-red-400/20 dark:text-red-200">
-									<div className="w-2 h-2 rounded-full bg-red-500" />
-									Something went wrong. Please email support@prochat.tools
-								</div>
-							)}
-						</form>
-					</div>
+    const handleScrollToForm = () => {
+      formCard?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const firstField = form.querySelector<HTMLElement>('[name="name"]')
+      firstField?.focus()
+    }
 
-				</div>
-			</div>
-		</main>
-	)
+    const handleInput = (event: Event) => {
+      const target = event.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      if (!target?.name) return
+
+      const normalized = normalizeFieldName(target.name)
+      if (normalized) {
+        clearFieldError(normalized)
+      }
+    }
+
+    const handleSubmit = async (event: SubmitEvent) => {
+      event.preventDefault()
+      clearAllErrors()
+      setStatus('idle')
+
+      const formData = new FormData(form)
+      const payload = {
+        name: String(formData.get('name') || '').trim(),
+        email: String(formData.get('email') || '').trim(),
+        topic: String(formData.get('topic') || '').trim(),
+        companyOrProjectUrl: String(formData.get('companyOrProjectUrl') || '').trim(),
+        message: String(formData.get('message') || '').trim(),
+        honeypot: String(formData.get('honeypot') || '').trim(),
+      }
+
+      const validation = contactSubmissionSchema.safeParse(payload)
+      if (!validation.success) {
+        const fieldErrors = validation.error.flatten().fieldErrors
+        let firstInvalidField: ContactFieldName | null = null
+
+        for (const [rawField, messages] of Object.entries(fieldErrors)) {
+          const field = normalizeFieldName(rawField)
+          const message = messages?.[0]
+          if (!field || !message) continue
+
+          if (!firstInvalidField) {
+            firstInvalidField = field
+          }
+          setFieldError(field, message)
+        }
+
+        if (firstInvalidField) {
+          form.querySelector<HTMLElement>(`[name="${firstInvalidField}"]`)?.focus()
+        }
+        return
+      }
+
+      setSubmitting(true)
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(validation.data),
+        })
+
+        const json = (await response.json().catch(() => null)) as ContactApiResponse | null
+
+        if (!response.ok) {
+          if (json?.fieldErrors) {
+            let firstInvalidField: ContactFieldName | null = null
+
+            for (const [rawField, messages] of Object.entries(json.fieldErrors)) {
+              const field = normalizeFieldName(rawField)
+              const message = messages?.[0]
+              if (!field || !message) continue
+
+              if (!firstInvalidField) {
+                firstInvalidField = field
+              }
+              setFieldError(field, message)
+            }
+
+            if (firstInvalidField) {
+              form.querySelector<HTMLElement>(`[name="${firstInvalidField}"]`)?.focus()
+            }
+          }
+
+          const retrySuffix =
+            response.status === 429 && json?.retryAfterSeconds
+              ? ` Retry in ${json.retryAfterSeconds}s.`
+              : ''
+
+          throw new Error((json?.error || 'Unable to send your message right now.') + retrySuffix)
+        }
+
+        form.reset()
+        setStatus(
+          'success',
+          json?.message ||
+            (json?.devMode
+              ? 'Message accepted in local dev mode.'
+              : 'Message sent. We will reply by email.'),
+        )
+      } catch (error) {
+        setStatus(
+          'error',
+          error instanceof Error ? error.message : 'Something went wrong. Please try again.',
+        )
+      } finally {
+        setSubmitting(false)
+      }
+    }
+
+    scrollButton?.addEventListener('click', handleScrollToForm)
+    form.addEventListener('input', handleInput)
+    form.addEventListener('submit', handleSubmit)
+
+    return () => {
+      scrollButton?.removeEventListener('click', handleScrollToForm)
+      form.removeEventListener('input', handleInput)
+      form.removeEventListener('submit', handleSubmit)
+    }
+  }, [])
+
+  return (
+    <main
+      ref={rootRef}
+      className="stitch-contact-root"
+      dangerouslySetInnerHTML={{ __html: STITCH_CONTACT_HTML }}
+    />
+  )
 }

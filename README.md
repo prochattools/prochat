@@ -117,6 +117,15 @@ npm install
 
 `.env` will be created automatically by the dev bootstrap script if missing. See `.env.example` for a reference.
 
+### Contact Form Email Env
+
+For `/contact` submissions:
+
+- `RESEND_API_KEY` — required in production to send emails.
+- `CONTACT_FROM_EMAIL` — sender identity for contact emails.
+- `SUPPORT_EMAIL` — internal inbox for contact notifications.
+- `CONTACT_TO_EMAIL` — optional legacy fallback inbox if `SUPPORT_EMAIL` is not set.
+
 ### 3. Local environment and provisioning (dev)
 
 The dev workflow is one command:
