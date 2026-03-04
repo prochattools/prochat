@@ -5,7 +5,7 @@ import { Youtube } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="font-marketing bg-background pt-20 pb-10 border-t border-border">
+    <footer className="bg-background pt-20 pb-10 border-t border-border font-mono [&_*]:font-mono">
       <div className="max-w-7xl mx-auto px-8">
         
         <div className="grid md:grid-cols-4 gap-12 mb-16">
@@ -28,21 +28,21 @@ export const Footer: React.FC = () => {
                    className="h-[58.5px] w-auto hidden dark:block"
                  />
               </Link>
-              <p className="text-muted-foreground text-sm">A system for turning service into SaaS.</p>
+              <p className="text-muted-foreground text-sm">Test first. SaaS second.</p>
            </div>
 
            {/* Links */}
            <div>
-              <h4 className="font-bold text-foreground mb-4">System</h4>
+              <h4 className="font-bold text-foreground mb-4">Menu</h4>
               <ul className="space-y-3 text-sm text-muted-foreground">
                  <li>
-                    <Link href="/kits" className="hover:text-primary transition-colors">
-                      Kits
+                    <Link href="/#system" className="hover:text-primary transition-colors">
+                      System
                     </Link>
                  </li>
                  <li>
-                    <Link href="/studio" className="hover:text-primary transition-colors">
-                      Studio
+                    <Link href="/kits" className="hover:text-primary transition-colors">
+                      Kits
                     </Link>
                  </li>
                  <li>

@@ -19,8 +19,8 @@ export const RoutingTiles: React.FC = () => {
               label: "No Idea Yet?",
               title: "WaaSKit",
               body: "The Client-First SaaS System. For people who don't know what to build yet. Sell websites to get paid immediately, then discover SaaS ideas from real client needs.",
-              cta: "Start with clients",
-              href: "/kits#waaskit",
+              cta: "Coming soon",
+              href: null,
               anchorId: "waaskit"
             },
             {
@@ -46,9 +46,15 @@ export const RoutingTiles: React.FC = () => {
                   <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 dark:text-slate-500">{tile.label}</div>
                   <h3 className="text-2xl font-bold text-slate-900 mb-4 dark:text-white">{tile.title}</h3>
                   <p className="text-slate-500 mb-8 flex-grow leading-relaxed font-light dark:text-slate-400">{tile.body}</p>
-                  <Link href={tile.href} className="inline-flex items-center gap-2 text-[#1D4ED8] font-bold hover:gap-3 transition-all dark:text-[#2563EB]">
-                    {tile.cta} <ArrowRight size={16} />
-                  </Link>
+                  {tile.href ? (
+                    <Link href={tile.href} className="inline-flex items-center gap-2 text-[#1D4ED8] font-bold hover:gap-3 transition-all dark:text-[#2563EB]">
+                      {tile.cta} <ArrowRight size={16} />
+                    </Link>
+                  ) : (
+                    <span className="inline-flex items-center text-slate-400 font-bold dark:text-slate-500">
+                      {tile.cta}
+                    </span>
+                  )}
                 </BlueprintCard>
               </div>
             </Reveal>
