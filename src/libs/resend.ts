@@ -4,6 +4,14 @@ import config from '@/config'
 import prisma from '@/libs/prisma'
 import { Resend } from 'resend'
 
+function normalizeEmailAddress(value: string | undefined) {
+	const raw = (value || '').trim()
+	if (!raw) return ''
+
+	const bracketMatch = raw.match(/<([^>]+)>/)
+	return (bracketMatch?.[1] || raw).trim()
+}
+
 class ResendService {
 	private getResendClient() {
 		const apiKey = process.env.RESEND_API_KEY
@@ -16,9 +24,9 @@ class ResendService {
 	public async sendThanksYouEmail(toMail: string) {
 		const resend = this.getResendClient()
 		const { data, error } = await resend.emails.send({
-			from: config.resend.fromAdmin,
+			from: normalizeEmailAddress(config.resend.fromAdmin),
 			to: [toMail],
-			replyTo: config.resend.forwardRepliesTo,
+			replyTo: [normalizeEmailAddress(config.resend.forwardRepliesTo)],
 			subject: config.resend.subjects?.thankYou ?? 'Welcome to ProChat',
 			react: ThankYouTemplate({ email: toMail }),
 		})
@@ -33,9 +41,9 @@ class ResendService {
 	public async sendInvoice(toMail: string, renderData: any) {
 		const resend = this.getResendClient()
 		const { data, error } = await resend.emails.send({
-			from: config.resend.fromAdmin,
+			from: normalizeEmailAddress(config.resend.fromAdmin),
 			to: [toMail],
-			replyTo: config.resend.forwardRepliesTo,
+			replyTo: [normalizeEmailAddress(config.resend.forwardRepliesTo)],
 			subject: 'Invoice: ' + renderData.id,
 			react: InvoiceTemplate(renderData),
 		})

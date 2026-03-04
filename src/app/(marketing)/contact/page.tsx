@@ -46,8 +46,6 @@ export default function ContactPage() {
     if (!root) return
 
     const form = root.querySelector<HTMLFormElement>('form[data-contact-form]')
-    const scrollButton = root.querySelector<HTMLButtonElement>('button[data-scroll-to-form]')
-    const formCard = root.querySelector<HTMLElement>('#contact-form-card')
     const submitButton = root.querySelector<HTMLButtonElement>('button[data-contact-submit]')
     const submitLabel = root.querySelector<HTMLElement>('[data-contact-submit-label]')
     const statusEl = root.querySelector<HTMLElement>('[data-contact-status]')
@@ -66,6 +64,12 @@ export default function ContactPage() {
       }
 
       statusEl.classList.add(type === 'success' ? 'contact-status-success' : 'contact-status-error')
+
+      // Keep status visible/announced even on small screens.
+      requestAnimationFrame(() => {
+        statusEl.focus({ preventScroll: true })
+        statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      })
     }
 
     const clearFieldError = (field: ContactFieldName) => {
@@ -107,12 +111,6 @@ export default function ContactPage() {
     const setSubmitting = (isSubmitting: boolean) => {
       submitButton.disabled = isSubmitting
       submitLabel.textContent = isSubmitting ? 'Sending...' : 'Send Message'
-    }
-
-    const handleScrollToForm = () => {
-      formCard?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      const firstField = form.querySelector<HTMLElement>('[name="name"]')
-      firstField?.focus()
     }
 
     const handleInput = (event: Event) => {
@@ -221,12 +219,10 @@ export default function ContactPage() {
       }
     }
 
-    scrollButton?.addEventListener('click', handleScrollToForm)
     form.addEventListener('input', handleInput)
     form.addEventListener('submit', handleSubmit)
 
     return () => {
-      scrollButton?.removeEventListener('click', handleScrollToForm)
       form.removeEventListener('input', handleInput)
       form.removeEventListener('submit', handleSubmit)
     }

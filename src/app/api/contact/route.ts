@@ -25,6 +25,17 @@ if (!globalRateLimitStore.__contactRateLimitStore) {
   globalRateLimitStore.__contactRateLimitStore = rateLimitStore
 }
 
+function normalizeEmailAddress(value: string | undefined) {
+  const raw = (value || '').trim()
+  if (!raw) return ''
+
+  // Accept "Name <email@domain>" and normalize to plain email.
+  const bracketMatch = raw.match(/<([^>]+)>/)
+  const candidate = (bracketMatch?.[1] || raw).trim()
+
+  return candidate
+}
+
 function getClientIp(request: Request) {
   const forwardedFor = request.headers.get('x-forwarded-for')
   if (forwardedFor) {
@@ -106,16 +117,19 @@ export async function POST(request: Request) {
       )
     }
 
-    const from =
+    const fromRaw =
       process.env.CONTACT_FROM_EMAIL ||
       process.env.RESEND_FROM ||
       process.env.EMAIL_FROM ||
-      'ProChat <info@prochat.tools>'
+      'info@prochat.tools'
 
-    const supportInbox =
+    const supportInboxRaw =
       process.env.SUPPORT_EMAIL ||
       process.env.CONTACT_TO_EMAIL ||
       'support@prochat.tools'
+
+    const from = normalizeEmailAddress(fromRaw)
+    const supportInbox = normalizeEmailAddress(supportInboxRaw)
 
     if (!from) {
       return NextResponse.json(
@@ -159,7 +173,7 @@ export async function POST(request: Request) {
       resend.emails.send({
         from,
         to: [supportInbox],
-        replyTo: submission.email,
+        replyTo: [submission.email],
         subject: `[Contact] ${submission.topic} — ${submission.name}`,
         react: ContactNotificationEmail({
           name: submission.name,
@@ -173,7 +187,7 @@ export async function POST(request: Request) {
       resend.emails.send({
         from,
         to: [submission.email],
-        replyTo: supportInbox,
+        replyTo: [supportInbox],
         subject: 'We received your message',
         react: ContactConfirmationEmail({
           name: submission.name,
@@ -188,6 +202,20 @@ export async function POST(request: Request) {
         internalError: internalEmailResult.error,
         confirmationError: confirmationEmailResult.error,
       })
+
+      if (process.env.NODE_ENV !== 'production') {
+        return NextResponse.json(
+          {
+            error: 'Failed to send contact emails.',
+            resendErrors: {
+              internal: internalEmailResult.error ?? null,
+              confirmation: confirmationEmailResult.error ?? null,
+            },
+          },
+          { status: 500 },
+        )
+      }
+
       return NextResponse.json(
         { error: 'Failed to send contact emails. Please try again shortly.' },
         { status: 500 },

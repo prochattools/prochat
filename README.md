@@ -122,7 +122,7 @@ npm install
 For `/contact` submissions:
 
 - `RESEND_API_KEY` — required in production to send emails.
-- `CONTACT_FROM_EMAIL` — sender identity for contact emails.
+- `CONTACT_FROM_EMAIL` — sender identity for contact emails (plain email address, e.g. `info@prochat.tools`).
 - `SUPPORT_EMAIL` — internal inbox for contact notifications.
 - `CONTACT_TO_EMAIL` — optional legacy fallback inbox if `SUPPORT_EMAIL` is not set.
 
