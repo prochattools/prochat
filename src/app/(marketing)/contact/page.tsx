@@ -179,64 +179,6 @@ export default function ContactPage() {
 						</form>
 					</div>
 
-					<div className="border-t border-slate-100 pt-12 mb-12 dark:border-[#1E242D]">
-						<h3 className="text-lg font-bold text-slate-900 mb-6 dark:text-white">
-							Other ways to reach us
-						</h3>
-
-						<div className="space-y-8">
-							<div>
-								<div className="text-sm font-bold text-slate-900 mb-2 dark:text-white">
-									Email
-								</div>
-								<ul className="space-y-1 text-slate-600 text-sm font-medium font-mono dark:text-slate-300">
-									<li>
-										<a
-											href="mailto:support@prochat.tools"
-											className="hover:text-[#1D4ED8] dark:hover:text-[#2563EB]"
-										>
-											support@prochat.tools
-										</a>
-									</li>
-									<li>
-										<a
-											href="mailto:privacy@prochat.tools"
-											className="hover:text-[#1D4ED8] dark:hover:text-[#2563EB]"
-										>
-											privacy@prochat.tools
-										</a>
-									</li>
-								</ul>
-								<p className="text-xs text-slate-400 mt-2 dark:text-slate-500">
-									Email is required for legal and GDPR-related communication.
-								</p>
-							</div>
-
-							<div>
-								<div className="text-sm font-bold text-slate-900 mb-2 dark:text-white">
-									Community
-								</div>
-								<p className="text-sm text-slate-500 mb-2 dark:text-slate-400">
-									We also run a Discord for builders and community discussion.
-								</p>
-								<p className="text-xs text-slate-400 dark:text-slate-500">
-									Discord is not used for support or legal requests.
-								</p>
-							</div>
-						</div>
-					</div>
-
-					<div className="bg-slate-50 border border-slate-200 rounded-lg p-6 flex gap-4 dark:bg-[#0F1626] dark:border-[#1E242D]">
-						<div className="w-1 bg-slate-300 rounded-full shrink-0 dark:bg-slate-600" />
-						<div className="space-y-1">
-							<p className="text-sm font-medium text-slate-900 dark:text-white">
-								We don’t offer live chat or instant support by design.
-							</p>
-							<p className="text-sm text-slate-500 dark:text-slate-400">
-								Clear communication beats urgency.
-							</p>
-						</div>
-					</div>
 				</div>
 			</div>
 		</main>

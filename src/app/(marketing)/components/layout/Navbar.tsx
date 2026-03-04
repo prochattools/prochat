@@ -10,7 +10,6 @@ const NAV_ITEMS = [
   { label: 'System', href: '/' },
   { label: 'Kits', href: '/kits' },
   { label: 'Studio', href: '/studio' },
-  { label: 'Proof', href: '/proof' },
   { label: 'Contact', href: '/contact' },
 ];
 

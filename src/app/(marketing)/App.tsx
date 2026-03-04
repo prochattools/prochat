@@ -80,7 +80,7 @@ export default function App() {
           <div className="max-w-2xl">
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-              v2.0 System Architecture
+              v2.0 Verified Architecture
             </div>
             <h1 className="mb-4 font-brand text-5xl font-bold leading-tight tracking-[-0.03em] text-foreground md:text-6xl lg:text-7xl">
               Build with AI.
@@ -117,7 +117,7 @@ export default function App() {
               <div className="absolute top-1/2 left-[15%] right-[15%] h-px -translate-y-1/2 border-b border-dashed border-border" />
             </div>
 
-            <div className="absolute left-[8%] top-[18%] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
+            <div className="absolute left-[calc(50%-250px)] top-[18%] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
               <div className="mb-4 flex items-start justify-between">
                 <div className="flex h-8 w-8 items-center justify-center rounded border border-border bg-muted text-muted-foreground">
                   <Lock className="h-4 w-4" />
@@ -131,7 +131,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="absolute right-[8%] top-[18%] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
+            <div className="absolute left-[calc(50%+10px)] top-[18%] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
               <div className="mb-4 flex items-start justify-between">
                 <div className="flex h-8 w-8 items-center justify-center rounded border border-border bg-muted text-muted-foreground">
                   <Database className="h-4 w-4" />
@@ -146,7 +146,7 @@ export default function App() {
               <div className="h-1 w-full rounded-sm bg-muted/70" />
             </div>
 
-            <div className="absolute bottom-[18%] left-[8%] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
+            <div className="absolute bottom-[18%] left-[calc(50%-250px)] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
               <div className="mb-4 flex items-start justify-between">
                 <div className="flex h-8 w-8 items-center justify-center rounded border border-border bg-muted text-muted-foreground">
                   <CreditCard className="h-4 w-4" />
@@ -160,7 +160,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="absolute bottom-[18%] right-[8%] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
+            <div className="absolute bottom-[18%] left-[calc(50%+10px)] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
               <div className="mb-4 flex items-start justify-between">
                 <div className="flex h-8 w-8 items-center justify-center rounded border border-border bg-muted text-muted-foreground">
                   <Cloud className="h-4 w-4" />
@@ -182,7 +182,7 @@ export default function App() {
                   <ShieldCheck className="h-6 w-6" />
                 </div>
                 <div>
-                  <div className="font-brand text-base font-bold text-foreground">System Architecture</div>
+                  <div className="font-brand text-base font-bold text-foreground">Verified Architecture</div>
                   <div className="font-mono text-xs text-muted-foreground">v2.0.4 stable</div>
                 </div>
               </div>

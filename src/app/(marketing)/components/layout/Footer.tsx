@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Youtube } from 'lucide-react';
-import TrackedOutboundLink from '@/components/TrackedOutboundLink';
 
 export const Footer: React.FC = () => {
   return (
@@ -36,32 +35,20 @@ export const Footer: React.FC = () => {
            <div>
               <h4 className="font-bold text-foreground mb-4">System</h4>
               <ul className="space-y-3 text-sm text-muted-foreground">
-                 <li><a href="#" className="hover:text-primary transition-colors">System notes</a></li>
                  <li>
-                    <Link href="/proof" className="hover:text-primary transition-colors">
-                      Proof
+                    <Link href="/kits" className="hover:text-primary transition-colors">
+                      Kits
+                    </Link>
+                 </li>
+                 <li>
+                    <Link href="/studio" className="hover:text-primary transition-colors">
+                      Studio
                     </Link>
                  </li>
                  <li>
                     <Link href="/contact" className="hover:text-primary transition-colors">
                       Contact
                     </Link>
-                 </li>
-                 <li>
-                    <TrackedOutboundLink
-                      href="https://accountant.prochat.tools"
-                      target="_blank"
-                      rel="nofollow noopener noreferrer"
-                      className="opacity-70 hover:text-primary transition-colors"
-                      eventName="cta_click"
-                      eventPayload={{
-                        location: 'footer',
-                        destination: 'accountant_funnel',
-                        href: 'https://accountant.prochat.tools',
-                      }}
-                    >
-                      WaaS for Accountants
-                    </TrackedOutboundLink>
                  </li>
               </ul>
            </div>
@@ -96,7 +83,6 @@ export const Footer: React.FC = () => {
               <h4 className="font-bold text-foreground mb-4">Contact the maker</h4>
               <ul className="space-y-3 text-sm text-muted-foreground mb-6">
                  <li className="font-medium text-foreground">Steve Westhoek</li>
-                 <li>ProChat</li>
               </ul>
               <div className="flex gap-2">
                  <Link
@@ -108,6 +94,17 @@ export const Footer: React.FC = () => {
                  >
                    <Youtube size={16} />
                  </Link>
+                 <a
+                   href="https://x.com/prochattools"
+                   target="_blank"
+                   rel="nofollow noopener noreferrer"
+                   aria-label="ProChat on X"
+                   className="relative inline-flex items-center justify-center rounded-full border border-border bg-background px-3 py-2 text-sm font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:text-primary hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background"
+                 >
+                   <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
+                     <path d="M18.901 2h3.68l-8.04 9.19L24 22h-7.406l-5.8-7.584L3.95 22H.268l8.6-9.834L0 2h7.594l5.243 6.932L18.901 2zm-1.292 17.8h2.04L6.486 4.106H4.3L17.61 19.8z" />
+                   </svg>
+                 </a>
               </div>
            </div>
 
