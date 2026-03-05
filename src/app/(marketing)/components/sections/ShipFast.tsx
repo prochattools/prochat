@@ -38,7 +38,7 @@ export const ShipFast: React.FC<ShipFastProps> = ({
 }) => {
   return (
     <section id={sectionId} className="py-32 relative bg-white border-b border-slate-100 dark:bg-[#0B111B] dark:border-[#1E242D]">
-      <div className="max-w-5xl mx-auto px-8">
+      <div className="max-w-5xl mx-auto px-page">
         
         <div className="text-center mb-24">
             <Reveal>

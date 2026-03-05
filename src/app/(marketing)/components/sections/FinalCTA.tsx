@@ -27,7 +27,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
 }) => {
   return (
     <section className="py-32 relative bg-white flex items-center justify-center border-t border-slate-100 dark:bg-[#0B111B] dark:border-[#1E242D]">
-       <div className="max-w-3xl mx-auto px-6 text-center space-y-8">
+       <div className="max-w-3xl mx-auto px-page text-center space-y-8">
           <Reveal width="100%">
               <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 leading-[1.1] dark:text-white">
                  {heading}

@@ -33,7 +33,7 @@ export const Pricing: React.FC<PricingProps> = ({
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(29,78,216,0.08),transparent_70%)]" />
       
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-page">
         
         <div className="text-center mb-20 space-y-4">
             <h2 className="text-4xl font-bold tracking-tight">

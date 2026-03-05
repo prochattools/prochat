@@ -6,7 +6,7 @@ import { Reveal } from '../ui/Reveal';
 export const Principle: React.FC = () => {
   return (
     <section className="py-24 bg-white border-b border-slate-100 dark:bg-[#0B111B] dark:border-[#1E242D]">
-      <div className="max-w-4xl mx-auto px-6 text-center">
+      <div className="max-w-4xl mx-auto px-page text-center">
         <Reveal>
           <div className="inline-block px-3 py-1 mb-6 rounded-full bg-gray-50 text-[#1D4ED8] text-xs font-bold uppercase tracking-wider dark:bg-[#1D4ED8]/10 dark:text-[#2563EB]">
             The Principle

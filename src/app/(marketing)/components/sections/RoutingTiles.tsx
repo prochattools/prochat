@@ -8,7 +8,7 @@ import { Reveal } from '../ui/Reveal';
 export const RoutingTiles: React.FC = () => {
   return (
     <section className="py-24 bg-slate-50/50 border-y border-slate-200 dark:bg-[#0F1626] dark:border-[#1E242D]">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-page">
         <Reveal>
           <h2 className="text-3xl font-bold text-slate-900 mb-12 text-center dark:text-white">Choose your entry point</h2>
         </Reveal>

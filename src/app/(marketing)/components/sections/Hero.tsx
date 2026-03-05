@@ -34,7 +34,7 @@ export const Hero: React.FC<HeroProps> = ({
       {/* Cinematic Spotlight */}
       <div className="absolute inset-x-0 top-0 h-[800px] bg-gradient-to-b from-gray-50/60 via-white/20 to-transparent pointer-events-none opacity-60 dark:from-[#1C2140]/50 dark:via-[#0B111B]/30" />
 
-      <div className="relative z-20 max-w-5xl mx-auto px-8 w-full flex flex-col items-center text-center space-y-10 mt-12 md:mt-0">
+      <div className="relative z-20 max-w-5xl mx-auto px-page w-full flex flex-col items-center text-center space-y-10 mt-12 md:mt-0">
         
         {/* Headlines */}
         <div className="space-y-8">

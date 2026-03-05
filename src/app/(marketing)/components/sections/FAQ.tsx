@@ -31,7 +31,7 @@ export const FAQ: React.FC = () => {
 
   return (
     <section className="py-24 bg-white relative dark:bg-[#0B111B]">
-        <div className="max-w-3xl mx-auto px-6">
+        <div className="max-w-3xl mx-auto px-page">
             <Reveal width="100%">
                 <h2 className="text-3xl font-bold text-slate-900 mb-12 text-center dark:text-white">Frequently Asked Questions</h2>
             </Reveal>

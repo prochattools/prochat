@@ -76,7 +76,7 @@ export default function App() {
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(29,78,216,0.06)_0%,rgba(255,255,255,0)_70%)] dark:bg-[radial-gradient(circle_at_70%_50%,rgba(37,99,235,0.14)_0%,rgba(2,6,23,0)_70%)]"
         />
-        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-14 px-page lg:grid-cols-[1.05fr_0.95fr]">
           <div className="max-w-2xl">
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
@@ -226,7 +226,7 @@ export default function App() {
       </section>
 
       <section className="relative border-y border-border bg-card py-28">
-        <div className="mx-auto max-w-4xl px-6 text-center">
+        <div className="mx-auto max-w-4xl px-page text-center">
           <h2 className="mb-8 font-brand text-4xl font-bold tracking-[-0.03em] text-foreground md:text-5xl">
             AI Removed the Coding Barrier.
           </h2>
@@ -245,7 +245,7 @@ export default function App() {
       </section>
 
       <section id="methodology" className="bg-background py-24">
-        <div className="mx-auto grid max-w-6xl gap-20 px-6 md:grid-cols-2 md:items-center">
+        <div className="mx-auto grid max-w-6xl gap-20 px-page md:grid-cols-2 md:items-center">
           <div>
             <div className="mb-6 inline-flex items-center gap-2 font-brand text-sm font-bold uppercase tracking-[0.2em] text-primary">
               <ShieldCheck className="h-4 w-4" />
@@ -300,7 +300,7 @@ export default function App() {
       </section>
 
       <section id="systems" className="border-y border-border bg-card py-28">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-7xl px-page">
           <div className="mb-20 text-center">
             <h2 className="mb-4 font-brand text-4xl font-bold tracking-[-0.03em] text-foreground">
               Opinionated Systems for Serious Builders.
@@ -382,7 +382,7 @@ export default function App() {
       </section>
 
       <section id="comparison" className="bg-background py-28">
-        <div className="mx-auto max-w-4xl px-6">
+        <div className="mx-auto max-w-4xl px-page">
           <div className="mb-16 text-center">
             <h2 className="font-brand text-3xl font-bold tracking-[-0.03em] text-foreground">Why Structure Wins</h2>
           </div>
@@ -419,7 +419,7 @@ export default function App() {
       </section>
 
       <section className="border-t border-border bg-card py-24">
-        <div className="mx-auto max-w-5xl px-6 text-center">
+        <div className="mx-auto max-w-5xl px-page text-center">
           <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
             <ShieldCheck className="h-5 w-5" />
           </div>
@@ -456,7 +456,7 @@ export default function App() {
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[size:32px_32px] bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)]"
         />
-        <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
+        <div className="relative z-10 mx-auto max-w-3xl px-page text-center">
           <h2 className="mb-8 font-brand text-4xl font-bold tracking-[-0.03em] md:text-5xl">You Already Have the Idea.</h2>
           <p className="mb-12 text-xl font-light leading-relaxed text-slate-300">
             AI removed the coding barrier. Now remove the structural risk. Less doubt. More execution.

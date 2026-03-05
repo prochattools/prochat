@@ -102,7 +102,7 @@ export default function StartHerePage() {
           />
         </div>
 
-        <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-8 md:px-12 lg:grid-cols-2 lg:gap-20">
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-page md:px-12 lg:grid-cols-2 lg:gap-20">
           <div className="order-1 space-y-8 lg:space-y-10">
             <div className="space-y-6">
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-primary">
@@ -176,7 +176,7 @@ export default function StartHerePage() {
       </section>
 
       <section className="border-b border-border bg-muted/60 py-24">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-page">
           <div className="mx-auto mb-16 max-w-3xl text-center">
             <h2 className="font-sans mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
               Preparation and Execution Are Not the Same
@@ -236,7 +236,7 @@ export default function StartHerePage() {
       </section>
 
       <section className="border-b border-border bg-background py-24">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-page">
           <div className="mx-auto mb-16 max-w-3xl text-center">
             <h2 className="font-sans mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
               This Is Not for Everyone
@@ -266,7 +266,7 @@ export default function StartHerePage() {
       </section>
 
       <section className="border-b border-border bg-muted/60 py-24">
-        <div className="mx-auto max-w-4xl px-6">
+        <div className="mx-auto max-w-4xl px-page">
           <div className="mx-auto mb-12 max-w-2xl text-center">
             <h2 className="font-sans text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
               Inside the PDF
@@ -293,7 +293,7 @@ export default function StartHerePage() {
       </section>
 
       <section className="border-b border-border bg-background py-24">
-        <div className="mx-auto max-w-4xl px-6">
+        <div className="mx-auto max-w-4xl px-page">
           <div className={`${CARD_BASE} p-8 md:p-10`}>
             <h2 className="font-sans mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
               Why This Matters Now
@@ -321,7 +321,7 @@ export default function StartHerePage() {
       </section>
 
       <section className="border-b border-border bg-muted/40 py-24">
-        <div className="mx-auto max-w-3xl px-6">
+        <div className="mx-auto max-w-3xl px-page">
           <h2 className="font-sans mb-12 text-center text-3xl font-bold text-foreground">FAQ</h2>
 
           <div className={`${CARD_BASE} overflow-hidden`}>

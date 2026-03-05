@@ -4,7 +4,7 @@ import { ShieldCheck, Zap, Layers } from 'lucide-react';
 export const Banner: React.FC = () => {
   return (
     <section className="py-10 border-y border-slate-100 bg-slate-50/50">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-page">
         <div className="flex flex-wrap justify-center gap-8 md:gap-16">
           
           <div className="flex items-center gap-3 group cursor-default">

@@ -2,7 +2,7 @@ import TrackedOutboundLink from '@/components/TrackedOutboundLink'
 
 const AccountantBridgePage = () => {
 	return (
-		<section className="mx-auto max-w-2xl px-6 py-16 text-slate-900 dark:text-white">
+		<section className="mx-auto max-w-2xl px-page py-16 text-slate-900 dark:text-white">
 			<h1 className="text-3xl font-bold">WaaS for Accountants</h1>
 			<p className="mt-4 text-slate-600 dark:text-slate-400">
 				This is a niche WaaS offer tailored for accounting firms. It lives on a

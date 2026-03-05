@@ -75,7 +75,7 @@ export default async function BlogArticlePage({ params }: PageParams) {
     .slice(0, 2)
 
   return (
-    <main className="mx-auto max-w-4xl px-6 pb-20 pt-28 md:pt-32">
+    <main className="mx-auto max-w-4xl px-page pb-20 pt-28 md:pt-32">
       <StructuredData
         id={`schema-blog-${post.slug}`}
         data={getBlogPostingSchema({

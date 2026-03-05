@@ -134,7 +134,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           <div className="absolute inset-0 z-[2] bg-[radial-gradient(circle_at_50%_34%,rgba(255,255,255,0.58)_0%,rgba(255,255,255,0.30)_45%,rgba(255,255,255,0.08)_72%,rgba(255,255,255,0)_100%)] dark:hidden" />
         </div>
 
-        <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
+        <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 font-mono text-xs font-medium text-muted-foreground shadow-sm">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
             v2.0 Production Ready
@@ -210,7 +210,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
       </section>
 
       <section id="tester-mindset" className="border-y border-border bg-[rgb(var(--section-alt-bg-rgb))] py-24">
-        <div className="mx-auto max-w-3xl px-6">
+        <div className="mx-auto max-w-3xl px-page">
           <div className="flex items-start gap-6">
             <div className="hidden flex-col items-center pt-2 md:flex">
               <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-lg border border-border bg-card text-primary shadow-sm">
@@ -251,7 +251,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
       </section>
 
       <section id="problem" className="relative scroll-mt-24 bg-[rgb(var(--section-bg-rgb))] py-24">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-page">
           <div className="grid items-start gap-12 md:grid-cols-2 lg:gap-24">
             <div className="relative">
               <div className="sticky top-24">
@@ -373,7 +373,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
       </section>
 
       <section id="manual" className="scroll-mt-24 border-y border-border bg-[rgb(var(--section-alt-bg-rgb))] py-24">
-        <div className="mx-auto max-w-4xl px-6">
+        <div className="mx-auto max-w-4xl px-page">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground">
               Manual Setup vs SaaSKit
@@ -441,7 +441,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
       </section>
 
       <section id="who" className="scroll-mt-24 bg-[rgb(var(--section-bg-rgb))] py-24">
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-5xl px-page">
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
               <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] leading-tight text-foreground">
@@ -504,7 +504,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
             ].join(','),
           }}
         />
-        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+        <div className="relative z-10 mx-auto max-w-4xl px-page text-center">
           <div className="mb-8 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1 font-mono text-sm text-primary backdrop-blur-sm">
             Documentation & Reuse Included
           </div>
@@ -568,7 +568,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
       </section>
 
       <section id="breakdown" className="scroll-mt-24 border-t border-border bg-[rgb(var(--section-bg-rgb))] py-24">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-6xl px-page">
           <details className="group overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow open:shadow-xl">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-left [&::-webkit-details-marker]:hidden md:px-8">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -643,7 +643,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
       </section>
 
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
-        <div className="mx-auto max-w-2xl px-6">
+        <div className="mx-auto max-w-2xl px-page">
           <ContextualLinkCta
             className="mb-10 text-left"
             title="Keep Executing After Setup"

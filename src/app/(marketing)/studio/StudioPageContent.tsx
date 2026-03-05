@@ -91,7 +91,7 @@ export default function StudioPageContent() {
 					id="what-is-studio"
 					className="py-24 bg-white border-b border-slate-100 dark:bg-[#0B111B] dark:border-[#1E242D]"
 				>
-					<div className="mx-auto w-full max-w-[1120px] px-6 sm:px-8">
+					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<div className="grid md:grid-cols-2 gap-12 items-center">
 							<div>
 								<Reveal>
@@ -133,7 +133,7 @@ export default function StudioPageContent() {
 					id="how-it-works"
 					className="py-32 bg-slate-50/50 border-b border-slate-200 dark:bg-[#0F1626] dark:border-[#1E242D]"
 				>
-					<div className="mx-auto w-full max-w-[1120px] px-6 sm:px-8">
+					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<Reveal>
 							<div className="text-center mb-16">
 								<h2 className="text-3xl font-bold text-slate-900 dark:text-white">
@@ -163,7 +163,7 @@ export default function StudioPageContent() {
 				</section>
 
 				<section className="py-32 bg-white border-b border-slate-100 dark:bg-[#0B111B] dark:border-[#1E242D]">
-					<div className="mx-auto w-full max-w-[1120px] px-6 sm:px-8">
+					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<Reveal>
 							<h2 className="text-3xl font-bold text-slate-900 mb-12 dark:text-white">
 								Studio produces artifacts, not deliverables.
@@ -195,7 +195,7 @@ export default function StudioPageContent() {
 				</section>
 
 				<section className="py-24 bg-white border-b border-slate-100 dark:bg-[#0B111B] dark:border-[#1E242D]">
-					<div className="mx-auto w-full max-w-[1120px] px-6 sm:px-8">
+					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<div className="grid md:grid-cols-2 gap-12">
 							<Reveal width="100%">
 								<div className="p-8 bg-slate-50 border border-slate-200 rounded-2xl h-full dark:bg-[#0F1626] dark:border-[#1E242D]">
@@ -245,7 +245,7 @@ export default function StudioPageContent() {
 				</section>
 
 				<section className="py-24 bg-white border-b border-slate-100 text-center dark:bg-[#0B111B] dark:border-[#1E242D]">
-					<div className="mx-auto w-full max-w-[1120px] px-6 sm:px-8">
+					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<div className="max-w-3xl mx-auto">
 							<Reveal>
 								<h2 className="text-3xl font-bold text-slate-900 mb-8 dark:text-white">
@@ -277,7 +277,7 @@ export default function StudioPageContent() {
 				</section>
 
 				<section className="py-24 bg-slate-900 text-white dark:bg-[#0F1626]">
-					<div className="mx-auto w-full max-w-[1120px] px-6 sm:px-8 text-center">
+					<div className="mx-auto w-full max-w-[1120px] px-page text-center">
 						<Reveal>
 							<h2 className="text-3xl font-bold mb-6">
 								Studio is intentionally limited.
@@ -316,7 +316,7 @@ export default function StudioPageContent() {
 				</section>
 
 				<section className="py-32 bg-white flex flex-col items-center text-center dark:bg-[#0B111B]">
-					<div className="mx-auto w-full max-w-[1120px] px-6 sm:px-8">
+					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<div className="max-w-3xl mx-auto">
 							<Reveal>
 								<h2 className="text-4xl font-bold text-slate-900 mb-8 dark:text-white">

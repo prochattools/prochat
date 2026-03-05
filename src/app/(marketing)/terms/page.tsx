@@ -15,7 +15,7 @@ export const metadata = getSEOTags({
 export default function TermsPage() {
 	return (
 		<section className="relative bg-white py-24 dark:bg-[#0B111B]">
-			<main className="mx-auto w-full max-w-3xl px-6 sm:px-8">
+			<main className="mx-auto w-full max-w-3xl px-page">
 				<article className="space-y-10 leading-relaxed text-slate-600 dark:text-slate-300">
 					<header className="mb-12">
 						<h1 className="mb-4 text-3xl font-bold text-slate-900 dark:text-white md:text-4xl">

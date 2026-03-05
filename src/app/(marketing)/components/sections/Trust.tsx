@@ -27,7 +27,7 @@ export const Trust: React.FC<TrustProps> = ({
 }) => {
   return (
     <section className="py-24 bg-slate-50 border-b border-slate-200 dark:bg-[#0F1626] dark:border-[#1E242D]">
-      <div className="max-w-4xl mx-auto px-6 text-center">
+      <div className="max-w-4xl mx-auto px-page text-center">
         <Reveal>
             <h2 className="text-3xl font-bold text-slate-900 mb-8 dark:text-white">{heading}</h2>
         </Reveal>

@@ -23,7 +23,7 @@ export const ProblemSolution: React.FC<ProblemSolutionProps> = ({
 }) => {
   return (
     <section className="py-32 relative bg-white border-y border-slate-100 overflow-hidden dark:bg-[#0B111B] dark:border-[#1E242D]">
-      <div className="max-w-7xl mx-auto px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-page relative z-10">
         
         {/* PROBLEM */}
         <div className="mb-32 grid md:grid-cols-2 gap-8 md:gap-16 items-center">

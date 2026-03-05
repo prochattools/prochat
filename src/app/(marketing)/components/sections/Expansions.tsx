@@ -28,7 +28,7 @@ export const Proof: React.FC<ProofProps> = ({
 
     return (
         <section className="py-24 bg-white relative overflow-hidden border-b border-slate-200/50 dark:bg-[#0B111B] dark:border-[#1E242D]">
-            <div className="max-w-7xl mx-auto px-8">
+            <div className="max-w-7xl mx-auto px-page">
                 <div className="mb-16 space-y-3">
                      <Reveal>
                         <h2 className="text-3xl font-bold text-slate-900 dark:text-white">{title}</h2>

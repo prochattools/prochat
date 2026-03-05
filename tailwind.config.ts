@@ -13,12 +13,18 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "var(--pc-page-gutter)",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1320px",
       },
     },
     extend: {
+      spacing: {
+        page: "var(--pc-page-gutter)",
+      },
+      maxWidth: {
+        reading: "var(--pc-reading-max)",
+      },
       fontFamily: {
         sans: [
           "var(--font-sans)",

@@ -4,7 +4,7 @@ import { ShieldCheck, Check } from 'lucide-react';
 export const License: React.FC = () => {
   return (
     <section className="py-16 bg-white dark:bg-[#010814] border-t border-slate-100 dark:border-[#1E242D]">
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-4xl mx-auto px-page">
             <div className="bg-slate-50 dark:bg-[#0B111B] border border-slate-200 dark:border-[#373C53] rounded-lg p-6 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8">
                 
                 <div className="flex items-center gap-6">

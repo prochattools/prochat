@@ -1,7 +1,7 @@
 export default function WaitlistPageMarkup() {
   return (
     <>
-<section className="max-w-4xl mx-auto px-6 pt-24 pb-12 lg:pt-32 lg:pb-24">
+<section className="max-w-4xl mx-auto px-page pt-24 pb-12 lg:pt-32 lg:pb-24">
   <div className="flex flex-col items-center text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-8">
       <span className="size-2 rounded-full bg-primary"></span>
@@ -72,7 +72,7 @@ export default function WaitlistPageMarkup() {
     </a>
   </div>
 </section>
-<section className="max-w-7xl mx-auto px-6 py-24 bg-slate-50/50 dark:bg-slate-900/20 rounded-t-[3rem]">
+<section className="max-w-7xl mx-auto px-page py-24 bg-slate-50/50 dark:bg-slate-900/20 rounded-t-[3rem]">
   <div className="max-w-7xl mx-auto">
     <div className="w-full">
       <h2 className="text-3xl font-bold mb-10 text-slate-900 dark:text-white text-center">Why join the UXKit waitlist?</h2>

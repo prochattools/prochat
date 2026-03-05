@@ -5,7 +5,7 @@ import { BlueprintCard } from '../ui/Scaffolding';
 export const AudienceFilter: React.FC = () => {
   return (
     <section className="py-24 border-y border-slate-200 bg-white">
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="max-w-4xl mx-auto px-page">
         
         <div className="text-center mb-12 space-y-2">
           <p className="text-xs font-bold tracking-widest text-slate-400 uppercase">We’d rather be clear than oversell</p>

@@ -35,7 +35,7 @@ export const Navbar: React.FC = () => {
           : 'border-border bg-background/70 py-2 backdrop-blur-sm'
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-page">
         {/* Logo */}
         <Link href="/" className="flex items-center group cursor-pointer">
           <span className="inline-block origin-left scale-[1.08] transform-gpu leading-none">

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 export const Newsletter: React.FC = () => {
   return (
     <section className="py-24 bg-white relative">
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-page grid md:grid-cols-2 gap-12 items-center">
         
         {/* Left: Text */}
         <div className="space-y-2">
@@ -35,7 +35,7 @@ export const Newsletter: React.FC = () => {
       </div>
       
       {/* Decorative separator line */}
-      <div className="max-w-7xl mx-auto px-6 mt-24">
+      <div className="max-w-7xl mx-auto px-page mt-24">
          <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
       </div>
     </section>

@@ -40,7 +40,7 @@ export default async function BlogPage() {
   const posts = await getAllBlogPosts()
 
   return (
-    <main className="mx-auto max-w-6xl px-6 pb-20 pt-28 md:pt-32">
+    <main className="mx-auto max-w-6xl px-page pb-20 pt-28 md:pt-32">
       <section className="mx-auto max-w-3xl text-center">
         <h1 className="font-brand text-4xl font-bold tracking-[-0.02em] text-foreground md:text-5xl">
           Build SaaS with AI. Keep the system stable.

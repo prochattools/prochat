@@ -6,7 +6,7 @@ import { Youtube } from 'lucide-react';
 export const Footer: React.FC = () => {
   return (
     <footer className="bg-background pt-20 pb-10 border-t border-border font-mono [&_*]:font-mono">
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-page">
         
         <div className="grid md:grid-cols-4 gap-12 mb-16">
            

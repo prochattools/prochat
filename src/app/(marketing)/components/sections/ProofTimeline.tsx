@@ -8,7 +8,7 @@ import { Reveal } from '../ui/Reveal';
 const ProofTimeline: React.FC = () => {
     return (
         <section id="phases" className="w-full py-20 bg-white dark:bg-[#0B111B]">
-            <div className="mx-auto w-full max-w-[1120px] px-6 sm:px-8">
+            <div className="mx-auto w-full max-w-[1120px] px-page">
                 <div className="mx-auto w-full max-w-4xl text-center">
                     <Reveal width="100%">
                         <div>

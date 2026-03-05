@@ -12,7 +12,7 @@ const ProofLive: React.FC = () => {
             id="live"
             className="w-full pt-20 pb-10 bg-slate-50 border-b border-slate-200 dark:bg-[#0F1626] dark:border-[#1E242D]"
         >
-            <div className="mx-auto w-full max-w-[1120px] px-6 sm:px-8">
+            <div className="mx-auto w-full max-w-[1120px] px-page">
                 {/* Text Block */}
                 <div className="max-w-4xl mx-auto text-center mb-8">
                     <Reveal width="100%">

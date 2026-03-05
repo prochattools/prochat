@@ -39,7 +39,7 @@ export default function EventTaxonomyContent() {
 			</div>
 			<div className="relative z-10 min-h-screen">
 				<section className="py-24 bg-white border-b border-slate-100 dark:bg-[#0B111B] dark:border-[#1E242D]">
-					<div className="max-w-5xl mx-auto px-8 text-center">
+					<div className="max-w-5xl mx-auto px-page text-center">
 						<Reveal>
 							<h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
 								Event taxonomy
@@ -54,7 +54,7 @@ export default function EventTaxonomyContent() {
 				</section>
 
 				<section className="py-24 bg-slate-50/50 border-y border-slate-200 dark:bg-[#0F1626] dark:border-[#1E242D]">
-					<div className="max-w-6xl mx-auto px-8">
+					<div className="max-w-6xl mx-auto px-page">
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 							{EVENTS.map((event) => (
 								<BlueprintCard key={event.name} className="p-6">

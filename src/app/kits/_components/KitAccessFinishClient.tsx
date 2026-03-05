@@ -137,7 +137,7 @@ export default function KitAccessFinishClient({
 	const showFallback = !sessionId || fallbackVisible || errorCode === 'invalid_session'
 
 	return (
-		<div className='mx-auto max-w-3xl px-4 py-16'>
+		<div className='mx-auto max-w-3xl px-page py-16'>
 			<p className='text-sm uppercase tracking-wide text-slate-500'>ProChat</p>
 			<h1 className='mt-2 text-3xl font-bold text-slate-900 dark:text-white'>
 				Finalize your {productLabel} access

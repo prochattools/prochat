@@ -37,7 +37,7 @@ const Section = ({ id, className = '', children }: SectionProps) => (
 )
 
 const Container = ({ className = '', children }: ContainerProps) => (
-	<div className={`max-w-7xl mx-auto px-8 ${className}`}>{children}</div>
+	<div className={`max-w-7xl mx-auto px-page ${className}`}>{children}</div>
 )
 
 export default function ProofPageContent() {

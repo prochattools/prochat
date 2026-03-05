@@ -34,7 +34,7 @@ const ProofSection: React.FC<ProofSectionProps> = ({
 };
 
 const ProofContainer: React.FC<ProofContainerProps> = ({ className = '', children }) => (
-    <div className={`mx-auto max-w-[1120px] px-6 sm:px-8 ${className}`}>{children}</div>
+    <div className={`mx-auto max-w-[1120px] px-page ${className}`}>{children}</div>
 );
 
 // SECTION: OPERATIONAL REALITY

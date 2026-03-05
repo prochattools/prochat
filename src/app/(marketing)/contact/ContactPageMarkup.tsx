@@ -1,7 +1,7 @@
 export default function ContactPageMarkup() {
   return (
     <>
-<section className="max-w-7xl mx-auto px-6 pt-28 pb-12 md:pt-32 md:pb-14">
+<section className="max-w-7xl mx-auto px-page pt-28 pb-12 md:pt-32 md:pb-14">
   <div className="grid lg:grid-cols-[1.08fr_0.92fr] gap-8 lg:gap-10 xl:gap-12 items-stretch">
         <div className="flex h-full flex-col justify-between gap-8 lg:gap-10">
       <div className="space-y-4 md:space-y-5 max-w-xl">
@@ -81,7 +81,7 @@ export default function ContactPageMarkup() {
 </section>
 
 <section className="bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800 py-16 md:py-20">
-  <div className="max-w-7xl mx-auto px-6">
+  <div className="max-w-7xl mx-auto px-page">
     <div className="grid lg:grid-cols-12 gap-10 md:gap-12">
             <div className="lg:col-span-8 space-y-8 md:space-y-10">
         <div className="space-y-4 md:space-y-6">

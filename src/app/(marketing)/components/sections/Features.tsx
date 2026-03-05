@@ -43,7 +43,7 @@ export const Features: React.FC<FeaturesProps> = ({
 }) => {
   return (
     <section className="py-32 relative">
-        <div className="max-w-7xl mx-auto px-6 mb-20">
+        <div className="max-w-7xl mx-auto px-page mb-20">
             <Reveal>
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
                   {sectionTitle}
@@ -63,7 +63,7 @@ export const Features: React.FC<FeaturesProps> = ({
             </Reveal>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="max-w-7xl mx-auto px-page grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {SYSTEMS.map((feature, idx) => (
                 <Reveal key={idx} delay={idx * 0.1}>
                   <BlueprintCard className="flex flex-col h-full group hover:border-[#1D4ED8]/30">
