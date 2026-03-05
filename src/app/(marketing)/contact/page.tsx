@@ -49,6 +49,9 @@ export default function ContactPage() {
     const submitButton = root.querySelector<HTMLButtonElement>('button[data-contact-submit]')
     const submitLabel = root.querySelector<HTMLElement>('[data-contact-submit-label]')
     const statusEl = root.querySelector<HTMLElement>('[data-contact-status]')
+    const faqItems = Array.from(root.querySelectorAll<HTMLElement>('[data-faq-item]'))
+    const faqTriggers = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-faq-trigger]'))
+    const faqPanels = Array.from(root.querySelectorAll<HTMLElement>('[data-faq-panel]'))
 
     if (!form || !submitButton || !submitLabel || !statusEl) {
       return
@@ -112,6 +115,34 @@ export default function ContactPage() {
       submitButton.disabled = isSubmitting
       submitLabel.textContent = isSubmitting ? 'Sending...' : 'Send Message'
     }
+
+    let openIndex: number | null = null
+    const setOpenFaqIndex = (nextIndex: number | null) => {
+      openIndex = nextIndex
+
+      faqTriggers.forEach((trigger, index) => {
+        const isOpen = openIndex === index
+        const panel = faqPanels[index]
+        const item = faqItems[index]
+
+        trigger.setAttribute('aria-expanded', String(isOpen))
+        item?.setAttribute('data-open', isOpen ? 'true' : 'false')
+
+        if (panel) {
+          panel.hidden = !isOpen
+        }
+      })
+    }
+
+    const faqClickHandlers = faqTriggers.map((trigger, index) => {
+      const onClick = () => {
+        setOpenFaqIndex(openIndex === index ? null : index)
+      }
+
+      trigger.addEventListener('click', onClick)
+      return { trigger, onClick }
+    })
+    setOpenFaqIndex(null)
 
     const handleInput = (event: Event) => {
       const target = event.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -223,6 +254,9 @@ export default function ContactPage() {
     form.addEventListener('submit', handleSubmit)
 
     return () => {
+      faqClickHandlers.forEach(({ trigger, onClick }) => {
+        trigger.removeEventListener('click', onClick)
+      })
       form.removeEventListener('input', handleInput)
       form.removeEventListener('submit', handleSubmit)
     }

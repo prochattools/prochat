@@ -62,3 +62,18 @@
   border-color: rgb(254 202 202);
   color: rgb(153 27 27);
 }
+
+.stitch-contact-root .contact-faq-item[data-open='true'] {
+  border-color: rgb(147 197 253);
+}
+
+.stitch-contact-root .contact-faq-chevron {
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.stitch-contact-root .contact-faq-item[data-open='true'] .contact-faq-chevron {
+  color: rgb(37 99 235);
+  transform: rotate(180deg);
+}

@@ -90,40 +90,134 @@
           <h2 class="text-3xl font-bold text-slate-900 dark:text-white">Frequently Asked Questions</h2>
           <p class="text-slate-600 dark:text-slate-400">Quick answers to common questions about our platform and services.</p>
         </div>
-        <div class="space-y-4 md:space-y-6">
-          <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:border-primary/50 transition-all cursor-pointer group">
-            <div class="flex items-center justify-between">
-              <h4 class="font-bold text-slate-900 dark:text-white">What is the average response time?</h4>
-              <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">expand_more</span>
-            </div>
-            <p class="mt-4 text-slate-600 dark:text-slate-400 hidden">We typically respond within 12-24 hours during business days.</p>
-          </div>
-
-          <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:border-primary/50 transition-all cursor-pointer group">
-            <div class="flex items-center justify-between">
-              <h4 class="font-bold text-slate-900 dark:text-white">Do you offer custom implementation or studio work?</h4>
-              <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">expand_more</span>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:border-primary/50 transition-all cursor-pointer group">
-            <div class="flex items-center justify-between">
-              <h4 class="font-bold text-slate-900 dark:text-white">Is technical support included with SaaSKit?</h4>
-              <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">expand_more</span>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:border-primary/50 transition-all cursor-pointer group">
-            <div class="flex items-center justify-between">
-              <h4 class="font-bold text-slate-900 dark:text-white">Can I upgrade my license later?</h4>
-              <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">expand_more</span>
+        <div class="space-y-4 md:space-y-6" data-faq-accordion>
+          <div class="contact-faq-item bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:border-primary/50 transition-all group" data-faq-item data-open="false">
+            <h3>
+              <button
+                id="contact-faq-trigger-0"
+                type="button"
+                class="flex w-full items-center justify-between gap-4 text-left"
+                data-faq-trigger
+                aria-expanded="false"
+                aria-controls="contact-faq-panel-0"
+              >
+                <span class="font-bold text-slate-900 dark:text-white">What is the average response time?</span>
+                <span class="material-symbols-outlined contact-faq-chevron text-slate-400 group-hover:text-primary transition-colors duration-200">expand_more</span>
+              </button>
+            </h3>
+            <div
+              id="contact-faq-panel-0"
+              class="mt-4 text-slate-600 dark:text-slate-400"
+              role="region"
+              aria-labelledby="contact-faq-trigger-0"
+              data-faq-panel
+              hidden
+            >
+              <p>Most messages get a reply within 1 business day. For deeper technical issues, expect 1–3 business days so we can reproduce the issue properly.</p>
             </div>
           </div>
 
-          <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:border-primary/50 transition-all cursor-pointer group">
-            <div class="flex items-center justify-between">
-              <h4 class="font-bold text-slate-900 dark:text-white">Where can I find documentation?</h4>
-              <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">expand_more</span>
+          <div class="contact-faq-item bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:border-primary/50 transition-all group" data-faq-item data-open="false">
+            <h3>
+              <button
+                id="contact-faq-trigger-1"
+                type="button"
+                class="flex w-full items-center justify-between gap-4 text-left"
+                data-faq-trigger
+                aria-expanded="false"
+                aria-controls="contact-faq-panel-1"
+              >
+                <span class="font-bold text-slate-900 dark:text-white">Do you offer custom implementation or studio work?</span>
+                <span class="material-symbols-outlined contact-faq-chevron text-slate-400 group-hover:text-primary transition-colors duration-200">expand_more</span>
+              </button>
+            </h3>
+            <div
+              id="contact-faq-panel-1"
+              class="mt-4 text-slate-600 dark:text-slate-400"
+              role="region"
+              aria-labelledby="contact-faq-trigger-1"
+              data-faq-panel
+              hidden
+            >
+              <p>Yes. ProChat Studio can handle setup, integrations, migrations, and custom features. Send a short brief and timeline and we’ll reply with clear next steps.</p>
+            </div>
+          </div>
+
+          <div class="contact-faq-item bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:border-primary/50 transition-all group" data-faq-item data-open="false">
+            <h3>
+              <button
+                id="contact-faq-trigger-2"
+                type="button"
+                class="flex w-full items-center justify-between gap-4 text-left"
+                data-faq-trigger
+                aria-expanded="false"
+                aria-controls="contact-faq-panel-2"
+              >
+                <span class="font-bold text-slate-900 dark:text-white">Is technical support included with SaaSKit?</span>
+                <span class="material-symbols-outlined contact-faq-chevron text-slate-400 group-hover:text-primary transition-colors duration-200">expand_more</span>
+              </button>
+            </h3>
+            <div
+              id="contact-faq-panel-2"
+              class="mt-4 text-slate-600 dark:text-slate-400"
+              role="region"
+              aria-labelledby="contact-faq-trigger-2"
+              data-faq-panel
+              hidden
+            >
+              <p>Yes—core setup and standard workflow support is included (install, env vars, deploy, common errors). Custom feature development is handled via Studio work.</p>
+            </div>
+          </div>
+
+          <div class="contact-faq-item bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:border-primary/50 transition-all group" data-faq-item data-open="false">
+            <h3>
+              <button
+                id="contact-faq-trigger-3"
+                type="button"
+                class="flex w-full items-center justify-between gap-4 text-left"
+                data-faq-trigger
+                aria-expanded="false"
+                aria-controls="contact-faq-panel-3"
+              >
+                <span class="font-bold text-slate-900 dark:text-white">Can I upgrade my license later?</span>
+                <span class="material-symbols-outlined contact-faq-chevron text-slate-400 group-hover:text-primary transition-colors duration-200">expand_more</span>
+              </button>
+            </h3>
+            <div
+              id="contact-faq-panel-3"
+              class="mt-4 text-slate-600 dark:text-slate-400"
+              role="region"
+              aria-labelledby="contact-faq-trigger-3"
+              data-faq-panel
+              hidden
+            >
+              <p>Yes. You can upgrade anytime. You keep your progress, and we’ll point you to the clean upgrade path.</p>
+            </div>
+          </div>
+
+          <div class="contact-faq-item bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:border-primary/50 transition-all group" data-faq-item data-open="false">
+            <h3>
+              <button
+                id="contact-faq-trigger-4"
+                type="button"
+                class="flex w-full items-center justify-between gap-4 text-left"
+                data-faq-trigger
+                aria-expanded="false"
+                aria-controls="contact-faq-panel-4"
+              >
+                <span class="font-bold text-slate-900 dark:text-white">Where can I find documentation?</span>
+                <span class="material-symbols-outlined contact-faq-chevron text-slate-400 group-hover:text-primary transition-colors duration-200">expand_more</span>
+              </button>
+            </h3>
+            <div
+              id="contact-faq-panel-4"
+              class="mt-4 text-slate-600 dark:text-slate-400"
+              role="region"
+              aria-labelledby="contact-faq-trigger-4"
+              data-faq-panel
+              hidden
+            >
+              <p>In the Documentation section on ProChat. It includes step-by-step setup, deployment guides, and troubleshooting pages.</p>
             </div>
           </div>
         </div>
@@ -170,7 +264,7 @@
           <div class="relative z-10 space-y-2">
             <h4 class="font-bold text-xl">Join the community</h4>
             <p class="text-white/80 text-sm">Get the latest updates on new ProKit releases.</p>
-            <a class="inline-flex mt-4 bg-white text-primary px-6 py-2 rounded-lg text-sm font-bold hover:bg-slate-100 transition-colors" href="/waiting-list">Join Now</a>
+            <a class="inline-flex mt-4 bg-white text-primary px-6 py-2 rounded-lg text-sm font-bold hover:bg-slate-100 transition-colors" href="https://discord.com/channels/1433752576779878583/1479029148654764106" target="_blank" rel="nofollow noopener noreferrer">Join Now</a>
           </div>
           <span class="material-symbols-outlined absolute -right-4 -bottom-4 text-white/10 text-9xl rotate-12 group-hover:scale-110 transition-transform duration-500">campaign</span>
         </div>
