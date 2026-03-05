@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/stitch/waitlist/fonts/material-symbols-outlined.ttf') format('truetype');
+}
+
+.stitch-waitlist-root {
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.stitch-waitlist-root h1,
+.stitch-waitlist-root h2,
+.stitch-waitlist-root h3,
+.stitch-waitlist-root h4 {
+  font-family: var(--font-brand), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.stitch-waitlist-root .mono-text {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.stitch-waitlist-root .material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.stitch-waitlist-root .waitlist-status {
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.stitch-waitlist-root .waitlist-status.waitlist-status-success {
+  background: rgb(236 253 245);
+  border-color: rgb(167 243 208);
+  color: rgb(6 95 70);
+}
+
+.stitch-waitlist-root .waitlist-status.waitlist-status-error {
+  background: rgb(254 242 242);
+  border-color: rgb(254 202 202);
+  color: rgb(153 27 27);
+}
