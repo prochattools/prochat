@@ -36,18 +36,20 @@ export async function generateMetadata({ params }: PageParams) {
   }
 
   return getSEOTags({
-    title: `${post.title} | ProChat Blog`,
-    description: post.description,
+    title: post.metaTitle || post.title,
+    description: post.metaDescription || post.description,
     keywords: post.keywords,
     canonicalUrlRelative: `/blog/${post.slug}`,
     openGraph: {
-      title: post.title,
-      description: post.description,
+      title: post.metaTitle || post.title,
+      description: post.metaDescription || post.description,
       images: [post.ogImage || '/og/prochat-home.png'],
       type: 'article',
     },
     twitter: {
       card: 'summary_large_image',
+      title: post.metaTitle || post.title,
+      description: post.metaDescription || post.description,
       images: [post.ogImage || '/og/prochat-home.png'],
     },
   })

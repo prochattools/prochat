@@ -14,7 +14,11 @@ type Frontmatter = {
   date: string
   updated?: string
   author?: string
-  cluster: BlogCluster
+  cluster?: BlogCluster
+  tags?: string[]
+  primaryKeyword?: string
+  metaTitle?: string
+  metaDescription?: string
   keywords?: string[]
   ogImage?: string
 }
@@ -50,9 +54,14 @@ function parseFrontmatter(rawFile: string) {
 
   const parsed = Object.fromEntries(frontmatterEntries)
 
-  const keywords = parsed.keywords
-    ? parsed.keywords.split('|').map(item => item.trim()).filter(Boolean)
-    : []
+  const parseList = (value?: string) =>
+    (value || '')
+      .split(/[|;,]/)
+      .map(item => item.trim())
+      .filter(Boolean)
+
+  const keywords = parseList(parsed.keywords)
+  const tags = parseList(parsed.tags)
 
   const frontmatter: Frontmatter = {
     title: parsed.title || '',
@@ -60,7 +69,13 @@ function parseFrontmatter(rawFile: string) {
     date: parsed.date || '',
     updated: parsed.updated || undefined,
     author: parsed.author || 'Steve',
-    cluster: (parsed.cluster || 'Founder Execution') as BlogCluster,
+    cluster: parsed.cluster
+      ? (parsed.cluster as BlogCluster)
+      : undefined,
+    tags,
+    primaryKeyword: parsed.primaryKeyword || '',
+    metaTitle: parsed.metaTitle || '',
+    metaDescription: parsed.metaDescription || '',
     ogImage: parsed.ogImage || '/og/prochat-home.png',
     keywords,
   }

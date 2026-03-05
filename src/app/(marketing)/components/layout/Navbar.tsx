@@ -9,6 +9,7 @@ import { ThemeToggle } from '../ui/ThemeToggle';
 const NAV_ITEMS = [
   { label: 'System', href: '/' },
   { label: 'Kits', href: '/kits' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/contact' },
 ];
 

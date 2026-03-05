@@ -4,9 +4,9 @@ import { BlogPost, getAllBlogPosts } from '@/libs/blog'
 import ContextualLinkCta from '@/components/ContextualLinkCta'
 
 export const metadata = getSEOTags({
-  title: 'ProChat Blog | Build SaaS with AI and Stable Next.js Infrastructure',
+  title: 'Blog | ProChat',
   description:
-    'Practical guides for non-technical founders: build SaaS with AI, ship on stable infrastructure, and execute from idea to paid users.',
+    'Founder-first guides on validating ideas, building with AI/no-code, and making reliable SaaS decisions.',
   keywords: [
     'build SaaS with AI',
     'Next.js SaaS starter',
@@ -15,9 +15,9 @@ export const metadata = getSEOTags({
     'launch SaaS fast',
   ],
   openGraph: {
-    title: 'ProChat Blog | Build SaaS with AI and Stable Next.js Infrastructure',
+    title: 'Blog | ProChat',
     description:
-      'Practical guides for non-technical founders: build SaaS with AI, ship on stable infrastructure, and execute from idea to paid users.',
+      'Founder-first guides on validating ideas, building with AI/no-code, and making reliable SaaS decisions.',
     images: ['/og/prochat-home.png'],
     type: 'website',
   },
@@ -57,9 +57,11 @@ export default async function BlogPage() {
             key={post.slug}
             className="flex h-full flex-col rounded-2xl border border-border bg-card p-6"
           >
-            <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-              {post.cluster}
-            </p>
+            {post.cluster && (
+              <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+                {post.cluster}
+              </p>
+            )}
             <h2 className="mt-3 font-brand text-xl font-bold text-foreground">
               <Link href={`/blog/${post.slug}`} className="hover:text-primary">
                 {post.title}
@@ -72,6 +74,18 @@ export default async function BlogPage() {
               <span>{formatDate(post.date)}</span>
               <span>{post.readingTimeMinutes} min read</span>
             </div>
+            {post.tags && post.tags.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {post.tags.map(tag => (
+                  <span
+                    key={`${post.slug}-${tag}`}
+                    className="rounded-full border border-border px-2 py-1 text-xs text-muted-foreground"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </article>
         ))}
       </section>
