@@ -126,6 +126,13 @@ For `/contact` submissions:
 - `SUPPORT_EMAIL` — internal inbox for contact notifications.
 - `CONTACT_TO_EMAIL` — optional legacy fallback inbox if `SUPPORT_EMAIL` is not set.
 
+For `/waitlist` submissions:
+
+- `WAITLIST_FROM_EMAIL` — optional sender override for waitlist emails; falls back to `CONTACT_FROM_EMAIL`.
+- `WAITLIST_ADMIN_EMAIL` — optional admin inbox override for waitlist notifications; falls back to `SUPPORT_EMAIL`.
+- `WAITLIST_PRODUCT_NAME` — product label used in subjects/body (default: `UXKit`).
+- `WAITLIST_AUDIENCE_TAG` — list tag used in admin notifications/logs (default: `uxkit-waitlist`).
+
 ### 3. Local environment and provisioning (dev)
 
 The dev workflow is one command:

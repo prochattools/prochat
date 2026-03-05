@@ -16,13 +16,30 @@
     </p>
     <!-- Inline Email Capture -->
     <div class="w-full max-w-lg mb-4">
+      <p
+        data-waitlist-status
+        class="waitlist-status hidden mb-3"
+        aria-live="polite"
+        aria-atomic="true"
+        tabindex="-1"
+      ></p>
       <form
         data-waitlist-form
         class="flex flex-col sm:flex-row gap-3 p-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none"
         noValidate
         method="post"
-        action="/api/waiting-list"
+        action="/api/waitlist"
       >
+        <div class="sr-only" aria-hidden="true">
+          <label for="waitlist-company-website">Leave this empty</label>
+          <input
+            id="waitlist-company-website"
+            name="company_website"
+            autoComplete="off"
+            type="text"
+            tabIndex="-1"
+          />
+        </div>
         <input
           id="waitlist-email"
           name="email"
@@ -42,11 +59,9 @@
         </button>
       </form>
       <p
-        data-waitlist-status
-        class="waitlist-status hidden mt-3"
-        aria-live="polite"
-        aria-atomic="true"
-        tabindex="-1"
+        id="waitlist-email-error"
+        class="waitlist-field-error hidden mt-2 text-left"
+        data-error-for="email"
       ></p>
     </div>
     <!-- Trust Line -->

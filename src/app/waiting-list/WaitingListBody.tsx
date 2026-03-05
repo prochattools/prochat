@@ -2,15 +2,18 @@
 
 import { useEffect, useRef } from 'react'
 
+import { waitlistSubmissionSchema } from '@/lib/waitlist/schema'
+
 import './stitch-waitlist.css'
 import { STITCH_WAITLIST_HTML } from './stitch-waitlist-html'
 
 type WaitlistApiResponse = {
   error?: string
+  message?: string
   success?: boolean
+  fieldErrors?: Record<string, string[] | undefined>
+  retryAfterSeconds?: number
 }
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function WaitingListBody() {
   const rootRef = useRef<HTMLElement>(null)
@@ -23,6 +26,7 @@ export default function WaitingListBody() {
     const emailInput = root.querySelector<HTMLInputElement>('input[name="email"]')
     const submitButton = root.querySelector<HTMLButtonElement>('button[data-waitlist-submit]')
     const submitLabel = root.querySelector<HTMLElement>('[data-waitlist-submit-label]')
+    const emailErrorEl = root.querySelector<HTMLElement>('[data-error-for="email"]')
     const statusEl = root.querySelector<HTMLElement>('[data-waitlist-status]')
 
     if (!form || !emailInput || !submitButton || !submitLabel || !statusEl) {
@@ -46,22 +50,59 @@ export default function WaitingListBody() {
       })
     }
 
+    const clearEmailError = () => {
+      emailInput.removeAttribute('aria-invalid')
+      emailInput.removeAttribute('aria-describedby')
+      if (emailErrorEl) {
+        emailErrorEl.textContent = ''
+        emailErrorEl.classList.add('hidden')
+      }
+    }
+
+    const setEmailError = (message: string) => {
+      const errorId = 'waitlist-email-error'
+      emailInput.setAttribute('aria-invalid', 'true')
+      emailInput.setAttribute('aria-describedby', errorId)
+
+      if (emailErrorEl) {
+        emailErrorEl.id = errorId
+        emailErrorEl.textContent = message
+        emailErrorEl.classList.remove('hidden')
+      }
+    }
+
     const setSubmitting = (isSubmitting: boolean) => {
       submitButton.disabled = isSubmitting
       submitLabel.textContent = isSubmitting ? 'Joining...' : 'Join Waitlist'
     }
 
     const handleInput = () => {
+      clearEmailError()
       setStatus('idle')
     }
 
     const handleSubmit = async (event: SubmitEvent) => {
       event.preventDefault()
+      clearEmailError()
       setStatus('idle')
 
-      const email = emailInput.value.trim().toLowerCase()
-      if (!EMAIL_REGEX.test(email)) {
-        setStatus('error', 'Please enter a valid email address.')
+      const formData = new FormData(form)
+      const payload = {
+        name: String(formData.get('name') || '').trim(),
+        role: String(formData.get('role') || '').trim(),
+        email: String(formData.get('email') || '').trim().toLowerCase(),
+        company_website: String(formData.get('company_website') || '').trim(),
+        honeypot: String(formData.get('honeypot') || '').trim(),
+      }
+
+      const validation = waitlistSubmissionSchema.safeParse(payload)
+      if (!validation.success) {
+        const emailMessage = validation.error.flatten().fieldErrors.email?.[0]
+        if (emailMessage) {
+          setEmailError(emailMessage)
+        } else {
+          setEmailError('Please enter a valid email address.')
+        }
         emailInput.focus()
         return
       }
@@ -69,22 +110,33 @@ export default function WaitingListBody() {
       setSubmitting(true)
 
       try {
-        const response = await fetch('/api/waiting-list', {
+        const response = await fetch('/api/waitlist', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify(validation.data),
         })
 
         const json = (await response.json().catch(() => null)) as WaitlistApiResponse | null
 
         if (!response.ok) {
-          throw new Error(json?.error || 'Unable to join the waitlist right now.')
+          const emailFieldMessage = json?.fieldErrors?.email?.[0]
+          if (emailFieldMessage) {
+            setEmailError(emailFieldMessage)
+            emailInput.focus()
+          }
+
+          const retrySuffix =
+            response.status === 429 && json?.retryAfterSeconds
+              ? ` Retry in ${json.retryAfterSeconds}s.`
+              : ''
+
+          throw new Error((json?.error || 'Unable to join the waitlist right now.') + retrySuffix)
         }
 
         form.reset()
-        setStatus('success', 'You are on the waitlist. We will email you updates.')
+        setStatus('success', json?.message || "You're on the UXKit waitlist.")
       } catch (error) {
         setStatus(
           'error',
