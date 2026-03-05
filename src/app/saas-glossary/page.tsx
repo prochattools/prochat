@@ -42,22 +42,23 @@ export default async function SaaSGlossaryPage() {
   }))
 
   return (
-    <main className="mx-auto max-w-7xl px-page pb-16 pt-28 md:pt-32">
-      <section className="mx-auto max-w-4xl">
-        <h1 className="font-brand text-4xl font-bold tracking-[-0.02em] text-foreground md:text-5xl">
+    <main className="mx-auto flex h-[calc(100dvh-4.5rem)] max-w-7xl flex-col overflow-hidden px-page pb-4 pt-24 md:pt-28">
+      <section className="mx-auto w-full max-w-4xl shrink-0">
+        <h1 className="font-brand text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
           SaaS Founder Glossary
         </h1>
-        <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-          A fast, founder-first dictionary for SaaS terms. Search instantly, scan
-          compact definitions, and open full explanations only when you need detail.
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
+          Fast SaaS definitions for non-technical founders. Search first, preview quickly,
+          then open the full explanation only when needed.
         </p>
-        <p className="mt-3 text-sm text-muted-foreground">
-          {terms.length} terms across validation, MVP, pricing, metrics, and
-          infrastructure.
+        <p className="mt-2 text-xs text-muted-foreground">
+          {terms.length} founder terms across validation, MVP, pricing, metrics, and infrastructure.
         </p>
       </section>
 
-      <GlossaryExplorer terms={explorerTerms} />
+      <div className="mt-4 min-h-0 flex-1">
+        <GlossaryExplorer terms={explorerTerms} />
+      </div>
     </main>
   )
 }

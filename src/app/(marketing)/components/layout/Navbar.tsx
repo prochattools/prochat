@@ -10,7 +10,6 @@ const NAV_ITEMS = [
   { label: 'System', href: '/' },
   { label: 'Kits', href: '/kits' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Glossary', href: '/saas-glossary' },
   { label: 'Contact', href: '/contact' },
 ];
 

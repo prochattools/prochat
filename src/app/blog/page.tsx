@@ -52,6 +52,28 @@ export default async function BlogPage() {
         </p>
       </section>
 
+      <section className="mx-auto mt-8 max-w-3xl">
+        <Panel tone="soft" padding="compact">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Resources
+          </p>
+          <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+            <Link
+              href="/saas-glossary"
+              className="font-medium text-foreground underline-offset-4 transition-colors hover:text-primary hover:underline"
+            >
+              SaaS Founder Glossary
+            </Link>
+            <Link
+              href="/blog/how-to-validate-a-saas-idea-without-coding"
+              className="text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+            >
+              SaaS Validation Guide
+            </Link>
+          </div>
+        </Panel>
+      </section>
+
       <section className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post: BlogPost) => (
           <Panel
