@@ -147,3 +147,25 @@ export function getBlogPostingSchema({
     url: articleUrl,
   }
 }
+
+export function getDefinedTermSchema({
+  name,
+  description,
+  slug,
+}: {
+  name: string
+  description: string
+  slug: string
+}) {
+  const siteUrl = getSiteUrl()
+  const termUrl = `${siteUrl}/glossary/${slug}`
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTerm',
+    name,
+    description,
+    url: termUrl,
+    inDefinedTermSet: `${siteUrl}/saas-glossary`,
+  }
+}
