@@ -232,8 +232,8 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
   }
 
   return (
-    <Panel tone="elevated" padding="none" className="mt-8 overflow-hidden">
-      <div className="pc-sticky-surface p-4 md:p-5">
+    <Panel tone="elevated" padding="none" className="relative isolate mt-8 overflow-hidden">
+      <div className="sticky top-[4.5rem] z-30 border-b border-border-subtle bg-surface/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-surface/85 md:p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="font-brand text-xl font-bold text-foreground">
@@ -279,7 +279,7 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
                 aria-label="Filter by stage"
                 value={selectedStage}
                 onChange={event => setSelectedStage(event.target.value)}
-                className="h-9 rounded-md border border-border-subtle bg-surface px-2.5 text-sm text-foreground shadow-surface focus:outline-none focus:ring-2 focus:ring-primary/40"
+                className="relative z-10 h-9 rounded-md border border-border-subtle bg-surface px-2.5 text-sm text-foreground shadow-surface focus:outline-none focus:ring-2 focus:ring-primary/40"
               >
                 {stages.map(stage => (
                   <option key={stage} value={stage}>
@@ -297,7 +297,7 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
                 aria-label="Sort terms"
                 value={sortMode}
                 onChange={event => setSortMode(event.target.value as SortMode)}
-                className="h-9 rounded-md border border-border-subtle bg-surface px-2.5 text-sm text-foreground shadow-surface focus:outline-none focus:ring-2 focus:ring-primary/40"
+                className="relative z-10 h-9 rounded-md border border-border-subtle bg-surface px-2.5 text-sm text-foreground shadow-surface focus:outline-none focus:ring-2 focus:ring-primary/40"
               >
                 <option value="az">A-Z</option>
                 <option value="priority">Most important</option>
@@ -339,62 +339,66 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
         </div>
       </div>
 
-      <div className="grid h-[calc(100vh-14.5rem)] min-h-[32rem] lg:grid-cols-[minmax(0,25rem)_minmax(0,1fr)]">
-        <section className="pc-rail flex min-h-0 flex-col border-b border-border-subtle lg:border-b-0">
+      <div className="relative z-0 grid min-h-[30rem] lg:h-[calc(100dvh-12.5rem)] lg:min-h-[32rem] lg:max-h-[46rem] lg:grid-cols-[minmax(0,25rem)_minmax(0,1fr)]">
+        <section className="flex min-h-0 min-w-0 flex-col border-b border-border-subtle bg-surface-soft/70 lg:border-b-0 lg:border-r lg:border-border-subtle">
           {showTopTerms && (
-            <div className="border-b border-border-subtle px-4 py-3">
+            <div className="shrink-0 border-b border-border-subtle px-4 py-3">
               <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Top terms for founders
               </p>
-              <div className="flex flex-wrap gap-2">
-                {topTerms.map(term => (
-                  <button
-                    key={term.slug}
-                    type="button"
-                    onClick={() => setSelectedSlug(term.slug)}
-                    className={cn(
-                      'rounded-full border px-2.5 py-1 text-xs transition-colors',
-                      selectedSlug === term.slug
-                        ? 'border-primary/30 bg-primary/10 text-primary shadow-surface'
-                        : 'border-border-subtle bg-surface text-muted-foreground hover:border-border hover:text-foreground',
-                    )}
-                  >
-                    {term.title}
-                  </button>
-                ))}
+              <div className="overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div className="flex min-w-max gap-2 pr-1">
+                  {topTerms.map(term => (
+                    <button
+                      key={term.slug}
+                      type="button"
+                      onClick={() => setSelectedSlug(term.slug)}
+                      className={cn(
+                        'rounded-full border px-2.5 py-1 text-xs transition-colors',
+                        selectedSlug === term.slug
+                          ? 'border-primary/30 bg-primary/10 text-primary shadow-surface'
+                          : 'border-border-subtle bg-surface text-muted-foreground hover:border-border hover:text-foreground',
+                      )}
+                    >
+                      {term.title}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           )}
 
           {showAlphaJump && quickJumpLetters.length > 0 && (
-            <div className="border-b border-border-subtle px-4 py-2">
-              <div className="flex flex-wrap gap-1">
-                {quickJumpLetters.map(letter => (
-                  <button
-                    key={letter}
-                    type="button"
-                    className="rounded px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-surface-soft hover:text-foreground"
-                    onClick={() => {
-                      const target = filteredTerms.find(
-                        term => startsWithLetter(term.title) === letter,
-                      )
-                      if (!target) return
-                      setSelectedSlug(target.slug)
-                      rowRefs.current[target.slug]?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center',
-                      })
-                    }}
-                  >
-                    {letter}
-                  </button>
-                ))}
+            <div className="shrink-0 border-b border-border-subtle px-4 py-2">
+              <div className="overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div className="flex min-w-max gap-1 pr-1">
+                  {quickJumpLetters.map(letter => (
+                    <button
+                      key={letter}
+                      type="button"
+                      className="rounded px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-surface-soft hover:text-foreground"
+                      onClick={() => {
+                        const target = filteredTerms.find(
+                          term => startsWithLetter(term.title) === letter,
+                        )
+                        if (!target) return
+                        setSelectedSlug(target.slug)
+                        rowRefs.current[target.slug]?.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'center',
+                        })
+                      }}
+                    >
+                      {letter}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           )}
 
           <div
-            className="min-h-0 flex-1 overflow-y-auto p-2.5"
+            className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-2.5"
             role="listbox"
             aria-label="Glossary terms"
             tabIndex={0}
@@ -421,7 +425,7 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
                       )}
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <p className="font-brand text-[15px] font-semibold text-foreground">
+                        <p className="min-w-0 flex-1 truncate font-brand text-[15px] font-semibold text-foreground">
                           {term.title}
                         </p>
                         <span className="text-[11px] text-tertiary">
@@ -448,7 +452,7 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
           </div>
         </section>
 
-        <section className="hidden min-h-0 flex-col bg-surface-soft/35 lg:flex">
+        <section className="hidden min-h-0 min-w-0 flex-col bg-surface-soft/35 lg:flex lg:overflow-hidden">
           {selectedTerm ? (
             <div className="min-h-0 flex-1 overflow-y-auto p-5 md:p-6">
               <Panel tone="elevated" padding="default">
