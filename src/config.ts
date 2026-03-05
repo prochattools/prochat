@@ -17,8 +17,8 @@ const config: ConfigProps = {
 	// REQUIRED: a short description of your app for SEO tags (can be overwritten)
 	appDescription:
 		'ProChat is built on ProKit—our internal Next.js starter for shipping SaaS, AI tools, or any other web app fast.',
-	// REQUIRED (no https://, not trialing slash at the end, just the naked domain)
-	domainName: 'prokit.prochat.tools',
+	// REQUIRED (no https://, no trailing slash; just the naked canonical domain)
+	domainName: 'prochat.tools',
 	stripe: {
 		// Create multiple products in your Stripe dashboard, then add them here. You can add as many plans as you want, just make sure to add the priceId
 		products: [

@@ -1,33 +1,43 @@
 import { MetadataRoute } from 'next'
+import config from '@/config'
+
+const STATIC_ROUTES: Array<{
+  path: string
+  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
+  priority: number
+}> = [
+  { path: '/', changeFrequency: 'weekly', priority: 1 },
+  { path: '/kits', changeFrequency: 'weekly', priority: 0.95 },
+  { path: '/kits/saaskit', changeFrequency: 'weekly', priority: 0.9 },
+  { path: '/kits/prokit', changeFrequency: 'weekly', priority: 0.9 },
+  { path: '/proof', changeFrequency: 'monthly', priority: 0.85 },
+  { path: '/studio', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/contact', changeFrequency: 'monthly', priority: 0.75 },
+  { path: '/waiting-list', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/blog', changeFrequency: 'weekly', priority: 0.7 },
+  { path: '/starting-point', changeFrequency: 'monthly', priority: 0.65 },
+  { path: '/system/events', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/terms', changeFrequency: 'yearly', priority: 0.5 },
+  { path: '/privacy', changeFrequency: 'yearly', priority: 0.5 },
+]
+
+function getBaseUrl() {
+  const publicUrl = process.env.NEXT_PUBLIC_APP_URL?.trim()
+  if (publicUrl) {
+    return publicUrl.replace(/\/+$/, '')
+  }
+
+  return `https://${config.domainName}`
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const currentUrl = process.env.NEXT_PUBLIC_APP_URL || ''
+  const baseUrl = getBaseUrl()
   const now = new Date()
 
-  return [
-    {
-      url: currentUrl,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 1,
-    },
-    {
-      url: `${currentUrl}/privacy-policy`,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.8,
-    },
-    {
-      url: `${currentUrl}/tos`,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.7,
-    },
-    {
-      url: `${currentUrl}/blog`,
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.6,
-    },
-  ]
+  return STATIC_ROUTES.map(route => ({
+    url: `${baseUrl}${route.path === '/' ? '' : route.path}`,
+    lastModified: now,
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
+  }))
 }

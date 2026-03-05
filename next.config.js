@@ -33,6 +33,16 @@ const nextConfig = {
 				destination: '/kits/saaskit/finish',
 				permanent: true,
 			},
+			{
+				source: '/tos',
+				destination: '/terms',
+				permanent: true,
+			},
+			{
+				source: '/privacy-policy',
+				destination: '/privacy',
+				permanent: true,
+			},
 		]
 	},
 	images: {

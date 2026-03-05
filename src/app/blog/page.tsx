@@ -6,8 +6,7 @@ export const metadata = getSEOTags({
 	title: `${config.appName} Blog | Stripe Chargeback Protection`,
 	description:
 		'Learn how to prevent chargebacks, how to accept payments online, and keep your Stripe account in good standing',
-	canonicalUrlRelative:
-		'/blog/?populate[author][populate]=*&populate=blog_image',
+	canonicalUrlRelative: '/blog',
 })
 
 export default async function Blog() {

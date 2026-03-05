@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
@@ -7,6 +9,13 @@ import ThankYouPopup from '@/components/ThankyouPopUp'
 import { authenticateRequest, isClerkEnabled } from '@/libs/safeClerkServer'
 import { redirect } from 'next/navigation'
 import { getSubscriptionByUserId } from '../api/actions'
+
+export const metadata: Metadata = {
+	robots: {
+		index: false,
+		follow: false,
+	},
+}
 
 export default async function Dashboard() {
 	const { userId } = await authenticateRequest()

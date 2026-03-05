@@ -6,12 +6,14 @@ import { getSEOTags } from '@/libs/seo'
 export async function generateMetadata({
 	params,
 }: {
-	params: { slug: string }
+	params: { articleId: string }
 }) {
+	const articleId = params.articleId
+
 	return getSEOTags({
 		title: `${config.appName} Blog`,
 		description: config.appDescription,
-		canonicalUrlRelative: `/blog/${params.slug}`,
+		canonicalUrlRelative: articleId ? `/blog/${articleId}` : '/blog',
 	})
 }
 

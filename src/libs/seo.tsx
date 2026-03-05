@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import config from "@/config";
-import {AbsoluteString, DefaultTemplateString} from "next/dist/lib/metadata/types/metadata-types";
 
 // These are all the SEO tags you can add to your pages.
 // It prefills data with default title/description/OG, etc.. and you can cusotmize it for each page.
@@ -19,6 +18,12 @@ export const getSEOTags = ({
   canonicalUrlRelative?: string;
   extraTags?: Record<string, any>;
 } = {}) => {
+  const siteUrl =
+    process.env.NEXT_PUBLIC_APP_URL?.trim().replace(/\/+$/, "") ||
+    (process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : `https://${config.domainName}`);
+
   return {
     // up to 50 characters (what does your app do for the user?) > your main should be here
     title: title || config.appName,
@@ -33,15 +38,11 @@ export const getSEOTags = ({
       apple: "/favicon.ico",
     },
     // set a base URL prefix for other fields that require a fully qualified URL (.e.g og:image: og:image: 'https://yourdomain.com/share.png' => '/share.png')
-    metadataBase: new URL(
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000/"
-        : `https://${config.domainName}/`
-    ),
+    metadataBase: new URL(`${siteUrl}/`),
     openGraph: {
       title: openGraph?.title || config.appName,
       description: openGraph?.description || config.appDescription,
-      url: openGraph?.url || `https://${config.domainName}/`,
+      url: openGraph?.url || `${siteUrl}/`,
       siteName: (openGraph?.title || config.appName) as string,
       // If you add an opengraph-image.(jpg|jpeg|png|gif) image to the /app folder, you don't need the code below
       // images: [
@@ -80,6 +81,12 @@ export const getSEOTags = ({
 // See https://prokit.prochat.tools/docs/features/seo
 
 export const renderSchemaTags = () => {
+  const siteUrl =
+    process.env.NEXT_PUBLIC_APP_URL?.trim().replace(/\/+$/, "") ||
+    (process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : `https://${config.domainName}`);
+
   return (
     <script
       type="application/ld+json"
@@ -89,8 +96,8 @@ export const renderSchemaTags = () => {
           "@type": "SoftwareApplication",
           name: config.appName,
           description: config.appDescription,
-          image: `https://${config.domainName}/favicon.ico`,
-          url: `https://${config.domainName}/`,
+          image: `${siteUrl}/favicon.ico`,
+          url: `${siteUrl}/`,
           author: {
             "@type": "Person",
             name: "Steve Westhoek",
