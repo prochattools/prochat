@@ -100,7 +100,7 @@ export default function App() {
               </Link>
               <Link
                 href="/kits/saaskit"
-                className="inline-flex items-center justify-center rounded-xl border border-border bg-card px-8 py-4 font-brand text-lg font-bold text-foreground shadow-sm transition-all hover:bg-muted"
+                className="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface px-8 py-4 font-brand text-lg font-bold text-foreground shadow-surface transition-all hover:border-border-strong hover:bg-surface-soft"
               >
                 Start with SaaSKit
               </Link>
@@ -185,7 +185,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="z-30 w-80 rounded-xl border border-primary/20 bg-card p-8 shadow-[0_20px_25px_-5px_rgba(2,6,23,0.08),0_10px_10px_-5px_rgba(2,6,23,0.03)]">
+            <div className="z-30 w-80 rounded-xl border border-primary/20 bg-surface-elevated p-8 shadow-elevated">
               <div className="mb-6 flex items-center gap-4 border-b border-border pb-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-primary/20 bg-primary/5 text-primary">
                   <ShieldCheck className="h-6 w-6" />
@@ -225,7 +225,7 @@ export default function App() {
         </div>
       </section>
 
-      <section className="relative border-y border-border bg-card py-28">
+      <section className="relative border-y border-border-subtle bg-surface-soft/70 py-28">
         <div className="mx-auto max-w-4xl px-page text-center">
           <h2 className="mb-8 font-brand text-4xl font-bold tracking-[-0.03em] text-foreground md:text-5xl">
             AI Removed the Coding Barrier.
@@ -261,7 +261,7 @@ export default function App() {
             </p>
           </div>
 
-          <div className="relative rounded-2xl border border-border bg-card p-10 shadow-sm">
+          <div className="relative rounded-2xl border border-border-subtle bg-surface p-10 shadow-surface">
             <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/10 blur-3xl" />
             <div className="flex flex-col gap-6">
               <div className="flex items-center gap-4 rounded-lg border border-border bg-muted/40 p-4 opacity-70">
@@ -274,7 +274,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="z-10 flex scale-[1.03] items-center gap-4 rounded-xl border border-primary/30 bg-card p-5 shadow-sm">
+              <div className="z-10 flex scale-[1.03] items-center gap-4 rounded-xl border border-primary/30 bg-surface-elevated p-5 shadow-elevated">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                   <ShieldCheck className="h-5 w-5" />
                 </div>
@@ -299,7 +299,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="systems" className="border-y border-border bg-card py-28">
+      <section id="systems" className="border-y border-border-subtle bg-surface-soft/70 py-28">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mb-20 text-center">
             <h2 className="mb-4 font-brand text-4xl font-bold tracking-[-0.03em] text-foreground">
@@ -320,8 +320,8 @@ export default function App() {
                   className={[
                     'flex h-full flex-col rounded-xl border p-8 transition-all duration-300',
                     card.primary
-                      ? 'border-primary/50 bg-primary text-primary-foreground shadow-xl hover:-translate-y-1 hover:shadow-2xl'
-                      : 'border-border bg-background hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg',
+                      ? 'border-primary/50 bg-primary text-primary-foreground shadow-elevated hover:-translate-y-1 hover:shadow-elevated'
+                      : 'border-border-subtle bg-surface shadow-surface hover:-translate-y-1 hover:border-border-strong hover:shadow-elevated',
                     isMuted ? 'opacity-80' : '',
                   ].join(' ')}
                 >
@@ -387,8 +387,8 @@ export default function App() {
             <h2 className="font-brand text-3xl font-bold tracking-[-0.03em] text-foreground">Why Structure Wins</h2>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-lg md:grid md:grid-cols-2">
-            <div className="border-b border-border bg-muted/30 p-10 md:border-b-0 md:border-r">
+          <div className="overflow-hidden rounded-2xl border border-border-subtle bg-surface shadow-elevated md:grid md:grid-cols-2">
+            <div className="border-b border-border-subtle bg-surface-soft/75 p-10 md:border-b-0 md:border-r">
               <h3 className="mb-8 flex items-center gap-2 font-brand text-xl font-bold text-muted-foreground">
                 Without Structure
               </h3>
@@ -402,7 +402,7 @@ export default function App() {
               </ul>
             </div>
 
-            <div className="relative bg-background p-10">
+            <div className="relative bg-surface-elevated p-10">
               <div className="pointer-events-none absolute right-0 top-0 h-28 w-28 rounded-bl-full bg-primary/10" />
               <h3 className="mb-8 flex items-center gap-2 font-brand text-xl font-bold text-primary">With Structure</h3>
               <ul className="space-y-6">
@@ -418,7 +418,7 @@ export default function App() {
         </div>
       </section>
 
-      <section className="border-t border-border bg-card py-24">
+      <section className="border-t border-border-subtle bg-surface/85 py-24">
         <div className="mx-auto max-w-5xl px-page text-center">
           <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
             <ShieldCheck className="h-5 w-5" />
@@ -429,19 +429,19 @@ export default function App() {
             deployment walkthroughs. You see what you ship. You understand what you run.
           </p>
           <div className="grid gap-8 text-left md:grid-cols-3">
-            <div className="rounded-lg border border-border bg-background/60 p-8 transition-colors hover:bg-muted/40">
+            <div className="rounded-lg border border-border-subtle bg-surface p-8 shadow-surface transition-colors hover:border-border-strong hover:bg-surface-soft">
               <h4 className="font-brand font-bold text-foreground">Detailed Docs</h4>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 Step-by-step setup guides that remove ambiguity.
               </p>
             </div>
-            <div className="rounded-lg border border-border bg-background/60 p-8 transition-colors hover:bg-muted/40">
+            <div className="rounded-lg border border-border-subtle bg-surface p-8 shadow-surface transition-colors hover:border-border-strong hover:bg-surface-soft">
               <h4 className="font-brand font-bold text-foreground">Architecture Maps</h4>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 Visual database schemas to understand relationships.
               </p>
             </div>
-            <div className="rounded-lg border border-border bg-background/60 p-8 transition-colors hover:bg-muted/40">
+            <div className="rounded-lg border border-border-subtle bg-surface p-8 shadow-surface transition-colors hover:border-border-strong hover:bg-surface-soft">
               <h4 className="font-brand font-bold text-foreground">Walkthroughs</h4>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 Video deployment guides for every major component.
@@ -458,7 +458,7 @@ export default function App() {
         />
         <div className="relative z-10 mx-auto max-w-3xl px-page text-center">
           <h2 className="mb-8 font-brand text-4xl font-bold tracking-[-0.03em] md:text-5xl">You Already Have the Idea.</h2>
-          <p className="mb-12 text-xl font-light leading-relaxed text-slate-300">
+          <p className="mb-12 text-xl font-light leading-relaxed text-white/75">
             AI removed the coding barrier. Now remove the structural risk. Less doubt. More execution.
           </p>
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
@@ -470,7 +470,7 @@ export default function App() {
             </Link>
             <Link
               href="/kits"
-              className="w-full rounded-lg border border-slate-600 px-8 py-5 font-brand text-lg font-bold text-slate-300 transition-colors hover:border-slate-400 hover:text-white sm:w-auto"
+              className="w-full rounded-lg border border-white/30 px-8 py-5 font-brand text-lg font-bold text-white/80 transition-colors hover:border-white/60 hover:text-white sm:w-auto"
             >
               Explore All Systems
             </Link>

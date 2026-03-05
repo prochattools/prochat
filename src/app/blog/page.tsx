@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getSEOTags } from '@/libs/seo'
 import { BlogPost, getAllBlogPosts } from '@/libs/blog'
 import ContextualLinkCta from '@/components/ContextualLinkCta'
+import { Panel } from '@/components/ui/surface'
 
 export const metadata = getSEOTags({
   title: 'Blog | ProChat',
@@ -53,9 +54,12 @@ export default async function BlogPage() {
 
       <section className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post: BlogPost) => (
-          <article
+          <Panel
             key={post.slug}
-            className="flex h-full flex-col rounded-2xl border border-border bg-card p-6"
+            tone="default"
+            padding="compact"
+            interactive
+            className="flex h-full flex-col"
           >
             {post.cluster && (
               <p className="text-xs font-semibold uppercase tracking-wider text-primary">
@@ -79,14 +83,14 @@ export default async function BlogPage() {
                 {post.tags.map(tag => (
                   <span
                     key={`${post.slug}-${tag}`}
-                    className="rounded-full border border-border px-2 py-1 text-xs text-muted-foreground"
+                    className="rounded-full border border-border-subtle bg-surface-soft px-2 py-1 text-xs text-tertiary"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
             )}
-          </article>
+          </Panel>
         ))}
       </section>
 

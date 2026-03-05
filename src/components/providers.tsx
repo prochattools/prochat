@@ -16,7 +16,7 @@ export function Providers({ children }: { children: ReactNode }) {
         enableSystem={false}
         disableTransitionOnChange
       >
-        <div className="min-h-screen bg-gray-50 text-slate-900 dark:bg-[#010814] dark:text-slate-100">
+        <div className="min-h-screen bg-background text-foreground">
           {children}
         </div>
       </ThemeProvider>
@@ -25,7 +25,7 @@ export function Providers({ children }: { children: ReactNode }) {
         position="bottom-center"
         toastOptions={{
           duration: 3000,
-          className: "text-sm dark:bg-black dark:text-white",
+          className: "border border-border-subtle bg-surface-elevated text-sm text-foreground shadow-elevated",
         }}
       />
       

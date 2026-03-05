@@ -2,6 +2,7 @@
 
 import { Scaffolding, BlueprintCard } from '@/app/(marketing)/components/ui/Scaffolding'
 import { Reveal } from '@/app/(marketing)/components/ui/Reveal'
+import { Panel, Section } from '@/components/ui/surface'
 
 const EVENTS = [
 	{
@@ -33,48 +34,52 @@ const EVENTS = [
 
 export default function EventTaxonomyContent() {
 	return (
-		<main className="min-h-screen bg-gray-50 text-slate-900 font-sans selection:bg-[#2563EB]/20 dark:bg-[#0B111B] dark:text-[#E6EAF2] dark:selection:bg-[#1D4ED8]/40 overflow-x-hidden relative">
+		<main className="relative min-h-screen overflow-x-hidden bg-background font-sans text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
 			<div className="fixed inset-0 pointer-events-none z-0">
 				<Scaffolding opacity={0.6} />
 			</div>
 			<div className="relative z-10 min-h-screen">
-				<section className="py-24 bg-white border-b border-slate-100 dark:bg-[#0B111B] dark:border-[#1E242D]">
-					<div className="max-w-5xl mx-auto px-page text-center">
-						<Reveal>
-							<h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
-								Event taxonomy
-							</h1>
-						</Reveal>
-						<Reveal delay={0.2}>
-							<p className="text-slate-500 font-light mt-4 dark:text-slate-400">
-								The analytics events used across ProChat and the kits.
-							</p>
-						</Reveal>
-					</div>
-				</section>
-
-				<section className="py-24 bg-slate-50/50 border-y border-slate-200 dark:bg-[#0F1626] dark:border-[#1E242D]">
-					<div className="max-w-6xl mx-auto px-page">
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-							{EVENTS.map((event) => (
-								<BlueprintCard key={event.name} className="p-6">
-									<div className="space-y-4">
-										<div className="text-xs font-bold text-slate-400 uppercase tracking-widest dark:text-slate-500">
-											{event.name}
-										</div>
-										<p className="text-slate-600 font-light dark:text-slate-300">
-											{event.description}
-										</p>
-										<pre className="text-xs text-slate-500 bg-white/70 border border-slate-200 rounded-lg p-3 dark:text-slate-300 dark:bg-[#0B111B] dark:border-[#1E242D] whitespace-pre-wrap">
-											{event.payload}
-										</pre>
-									</div>
-								</BlueprintCard>
-							))}
+				<Section tone="surface" spacing="default">
+						<div className="max-w-5xl mx-auto px-page text-center">
+							<Reveal>
+								<h1 className="text-4xl md:text-5xl font-bold text-foreground">
+									Event taxonomy
+								</h1>
+							</Reveal>
+							<Reveal delay={0.2}>
+								<p className="mt-4 font-light text-muted-foreground">
+									The analytics events used across ProChat and the kits.
+								</p>
+							</Reveal>
 						</div>
-					</div>
-				</section>
-			</div>
-		</main>
+					</Section>
+
+					<Section tone="muted" spacing="default">
+						<div className="max-w-6xl mx-auto px-page">
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+								{EVENTS.map((event) => (
+									<BlueprintCard key={event.name} className="p-6">
+										<div className="space-y-4">
+											<div className="text-xs font-bold uppercase tracking-widest text-tertiary">
+												{event.name}
+											</div>
+											<p className="font-light text-muted-foreground">
+												{event.description}
+											</p>
+											<Panel
+												tone="soft"
+												padding="compact"
+												className="rounded-lg whitespace-pre-wrap font-mono text-xs text-tertiary"
+											>
+												{event.payload}
+											</Panel>
+										</div>
+									</BlueprintCard>
+								))}
+							</div>
+						</div>
+					</Section>
+				</div>
+			</main>
 	)
 }

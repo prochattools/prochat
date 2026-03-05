@@ -302,7 +302,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
             </div>
 
             <div id="solution" className="relative mt-12 md:mt-0">
-              <div className="relative overflow-hidden rounded-2xl bg-blue-900 p-8 text-primary-foreground shadow-xl transition-transform duration-500 md:p-12">
+              <div className="relative overflow-hidden rounded-2xl bg-blue-900 p-8 text-primary-foreground shadow-elevated transition-transform duration-500 md:p-12">
                 <div
                   aria-hidden
                   className="absolute inset-0 opacity-20 dark:opacity-15"
@@ -516,7 +516,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
             you are buying reduced uncertainty.
           </p>
 
-          <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border bg-card text-foreground shadow-xl transition-transform duration-300 hover:-translate-y-1">
+          <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border-subtle bg-surface text-foreground shadow-elevated transition-transform duration-300 hover:-translate-y-1">
             <div className="relative border-b border-border p-8">
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-secondary via-primary to-secondary" />
               <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
@@ -569,7 +569,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
 
       <section id="breakdown" className="scroll-mt-24 border-t border-border bg-[rgb(var(--section-bg-rgb))] py-24">
         <div className="mx-auto max-w-6xl px-page">
-          <details className="group overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow open:shadow-xl">
+          <details className="group overflow-hidden rounded-2xl border border-border-subtle bg-surface shadow-surface transition-shadow open:shadow-elevated">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-left [&::-webkit-details-marker]:hidden md:px-8">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary" />
@@ -664,7 +664,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
             <a
               href="#pricing"
-              className="font-brand w-full rounded-lg bg-black px-8 py-4 text-lg font-bold tracking-[-0.01em] text-white shadow-sm transition-colors hover:bg-neutral-900 sm:w-auto"
+              className="font-brand w-full rounded-lg bg-foreground px-8 py-4 text-lg font-bold tracking-[-0.01em] text-background shadow-surface transition-colors hover:bg-foreground/90 sm:w-auto"
             >
               Build on Stable Ground
             </a>

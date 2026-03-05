@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Panel } from '@/components/ui/surface'
 
 type CtaLink = {
   href: string
@@ -19,10 +20,7 @@ export default function ContextualLinkCta({
   className?: string
 }) {
   return (
-    <aside
-      className={`rounded-2xl border border-border bg-card p-6 md:p-8 ${className}`.trim()}
-      aria-label={title}
-    >
+    <Panel tone="elevated" padding="compact" className={className} aria-label={title}>
       <h2 className="font-brand text-2xl font-bold text-foreground">{title}</h2>
       <p className="mt-2 text-muted-foreground">{description}</p>
       <div className="mt-5 flex flex-wrap gap-3">
@@ -36,6 +34,6 @@ export default function ContextualLinkCta({
           </Link>
         ))}
       </div>
-    </aside>
+    </Panel>
   )
 }

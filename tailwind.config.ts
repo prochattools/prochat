@@ -25,6 +25,11 @@ const config = {
       maxWidth: {
         reading: "var(--pc-reading-max)",
       },
+      boxShadow: {
+        surface: "var(--pc-shadow-surface)",
+        elevated: "var(--pc-shadow-elevated)",
+        inset: "var(--pc-shadow-inset)",
+      },
       fontFamily: {
         sans: [
           "var(--font-sans)",
@@ -87,9 +92,14 @@ const config = {
         },
         background: "rgb(var(--pc-bg-rgb) / <alpha-value>)",
         surface: "rgb(var(--pc-surface-rgb) / <alpha-value>)",
+        "surface-soft": "rgb(var(--pc-surface-soft-rgb) / <alpha-value>)",
+        "surface-elevated": "rgb(var(--pc-surface-elevated-rgb) / <alpha-value>)",
         text: "rgb(var(--pc-text-rgb) / <alpha-value>)",
         muted: "rgb(var(--pc-muted-rgb) / <alpha-value>)",
+        "muted-soft": "rgb(var(--pc-muted-foreground-soft-rgb) / <alpha-value>)",
         border: "rgb(var(--pc-border-rgb) / <alpha-value>)",
+        "border-subtle": "rgb(var(--pc-border-subtle-rgb) / <alpha-value>)",
+        "border-strong": "rgb(var(--pc-border-strong-rgb) / <alpha-value>)",
         primary: "rgb(var(--pc-blue-600-rgb) / <alpha-value>)",
         secondary: "rgb(var(--pc-blue-500-rgb) / <alpha-value>)",
         "primary-foreground": "rgb(var(--pc-primary-foreground-rgb) / <alpha-value>)",

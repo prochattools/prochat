@@ -129,7 +129,7 @@ export default async function BlogArticlePage({ params }: PageParams) {
               <Link
                 key={related.slug}
                 href={`/blog/${related.slug}`}
-                className="rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/50"
+                className="rounded-2xl border border-border-subtle bg-surface p-4 shadow-surface transition-all hover:border-border-strong hover:shadow-elevated"
               >
                 <p className="text-xs font-semibold uppercase tracking-wider text-primary">
                   {related.cluster}
