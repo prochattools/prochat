@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
+import ContextualLinkCta from '@/components/ContextualLinkCta'
 import { handleCheckoutProcess } from '@/helpers/checkout'
 import { useUser } from '@/libs/safeClerk'
 import { trackEvent } from '@/utils/analytics'
@@ -140,10 +141,10 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           </div>
 
           <h1 className="mb-8 text-5xl font-bold leading-[1.08] tracking-[-0.02em] text-foreground md:text-7xl">
-            Launch your SaaS on
+            Next.js SaaS Boilerplate for AI Builders.
             <br />
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              stable ground.
+              Launch on stable ground.
             </span>
           </h1>
 
@@ -156,8 +157,11 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
               </strong>
             </p>
             <p className="text-base text-muted-foreground">
-              SaaSKit gives you a production-ready base: authentication, payments, database, email,
-              and deployment already connected and verified.
+              SaaSKit helps you <strong>build SaaS with AI</strong> and
+              <strong> launch SaaS fast</strong> with authentication, Stripe billing, Supabase data,
+              email, and deployment already connected and verified for the
+              <strong> non-technical founder SaaS</strong> path. It is a
+              <strong> SaaS starter with Stripe and Supabase</strong> already wired.
             </p>
             <div className="flex flex-col items-center justify-center py-2">
               <div className="flex min-h-11 flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-md border border-border bg-card/90 px-4 py-2 font-mono text-sm leading-none text-foreground shadow-sm backdrop-blur-sm sm:flex-nowrap">
@@ -640,6 +644,15 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
 
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-6">
+          <ContextualLinkCta
+            className="mb-10 text-left"
+            title="Keep Executing After Setup"
+            description="Go deeper with practical guides and get notified when UXKit early access opens."
+            links={[
+              { href: '/blog', label: 'Read Build Guides' },
+              { href: '/kits/uxkit-waitlist', label: 'Join UXKit Waitlist' },
+            ]}
+          />
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
             You already have the idea.
           </h2>

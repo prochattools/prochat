@@ -5,8 +5,12 @@ import WaitingListBody from "./WaitingListBody";
 export const metadata = getSEOTags({
   title: `${config.appName} UXKit Waiting List`,
   description:
-    'Join the UXKit waitlist for early access, launch updates, and founding pricing.',
-  canonicalUrlRelative: '/waiting-list',
+    'Legacy waitlist route. Visit the canonical UXKit waitlist page.',
+  canonicalUrlRelative: '/kits/uxkit-waitlist',
+  robots: {
+    index: false,
+    follow: false,
+  },
 });
 
 export default function WaitingList() {

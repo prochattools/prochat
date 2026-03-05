@@ -2,7 +2,9 @@
 import { Providers } from '@/components/providers'
 import AppShell from '@/components/AppShell'
 import { Scaffolding } from '@/components/ui/Scaffolding'
+import StructuredData from '@/components/StructuredData'
 import { getSEOTags } from '@/libs/seo'
+import { getOrganizationSchema, getWebsiteSchema } from '@/libs/structured-data'
 import { SafeClerkProvider } from '@/libs/safeClerk'
 import { Golos_Text, JetBrains_Mono } from 'next/font/google'
 import { Viewport } from 'next'
@@ -67,6 +69,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <head>
         <style dangerouslySetInnerHTML={{ __html: BASE_STYLE_OVERRIDES }} />
+        <StructuredData id="schema-organization" data={getOrganizationSchema()} />
+        <StructuredData id="schema-website" data={getWebsiteSchema()} />
       </head>
       <body className="font-body bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
         <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">

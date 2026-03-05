@@ -1,68 +1,90 @@
-import config from '@/config'
+import Link from 'next/link'
 import { getSEOTags } from '@/libs/seo'
-import BlogListingNew from './_assets/components/BlogListingNew'
+import { BlogPost, getAllBlogPosts } from '@/libs/blog'
+import ContextualLinkCta from '@/components/ContextualLinkCta'
 
 export const metadata = getSEOTags({
-	title: `${config.appName} Blog | Stripe Chargeback Protection`,
-	description:
-		'Learn how to prevent chargebacks, how to accept payments online, and keep your Stripe account in good standing',
-	canonicalUrlRelative: '/blog',
+  title: 'ProChat Blog | Build SaaS with AI and Stable Next.js Infrastructure',
+  description:
+    'Practical guides for non-technical founders: build SaaS with AI, ship on stable infrastructure, and execute from idea to paid users.',
+  keywords: [
+    'build SaaS with AI',
+    'Next.js SaaS starter',
+    'SaaS boilerplate',
+    'non-technical founder SaaS',
+    'launch SaaS fast',
+  ],
+  openGraph: {
+    title: 'ProChat Blog | Build SaaS with AI and Stable Next.js Infrastructure',
+    description:
+      'Practical guides for non-technical founders: build SaaS with AI, ship on stable infrastructure, and execute from idea to paid users.',
+    images: ['/og/prochat-home.png'],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og/prochat-home.png'],
+  },
+  canonicalUrlRelative: '/blog',
 })
 
-export default async function Blog() {
-	const articles: any[] = []
+function formatDate(dateIso: string) {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(dateIso))
+}
 
-	return (
-		<>
-			{/* <section className='text-center max-w-xl mx-auto mt-24 mb-24 md:mb-32'>
-				<h1 className='font-extrabold text-3xl lg:text-5xl tracking-tight mb-6 text-white'>
-					The {config.appName} Blog
-				</h1>
+export default async function BlogPage() {
+  const posts = await getAllBlogPosts()
 
-				<p className='text-lg opacity-80 leading-relaxed text-white'>
-					Learn how to ship your startup in days, not weeks. And get the latest
-					updates about ProKit.
-				</p>
-			</section>
+  return (
+    <main className="mx-auto max-w-6xl px-6 pb-20 pt-28 md:pt-32">
+      <section className="mx-auto max-w-3xl text-center">
+        <h1 className="font-brand text-4xl font-bold tracking-[-0.02em] text-foreground md:text-5xl">
+          Build SaaS with AI. Keep the system stable.
+        </h1>
+        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+          Long-tail guides for non-technical founders shipping with Next.js,
+          Stripe, Supabase, and production-safe execution patterns.
+        </p>
+      </section>
 
-			<section className='grid lg:grid-cols-2 mb-24 md:mb-32 gap-8'>
-				{articles &&
-					!!articles.length &&
-					articles?.map((article, i: number) => (
-						<CardArticle
-							article={article}
-							key={article.id}
-							isImagePriority={i <= 2}
-						/>
-					))}
-			</section> */}
-			<div className='mt-[100px] mb-[40px]'>
-				<div className='container mx-auto p-8 px-20  md:w-[80%] '>
-					<div className='text-center max-w-xl mx-auto mt-14 mb-14'>
-						<h1 className='text-4xl font-bold text-center mb-6'>
-							The ProChat Blog
-						</h1>
+      <section className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post: BlogPost) => (
+          <article
+            key={post.slug}
+            className="flex h-full flex-col rounded-2xl border border-border bg-card p-6"
+          >
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+              {post.cluster}
+            </p>
+            <h2 className="mt-3 font-brand text-xl font-bold text-foreground">
+              <Link href={`/blog/${post.slug}`} className="hover:text-primary">
+                {post.title}
+              </Link>
+            </h2>
+            <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+              {post.description}
+            </p>
+            <div className="mt-5 flex items-center justify-between text-xs text-muted-foreground">
+              <span>{formatDate(post.date)}</span>
+              <span>{post.readingTimeMinutes} min read</span>
+            </div>
+          </article>
+        ))}
+      </section>
 
-						<p className='text-lg opacity-80 leading-relaxed '>
-							Learn how to ship your startup in days, not weeks. And get the
-							latest updates about ProKit.
-						</p>
-					</div>
-					<BlogListingNew articles={articles} />
-				</div>
-			</div>
-
-			{/* <section>}
-       <p className="font-bold text-2xl lg:text-4xl tracking-tight text-center mb-8 md:mb-12 text-white">
-         Browse articles by category
-       </p>
-
-       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-         {categories.map((category) => (
-           <CardCategory key={category.slug} category={category} tag="div" />
-         ))}
-       </div>
-      </section> */}
-		</>
-	)
+      <ContextualLinkCta
+        className="mt-12"
+        title="Turn Reading Into Shipping"
+        description="Use the same production-ready foundation discussed in these guides."
+        links={[
+          { href: '/kits/saaskit', label: 'Explore SaaSKit' },
+          { href: '/kits/uxkit-waitlist', label: 'Join UXKit Waitlist' },
+        ]}
+      />
+    </main>
+  )
 }

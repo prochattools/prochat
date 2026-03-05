@@ -35,7 +35,7 @@ const systemCards = [
     status: 'Coming Soon',
     description:
       'Verified UI component systems. Designed for rapid, error-free dashboard assembly and clarity.',
-    href: '/kits',
+    href: '/kits/uxkit-waitlist',
     primary: false,
     icon: CircleDot,
   },
@@ -103,6 +103,15 @@ export default function App() {
                 className="inline-flex items-center justify-center rounded-xl border border-border bg-card px-8 py-4 font-brand text-lg font-bold text-foreground shadow-sm transition-all hover:bg-muted"
               >
                 Start with SaaSKit
+              </Link>
+            </div>
+            <div className="mb-8">
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
+              >
+                Read the build guides
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
             <div className="inline-flex items-center gap-3 text-sm font-medium text-muted-foreground">

@@ -43,6 +43,11 @@ const nextConfig = {
 				destination: '/privacy',
 				permanent: true,
 			},
+			{
+				source: '/waiting-list',
+				destination: '/kits/uxkit-waitlist',
+				permanent: true,
+			},
 		]
 	},
 	images: {

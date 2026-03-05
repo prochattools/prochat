@@ -1,17 +1,8 @@
 import { MetadataRoute } from 'next'
-import config from '@/config'
-
-function getBaseUrl() {
-  const publicUrl = process.env.NEXT_PUBLIC_APP_URL?.trim()
-  if (publicUrl) {
-    return publicUrl.replace(/\/+$/, '')
-  }
-
-  return `https://${config.domainName}`
-}
+import { getSiteUrl } from '@/libs/site-url'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = getBaseUrl()
+  const baseUrl = getSiteUrl()
 
   return {
     rules: {
