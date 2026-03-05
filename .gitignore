@@ -39,6 +39,3 @@ next-env.d.ts
 public/robots.txt
 public/sitemap.xml
 public/sitemap-0.xml_brain
-
-# local import scratch
-_stitch/

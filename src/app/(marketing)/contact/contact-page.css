@@ -2,25 +2,25 @@
   font-family: 'Material Symbols Outlined';
   font-style: normal;
   font-weight: 400;
-  src: url('/stitch/contact-final/fonts/material-symbols-outlined.ttf') format('truetype');
+  src: url('/fonts/material-symbols-outlined.ttf') format('truetype');
 }
 
-.stitch-contact-root {
+.contact-page-root {
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-.stitch-contact-root h1,
-.stitch-contact-root h2,
-.stitch-contact-root h3,
-.stitch-contact-root h4 {
+.contact-page-root h1,
+.contact-page-root h2,
+.contact-page-root h3,
+.contact-page-root h4 {
   font-family: var(--font-brand), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-.stitch-contact-root .mono-text {
+.contact-page-root .mono-text {
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-.stitch-contact-root .material-symbols-outlined {
+.contact-page-root .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
   font-weight: normal;
   font-style: normal;
@@ -36,13 +36,13 @@
   -webkit-font-smoothing: antialiased;
 }
 
-.stitch-contact-root .contact-field-error {
+.contact-page-root .contact-field-error {
   color: #dc2626;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
-.stitch-contact-root .contact-status {
+.contact-page-root .contact-status {
   border-radius: 0.75rem;
   border: 1px solid transparent;
   font-size: 0.875rem;
@@ -51,29 +51,29 @@
   padding: 0.75rem 1rem;
 }
 
-.stitch-contact-root .contact-status.contact-status-success {
+.contact-page-root .contact-status.contact-status-success {
   background: rgb(236 253 245);
   border-color: rgb(167 243 208);
   color: rgb(6 95 70);
 }
 
-.stitch-contact-root .contact-status.contact-status-error {
+.contact-page-root .contact-status.contact-status-error {
   background: rgb(254 242 242);
   border-color: rgb(254 202 202);
   color: rgb(153 27 27);
 }
 
-.stitch-contact-root .contact-faq-item[data-open='true'] {
+.contact-page-root .contact-faq-item[data-open='true'] {
   border-color: rgb(147 197 253);
 }
 
-.stitch-contact-root .contact-faq-chevron {
+.contact-page-root .contact-faq-chevron {
   transition:
     transform 0.2s ease,
     color 0.2s ease;
 }
 
-.stitch-contact-root .contact-faq-item[data-open='true'] .contact-faq-chevron {
+.contact-page-root .contact-faq-item[data-open='true'] .contact-faq-chevron {
   color: rgb(37 99 235);
   transform: rotate(180deg);
 }

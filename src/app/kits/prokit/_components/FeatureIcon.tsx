@@ -2,14 +2,14 @@ import type { CSSProperties, HTMLAttributes } from 'react'
 
 import { cn } from '@/helpers/utils'
 
-type StitchIconProps = HTMLAttributes<HTMLSpanElement> & {
+type FeatureIconProps = HTMLAttributes<HTMLSpanElement> & {
 	name: string
 }
 
-export function StitchIcon({ name, className, style, ...props }: StitchIconProps) {
+export function FeatureIcon({ name, className, style, ...props }: FeatureIconProps) {
 	const iconStyle: CSSProperties = {
-		maskImage: `url(/stitch/icons/${name}.svg)`,
-		WebkitMaskImage: `url(/stitch/icons/${name}.svg)`,
+		maskImage: `url(/icons/system/${name}.svg)`,
+		WebkitMaskImage: `url(/icons/system/${name}.svg)`,
 		maskRepeat: 'no-repeat',
 		WebkitMaskRepeat: 'no-repeat',
 		maskPosition: 'center',

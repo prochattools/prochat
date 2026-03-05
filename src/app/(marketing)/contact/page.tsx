@@ -4,8 +4,8 @@ import { useEffect, useRef } from 'react'
 
 import { contactSubmissionSchema } from '@/lib/contact/schema'
 
-import './stitch-contact.css'
-import { STITCH_CONTACT_HTML } from './stitch-contact-html'
+import './contact-page.css'
+import ContactPageMarkup from './ContactPageMarkup'
 
 type ContactFieldName =
   | 'name'
@@ -263,10 +263,8 @@ export default function ContactPage() {
   }, [])
 
   return (
-    <main
-      ref={rootRef}
-      className="stitch-contact-root"
-      dangerouslySetInnerHTML={{ __html: STITCH_CONTACT_HTML }}
-    />
+    <main ref={rootRef} className="contact-page-root">
+      <ContactPageMarkup />
+    </main>
   )
 }

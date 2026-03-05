@@ -5,7 +5,7 @@ import KitsShell from '../_components/KitsShell'
 import { handleCheckoutProcess } from '@/helpers/checkout'
 import { useUser } from '@/libs/safeClerk'
 import { trackEvent } from '@/utils/analytics'
-import { StitchIcon } from './_components/StitchIcon'
+import { FeatureIcon } from './_components/FeatureIcon'
 
 interface SaaSkitPageContentProps {
   priceId: string | null
@@ -13,7 +13,7 @@ interface SaaSkitPageContentProps {
 
 const techSpecs = [
   {
-    icon: <StitchIcon name="runtime" className="h-5 w-5 text-primary" />,
+    icon: <FeatureIcon name="runtime" className="h-5 w-5 text-primary" />,
     title: 'Runtime Foundation',
     points: [
       'Next.js 14 App Router config',
@@ -22,7 +22,7 @@ const techSpecs = [
     ],
   },
   {
-    icon: <StitchIcon name="auth" className="h-5 w-5 text-primary" />,
+    icon: <FeatureIcon name="auth" className="h-5 w-5 text-primary" />,
     title: 'Authentication & Access',
     points: [
       'Magic link & social login ready',
@@ -31,7 +31,7 @@ const techSpecs = [
     ],
   },
   {
-    icon: <StitchIcon name="payments" className="h-5 w-5 text-primary" />,
+    icon: <FeatureIcon name="payments" className="h-5 w-5 text-primary" />,
     title: 'Payments & Billing',
     points: [
       'Verified Stripe webhooks',
@@ -40,7 +40,7 @@ const techSpecs = [
     ],
   },
   {
-    icon: <StitchIcon name="db" className="h-5 w-5 text-primary" />,
+    icon: <FeatureIcon name="db" className="h-5 w-5 text-primary" />,
     title: 'Database & Migrations',
     points: [
       'Production-ready schema',
@@ -49,7 +49,7 @@ const techSpecs = [
     ],
   },
   {
-    icon: <StitchIcon name="seo" className="h-5 w-5 text-primary" />,
+    icon: <FeatureIcon name="seo" className="h-5 w-5 text-primary" />,
     title: 'Marketing & SEO',
     points: [
       'Dynamic sitemap generation',
@@ -58,7 +58,7 @@ const techSpecs = [
     ],
   },
   {
-    icon: <StitchIcon name="automation" className="h-5 w-5 text-primary" />,
+    icon: <FeatureIcon name="automation" className="h-5 w-5 text-primary" />,
     title: 'Automation & Integrations',
     points: [
       'Transactional email setup',
@@ -113,10 +113,10 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
   }, [priceId, isCheckingOut, isLoaded, isSignedIn, user])
 
   // Visual sanity checklist:
-  // - Hero checklist icons use Stitch solid green checks.
+  // - Hero checklist icons use solid green checks.
   // - Real Problem uses filled red warning triangle and frustrated-face risk icon.
   // - Blue solution card uses darker outer blue + contrasted inner panel with green checks/dots.
-  // - Pricing lock icon + all breakdown icons use Stitch filled glyphs.
+  // - Pricing lock icon + all breakdown icons use filled glyphs.
   return (
     <KitsShell>
       <div className="[--section-bg-rgb:255_255_255] [--section-alt-bg-rgb:241_245_249] dark:[--section-bg-rgb:15_17_21] dark:[--section-alt-bg-rgb:29_37_49]">
@@ -162,17 +162,17 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
             <div className="flex flex-col items-center justify-center py-2">
               <div className="flex min-h-11 flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-md border border-border bg-card/90 px-4 py-2 font-mono text-sm leading-none text-foreground shadow-sm backdrop-blur-sm sm:flex-nowrap">
                 <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-                  <StitchIcon name="check-green" className="h-4 w-4 text-green-600" />
+                  <FeatureIcon name="check-green" className="h-4 w-4 text-green-600" />
                   <span>Not a blank project.</span>
                 </span>
                 <span className="hidden text-border sm:inline">|</span>
                 <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-                  <StitchIcon name="check-green" className="h-4 w-4 text-green-600" />
+                  <FeatureIcon name="check-green" className="h-4 w-4 text-green-600" />
                   <span>Not a fragile tutorial.</span>
                 </span>
                 <span className="hidden text-border sm:inline">|</span>
                 <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-                  <StitchIcon name="check-green" className="h-4 w-4 text-green-600" />
+                  <FeatureIcon name="check-green" className="h-4 w-4 text-green-600" />
                   <span>A controlled system.</span>
                 </span>
               </div>
@@ -192,7 +192,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
               className="font-brand group inline-flex items-center justify-center rounded-lg border border-border bg-background px-8 py-4 text-lg font-bold tracking-[-0.01em] text-foreground shadow-sm transition-all hover:bg-muted"
             >
               See what&apos;s inside
-              <StitchIcon
+              <FeatureIcon
                 name="arrow-downward"
                 className="ml-2 h-4 w-4 transition-transform group-hover:translate-y-0.5"
               />
@@ -210,7 +210,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           <div className="flex items-start gap-6">
             <div className="hidden flex-col items-center pt-2 md:flex">
               <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-lg border border-border bg-card text-primary shadow-sm">
-                <StitchIcon name="shield-tester" className="h-5 w-5" />
+                <FeatureIcon name="shield-tester" className="h-5 w-5" />
               </div>
               <div className="h-32 w-px bg-gradient-to-b from-border to-transparent" />
             </div>
@@ -252,7 +252,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
             <div className="relative">
               <div className="sticky top-24">
                 <div className="mb-6 flex items-center gap-3">
-                  <StitchIcon name="warning-triangle-filled" className="h-5 w-5 text-destructive" />
+                  <FeatureIcon name="warning-triangle-filled" className="h-5 w-5 text-destructive" />
                   <h3 className="text-xl font-bold uppercase tracking-wider text-foreground">
                     The Real Problem
                   </h3>
@@ -273,19 +273,19 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
 
                 <div className="space-y-4 rounded-lg border border-destructive/30 bg-destructive/10 p-6 shadow-sm">
                   <div className="flex items-start gap-3 text-sm text-destructive/90">
-                    <StitchIcon name="close" className="mt-0.5 h-4 w-4" />
+                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
                     <p>Conflicting tutorials and ten tabs open</p>
                   </div>
                   <div className="flex items-start gap-3 text-sm text-destructive/90">
-                    <StitchIcon name="close" className="mt-0.5 h-4 w-4" />
+                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
                     <p>Unexpected production errors</p>
                   </div>
                   <div className="flex items-start gap-3 text-sm text-destructive/90">
-                    <StitchIcon name="close" className="mt-0.5 h-4 w-4" />
+                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
                     <p>Stripe half-configured</p>
                   </div>
                   <div className="flex items-start gap-3 text-sm font-medium text-destructive">
-                    <StitchIcon name="frustrated-face" className="mt-0.5 h-4 w-4" />
+                    <FeatureIcon name="frustrated-face" className="mt-0.5 h-4 w-4" />
                     <p>&quot;What if this breaks in production?&quot;</p>
                   </div>
                 </div>
@@ -312,7 +312,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
                 />
                 <div className="relative z-10">
                   <div className="mb-6 flex items-center gap-3">
-                    <StitchIcon name="verified" className="h-5 w-5 text-blue-300" />
+                    <FeatureIcon name="verified" className="h-5 w-5 text-blue-300" />
                     <h3 className="text-xl font-bold uppercase tracking-wider text-primary-foreground/80">
                       What SaaSKit Gives You
                     </h3>
@@ -327,19 +327,19 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
 
                   <div className="space-y-4 rounded-lg border border-blue-700 bg-blue-800/55 p-6 shadow-inner backdrop-blur-sm">
                     <div className="flex items-center gap-3 text-primary-foreground">
-                      <StitchIcon name="check" className="h-4 w-4 text-green-400" />
+                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
                       <p className="text-sm font-medium">Authentication wired and secure</p>
                     </div>
                     <div className="flex items-center gap-3 text-primary-foreground">
-                      <StitchIcon name="check" className="h-4 w-4 text-green-400" />
+                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
                       <p className="text-sm font-medium">Database structured and verified</p>
                     </div>
                     <div className="flex items-center gap-3 text-primary-foreground">
-                      <StitchIcon name="check" className="h-4 w-4 text-green-400" />
+                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
                       <p className="text-sm font-medium">Stripe payments connected</p>
                     </div>
                     <div className="flex items-center gap-3 text-primary-foreground">
-                      <StitchIcon name="check" className="h-4 w-4 text-green-400" />
+                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
                       <p className="text-sm font-medium">Email systems ready</p>
                     </div>
                   </div>
@@ -390,7 +390,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
 
             <div className="grid grid-cols-3 border-b border-border transition-colors hover:bg-muted/60">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
-                <StitchIcon name="schedule" className="h-4 w-4 text-muted-foreground" />
+                <FeatureIcon name="schedule" className="h-4 w-4 text-muted-foreground" />
                 Time Cost
               </div>
               <div className="border-l border-border p-6 text-center text-muted-foreground">
@@ -403,7 +403,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
 
             <div className="grid grid-cols-3 border-b border-border transition-colors hover:bg-muted/60">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
-                <StitchIcon name="bug-report" className="h-4 w-4 text-muted-foreground" />
+                <FeatureIcon name="bug-report" className="h-4 w-4 text-muted-foreground" />
                 Error Cost
               </div>
               <div className="border-l border-border p-6 text-center text-muted-foreground">
@@ -416,7 +416,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
 
             <div className="grid grid-cols-3 transition-colors hover:bg-muted/60">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
-                <StitchIcon name="psychology" className="h-4 w-4 text-muted-foreground" />
+                <FeatureIcon name="psychology" className="h-4 w-4 text-muted-foreground" />
                 Confidence Cost
               </div>
               <div className="border-l border-border p-6 text-center text-muted-foreground">
@@ -455,7 +455,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
                 <ul className="space-y-4">
                   <li className="flex items-start gap-4">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="text-muted-foreground">
                       You have a serious SaaS idea and want to build it yourself using AI.
@@ -463,13 +463,13 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="text-muted-foreground">You don&apos;t want to hire a developer yet.</span>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="text-muted-foreground">
                       You feel capable, but overwhelmed by infrastructure decisions.
@@ -477,7 +477,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <StitchIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="font-medium text-foreground">You want structure before speed.</span>
                   </li>
@@ -529,19 +529,19 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
             <div className="bg-muted p-8">
               <ul className="mb-8 space-y-3 text-left">
                 <li className="flex items-center gap-3">
-                  <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
+                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
                   <span className="text-muted-foreground">Production-ready structure</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
+                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
                   <span className="text-muted-foreground">Verified auth, payment, and DB wiring</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
+                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
                   <span className="text-muted-foreground">Months of hesitation removed</span>
                 </li>
                 <li className="flex items-center gap-3">
-                  <StitchIcon name="check-blue" className="h-5 w-5 text-primary" />
+                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
                   <span className="font-bold text-foreground">Use in unlimited projects</span>
                 </li>
               </ul>
@@ -555,7 +555,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
                 {isCheckingOut ? 'Processing...' : 'Start with SaaSKit'}
               </button>
               <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                <StitchIcon name="lock-filled" className="h-3 w-3" />
+                <FeatureIcon name="lock-filled" className="h-3 w-3" />
                 Secure payment · Instant GitHub access
               </div>
             </div>
@@ -575,7 +575,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
               </div>
               <div className="flex items-center gap-2 text-sm font-medium text-primary">
                 <span>See full system breakdown</span>
-                <StitchIcon
+                <FeatureIcon
                   name="arrow-downward"
                   className="h-4 w-4 transition-transform duration-200 group-open:rotate-180"
                 />
@@ -660,7 +660,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
               className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
             >
               Preview documentation
-              <StitchIcon
+              <FeatureIcon
                 name="arrow-forward"
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"
               />

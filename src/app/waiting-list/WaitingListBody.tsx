@@ -4,8 +4,8 @@ import { useEffect, useRef } from 'react'
 
 import { waitlistSubmissionSchema } from '@/lib/waitlist/schema'
 
-import './stitch-waitlist.css'
-import { STITCH_WAITLIST_HTML } from './stitch-waitlist-html'
+import './waitlist-page.css'
+import WaitlistPageMarkup from './WaitlistPageMarkup'
 
 type WaitlistApiResponse = {
   error?: string
@@ -157,10 +157,8 @@ export default function WaitingListBody() {
   }, [])
 
   return (
-    <main
-      ref={rootRef}
-      className="stitch-waitlist-root"
-      dangerouslySetInnerHTML={{ __html: STITCH_WAITLIST_HTML }}
-    />
+    <main ref={rootRef} className="waitlist-page-root">
+      <WaitlistPageMarkup />
+    </main>
   )
 }
