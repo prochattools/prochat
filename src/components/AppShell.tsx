@@ -28,7 +28,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
 			<Navbar />
 			<main
 				className={`font-marketing bg-background text-foreground selection:bg-primary selection:text-primary-foreground ${
-					isFullscreenRoute ? 'h-screen overflow-hidden' : 'min-h-screen'
+					isFullscreenRoute
+						? 'box-border h-dvh overflow-hidden pt-[var(--pc-header-height)]'
+						: 'min-h-screen'
 				}`}
 			>
 				{children}

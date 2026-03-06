@@ -35,15 +35,17 @@ export default async function SaaSGlossaryPage() {
     description: term.description,
     excerpt: term.excerpt,
     definition: term.definition,
+    content: term.content,
     category: term.category,
     stage: term.stage,
     synonyms: term.synonyms,
     priority: term.priority,
+    focusTags: term.focusTags,
   }))
 
   return (
-    <main className="mx-auto flex h-[calc(100dvh-4.5rem)] max-w-7xl flex-col overflow-hidden px-page pb-4 pt-24 md:pt-28">
-      <section className="mx-auto w-full max-w-4xl shrink-0">
+    <section className="mx-auto flex h-full max-w-7xl flex-col overflow-hidden px-page pb-4 pt-4 md:pb-5 md:pt-5">
+      <header className="w-full shrink-0 border-b border-border-subtle/80 pb-4 md:pb-5">
         <h1 className="font-brand text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
           SaaS Founder Glossary
         </h1>
@@ -54,11 +56,11 @@ export default async function SaaSGlossaryPage() {
         <p className="mt-2 text-xs text-muted-foreground">
           {terms.length} founder terms across validation, MVP, pricing, metrics, and infrastructure.
         </p>
-      </section>
+      </header>
 
-      <div className="mt-4 min-h-0 flex-1">
+      <div className="min-h-0 flex-1 pt-4 md:pt-5">
         <GlossaryExplorer terms={explorerTerms} />
       </div>
-    </main>
+    </section>
   )
 }

@@ -16,6 +16,7 @@ type Frontmatter = {
   author?: string
   cluster?: BlogCluster
   tags?: string[]
+  takeaways?: string[]
   primaryKeyword?: string
   metaTitle?: string
   metaDescription?: string
@@ -62,6 +63,7 @@ function parseFrontmatter(rawFile: string) {
 
   const keywords = parseList(parsed.keywords)
   const tags = parseList(parsed.tags)
+  const takeaways = parseList(parsed.takeaways || parsed.summary)
 
   const frontmatter: Frontmatter = {
     title: parsed.title || '',
@@ -73,6 +75,7 @@ function parseFrontmatter(rawFile: string) {
       ? (parsed.cluster as BlogCluster)
       : undefined,
     tags,
+    takeaways,
     primaryKeyword: parsed.primaryKeyword || '',
     metaTitle: parsed.metaTitle || '',
     metaDescription: parsed.metaDescription || '',

@@ -35,6 +35,7 @@ export type GlossaryTerm = Frontmatter & {
   excerpt: string
   definition: string
   priority: number
+  focusTags: string[]
 }
 
 let allTermsPromise: Promise<GlossaryTerm[]> | null = null
@@ -44,6 +45,16 @@ const DEFAULT_METADATA = {
   stage: 'Launch' as GlossaryStage,
   synonyms: [] as string[],
   priority: 90,
+}
+
+const CATEGORY_FOCUS_TAGS: Record<string, string[]> = {
+  Foundation: ['business model', 'non-technical'],
+  MVP: ['scope', 'shipping'],
+  Validation: ['customer research', 'traction'],
+  Metrics: ['revenue', 'numbers'],
+  Pricing: ['payments', 'monetization'],
+  Infrastructure: ['systems', 'reliability'],
+  Launch: ['activation', 'adoption'],
 }
 
 const GLOSSARY_METADATA: Record<
@@ -186,6 +197,12 @@ function clampExcerpt(text: string, max = 170) {
   return `${text.slice(0, max - 1).trimEnd()}…`
 }
 
+function getFocusTags(category: string, stage: GlossaryStage) {
+  return Array.from(
+    new Set([...(CATEGORY_FOCUS_TAGS[category] || []), stage.toLowerCase()]),
+  )
+}
+
 function extractDefinition(content: string) {
   const definitionMatch = content.match(/<strong>\s*Definition:\s*<\/strong>\s*([^<]+)/i)
   if (definitionMatch?.[1]) return definitionMatch[1].trim()
@@ -294,6 +311,7 @@ async function readGlossaryFile(fileName: string): Promise<GlossaryTerm> {
     excerpt: clampExcerpt(excerptSource),
     definition,
     priority: frontmatter.priority || metadata.priority,
+    focusTags: getFocusTags(frontmatter.category || metadata.category, frontmatter.stage || metadata.stage),
   }
 }
 

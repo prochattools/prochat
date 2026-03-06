@@ -7,6 +7,7 @@
 :root {
 	--font-sans: "Host Grotesk";
 	--pc-base-font-size: 15.5px;
+	--pc-header-height: 5rem;
 	--pc-page-gutter: clamp(1.125rem, 2.4vw, 2.875rem);
 	--pc-reading-max: 72ch;
 	--pc-blue-600: rgb(29 78 216);
@@ -163,6 +164,205 @@ samp {
 		max-width: min(100%, var(--pc-reading-max));
 	}
 
+	.pc-article-shell {
+		width: min(100%, 68ch);
+		margin-inline: auto;
+	}
+
+	.prose-premium {
+		font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+		font-size: clamp(1rem, 0.99rem + 0.12vw, 1.04rem);
+		line-height: 1.76;
+		letter-spacing: 0.001em;
+		color: rgb(var(--pc-text-rgb) / 0.92);
+	}
+
+	.prose-premium > * {
+		min-width: 0;
+	}
+
+	.prose-premium > * + * {
+		margin-top: clamp(1.2rem, 1.05rem + 0.45vw, 1.6rem);
+	}
+
+	.prose-premium > :where(h1, h2, h3, h4) {
+		font-family: var(--font-brand), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+		font-weight: 700;
+		color: rgb(var(--pc-text-rgb) / 0.99);
+		text-wrap: balance;
+	}
+
+	.prose-premium > :where(h1) {
+		margin-top: 0;
+		font-size: clamp(2.1rem, 1.95rem + 0.9vw, 2.65rem);
+		line-height: 1.08;
+		letter-spacing: -0.03em;
+	}
+
+	.prose-premium > :where(h2) {
+		scroll-margin-top: 6rem;
+		margin-top: clamp(3rem, 2.5rem + 1.2vw, 4rem);
+		font-size: clamp(1.72rem, 1.58rem + 0.5vw, 2rem);
+		line-height: 1.14;
+		letter-spacing: -0.026em;
+	}
+
+	.prose-premium > :where(h3) {
+		scroll-margin-top: 6rem;
+		margin-top: clamp(2.2rem, 1.95rem + 0.8vw, 2.8rem);
+		font-size: clamp(1.3rem, 1.18rem + 0.35vw, 1.5rem);
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+	}
+
+	.prose-premium > :where(h4) {
+		scroll-margin-top: 6rem;
+		margin-top: 1.85rem;
+		font-size: 1.08rem;
+		line-height: 1.35;
+		letter-spacing: -0.012em;
+	}
+
+	.prose-premium > :where(h1, h2, h3, h4) + * {
+		margin-top: 0.95rem;
+	}
+
+	.prose-premium :where(p) {
+		color: rgb(var(--pc-text-rgb) / 0.92);
+		text-wrap: pretty;
+	}
+
+	.prose-premium :where(strong) {
+		font-weight: 600;
+		color: rgb(var(--pc-text-rgb) / 0.99);
+	}
+
+	.prose-premium :where(em) {
+		color: rgb(var(--pc-text-rgb) / 0.9);
+	}
+
+	.prose-premium :where(ul, ol) {
+		padding-left: 1.35rem;
+		color: rgb(var(--pc-text-rgb) / 0.92);
+	}
+
+	.prose-premium :where(ul) {
+		list-style: disc;
+	}
+
+	.prose-premium :where(ol) {
+		list-style: decimal;
+	}
+
+	.prose-premium :where(li) {
+		padding-left: 0.3rem;
+	}
+
+	.prose-premium :where(li + li) {
+		margin-top: 0.65rem;
+	}
+
+	.prose-premium :where(li)::marker {
+		color: rgb(var(--pc-muted-foreground-soft-rgb) / 0.95);
+	}
+
+	.prose-premium :where(blockquote) {
+		margin-block: clamp(2rem, 1.7rem + 1vw, 2.9rem);
+		border: 1px solid rgb(var(--pc-border-subtle-rgb) / 0.92);
+		border-left: 2px solid rgb(var(--pc-blue-500-rgb) / 0.42);
+		border-radius: 1rem;
+		background: rgb(var(--pc-surface-soft-rgb) / 0.82);
+		padding: 1.2rem 1.35rem;
+		box-shadow: var(--pc-shadow-surface);
+		font-size: 1.02em;
+		line-height: 1.72;
+		font-style: italic;
+		color: rgb(var(--pc-text-rgb) / 0.86);
+	}
+
+	.prose-premium :where(blockquote p) {
+		margin: 0;
+		color: inherit;
+	}
+
+	.prose-premium :where(blockquote cite) {
+		display: block;
+		margin-top: 0.85rem;
+		font-size: 0.78em;
+		font-style: normal;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: rgb(var(--pc-muted-foreground-soft-rgb) / 1);
+	}
+
+	.prose-premium :where(hr) {
+		margin-block: clamp(2.7rem, 2.2rem + 1vw, 3.6rem);
+		height: 1px;
+		border: 0;
+		background: linear-gradient(
+			90deg,
+			rgb(var(--pc-border-subtle-rgb) / 0) 0%,
+			rgb(var(--pc-border-strong-rgb) / 0.85) 22%,
+			rgb(var(--pc-border-strong-rgb) / 0.85) 78%,
+			rgb(var(--pc-border-subtle-rgb) / 0) 100%
+		);
+	}
+
+	.prose-premium :where(pre) {
+		overflow-x: auto;
+		border: 1px solid rgb(var(--pc-border-subtle-rgb) / 0.88);
+		border-radius: 1rem;
+		background: rgb(var(--pc-surface-elevated-rgb) / 0.95);
+		padding: 1rem 1.1rem;
+		box-shadow: var(--pc-shadow-surface);
+		font-size: 0.92em;
+		line-height: 1.7;
+		color: rgb(var(--pc-text-rgb) / 0.96);
+	}
+
+	.prose-premium :where(code):not(pre code) {
+		border: 1px solid rgb(var(--pc-border-subtle-rgb) / 0.85);
+		border-radius: 0.5rem;
+		background: rgb(var(--pc-surface-soft-rgb) / 0.9);
+		padding: 0.15rem 0.4rem;
+		font-size: 0.9em;
+		color: rgb(var(--pc-text-rgb) / 0.97);
+	}
+
+	.prose-premium :where(pre code) {
+		background: transparent;
+		padding: 0;
+		border: 0;
+		border-radius: 0;
+		font-size: inherit;
+		color: inherit;
+	}
+
+	.prose-premium :where(a),
+	.pc-prose-link {
+		font-weight: 500;
+		color: rgb(var(--pc-text-rgb) / 0.97);
+		text-decoration: underline;
+		text-decoration-color: rgb(var(--pc-border-strong-rgb) / 0.95);
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.26em;
+		transition: color 160ms ease, text-decoration-color 160ms ease;
+	}
+
+	.prose-premium :where(a:hover),
+	.pc-prose-link:hover {
+		color: rgb(var(--pc-blue-500-rgb) / 1);
+		text-decoration-color: rgb(var(--pc-blue-500-rgb) / 0.88);
+	}
+
+	.prose-premium :where(a:focus-visible),
+	.pc-prose-link:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 2px rgb(var(--pc-ring-rgb) / 0.5);
+		border-radius: 0.25rem;
+	}
+
 	.pc-section {
 		position: relative;
 		padding-block: clamp(4.25rem, 5.5vw, 6.25rem);
@@ -192,7 +392,7 @@ samp {
 
 	.pc-sticky-surface {
 		position: sticky;
-		top: 4.5rem;
+		top: var(--pc-header-height);
 		z-index: 20;
 		border-bottom: 1px solid rgb(var(--pc-border-subtle-rgb) / 0.85);
 		background: rgb(var(--pc-surface-rgb) / 0.88);
