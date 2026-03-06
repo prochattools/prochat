@@ -39,6 +39,11 @@ const links = [
   },
 ];
 
+const INVOICE_TEXT_PRIMARY = "rgb(0 0 0)";
+const INVOICE_TEXT_SECONDARY = "rgb(51 51 51)";
+const INVOICE_BORDER = "1px solid rgb(229 231 235)";
+const INVOICE_ROW_BG = "rgb(248 248 248)";
+
 const LoginPayment = ({ user }: any) => {
   const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
   const [username, setUsername] = useState("");
@@ -106,7 +111,7 @@ const LoginPayment = ({ user }: any) => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-40 mb-24 bg-white dark:bg-[#010814] w-full">
+    <div className="flex justify-center items-center mt-40 mb-24 bg-background w-full">
       <div className="max-w-[1440px] w-full px-4 sm:px-12">
         <div className="flex flex-col lg:flex-row items-center justify-between w-full gap-y-16">
           <div className="w-full sm:w-[500px] lg:w-[45%]">
@@ -117,7 +122,7 @@ const LoginPayment = ({ user }: any) => {
                 >
                   <Logo isLarge={true} /> ProKit
                 </div>
-                <p className="text-[#7B7E83] dark:text-[#808389] font-medium text-base mb-8">
+                <p className="text-muted-foreground font-medium text-base mb-8">
                   Enter your{" "}
                   <span className="text-black1 dark:text-white font-bold">
                     GitHub user name
@@ -135,10 +140,10 @@ const LoginPayment = ({ user }: any) => {
                       value={username}
                       onChange={(e: any) => setUsername(e.target.value)}
                       placeholder="User name"
-                      className="border border-[#86898E] h-[50px] sm:h-full dark:border-[#5A5E66] w-full text-black1 dark:text-white placeholder-[#B7B8BB] dark:placeholder-[#4D525A] rounded-[8px] px-3 text-base font-medium bg-transparent"
+                      className="border border-border-strong h-[50px] sm:h-full w-full text-foreground placeholder:text-muted-foreground rounded-[8px] px-3 text-base font-medium bg-transparent"
                     />
                     {error?.length > 0 && (
-                      <p className="text-[#EA2222] dark:text-[#FF4242] text-sm font-medium mt-2 flex items-center gap-2">
+                      <p className="text-destructive text-sm font-medium mt-2 flex items-center gap-2">
                         <Info /> {error}
                       </p>
                     )}
@@ -159,7 +164,7 @@ const LoginPayment = ({ user }: any) => {
                         open={isDialogOpen}
                         onOpenChange={setIsDialogOpen}
                       >
-                        <DialogContent className="overflow-y-scroll bg-white dark:bg-gradient-to-r from-[#1E242D] to-[#0B111B] max-h-[90vh] max-w-[500px] w-full">
+                        <DialogContent className="overflow-y-scroll bg-surface-elevated max-h-[90vh] max-w-[500px] w-full">
                           <div className="mx-auto w-fit text-black1 dark:text-white">
                             <Github />
                           </div>
@@ -168,7 +173,7 @@ const LoginPayment = ({ user }: any) => {
                               It's your username “
                               <span className="text-bold">{username}</span>”
                             </p>
-                            <p className="text-base font-medium text-[#7B7E83] dark:text-[#5A5E66] text-center">
+                            <p className="text-base font-medium text-muted-foreground text-center">
                               Make sure you entered your GitHub username
                             </p>
                           </div>
@@ -204,13 +209,13 @@ const LoginPayment = ({ user }: any) => {
                   <br />
                   Please check you email
                 </div>
-                <p className="text-[#7B7E83] dark:text-[#808389] font-medium text-xl mb-8">
+                <p className="text-muted-foreground font-medium text-xl mb-8">
                   {user?.stripeEmail?.slice(0, 2)}*******@gmail.com
                 </p>
-                <div className="bg-white dark:bg-gradient-to-r from-[#1E242D] to-[#0B111B] px-4 py-3 rounded-[12px] border-l-2 border-r-0 border-[#F1AF33] shadow-[0_0_20px_rgba(0,0,0,0.25)]">
-                  <div className="flex items-center gap-2 text-[#F1AF33]">
+                <div className="bg-surface-elevated px-4 py-3 rounded-[12px] border-l-2 border-r-0 border-amber-400 shadow-surface">
+                  <div className="flex items-center gap-2 text-amber-500">
                     <Info />
-                    <p className="text-[#7B7E83] dark:text-[#808389] font-medium">
+                    <p className="text-muted-foreground font-medium">
                       <span className="text-black1 dark:text-white font-semibold">
                         Check your SPAM
                       </span>{" "}
@@ -220,12 +225,12 @@ const LoginPayment = ({ user }: any) => {
                 </div>
               </div>
             )}
-            <p className="text-[#7B7E83] dark:text-[#808389] font-medium text-base mt-8 mb-4">
+            <p className="text-muted-foreground font-medium text-base mt-8 mb-4">
               Issues? Drop me a line{" "}
               <a
                 href="mailto:hello@db2.io"
                 target="_blank"
-                className="text-[#010610] dark:text-white hover:underline"
+                className="text-foreground hover:underline"
               >
                 hello@db2.io
               </a>{" "}
@@ -233,7 +238,7 @@ const LoginPayment = ({ user }: any) => {
               <a
                 href="https://discord.gg/U75p2BQuAH"
                 target="_blank"
-                className="text-[#7289DA] hover:underline"
+                className="text-secondary hover:underline"
               >
                 Discord
               </a>
@@ -243,7 +248,7 @@ const LoginPayment = ({ user }: any) => {
               target="_blank"
               className="w-fit block"
             >
-              <button className="bg-[#7289DA] w-fit min-w-[220px] rounded-[8px] text-sm font-semibold text-white flex items-center gap-3 justify-center py-3">
+              <button className="bg-secondary w-fit min-w-[220px] rounded-[8px] text-sm font-semibold text-primary-foreground flex items-center gap-3 justify-center py-3">
                 Join Discord{" "}
                 <span>
                   <Discord />
@@ -251,7 +256,7 @@ const LoginPayment = ({ user }: any) => {
               </button>
             </a>
           </div>
-          <div className="w-full sm:w-[500px] lg:w-[45%] xl:w-[40%] bg-white dark:bg-gradient-to-r from-[#1E242D] to-[#0B111B] p-8 rounded-[16px] shadow-[0_0_20px_rgba(0,0,0,0.25)]">
+          <div className="w-full sm:w-[500px] lg:w-[45%] xl:w-[40%] bg-surface-elevated p-8 rounded-[16px] shadow-surface">
             {links && (
               <div className="w-full flex flex-col sm:flex-row gap-4 mb-6">
                 {links?.map((item: any, index: number) => (
@@ -278,12 +283,12 @@ const LoginPayment = ({ user }: any) => {
                 ))}
               </div>
             )}
-            <div className="w-full py-8 border-y border-[#EBEBEB] dark:border-[#31353D]">
+            <div className="w-full py-8 border-y border-border-subtle">
               <p className="font-semibold text-xl text-black1 dark:text-white mb-2">
                 Build with 2 000+ makers
               </p>
               <a href="https://discord.gg/U75p2BQuAH" target="_blank">
-                <button className="bg-[#7289DA] w-full rounded-[8px] text-sm font-semibold text-white flex items-center gap-3 justify-center py-3">
+                <button className="bg-secondary w-full rounded-[8px] text-sm font-semibold text-primary-foreground flex items-center gap-3 justify-center py-3">
                   Join Discord{" "}
                   <span>
                     <Discord />
@@ -301,7 +306,7 @@ const LoginPayment = ({ user }: any) => {
                 <p className="text-lg text-black1 dark:text-white font-medium">
                   Please! Please! Please!
                 </p>
-                <p className="text-base font-medium text-[#7B7E83] dark:text-[#5A5E66]">
+                <p className="text-base font-medium text-muted-foreground">
                   Create only one feature and launch your micro SaaS today! I
                   believe in you!
                 </p>
@@ -338,22 +343,22 @@ const LoginPayment = ({ user }: any) => {
                             <h1
                               style={{
                                 margin: "0",
-                                color: "#000",
+                                color: INVOICE_TEXT_PRIMARY,
                                 fontSize: "30px",
                               }}
                             >
                               Receipt
                             </h1>
-                            <h4 style={{ margin: "5px 0 0", color: "#333" }}>
+                            <h4 style={{ margin: "5px 0 0", color: INVOICE_TEXT_SECONDARY }}>
                               Invoice number: {user?.id}
                             </h4>
-                            <h4 style={{ margin: "5px 0 0", color: "#333" }}>
+                            <h4 style={{ margin: "5px 0 0", color: INVOICE_TEXT_SECONDARY }}>
                               Receipt number: 2686-1458
                             </h4>
-                            <h4 style={{ margin: "5px 0 0", color: "#333" }}>
+                            <h4 style={{ margin: "5px 0 0", color: INVOICE_TEXT_SECONDARY }}>
                               Date paid: {FormatDate(user?.publishedAt)}
                             </h4>
-                            <h4 style={{ margin: "5px 0 0", color: "#333" }}>
+                            <h4 style={{ margin: "5px 0 0", color: INVOICE_TEXT_SECONDARY }}>
                               Payment method: Visa - 8517
                             </h4>
                           </td>
@@ -379,7 +384,7 @@ const LoginPayment = ({ user }: any) => {
                     <hr
                       style={{
                         border: "0",
-                        borderTop: "1px solid #eee",
+                        borderTop: INVOICE_BORDER,
                         margin: "20px 0",
                       }}
                     />
@@ -392,20 +397,13 @@ const LoginPayment = ({ user }: any) => {
                             <h3
                               style={{
                                 margin: "0",
-                                color: "#000",
-                                // fontWeight: "500",
+                                color: INVOICE_TEXT_PRIMARY,
                                 fontSize: "16px",
                               }}
                             >
                               DB2 SOFTWARE LTD, 38 Fawkner Way, Stanford In The
                               Vale, Faringdon, United Kingdom, SN7 8FF
                             </h3>
-                            {/* <h4 style={{ margin: "5px 0 0", color: "#333" }}>
-                                +44 7949 100738
-                              </h4>
-                              <h4 style={{ margin: "5px 0 0", color: "#333" }}>
-                                microsaasfast@gmail.com
-                              </h4> */}
                           </td>
                           <td
                             style={{
@@ -415,16 +413,16 @@ const LoginPayment = ({ user }: any) => {
                             <h3
                               style={{
                                 margin: "0",
-                                color: "#000",
+                                color: INVOICE_TEXT_PRIMARY,
                                 fontSize: "18px",
                               }}
                             >
                               Bill to
                             </h3>
-                            <h4 style={{ margin: "5px 0 0", color: "#333" }}>
+                            <h4 style={{ margin: "5px 0 0", color: INVOICE_TEXT_SECONDARY }}>
                               {user?.stripeName}
                             </h4>
-                            <h4 style={{ margin: "5px 0 0", color: "#333" }}>
+                            <h4 style={{ margin: "5px 0 0", color: INVOICE_TEXT_SECONDARY }}>
                               {user?.stripeEmail}
                             </h4>
                           </td>
@@ -435,7 +433,7 @@ const LoginPayment = ({ user }: any) => {
                       style={{
                         fontSize: "30px",
                         margin: "20px 0px",
-                        color: "#000",
+                        color: INVOICE_TEXT_PRIMARY,
                       }}
                     >
                       €{parseFloat(user?.amountPaid).toFixed(2)} paid on{" "}
@@ -449,13 +447,13 @@ const LoginPayment = ({ user }: any) => {
                       }}
                     >
                       <thead>
-                        <tr style={{ backgroundColor: "#f8f8f8" }}>
+                        <tr style={{ backgroundColor: INVOICE_ROW_BG }}>
                           <th
                             style={{
                               padding: "10px",
                               textAlign: "left",
-                              color: "#000",
-                              borderBottom: "1px solid #eee",
+                              color: INVOICE_TEXT_PRIMARY,
+                              borderBottom: INVOICE_BORDER,
                             }}
                           >
                             Description
@@ -464,8 +462,8 @@ const LoginPayment = ({ user }: any) => {
                             style={{
                               padding: "10px",
                               textAlign: "left",
-                              color: "#000",
-                              borderBottom: "1px solid #eee",
+                              color: INVOICE_TEXT_PRIMARY,
+                              borderBottom: INVOICE_BORDER,
                             }}
                           >
                             Qty
@@ -474,8 +472,8 @@ const LoginPayment = ({ user }: any) => {
                             style={{
                               padding: "10px",
                               textAlign: "left",
-                              color: "#000",
-                              borderBottom: "1px solid #eee",
+                              color: INVOICE_TEXT_PRIMARY,
+                              borderBottom: INVOICE_BORDER,
                             }}
                           >
                             Unit price
@@ -484,8 +482,8 @@ const LoginPayment = ({ user }: any) => {
                             style={{
                               padding: "10px",
                               textAlign: "left",
-                              color: "#000",
-                              borderBottom: "1px solid #eee",
+                              color: INVOICE_TEXT_PRIMARY,
+                              borderBottom: INVOICE_BORDER,
                             }}
                           >
                             Amount
@@ -497,8 +495,8 @@ const LoginPayment = ({ user }: any) => {
                           <td
                             style={{
                               padding: "10px",
-                              borderBottom: "1px solid #eee",
-                              color: "#000",
+                              borderBottom: INVOICE_BORDER,
+                              color: INVOICE_TEXT_PRIMARY,
                             }}
                           >
                             {user?.amountPaid === "210" ? "Standard" : "All-in"}
@@ -506,8 +504,8 @@ const LoginPayment = ({ user }: any) => {
                           <td
                             style={{
                               padding: "10px",
-                              borderBottom: "1px solid #eee",
-                              color: "#000",
+                              borderBottom: INVOICE_BORDER,
+                              color: INVOICE_TEXT_PRIMARY,
                             }}
                           >
                             1
@@ -515,8 +513,8 @@ const LoginPayment = ({ user }: any) => {
                           <td
                             style={{
                               padding: "10px",
-                              borderBottom: "1px solid #eee",
-                              color: "#000",
+                              borderBottom: INVOICE_BORDER,
+                              color: INVOICE_TEXT_PRIMARY,
                             }}
                           >
                             €{parseFloat(user?.amountPaid).toFixed(2)}
@@ -524,8 +522,8 @@ const LoginPayment = ({ user }: any) => {
                           <td
                             style={{
                               padding: "10px",
-                              borderBottom: "1px solid #eee",
-                              color: "#000",
+                              borderBottom: INVOICE_BORDER,
+                              color: INVOICE_TEXT_PRIMARY,
                             }}
                           >
                             €{parseFloat(user?.amountPaid).toFixed(2)}
@@ -538,8 +536,8 @@ const LoginPayment = ({ user }: any) => {
                             style={{
                               padding: "10px",
                               textAlign: "left",
-                              borderTop: "1px solid #eee",
-                              color: "#000",
+                              borderTop: INVOICE_BORDER,
+                              color: INVOICE_TEXT_PRIMARY,
                             }}
                           >
                             Subtotal
@@ -547,8 +545,8 @@ const LoginPayment = ({ user }: any) => {
                           <td
                             style={{
                               padding: "10px",
-                              borderTop: "1px solid #eee",
-                              color: "#000",
+                              borderTop: INVOICE_BORDER,
+                              color: INVOICE_TEXT_PRIMARY,
                             }}
                           >
                             €{parseFloat(user?.amountPaid).toFixed(2)}
@@ -559,8 +557,8 @@ const LoginPayment = ({ user }: any) => {
                             style={{
                               padding: "10px",
                               textAlign: "left",
-                              borderTop: "1px solid #eee",
-                              color: "#000",
+                              borderTop: INVOICE_BORDER,
+                              color: INVOICE_TEXT_PRIMARY,
                             }}
                           >
                             Total
@@ -568,8 +566,8 @@ const LoginPayment = ({ user }: any) => {
                           <td
                             style={{
                               padding: "10px",
-                              borderTop: "1px solid #eee",
-                              color: "#000",
+                              borderTop: INVOICE_BORDER,
+                              color: INVOICE_TEXT_PRIMARY,
                             }}
                           >
                             €{parseFloat(user?.amountPaid).toFixed(2)}
@@ -580,8 +578,8 @@ const LoginPayment = ({ user }: any) => {
                             style={{
                               padding: "10px",
                               textAlign: "left",
-                              borderTop: "1px solid #eee",
-                              color: "#000",
+                              borderTop: INVOICE_BORDER,
+                              color: INVOICE_TEXT_PRIMARY,
                             }}
                           >
                             <strong>Total Amount Paid</strong>
@@ -589,8 +587,8 @@ const LoginPayment = ({ user }: any) => {
                           <td
                             style={{
                               padding: "10px",
-                              borderTop: "1px solid #eee",
-                              color: "#000",
+                              borderTop: INVOICE_BORDER,
+                              color: INVOICE_TEXT_PRIMARY,
                             }}
                           >
                             <strong>
@@ -608,7 +606,7 @@ const LoginPayment = ({ user }: any) => {
                         <IconButton text="Cancel" />
                       </div>
                     </DialogClose>
-                    <div className="text-black" onClick={downloadAsPDF}>
+                    <div className="text-foreground" onClick={downloadAsPDF}>
                       <IconButton
                         text="Download"
                         icon={<RightArrow />}

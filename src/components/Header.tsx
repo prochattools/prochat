@@ -71,7 +71,7 @@ const ThemeSwitch = () => {
 				id='theme-toggle'
 				checked={mounted ? resolvedTheme === 'dark' : false}
 				onChange={toggleTheme}
-				className='appearance-none transition-colors cursor-pointer w-14 h-[30px] rounded-full focus:outline-none border border-[#B7B8BB] dark:border-[#373C53] bg-white'
+				className='appearance-none transition-colors cursor-pointer w-14 h-[30px] rounded-full focus:outline-none border border-border-strong dark:border-border bg-white'
 			/>
 			<span className='absolute font-medium text-xs uppercase right-1 text-white'>
 				<Sun />
@@ -79,7 +79,7 @@ const ThemeSwitch = () => {
 			<span className='absolute font-medium text-xs uppercase right-8 text-white'>
 				<Moon />
 			</span>
-			<span className='w-6 h-6 right-[29px] dark:right-[31px] absolute rounded-full transform transition-transform bg-[#0B111B] dark:bg-white' />
+			<span className='w-6 h-6 right-[29px] dark:right-[31px] absolute rounded-full transform transition-transform bg-ink-950 dark:bg-white' />
 		</label>
 	)
 }
@@ -94,7 +94,7 @@ const MobileNav = () => {
 			</SheetTrigger>
 			<SheetContent className='bg-white dark:bg-black1 px-0 pt-4 border-l-0 min-w-[320px]'>
 				<SheetHeader>
-					<SheetTitle className='text-black1 dark:text-white text-xl font-bold border-b border-[#b3b3b3] text-left pb-4 pl-4'>
+					<SheetTitle className='text-black1 dark:text-white text-xl font-bold border-b border-border text-left pb-4 pl-4'>
 						Menu
 					</SheetTitle>
 				</SheetHeader>
@@ -135,7 +135,7 @@ const Header = () => {
 		<div
 			className={`flex justify-center items-center w-full fixed top-0 z-50 border-b transition-all duration-500 ${
 				isScrolled
-					? 'bg-white/70 backdrop-blur-xl border-slate-200/60 py-3 shadow-[0_2px_20px_-12px_rgba(0,0,0,0.05)] dark:bg-[#0B111B]/70 dark:border-[#1E242D] dark:shadow-none'
+					? 'bg-surface/80 backdrop-blur-xl border-border/70 py-3 shadow-[0_2px_20px_-12px_rgba(0,0,0,0.05)] dark:bg-surface/80 dark:border-border-subtle dark:shadow-none'
 					: 'bg-transparent border-transparent py-6 dark:bg-transparent dark:border-transparent'
 			}`}
 		>

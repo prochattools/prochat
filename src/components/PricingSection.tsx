@@ -17,11 +17,11 @@ export default function PricingSection() {
 					{products.map((product, index) => (
 						<div
 							key={product.priceId}
-							className={`dark:bg-[#131211] bg-white rounded-lg shadow-md p-8 ${product.isBest ? 'border-4 border-[#1D4ED8] relative' : ''
+							className={`dark:bg-surface bg-white rounded-lg shadow-md p-8 ${product.isBest ? 'border-4 border-primary relative' : ''
 								}`}
 						>
 							{product.isBest && (
-								<div className='absolute top-0 right-0 bg-[#1D4ED8] text-white py-1 px-4 rounded-bl-lg text-sm font-semibold'>
+								<div className='absolute top-0 right-0 bg-primary text-primary-foreground py-1 px-4 rounded-bl-lg text-sm font-semibold'>
 									Best Value
 								</div>
 							)}

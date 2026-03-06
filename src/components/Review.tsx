@@ -4,7 +4,7 @@ import ProfilePic from "@/assets/images/profile-pic.svg";
 
 const Review = () => {
   return (
-    <div className="bg-white dark:bg-[#010814] w-full">
+    <div className="bg-white dark:bg-background w-full">
       <div className="max-w-[730px] flex flex-col items-center px-4 sm:px-12 mx-auto py-16">
         <Quote />
         <p className="text-lg font-medium text-black1 dark:text-white my-5 text-center">
@@ -21,10 +21,10 @@ const Review = () => {
             className="rounded-full"
           />
           <div>
-            <p className="text-[#1364FF] dark:text-white font-medium text-lg">
+            <p className="text-primary dark:text-white font-medium text-lg">
               John Dow
             </p>
-            <p className="text-[#7B7E83] dark:text-[#5A5E66] font-medium text-sm">
+            <p className="text-muted-foreground dark:text-tertiary font-medium text-sm">
               Marketer
             </p>
           </div>

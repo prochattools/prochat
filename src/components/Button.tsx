@@ -20,7 +20,7 @@ const Button = ({
           onClick();
         }
       }}
-      className="bg-[#1D4ED8] scale-1 hover:scale-[1.05] transition-all duration-300 rounded-full px-8 hover:bg-[#2563EB] border-none outline-none focus-visible:ring-0"
+      className="bg-primary text-primary-foreground scale-1 hover:scale-[1.05] transition-all duration-300 rounded-full px-8 hover:bg-secondary border-none outline-none focus-visible:ring-0"
       disabled={disabled || false}
     >
       {isLoading ? (

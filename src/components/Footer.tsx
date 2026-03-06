@@ -80,25 +80,25 @@ const Footer = () => {
               <Logo scale={1.3} />
             </Link>
             <div>
-              <p className="text-xs text-[#7B7E83] dark:text-[#808389] font-medium">
+              <p className="text-xs text-muted-foreground font-medium">
                 Launch your SaaS in days, not weeks
               </p>
             </div>
           </div>
           <div className="sm:order-3 xl:order-2">
-            <p className="uppercase text-[#86898E] dark:text-[#808389] font-semibold text-base mb-8">
+            <p className="uppercase text-tertiary font-semibold text-base mb-8">
               Links
             </p>
             <NavLinks nav_links={nav_links1} isFooter={true} />
           </div>
           <div className="sm:order-last xl:order-3">
-            <p className="uppercase text-[#86898E] dark:text-[#808389] font-semibold text-base mb-8">
+            <p className="uppercase text-tertiary font-semibold text-base mb-8">
               Legal
             </p>
             <NavLinks nav_links={nav_links2} isFooter={true} />
           </div>
           <div className="sm:order-2 xl:order-last">
-            <p className="uppercase text-[#86898E] dark:text-[#808389] font-semibold text-base mb-8">
+            <p className="uppercase text-tertiary font-semibold text-base mb-8">
               CONTACT THE MAKER
             </p>
             <p className="text-black1 dark:text-white font-medium text-base mb-6">
@@ -171,7 +171,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <p className="text-xs text-[#7B7E83] dark:text-[#808389] font-medium text-center sm:text-right">
+          <p className="text-xs text-muted-foreground font-medium text-center sm:text-right">
             © 2025 ProChat - All rights reserved
           </p>
         </div>

@@ -26,16 +26,16 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
   onPrimaryCtaClick
 }) => {
   return (
-    <section className="py-32 relative bg-white flex items-center justify-center border-t border-slate-100 dark:bg-[#0B111B] dark:border-[#1E242D]">
+    <section className="py-32 relative bg-background flex items-center justify-center border-t border-border-subtle">
        <div className="max-w-3xl mx-auto px-page text-center space-y-8">
           <Reveal width="100%">
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 leading-[1.1] dark:text-white">
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.1]">
                  {heading}
               </h2>
           </Reveal>
           {subhead && (
             <Reveal delay={0.3} width="100%">
-                <p className="text-xl text-slate-500 font-light dark:text-slate-400">
+                <p className="text-xl text-muted-foreground font-light">
                    {subhead}
                 </p>
             </Reveal>
@@ -48,7 +48,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({
                     </Button>
                  </Link>
                  <Link href={primaryCtaLink} onClick={onPrimaryCtaClick}>
-                    <Button size="lg" className="h-16 px-12 text-lg bg-[#1D4ED8] hover:bg-[#2563EB] text-white shadow-xl shadow-[#1D4ED8]/20 hover:shadow-[#1D4ED8]/40 transition-all dark:shadow-[0_0_24px_-12px_rgba(29,78,216,0.35)] dark:hover:shadow-[0_0_34px_-12px_rgba(29,78,216,0.45)]">
+                    <Button size="lg" className="h-16 px-12 text-lg bg-primary hover:bg-secondary text-primary-foreground shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all dark:shadow-[0_0_24px_-12px_rgb(var(--pc-blue-600-rgb)/0.35)] dark:hover:shadow-[0_0_34px_-12px_rgb(var(--pc-blue-600-rgb)/0.45)]">
                         {primaryCtaLabel}
                     </Button>
                  </Link>

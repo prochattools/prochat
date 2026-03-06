@@ -18,7 +18,7 @@ export const Banner: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3 group cursor-default">
-            <div className="p-2 bg-white rounded-lg border border-slate-200 text-slate-400 group-hover:text-[#1D4ED8] group-hover:border-[#1D4ED8]/30 transition-colors">
+            <div className="p-2 bg-white rounded-lg border border-slate-200 text-slate-400 group-hover:text-primary group-hover:border-primary/30 transition-colors">
               <Zap size={20} />
             </div>
             <div>

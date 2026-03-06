@@ -40,13 +40,13 @@ const BASE_STYLE_OVERRIDES = `
   }
 
   ::selection {
-    background: #2563EB;
+    background: rgb(var(--pc-blue-500-rgb) / 1);
     color: white;
   }
 `
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
+  themeColor: 'black',
   width: 'device-width',
   initialScale: 1,
 }

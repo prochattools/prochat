@@ -16,7 +16,9 @@
     "db:migrate:dev": "prisma migrate dev --schema=prisma/system.prisma",
     "db:migrate:prod": "prisma migrate deploy --schema=prisma/system.prisma",
     "predev": "node scripts/dev/bootstrap-env.js && npm run db:init && npm run db:migrate:dev",
-    "db:provision:local": "NODE_ENV=development npm run provision:auto"
+    "db:provision:local": "NODE_ENV=development npm run provision:auto",
+    "lint:design": "node scripts/design/lint-design-system.mjs",
+    "lint:design:baseline": "node scripts/design/lint-design-system.mjs --write-baseline"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.7.1",

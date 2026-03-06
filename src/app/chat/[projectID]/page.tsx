@@ -140,7 +140,7 @@ export default function ChatPage() {
 								${
 									errors.message && touched.message
 										? 'focus:ring-red-500 border-red-500'
-										: 'focus:ring-[#2563EB]/50'
+										: 'focus:ring-primary/50'
 								}`}
 						/>
 						<Button

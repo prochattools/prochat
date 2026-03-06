@@ -38,7 +38,7 @@ const StripePortalButton: React.FC = () => {
         onClick={handlePortalRedirect}
         disabled={isLoading}
         className={`
-          bg-[#1D4ED8] hover:bg-[#2563EB] text-white font-bold py-2 px-4 rounded
+          bg-primary hover:bg-secondary text-primary-foreground font-bold py-2 px-4 rounded
           ${isLoading ? "opacity-50 cursor-not-allowed" : ""}
         `}
       >

@@ -25,9 +25,9 @@ const Dashboard = () => {
 	})
 
 	return (
-		<div className='flex justify-center items-center w-full bg-white dark:bg-[#010814] my-16'>
-			<div className='max-w-[1440px] w-full rounded-[16px] mx-4 sm:mx-12 dark:border dark:border-[#5f708b] bg-white dark:bg-gradient-to-r from-[#1E242D] to-[#0B111B] min-h-[300px] pb-6'>
-				<div className='flex justify-between items-center w-full p-4 sm:p-8 dark:border-b dark:border-[#4D525A]'>
+		<div className='flex justify-center items-center w-full bg-white dark:bg-background my-16'>
+			<div className='max-w-[1440px] w-full rounded-[16px] mx-4 sm:mx-12 dark:border dark:border-border-strong bg-white dark:bg-gradient-to-r dark:from-surface-elevated dark:to-surface min-h-[300px] pb-6'>
+				<div className='flex justify-between items-center w-full p-4 sm:p-8 dark:border-b dark:border-border-subtle'>
 					<p className='text-black1 dark:text-white font-semibold text-xl'>
 						Weather App
 					</p>

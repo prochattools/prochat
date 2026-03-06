@@ -30,7 +30,7 @@ type ContainerProps = {
 const Section = ({ id, className = '', children }: SectionProps) => (
 	<section
 		id={id}
-		className={`py-24 bg-white border-b border-slate-100 dark:bg-[#0B111B] dark:border-[#1E242D] ${className}`}
+		className={`py-24 bg-background border-b border-border-subtle ${className}`}
 	>
 		{children}
 	</section>
@@ -50,7 +50,7 @@ export default function ProofPageContent() {
 	}
 
 	return (
-		<main className="min-h-screen bg-gray-50 text-slate-900 font-sans selection:bg-[#2563EB]/20 dark:bg-[#0B111B] dark:text-[#E6EAF2] dark:selection:bg-[#1D4ED8]/40 overflow-x-hidden relative">
+		<main className="min-h-screen bg-background text-foreground font-sans selection:bg-secondary/20 dark:selection:bg-primary/40 overflow-x-hidden relative">
 			<div className="fixed inset-0 pointer-events-none z-0">
 				<Scaffolding opacity={0.6} />
 			</div>
@@ -78,10 +78,10 @@ export default function ProofPageContent() {
 							<div className="flex flex-col justify-center space-y-8 order-2 lg:order-1">
 								<Reveal>
 									<div className="space-y-4">
-										<h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight dark:text-white">
+										<h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
 											What &quot;proof&quot; means here.
 										</h2>
-										<p className="text-slate-500 text-lg leading-relaxed max-w-[45ch] dark:text-slate-400">
+										<p className="text-muted-foreground text-lg leading-relaxed max-w-[45ch]">
 											Most SaaS websites show outcomes without showing the process that
 											produced them.
 										</p>
@@ -89,7 +89,7 @@ export default function ProofPageContent() {
 								</Reveal>
 
 								<Reveal delay={0.1}>
-									<div className="pl-6 border-l-2 border-[#1D4ED8] italic text-slate-700 text-lg font-medium leading-relaxed dark:text-slate-200">
+									<div className="pl-6 border-l-2 border-primary italic text-foreground/90 text-lg font-medium leading-relaxed">
 										&quot;This page does not show a highlight reel. It shows evidence
 										that a real system exists, is being followed, and constrains
 										decisions.&quot;
@@ -98,7 +98,7 @@ export default function ProofPageContent() {
 
 								<Reveal delay={0.2}>
 									<div className="pt-2">
-										<p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 dark:text-slate-500">
+										<p className="text-xs font-bold text-tertiary uppercase tracking-widest mb-4">
 											OBSERVABLE EVIDENCE:
 										</p>
 										<ul className="space-y-3">
@@ -110,9 +110,9 @@ export default function ProofPageContent() {
 											].map((item, i) => (
 												<li
 													key={i}
-													className="flex items-center gap-3 text-slate-900 font-medium dark:text-white"
+													className="flex items-center gap-3 text-foreground font-medium"
 												>
-													<Check size={18} className="text-[#1D4ED8] shrink-0" />
+													<Check size={18} className="text-primary shrink-0" />
 													{item}
 												</li>
 											))}
@@ -128,53 +128,53 @@ export default function ProofPageContent() {
 										{/* Abstract Process Visualization */}
 										<div className="space-y-4 relative z-10">
 											{/* P1 */}
-											<div className="p-4 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-between opacity-50 grayscale dark:bg-[#0F1626] dark:border-[#1E242D]">
+											<div className="p-4 bg-surface-soft border border-border-subtle rounded-xl flex items-center justify-between opacity-50 grayscale">
 												<div className="flex items-center gap-3">
-													<div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-500 dark:bg-[#1E242D] dark:text-slate-400">
+													<div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-xs font-bold text-muted-foreground">
 														01
 													</div>
-													<span className="text-sm font-bold text-slate-500 dark:text-slate-400">
+													<span className="text-sm font-bold text-muted-foreground">
 														CLIENTS
 													</span>
 												</div>
-												<Users size={16} className="text-slate-400 dark:text-slate-500" />
+												<Users size={16} className="text-tertiary" />
 											</div>
 
 											{/* P2 - Active */}
-											<div className="p-6 bg-white border border-[#1D4ED8]/20 shadow-xl shadow-[#1D4ED8]/5 rounded-xl relative scale-105 dark:bg-[#0F1424]">
-												<div className="absolute -top-3 right-4 px-3 py-1 bg-[#1D4ED8] text-white text-[10px] font-bold uppercase tracking-wide rounded-full">
+											<div className="p-6 bg-surface-elevated border border-primary/20 shadow-surface shadow-primary/10 rounded-xl relative scale-105">
+												<div className="absolute -top-3 right-4 px-3 py-1 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-wide rounded-full">
 													Current Phase
 												</div>
 												<div className="flex items-center gap-3 mb-3">
-													<div className="w-8 h-8 rounded-full bg-[#1D4ED8] flex items-center justify-center text-xs font-bold text-white">
+													<div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-primary-foreground">
 														02
 													</div>
-													<span className="text-sm font-bold text-[#1D4ED8]">
+													<span className="text-sm font-bold text-primary">
 														SYSTEM CONSTRUCTION
 													</span>
 												</div>
-												<p className="text-xs text-slate-500 leading-relaxed pl-11 dark:text-slate-400">
+												<p className="text-xs text-muted-foreground leading-relaxed pl-11">
 													Building the constraint engine based on service friction.
 													Validating stack choices against real paid requests.
 												</p>
 											</div>
 
 											{/* P3 */}
-											<div className="p-4 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-between opacity-50 border-dashed dark:bg-[#0F1626] dark:border-[#1E242D]">
+											<div className="p-4 bg-surface-soft border border-border-subtle rounded-xl flex items-center justify-between opacity-50 border-dashed">
 												<div className="flex items-center gap-3">
-													<div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-300 dark:border-[#1E242D] dark:text-slate-600">
+													<div className="w-8 h-8 rounded-full border border-border-subtle flex items-center justify-center text-xs font-bold text-tertiary">
 														03
 													</div>
-													<span className="text-sm font-bold text-slate-400 dark:text-slate-500">
+													<span className="text-sm font-bold text-tertiary">
 														ASSET SCALE
 													</span>
 												</div>
-												<div className="w-4 h-4 rounded-full border border-slate-200 dark:border-[#1E242D]" />
+												<div className="w-4 h-4 rounded-full border border-border-subtle" />
 											</div>
 										</div>
 
 										{/* Connector Line */}
-										<div className="absolute left-[28px] top-6 bottom-6 w-px bg-slate-200 -z-0 dark:bg-[#1E242D]" />
+										<div className="absolute left-[28px] top-6 bottom-6 w-px bg-border-subtle -z-0" />
 									</div>
 								</Reveal>
 							</div>

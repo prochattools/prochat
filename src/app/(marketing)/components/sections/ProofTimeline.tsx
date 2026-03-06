@@ -7,15 +7,15 @@ import { Reveal } from '../ui/Reveal';
 // SECTION: TIMELINE
 const ProofTimeline: React.FC = () => {
     return (
-        <section id="phases" className="w-full py-20 bg-white dark:bg-[#0B111B]">
+        <section id="phases" className="w-full py-20 bg-background">
             <div className="mx-auto w-full max-w-[1120px] px-page">
                 <div className="mx-auto w-full max-w-4xl text-center">
                     <Reveal width="100%">
                         <div>
-                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 dark:text-white">
+                            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                                 Proof accumulates. It doesn’t get invented.
                             </h2>
-                            <div className="text-slate-500 max-w-xl mx-auto mb-16 font-light text-xl dark:text-slate-400">
+                            <div className="text-muted-foreground max-w-xl mx-auto mb-16 font-light text-xl">
                                 This page will evolve only as the system progresses. Each stage appears only after it is
                                 reached.
                             </div>
@@ -26,7 +26,7 @@ const ProofTimeline: React.FC = () => {
                         <div className="mt-12 flex justify-center">
                             <div className="relative inline-flex flex-wrap items-center justify-center gap-10 md:gap-14">
                                 {/* Connecting Line */}
-                                <div className="hidden md:block absolute top-[28px] left-0 right-0 h-0.5 bg-slate-100 -z-10 dark:bg-[#1E242D]" />
+                                <div className="hidden md:block absolute top-[28px] left-0 right-0 h-0.5 bg-border-subtle -z-10" />
 
                                 {[
                                     { step: '01', label: 'Service', status: 'complete', sub: 'Done' },
@@ -37,14 +37,14 @@ const ProofTimeline: React.FC = () => {
                                     <div key={i} className="flex flex-col items-center group">
                                         <div
                                             className={`
-                        w-14 h-14 rounded-full flex items-center justify-center text-sm font-bold border-[4px] transition-all duration-500 z-10 bg-white dark:bg-[#0F1424]
-                        ${s.status === 'complete' ? 'border-slate-900 text-slate-900 dark:border-slate-100 dark:text-slate-100' : ''}
+                        w-14 h-14 rounded-full flex items-center justify-center text-sm font-bold border-[4px] transition-all duration-500 z-10 bg-surface
+                        ${s.status === 'complete' ? 'border-foreground text-foreground' : ''}
                         ${
                             s.status === 'active'
-                                ? 'border-[#1D4ED8] text-[#1D4ED8] shadow-[0_0_0_8px_rgba(29,78,216,0.15)] scale-110'
+                                ? 'border-primary text-primary shadow-[0_0_0_8px_rgb(var(--pc-blue-600-rgb)/0.15)] scale-110'
                                 : ''
                         }
-                        ${s.status === 'locked' ? 'border-slate-100 text-slate-300 dark:border-[#1E242D] dark:text-slate-600' : ''}
+                        ${s.status === 'locked' ? 'border-border-subtle text-tertiary' : ''}
                       `}
                                         >
                                             {s.status === 'complete' && <Check size={20} strokeWidth={3} />}
@@ -60,15 +60,15 @@ const ProofTimeline: React.FC = () => {
                                             <div
                                                 className={`text-sm font-bold uppercase tracking-wider ${
                                                     s.status === 'active'
-                                                        ? 'text-[#1D4ED8]'
+                                                        ? 'text-primary'
                                                         : s.status === 'locked'
-                                                            ? 'text-slate-300 dark:text-slate-600'
-                                                            : 'text-slate-900 dark:text-slate-100'
+                                                            ? 'text-tertiary'
+                                                            : 'text-foreground'
                                                 }`}
                                             >
                                                 {s.label}
                                             </div>
-                                            <div className="text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                                            <div className="text-[10px] font-mono uppercase tracking-widest text-tertiary">
                                                 {s.sub}
                                             </div>
                                         </div>

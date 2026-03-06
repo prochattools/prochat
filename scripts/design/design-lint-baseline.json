@@ -1,0 +1,5 @@
+{
+  "generatedAt": "2026-03-06T09:46:59.002Z",
+  "rule": "No new hardcoded hex colors in src/ (baseline lock)",
+  "hexByFile": {}
+}

@@ -7,7 +7,7 @@ import { Reveal } from '../ui/Reveal';
 
 export const RoutingTiles: React.FC = () => {
   return (
-    <section className="py-24 bg-slate-50/50 border-y border-slate-200 dark:bg-[#0F1626] dark:border-[#1E242D]">
+    <section className="py-24 bg-slate-50/50 border-y border-slate-200 dark:bg-surface-soft dark:border-border-subtle">
       <div className="max-w-7xl mx-auto px-page">
         <Reveal>
           <h2 className="text-3xl font-bold text-slate-900 mb-12 text-center dark:text-white">Choose your entry point</h2>
@@ -42,12 +42,12 @@ export const RoutingTiles: React.FC = () => {
           ].map((tile, i) => (
             <Reveal key={i} delay={i * 0.1}>
               <div id={tile.anchorId} className="h-full">
-                <BlueprintCard className="h-full p-8 flex flex-col bg-white dark:bg-[#0F1424]">
+                <BlueprintCard className="h-full p-8 flex flex-col bg-white dark:bg-surface">
                   <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 dark:text-slate-500">{tile.label}</div>
                   <h3 className="text-2xl font-bold text-slate-900 mb-4 dark:text-white">{tile.title}</h3>
                   <p className="text-slate-500 mb-8 flex-grow leading-relaxed font-light dark:text-slate-400">{tile.body}</p>
                   {tile.href ? (
-                    <Link href={tile.href} className="inline-flex items-center gap-2 text-[#1D4ED8] font-bold hover:gap-3 transition-all dark:text-[#2563EB]">
+                    <Link href={tile.href} className="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all dark:text-secondary">
                       {tile.cta} <ArrowRight size={16} />
                     </Link>
                   ) : (

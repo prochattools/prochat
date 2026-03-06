@@ -50,7 +50,7 @@ const BlogCard = () => {
             <Link
               href={`/blog/${post.slug}`}
               key={index}
-              className="bg-white  dark:bg-[#1E232C] rounded-xl overflow-hidden shadow-lg dark:border border-solid border-[#373C53] hover:border-[#5b6285] transition-all duration-500 transform hover:scale-105 ease-in-out  "
+              className="bg-white dark:bg-surface rounded-xl overflow-hidden shadow-lg dark:border border-solid border-border hover:border-border-strong transition-all duration-500 transform hover:scale-105 ease-in-out"
             >
               <Image
                 src={post.image}
@@ -71,7 +71,7 @@ const BlogCard = () => {
         {visiblePosts < posts.length && (
           <div className="flex justify-center">
             <button
-              className="bg-[#1364FF] w-32 rounded-lg text-white font-semibold py-3 mt-12"
+              className="bg-primary hover:bg-secondary w-32 rounded-lg text-primary-foreground font-semibold py-3 mt-12 transition-colors"
               onClick={loadMore}
             >
               See more

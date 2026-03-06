@@ -15,10 +15,26 @@ interface ContactConfirmationEmailProps {
   message: string
 }
 
+const EMAIL_COLORS = {
+  background: 'rgb(248 250 252)',
+  textPrimary: 'rgb(11 18 32)',
+  textStrong: 'rgb(15 23 42)',
+  textBody: 'rgb(51 65 85)',
+  textMuted: 'rgb(100 116 139)',
+  surface: 'rgb(255 255 255)',
+  headerSurface: 'rgb(239 246 255)',
+  headerAccent: 'rgb(29 78 216)',
+} as const
+
+const EMAIL_BORDERS = {
+  soft: '1px solid rgb(226 232 240)',
+  header: '1px solid rgb(219 234 254)',
+} as const
+
 const styles = {
   body: {
-    backgroundColor: '#f8fafc',
-    color: '#0b1220',
+    backgroundColor: EMAIL_COLORS.background,
+    color: EMAIL_COLORS.textPrimary,
     fontFamily: 'Host Grotesk, Golos Text, -apple-system, Segoe UI, Arial, sans-serif',
     margin: 0,
     padding: '24px 12px',
@@ -29,18 +45,18 @@ const styles = {
     width: '100%',
   },
   card: {
-    backgroundColor: '#ffffff',
-    border: '1px solid #e2e8f0',
+    backgroundColor: EMAIL_COLORS.surface,
+    border: EMAIL_BORDERS.soft,
     borderRadius: '16px',
     overflow: 'hidden',
   },
   header: {
-    backgroundColor: '#eff6ff',
-    borderBottom: '1px solid #dbeafe',
+    backgroundColor: EMAIL_COLORS.headerSurface,
+    borderBottom: EMAIL_BORDERS.header,
     padding: '18px 24px',
   },
   headerKicker: {
-    color: '#1d4ed8',
+    color: EMAIL_COLORS.headerAccent,
     fontFamily: 'JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace',
     fontSize: '11px',
     letterSpacing: '0.08em',
@@ -48,7 +64,7 @@ const styles = {
     textTransform: 'uppercase' as const,
   },
   headerTitle: {
-    color: '#0b1220',
+    color: EMAIL_COLORS.textPrimary,
     fontSize: '24px',
     fontWeight: 700,
     lineHeight: '1.2',
@@ -58,13 +74,13 @@ const styles = {
     padding: '20px 24px',
   },
   paragraph: {
-    color: '#334155',
+    color: EMAIL_COLORS.textBody,
     fontSize: '16px',
     lineHeight: '1.7',
     margin: '0 0 14px',
   },
   label: {
-    color: '#64748b',
+    color: EMAIL_COLORS.textMuted,
     fontFamily: 'JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace',
     fontSize: '11px',
     letterSpacing: '0.08em',
@@ -72,10 +88,10 @@ const styles = {
     textTransform: 'uppercase' as const,
   },
   messageBox: {
-    backgroundColor: '#f8fafc',
-    border: '1px solid #e2e8f0',
+    backgroundColor: EMAIL_COLORS.background,
+    border: EMAIL_BORDERS.soft,
     borderRadius: '12px',
-    color: '#0f172a',
+    color: EMAIL_COLORS.textStrong,
     fontSize: '15px',
     lineHeight: '1.65',
     margin: 0,
@@ -83,8 +99,8 @@ const styles = {
     whiteSpace: 'pre-wrap' as const,
   },
   footer: {
-    borderTop: '1px solid #e2e8f0',
-    color: '#64748b',
+    borderTop: EMAIL_BORDERS.soft,
+    color: EMAIL_COLORS.textMuted,
     fontFamily: 'JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace',
     fontSize: '11px',
     letterSpacing: '0.06em',

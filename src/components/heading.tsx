@@ -13,7 +13,7 @@ const Heading = ({ title, desc, maxWidth }: types) => {
         {title}
       </h2>
       <p
-        className={`text-[#7B7E83] dark:text-[#808389] font-inter font-medium text-base text-center`}
+        className={`text-muted-foreground dark:text-tertiary font-inter font-medium text-base text-center`}
         style={{ maxWidth: maxWidth ? `${maxWidth}px` : "none" }}
       >
         {desc}

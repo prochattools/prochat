@@ -9,6 +9,6 @@
 }
 
 .marketingRoot ::selection {
-  background: #2563EB;
-  color: #ffffff;
+  background: rgb(var(--pc-blue-500-rgb) / 1);
+  color: rgb(var(--pc-primary-foreground-rgb) / 1);
 }

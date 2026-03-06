@@ -62,7 +62,7 @@ const config: ConfigProps = {
 	},
 	colors: {
 		theme: 'light',
-		main: '#1D4ED8',
+		main: 'rgb(29, 78, 216)',
 	},
 	resend: {
 		// REQUIRED — Email 'From' field to be used when sending other emails, like abandoned carts, updates etc..

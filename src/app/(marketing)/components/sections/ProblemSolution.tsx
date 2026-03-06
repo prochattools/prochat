@@ -22,7 +22,7 @@ export const ProblemSolution: React.FC<ProblemSolutionProps> = ({
   closingLine
 }) => {
   return (
-    <section className="py-32 relative bg-white border-y border-slate-100 overflow-hidden dark:bg-[#0B111B] dark:border-[#1E242D]">
+    <section className="py-32 relative bg-background border-y border-border-subtle overflow-hidden">
       <div className="max-w-7xl mx-auto px-page relative z-10">
         
         {/* PROBLEM */}
@@ -34,14 +34,14 @@ export const ProblemSolution: React.FC<ProblemSolutionProps> = ({
                   </div>
                 </Reveal>
                 <Reveal delay={0.3}>
-                  <h2 className="text-4xl font-bold text-slate-900 leading-tight dark:text-white">
+                  <h2 className="text-4xl font-bold text-foreground leading-tight">
                       {title}
                   </h2>
                 </Reveal>
                 <Reveal delay={0.4}>
                   <ul className="space-y-4 mt-6">
                     {bullets.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-lg text-slate-500 font-light dark:text-slate-400">
+                      <li key={i} className="flex items-start gap-3 text-lg text-muted-foreground font-light">
                         <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0 dark:bg-orange-400/80" />
                         {item}
                       </li>
@@ -50,7 +50,7 @@ export const ProblemSolution: React.FC<ProblemSolutionProps> = ({
                 </Reveal>
                 {closingLine && (
                   <Reveal delay={0.5}>
-                    <p className="text-lg text-slate-500 font-light dark:text-slate-400">
+                    <p className="text-lg text-muted-foreground font-light">
                       {closingLine}
                     </p>
                   </Reveal>
@@ -58,34 +58,34 @@ export const ProblemSolution: React.FC<ProblemSolutionProps> = ({
             </div>
             
             {/* The Setup Trap Visual - Comparison Style */}
-            <div className="relative h-80 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200 p-8 flex items-center justify-center group overflow-hidden dark:bg-[#0F1626] dark:border-[#1E242D]">
+            <div className="relative h-80 bg-surface-soft/70 rounded-2xl border border-dashed border-border-subtle p-8 flex items-center justify-center group overflow-hidden">
                  
                  <div className="w-full max-w-md grid grid-cols-2 gap-8 relative z-10">
                     
                     {/* Left: The Hard Way (Fragmented) */}
                     <div className="flex flex-col gap-3 opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
-                        <div className="text-[10px] font-mono uppercase tracking-widest text-slate-400 text-center mb-1 dark:text-slate-500">Manual Setup</div>
+                        <div className="text-[10px] font-mono uppercase tracking-widest text-tertiary text-center mb-1">Manual Setup</div>
                         {[
                             { label: "Auth Config", status: "error" },
                             { label: "Stripe API", status: "loading" },
                             { label: "DB Schema", status: "waiting" },
                             { label: "Emails", status: "waiting" }
                         ].map((item, i) => (
-                            <div key={i} className="bg-white border border-slate-200 rounded-lg p-3 shadow-sm flex items-center justify-between transform transition-transform group-hover:translate-x-[-2px] group-hover:rotate-[-1deg] dark:bg-[#0B111B] dark:border-[#1E242D] dark:shadow-none" style={{ transitionDelay: `${i * 50}ms` }}>
+                            <div key={i} className="bg-surface border border-border-subtle rounded-lg p-3 shadow-sm flex items-center justify-between transform transition-transform group-hover:translate-x-[-2px] group-hover:rotate-[-1deg]" style={{ transitionDelay: `${i * 50}ms` }}>
                                 <div className="flex items-center gap-2">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600" />
-                                    <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{item.label}</span>
+                                    <div className="w-1.5 h-1.5 rounded-full bg-border-strong" />
+                                    <span className="text-[10px] font-medium text-muted-foreground">{item.label}</span>
                                 </div>
-                                {item.status === 'error' ? <div className="w-1.5 h-1.5 rounded-full bg-red-400" /> : <div className="w-3 h-1 bg-slate-200 rounded-full animate-pulse dark:bg-slate-700" />}
+                                {item.status === 'error' ? <div className="w-1.5 h-1.5 rounded-full bg-red-400" /> : <div className="w-3 h-1 bg-muted rounded-full animate-pulse" />}
                             </div>
                         ))}
                     </div>
 
                     {/* Right: The System Way (Unified) */}
                     <div className="flex flex-col gap-3 relative">
-                        <div className="text-[10px] font-mono uppercase tracking-widest text-[#1D4ED8] text-center mb-1 dark:text-[#2563EB]">System Core</div>
-                        <div className="bg-white border border-slate-200/80 shadow-[0_8px_30px_-6px_rgba(29,78,216,0.15)] rounded-xl p-4 h-full relative overflow-hidden group-hover:border-[#1D4ED8]/30 transition-colors dark:bg-[#0B111B] dark:border-[#2A3445] dark:shadow-none">
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#1D4ED8] to-[#2563EB]" />
+                        <div className="text-[10px] font-mono uppercase tracking-widest text-primary text-center mb-1">System Core</div>
+                        <div className="bg-surface border border-border-subtle shadow-surface rounded-xl p-4 h-full relative overflow-hidden group-hover:border-primary/30 transition-colors">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary" />
                             <div className="space-y-3 pt-2">
                                 {[
                                     "Identity System",
@@ -94,22 +94,22 @@ export const ProblemSolution: React.FC<ProblemSolutionProps> = ({
                                     "Comms Engine"
                                 ].map((feature, j) => (
                                     <div key={j} className="flex items-center gap-2.5">
-                                        <div className="w-4 h-4 rounded-full bg-[#1D4ED8]/10 flex items-center justify-center text-[#1D4ED8] dark:bg-[#1D4ED8]/20">
+                                        <div className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center text-primary dark:bg-primary/20">
                                             <Check size={10} strokeWidth={3} />
                                         </div>
-                                        <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200">{feature}</span>
+                                        <span className="text-[11px] font-bold text-foreground">{feature}</span>
                                     </div>
                                 ))}
                             </div>
-                            <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between dark:border-[#1E242D]">
-                                <span className="text-[9px] text-slate-400 font-medium dark:text-slate-500">Status</span>
+                            <div className="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between">
+                                <span className="text-[9px] text-tertiary font-medium">Status</span>
                                 <span className="text-[9px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 dark:text-emerald-300 dark:bg-emerald-500/10 dark:border-emerald-500/20">Ready</span>
                             </div>
                         </div>
                     </div>
 
                     {/* Divider */}
-                    <div className="absolute left-1/2 top-8 bottom-0 w-px border-l border-dashed border-slate-200 -translate-x-1/2 hidden md:block dark:border-[#2A3445]" />
+                    <div className="absolute left-1/2 top-8 bottom-0 w-px border-l border-dashed border-border-subtle -translate-x-1/2 hidden md:block" />
 
                  </div>
             </div>

@@ -9,25 +9,25 @@
 	--pc-base-font-size: 15.5px;
 	--pc-page-gutter: clamp(1.125rem, 2.4vw, 2.875rem);
 	--pc-reading-max: 72ch;
-	--pc-blue-600: #1d4ed8;
-	--pc-blue-500: #2563eb;
-	--pc-blue-900: #1e3a8a;
+	--pc-blue-600: rgb(29 78 216);
+	--pc-blue-500: rgb(37 99 235);
+	--pc-blue-900: rgb(30 58 138);
 
 	--pc-blue-600-rgb: 29 78 216;
 	--pc-blue-500-rgb: 37 99 235;
 	--pc-blue-900-rgb: 30 58 138;
 
-	--pc-gray-950: #0b1220;
-	--pc-gray-900: #0f172a;
-	--pc-gray-800: #1f2937;
-	--pc-gray-700: #334155;
-	--pc-gray-600: #475569;
-	--pc-gray-500: #64748b;
-	--pc-gray-400: #94a3b8;
-	--pc-gray-300: #cbd5e1;
-	--pc-gray-200: #e2e8f0;
-	--pc-gray-100: #f1f5f9;
-	--pc-gray-50: #f8fafc;
+	--pc-gray-950: rgb(11 18 32);
+	--pc-gray-900: rgb(15 23 42);
+	--pc-gray-800: rgb(31 41 55);
+	--pc-gray-700: rgb(51 65 85);
+	--pc-gray-600: rgb(71 85 105);
+	--pc-gray-500: rgb(100 116 139);
+	--pc-gray-400: rgb(148 163 184);
+	--pc-gray-300: rgb(203 213 225);
+	--pc-gray-200: rgb(226 232 240);
+	--pc-gray-100: rgb(241 245 249);
+	--pc-gray-50: rgb(248 250 252);
 
 	--pc-gray-950-rgb: 11 18 32;
 	--pc-gray-900-rgb: 15 23 42;
@@ -42,16 +42,16 @@
 	--pc-gray-50-rgb: 248 250 252;
 
 	--pc-bg: var(--pc-gray-50);
-	--pc-surface: #ffffff;
-	--pc-surface-soft: #f5f8fc;
-	--pc-surface-elevated: #ffffff;
+	--pc-surface: rgb(255 255 255);
+	--pc-surface-soft: rgb(245 248 252);
+	--pc-surface-elevated: rgb(255 255 255);
 	--pc-text: var(--pc-gray-900);
 	--pc-muted: var(--pc-gray-100);
 	--pc-muted-foreground: var(--pc-gray-500);
-	--pc-muted-foreground-soft: #7e8ca3;
+	--pc-muted-foreground-soft: rgb(126 140 163);
 	--pc-border: var(--pc-gray-200);
-	--pc-border-subtle: #e6ebf4;
-	--pc-border-strong: #ccd7e6;
+	--pc-border-subtle: rgb(230 235 244);
+	--pc-border-strong: rgb(204 215 230);
 
 	--pc-bg-rgb: var(--pc-gray-50-rgb);
 	--pc-surface-rgb: 255 255 255;
@@ -142,8 +142,8 @@ samp {
 }
 
 ::selection {
-	background: #2563eb;
-	color: #ffffff;
+	background: rgb(var(--pc-blue-500-rgb) / 1);
+	color: rgb(255 255 255 / 1);
 }
 
 :focus-visible {
@@ -212,34 +212,18 @@ samp {
 	}
 }
 
-@layer base {
-	.font-marketing :is(main, section, article, header, footer, div)[class*="mx-auto"][class*="max-w-"][class*="px-4"],
-	.font-marketing :is(main, section, article, header, footer, div)[class*="mx-auto"][class*="max-w-"][class*="px-6"],
-	.font-marketing :is(main, section, article, header, footer, div)[class*="mx-auto"][class*="max-w-"][class*="px-8"] {
-		padding-left: var(--pc-page-gutter);
-		padding-right: var(--pc-page-gutter);
-	}
-
-	.font-marketing :is(main, section, article, header, footer, div)[class*="mx-auto"][class*="max-w-"][class*="sm:px-8"] {
-		@media (min-width: 640px) {
-			padding-left: var(--pc-page-gutter);
-			padding-right: var(--pc-page-gutter);
-		}
-	}
-}
-
 .dark {
-	--pc-bg: #0f1115;
-	--pc-surface: #161b24;
-	--pc-surface-soft: #1a2230;
-	--pc-surface-elevated: #202a39;
-	--pc-text: #e8edf3;
-	--pc-muted: #1d2531;
-	--pc-muted-foreground: #a3b0c2;
-	--pc-muted-foreground-soft: #8899b0;
-	--pc-border: #2f3949;
-	--pc-border-subtle: #2c394c;
-	--pc-border-strong: #3c4d65;
+	--pc-bg: rgb(15 17 21);
+	--pc-surface: rgb(22 27 36);
+	--pc-surface-soft: rgb(26 34 48);
+	--pc-surface-elevated: rgb(32 42 57);
+	--pc-text: rgb(232 237 243);
+	--pc-muted: rgb(29 37 49);
+	--pc-muted-foreground: rgb(163 176 194);
+	--pc-muted-foreground-soft: rgb(136 153 176);
+	--pc-border: rgb(47 57 73);
+	--pc-border-subtle: rgb(44 57 76);
+	--pc-border-strong: rgb(60 77 101);
 
 	--pc-bg-rgb: 15 17 21;
 	--pc-surface-rgb: 22 27 36;
@@ -282,7 +266,7 @@ html.dark {
 }
 
 .blocks-class a {
-	color: #0000ee !important;
+	color: rgb(0 0 238) !important;
 	text-decoration: underline;
 }
 
@@ -320,7 +304,7 @@ html.dark {
 }
 
 #theme-toggle:checked {
-	background-color: #373c53;
+	background-color: rgb(55 60 83);
 }
 
 #theme-toggle:checked ~ span:last-child {
@@ -328,12 +312,12 @@ html.dark {
 }
 
 .close-div button {
-	color: #fff;
+	color: rgb(255 255 255);
 	display: none;
 }
 
 .glass {
-	background: #121a32;
+	background: rgb(18 26 50);
 	background: linear-gradient(
 		155deg,
 		rgba(5, 0, 107, 0) 0%,

@@ -61,7 +61,7 @@ const AboutMe = () => {
                 />
               </div>
             </div>
-            <div className="lg:w-[65%] text-[#41444C] dark:text-[#B2B5BA] text-base font-medium">
+            <div className="lg:w-[65%] text-muted-foreground text-base font-medium">
               <p className="mb-3">
                 ProChat builds and ships SaaS faster by standardizing on one
                 stack and one starter: <strong className="text-black1 dark:text-white">ProKit</strong>.
@@ -116,7 +116,7 @@ const AboutMe = () => {
               </div>
             </div>
             <div className="flex flex-col justify-center w-full">
-              <p className="text-center text-[#41444C] dark:text-[#B2B5BA]">
+              <p className="text-center text-muted-foreground">
                 ProKit is the ProChat engine for testing and launching SaaS ideas
                 quickly. Built by Steve Westhoek and maintained by the ProChat team.
               </p>

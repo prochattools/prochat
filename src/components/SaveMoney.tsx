@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import { Heading, Logo } from "@/components";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/helpers/utils";
-import { Save } from "lucide-react";
 
 const data = [
   {
@@ -52,8 +51,8 @@ interface MoneyCardProps {
 const MoneyCard = ({ item }: MoneyCardProps) => {
   return (
     <div
-      className={`w-full pt-6 border rounded-[12px] bg-white dark:bg-gradient-to-r from-[#1E242D] to-[#0B111B] h-full scale-1 hover:scale-[1.05] transition-all duration-300 ${
-        !item?.isGreen ? "border-[#EA2222]" : "border-[#1AAB12]"
+      className={`w-full pt-6 border rounded-[12px] bg-surface-elevated h-full scale-1 hover:scale-[1.05] transition-all duration-300 ${
+        !item?.isGreen ? "border-destructive/60" : "border-emerald-600/55"
       }`}
     >
       <div className="h-full flex flex-col justify-between gap-4">
@@ -63,7 +62,7 @@ const MoneyCard = ({ item }: MoneyCardProps) => {
           </div>
           <ul
             className={`list-disc ml-4 mb-6 ${
-              item?.isGreen ? "marker:text-[#1AAB12]" : "marker:text-[#E93737]"
+              item?.isGreen ? "marker:text-emerald-600" : "marker:text-destructive"
             }`}
           >
             {item.features.map((feature, index) => (
@@ -78,7 +77,7 @@ const MoneyCard = ({ item }: MoneyCardProps) => {
         </div>
         <div
           className={`px-3 text-white font-bold text-lg rounded-b-lg flex items-center justify-center min-h-[50px] ${
-            item?.isGreen ? "bg-[#1AAB12]" : "bg-[#E93737]"
+            item?.isGreen ? "bg-emerald-600" : "bg-destructive"
           }`}
         >
           {item?.cost}
@@ -90,7 +89,7 @@ const MoneyCard = ({ item }: MoneyCardProps) => {
 
 const SaveMoney = () => {
   return (
-    <div className="flex justify-center items-center w-full bg-white dark:bg-[#010814] my-16">
+    <div className="flex justify-center items-center w-full bg-background my-16">
       <div className="max-w-[1440px] w-full px-4 sm:px-12">
         <div className="max-w-[450px] mx-auto mb-6">
           <Heading
@@ -112,7 +111,7 @@ const SaveMoney = () => {
           <p className="text-lg font-medium text-black1 dark:text-white text-center">
             ProKit starter kit saves you
           </p>
-          <p className="text-[#1AAB12] text-[32px] font-bold text-center mb-5">
+          <p className="text-emerald-600 text-[32px] font-bold text-center mb-5">
             €13,655
           </p>
         </div>

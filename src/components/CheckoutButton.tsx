@@ -32,7 +32,7 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ priceId, disabled = fal
   return (
     <div>
       <button 
-        className="w-full bg-[#1D4ED8] text-white py-2 px-4 rounded-md hover:bg-[#2563EB] transition duration-300"
+        className="w-full bg-primary text-primary-foreground py-2 px-4 rounded-md hover:bg-secondary transition duration-300"
         onClick={handleCheckout}
         disabled={loading || disabled}
       >

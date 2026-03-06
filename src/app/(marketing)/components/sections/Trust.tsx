@@ -26,7 +26,7 @@ export const Trust: React.FC<TrustProps> = ({
   disclaimer
 }) => {
   return (
-    <section className="py-24 bg-slate-50 border-b border-slate-200 dark:bg-[#0F1626] dark:border-[#1E242D]">
+    <section className="py-24 bg-slate-50 border-b border-slate-200 dark:bg-surface-soft dark:border-border-subtle">
       <div className="max-w-4xl mx-auto px-page text-center">
         <Reveal>
             <h2 className="text-3xl font-bold text-slate-900 mb-8 dark:text-white">{heading}</h2>
@@ -37,7 +37,7 @@ export const Trust: React.FC<TrustProps> = ({
               <ul className="space-y-4 mb-10">
                   {bullets.map((item, i) => (
                       <li key={i} className="flex items-start gap-3 text-slate-600 font-light text-lg dark:text-slate-300">
-                          <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#1D4ED8]" />
+                          <div className="mt-2 w-1.5 h-1.5 rounded-full bg-primary" />
                           {item}
                       </li>
                   ))}

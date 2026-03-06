@@ -32,7 +32,7 @@ export const Hero: React.FC<HeroProps> = ({
     <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden pt-20">
       
       {/* Cinematic Spotlight */}
-      <div className="absolute inset-x-0 top-0 h-[800px] bg-gradient-to-b from-gray-50/60 via-white/20 to-transparent pointer-events-none opacity-60 dark:from-[#1C2140]/50 dark:via-[#0B111B]/30" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[800px] bg-gradient-to-b from-surface-soft/85 via-surface/35 to-transparent opacity-60 dark:from-surface-elevated/55 dark:via-background/25" />
 
       <div className="relative z-20 max-w-5xl mx-auto px-page w-full flex flex-col items-center text-center space-y-10 mt-12 md:mt-0">
         
@@ -42,7 +42,7 @@ export const Hero: React.FC<HeroProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8 }}
-            className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[1.1] md:leading-[1] text-slate-900 dark:text-white"
+            className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[1.1] md:leading-[1] text-foreground"
           >
             {headline}
           </motion.h1>
@@ -53,7 +53,7 @@ export const Hero: React.FC<HeroProps> = ({
             transition={{ delay: 0.2, duration: 0.8 }}
             className="max-w-2xl mx-auto space-y-3"
           >
-            <p className="text-lg md:text-2xl text-slate-600 font-light leading-relaxed dark:text-slate-300">
+            <p className="text-lg font-light leading-relaxed text-muted-foreground md:text-2xl">
               {subhead}
             </p>
           </motion.div>
@@ -68,7 +68,10 @@ export const Hero: React.FC<HeroProps> = ({
         >
           <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto justify-center">
             <Link href={primaryCtaLink} className="w-full md:w-auto" onClick={onPrimaryCtaClick}>
-              <Button size="lg" className="w-full md:w-auto h-16 px-12 text-lg bg-[#1D4ED8] hover:bg-[#2563EB] shadow-[0_0_40px_-10px_rgba(29,78,216,0.4)] hover:shadow-[0_0_60px_-10px_rgba(29,78,216,0.5)] transition-all duration-300 dark:shadow-[0_0_26px_-12px_rgba(29,78,216,0.35)] dark:hover:shadow-[0_0_36px_-12px_rgba(29,78,216,0.45)]">
+              <Button
+                size="lg"
+                className="h-16 w-full px-12 text-lg shadow-[0_0_40px_-10px_rgb(var(--pc-blue-600-rgb)/0.42)] transition-all duration-300 hover:shadow-[0_0_60px_-10px_rgb(var(--pc-blue-600-rgb)/0.52)] md:w-auto"
+              >
                 {primaryCta}
               </Button>
             </Link>
@@ -83,7 +86,7 @@ export const Hero: React.FC<HeroProps> = ({
           
           {/* Proof Strip */}
           <div className="flex flex-col items-center gap-5 pt-4">
-            <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-slate-500">
+            <p className="text-[10px] font-mono uppercase tracking-widest text-tertiary">
               {microProof}
             </p>
             <FakeLogos />

@@ -49,7 +49,7 @@ const MarketingCard = ({ item }: any) => {
         {item?.title}
       </p>
       {item?.description && (
-        <p className="text-[#7B7E83] dark:text-[#5A5E66] font-medium text-center text-base px-3">
+        <p className="text-muted-foreground dark:text-tertiary font-medium text-center text-base px-3">
           {item?.description}
         </p>
       )}
@@ -59,7 +59,7 @@ const MarketingCard = ({ item }: any) => {
 
 const Marketing = () => {
   return (
-    <div className="flex justify-center items-center bg-white dark:bg-[#010814] my-16 w-full">
+    <div className="flex justify-center items-center bg-white dark:bg-background my-16 w-full">
       <div className="max-w-[1440px] w-full px-4 sm:px-12">
         <div className="max-w-[440px] mx-auto">
           <Heading

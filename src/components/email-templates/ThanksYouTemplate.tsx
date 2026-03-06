@@ -5,9 +5,17 @@ interface EmailTemplateProps {
   email: string;
 }
 
+const EMAIL_COLORS = {
+  background: 'rgb(243 244 246)',
+  surface: 'rgb(255 255 255)',
+  accent: 'rgb(59 130 246)',
+  textBody: 'rgb(55 65 81)',
+  textOnAccent: 'rgb(255 255 255)',
+} as const;
+
 const styles = {
   body: {
-    backgroundColor: '#f3f4f6',
+    backgroundColor: EMAIL_COLORS.background,
     fontFamily: 'Arial, sans-serif',
   },
   container: {
@@ -16,27 +24,27 @@ const styles = {
     width: '580px',
   },
   section: {
-    backgroundColor: '#ffffff',
+    backgroundColor: EMAIL_COLORS.surface,
     borderRadius: '5px',
     padding: '40px',
   },
   h1: {
-    color: '#3b82f6',
+    color: EMAIL_COLORS.accent,
     fontSize: '32px',
     fontWeight: 'bold',
     textAlign: 'center' as const,
     margin: '0 0 20px',
   },
   text: {
-    color: '#374151',
+    color: EMAIL_COLORS.textBody,
     fontSize: '16px',
     lineHeight: '24px',
     textAlign: 'center' as const,
   },
   button: {
-    backgroundColor: '#3b82f6',
+    backgroundColor: EMAIL_COLORS.accent,
     borderRadius: '5px',
-    color: '#ffffff',
+    color: EMAIL_COLORS.textOnAccent,
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 'bold',

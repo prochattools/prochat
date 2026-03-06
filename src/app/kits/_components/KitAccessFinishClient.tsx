@@ -153,7 +153,7 @@ export default function KitAccessFinishClient({
 					<Link
 						href='https://github.com/join'
 						target='_blank'
-						className='text-[#2563EB] underline'
+						className='text-secondary underline'
 					>
 						Create account
 					</Link>
@@ -163,7 +163,7 @@ export default function KitAccessFinishClient({
 			</ol>
 
 			{sessionId ? (
-				<div className='mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-[#0B111B]'>
+				<div className='mt-8 rounded-2xl border border-border-subtle bg-surface p-6 shadow-sm'>
 					<h2 className='text-lg font-semibold text-slate-900 dark:text-white'>
 						Claim with checkout session
 					</h2>
@@ -177,14 +177,14 @@ export default function KitAccessFinishClient({
 								value={username}
 								onChange={event => setUsername(event.target.value)}
 								placeholder='your-github-username'
-								className='mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-[#2563EB]/50 dark:border-slate-600 dark:bg-[#0B111B] dark:text-white'
+								className='mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-secondary/50'
 							/>
 						</label>
 						<button
 							type='button'
 							onClick={onSessionSubmit}
 							disabled={!canSubmitSession}
-							className='inline-flex items-center justify-center rounded-lg bg-[#1D4ED8] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2563EB] disabled:cursor-not-allowed disabled:opacity-60'
+							className='inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-60'
 						>
 							{submitting ? 'Submitting...' : 'Link GitHub username'}
 						</button>
@@ -206,7 +206,7 @@ export default function KitAccessFinishClient({
 			)}
 
 			{showFallback && (
-				<div className='mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-[#0B111B]'>
+				<div className='mt-6 rounded-2xl border border-border-subtle bg-surface p-6 shadow-sm'>
 					<h2 className='text-lg font-semibold text-slate-900 dark:text-white'>
 						Recover access with checkout email
 					</h2>
@@ -222,7 +222,7 @@ export default function KitAccessFinishClient({
 								value={email}
 								onChange={event => setEmail(event.target.value)}
 								placeholder='you@company.com'
-								className='mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-[#2563EB]/50 dark:border-slate-600 dark:bg-[#0B111B] dark:text-white'
+								className='mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-secondary/50'
 							/>
 						</label>
 						<label className='block text-sm font-medium text-slate-700 dark:text-slate-200'>
@@ -231,7 +231,7 @@ export default function KitAccessFinishClient({
 								value={username}
 								onChange={event => setUsername(event.target.value)}
 								placeholder='your-github-username'
-								className='mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:ring-2 focus:ring-[#2563EB]/50 dark:border-slate-600 dark:bg-[#0B111B] dark:text-white'
+								className='mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-secondary/50'
 							/>
 						</label>
 						<button

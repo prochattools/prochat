@@ -59,7 +59,7 @@
 }
 
 .waitlist-page-root .waitlist-field-error {
-  color: #dc2626;
+  color: rgb(var(--pc-destructive-rgb) / 1);
   font-size: 0.875rem;
   line-height: 1.25rem;
 }

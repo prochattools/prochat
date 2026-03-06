@@ -6,10 +6,10 @@ import { Reveal } from '../ui/Reveal';
 
 export const SystemApply: React.FC = () => {
   return (
-    <section className="py-32 bg-[#0a0a0a] relative overflow-hidden text-white">
+    <section className="py-32 bg-ink-950 relative overflow-hidden text-primary-foreground">
        {/* Background aesthetics preserved from Pricing section for visual continuity */}
-       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px]" />
-       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(29,78,216,0.08),transparent_70%)]" />
+       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--pc-primary-foreground-rgb)/0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--pc-primary-foreground-rgb)/0.04)_1px,transparent_1px)] bg-[size:40px_40px]" />
+       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgb(var(--pc-blue-600-rgb)/0.08),transparent_70%)]" />
 
        <div className="relative z-10 max-w-4xl mx-auto px-page text-center">
           <Reveal width="100%">
@@ -26,7 +26,7 @@ export const SystemApply: React.FC = () => {
           <Reveal width="100%" delay={0.4}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                  <Link href="/kits/saaskit">
-                    <Button className="bg-[#1D4ED8] hover:bg-[#2563EB] text-white h-14 px-8 text-lg border-none shadow-lg shadow-[#1D4ED8]/20 dark:shadow-[0_0_20px_rgba(29,78,216,0.35)] dark:hover:shadow-[0_0_28px_rgba(29,78,216,0.45)]">
+                    <Button className="bg-primary hover:bg-secondary text-primary-foreground h-14 px-8 text-lg border-none shadow-lg shadow-primary/20 dark:shadow-[0_0_20px_rgb(var(--pc-blue-600-rgb)/0.35)] dark:hover:shadow-[0_0_28px_rgb(var(--pc-blue-600-rgb)/0.45)]">
                         Explore SaaSKit
                     </Button>
                  </Link>

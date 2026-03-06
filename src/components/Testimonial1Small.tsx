@@ -5,8 +5,8 @@ import Image from "next/image";
 
 const Testimonial1Small = () => {
   return (
-    <section className="dark:bg-black1 bg-[#e4e4e4] px-3 pb-16 pt-32 md:pb-32">
-      <div className="space-y-6 md:space-y-8 max-w-[500px] mx-auto p-3 sm:p-8 dark:bg-[#141414] bg-[#cccccc] rounded-box">
+    <section className="dark:bg-black1 bg-muted px-3 pb-16 pt-32 md:pb-32">
+      <div className="space-y-6 md:space-y-8 max-w-[500px] mx-auto p-3 sm:p-8 dark:bg-surface bg-surface-soft rounded-box">
         <div className="rating !flex justify-center">
           {[...Array(5)].map((_, i) => (
             <svg

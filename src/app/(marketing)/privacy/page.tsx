@@ -13,7 +13,7 @@ export const metadata = getSEOTags({
 
 export default function PrivacyPage() {
 	return (
-		<section className="relative bg-white py-24 dark:bg-[#0B111B]">
+		<section className="relative bg-white py-24 dark:bg-background">
 			<main className="mx-auto w-full max-w-3xl px-page">
 				<article className="space-y-10 leading-relaxed text-slate-600 dark:text-slate-300">
 					<header className="mb-12">

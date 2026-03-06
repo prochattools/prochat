@@ -24,7 +24,7 @@ const ProofSection: React.FC<ProofSectionProps> = ({
     className = '',
     children,
 }) => {
-    const variantClassName = variant === 'white' ? 'bg-white dark:bg-[#0B111B]' : '';
+    const variantClassName = variant === 'white' ? 'bg-background' : '';
 
     return (
         <section id={id} className={`py-16 sm:py-24 ${variantClassName} ${className}`}>
@@ -59,10 +59,10 @@ const ProofOperational: React.FC = () => {
                 <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
                     <Reveal width="100%">
                         <div>
-                            <h2 className="text-3xl font-bold text-slate-900 mb-4 dark:text-white">
+                            <h2 className="text-3xl font-bold text-foreground mb-4">
                                 This is not a slide-deck business.
                             </h2>
-                            <div className="text-slate-500 text-xl font-light leading-relaxed dark:text-slate-400">
+                            <div className="text-muted-foreground text-xl font-light leading-relaxed">
                                 Systems are running. Infrastructure is monitored. Failures would be visible.
                                 <br className="hidden md:block" />
                                 This page shows readiness, not scale.
@@ -85,10 +85,10 @@ const ProofOperational: React.FC = () => {
                                                 <Server size={24} />
                                             </div>
                                             <div>
-                                                <div className="text-base font-bold text-slate-900 dark:text-white">
+                                                <div className="text-base font-bold text-foreground">
                                                     Infrastructure
                                                 </div>
-                                                <div className="text-xs text-slate-500 font-mono mt-0.5 dark:text-slate-400">
+                                                <div className="text-xs text-muted-foreground font-mono mt-0.5">
                                                     US-East (N. Virginia)
                                                 </div>
                                             </div>
@@ -107,9 +107,9 @@ const ProofOperational: React.FC = () => {
                                         ].map((item, i) => (
                                             <div
                                                 key={i}
-                                                className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0 group dark:border-[#1E242D]"
+                                                className="flex items-center justify-between py-2 border-b border-muted/60 last:border-0 group"
                                             >
-                                                <span className="text-slate-600 font-medium text-sm group-hover:text-slate-900 transition-colors dark:text-slate-300 dark:group-hover:text-white">
+                                                <span className="text-muted-foreground font-medium text-sm group-hover:text-foreground transition-colors">
                                                     {item}
                                                 </span>
                                                 <div className="flex items-center gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
@@ -119,7 +119,7 @@ const ProofOperational: React.FC = () => {
                                         ))}
                                     </div>
                                 </div>
-                                <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 dark:border-[#1E242D] dark:text-slate-500">
+                                <div className="mt-8 pt-6 border-t border-border-subtle flex items-center justify-between text-xs text-tertiary">
                                     <span>Uptime: 99.99%</span>
                                     <span className="font-mono">v2.4.0</span>
                                 </div>
@@ -131,11 +131,11 @@ const ProofOperational: React.FC = () => {
                     <Reveal delay={0.2} width="100%">
                         <div className="h-full">
                             <BlueprintCard
-                                className={`p-0 overflow-hidden bg-[#0f172a] border-slate-800 text-slate-300 h-full flex flex-col shadow-2xl ${cardHeightClasses}`}
+                                className={`p-0 overflow-hidden bg-ink-900 border-ink-800 text-ink-300 h-full flex flex-col shadow-2xl ${cardHeightClasses}`}
                             >
-                                <div className="p-4 border-b border-slate-700/50 bg-[#1e293b] flex items-center justify-between shrink-0">
+                                <div className="p-4 border-b border-ink-700/50 bg-ink-800 flex items-center justify-between shrink-0">
                                     <div className="flex items-center gap-2">
-                                        <Activity size={14} className="text-[#2563EB]" />
+                                        <Activity size={14} className="text-secondary" />
                                         <span className="text-xs font-bold text-white tracking-wide">
                                             Live Traffic
                                         </span>
@@ -146,9 +146,9 @@ const ProofOperational: React.FC = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex-1 min-h-0 overflow-hidden relative font-mono text-[10px] p-5 bg-[#0f172a] leading-relaxed">
-                                    <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#0f172a] to-transparent z-10" />
-                                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0f172a] to-transparent z-10" />
+                                <div className="flex-1 min-h-0 overflow-hidden relative font-mono text-[10px] p-5 bg-ink-900 leading-relaxed">
+                                    <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-ink-900 to-transparent z-10" />
+                                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-ink-900 to-transparent z-10" />
 
                                     <motion.div
                                         animate={{ y: [0, -200] }}
@@ -163,9 +163,9 @@ const ProofOperational: React.FC = () => {
                                                 <span
                                                     className={`break-all ${
                                                         log.includes('POST')
-                                                            ? 'text-[#2563EB]'
+                                                            ? 'text-secondary'
                                                             : log.includes('AUTH')
-                                                                ? 'text-[#2563EB]'
+                                                                ? 'text-secondary'
                                                                 : 'text-emerald-400'
                                                     }`}
                                                 >

@@ -2,7 +2,7 @@
 
 import { FormEvent, useId, useState } from 'react'
 import { Loader2 } from 'lucide-react'
-import { Button } from '@/app/(marketing)/components/ui/Button'
+import { Button } from '@/components/ui/button'
 
 interface StartSignupFormProps {
   buttonLabel?: string
@@ -88,14 +88,13 @@ export default function StartSignupForm({
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           disabled={isSubmitting}
-          className="h-12 w-full rounded-full border border-slate-300 bg-white px-5 text-base text-slate-900 placeholder:text-slate-500 outline-none transition-all duration-300 focus:border-[#1D4ED8] focus:ring-2 focus:ring-[#1D4ED8]/30 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-60"
+          className="h-12 w-full rounded-full border border-slate-300 bg-white px-5 text-base text-slate-900 placeholder:text-slate-500 outline-none transition-all duration-300 focus:border-primary focus:ring-2 focus:ring-primary/30 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-60"
         />
 
         <Button
           type="submit"
           disabled={isSubmitting}
-          size="md"
-          className="h-12 w-full whitespace-nowrap px-6 text-base sm:w-auto sm:min-w-[170px] sm:px-7 bg-[#1D4ED8] hover:bg-[#2563EB] shadow-[0_0_26px_-12px_rgba(29,78,216,0.45)] hover:shadow-[0_0_34px_-10px_rgba(29,78,216,0.55)]"
+          className="h-12 w-full whitespace-nowrap px-6 text-base sm:w-auto sm:min-w-[170px] sm:px-7 bg-primary hover:bg-secondary shadow-[0_0_26px_-12px_rgb(var(--pc-blue-600-rgb)/0.45)] hover:shadow-[0_0_34px_-10px_rgb(var(--pc-blue-600-rgb)/0.55)]"
         >
           {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
           {isSubmitting ? 'Submitting...' : buttonLabel}

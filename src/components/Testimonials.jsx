@@ -56,7 +56,7 @@ const data = [
 
 const TestimonialCard = ({ item }) => {
   return (
-    <div className="p-0 shadow-2xl dark:shadow-none border dark:border-[#373C53] bg-white dark:bg-gradient-to-r from-[#1E242D] to-[#0B111B] scale-1 hover:scale-[1.025] rounded-[20px] transition-all duration-300">
+    <div className="p-0 shadow-2xl dark:shadow-none border dark:border-border bg-white dark:bg-gradient-to-r dark:from-surface-elevated dark:to-surface scale-1 hover:scale-[1.025] rounded-[20px] transition-all duration-300">
       {item?.video && (
         <div className="">
           <video
@@ -116,7 +116,7 @@ const Testimonials = () => {
   if (!isClient) return null; // Render nothing if not client-side
 
   return (
-    <div className="flex justify-center items-center bg-white dark:bg-[#010814] my-16 w-full">
+    <div className="flex justify-center items-center bg-white dark:bg-background my-16 w-full">
       <div className="max-w-[1440px] w-full px-4 sm:px-12">
         <div className="max-w-[800px] mx-auto mb-16">
           <Heading

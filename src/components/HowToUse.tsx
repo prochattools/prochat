@@ -2,7 +2,7 @@ import { Heading, LazyLoadIframe } from "@/components";
 
 const HowToUse = () => {
   return (
-    <div className="flex justify-center items-center w-full bg-white dark:bg-[#010814] my-16">
+    <div className="flex justify-center items-center w-full bg-white dark:bg-background my-16">
       <div className="max-w-[1440px] w-full px-4 sm:px-12">
         <div id="0" className="max-w-[405px] mx-auto mb-6">
           <Heading

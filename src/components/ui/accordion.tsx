@@ -33,7 +33,7 @@ const AccordionTrigger = React.forwardRef<
       )}
       {...props}
     >
-      <div className="text-black1 group-data-[state=open]:text-[#1364FF] dark:text-white dark:group-data-[state=open]:text-white outline-none">
+      <div className="text-black1 group-data-[state=open]:text-primary dark:text-white dark:group-data-[state=open]:text-white outline-none">
         {children}
       </div>
       <div className="h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=open]:hidden dark:hidden">
@@ -42,7 +42,7 @@ const AccordionTrigger = React.forwardRef<
       <div className="h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=open]:hidden hidden dark:block">
         <OpenFaq2 />
       </div>
-      <div className="h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=closed]:hidden text-[#1364FF] dark:text-white">
+      <div className="h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=closed]:hidden text-primary dark:text-white">
         <Cross />
       </div>
     </AccordionPrimitive.Trigger>
