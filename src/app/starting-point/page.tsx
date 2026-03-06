@@ -13,7 +13,7 @@ import { AlertCircle, BookOpen, Check, MonitorPlay } from 'lucide-react'
 export const metadata: Metadata = {
   title: 'The SaaS Starting Point | ProChat',
   description:
-    'Test first. SaaS second. A preparation framework to reduce risk before you build.',
+    'The Operating System for SaaS Builders. A preparation framework to reduce risk before you build.',
 }
 
 const AUDIENCE_CARDS = [
@@ -100,6 +100,7 @@ export default function StartHerePage() {
             className="absolute left-1/2 top-0 h-[760px] w-full -translate-x-1/2 bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,0.12)_0%,transparent_52%)]"
             aria-hidden="true"
           />
+          <div className="pc-hero-lines" aria-hidden="true" />
         </div>
 
         <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-page md:px-12 lg:grid-cols-2 lg:gap-20">
@@ -109,9 +110,9 @@ export default function StartHerePage() {
                 Preparation Layer
               </p>
               <h1 className="font-sans text-[2.75rem] font-extrabold leading-[1.08] tracking-[-0.05em] text-foreground md:text-[4.25rem]">
-                Test first.
+                The Operating System
                 <br className="hidden lg:block" />
-                SaaS second.
+                for SaaS Builders.
               </h1>
               <p className="font-sans max-w-[40ch] text-xl font-semibold leading-[1.45] text-foreground md:text-2xl">
                 AI removed the coding barrier.
@@ -348,7 +349,7 @@ export default function StartHerePage() {
       <footer className="bg-muted/70 py-8 text-center">
         <div className="mx-auto px-6">
           <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
-            Built by Steve Westhoek. Software tester. Test first. SaaS second.
+            Built by Steve Westhoek. Software tester. The Operating System for SaaS Builders.
           </p>
           <div className="flex items-center justify-center gap-5 text-xs font-medium text-muted-foreground">
             <Link href="/privacy" className="transition-colors hover:text-primary">

@@ -1,165 +1,193 @@
-/*
- * CUSTOM EDITS MADE:
- * 1. Added ButtonSignin to mobile navigation for dashboard access
- * 2. Fixed responsive layout spacing to prevent overlap
- * 3. Improved alignment with items-center classes
- */
 'use client'
-import { IconButton, Logo } from '@/components'
-import ButtonSignin from '@/components/ButtonSignin'
-import NavLinks from '@/components/nav-links'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Menu } from 'lucide-react'
+import { useState } from 'react'
+import Logo from '@/components/logo'
+import { Button } from '@/components/ui/button'
 import {
 	Sheet,
 	SheetContent,
+	SheetDescription,
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet'
-import { Blog, Demo, Landing, Moon, OpenNav, Pricing, RightArrow, Sun } from '@/icons'
-import { ScrollToSection } from '@/utils/scroll-to-section'
-import { useTheme } from 'next-themes'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { ThemeToggle } from '@/app/(marketing)/components/ui/ThemeToggle'
+import { isChromelessPath } from '@/helpers/chrome-routes'
+import { cn } from '@/helpers/utils'
+import { trackEvent } from '@/utils/analytics'
 
-const nav_links = [
-	{
-		icon: <Demo />,
-		title: 'Demo',
-		link: '/',
-	},
-	{
-		icon: <Pricing />,
-		title: 'Pricing',
-		link: '/',
-	},
-	{
-		icon: <Blog width={18} height={18} />,
-		title: 'Blog',
-		link: '/blog',
-	},
-	{
-		icon: (
-			<span className='inline-flex scale-[0.6]'>
-				<Landing />
-			</span>
-		),
-		title: 'Kits',
-		link: '/kits',
-	},
-]
+const NAV_ITEMS = [
+	{ label: 'System', href: '/' },
+	{ label: 'Kits', href: '/kits' },
+	{ label: 'Blog', href: '/blog' },
+	{ label: 'Contact', href: '/contact' },
+] as const
 
-const ThemeSwitch = () => {
-	const { resolvedTheme, setTheme } = useTheme()
-	const [mounted, setMounted] = useState(false)
-
-	useEffect(() => {
-		setMounted(true)
-	}, [])
-
-	const toggleTheme = () => {
-		const isDarkTheme =
-			resolvedTheme === 'dark' ||
-			(typeof document !== 'undefined' &&
-				document.documentElement.classList.contains('dark'))
-		setTheme(isDarkTheme ? 'light' : 'dark')
+function isActivePath(pathname: string, href: string) {
+	if (href === '/') {
+		return pathname === '/'
 	}
 
-	return (
-		<label className='flex items-center relative w-max cursor-pointer select-none'>
-			<input
-				type='checkbox'
-				id='theme-toggle'
-				checked={mounted ? resolvedTheme === 'dark' : false}
-				onChange={toggleTheme}
-				className='appearance-none transition-colors cursor-pointer w-14 h-[30px] rounded-full focus:outline-none border border-border-strong dark:border-border bg-white'
-			/>
-			<span className='absolute font-medium text-xs uppercase right-1 text-white'>
-				<Sun />
-			</span>
-			<span className='absolute font-medium text-xs uppercase right-8 text-white'>
-				<Moon />
-			</span>
-			<span className='w-6 h-6 right-[29px] dark:right-[31px] absolute rounded-full transform transition-transform bg-ink-950 dark:bg-white' />
-		</label>
-	)
+	return pathname === href || pathname.startsWith(`${href}/`)
 }
 
-const MobileNav = () => {
+function HeaderThemeToggle() {
 	return (
-		<Sheet>
-			<SheetTrigger>
-				<div className='text-black1 dark:text-white'>
-					<OpenNav />
-				</div>
-			</SheetTrigger>
-			<SheetContent className='bg-white dark:bg-black1 px-0 pt-4 border-l-0 min-w-[320px]'>
-				<SheetHeader>
-					<SheetTitle className='text-black1 dark:text-white text-xl font-bold border-b border-border text-left pb-4 pl-4'>
-						Menu
-					</SheetTitle>
-				</SheetHeader>
-				<Link href='/' className='flex items-center gap-2 mt-8 mx-auto w-fit'>
-					<Logo scale={1.3} />
-				</Link>
-				<div className='my-8 mx-auto w-fit'>
-					<NavLinks nav_links={nav_links} />
-				</div>
-				{/* CUSTOM EDIT: Added ButtonSignin to mobile navigation for dashboard access */}
-				<div className='mb-8 mx-auto w-fit'>
-					<ButtonSignin />
-				</div>
-				<div
-					onClick={() => {
-						ScrollToSection('1')
-					}}
-					className='mb-8 mx-auto w-fit block'
-				>
-					<IconButton text='Get ProKit' icon={<RightArrow />} />
-				</div>
-			</SheetContent>
-		</Sheet>
-	)
-}
-
-const Header = () => {
-	const [isScrolled, setIsScrolled] = useState(false)
-
-	useEffect(() => {
-		const handleScroll = () => setIsScrolled(window.scrollY > 20)
-		handleScroll()
-		window.addEventListener('scroll', handleScroll)
-		return () => window.removeEventListener('scroll', handleScroll)
-	}, [])
-
-	return (
-		<div
-			className={`flex justify-center items-center w-full fixed top-0 z-50 border-b transition-all duration-500 ${
-				isScrolled
-					? 'bg-surface/80 backdrop-blur-xl border-border/70 py-3 shadow-[0_2px_20px_-12px_rgba(0,0,0,0.05)] dark:bg-surface/80 dark:border-border-subtle dark:shadow-none'
-					: 'bg-transparent border-transparent py-6 dark:bg-transparent dark:border-transparent'
-			}`}
-		>
-			<div className='max-w-[1440px] w-full flex justify-between items-center gap-4 px-4 sm:px-12'>
-				<Link href='/'>
-					<Logo scale={1.3} />
-				</Link>
-				<div className='hidden lg:block'>
-					<NavLinks nav_links={nav_links} />
-				</div>
-
-				{/* CUSTOM EDIT: Fixed responsive layout to prevent overlap */}
-				<div className='hidden lg:flex items-center gap-4'>
-					<ThemeSwitch />
-					<ButtonSignin />
-				</div>
-
-				<div className='lg:hidden flex items-center gap-3'>
-					<ThemeSwitch />
-					<MobileNav />
-				</div>
-			</div>
+		<div className="pc-toggle-shell shrink-0">
+			<ThemeToggle className="h-full w-full rounded-full border-0 bg-transparent text-foreground shadow-none hover:bg-transparent focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0" />
 		</div>
 	)
 }
 
-export default Header
+function DesktopNavigation({ pathname }: { pathname: string }) {
+	return (
+		<nav className="pc-nav-capsule min-w-[58rem] justify-between xl:min-w-[64rem]" aria-label="Primary">
+			<ul className="flex items-center gap-14 whitespace-nowrap xl:gap-16">
+				{NAV_ITEMS.map(item => (
+					<li key={item.href}>
+						<Link
+							href={item.href}
+							aria-current={isActivePath(pathname, item.href) ? 'page' : undefined}
+							className="pc-header-link focus-visible:outline-none"
+						>
+							{item.label}
+						</Link>
+					</li>
+				))}
+			</ul>
+			<Button
+				asChild
+				size="sm"
+				className="h-10 rounded-[var(--pc-button-radius)] px-5 text-lg shadow-none hover:brightness-[1.03]"
+			>
+				<Link
+					href="/kits"
+					onClick={() => trackEvent('explore_kits_click', { location: 'header_capsule' })}
+				>
+					Explore kits
+				</Link>
+			</Button>
+		</nav>
+	)
+}
+
+function MobileNavigation({ pathname }: { pathname: string }) {
+	const [open, setOpen] = useState(false)
+
+	return (
+		<div className="ml-auto flex items-center gap-3 lg:hidden">
+			<div className="pc-nav-capsule gap-2 px-2 py-2">
+				<Button
+					asChild
+					size="sm"
+					className="h-9 rounded-[var(--pc-button-radius)] px-4 shadow-none hover:brightness-[1.03]"
+				>
+					<Link
+						href="/kits"
+						onClick={() => trackEvent('explore_kits_click', { location: 'mobile_header_capsule' })}
+					>
+						Explore
+					</Link>
+				</Button>
+				<Sheet open={open} onOpenChange={setOpen}>
+					<SheetTrigger asChild>
+						<button
+							type="button"
+							aria-label="Open navigation menu"
+							className="pc-mobile-nav-trigger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0"
+						>
+							<Menu className="h-4 w-4" />
+						</button>
+					</SheetTrigger>
+					<SheetContent
+						side="right"
+						className="pc-mobile-sheet w-[min(22rem,calc(100vw-1rem))] border-l px-5 py-6 sm:max-w-[22rem]"
+					>
+						<SheetHeader className="space-y-1">
+							<SheetTitle className="font-brand text-xl tracking-[-0.05em]">
+								Navigation
+							</SheetTitle>
+							<SheetDescription>
+								Structured navigation for builders working inside ProChat.
+							</SheetDescription>
+						</SheetHeader>
+						<div className="mt-8 flex flex-col gap-2">
+							{NAV_ITEMS.map(item => (
+								<Link
+									key={item.href}
+									href={item.href}
+									aria-current={isActivePath(pathname, item.href) ? 'page' : undefined}
+									onClick={() => setOpen(false)}
+									className={cn(
+										'rounded-[var(--pc-button-radius)] border px-4 py-3 font-mono text-[0.86rem] font-medium uppercase tracking-[0.12em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0',
+										isActivePath(pathname, item.href)
+											? 'border-transparent bg-transparent font-bold text-foreground'
+											: 'border-transparent bg-transparent text-muted-foreground hover:border-transparent hover:bg-transparent hover:font-bold hover:text-foreground',
+									)}
+									>
+										{item.label}
+									</Link>
+								))}
+							</div>
+							<div className="mt-6 rounded-[var(--pc-button-radius)] border border-white/10 bg-white/5 p-4">
+								<p className="text-sm leading-relaxed text-muted-foreground">
+									Get the production-ready kit system without leaving the current flow.
+								</p>
+							<Button
+								asChild
+								className="mt-4 h-10 w-full rounded-[var(--pc-button-radius)] shadow-none hover:brightness-[1.03]"
+							>
+								<Link
+									href="/kits"
+									onClick={() => {
+										trackEvent('explore_kits_click', { location: 'mobile_header_drawer' })
+										setOpen(false)
+									}}
+								>
+									Explore kits
+								</Link>
+							</Button>
+						</div>
+					</SheetContent>
+				</Sheet>
+			</div>
+			<HeaderThemeToggle />
+		</div>
+	)
+}
+
+export default function Header() {
+	const pathname = usePathname() || ''
+
+	if (isChromelessPath(pathname)) {
+		return null
+	}
+
+	return (
+		<header className="fixed inset-x-0 top-6 z-50 pointer-events-none">
+			<div className="w-full px-4 sm:px-6 lg:px-[40px] pointer-events-auto">
+				<div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-6">
+					<Link href="/" className="justify-self-start">
+						<Logo scale={0.76} />
+					</Link>
+					<div className="origin-center justify-self-center scale-[0.7]">
+						<DesktopNavigation pathname={pathname} />
+					</div>
+					<div className="justify-self-end">
+						<HeaderThemeToggle />
+					</div>
+				</div>
+
+				<div className="flex items-center gap-3 lg:hidden">
+					<Link href="/" className="shrink-0">
+						<Logo scale={0.88} />
+					</Link>
+					<MobileNavigation pathname={pathname} />
+				</div>
+			</div>
+		</header>
+	)
+}

@@ -1,6 +1,7 @@
 // src/app/layout.tsx
 import { Providers } from '@/components/providers'
 import AppShell from '@/components/AppShell'
+import Header from '@/components/Header'
 import { Scaffolding } from '@/components/ui/Scaffolding'
 import StructuredData from '@/components/StructuredData'
 import UmamiAnalytics from '@/components/UmamiAnalytics'
@@ -13,9 +14,9 @@ import { ReactNode } from 'react'
 
 import '@/assets/styles/globals.scss'
 
-const ROOT_TITLE = 'ProChat - Build SaaS without guessing'
+const ROOT_TITLE = 'ProChat — The Operating System for SaaS Builders'
 const ROOT_DESCRIPTION =
-  'ProChat is a practical system: start with paid clients, extract repeating pain, then ship SaaS on a proven stack.'
+  'ProChat is the operating system for SaaS builders. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.'
 
 const fontSans = { variable: '' }
 
@@ -41,13 +42,13 @@ const BASE_STYLE_OVERRIDES = `
   }
 
   ::selection {
-    background: rgb(var(--pc-blue-500-rgb) / 1);
+    background: rgb(var(--pc-blue-600-rgb) / 1);
     color: white;
   }
 `
 
 export const viewport: Viewport = {
-  themeColor: 'black',
+  themeColor: 'rgb(11 18 32)',
   width: 'device-width',
   initialScale: 1,
 }
@@ -65,7 +66,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${fontSans.variable} ${fontBrand.variable} ${fontMono.variable}`}
+      className={`dark ${fontSans.variable} ${fontBrand.variable} ${fontMono.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <div className="relative z-10">
           <Providers>
             <SafeClerkProvider>
+              <Header />
               <AppShell>{children}</AppShell>
             </SafeClerkProvider>
           </Providers>

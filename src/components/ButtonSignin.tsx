@@ -75,7 +75,7 @@ const ButtonSignin = ({
 
 	return (
 		<Button
-			className={`btn bg-primary text-primary-foreground border-none scale-1 hover:scale-[1.05] transition-all duration-300 rounded-full px-8 hover:bg-secondary ${
+			className={`btn btn-primary border-none scale-1 rounded-[var(--pc-button-radius)] px-8 transition-all duration-300 hover:scale-[1.05] ${
 				extraStyle ? extraStyle : ''
 			}`}
 			onClick={handleClick}

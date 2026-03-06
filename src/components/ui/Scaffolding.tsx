@@ -11,8 +11,8 @@ export const Scaffolding: React.FC<{ opacity?: number, className?: string }> = (
     return (
         <div className={`absolute inset-0 pointer-events-none overflow-hidden select-none z-0 ${className}`} style={{ opacity }}>
             {/* Base Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] dark:bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)]" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800f_1px,transparent_1px),linear-gradient(to_bottom,#8080800f_1px,transparent_1px)] bg-[size:120px_120px] dark:bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--pc-border-subtle-rgb)/0.16)_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--pc-border-subtle-rgb)/0.16)_1px,transparent_1px)] bg-[size:24px_24px]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--pc-border-subtle-rgb)/0.22)_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--pc-border-subtle-rgb)/0.22)_1px,transparent_1px)] bg-[size:120px_120px]" />
 
             {/* Center Axis */}
             <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px border-l border-dashed border-border-subtle/45" />

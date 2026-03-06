@@ -40,6 +40,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet'
+import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from '@/helpers/action-label'
 import { isEditableTarget, useKeyboardNavigation } from '@/hooks/useKeyboardNavigation'
 import type { GlossaryStage } from '@/libs/glossary'
 
@@ -1227,9 +1228,9 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
                       ) : null}
                       <Link
                         href={`/glossary/${selectedTerm.slug}`}
-                        className="inline-flex items-center gap-1 rounded-full border border-primary/25 bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground shadow-surface transition-colors hover:bg-primary/90"
+                        className={`inline-flex items-center gap-1 rounded-full border border-primary/25 bg-primary px-3 py-2 text-sm text-primary-foreground shadow-surface transition-colors hover:bg-primary/90 ${ACTION_LABEL_CLASS_NAME}`}
                       >
-                        Open full page
+                        {renderActionLabel('Open full page')}
                         <ArrowUpRight className="h-3.5 w-3.5" />
                       </Link>
                     </div>

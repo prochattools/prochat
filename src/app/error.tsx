@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from "@/helpers/action-label";
 
 const ILLUSTRATION_COLORS = {
   neutralSoft: "rgb(242 242 242)",
@@ -146,7 +147,7 @@ export default function Error({
         <p className="text-red-500">{error?.message}</p>
 
         <div className="flex flex-wrap gap-4 justify-center">
-          <button className="btn btn-sm" onClick={reset}>
+          <button className={`btn btn-sm ${ACTION_LABEL_CLASS_NAME}`} onClick={reset}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -159,9 +160,9 @@ export default function Error({
                 clipRule="evenodd"
               />
             </svg>
-            Refresh
+            {renderActionLabel("Refresh")}
           </button>
-          <Link href="/" className="btn btn-sm">
+          <Link href="/" className={`btn btn-sm ${ACTION_LABEL_CLASS_NAME}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -174,7 +175,7 @@ export default function Error({
                 clipRule="evenodd"
               />
             </svg>
-            Home
+            {renderActionLabel("Home")}
           </Link>
         </div>
       </div>

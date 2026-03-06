@@ -16,6 +16,7 @@ export function getOrganizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: config.appName,
+    description: config.appDescription,
     url: `${siteUrl}/`,
     founder: {
       '@type': 'Person',
@@ -35,6 +36,7 @@ export function getWebsiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: config.appName,
+    description: config.appDescription,
     url: `${siteUrl}/`,
     potentialAction: {
       '@type': 'SearchAction',

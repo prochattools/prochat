@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { renderActionLabel } from "@/helpers/action-label";
 
 const StripePortalButton: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,16 +36,13 @@ const StripePortalButton: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen dark:bg-black1 bg-gray-100">
-      <button
+      <Button
         onClick={handlePortalRedirect}
         disabled={isLoading}
-        className={`
-          bg-primary hover:bg-secondary text-primary-foreground font-bold py-2 px-4 rounded
-          ${isLoading ? "opacity-50 cursor-not-allowed" : ""}
-        `}
+        className={isLoading ? "opacity-50 cursor-not-allowed" : ""}
       >
-        {isLoading ? "Loading..." : "Go to Stripe Customer Portal"}
-      </button>
+        {renderActionLabel(isLoading ? "Loading..." : "Go to Stripe Customer Portal")}
+      </Button>
     </div>
   );
 };

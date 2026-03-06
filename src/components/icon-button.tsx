@@ -1,3 +1,5 @@
+import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from "@/helpers/action-label";
+
 const IconButton = ({
   text,
   isLeft,
@@ -10,7 +12,7 @@ const IconButton = ({
   return (
     <button
       type={isSubmit ? "submit" : "button"}
-      className={`text-white font-semibold whitespace-nowrap text-sm px-6 py-4 rounded-lg w-full scale-1 hover:scale-[1.05] transition-all duration-300 bg-primary`}
+      className={`btn-primary ${ACTION_LABEL_CLASS_NAME} w-full whitespace-nowrap rounded-[var(--pc-button-radius)] px-6 py-4 text-sm text-primary-foreground transition-all duration-300 hover:scale-[1.05]`}
       disabled={isLoading}
     >
       {!isLoading ? (
@@ -20,7 +22,7 @@ const IconButton = ({
           {isLeft && (
             <span className={`${isDownload ? "rotate-90" : ""}`}>{icon}</span>
           )}
-          <span>{text}</span>
+          {renderActionLabel(text)}
           {!isLeft && !isDisable && (
             <span className={`${isDownload ? "rotate-90" : ""}`}>{icon}</span>
           )}

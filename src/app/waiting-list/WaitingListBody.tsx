@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 
+import { getActionLabelHtml } from '@/helpers/action-label'
 import { waitlistSubmissionSchema } from '@/lib/waitlist/schema'
 
 import './waitlist-page.css'
@@ -73,7 +74,7 @@ export default function WaitingListBody() {
 
     const setSubmitting = (isSubmitting: boolean) => {
       submitButton.disabled = isSubmitting
-      submitLabel.textContent = isSubmitting ? 'Joining...' : 'Join Waitlist'
+      submitLabel.innerHTML = getActionLabelHtml(isSubmitting ? 'Joining...' : 'Join Waitlist')
     }
 
     const handleInput = () => {

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from '@/helpers/action-label'
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 
@@ -184,9 +185,9 @@ export default function KitAccessFinishClient({
 							type='button'
 							onClick={onSessionSubmit}
 							disabled={!canSubmitSession}
-							className='inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-60'
+							className={`inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm text-primary-foreground transition hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-60 ${ACTION_LABEL_CLASS_NAME}`}
 						>
-							{submitting ? 'Submitting...' : 'Link GitHub username'}
+							{renderActionLabel(submitting ? 'Submitting...' : 'Link GitHub username')}
 						</button>
 					</div>
 				</div>
@@ -238,9 +239,9 @@ export default function KitAccessFinishClient({
 							type='button'
 							onClick={onFallbackSubmit}
 							disabled={!canSubmitEmailFallback}
-							className='inline-flex items-center justify-center rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white'
+							className={`inline-flex items-center justify-center rounded-lg bg-slate-900 px-5 py-2.5 text-sm text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white ${ACTION_LABEL_CLASS_NAME}`}
 						>
-							{submitting ? 'Checking purchase...' : 'Find purchase and link access'}
+							{renderActionLabel(submitting ? 'Checking purchase...' : 'Find purchase and link access')}
 						</button>
 					</div>
 				</div>

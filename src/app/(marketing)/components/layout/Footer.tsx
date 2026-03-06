@@ -28,7 +28,7 @@ export const Footer: React.FC = () => {
                    className="h-[58.5px] w-auto hidden dark:block"
                  />
               </Link>
-              <p className="text-muted-foreground text-sm">Test first. SaaS second.</p>
+              <p className="text-muted-foreground text-sm">The Operating System for SaaS Builders.</p>
            </div>
 
            {/* Links */}

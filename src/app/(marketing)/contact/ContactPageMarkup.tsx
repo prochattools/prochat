@@ -16,6 +16,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Panel, Section } from '@/components/ui/surface'
+import { renderActionLabel } from '@/helpers/action-label'
 
 const FAQ_ITEMS = [
   {
@@ -217,7 +218,7 @@ export default function ContactPageMarkup() {
                   type="submit"
                   className="contact-submit-button h-11 w-full justify-center gap-2 rounded-lg text-[0.95rem] font-semibold shadow-surface hover:bg-primary/92 active:scale-[0.98]"
                 >
-                  <span data-contact-submit-label="">Send Message</span>
+                  <span data-contact-submit-label="">{renderActionLabel('Send Message')}</span>
                   <Send className="h-4 w-4" />
                 </Button>
               </form>

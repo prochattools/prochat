@@ -9,6 +9,7 @@ import {
   Rocket,
   ShieldCheck,
 } from 'lucide-react'
+import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from '@/helpers/action-label'
 
 const systemCards = [
   {
@@ -72,22 +73,23 @@ export default function App() {
       >
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[size:40px_40px] bg-[linear-gradient(to_right,rgba(29,78,216,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(29,78,216,0.035)_1px,transparent_1px)] opacity-50 dark:bg-[linear-gradient(to_right,rgba(148,163,184,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.07)_1px,transparent_1px)]"
+          className="pointer-events-none absolute inset-0 bg-[size:40px_40px] bg-[linear-gradient(to_right,rgb(var(--pc-border-subtle-rgb)/0.32)_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--pc-border-subtle-rgb)/0.32)_1px,transparent_1px)] opacity-55"
         />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(29,78,216,0.06)_0%,rgba(255,255,255,0)_70%)] dark:bg-[radial-gradient(circle_at_70%_50%,rgba(37,99,235,0.14)_0%,rgba(2,6,23,0)_70%)]"
-        />
+        <div aria-hidden className="pc-hero-backdrop pointer-events-none absolute inset-0" />
+        <div aria-hidden className="pc-hero-lines pointer-events-none z-0" />
         <div className="relative z-10 mx-auto flex min-h-[calc(88vh-8rem)] max-w-3xl items-center px-page">
           <div className="w-full text-center">
             <div className="mx-auto mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
               v2.0 Verified Architecture
             </div>
-            <h1 className="mb-4 font-brand text-5xl font-bold leading-tight tracking-[-0.05em] text-foreground md:text-6xl lg:text-7xl">
+            <h1
+              className="mb-4 font-brand text-5xl font-[700] tracking-[-0.05em] text-foreground md:text-6xl lg:text-7xl"
+              style={{ lineHeight: 0.83 }}
+            >
               Build with AI.
               <br />
-              <span className="text-primary">Operate with Structure.</span>
+              <span className="hero-accent">Operate with structure.</span>
             </h1>
             <p className="mx-auto mb-10 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl">
               AI made software accessible. It did not remove structural risk. ProChat builds production systems
@@ -96,15 +98,15 @@ export default function App() {
             <div className="mb-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/kits"
-                className="inline-flex items-center justify-center rounded-xl bg-primary px-8 py-4 font-brand text-lg font-bold text-primary-foreground transition-all hover:-translate-y-0.5 hover:bg-primary/90"
+                className={`btn-primary ${ACTION_LABEL_CLASS_NAME} inline-flex items-center justify-center rounded-xl px-8 py-4 text-lg transition-all hover:-translate-y-0.5 hover:shadow-level-2-light dark:hover:shadow-level-2-dark`}
               >
-                Explore Systems
+                {renderActionLabel('Explore Systems')}
               </Link>
               <Link
                 href="/kits/saaskit"
-                className="inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface px-8 py-4 font-brand text-lg font-bold text-foreground shadow-surface transition-all hover:border-border-strong hover:bg-surface-soft"
+                className={`inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface px-8 py-4 text-lg text-foreground shadow-surface transition-all hover:border-border-strong hover:bg-surface-soft ${ACTION_LABEL_CLASS_NAME}`}
               >
-                Start with SaaSKit
+                {renderActionLabel('Start with SaaSKit')}
               </Link>
             </div>
             <div className="mb-8">
@@ -219,7 +221,7 @@ export default function App() {
                   className={[
                     'flex h-full flex-col rounded-xl border p-8 transition-all duration-300',
                     card.primary
-                      ? 'border-primary/50 bg-primary text-primary-foreground shadow-elevated hover:-translate-y-1 hover:shadow-elevated'
+                      ? 'border-primary/30 bg-[linear-gradient(180deg,rgb(var(--pc-blue-600-rgb)/0.14),rgb(var(--pc-surface-elevated-rgb)/1))] text-foreground shadow-elevated hover:-translate-y-1 hover:shadow-elevated'
                       : 'border-border-subtle bg-surface shadow-surface hover:-translate-y-1 hover:border-border-strong hover:shadow-elevated',
                     isMuted ? 'opacity-80' : '',
                   ].join(' ')}
@@ -229,7 +231,7 @@ export default function App() {
                       className={[
                         'flex h-12 w-12 items-center justify-center rounded-lg border',
                         card.primary
-                          ? 'border-white/20 bg-white/10 text-blue-100'
+                          ? 'border-primary/20 bg-primary/10 text-primary'
                           : 'border-border bg-muted text-muted-foreground',
                       ].join(' ')}
                     >
@@ -239,9 +241,9 @@ export default function App() {
                       className={[
                         'rounded-sm px-2 py-1 text-xs font-bold uppercase tracking-wider',
                         card.primary
-                          ? 'bg-white/20 text-white'
+                          ? 'bg-primary/10 text-primary'
                           : card.status === 'Coming Soon'
-                            ? 'bg-amber-100 text-amber-700'
+                            ? 'bg-surface-elevated text-muted-foreground'
                             : card.status === 'Roadmap'
                               ? 'bg-muted text-muted-foreground'
                               : 'bg-muted text-foreground',
@@ -256,7 +258,7 @@ export default function App() {
                   <p
                     className={[
                       'mb-8 flex-grow text-sm leading-relaxed',
-                      card.primary ? 'text-blue-100' : 'text-muted-foreground',
+                      'text-muted-foreground',
                     ].join(' ')}
                   >
                     {card.description}
@@ -266,7 +268,7 @@ export default function App() {
                     className={[
                       'mt-auto inline-flex items-center gap-2 border-t pt-4 text-sm font-bold transition-all',
                       card.primary
-                        ? 'border-white/20 text-white hover:gap-3'
+                        ? 'border-primary/20 text-foreground hover:gap-3 hover:text-primary'
                         : 'border-border text-foreground hover:gap-3 hover:text-primary',
                     ].join(' ')}
                   >
@@ -363,15 +365,15 @@ export default function App() {
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
             <Link
               href="/kits/saaskit"
-              className="w-full rounded-lg bg-primary px-8 py-5 font-brand text-lg font-bold text-white shadow-lg transition-all hover:bg-primary/90 sm:w-auto"
+              className={`w-full rounded-lg bg-primary px-8 py-5 text-lg text-white shadow-lg transition-all hover:bg-primary/90 sm:w-auto ${ACTION_LABEL_CLASS_NAME}`}
             >
-              Start with SaaSKit
+              {renderActionLabel('Start with SaaSKit')}
             </Link>
             <Link
               href="/kits"
-              className="w-full rounded-lg border border-white/30 px-8 py-5 font-brand text-lg font-bold text-white/80 transition-colors hover:border-white/60 hover:text-white sm:w-auto"
+              className={`w-full rounded-lg border border-white/30 px-8 py-5 text-lg text-white/80 transition-colors hover:border-white/60 hover:text-white sm:w-auto ${ACTION_LABEL_CLASS_NAME}`}
             >
-              Explore All Systems
+              {renderActionLabel('Explore All Systems')}
             </Link>
           </div>
         </div>

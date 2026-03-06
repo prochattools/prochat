@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from "@/helpers/action-label";
 
 const ButtonGradient = ({
   title = "Gradient Button",
@@ -10,8 +11,11 @@ const ButtonGradient = ({
   onClick?: () => void;
 }) => {
   return (
-    <button className="btn btn-gradient animate-shimmer" onClick={onClick}>
-      {title}
+    <button
+      className={`btn btn-gradient animate-shimmer ${ACTION_LABEL_CLASS_NAME}`}
+      onClick={onClick}
+    >
+      {renderActionLabel(title)}
     </button>
   );
 };

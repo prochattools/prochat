@@ -33,11 +33,11 @@ const SIZE_MAP: Record<
 }
 
 const VARIANT_STYLE_MAP: Record<MarketingButtonVariant, string> = {
-  primary: 'rounded-full',
-  secondary: 'rounded-full',
-  ghost: 'rounded-full',
+  primary: '',
+  secondary: '',
+  ghost: '',
   glass:
-    'rounded-full border-border-subtle bg-surface/70 shadow-surface backdrop-blur-md hover:bg-surface-soft',
+    'border-border-subtle bg-surface/70 shadow-surface backdrop-blur-md hover:bg-surface-soft',
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -53,7 +53,7 @@ export const Button: React.FC<ButtonProps> = ({
       variant={VARIANT_MAP[variant]}
       size={SIZE_MAP[size]}
       className={cn(
-        'group font-brand tracking-[-0.01em] transition-all duration-300',
+        'group transition-all duration-300',
         VARIANT_STYLE_MAP[variant],
         className,
       )}

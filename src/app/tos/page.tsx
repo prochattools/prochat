@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getSEOTags } from "@/libs/seo";
 import config from "@/config";
+import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from "@/helpers/action-label";
 
 // CHATGPT PROMPT TO GENERATE YOUR TERMS & SERVICES — replace with your own data 👇
 
@@ -34,7 +35,7 @@ const TOS = () => {
   return (
     <main className="max-w-xl mx-auto">
       <div className="p-5">
-        <Link href="/" className="btn btn-ghost text-white">
+        <Link href="/" className={`btn btn-ghost text-white ${ACTION_LABEL_CLASS_NAME}`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -47,7 +48,7 @@ const TOS = () => {
               clipRule="evenodd"
             />
           </svg>
-          Back
+          {renderActionLabel("Back")}
         </Link>
         <h1 className="pb-6 text-3xl font-extrabold tracking-[-0.05em] text-white">
           Terms and Conditions for {config.appName}

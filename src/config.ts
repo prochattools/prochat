@@ -16,7 +16,7 @@ const config: ConfigProps = {
 	appName: 'ProChat',
 	// REQUIRED: a short description of your app for SEO tags (can be overwritten)
 	appDescription:
-		'ProChat is built on ProKit—our internal Next.js starter for shipping SaaS, AI tools, or any other web app fast.',
+		'ProChat is the operating system for SaaS builders. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.',
 	// REQUIRED (no https://, no trailing slash; just the naked canonical domain)
 	domainName: 'prochat.tools',
 	stripe: {
@@ -61,8 +61,8 @@ const config: ConfigProps = {
 		],
 	},
 	colors: {
-		theme: 'light',
-		main: 'rgb(29, 78, 216)',
+		theme: 'dark',
+		main: 'rgb(76, 111, 255)',
 	},
 	resend: {
 		// REQUIRED — Email 'From' field to be used when sending other emails, like abandoned carts, updates etc..

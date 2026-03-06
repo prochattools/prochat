@@ -33,8 +33,8 @@ export const Pricing: React.FC<PricingProps> = ({
       className="relative overflow-hidden border-y border-border-subtle bg-surface-elevated py-32 text-foreground"
     >
       {/* Dark Blueprint Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--pc-border-rgb)/0.22)_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--pc-border-rgb)/0.22)_1px,transparent_1px)] bg-[size:40px_40px]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgb(var(--pc-blue-600-rgb)/0.11),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(var(--pc-border-subtle-rgb)/0.3)_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--pc-border-subtle-rgb)/0.3)_1px,transparent_1px)] bg-[size:40px_40px]" />
+      <div className="pc-hero-backdrop pointer-events-none absolute inset-0 opacity-70" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-page">
         
@@ -53,8 +53,8 @@ export const Pricing: React.FC<PricingProps> = ({
             <div className="group relative overflow-hidden rounded-2xl border border-border-subtle bg-surface p-8 shadow-elevated transition-colors duration-500 hover:border-primary/40">
                 
                 {/* Gradient Top Line - perfectly contained */}
-                <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary to-secondary" />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary to-primary/65" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-primary/8 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
                 <div className="mb-8 text-center relative z-10">
                     <div className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary">Lifetime Access</div>
@@ -77,7 +77,7 @@ export const Pricing: React.FC<PricingProps> = ({
                 </div>
 
                 <Button
-                    className="relative z-10 h-14 w-full border-0 bg-primary text-lg font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-primary/40"
+                    className="relative z-10 h-14 w-full border-0 bg-primary text-lg font-bold text-primary-foreground shadow-elevated transition-all hover:bg-secondary"
                     onClick={onCtaClick}
                     type="button"
                 >

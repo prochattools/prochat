@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 import { Panel } from '@/components/ui/surface'
 import { trackEvent } from '@/utils/analytics'
 
@@ -41,22 +42,26 @@ export default function ContextualLinkCta({
       <p className="mt-2 text-muted-foreground">{description}</p>
       <div className="mt-5 flex flex-wrap gap-3">
         {links.map(link => (
-          <Link
+          <Button
             key={link.href}
-            href={link.href}
-            onClick={() => {
-              if (!analytics) return
-
-              trackEvent(analytics.eventName, {
-                cta_type: getCtaType(link.href),
-                location: analytics.location,
-                href: link.href,
-              })
-            }}
-            className="inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+            asChild
+            className="rounded-lg"
           >
-            {link.label}
-          </Link>
+            <Link
+              href={link.href}
+              onClick={() => {
+                if (!analytics) return
+
+                trackEvent(analytics.eventName, {
+                  cta_type: getCtaType(link.href),
+                  location: analytics.location,
+                  href: link.href,
+                })
+              }}
+            >
+              {link.label}
+            </Link>
+          </Button>
         ))}
       </div>
     </Panel>

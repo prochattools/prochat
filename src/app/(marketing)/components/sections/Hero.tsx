@@ -18,7 +18,7 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({
-  headline = "Build SaaS without guessing.",
+  headline = "The Operating System for SaaS Builders.",
   subhead = "ProChat is a system for turning paid client pain into SaaS—start with service, find the friction, then ship the software.",
   primaryCta = "See the system",
   primaryCtaLink = "#system",
@@ -32,7 +32,8 @@ export const Hero: React.FC<HeroProps> = ({
     <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden pt-20">
       
       {/* Cinematic Spotlight */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[800px] bg-gradient-to-b from-surface-soft/85 via-surface/35 to-transparent opacity-60 dark:from-surface-elevated/55 dark:via-background/25" />
+	      <div className="pc-hero-backdrop pointer-events-none absolute inset-0 opacity-90" />
+	      <div aria-hidden className="pc-hero-lines pointer-events-none z-0" />
 
       <div className="relative z-20 max-w-5xl mx-auto px-page w-full flex flex-col items-center text-center space-y-10 mt-12 md:mt-0">
         

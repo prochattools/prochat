@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
 import ContextualLinkCta from '@/components/ContextualLinkCta'
 import { handleCheckoutProcess } from '@/helpers/checkout'
+import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from '@/helpers/action-label'
 import { useUser } from '@/libs/safeClerk'
 import { trackEvent } from '@/utils/analytics'
 import { FeatureIcon } from './_components/FeatureIcon'
@@ -132,6 +133,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           <div className="absolute inset-0 z-0 blur-[0.4px] bg-[size:24px_24px] bg-[linear-gradient(to_right,rgba(15,23,42,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.025)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(148,163,184,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.05)_1px,transparent_1px)]" />
           <div className="absolute inset-0 z-[1] blur-[0.4px] bg-[size:96px_96px] bg-[linear-gradient(to_right,rgba(15,23,42,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.045)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(148,163,184,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.07)_1px,transparent_1px)]" />
           <div className="absolute inset-0 z-[2] bg-[radial-gradient(circle_at_50%_34%,rgba(255,255,255,0.58)_0%,rgba(255,255,255,0.30)_45%,rgba(255,255,255,0.08)_72%,rgba(255,255,255,0)_100%)] dark:hidden" />
+          <div className="pc-hero-lines z-[3]" />
         </div>
 
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
@@ -143,7 +145,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           <h1 className="mb-8 text-5xl font-bold leading-[1.08] tracking-[-0.05em] text-foreground md:text-7xl">
             Next.js SaaS Boilerplate for AI Builders.
             <br />
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <span className="hero-accent">
               Launch on stable ground.
             </span>
           </h1>
@@ -187,15 +189,15 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
             <a
               href="#pricing"
               onClick={handleHeroCtaClick}
-              className="font-brand inline-flex -translate-y-0 items-center justify-center rounded-lg bg-primary px-8 py-4 text-lg font-bold tracking-[-0.01em] text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-primary/90"
+              className={`btn-primary ${ACTION_LABEL_CLASS_NAME} inline-flex -translate-y-0 items-center justify-center rounded-lg px-8 py-4 text-lg transition-all hover:-translate-y-0.5 hover:shadow-level-2-light dark:hover:shadow-level-2-dark`}
             >
-              Get SaaSKit — Build on Stable Ground
+              {renderActionLabel('Get SaaSKit — Build on Stable Ground')}
             </a>
             <a
               href="#tester-mindset"
-              className="font-brand group inline-flex items-center justify-center rounded-lg border border-border bg-background px-8 py-4 text-lg font-bold tracking-[-0.01em] text-foreground shadow-sm transition-all hover:bg-muted"
+              className={`group inline-flex items-center justify-center rounded-lg border border-border bg-background px-8 py-4 text-lg text-foreground shadow-sm transition-all hover:bg-muted ${ACTION_LABEL_CLASS_NAME}`}
             >
-              See what&apos;s inside
+              {renderActionLabel("See what's inside")}
               <FeatureIcon
                 name="arrow-downward"
                 className="ml-2 h-4 w-4 transition-transform group-hover:translate-y-0.5"
@@ -302,7 +304,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
             </div>
 
             <div id="solution" className="relative mt-12 md:mt-0">
-              <div className="relative overflow-hidden rounded-2xl bg-blue-900 p-8 text-primary-foreground shadow-elevated transition-transform duration-500 md:p-12">
+              <div className="relative overflow-hidden rounded-2xl border border-border-strong bg-surface-elevated p-8 text-foreground shadow-elevated transition-transform duration-500 md:p-12">
                 <div
                   aria-hidden
                   className="absolute inset-0 opacity-20 dark:opacity-15"
@@ -316,41 +318,41 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
                 />
                 <div className="relative z-10">
                   <div className="mb-6 flex items-center gap-3">
-                    <FeatureIcon name="verified" className="h-5 w-5 text-blue-300" />
-                    <h3 className="text-xl font-bold uppercase tracking-wider text-primary-foreground/80">
+                    <FeatureIcon name="verified" className="h-5 w-5 text-primary" />
+                    <h3 className="text-xl font-bold uppercase tracking-wider text-muted-foreground">
                       What SaaSKit Gives You
                     </h3>
                   </div>
-                  <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-primary-foreground md:text-4xl">
+                  <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
                     Reduced uncertainty.
                   </h2>
-                  <p className="mb-8 leading-relaxed text-primary-foreground/90">
+                  <p className="mb-8 leading-relaxed text-muted-foreground">
                     AI allows you to build. SaaSKit allows you to build safely. You build your
                     product. You don&apos;t build the wiring.
                   </p>
 
-                  <div className="space-y-4 rounded-lg border border-blue-700 bg-blue-800/55 p-6 shadow-inner backdrop-blur-sm">
-                    <div className="flex items-center gap-3 text-primary-foreground">
+                  <div className="space-y-4 rounded-lg border border-primary/20 bg-background/60 p-6 shadow-inner backdrop-blur-sm">
+                    <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
                       <p className="text-sm font-medium">Authentication wired and secure</p>
                     </div>
-                    <div className="flex items-center gap-3 text-primary-foreground">
+                    <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
                       <p className="text-sm font-medium">Database structured and verified</p>
                     </div>
-                    <div className="flex items-center gap-3 text-primary-foreground">
+                    <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
                       <p className="text-sm font-medium">Stripe payments connected</p>
                     </div>
-                    <div className="flex items-center gap-3 text-primary-foreground">
+                    <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
                       <p className="text-sm font-medium">Email systems ready</p>
                     </div>
                   </div>
 
-                  <div className="mt-8 border-t border-primary-foreground/30 pt-8">
-                    <h4 className="mb-4 font-bold text-primary-foreground">What You Actually Save</h4>
-                    <ul className="space-y-2 font-mono text-sm text-primary-foreground/85">
+                  <div className="mt-8 border-t border-border-subtle pt-8">
+                    <h4 className="mb-4 font-bold text-foreground">What You Actually Save</h4>
+                    <ul className="space-y-2 font-mono text-sm text-muted-foreground">
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
                         Momentum is what makes solo founders dangerous.
@@ -554,9 +556,9 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
                 type="button"
                 onClick={handleCheckoutClick}
                 disabled={!priceId || isCheckingOut}
-                className="font-brand inline-flex w-full items-center justify-center rounded-lg bg-primary py-4 text-lg font-bold tracking-[-0.01em] text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:bg-primary/60"
+                className={`btn-primary ${ACTION_LABEL_CLASS_NAME} inline-flex w-full items-center justify-center rounded-lg py-4 text-lg transition-colors hover:shadow-level-2-light dark:hover:shadow-level-2-dark disabled:cursor-not-allowed disabled:opacity-60`}
               >
-                {isCheckingOut ? 'Processing...' : 'Start with SaaSKit'}
+                {renderActionLabel(isCheckingOut ? 'Processing...' : 'Start with SaaSKit')}
               </button>
               <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
                 <FeatureIcon name="lock-filled" className="h-3 w-3" />
@@ -664,9 +666,9 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
             <a
               href="#pricing"
-              className="font-brand w-full rounded-lg bg-foreground px-8 py-4 text-lg font-bold tracking-[-0.01em] text-background shadow-surface transition-colors hover:bg-foreground/90 sm:w-auto"
+              className={`w-full rounded-lg bg-foreground px-8 py-4 text-lg text-background shadow-surface transition-colors hover:bg-foreground/90 sm:w-auto ${ACTION_LABEL_CLASS_NAME}`}
             >
-              Build on Stable Ground
+              {renderActionLabel('Build on Stable Ground')}
             </a>
             <a
               href="#breakdown"

@@ -2,6 +2,29 @@ import type { Metadata } from 'next'
 import config from '@/config'
 import { getSiteUrl } from '@/libs/site-url'
 
+const BRAND_TITLE_SUFFIX = 'ProChat — The Operating System for SaaS Builders'
+const brandPattern = /\s*[|—-]\s*ProChat(?:\s+Blog)?$/i
+
+function formatMetaTitle(value?: string | null) {
+  if (!value) return BRAND_TITLE_SUFFIX
+
+  const trimmed = value.trim()
+  if (!trimmed || trimmed === BRAND_TITLE_SUFFIX || trimmed === config.appName) {
+    return BRAND_TITLE_SUFFIX
+  }
+
+  const normalized = trimmed.replace(brandPattern, '').trim()
+  if (!normalized || normalized === config.appName) {
+    return BRAND_TITLE_SUFFIX
+  }
+
+  if (normalized === BRAND_TITLE_SUFFIX) {
+    return BRAND_TITLE_SUFFIX
+  }
+
+  return `${normalized} | ${BRAND_TITLE_SUFFIX}`
+}
+
 /**
  * SEO Architecture Audit Summary (2026-03-05)
  * - Metadata source of truth is this helper + page-level `metadata` / `generateMetadata`.
@@ -26,10 +49,27 @@ export const getSEOTags = ({
 } = {}) => {
   const siteUrl = getSiteUrl()
   const defaultOgImage = '/og/prochat-home.png'
+  const resolvedTitle =
+    typeof title === 'string' ? formatMetaTitle(title) : title || BRAND_TITLE_SUFFIX
+  const resolvedDescription = description || config.appDescription
+  const resolvedOgTitle =
+    typeof openGraph?.title === 'string'
+      ? formatMetaTitle(openGraph.title)
+      : typeof title === 'string'
+        ? formatMetaTitle(title)
+        : BRAND_TITLE_SUFFIX
+  const resolvedTwitterTitle =
+    typeof twitter?.title === 'string'
+      ? formatMetaTitle(twitter.title)
+      : typeof openGraph?.title === 'string'
+        ? formatMetaTitle(openGraph.title)
+        : typeof title === 'string'
+          ? formatMetaTitle(title)
+          : BRAND_TITLE_SUFFIX
 
   return {
-    title: title || config.appName,
-    description: description || config.appDescription,
+    title: resolvedTitle,
+    description: resolvedDescription,
     keywords: keywords || [config.appName],
     applicationName: config.appName,
     icons: {
@@ -39,28 +79,27 @@ export const getSEOTags = ({
     },
     metadataBase: new URL(`${siteUrl}/`),
     openGraph: {
-      title: openGraph?.title || title || config.appName,
-      description: openGraph?.description || description || config.appDescription,
+      ...openGraph,
+      title: resolvedOgTitle,
+      description: openGraph?.description || resolvedDescription,
       url:
         openGraph?.url ||
         (canonicalUrlRelative ? `${siteUrl}${canonicalUrlRelative}` : `${siteUrl}/`),
-      siteName: (openGraph?.title || title || config.appName) as string,
+      siteName: BRAND_TITLE_SUFFIX,
       locale: 'en_US',
       type: 'website',
       images: openGraph?.images || [defaultOgImage],
-      ...openGraph,
     },
     twitter: {
-      title: twitter?.title || openGraph?.title || title || config.appName,
+      ...twitter,
+      title: resolvedTwitterTitle,
       description:
         twitter?.description ||
         openGraph?.description ||
-        description ||
-        config.appDescription,
+        resolvedDescription,
       card: 'summary_large_image',
       creator: '@prochat',
       images: twitter?.images || openGraph?.images || [defaultOgImage],
-      ...twitter,
     },
     ...(robots && { robots }),
     ...(canonicalUrlRelative && {

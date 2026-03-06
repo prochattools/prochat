@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 
 import { contactSubmissionSchema } from '@/lib/contact/schema'
+import { getActionLabelHtml } from '@/helpers/action-label'
 import { trackEvent } from '@/utils/analytics'
 
 import './contact-page.css'
@@ -114,7 +115,7 @@ export default function ContactPage() {
 
     const setSubmitting = (isSubmitting: boolean) => {
       submitButton.disabled = isSubmitting
-      submitLabel.textContent = isSubmitting ? 'Sending...' : 'Send Message'
+      submitLabel.innerHTML = getActionLabelHtml(isSubmitting ? 'Sending...' : 'Send Message')
     }
 
     let openIndex: number | null = null

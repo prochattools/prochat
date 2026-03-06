@@ -25,6 +25,7 @@ import {
 import { validateGithubUsername } from "@/utils/validate_github";
 import ProfileImage from "@/assets/images/profile.svg";
 import Image from "next/image";
+import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from "@/helpers/action-label";
 
 const links = [
   {
@@ -248,8 +249,10 @@ const LoginPayment = ({ user }: any) => {
               target="_blank"
               className="w-fit block"
             >
-              <button className="bg-secondary w-fit min-w-[220px] rounded-[8px] text-sm font-semibold text-primary-foreground flex items-center gap-3 justify-center py-3">
-                Join Discord{" "}
+              <button
+                className={`bg-secondary w-fit min-w-[220px] rounded-[8px] text-sm text-primary-foreground flex items-center gap-3 justify-center py-3 ${ACTION_LABEL_CLASS_NAME}`}
+              >
+                {renderActionLabel("Join Discord")}{" "}
                 <span>
                   <Discord />
                 </span>
@@ -288,8 +291,10 @@ const LoginPayment = ({ user }: any) => {
                 Build with 2 000+ makers
               </p>
               <a href="https://discord.gg/U75p2BQuAH" target="_blank">
-                <button className="bg-secondary w-full rounded-[8px] text-sm font-semibold text-primary-foreground flex items-center gap-3 justify-center py-3">
-                  Join Discord{" "}
+                <button
+                  className={`bg-secondary w-full rounded-[8px] text-sm text-primary-foreground flex items-center gap-3 justify-center py-3 ${ACTION_LABEL_CLASS_NAME}`}
+                >
+                  {renderActionLabel("Join Discord")}{" "}
                   <span>
                     <Discord />
                   </span>

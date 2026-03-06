@@ -2,9 +2,9 @@ import { getSEOTags } from '@/libs/seo'
 import MarketingApp from './(marketing)/App'
 
 export const metadata = getSEOTags({
-  title: 'ProChat — Build Your SaaS with AI (Without Breaking It)',
+  title: 'ProChat',
   description:
-    'ProChat helps non-technical founders build and launch real SaaS products using AI — with a production-ready Next.js foundation including authentication, billing, database integration and deployment patterns.',
+    'ProChat is the operating system for SaaS builders. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.',
   keywords: [
     'SaaS boilerplate',
     'Next.js SaaS starter',
@@ -14,9 +14,9 @@ export const metadata = getSEOTags({
     'Supabase Stripe Next.js starter',
   ],
   openGraph: {
-    title: 'ProChat — Build Your SaaS with AI (Without Breaking It)',
+    title: 'ProChat',
     description:
-      'ProChat helps non-technical founders build and launch real SaaS products using AI — with a production-ready Next.js foundation including authentication, billing, database integration and deployment patterns.',
+      'ProChat is the operating system for SaaS builders. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.',
     images: ['/og/prochat-home.png'],
     type: 'website',
   },

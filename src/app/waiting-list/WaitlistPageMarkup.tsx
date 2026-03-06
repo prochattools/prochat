@@ -1,3 +1,5 @@
+import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from '@/helpers/action-label'
+
 export default function WaitlistPageMarkup() {
   return (
     <>
@@ -50,10 +52,10 @@ export default function WaitlistPageMarkup() {
         />
         <button
           data-waitlist-submit=""
-          className="bg-primary text-white font-bold px-8 py-3 rounded-xl hover:opacity-90 transition-opacity whitespace-nowrap"
+          className={`bg-primary text-white px-8 py-3 rounded-xl hover:opacity-90 transition-opacity whitespace-nowrap ${ACTION_LABEL_CLASS_NAME}`}
           type="submit"
         >
-          <span data-waitlist-submit-label="">Join Waitlist</span>
+          <span data-waitlist-submit-label="">{renderActionLabel('Join Waitlist')}</span>
         </button>
       </form>
       <p

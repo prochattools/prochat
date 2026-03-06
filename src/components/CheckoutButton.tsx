@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 //import { loadStripe, Stripe } from '@stripe/stripe-js';
+import { Button } from '@/components/ui/button';
+import { renderActionLabel } from '@/helpers/action-label';
 import { useUser } from '@/libs/safeClerk';
 import { handleCheckoutProcess } from '@/helpers/checkout';
 
@@ -31,13 +33,14 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ priceId, disabled = fal
 
   return (
     <div>
-      <button 
-        className="w-full bg-primary text-primary-foreground py-2 px-4 rounded-md hover:bg-secondary transition duration-300"
+      <Button
+        type="button"
+        className="w-full"
         onClick={handleCheckout}
         disabled={loading || disabled}
       >
-        {loading ? 'Processing...' : 'Proceed to Checkout'}
-      </button>
+        {renderActionLabel(loading ? 'Processing...' : 'Proceed to Checkout')}
+      </Button>
       {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );
