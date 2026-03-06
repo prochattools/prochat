@@ -4,7 +4,6 @@ import {
   Check,
   CircleDot,
   Cloud,
-  CreditCard,
   Database,
   Lock,
   Rocket,
@@ -67,7 +66,7 @@ const withStructure = [
 export default function App() {
   return (
     <div className="overflow-hidden bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
-      <section id="system" className="relative min-h-[88vh] border-b border-border bg-background pb-20 pt-28 sm:pt-32">
+      <section id="system" className="relative min-h-[88vh] border-b border-border bg-background pb-24 pt-32 sm:pb-28 sm:pt-36">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[size:40px_40px] bg-[linear-gradient(to_right,rgba(29,78,216,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(29,78,216,0.035)_1px,transparent_1px)] opacity-50 dark:bg-[linear-gradient(to_right,rgba(148,163,184,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.07)_1px,transparent_1px)]"
@@ -76,9 +75,9 @@ export default function App() {
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(29,78,216,0.06)_0%,rgba(255,255,255,0)_70%)] dark:bg-[radial-gradient(circle_at_70%_50%,rgba(37,99,235,0.14)_0%,rgba(2,6,23,0)_70%)]"
         />
-        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-14 px-page lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="max-w-2xl">
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary">
+        <div className="relative z-10 mx-auto flex min-h-[calc(88vh-8rem)] max-w-3xl items-center px-page">
+          <div className="w-full text-center">
+            <div className="mx-auto mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
               v2.0 Verified Architecture
             </div>
@@ -87,11 +86,11 @@ export default function App() {
               <br />
               <span className="text-primary">Operate with Structure.</span>
             </h1>
-            <p className="mb-10 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+            <p className="mx-auto mb-10 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl">
               AI made software accessible. It did not remove structural risk. ProChat builds production systems
               that give founders guardrails so ideas do not collapse under hidden complexity.
             </p>
-            <div className="mb-8 flex flex-col gap-4 sm:flex-row">
+            <div className="mb-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/kits"
                 className="inline-flex items-center justify-center rounded-xl bg-primary px-8 py-4 font-brand text-lg font-bold text-primary-foreground transition-all hover:-translate-y-0.5 hover:bg-primary/90"
@@ -108,118 +107,15 @@ export default function App() {
             <div className="mb-8">
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
+                className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
               >
                 Read the build guides
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="inline-flex items-center gap-3 text-sm font-medium text-muted-foreground">
+            <div className="inline-flex items-center justify-center gap-3 text-sm font-medium text-muted-foreground">
               <ShieldCheck className="h-4 w-4 text-primary" />
               Built and hardened by a professional software tester.
-            </div>
-          </div>
-
-          <div className="relative hidden h-[640px] w-full items-center justify-center lg:flex">
-            <div className="pointer-events-none absolute inset-0 z-0">
-              <div className="absolute left-1/2 top-[15%] bottom-[15%] w-px -translate-x-1/2 border-r border-dashed border-border" />
-              <div className="absolute top-1/2 left-[15%] right-[15%] h-px -translate-y-1/2 border-b border-dashed border-border" />
-            </div>
-
-            <div className="absolute left-[calc(50%-250px)] top-[18%] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
-              <div className="mb-4 flex items-start justify-between">
-                <div className="flex h-8 w-8 items-center justify-center rounded border border-border bg-muted text-muted-foreground">
-                  <Lock className="h-4 w-4" />
-                </div>
-                <span className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] text-primary">AUTH</span>
-              </div>
-              <div className="space-y-2">
-                <div className="h-1.5 w-16 rounded-sm bg-muted" />
-                <div className="h-1 w-full rounded-sm bg-muted/70" />
-                <div className="h-1 w-2/3 rounded-sm bg-muted/70" />
-              </div>
-            </div>
-
-            <div className="absolute left-[calc(50%+10px)] top-[18%] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
-              <div className="mb-4 flex items-start justify-between">
-                <div className="flex h-8 w-8 items-center justify-center rounded border border-border bg-muted text-muted-foreground">
-                  <Database className="h-4 w-4" />
-                </div>
-                <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">DATA</span>
-              </div>
-              <div className="mb-2 flex gap-1">
-                <div className="h-8 w-1 rounded-full bg-primary/80" />
-                <div className="h-8 w-1 rounded-full bg-primary/60" />
-                <div className="h-8 w-1 rounded-full bg-primary/40" />
-              </div>
-              <div className="h-1 w-full rounded-sm bg-muted/70" />
-            </div>
-
-            <div className="absolute bottom-[18%] left-[calc(50%-250px)] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
-              <div className="mb-4 flex items-start justify-between">
-                <div className="flex h-8 w-8 items-center justify-center rounded border border-border bg-muted text-muted-foreground">
-                  <CreditCard className="h-4 w-4" />
-                </div>
-                <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">PAY</span>
-              </div>
-              <div className="mt-2 flex items-center gap-3">
-                <div className="h-2 w-12 rounded-sm bg-muted" />
-                <div className="h-px flex-1 bg-border" />
-                <div className="h-2 w-8 rounded-sm bg-primary/20" />
-              </div>
-            </div>
-
-            <div className="absolute bottom-[18%] left-[calc(50%+10px)] w-60 rounded-lg border border-border bg-card p-5 shadow-sm">
-              <div className="mb-4 flex items-start justify-between">
-                <div className="flex h-8 w-8 items-center justify-center rounded border border-border bg-muted text-muted-foreground">
-                  <Cloud className="h-4 w-4" />
-                </div>
-                <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">DEPLOY</span>
-              </div>
-              <div className="mt-2 flex h-8 items-end gap-1">
-                <div className="h-3 w-1.5 rounded-t-sm bg-primary/20" />
-                <div className="h-5 w-1.5 rounded-t-sm bg-primary/30" />
-                <div className="h-4 w-1.5 rounded-t-sm bg-primary/40" />
-                <div className="h-6 w-1.5 rounded-t-sm bg-primary/70" />
-                <div className="h-8 w-1.5 rounded-t-sm bg-primary" />
-              </div>
-            </div>
-
-            <div className="z-30 w-80 rounded-xl border border-primary/20 bg-surface-elevated p-8 shadow-elevated">
-              <div className="mb-6 flex items-center gap-4 border-b border-border pb-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-primary/20 bg-primary/5 text-primary">
-                  <ShieldCheck className="h-6 w-6" />
-                </div>
-                <div>
-                  <div className="font-brand text-base font-bold text-foreground">Verified Architecture</div>
-                  <div className="font-mono text-xs text-muted-foreground">v2.0.4 stable</div>
-                </div>
-              </div>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between rounded border border-border bg-muted/40 p-3">
-                  <span className="text-xs font-medium text-muted-foreground">Global Status</span>
-                  <div className="flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
-                    <span className="font-mono text-xs text-foreground">Operational</span>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
-                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
-                      <div className="h-full w-3/4 rounded-full bg-primary" />
-                    </div>
-                    <span className="font-mono text-[10px] text-muted-foreground">CPU</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
-                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
-                      <div className="h-full w-1/2 rounded-full bg-primary/70" />
-                    </div>
-                    <span className="font-mono text-[10px] text-muted-foreground">MEM</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
