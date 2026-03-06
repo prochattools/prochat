@@ -113,6 +113,7 @@ export default async function BlogArticlePage({ params }: PageParams) {
         className="mt-12"
         title="Build on Stable Ground"
         description="Use a production-ready Next.js SaaS baseline while you execute on distribution and customer value."
+        analytics={{ eventName: 'blog_cta_click', location: 'blog_post_footer' }}
         links={[
           { href: '/kits/saaskit', label: 'Explore SaaSKit' },
           { href: '/kits/uxkit-waitlist', label: 'Join UXKit Waitlist' },

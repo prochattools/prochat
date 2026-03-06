@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 
 import { contactSubmissionSchema } from '@/lib/contact/schema'
+import { trackEvent } from '@/utils/analytics'
 
 import './contact-page.css'
 import ContactPageMarkup from './ContactPageMarkup'
@@ -233,6 +234,7 @@ export default function ContactPage() {
         }
 
         form.reset()
+        trackEvent('contact_submit', { form: 'contact' })
         setStatus(
           'success',
           json?.message ||

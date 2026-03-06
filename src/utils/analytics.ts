@@ -5,6 +5,22 @@ const isDev = process.env.NODE_ENV === 'development'
 export const trackEvent = (name: string, payload: AnalyticsPayload = {}) => {
 	if (typeof window === 'undefined') return
 
+	const umami = (
+		window as typeof window & {
+			umami?: {
+				track?: (event: string, data?: AnalyticsPayload) => void
+			}
+		}
+	).umami
+	if (typeof umami?.track === 'function') {
+		if (Object.keys(payload).length > 0) {
+			umami.track(name, payload)
+		} else {
+			umami.track(name)
+		}
+		return
+	}
+
 	const gtag = (window as typeof window & { gtag?: (...args: unknown[]) => void })
 		.gtag
 	if (typeof gtag === 'function') {

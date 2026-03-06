@@ -26,6 +26,7 @@ Create `.env` (or let `npm run dev` generate it) and set:
 - `STRIPE_SECRET_KEY_TEST`, `STRIPE_SECRET_KEY_LIVE` – server Stripe keys
 - `STRIPE_WEBHOOK_SECRET_TEST`, `STRIPE_WEBHOOK_SECRET_LIVE` – Stripe webhook signing secrets
 - `NEXT_PUBLIC_APP_URL` – app base URL (e.g., http://localhost:3000)
+- `NEXT_PUBLIC_UMAMI_SCRIPT_URL`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` – optional public analytics config for Umami
 - Optional: MAKE_*, N8N_*, RESEND_API_KEY, WP_REST_ENDPOINT, MCP_* as needed
 
 Reference: `.env.example`.

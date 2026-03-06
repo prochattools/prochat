@@ -205,6 +205,8 @@ Result:
    - `SYSTEM_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public`
    - `SHADOW_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public`
    - `NEXT_PUBLIC_APP_URL=https://myapp.example.com`
+   - `NEXT_PUBLIC_UMAMI_SCRIPT_URL=https://umami.prochat.tools/script.js`
+   - `NEXT_PUBLIC_UMAMI_WEBSITE_ID=<your-umami-website-id>`
    - `PORT=3000`
 
 2) Dokploy commands:

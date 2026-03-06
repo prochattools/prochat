@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { trackEvent } from '@/utils/analytics';
 
 const NAV_ITEMS = [
   { label: 'System', href: '/' },
@@ -16,6 +17,10 @@ const NAV_ITEMS = [
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleExploreKitsClick = (location: 'navbar' | 'mobile_navbar') => {
+    trackEvent('explore_kits_click', { location });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,7 +78,7 @@ export const Navbar: React.FC = () => {
         {/* Right Actions */}
         <div className="hidden items-center gap-3 md:flex">
           <ThemeToggle />
-          <Link href="/kits">
+          <Link href="/kits" onClick={() => handleExploreKitsClick('navbar')}>
             <Button variant="primary" size="sm" className="rounded-md px-4 py-2 text-sm shadow-sm">
               Explore kits
             </Button>
@@ -114,7 +119,13 @@ export const Navbar: React.FC = () => {
                 {item.label}
               </Link>
             ))}
-            <Link href="/kits" onClick={() => setMobileMenuOpen(false)}>
+            <Link
+              href="/kits"
+              onClick={() => {
+                handleExploreKitsClick('mobile_navbar');
+                setMobileMenuOpen(false);
+              }}
+            >
               <Button className="mt-3 w-full justify-center rounded-md py-2.5 text-sm">Explore kits</Button>
             </Link>
           </div>

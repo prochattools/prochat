@@ -120,6 +120,7 @@ export default async function BlogPage() {
         className="mt-12"
         title="Turn Reading Into Shipping"
         description="Use the same production-ready foundation discussed in these guides."
+        analytics={{ eventName: 'blog_cta_click', location: 'blog_index_footer' }}
         links={[
           { href: '/kits/saaskit', label: 'Explore SaaSKit' },
           { href: '/kits/uxkit-waitlist', label: 'Join UXKit Waitlist' },

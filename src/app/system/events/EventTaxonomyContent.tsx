@@ -30,6 +30,21 @@ const EVENTS = [
 		description: 'Evidence card click from the proof page.',
 		payload: '{ id: "string", href: "string" }',
 	},
+	{
+		name: 'explore_kits_click',
+		description: 'Primary Explore kits CTA click from the global navigation.',
+		payload: '{ location: "navbar|mobile_navbar" }',
+	},
+	{
+		name: 'contact_submit',
+		description: 'Successful submission of the main contact form.',
+		payload: '{ form: "contact" }',
+	},
+	{
+		name: 'blog_cta_click',
+		description: 'Key conversion CTA click from blog index and blog article footers.',
+		payload: '{ cta_type: "explore_kits|contact|related_article|blog|link", location: "blog_index_footer|blog_post_footer", href: "string" }',
+	},
 ]
 
 export default function EventTaxonomyContent() {
