@@ -89,7 +89,7 @@ export default async function GlossaryTermPage({ params }: PageParams) {
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">
             SaaS Founder Glossary
           </p>
-          <h1 className="mt-3 font-brand text-4xl font-bold tracking-[-0.02em] text-foreground md:text-5xl">
+          <h1 className="mt-3 font-brand text-4xl font-bold tracking-[-0.05em] text-foreground md:text-5xl">
             {term.title}
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-muted-foreground">

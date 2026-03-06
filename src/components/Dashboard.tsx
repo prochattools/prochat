@@ -42,7 +42,7 @@ const Dashboard = () => {
 					</div>
 				</div>
 				<form onSubmit={formik.handleSubmit} className='flex flex-col gap-4'>
-					<h1 className='text-black1 dark:text-white font-semibold text-[32px] px-4 sm:px-8 py-4'>
+					<h1 className='text-black1 dark:text-white px-4 py-4 text-[32px] font-semibold tracking-[-0.05em] sm:px-8'>
 						Environments:
 					</h1>
 

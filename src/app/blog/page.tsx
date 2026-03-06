@@ -56,7 +56,7 @@ export default async function BlogPage() {
   return (
     <main className="mx-auto max-w-6xl px-page pb-24 pt-28 md:pt-32">
       <section className="mx-auto max-w-3xl text-center">
-        <h1 className="font-brand text-4xl font-bold tracking-[-0.02em] text-foreground md:text-5xl">
+        <h1 className="font-brand text-4xl font-bold tracking-[-0.05em] text-foreground md:text-5xl">
           Build SaaS with AI. Keep the system stable.
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-muted-foreground">

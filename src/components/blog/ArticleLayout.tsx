@@ -34,7 +34,7 @@ export default function ArticleLayout({
               {post.cluster}
             </div>
           ) : null}
-          <h1 className="mt-4 font-brand text-4xl font-bold tracking-[-0.025em] text-foreground md:text-5xl">
+          <h1 className="mt-4 font-brand text-4xl font-bold tracking-[-0.05em] text-foreground md:text-5xl">
             {post.title}
           </h1>
           <p className="mt-6 text-[1.02rem] leading-7 text-muted-foreground md:text-[1.06rem]">

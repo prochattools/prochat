@@ -84,7 +84,7 @@ export default function App() {
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
               v2.0 Verified Architecture
             </div>
-            <h1 className="mb-4 font-brand text-5xl font-bold leading-tight tracking-[-0.03em] text-foreground md:text-6xl lg:text-7xl">
+            <h1 className="mb-4 font-brand text-5xl font-bold leading-tight tracking-[-0.05em] text-foreground md:text-6xl lg:text-7xl">
               Build with AI.
               <br />
               <span className="text-primary">Operate with Structure.</span>

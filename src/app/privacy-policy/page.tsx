@@ -49,7 +49,7 @@ const PrivacyPolicy = () => {
           </svg>{" "}
           Back
         </Link>
-        <h1 className="text-3xl font-extrabold pb-6 text-white">
+        <h1 className="pb-6 text-3xl font-extrabold tracking-[-0.05em] text-white">
           Privacy Policy for {config.appName}
         </h1>
 

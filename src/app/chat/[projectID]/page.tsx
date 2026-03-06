@@ -108,7 +108,7 @@ export default function ChatPage() {
 	return (
 		<div className='flex flex-col h-[800px] justify-between items-center w-full p-5'>
 			<div className='flex flex-col w-3/4 h-5/6 rounded-b-lg'>
-				<h1 className='text-2xl text-center font-bold'>Chat</h1>
+				<h1 className='text-center text-2xl font-bold tracking-[-0.05em]'>Chat</h1>
 
 				<div className='flex flex-col gap-2 h-full w-full'>
 					{messages.map(message => (

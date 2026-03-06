@@ -100,7 +100,7 @@ const Scenarios = () => {
 
 	return (
 		<div className='flex flex-col w-full items-center justify-start gap-4'>
-			<h1 className='text-4xl font-bold'>Scenarios Templates</h1>
+			<h1 className='text-4xl font-bold tracking-[-0.05em]'>Scenarios Templates</h1>
 
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-11/12 max-w-7xl'>
 				{availableScenarios?.map(scenario => {
@@ -175,7 +175,7 @@ const Scenarios = () => {
 				})}
 			</div>
 
-			<h1 className='text-4xl font-bold'>My Projects</h1>
+			<h1 className='text-4xl font-bold tracking-[-0.05em]'>My Projects</h1>
 
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-11/12 max-w-7xl'>
 				{myProjects?.map(project => (

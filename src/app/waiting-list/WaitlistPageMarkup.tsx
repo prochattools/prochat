@@ -7,7 +7,7 @@ export default function WaitlistPageMarkup() {
       <span className="size-2 rounded-full bg-primary"></span>
       <span className="text-[10px] font-bold tracking-widest uppercase text-primary mono-text">Waitlist</span>
     </div>
-        <h1 className="text-5xl lg:text-7xl font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white mb-8">
+        <h1 className="mb-8 text-5xl font-black leading-[1.1] tracking-[-0.05em] text-slate-900 dark:text-white lg:text-7xl">
       Join the UXKit <span className="text-primary">Waiting List.</span>
     </h1>
         <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed mb-10">

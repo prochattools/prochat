@@ -56,7 +56,7 @@ export default function NotFound() {
         </div>
 
         <div className="space-y-6 max-w-lg mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-4xl font-bold tracking-[-0.05em] text-slate-900 dark:text-white md:text-5xl">
             Still building this part.
           </h1>
 

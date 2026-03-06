@@ -17,7 +17,7 @@ export default function PrivacyPage() {
 			<main className="mx-auto w-full max-w-3xl px-page">
 				<article className="space-y-10 leading-relaxed text-slate-600 dark:text-slate-300">
 					<header className="mb-12">
-						<h1 className="mb-4 text-3xl font-bold text-slate-900 dark:text-white md:text-4xl">
+						<h1 className="mb-4 text-3xl font-bold tracking-[-0.05em] text-slate-900 dark:text-white md:text-4xl">
 							PRIVACY POLICY
 						</h1>
 						<p className="text-sm font-medium text-slate-500 dark:text-slate-400">

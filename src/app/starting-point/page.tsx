@@ -108,7 +108,7 @@ export default function StartHerePage() {
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-primary">
                 Preparation Layer
               </p>
-              <h1 className="font-sans text-[2.75rem] font-extrabold leading-[1.08] tracking-[-0.02em] text-foreground md:text-[4.25rem]">
+              <h1 className="font-sans text-[2.75rem] font-extrabold leading-[1.08] tracking-[-0.05em] text-foreground md:text-[4.25rem]">
                 Test first.
                 <br className="hidden lg:block" />
                 SaaS second.

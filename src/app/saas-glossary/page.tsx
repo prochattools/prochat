@@ -46,7 +46,7 @@ export default async function SaaSGlossaryPage() {
   return (
     <section className="mx-auto flex h-full max-w-7xl flex-col overflow-hidden px-page pb-4 pt-4 md:pb-5 md:pt-5">
       <header className="w-full shrink-0 border-b border-border-subtle/80 pb-4 md:pb-5">
-        <h1 className="font-brand text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
+        <h1 className="font-brand text-3xl font-bold tracking-[-0.05em] text-foreground md:text-4xl">
           SaaS Founder Glossary
         </h1>
         <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">

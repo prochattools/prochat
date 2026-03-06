@@ -57,7 +57,7 @@ export default function EventTaxonomyContent() {
 				<Section tone="surface" spacing="default">
 						<div className="max-w-5xl mx-auto px-page text-center">
 							<Reveal>
-								<h1 className="text-4xl md:text-5xl font-bold text-foreground">
+								<h1 className="text-4xl font-bold tracking-[-0.05em] text-foreground md:text-5xl">
 									Event taxonomy
 								</h1>
 							</Reveal>

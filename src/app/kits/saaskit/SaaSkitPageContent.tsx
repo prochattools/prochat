@@ -140,7 +140,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
             v2.0 Production Ready
           </div>
 
-          <h1 className="mb-8 text-5xl font-bold leading-[1.08] tracking-[-0.02em] text-foreground md:text-7xl">
+          <h1 className="mb-8 text-5xl font-bold leading-[1.08] tracking-[-0.05em] text-foreground md:text-7xl">
             Next.js SaaS Boilerplate for AI Builders.
             <br />
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
