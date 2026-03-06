@@ -24,6 +24,13 @@ import {
 import { cn } from '@/helpers/utils'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Panel, listRowVariants } from '@/components/ui/surface'
 import {
@@ -33,6 +40,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet'
+import { isEditableTarget, useKeyboardNavigation } from '@/hooks/useKeyboardNavigation'
 import type { GlossaryStage } from '@/libs/glossary'
 
 type ExplorerTerm = {
@@ -97,6 +105,28 @@ function useDebouncedValue<T>(value: T, delayMs: number) {
 
 function startsWithLetter(title: string) {
   return title.trim().charAt(0).toUpperCase()
+}
+
+function buildSearchIndex(term: ExplorerTerm) {
+  return [
+    term.title,
+    term.description,
+    term.excerpt,
+    term.definition,
+    term.synonyms.join(' '),
+    term.focusTags.join(' '),
+    term.content.replace(/<[^>]+>/g, ' '),
+  ]
+    .join(' ')
+    .toLowerCase()
+}
+
+function matchesSearchTokens(term: ExplorerTerm, normalizedQuery: string) {
+  const tokens = normalizedQuery ? normalizedQuery.split(/\s+/) : []
+  if (tokens.length === 0) return true
+
+  const searchIndex = buildSearchIndex(term)
+  return tokens.every(token => searchIndex.includes(token))
 }
 
 function SearchField({
@@ -338,16 +368,234 @@ function FilterAccordion({
   )
 }
 
+function GlossaryCommandPalette({
+  open,
+  onOpenChange,
+  terms,
+  onSelectTerm,
+}: {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  terms: ExplorerTerm[]
+  onSelectTerm: (term: ExplorerTerm) => void
+}) {
+  const [query, setQuery] = useState('')
+  const [activeIndex, setActiveIndex] = useState(0)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const rowRefs = useRef<Record<string, HTMLButtonElement | null>>({})
+
+  const debouncedQuery = useDebouncedValue(query, 80)
+  const normalizedQuery = debouncedQuery.trim().toLowerCase()
+
+  const filteredTerms = useMemo(() => {
+    const matchedTerms = terms.filter(term => matchesSearchTokens(term, normalizedQuery))
+    return [...matchedTerms].sort(
+      (a, b) => a.priority - b.priority || a.title.localeCompare(b.title),
+    )
+  }, [normalizedQuery, terms])
+
+  useEffect(() => {
+    if (!open) {
+      setQuery('')
+      setActiveIndex(0)
+      return
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      inputRef.current?.focus()
+      inputRef.current?.select()
+    })
+
+    return () => window.cancelAnimationFrame(frame)
+  }, [open])
+
+  useEffect(() => {
+    if (filteredTerms.length === 0) {
+      setActiveIndex(-1)
+      return
+    }
+
+    setActiveIndex(current => {
+      if (current < 0) return 0
+      return Math.min(current, filteredTerms.length - 1)
+    })
+  }, [filteredTerms])
+
+  useEffect(() => {
+    if (!open || activeIndex < 0) return
+
+    const activeTerm = filteredTerms[activeIndex]
+    if (!activeTerm) return
+
+    rowRefs.current[activeTerm.slug]?.scrollIntoView({
+      block: 'nearest',
+      behavior: 'smooth',
+    })
+  }, [activeIndex, filteredTerms, open])
+
+  const commitSelection = (term: ExplorerTerm) => {
+    onSelectTerm(term)
+    onOpenChange(false)
+  }
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement | HTMLInputElement>) => {
+    if (filteredTerms.length === 0) return
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      setActiveIndex(current => Math.min(filteredTerms.length - 1, Math.max(current, 0) + 1))
+      return
+    }
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      setActiveIndex(current => Math.max(0, (current < 0 ? 0 : current) - 1))
+      return
+    }
+
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      const activeTerm = filteredTerms[Math.max(activeIndex, 0)]
+      if (activeTerm) commitSelection(activeTerm)
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="overflow-hidden rounded-3xl border border-border-subtle/80 bg-surface-elevated p-0 shadow-elevated sm:max-w-2xl">
+        <DialogHeader className="border-b border-border-subtle/80 px-5 py-4">
+          <DialogTitle className="font-brand text-xl tracking-[-0.02em] text-foreground">
+            Jump to any glossary term
+          </DialogTitle>
+          <DialogDescription>
+            Search all glossary terms, move with arrow keys, and press Enter to open.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-4 p-4">
+          <div className="relative">
+            <label htmlFor="glossary-command-search" className="sr-only">
+              Search glossary terms in the command palette
+            </label>
+            <Search
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+              aria-hidden="true"
+            />
+            <Input
+              id="glossary-command-search"
+              ref={inputRef}
+              value={query}
+              onChange={event => setQuery(event.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Search glossary terms..."
+              className="h-11 border-border-subtle bg-surface pl-10 pr-4"
+            />
+          </div>
+
+          <div
+            role="listbox"
+            aria-label="Glossary command results"
+            aria-activedescendant={
+              activeIndex >= 0 ? `glossary-command-option-${filteredTerms[activeIndex]?.slug}` : undefined
+            }
+            className="max-h-[min(26rem,60vh)] overflow-y-auto overscroll-contain rounded-2xl border border-border-subtle/80 bg-surface/70 p-2"
+            onKeyDown={handleKeyDown}
+          >
+            {filteredTerms.length === 0 ? (
+              <div className="rounded-xl border border-dashed border-border-subtle/80 bg-surface-soft/70 p-4 text-sm text-muted-foreground">
+                No glossary terms match this search.
+              </div>
+            ) : (
+              <ul className="space-y-1.5">
+                {filteredTerms.map((term, index) => {
+                  const isActive = activeIndex === index
+
+                  return (
+                    <li key={term.slug}>
+                      <button
+                        id={`glossary-command-option-${term.slug}`}
+                        ref={element => {
+                          rowRefs.current[term.slug] = element
+                        }}
+                        type="button"
+                        role="option"
+                        aria-selected={isActive}
+                        onClick={() => commitSelection(term)}
+                        onFocus={() => setActiveIndex(index)}
+                        className={cn(
+                          'w-full rounded-2xl border px-3 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+                          isActive
+                            ? 'border-primary/25 bg-primary/10 shadow-surface'
+                            : 'border-transparent bg-transparent hover:border-border-subtle hover:bg-surface-soft/80',
+                        )}
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <p className="truncate font-brand text-[15px] font-semibold text-foreground">
+                              {term.title}
+                            </p>
+                            <p className="mt-1 line-clamp-2 text-sm leading-5 text-muted-foreground">
+                              {term.excerpt}
+                            </p>
+                          </div>
+                          <Badge
+                            variant="outline"
+                            className="h-6 shrink-0 rounded-full border-border-subtle bg-surface px-2 py-0 text-[10px] font-medium text-muted-foreground"
+                          >
+                            {term.stage}
+                          </Badge>
+                        </div>
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border-subtle/70 pt-2 text-xs text-muted-foreground">
+            <span>
+              <kbd className="rounded border border-border-subtle bg-surface px-1.5 py-0.5 font-mono text-[10px] text-foreground">
+                ↑
+              </kbd>{' '}
+              <kbd className="rounded border border-border-subtle bg-surface px-1.5 py-0.5 font-mono text-[10px] text-foreground">
+                ↓
+              </kbd>{' '}
+              Move
+            </span>
+            <span>
+              <kbd className="rounded border border-border-subtle bg-surface px-1.5 py-0.5 font-mono text-[10px] text-foreground">
+                Enter
+              </kbd>{' '}
+              Open
+            </span>
+            <span>
+              <kbd className="rounded border border-border-subtle bg-surface px-1.5 py-0.5 font-mono text-[10px] text-foreground">
+                Esc
+              </kbd>{' '}
+              Close
+            </span>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 function TermsList({
   terms,
   selectedSlug,
+  activeIndex,
   onSelect,
+  onActiveIndexChange,
   rowRefs,
   onKeyDown,
 }: {
   terms: ExplorerTerm[]
   selectedSlug: string
+  activeIndex: number
   onSelect: (term: ExplorerTerm) => void
+  onActiveIndexChange: (index: number) => void
   rowRefs: MutableRefObject<Record<string, HTMLButtonElement | null>>
   onKeyDown: (event: ReactKeyboardEvent<HTMLDivElement>) => void
 }) {
@@ -355,6 +603,7 @@ function TermsList({
     <div
       role="listbox"
       aria-label="Glossary terms"
+      aria-activedescendant={activeIndex >= 0 ? `glossary-term-${terms[activeIndex]?.slug}` : undefined}
       tabIndex={0}
       onKeyDown={onKeyDown}
       className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-inset [scroll-padding-top:3.75rem]"
@@ -365,41 +614,58 @@ function TermsList({
         </div>
       ) : (
         <ul className="space-y-1.5">
-          {terms.map(term => (
-            <li key={term.slug}>
-              <button
-                ref={element => {
-                  rowRefs.current[term.slug] = element
-                }}
-                type="button"
-                role="option"
-                aria-selected={selectedSlug === term.slug}
-                onClick={() => onSelect(term)}
-                className={cn(
-                  listRowVariants({ selected: selectedSlug === term.slug }),
-                  'w-full rounded-xl border px-3 py-3 text-left focus-visible:outline-none',
-                )}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="truncate font-brand text-[15px] font-semibold text-foreground">
-                      {term.title}
-                    </p>
-                    <p className="mt-1 line-clamp-2 text-sm leading-5 text-muted-foreground">
-                      {term.excerpt}
-                    </p>
+          {terms.map((term, index) => {
+            const isSelected = selectedSlug === term.slug
+            const isActive = activeIndex === index
+
+            return (
+              <li key={term.slug}>
+                <button
+                  id={`glossary-term-${term.slug}`}
+                  ref={element => {
+                    rowRefs.current[term.slug] = element
+                  }}
+                  type="button"
+                  role="option"
+                  aria-selected={isSelected}
+                  onClick={() => onSelect(term)}
+                  onFocus={() => onActiveIndexChange(index)}
+                  className={cn(
+                    listRowVariants({ selected: isSelected }),
+                    'relative w-full rounded-xl border px-3 py-3 pl-4 text-left focus-visible:outline-none',
+                    isActive && !isSelected ? 'border-primary/20 bg-primary/[0.06]' : '',
+                  )}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      'absolute inset-y-3 left-1 w-0.5 rounded-full transition-opacity',
+                      isSelected ? 'bg-primary opacity-100' : '',
+                      isActive && !isSelected ? 'bg-primary/70 opacity-100' : '',
+                      !isSelected && !isActive ? 'opacity-0' : '',
+                    )}
+                  />
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="truncate font-brand text-[15px] font-semibold text-foreground">
+                        {term.title}
+                      </p>
+                      <p className="mt-1 line-clamp-2 text-sm leading-5 text-muted-foreground">
+                        {term.excerpt}
+                      </p>
+                    </div>
+                    <Badge
+                      variant="outline"
+                      className="h-6 shrink-0 rounded-full border-border-subtle bg-surface px-2 py-0 text-[10px] font-medium text-muted-foreground"
+                    >
+                      {term.stage}
+                    </Badge>
                   </div>
-                  <Badge
-                    variant="outline"
-                    className="h-6 shrink-0 rounded-full border-border-subtle bg-surface px-2 py-0 text-[10px] font-medium text-muted-foreground"
-                  >
-                    {term.stage}
-                  </Badge>
-                </div>
-                <p className="mt-2 text-[11px] text-tertiary">{term.category}</p>
-              </button>
-            </li>
-          ))}
+                  <p className="mt-2 text-[11px] text-tertiary">{term.category}</p>
+                </button>
+              </li>
+            )
+          })}
         </ul>
       )}
     </div>
@@ -418,13 +684,16 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
     )
     return byPriority[0]?.slug || ''
   })
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
   const [showDesktopFilters, setShowDesktopFilters] = useState(true)
   const [mobileTermsOpen, setMobileTermsOpen] = useState(false)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-  const [openFilterGroup, setOpenFilterGroup] = useState<FilterGroupKey>('category')
+  const [openFilterGroup, setOpenFilterGroup] = useState<FilterGroupKey | ''>('category')
 
   const inputRef = useRef<HTMLInputElement>(null)
   const rowRefs = useRef<Record<string, HTMLButtonElement | null>>({})
+  const previousFocusRef = useRef<HTMLElement | null>(null)
 
   const debouncedQuery = useDebouncedValue(query, 120)
   const normalizedQuery = debouncedQuery.trim().toLowerCase()
@@ -469,26 +738,10 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
     [tagCounts],
   )
 
-  const queryMatchedTerms = useMemo(() => {
-    const tokens = normalizedQuery ? normalizedQuery.split(/\s+/) : []
-    if (tokens.length === 0) return terms
-
-    return terms.filter(term => {
-      const searchIndex = [
-        term.title,
-        term.description,
-        term.excerpt,
-        term.definition,
-        term.synonyms.join(' '),
-        term.focusTags.join(' '),
-        term.content.replace(/<[^>]+>/g, ' '),
-      ]
-        .join(' ')
-        .toLowerCase()
-
-      return tokens.every(token => searchIndex.includes(token))
-    })
-  }, [normalizedQuery, terms])
+  const queryMatchedTerms = useMemo(
+    () => terms.filter(term => matchesSearchTokens(term, normalizedQuery)),
+    [normalizedQuery, terms],
+  )
 
   const filteredWithoutLetter = useMemo(() => {
     return queryMatchedTerms
@@ -523,8 +776,8 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
     )
   }, [filteredWithoutLetter, normalizedQuery, selectedLetter])
 
-  const selectedTerm =
-    filteredTerms.find(term => term.slug === selectedSlug) || filteredTerms[0] || null
+  const selectedTerm = filteredTerms.find(term => term.slug === selectedSlug) || null
+  const activeTerm = activeIndex >= 0 ? filteredTerms[activeIndex] || null : null
 
   const relatedTerms = useMemo(() => {
     if (!selectedTerm) return []
@@ -591,54 +844,211 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
   useEffect(() => {
     if (filteredTerms.length === 0) {
       setSelectedSlug('')
+      setActiveIndex(-1)
       return
     }
 
-    if (!filteredTerms.some(term => term.slug === selectedSlug)) {
+    if (selectedSlug && !filteredTerms.some(term => term.slug === selectedSlug)) {
       setSelectedSlug(filteredTerms[0].slug)
+      setActiveIndex(0)
     }
   }, [filteredTerms, selectedSlug])
 
   useEffect(() => {
-    if (!selectedSlug) return
-    rowRefs.current[selectedSlug]?.scrollIntoView({ block: 'nearest' })
-  }, [selectedSlug])
+    if (filteredTerms.length === 0) return
+
+    setActiveIndex(current => {
+      if (current >= 0 && current < filteredTerms.length) return current
+
+      const selectedIndex = filteredTerms.findIndex(term => term.slug === selectedSlug)
+      return selectedIndex >= 0 ? selectedIndex : 0
+    })
+  }, [filteredTerms, selectedSlug])
 
   useEffect(() => {
-    const handleFocusShortcut = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-        event.preventDefault()
-        inputRef.current?.focus()
-        inputRef.current?.select()
-      }
+    if (activeIndex < 0) return
+
+    const activeTermSlug = filteredTerms[activeIndex]?.slug
+    if (!activeTermSlug) return
+
+    rowRefs.current[activeTermSlug]?.scrollIntoView({
+      block: 'nearest',
+      behavior: 'smooth',
+    })
+  }, [activeIndex, filteredTerms])
+
+  useEffect(() => {
+    if (commandPaletteOpen) return
+    if (!previousFocusRef.current) return
+
+    const fallbackTarget =
+      previousFocusRef.current !== document.body ? previousFocusRef.current : inputRef.current
+    previousFocusRef.current = null
+
+    window.requestAnimationFrame(() => {
+      fallbackTarget?.focus()
+    })
+  }, [commandPaletteOpen])
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags(current =>
+      current.includes(tag)
+        ? current.filter(currentTag => currentTag !== tag)
+        : [...current, tag],
+    )
+  }
+
+  const focusSearch = () => {
+    inputRef.current?.focus()
+    inputRef.current?.select()
+  }
+
+  const openCommandPalette = () => {
+    previousFocusRef.current =
+      document.activeElement instanceof HTMLElement ? document.activeElement : inputRef.current
+    setCommandPaletteOpen(true)
+  }
+
+  const moveActiveIndex = (direction: 1 | -1) => {
+    if (filteredTerms.length === 0) return
+
+    setActiveIndex(current => {
+      const safeIndex = current < 0 ? 0 : current
+      return Math.min(filteredTerms.length - 1, Math.max(0, safeIndex + direction))
+    })
+  }
+
+  const openTerm = (term: ExplorerTerm) => {
+    const nextIndex = filteredTerms.findIndex(candidate => candidate.slug === term.slug)
+    if (nextIndex >= 0) setActiveIndex(nextIndex)
+
+    setSelectedSlug(term.slug)
+    setMobileTermsOpen(false)
+    setCommandPaletteOpen(false)
+  }
+
+  const openActiveTerm = () => {
+    const nextTerm = filteredTerms[activeIndex]
+    if (nextTerm) openTerm(nextTerm)
+  }
+
+  const jumpToLetter = (letter: string) => {
+    const nextIndex = filteredTerms.findIndex(
+      term => startsWithLetter(term.title) === letter.toUpperCase(),
+    )
+
+    if (nextIndex >= 0) setActiveIndex(nextIndex)
+  }
+
+  useKeyboardNavigation(event => {
+    if (event.defaultPrevented) return
+
+    const key = event.key
+    const isModifierKey = event.metaKey || event.ctrlKey
+    const isTyping = isEditableTarget(event.target)
+
+    if (isModifierKey && !event.shiftKey && !event.altKey && key.toLowerCase() === 'k') {
+      if (isTyping || mobileTermsOpen || mobileFiltersOpen) return
+      event.preventDefault()
+      openCommandPalette()
+      return
     }
 
-    window.addEventListener('keydown', handleFocusShortcut)
-    return () => window.removeEventListener('keydown', handleFocusShortcut)
-  }, [])
+    if (key === 'Escape') {
+      if (commandPaletteOpen) {
+        event.preventDefault()
+        setCommandPaletteOpen(false)
+        return
+      }
+
+      if (mobileTermsOpen) {
+        event.preventDefault()
+        setMobileTermsOpen(false)
+        return
+      }
+
+      if (mobileFiltersOpen) {
+        event.preventDefault()
+        setMobileFiltersOpen(false)
+        return
+      }
+
+      if (selectedSlug) {
+        event.preventDefault()
+        setSelectedSlug('')
+        return
+      }
+
+      if (openFilterGroup) {
+        event.preventDefault()
+        setOpenFilterGroup('')
+      }
+
+      return
+    }
+
+    if (commandPaletteOpen) return
+
+    if (key === '/' && !event.altKey && !isModifierKey && !event.shiftKey) {
+      if (isTyping) return
+      event.preventDefault()
+      focusSearch()
+      return
+    }
+
+    if (isTyping || mobileTermsOpen || mobileFiltersOpen) return
+    if (!window.matchMedia('(min-width: 1024px)').matches) return
+    if (isModifierKey || event.altKey) return
+
+    if (key === 'ArrowDown') {
+      event.preventDefault()
+      moveActiveIndex(1)
+      return
+    }
+
+    if (key === 'ArrowUp') {
+      event.preventDefault()
+      moveActiveIndex(-1)
+      return
+    }
+
+    if (key === 'Enter') {
+      if (activeIndex < 0) return
+      event.preventDefault()
+      openActiveTerm()
+      return
+    }
+
+    if (/^[a-z]$/i.test(key)) {
+      event.preventDefault()
+      jumpToLetter(key)
+    }
+  })
 
   const handleListKeyboardNavigation = (event: ReactKeyboardEvent<HTMLDivElement>) => {
     if (filteredTerms.length === 0) return
 
-    const currentIndex = filteredTerms.findIndex(term => term.slug === selectedSlug)
-    const safeIndex = currentIndex >= 0 ? currentIndex : 0
-
     if (event.key === 'ArrowDown') {
       event.preventDefault()
-      const nextIndex = Math.min(filteredTerms.length - 1, safeIndex + 1)
-      setSelectedSlug(filteredTerms[nextIndex].slug)
+      moveActiveIndex(1)
+      return
     }
 
     if (event.key === 'ArrowUp') {
       event.preventDefault()
-      const nextIndex = Math.max(0, safeIndex - 1)
-      setSelectedSlug(filteredTerms[nextIndex].slug)
+      moveActiveIndex(-1)
+      return
     }
 
     if (event.key === 'Enter') {
       event.preventDefault()
-      const activeTerm = filteredTerms[safeIndex]
-      if (activeTerm) setSelectedSlug(activeTerm.slug)
+      openActiveTerm()
+      return
+    }
+
+    if (/^[a-z]$/i.test(event.key) && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      event.preventDefault()
+      jumpToLetter(event.key)
     }
   }
 
@@ -651,8 +1061,7 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
   }
 
   const handleTermSelect = (term: ExplorerTerm) => {
-    setSelectedSlug(term.slug)
-    setMobileTermsOpen(false)
+    openTerm(term)
   }
 
   const guide = selectedTerm ? CATEGORY_GUIDES[selectedTerm.category] : null
@@ -767,7 +1176,9 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
             <TermsList
               terms={filteredTerms}
               selectedSlug={selectedSlug}
-              onSelect={term => setSelectedSlug(term.slug)}
+              activeIndex={activeIndex}
+              onSelect={openTerm}
+              onActiveIndexChange={setActiveIndex}
               rowRefs={rowRefs}
               onKeyDown={handleListKeyboardNavigation}
             />
@@ -845,13 +1256,7 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
                             <button
                               key={tag}
                               type="button"
-                              onClick={() =>
-                                setSelectedTags(current =>
-                                  current.includes(tag)
-                                    ? current.filter(currentTag => currentTag !== tag)
-                                    : [...current, tag],
-                                )
-                              }
+                              onClick={() => toggleTag(tag)}
                               className={cn(
                                 'rounded-full border px-2.5 py-1 text-xs transition-colors',
                                 selectedTags.includes(tag)
@@ -875,7 +1280,7 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
                               <button
                                 key={term.slug}
                                 type="button"
-                                onClick={() => setSelectedSlug(term.slug)}
+                                onClick={() => openTerm(term)}
                                 className="rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-border hover:text-foreground"
                               >
                                 {term.title}
@@ -889,8 +1294,20 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
                 </div>
               </div>
             ) : (
-              <div className="flex h-full items-center justify-center px-6 text-sm text-muted-foreground">
-                Select a term to open its definition.
+              <div className="flex h-full items-center justify-center px-6">
+                <Panel tone="soft" padding="compact" className="max-w-lg text-center">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
+                    Keyboard ready
+                  </p>
+                  <h3 className="mt-2 font-brand text-xl font-semibold text-foreground">
+                    {activeTerm ? `Press Enter to open ${activeTerm.title}` : 'Select a term'}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {activeTerm
+                      ? activeTerm.excerpt
+                      : 'Use arrow keys or search to move through glossary terms.'}
+                  </p>
+                </Panel>
               </div>
             )}
           </section>
@@ -915,7 +1332,7 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
               >
                 <FilterAccordion
                   groupValue={openFilterGroup}
-                  onGroupChange={value => setOpenFilterGroup((value || 'category') as FilterGroupKey)}
+                  onGroupChange={value => setOpenFilterGroup((value || '') as FilterGroupKey | '')}
                   categoryOptions={categoryOptions}
                   categoryCounts={categoryCounts}
                   selectedCategory={selectedCategory}
@@ -930,13 +1347,7 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
                   tagOptions={tagOptions}
                   tagCounts={tagCounts}
                   selectedTags={selectedTags}
-                  toggleTag={tag =>
-                    setSelectedTags(current =>
-                      current.includes(tag)
-                        ? current.filter(currentTag => currentTag !== tag)
-                        : [...current, tag],
-                    )
-                  }
+                  toggleTag={toggleTag}
                   totalTerms={terms.length}
                 />
               </div>
@@ -961,7 +1372,9 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
             <TermsList
               terms={filteredTerms}
               selectedSlug={selectedSlug}
+              activeIndex={activeIndex}
               onSelect={handleTermSelect}
+              onActiveIndexChange={setActiveIndex}
               rowRefs={rowRefs}
               onKeyDown={handleListKeyboardNavigation}
             />
@@ -994,7 +1407,7 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
 
             <FilterAccordion
               groupValue={openFilterGroup}
-              onGroupChange={value => setOpenFilterGroup((value || 'category') as FilterGroupKey)}
+              onGroupChange={value => setOpenFilterGroup((value || '') as FilterGroupKey | '')}
               categoryOptions={categoryOptions}
               categoryCounts={categoryCounts}
               selectedCategory={selectedCategory}
@@ -1009,18 +1422,19 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
               tagOptions={tagOptions}
               tagCounts={tagCounts}
               selectedTags={selectedTags}
-              toggleTag={tag =>
-                setSelectedTags(current =>
-                  current.includes(tag)
-                    ? current.filter(currentTag => currentTag !== tag)
-                    : [...current, tag],
-                )
-              }
+              toggleTag={toggleTag}
               totalTerms={terms.length}
             />
           </div>
         </SheetContent>
       </Sheet>
+
+      <GlossaryCommandPalette
+        open={commandPaletteOpen}
+        onOpenChange={setCommandPaletteOpen}
+        terms={terms}
+        onSelectTerm={openTerm}
+      />
     </>
   )
 }

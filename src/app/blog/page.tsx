@@ -126,8 +126,9 @@ export default async function BlogPage() {
                     {post.tags.map(tag => (
                       <span
                         key={`${post.slug}-${tag}`}
-                        className="rounded-lg border border-border-subtle/80 bg-surface-soft/65 px-2.5 py-1 text-[11px] font-medium text-tertiary transition-colors duration-200 group-hover:border-border/80"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-border-subtle/80 bg-surface-soft/65 px-2.5 py-1 text-[11px] font-medium text-tertiary transition-colors duration-200 group-hover:border-border/80"
                       >
+                        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-primary/70" />
                         {tag}
                       </span>
                     ))}

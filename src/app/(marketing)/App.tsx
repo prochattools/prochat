@@ -66,7 +66,10 @@ const withStructure = [
 export default function App() {
   return (
     <div className="overflow-hidden bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
-      <section id="system" className="relative min-h-[88vh] border-b border-border bg-background pb-24 pt-32 sm:pb-28 sm:pt-36">
+      <section
+        id="system"
+        className="relative min-h-[88vh] border-b border-border bg-background pb-24 pt-[calc(var(--pc-header-height)+2.5rem)] sm:pb-28 sm:pt-[calc(var(--pc-header-height)+3rem)]"
+      >
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[size:40px_40px] bg-[linear-gradient(to_right,rgba(29,78,216,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(29,78,216,0.035)_1px,transparent_1px)] opacity-50 dark:bg-[linear-gradient(to_right,rgba(148,163,184,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.07)_1px,transparent_1px)]"
