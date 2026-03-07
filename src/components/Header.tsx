@@ -44,10 +44,10 @@ function HeaderThemeToggle() {
 
 function DesktopNavigation({ pathname }: { pathname: string }) {
 	return (
-		<nav className="pc-nav-capsule min-w-[58rem] justify-between xl:min-w-[64rem]" aria-label="Primary">
-			<ul className="flex items-center gap-14 whitespace-nowrap xl:gap-16">
+		<nav className="pc-nav-capsule grid min-w-[58rem] grid-cols-5 items-center xl:min-w-[64rem]" aria-label="Primary">
+			<ul className="contents">
 				{NAV_ITEMS.map(item => (
-					<li key={item.href}>
+					<li key={item.href} className="justify-self-center">
 						<Link
 							href={item.href}
 							aria-current={isActivePath(pathname, item.href) ? 'page' : undefined}
@@ -58,18 +58,20 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 					</li>
 				))}
 			</ul>
-			<Button
-				asChild
-				size="sm"
-				className="h-10 rounded-[var(--pc-button-radius)] px-5 text-lg shadow-none hover:brightness-[1.03]"
-			>
-				<Link
-					href="/kits"
-					onClick={() => trackEvent('explore_kits_click', { location: 'header_capsule' })}
+			<div className="justify-self-center">
+				<Button
+					asChild
+					size="sm"
+					className="h-10 rounded-[var(--pc-button-radius)] px-5 text-lg shadow-none hover:brightness-[1.03]"
 				>
-					Explore kits
-				</Link>
-			</Button>
+					<Link
+						href="/kits"
+						onClick={() => trackEvent('explore_kits_click', { location: 'header_capsule' })}
+					>
+						Explore kits
+					</Link>
+				</Button>
+			</div>
 		</nav>
 	)
 }
