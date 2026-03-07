@@ -1,0 +1,315 @@
+---
+title: "How to Structure Your First SaaS Database (Without Overengineering It)"
+excerpt: "A practical guide for non-technical founders on designing a minimal, production-safe SaaS database schema — without premature complexity."
+category: "structure"
+pillarCategory: "structure"
+pillarOrder: 6
+tags:
+  - infrastructure
+  - architecture
+  - saas
+  - non-technical-founders
+publishedAt: "2026-04-14"
+updated: false
+readingTime: "12 min read"
+seo:
+  title: "How to Structure Your First SaaS Database (Without Overengineering It)"
+  description: "Learn how to design a simple, production-ready SaaS database schema as a non-technical founder — covering users, subscriptions, entitlements, migrations, and safe evolution."
+  keywords:
+    - saas database design beginner
+    - first saas schema structure
+    - saas database best practices
+    - nextjs saas database structure
+    - minimal saas architecture
+---
+
+Most first-time founders either:
+
+- Under-design their database  
+or  
+- Overengineer it into something unmaintainable  
+
+Both are dangerous.
+
+If you are building with AI, you need something simpler:
+
+A minimal, production-safe schema that can evolve without collapsing.
+
+This guide explains exactly how to structure your first SaaS database without turning it into an academic project.
+
+For context, review:
+- [What Makes a SaaS Boilerplate Production-Ready?](/blog/what-makes-a-saas-boilerplate-production-ready)
+- [Next.js SaaS Infrastructure Checklist for Non-Technical Founders](/blog/nextjs-saas-infrastructure-checklist-for-non-technical-founders)
+
+---
+
+# The Goal: Stable Core, Expandable Edges
+
+Your first SaaS database does not need:
+
+- Microservices
+- Event sourcing
+- Multi-region sharding
+- Complex multi-tenancy
+
+It needs:
+
+- Clear identity
+- Clean billing linkage
+- Feature entitlements
+- Safe migrations
+- Upgrade path
+
+Structure for today.
+Design for evolution.
+
+---
+
+# 1. Start With a Clean Users Table
+
+Every SaaS begins with identity.
+
+Your `users` table should minimally include:
+
+- id (UUID)
+- email
+- created_at
+- updated_at
+- role (if applicable)
+- billing_customer_id (Stripe reference)
+
+Avoid:
+
+- Embedding billing logic directly in user fields
+- Storing too many derived properties
+- Coupling UI flags to user identity
+
+Keep identity clean and independent.
+
+Authentication logic must remain server-enforced.
+
+---
+
+# 2. Separate Subscriptions From Users
+
+Do not store subscription state directly in the users table.
+
+Instead:
+
+Create a `subscriptions` table:
+
+- id
+- user_id (foreign key)
+- stripe_subscription_id
+- plan_tier
+- status
+- current_period_end
+- created_at
+- updated_at
+
+Why separate?
+
+- Billing lifecycle changes independently
+- Users may cancel, upgrade, downgrade
+- Status transitions must be logged safely
+
+For deeper billing modeling:
+[How Stripe Subscriptions Break in SaaS Apps (And How to Structure Them Correctly)](/blog/how-stripe-subscriptions-break-in-saas-apps-and-how-to-structure-them-correctly)
+
+---
+
+# 3. Model Entitlements Explicitly
+
+Stripe tracks payment.
+
+Your app must track access.
+
+Create an entitlement layer:
+
+Option A (Simple):
+- plan_tier field on subscription
+- Server-side feature checks
+
+Option B (Expandable):
+- features table
+- plan_feature mapping table
+
+Avoid:
+
+- Hardcoding feature access in frontend logic
+- Tying features directly to Stripe plan names
+
+Your database must be the source of product truth.
+
+---
+
+# 4. Do NOT Implement Multi-Tenancy Too Early
+
+Many founders overengineer by introducing:
+
+- Teams
+- Organizations
+- Complex tenant isolation
+- Cross-tenant role matrices
+
+Unless your product requires it from day one, avoid it.
+
+Premature multi-tenancy increases:
+
+- Query complexity
+- Access-control risk
+- Migration complexity
+
+Start simple:
+
+User → Subscription → Feature access
+
+You can evolve later.
+
+---
+
+# 5. Add Audit Fields Everywhere
+
+Every production-safe table should include:
+
+- created_at
+- updated_at
+
+For billing-related tables, consider:
+
+- status_change_reason
+- last_event_id (for webhook idempotency)
+
+Auditability prevents silent corruption.
+
+---
+
+# 6. Plan for Safe Migrations
+
+Your schema will evolve.
+
+You must:
+
+- Use versioned migrations
+- Avoid destructive changes
+- Never modify production tables manually
+- Maintain backward compatibility when possible
+
+Deployment mistakes often start here:
+[Why Most SaaS Deployments Break After Launch](/blog/why-most-saas-deployments-break-after-launch)
+
+Database evolution must be deliberate.
+
+---
+
+# 7. Avoid Derived Data Storage
+
+Common beginner mistake:
+
+Storing computed values directly.
+
+Examples:
+
+- is_premium (derived from subscription)
+- is_trial (derived from status)
+- has_access (derived from billing state)
+
+Instead:
+
+Compute from source-of-truth fields.
+
+Derived fields drift.
+Source-of-truth fields stay stable.
+
+---
+
+# 8. Minimal Example Schema
+
+Your first SaaS database likely needs:
+
+1. users
+2. subscriptions
+3. product_entities (your core feature data)
+4. optional: audit_events
+
+That is enough.
+
+Everything else is evolution.
+
+---
+
+# 9. Evolution Strategy
+
+When your SaaS grows:
+
+- Introduce teams when required
+- Add role tables when complexity increases
+- Introduce soft deletes carefully
+- Add indexing when query load justifies it
+
+Evolution should follow usage.
+
+Not imagination.
+
+---
+
+# 10. AI and Database Discipline
+
+If you are using AI to generate schema:
+
+Do not allow it to:
+
+- Rename tables casually
+- Modify primary keys
+- Introduce inconsistent naming
+- Change field types without migration
+
+AI accelerates change.
+
+You must control structure.
+
+---
+
+# Where SaaSKit Fits
+
+SaaSKit includes:
+
+- Structured user modeling
+- Subscription separation
+- Entitlement-safe patterns
+- Migration-aware architecture
+- Server-enforced access
+
+It gives you a stable baseline without forcing overengineering.
+
+If you want a production-oriented starting point:
+
+👉 /kits/saaskit
+
+---
+
+# Final Thought
+
+Your first SaaS database should be:
+
+- Minimal
+- Clear
+- Safe
+- Expandable
+
+Not impressive.
+Not complex.
+Not academic.
+
+Structure is about stability.
+
+And stability compounds.
+
+For execution discipline, revisit:
+[Founder Execution System from Idea to Paying Users](/blog/founder-execution-system-from-idea-to-paying-users)
+
+Build simple.
+
+Build stable.
+
+Then evolve.

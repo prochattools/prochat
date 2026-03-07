@@ -105,14 +105,20 @@ function mapEntryToBlogPost(entry: Awaited<ReturnType<typeof getSectionEntries>>
 
 const allowedTags = new Set<string>(BLOG_TAGS)
 const allowedCategories = new Set<string>(BLOG_PILLARS.map(pillar => pillar.id))
+const allowedCategoryList = BLOG_PILLARS.map(pillar => pillar.id).join(', ')
+const taxonomyReadmePath = 'src/lib/content/blog/README.md'
 
 function validateBlogPost(post: BlogPost) {
   if (post.category && !allowedCategories.has(post.category)) {
-    throw new Error(`Invalid blog category "${post.category}" for "${post.slug}".`)
+    throw new Error(
+      `Invalid blog category "${post.category}" for "${post.slug}". Allowed categories: ${allowedCategoryList}. See ${taxonomyReadmePath}.`,
+    )
   }
 
   if (post.pillarCategory && !allowedCategories.has(post.pillarCategory)) {
-    throw new Error(`Invalid blog pillarCategory "${post.pillarCategory}" for "${post.slug}".`)
+    throw new Error(
+      `Invalid blog pillarCategory "${post.pillarCategory}" for "${post.slug}". Allowed categories: ${allowedCategoryList}. See ${taxonomyReadmePath}.`,
+    )
   }
 
   for (const tag of post.tags || []) {

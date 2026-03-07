@@ -1,0 +1,317 @@
+---
+title: "How to Design Multi-Tenancy Correctly in Your SaaS (Without Breaking Your Database)"
+excerpt: "A practical guide to structuring multi-tenancy safely in your SaaS — covering tenant modeling, isolation strategies, RBAC layering, and preventing cross-tenant data leaks."
+category: "structure"
+pillarCategory: "structure"
+pillarOrder: 11
+publishedAt: "2026-06-02"
+updated: false
+readingTime: "15 min read"
+seo:
+  title: "How to Design Multi-Tenancy Correctly in Your SaaS"
+  description: "Learn how to structure multi-tenant SaaS architecture safely — including tenant modeling, row-level isolation, RBAC layering, migration safety, and preventing data leaks."
+  keywords:
+    - saas multi tenancy design
+    - multi tenant database structure
+    - row level security saas
+    - prevent cross tenant data leaks
+    - multi tenant nextjs architecture
+---
+
+Multi-tenancy is where many SaaS apps quietly break.
+
+Not in development.
+
+In production.
+
+A single cross-tenant data leak can destroy trust permanently.
+
+If you are a non-technical founder building with AI, this is a structural area you must understand.
+
+Before continuing, review:
+
+- [How to Design SaaS Authentication Correctly as a Non-Technical Founder](/blog/how-to-design-saas-authentication-correctly-as-a-non-technical-founder)
+- [Next.js SaaS Infrastructure Checklist for Non-Technical Founders](/blog/nextjs-saas-infrastructure-checklist-for-non-technical-founders)
+
+This guide focuses on safe structural modeling — not complexity.
+
+---
+
+# 1. What Multi-Tenancy Actually Means
+
+Multi-tenancy = multiple customers share the same application and database.
+
+Your job:
+
+Guarantee that:
+
+- Tenant A can never see Tenant B’s data
+- Tenant A cannot modify Tenant B’s resources
+- Queries never accidentally return cross-tenant rows
+
+Isolation must be structural.
+
+Not conditional.
+
+---
+
+# 2. Choose Your Isolation Strategy
+
+There are three common strategies:
+
+### 1. Separate Database per Tenant
+Pros:
+- Strong isolation  
+Cons:
+- Operational complexity  
+- Hard to scale early  
+
+### 2. Separate Schema per Tenant
+Pros:
+- Good isolation  
+Cons:
+- Migration complexity  
+
+### 3. Shared Database with Tenant ID (Most Common Early SaaS)
+Pros:
+- Simple
+- Scalable
+- Cost-efficient  
+Cons:
+- Requires strict discipline  
+
+Most first SaaS products use shared DB with tenant_id.
+
+If you choose this, discipline is mandatory.
+
+---
+
+# 3. Tenant ID Must Exist Everywhere
+
+Every tenant-owned table must include:
+
+- tenant_id
+- Proper foreign key constraints
+
+For example:
+
+- projects
+- invoices
+- tasks
+- documents
+
+Each must contain:
+
+tenant_id → referencing tenants table
+
+Never rely on:
+
+- Implicit filtering
+- Client-supplied tenant identifiers
+- “Current tenant” global state without verification
+
+Tenant ID must be structural.
+
+---
+
+# 4. Enforce Tenant Boundaries in Queries
+
+Every query that retrieves tenant-owned data must:
+
+- Filter by tenant_id
+- Validate ownership server-side
+
+Never trust:
+
+- Route parameters
+- Frontend-provided tenant identifiers
+
+Instead:
+
+- Extract user session
+- Determine tenant_id from membership table
+- Query with explicit tenant filter
+
+Cross-tenant leaks happen when this discipline slips.
+
+---
+
+# 5. Foreign Key Discipline Prevents Chaos
+
+Enforce:
+
+- Foreign key constraints
+- ON DELETE rules
+- Referential integrity
+
+Example:
+
+projects table:
+
+- id
+- tenant_id (FK)
+- owner_id (FK)
+
+Database should reject:
+
+- Orphan rows
+- Cross-tenant relationships
+
+Let the database protect you.
+
+---
+
+# 6. Layer RBAC on Top of Tenant Isolation
+
+Tenant isolation ≠ role management.
+
+Within a tenant you may have:
+
+- owner
+- admin
+- member
+
+So your checks become:
+
+1. Is user authenticated?
+2. Is user part of tenant?
+3. Does role allow this action?
+
+Authentication discipline:
+[How to Design SaaS Authentication Correctly as a Non-Technical Founder](/blog/how-to-design-saas-authentication-correctly-as-a-non-technical-founder)
+
+Never collapse tenant logic and RBAC logic into one condition.
+
+Keep layers clear.
+
+---
+
+# 7. Prevent Cross-Tenant Leaks by Design
+
+Common AI-generated mistake:
+
+```sql
+SELECT * FROM projects WHERE id = $1
+```
+
+Correct:
+
+```sql
+SELECT * FROM projects WHERE id = $1 AND tenant_id = $2
+```
+
+If tenant_id is not in query:
+
+It is unsafe.
+
+Make this a rule.
+
+---
+
+# 8. Migration Safety in Multi-Tenant Systems
+
+When adding columns or modifying structure:
+
+Ask:
+
+- Does this affect all tenants?
+- Does migration assume single-tenant data?
+- Does it require backfilling?
+
+Migration mistakes in shared DB affect everyone.
+
+Test migrations on staging with multiple tenants.
+
+---
+
+# 9. Billing and Multi-Tenancy
+
+Billing often ties to tenant, not user.
+
+Subscription should be linked to:
+
+- tenant_id
+- Not individual user_id
+
+Stripe modeling guidance:
+[How to Structure Stripe Billing Correctly in Your First SaaS](/blog/how-to-structure-stripe-billing-correctly-in-your-first-saas)
+
+Billing must align with tenancy model.
+
+---
+
+# 10. Testing Tenant Boundaries Before Production
+
+Before launch:
+
+- Create two tenants
+- Log in as different users
+- Attempt cross-tenant API calls
+- Attempt manual ID swapping
+- Verify isolation holds
+
+If cross-tenant access is possible:
+
+You have a structural flaw.
+
+---
+
+# 11. Minimal Safe Multi-Tenant Model
+
+For early SaaS:
+
+You need:
+
+- tenants table
+- tenant_members table
+- tenant_id on all owned resources
+- Server-side tenant validation
+- Role checks layered after tenant check
+
+Avoid:
+
+- Premature enterprise policy engines
+- Complex hierarchical tenancy
+- Deep nested ownership chains
+
+Keep it simple.
+
+Keep it enforced.
+
+---
+
+# Where SaaSKit Fits
+
+SaaSKit provides:
+
+- Tenant-aware data modeling
+- Server-side boundary enforcement
+- Clean RBAC layering
+- Structured migration safety
+
+It gives you a stable base to build multi-tenant features safely.
+
+If you want structural isolation without guessing:
+
+👉 /kits/saaskit
+
+---
+
+# Final Thought
+
+Multi-tenancy is not a feature.
+
+It is a responsibility.
+
+Your users assume their data is isolated.
+
+Design your database like that assumption matters.
+
+Because it does.
+
+For structural production discipline:
+[What Makes a SaaS Boilerplate Production-Ready?](/blog/what-makes-a-saas-boilerplate-production-ready)
+
+Isolation is architecture.
+
+Not a checkbox.

@@ -1,4 +1,5 @@
 import {
+  Fragment,
   cloneElement,
   isValidElement,
   type ReactElement,
@@ -79,7 +80,9 @@ export function formatActionLabelNode(node: ReactNode): ReactNode {
   }
 
   if (Array.isArray(node)) {
-    return node.map(formatActionLabelNode)
+    return node.map((child, index) => (
+      <Fragment key={`action-label-${index}`}>{formatActionLabelNode(child)}</Fragment>
+    ))
   }
 
   if (isValidElement(node)) {

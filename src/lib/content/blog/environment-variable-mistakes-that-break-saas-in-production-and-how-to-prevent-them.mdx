@@ -1,0 +1,284 @@
+---
+title: "Environment Variable Mistakes That Break SaaS in Production (And How to Prevent Them)"
+excerpt: "A deep dive into real environment variable misconfiguration issues in Next.js SaaS apps — including Stripe test/live mixups, webhook secret errors, NEXT_PUBLIC leakage, and staging vs production drift."
+category: "production"
+pillarCategory: "production"
+pillarOrder: 5
+publishedAt: "2026-09-01"
+updated: false
+readingTime: "16 min read"
+seo:
+  title: "Environment Variable Mistakes That Break SaaS in Production"
+  description: "A structured breakdown of environment configuration mistakes in Next.js SaaS apps — covering Stripe keys, webhook secrets, server/client leakage, and deployment drift."
+  keywords:
+    - nextjs environment variables production
+    - stripe test vs live keys mistake
+    - nextjs next_public security risk
+    - saas staging vs production drift
+    - environment configuration errors saas
+---
+
+Most SaaS production failures are not logic bugs.
+
+They are configuration bugs.
+
+Environment variables are invisible infrastructure.
+
+When misconfigured, they create silent failures:
+
+- Billing corruption
+- Webhook rejections
+- Authentication mismatches
+- Feature access leaks
+- Production downtime
+
+For non-technical founders building with AI, environment discipline is essential.
+
+Before continuing, review:
+
+- [Stripe Subscription Mistakes That Kill SaaS Startups](/blog/stripe-subscription-mistakes-that-kill-saas-startups-and-how-to-avoid-them)
+- [SaaS Production Checklist](/blog/complete-production-checklist-first-time-saas-founders)
+- [Next.js SaaS Infrastructure Checklist](/blog/nextjs-saas-infrastructure-checklist-for-non-technical-founders)
+- [Why Most AI-Built SaaS Apps Break in Production](/blog/why-most-ai-built-saas-apps-break-in-production-and-how-to-prevent-it)
+
+This article focuses on configuration failure points.
+
+---
+
+# Mistake #1: Mixing Stripe Test and Live Keys
+
+The most common billing mistake:
+
+- Live Stripe key in test environment
+- Test key deployed to production
+- Test webhook secret on live server
+
+Symptoms:
+
+- Payments appear successful but no subscription activates
+- Webhooks fail silently
+- Dashboard and app states disagree
+
+### Prevention
+
+- Separate .env files per environment
+- Label keys explicitly in dashboard
+- Validate environment at startup
+- Log Stripe key prefix (sk_test vs sk_live)
+
+Never deploy without verifying key types.
+
+---
+
+# Mistake #2: Incorrect Webhook Secrets
+
+Stripe webhook secrets are environment-specific.
+
+Common error:
+
+- Copying webhook secret from staging into production
+- Using wrong endpoint secret
+- Rotating webhook secret without updating deployment
+
+Result:
+
+Stripe events fail validation.
+Billing stops updating.
+Access logic drifts.
+
+### Prevention
+
+- Document webhook secrets clearly
+- Separate staging and production endpoints
+- Log webhook verification failures
+- Re-test webhook after deployment
+
+Webhook logic is infrastructure, not glue code.
+
+---
+
+# Mistake #3: NEXT_PUBLIC Leakage
+
+In Next.js:
+
+Variables prefixed with `NEXT_PUBLIC_` are exposed to the client.
+
+Common beginner mistake:
+
+Exposing:
+
+- Stripe secret keys
+- Internal API endpoints
+- Private configuration flags
+
+AI-generated code often mislabels variables.
+
+### Prevention
+
+- Only expose values meant for browser use
+- Keep secret keys server-only
+- Audit environment variables before deployment
+- Review build output for leaked variables
+
+Never prefix secrets with NEXT_PUBLIC.
+
+---
+
+# Mistake #4: Server / Client Boundary Confusion
+
+AI tools frequently:
+
+- Move logic into client components
+- Access server variables in frontend code
+- Blur boundaries between API and UI
+
+In production, this breaks.
+
+Or worse — leaks data.
+
+### Prevention
+
+- Keep secret-dependent logic in server routes
+- Never reference server-only variables in client components
+- Enforce access checks in API layer
+
+Client code is presentation.
+
+Server code is authority.
+
+---
+
+# Mistake #5: Staging vs Production Drift
+
+Configuration drift happens when:
+
+- Staging has updated variables
+- Production lags behind
+- Feature flags differ silently
+- Environment schemas evolve without sync
+
+You end up debugging “works on staging” problems.
+
+### Prevention
+
+- Maintain environment variable checklist
+- Version control required variables
+- Validate required variables on boot
+- Use explicit environment schemas
+
+Drift is subtle and expensive.
+
+---
+
+# Mistake #6: Docker / Dokploy Injection Errors
+
+When using Docker or Dokploy:
+
+- Variables must be injected correctly
+- Build-time vs runtime variables differ
+- ENV in Dockerfile ≠ runtime secrets
+
+Common errors:
+
+- Building with wrong variables baked in
+- Not restarting container after variable change
+- Forgetting to redeploy after secret update
+
+### Prevention
+
+- Distinguish build-time vs runtime config
+- Document required environment variables
+- Redeploy after variable updates
+- Verify variables inside running container
+
+Configuration is part of deployment discipline.
+
+---
+
+# Mistake #7: Missing Required Variable Validation
+
+Many SaaS apps start even when critical variables are missing.
+
+This leads to:
+
+- Null Stripe clients
+- Silent billing failures
+- Broken email sending
+- Partial system behavior
+
+### Prevention Framework
+
+At application startup:
+
+- Validate all required variables
+- Throw explicit errors if missing
+- Fail fast instead of failing silently
+
+Silent failure is the worst failure.
+
+---
+
+# The Environment Discipline Checklist
+
+Before every production deploy:
+
+- Confirm Stripe key type
+- Confirm webhook secret matches endpoint
+- Confirm NEXT_PUBLIC variables are safe
+- Confirm server-only secrets are not exposed
+- Confirm staging and production parity
+- Confirm container restart after changes
+- Confirm required variables exist
+
+Configuration review should be as serious as code review.
+
+---
+
+# Why AI Amplifies Environment Risk
+
+AI can:
+
+- Generate working code
+- Guess variable names
+- Duplicate environment usage patterns
+
+But AI does not understand your deployment topology.
+
+It cannot:
+
+- Distinguish staging vs production
+- Detect secret leakage
+- Validate runtime container injection
+
+Without discipline, AI increases configuration risk.
+
+---
+
+# When a Structured Foundation Helps
+
+A structured SaaS foundation:
+
+- Documents required variables
+- Separates staging and production patterns
+- Clarifies server vs client boundaries
+- Provides deployment checklists
+- Reduces configuration improvisation
+
+That is infrastructure discipline.
+
+Explore: /kits/saaskit
+
+---
+
+# Final Thought
+
+Environment variables are invisible until they fail.
+
+Most founders treat configuration as an afterthought.
+
+It is not.
+
+If billing is the heart of your SaaS,
+Environment configuration is its nervous system.
+
+Protect it accordingly.

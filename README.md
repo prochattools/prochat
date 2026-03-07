@@ -2,17 +2,39 @@
 
 ProChat is the operating system for SaaS builders.
 
-This repository runs the root-domain marketing, content, glossary, and conversion experience for ProChat. It now uses a unified SEO authority architecture so articles, docs, guides, prompts, snippets, playbooks, and glossary entries reinforce one another under the same domain.
+This repository runs the root-domain marketing, content, glossary, and conversion experience for ProChat. It uses a deterministic build-time content pipeline so articles, docs, guides, prompts, snippets, playbooks, glossary entries, Open Graph assets, sitemap output, and RSS output are generated under one production-safe architecture.
 
 ## Architecture Overview
 
-The site is built on Next.js App Router with one shared metadata system, one shared structured-data system, and one shared MDX content pipeline for authority content.
+The site is built on Next.js App Router and deployed on Dokploy. The system is dark-mode-first, tokenized, and build-driven: content is loaded from MDX, validated, rendered into static routes, then enriched with deterministic Open Graph images, sitemap output, and RSS output during deployment.
+
+Core architectural properties:
+
+- Next.js App Router for route ownership and static generation
+- Dokploy deployment with Node runtime
+- Deterministic build-time behavior for content visibility and publishing
+- Dark-mode-first design system driven by shared brand tokens
+- Tokenized brand architecture across UI, metadata, and OG rendering
+
+## System Flow
+
+The production content flow is:
+
+```text
+Content (MDX)
+  -> Build (Next.js App Router)
+  -> Open Graph generation
+  -> Sitemap generation
+  -> RSS generation
+  -> Dokploy deploy
+```
 
 Core layers:
 
-- `src/app` — route tree, page templates, sitemap routes
+- `src/app` — route tree, page templates, OG routes, section sitemap routes
 - `src/components/content` — shared content layout, MDX renderer, CTA, related content
 - `src/lib/content` — placeholder MDX content roots and shared content loader
+- `src/lib/brand.ts` — centralized brand, spacing, type, depth, and motion tokens
 - `src/lib/seo` — metadata and schema helpers
 - `src/lib/taxonomy.ts` — categories, tags, and mapping helpers
 - `src/lib/content/blog` — canonical blog content root
@@ -24,13 +46,14 @@ Core layers:
 src/
   app/
     blog/[slug]/page.tsx
+    blog/[slug]/og/route.ts
     docs/[category]/[slug]/page.tsx
     glossary/[term]/page.tsx
     playbooks/[segment]/[slug]/page.tsx
     prompts/[category]/[slug]/page.tsx
     snippets/[stack]/[slug]/page.tsx
     guides/[topic]/[slug]/page.tsx
-    sitemap.ts
+    og/route.ts
     */sitemap.ts
   components/
     content/
@@ -51,9 +74,10 @@ src/
       metadata.ts
       schema.ts
     taxonomy.ts
-content/
-  blog/
-  glossary/
+scripts/
+  generate-sitemap.ts
+  generate-rss.ts
+  start-production.sh
 ```
 
 ## Content Clustering Strategy
@@ -122,12 +146,12 @@ The blog is organized as a guided learning system rather than a flat reverse-chr
 
 - `Start Here` features the flagship pillar post for first-time readers.
 - `Core Resources` sits directly below the hero to surface glossary and validation assets before the learning path.
-- The learning path is grouped into ordered pillars: `Foundation`, `Build`, `Production Safety`, `Monetization`, and `Advanced`.
+- The learning path is grouped into ordered pillars: `Start Here`, `Foundation`, `Structure`, `Build`, `Production`, and `Execution`.
 - Posts support `pillarCategory` and `pillarOrder` frontmatter so ordering remains stable as the library grows.
 - Tag filtering is client-side and derived from the current post set, with the default state showing every post.
 - The flagship guide always renders first when a post is marked `pillar: true`.
 
-This keeps the blog aligned to the broader authority architecture: users start with one canonical guide, then move through a controlled sequence of posts instead of browsing an unstructured feed.
+The detailed mechanics live in `docs/blog-system.md`.
 
 ## Conversion Flow Logic
 
@@ -139,6 +163,15 @@ The content system is not isolated from conversion. It is designed to move users
 4. Convert into SaaSKit, ProKit, or a conversation with ProChat
 
 Each content layout injects a CTA section automatically so discovery traffic does not dead-end.
+
+## Documentation Map
+
+Use these docs as the canonical references for the production architecture:
+
+- `docs/ARCHITECTURE.md` — URL model, taxonomy, deployment assumptions, zero-manual workflow
+- `docs/blog-system.md` — MDX blog rules, publishing schedule, internal linking, taxonomy enforcement
+- `docs/open-graph-system.md` — global and blog OG generation architecture
+- `docs/design-system.md` — brand tokens, hero system, button system, type scale, motion rules
 
 ## Development Notes
 
@@ -156,6 +189,36 @@ Notes:
 
 - `npm run lint` is not defined in this repository.
 - `npm run build` requires production database env such as `SYSTEM_DATABASE_URL` because of the existing prebuild flow.
+
+## Build-Time Automation
+
+Production build order:
+
+1. `next build`
+2. `npm run sitemap`
+3. `npm run rss`
+
+The root build script is deterministic. There is no runtime cron, no ISR publishing toggle, and no background worker that mutates content visibility after deploy.
+
+## Deployment Model
+
+- Dokploy is the deployment target
+- OG routes run on the Node runtime, not Edge
+- Publishing visibility is decided at build time using `publishedAt`
+- Search engine pinging happens once on production startup
+- Weekly scheduled publishing is handled by GitHub Actions triggering a Dokploy redeploy
+
+## Zero Manual Content Workflow
+
+The publishing system is designed to remove repetitive operational work:
+
+- No manual OG image creation
+- No manual sitemap updates
+- No manual RSS updates
+- No manual publish toggles for future-dated posts
+- Future-dated posts become visible on the next redeploy after `publishedAt`
+- Taxonomy validation is enforced in the blog loader
+- Internal linking follows a controlled editorial rule set for semantic consistency
 
 ## Existing ProKit / Infra Docs
 

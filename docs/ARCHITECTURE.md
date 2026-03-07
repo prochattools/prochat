@@ -56,6 +56,13 @@ Rules:
 - Prefer stable slugs over synonyms for route segments
 - Related content should favor shared category or overlapping tags
 
+For blog content specifically:
+
+- The canonical blog root is `src/lib/content/blog`
+- Pillars are defined in `src/lib/blogStructure.ts`
+- Tags must come from the controlled blog vocabulary in `src/lib/blogStructure.ts`
+- Invalid blog taxonomy fails the build through `src/libs/blog.ts`
+
 ## Metadata System
 
 Source of truth:
@@ -74,10 +81,46 @@ Rules:
 
 Sitemap design is section-based:
 
-- Root sitemap handles static and brand-critical routes
+- Root sitemap is generated at build time into `public/sitemap.xml`
 - Section sitemaps handle content URLs for each cluster
 
 This keeps sitemap ownership aligned to content ownership.
+
+## Build + Deploy Model
+
+The repository is designed for deterministic production builds:
+
+1. `next build` generates the App Router output
+2. `scripts/generate-sitemap.ts` writes `public/sitemap.xml`
+3. `scripts/generate-rss.ts` writes `public/rss.xml`
+4. Dokploy deploys the resulting build
+
+Publishing behavior is build-driven, not runtime-driven:
+
+- blog visibility is filtered by `publishedAt` in `src/libs/blog.ts`
+- future-dated posts are excluded until a later deploy
+- weekly scheduled publishing is handled by `.github/workflows/scheduled-publish.yml`
+- the scheduled workflow triggers a Dokploy redeploy webhook
+- there is no runtime cron, polling loop, or background worker
+
+Deployment assumptions:
+
+- Dokploy is the production deploy target
+- OG generation uses the Node runtime
+- no Edge runtime is required for OG routes
+- deterministic builds are required for consistent content visibility
+
+## Zero Manual Workflow
+
+The intended operating model is zero repetitive publishing work:
+
+- no manual OG image creation
+- no manual sitemap editing
+- no manual RSS editing
+- no manual publish toggle for scheduled posts
+- no manual social card export pipeline
+
+The only authoring step is committing valid content with correct frontmatter and links.
 
 ## Conversion Model
 
