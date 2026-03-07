@@ -135,57 +135,44 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 font-mono text-xs font-medium text-muted-foreground shadow-sm">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-            v2.0 Production Ready
+            SaaSKit Structured Launch System
           </div>
 
           <h1 className="pc-hero-title mb-8 text-foreground">
-            Launch your SaaS fast — without improvising the foundation.
+            Launch your SaaS —
             <br />
-            <span className="hero-accent">Build on stable ground.</span>
+            <span className="hero-accent">without building the foundation from scratch.</span>
           </h1>
 
           <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
             <p>
-              SaaSKit gives you the complete production-ready engine and structured
-              marketing layer so you can focus on your idea, not wiring
-              authentication, billing, infrastructure, and growth systems from
-              scratch.
+              SaaSKit gives you a production-ready SaaS engine and integrated marketing layer —
+              authentication, billing, database, deployment, and growth structure already wired.
             </p>
-            <p className="text-sm font-medium text-muted-foreground">
-              Built for non-technical founders who want speed without fragility.
+            <p className="text-base text-muted-foreground">
+              For non-technical founders who want speed with built-in structure.
             </p>
             <div className="flex flex-col items-center justify-center py-2">
-              <div className="w-full max-w-3xl rounded-md border border-border bg-card/90 px-4 py-4 font-mono text-sm text-foreground shadow-sm backdrop-blur-sm">
-                <div className="mb-3 text-left text-xs uppercase tracking-[0.12em] text-muted-foreground">
-                  You don&apos;t need to:
-                </div>
-                <div className="grid gap-3 text-left sm:grid-cols-2">
-                  <span className="inline-flex items-start gap-2">
+              <div className="flex min-h-11 flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-md border border-border bg-card/90 px-4 py-2 font-mono text-sm leading-none text-foreground shadow-sm backdrop-blur-sm sm:flex-nowrap">
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
                     <FeatureIcon name="check-green" className="mt-0.5 h-4 w-4 text-green-600" />
-                    <span>Design your own infrastructure</span>
-                  </span>
-                  <span className="inline-flex items-start gap-2">
-                    <FeatureIcon name="check-green" className="mt-0.5 h-4 w-4 text-green-600" />
-                    <span>Figure out Stripe billing flows</span>
-                  </span>
-                  <span className="inline-flex items-start gap-2">
-                    <FeatureIcon name="check-green" className="mt-0.5 h-4 w-4 text-green-600" />
-                    <span>Structure authentication correctly</span>
-                  </span>
-                  <span className="inline-flex items-start gap-2">
-                    <FeatureIcon name="check-green" className="mt-0.5 h-4 w-4 text-green-600" />
-                    <span>Architect deployment boundaries</span>
-                  </span>
-                  <span className="inline-flex items-start gap-2 sm:col-span-2">
-                    <FeatureIcon name="check-green" className="mt-0.5 h-4 w-4 text-green-600" />
-                    <span>Build your marketing system from zero</span>
-                  </span>
-                </div>
-                <p className="mt-4 text-left font-medium text-foreground">
-                  You build your idea. SaaSKit provides the structure.
-                </p>
+                    <span>Core infrastructure included.</span>
+                </span>
+                <span className="hidden text-border sm:inline">|</span>
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+                  <FeatureIcon name="check-green" className="mt-0.5 h-4 w-4 text-green-600" />
+                  <span>Marketing system included.</span>
+                </span>
+                <span className="hidden text-border sm:inline">|</span>
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+                  <FeatureIcon name="check-green" className="mt-0.5 h-4 w-4 text-green-600" />
+                  <span>Production-ready from day one.</span>
+                </span>
               </div>
             </div>
+            <p className="text-sm font-medium text-foreground">
+              You build the product. SaaSKit provides the structure.
+            </p>
           </div>
 
           <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
