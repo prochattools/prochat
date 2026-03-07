@@ -1,4 +1,5 @@
 import config from '@/config'
+import { articleSchema, glossarySchema, howToSchema, productSchema } from '@/lib/seo/schema'
 import { getSiteUrl } from '@/libs/site-url'
 
 type Offer = {
@@ -57,21 +58,8 @@ export function getSoftwareApplicationSchema({
   urlPath: string
   offers: Offer[]
 }) {
-  const siteUrl = getSiteUrl()
-
   return {
-    '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name,
-    applicationCategory: 'DeveloperApplication',
-    brand: config.appName,
-    creator: {
-      '@type': 'Person',
-      name: 'Steve',
-    },
-    operatingSystem: 'Web',
-    description,
-    url: `${siteUrl}${urlPath}`,
+    ...productSchema({ name, description, urlPath }),
     offers,
   }
 }
@@ -126,28 +114,13 @@ export function getBlogPostingSchema({
   datePublished: string
   dateModified?: string
 }) {
-  const siteUrl = getSiteUrl()
-  const articleUrl = `${siteUrl}/blog/${slug}`
-
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: title,
+  return articleSchema({
+    title,
     description,
-    author: {
-      '@type': 'Person',
-      name: 'Steve',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: config.appName,
-      url: `${siteUrl}/`,
-    },
+    urlPath: `/blog/${slug}`,
     datePublished,
-    dateModified: dateModified || datePublished,
-    mainEntityOfPage: articleUrl,
-    url: articleUrl,
-  }
+    dateModified,
+  })
 }
 
 export function getDefinedTermSchema({
@@ -159,15 +132,11 @@ export function getDefinedTermSchema({
   description: string
   slug: string
 }) {
-  const siteUrl = getSiteUrl()
-  const termUrl = `${siteUrl}/glossary/${slug}`
-
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'DefinedTerm',
+  return glossarySchema({
     name,
     description,
-    url: termUrl,
-    inDefinedTermSet: `${siteUrl}/saas-glossary`,
-  }
+    urlPath: `/glossary/${slug}`,
+  })
 }
+
+export { articleSchema, glossarySchema, howToSchema, productSchema }

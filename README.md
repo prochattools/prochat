@@ -1,283 +1,164 @@
-# ProChat (marketing + sales site) — powered by the ProKit engine
+# ProChat
 
-Repository: `prochattools/prochat` (renamed from `prochattools/prochat-core` on February 10, 2026; previously `prochattools/prochat-tools`).
+ProChat is the operating system for SaaS builders.
 
-ProChat is the business owned by Steve Westhoek (info@prochat.tools). ProChat sells three kit products built on the same ProKit engine: **ProKit** (engine-only), **SaaSKit** (ProKit + marketing layer), and **WaaSKit** (service/agency flavor). This repo is the ProChat marketing/sales application built on the shared ProKit codebase; internal modules still use ProKit naming because the engine is shared.
+This repository runs the root-domain marketing, content, glossary, and conversion experience for ProChat. It now uses a unified SEO authority architecture so articles, docs, guides, prompts, snippets, playbooks, and glossary entries reinforce one another under the same domain.
 
-ProKit remains the underlying engine used here to launch micro-SaaS apps quickly while preserving the proven Next.js + Postgres + Prisma stack.
+## Architecture Overview
 
-Production-ready boilerplate for building B2B SaaS apps with:
+The site is built on Next.js App Router with one shared metadata system, one shared structured-data system, and one shared MDX content pipeline for authority content.
 
-- Next.js + TypeScript
-- PostgreSQL (single-tenant runtime, schema-per-app)
-- Prisma for migrations
-- Dokploy for deployment
-- Supabase Postgres in production
-- Optional MCP bridge for automation (replaceable/optional)
+Core layers:
 
+- `src/app` — route tree, page templates, sitemap routes
+- `src/components/content` — shared content layout, MDX renderer, CTA, related content
+- `src/lib/content` — placeholder MDX content roots and shared content loader
+- `src/lib/seo` — metadata and schema helpers
+- `src/lib/taxonomy.ts` — categories, tags, and mapping helpers
+- `content/blog`, `content/glossary` — existing blog and glossary content retained in place
 
-For rules governing how AI assistants may modify this boilerplate—including architectural invariants, database contracts, and allowed vs forbidden operations—see `docs/PROKIT_AI_GUIDELINES.md`. All AI-driven contributions must adhere to those rules before altering code, schema, or documentation.
+## Folder Structure
 
----
-
-## ✨ Features
-
-- Single-tenant runtime using one schema (`tenant_<APP_SLUG>`) and one DB user (`tenant_<APP_SLUG>_user`)
-- Registry table `public.tenants` used only by infra scripts (provision/cleanup), never by runtime
-- Shared existing Postgres database per environment (dev + prod), canonical port `5433`
-- Local development using Docker Postgres on `localhost:5433`
-- Production Postgres on a private Supabase instance (no public DB access)
-- Prisma migrations:
-  - `db:migrate:dev` → `prisma migrate dev`
-  - `db:migrate:prod` → `prisma migrate deploy`
-- Deterministic scripts:
-  - Provisioning: `npm run db:init -- --slug <slug> [--preview] [--external-id <id>]`
-  - Cleanup (preview or forced prod): `npm run db:cleanup -- --slug <slug> [--force]`
-- Dokploy integration for pre-deploy migrations and schema provisioning in the same VNet as Supabase
-- Optional MCP bridge (`https://mcp.prochat.tools`) to trigger these scripts remotely (replaceable)
-- Optional modules (trustless patterns, idea factory) that can be layered on without touching the core
-
-For deeper details on dev workflow, stack, and automation, see `docs/PROKIT_DEV_GUIDE.md`.
-
----
-
-## 🧱 Tech Stack
-
-- Frontend / Backend: Next.js + TypeScript
-- Database: PostgreSQL (schema-per-app, single-tenant runtime)
-- ORM: Prisma (`prisma/system.prisma`)
-- Hosting / Orchestration: Dokploy (containers, pre-deploy hooks, jobs, schedules)
-- Production Database: Supabase Postgres on a private Azure VM (private IP `10.0.2.4`)
-- Automation: Node scripts for provisioning/migrations/cleanup; optional MCP bridge for remote-triggered operations
-
-For infrastructure details and network layout, see `docs/PROKIT_INFRASTRUCTURE.md`.
-
----
-
-## ⚙️ Database & Migrations (Summary)
-
-The full database model and automation behavior is documented in:
-
-- `docs/PROKIT_DATABASE.md` – schemas, lifecycle, commands
-- `docs/PROKIT_TENANT_CLEANUP.md` – cleanup logic and SQL templates
-
-### Architecture
-
-- Each environment (development, production) uses an already existing Postgres database.
-- In production this is the existing Supabase Postgres database (no database provisioning).
-- One app → one schema (`tenant_<APP_SLUG>`) → one DB user (`tenant_<APP_SLUG>_user`).
-- `db:init` provisions schema + role only. It never creates databases.
-- Tenant DB users are restricted to their own schema and are explicitly revoked from `public` and other `tenant_*` schemas.
-- Runtime uses only `DATABASE_URL` (tenant user + tenant schema). Runtime must NOT read hostnames, `SYSTEM_DATABASE_URL`, `SHADOW_DATABASE_URL`, or `public.tenants`.
-- Registry (`public.tenants`) is infra-only (provision/cleanup). Columns: slug, schema_name, db_user, db_password, type (`prod`/`preview`), external_id, created_at, updated_at.
-
-Example environment variables (conceptual):
-
-```
-# .env (development)
-DATABASE_URL=postgresql://tenant_dev_user:devpass@localhost:5433/postgres?schema=tenant_dev
-SYSTEM_DATABASE_URL=postgresql://postgres:postgres@localhost:5433/postgres?schema=public
-SHADOW_DATABASE_URL=postgresql://postgres:postgres@localhost:5433/postgres?schema=public
-APP_SLUG=dev
-
-# Production (Dokploy env)
-NODE_ENV=production
-APP_SLUG=myapp
-TENANT_DB_PASSWORD=<strong-password>
-DATABASE_URL=postgresql://tenant_myapp_user:<TENANT_DB_PASSWORD>@10.0.2.4:5433/postgres?schema=tenant_myapp
-SYSTEM_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public
-SHADOW_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public
+```text
+src/
+  app/
+    blog/[slug]/page.tsx
+    docs/[category]/[slug]/page.tsx
+    glossary/[term]/page.tsx
+    playbooks/[segment]/[slug]/page.tsx
+    prompts/[category]/[slug]/page.tsx
+    snippets/[stack]/[slug]/page.tsx
+    guides/[topic]/[slug]/page.tsx
+    sitemap.ts
+    */sitemap.ts
+  components/
+    content/
+      ContentLayout.tsx
+      MDXRenderer.tsx
+      CTASection.tsx
+      RelatedContent.tsx
+  lib/
+    content/
+      blog/
+      docs/
+      glossary/
+      playbooks/
+      prompts/
+      snippets/
+      guides/
+    seo/
+      metadata.ts
+      schema.ts
+    taxonomy.ts
+content/
+  blog/
+  glossary/
 ```
 
-Commands:
+## Content Clustering Strategy
 
-- Provision tenant: `npm run db:init -- --slug <slug> [--preview] [--external-id <id>]`
-- Migrate schema (development): `npm run db:migrate:dev`
-- Migrate schema (production command used by Dokploy prebuild): `npm run db:migrate:prod`
-- Cleanup preview tenant: `npm run db:cleanup -- --slug <slug> [--force]`
+ProChat now stacks authority through seven connected clusters:
 
----
+- `blog` — narrative, positioning, long-form search capture
+- `docs` — implementation detail and architecture explanation
+- `glossary` — definition capture for SaaS founder terminology
+- `playbooks` — repeatable execution workflows
+- `prompts` — reusable AI operating assets
+- `snippets` — tactical implementation patterns
+- `guides` — structured walkthroughs that connect strategy to execution
 
-## 🚀 Getting Started
+The root domain carries all of these because they support one buyer journey and one topical graph.
 
-### 1. Prerequisites
+## Internal Linking Rules
 
-- Node.js and npm installed.
-- Docker Desktop running, with Postgres exposed on `localhost:5433`.
-- Dokploy configured and able to pull this repo from GitHub.
-- Supabase Postgres VM reachable from Dokploy over a private VNet.
+Every content page should link in three directions:
 
-### 2. Clone and install
+1. Upward to its section hub or canonical parent context
+2. Sideways to closely related assets in the same cluster
+3. Forward to the next decision asset or conversion step
 
-```
-git clone https://github.com/prochattools/prochat.git my-new-app
-cd my-new-app
+Practical rules:
+
+- Blog posts link to kits, glossary, and deeper implementation assets
+- Glossary entries link back to `/saas-glossary` plus relevant blog articles
+- Playbooks and prompts link to each other where execution sequence matters
+- Snippets and docs link into guides when users need context, not just code
+- CTA blocks should move readers toward either `/kits`, `/contact`, or the next authority asset
+
+## Sitemap Structure
+
+The root sitemap lives at `/sitemap.xml` and covers static/site-critical routes.
+
+Section sitemaps live at:
+
+- `/blog/sitemap.xml`
+- `/docs/sitemap.xml`
+- `/glossary/sitemap.xml`
+- `/playbooks/sitemap.xml`
+- `/prompts/sitemap.xml`
+- `/snippets/sitemap.xml`
+- `/guides/sitemap.xml`
+
+This keeps section-level discovery explicit while preserving one root-domain authority graph.
+
+## SEO Philosophy
+
+The SEO system is centralized and route-safe:
+
+- one metadata helper: `src/lib/seo/metadata.ts`
+- one structured-data helper layer: `src/lib/seo/schema.ts`
+- route-level metadata extends the same defaults instead of creating one-off SEO logic
+- content routes are statically generated via `generateStaticParams`
+- canonical URLs are always built from the same site-url source
+
+The positioning is consistent across metadata and content:
+
+> ProChat — The Operating System for SaaS Builders
+
+## Conversion Flow Logic
+
+The content system is not isolated from conversion. It is designed to move users through a clear ladder:
+
+1. Discover via blog, glossary, guides, docs, prompts, or snippets
+2. Understand the system through related content and structured layouts
+3. Move into a CTA that routes to kits, contact, or the next execution asset
+4. Convert into SaaSKit, ProKit, or a conversation with ProChat
+
+Each content layout injects a CTA section automatically so discovery traffic does not dead-end.
+
+## Development Notes
+
+Useful commands:
+
+```bash
 npm install
-```
-
-`.env` will be created automatically by the dev bootstrap script if missing. See `.env.example` for a reference.
-
-### Contact Form Email Env
-
-For `/contact` submissions:
-
-- `RESEND_API_KEY` — required in production to send emails.
-- `CONTACT_FROM_EMAIL` — sender identity for contact emails (plain email address, e.g. `info@prochat.tools`).
-- `SUPPORT_EMAIL` — internal inbox for contact notifications.
-- `CONTACT_TO_EMAIL` — optional legacy fallback inbox if `SUPPORT_EMAIL` is not set.
-
-For `/waitlist` submissions:
-
-- `WAITLIST_FROM_EMAIL` — optional sender override for waitlist emails; falls back to `CONTACT_FROM_EMAIL`.
-- `WAITLIST_ADMIN_EMAIL` — optional admin inbox override for waitlist notifications; falls back to `SUPPORT_EMAIL`.
-- `WAITLIST_PRODUCT_NAME` — product label used in subjects/body (default: `UXKit`).
-- `WAITLIST_AUDIENCE_TAG` — list tag used in admin notifications/logs (default: `uxkit-waitlist`).
-
-### 3. Local environment and provisioning (dev)
-
-The dev workflow is one command:
-
-```
 npm run dev
+npm run lint:design
+npx tsc --noEmit
+npx next build
 ```
-
-Under the hood:
-
-1) `scripts/dev/bootstrap-env.js`
-   - If `.env` does not exist, writes defaults with `NODE_ENV=development`, `APP_SLUG=dev`, `SYSTEM_DATABASE_URL`, and `SHADOW_DATABASE_URL` pointing at `localhost:5433`.
-
-2) `npm run db:init`
-   - Parses `--slug <slug>` (preferred) or `APP_SLUG`.
-   - Defaults to `dev` in development if nothing is provided.
-   - Creates `tenant_<slug>` schema, `tenant_<slug>_user`, least-privilege grants, and `public.tenants` row with metadata (type `prod` by default, `preview` if `--preview` is passed).
-   - Never creates a database. Dev and production both assume the database already exists.
-   - Updates `.env` with `APP_SLUG` and `DATABASE_URL`; only sets `SYSTEM_DATABASE_URL`/`SHADOW_DATABASE_URL` if missing.
-
-3) `npm run db:migrate:dev`
-   - Runs `prisma migrate dev --schema=prisma/system.prisma` against your local Postgres on `localhost:5433` (uses `SHADOW_DATABASE_URL` for the shadow DB).
-
-4) `next dev`
-   - Starts the Next.js dev server on http://localhost:3000.
-
-If Prisma detects drift and asks to reset the DB, you can run:
-
-```
-npx prisma migrate reset --schema=prisma/system.prisma
-```
-
-### 4. Manual dev commands (optional)
-
-- Auto provision local DB: `npm run db:provision:local`
-- Provision: `npm run db:init -- --slug myapp`
-- Migrate: `npm run db:migrate:dev`
-- Start dev server: `npm run dev`
-- New app provisioning (also updates `.env.production`): `./scripts/provision-saas.sh <slug>`
-
----
-
-## 🧬 New SaaS from this boilerplate
-
-- `APP_SLUG` defines your app identity: it becomes `tenant_<APP_SLUG>` and `tenant_<APP_SLUG>_user`.
-- Runtime uses only `DATABASE_URL` scoped to that tenant.
-- Registry (`public.tenants`) is kept for infra scripts and preview cleanup; runtime ignores it.
-
-### Local development workflow (summary)
-
-1) Clone + install.
-2) Ensure Postgres on `localhost:5433`.
-3) Optionally set `APP_SLUG` in `.env`.
-4) `npm run dev`.
-
-Result:
-- `tenant_<APP_SLUG>` schema and user exist.
-- Prisma migrations applied.
-- Next.js running with `DATABASE_URL`.
-
-### Production deployment (Dokploy + Supabase)
-
-1) Configure Dokploy env:
-   - Use the existing Supabase Postgres database.
-   - Do not provision/create a new database.
-   - `NODE_ENV=production`
-   - `APP_SLUG=myapp`
-   - `TENANT_DB_PASSWORD=<strong-password>`
-   - `DATABASE_URL=postgresql://tenant_myapp_user:<TENANT_DB_PASSWORD>@10.0.2.4:5433/postgres?schema=tenant_myapp`
-   - `SYSTEM_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public`
-   - `SHADOW_DATABASE_URL=postgresql://postgres:<admin-password>@10.0.2.4:5433/postgres?schema=public`
-   - `NEXT_PUBLIC_APP_URL=https://myapp.example.com`
-   - `NEXT_PUBLIC_UMAMI_SCRIPT_URL=https://umami.prochat.tools/script.js`
-   - `NEXT_PUBLIC_UMAMI_WEBSITE_ID=<your-umami-website-id>`
-   - `PORT=3000`
-
-2) Dokploy commands:
-   - Build command: `npm run build`
-   - Start command: `npm run start`
 
 Notes:
-- `npm run build` automatically runs `prebuild` first.
-- `prebuild` runs `NODE_ENV=production npm run provision:auto`, which runs `db:init` + `db:migrate:prod` before `next build`.
-- In Dokploy production deployments, no manual database action is required. Do not add manual `db:init` or `db:migrate:prod` commands to deployment hooks.
-- `npm run db:init` is idempotent; it reconciles schema, user, and registry row.
-- Runtime must only use `DATABASE_URL` (tenant user). `SYSTEM_DATABASE_URL` is for scripts; `SHADOW_DATABASE_URL` is for Prisma dev migrations.
 
-### Preview tenants and cleanup (optional)
+- `npm run lint` is not defined in this repository.
+- `npm run build` requires production database env such as `SYSTEM_DATABASE_URL` because of the existing prebuild flow.
 
-- Provision preview: `NODE_ENV=production npm run db:init -- --slug pr_42 --preview`
-- Deploy preview app with `APP_SLUG=pr_42` and matching `DATABASE_URL`.
-- Cleanup preview: `NODE_ENV=production npm run db:cleanup -- --slug pr_42`
-- Cleanup refuses `type='prod'` unless `--force` is passed.
+## Existing ProKit / Infra Docs
 
-### CI (GitHub Actions)
+Operational and infrastructure details remain in the existing docs set:
 
-`.github/workflows/ci.yml`:
-- Postgres 16 mapped to host port 5433.
-- Provision tenant (`npm run db:init -- --slug ci`).
-- Run `npm run db:migrate:dev` (uses `prisma migrate dev`).
-- Build the app.
+- `docs/PROKIT_AI_GUIDELINES.md`
+- `docs/PROKIT_DEV_GUIDE.md`
+- `docs/PROKIT_INFRASTRUCTURE.md`
+- `docs/PROKIT_DATABASE.md`
+- `docs/PROKIT_TENANT_CLEANUP.md`
 
----
+## Next Step for Content Expansion
 
-## 🤖 AI / MCP Usage
+To add a new authority asset:
 
-This boilerplate is AI-friendly and provider-agnostic.
-
-AI assistants or developers may:
-- Propose Prisma schema changes.
-- Request running:
-  - `npm run db:init -- --slug <slug> [--preview]`
-  - `npm run db:migrate:dev`
-  - `npm run db:migrate:prod`
-  - `npm run db:cleanup -- --slug <slug> [--force]`
-- Use the information in `docs/PROKIT_DATABASE.md`, `docs/PROKIT_INFRASTRUCTURE.md`, `docs/PROKIT_DEV_GUIDE.md`, `docs/PROKIT_TENANT_CLEANUP.md`, and this README.
-
-They must not:
-- Connect directly to production DB from outside the VNet.
-- Run arbitrary SQL against production.
-- Bypass Prisma migrations.
-- Create/drop schemas or users outside the scripts.
-
-Optional MCP tools (replaceable):
-- `provisionTenant(slug)` → `npm run db:init -- --slug <slug>`
-- `deployMigrations()` → `NODE_ENV=production npm run db:migrate:prod`
-- `cleanupTenant(slug)` → `NODE_ENV=production npm run db:cleanup -- --slug <slug>`
-
----
-
-## 🧩 Optional Modules
-
-- Trustless / passwordless patterns: see `docs/PROKIT_README_TRUSTLESS.md` (optional).
-- AI SaaS Idea Factory: see `docs/PROKIT_REFERENCE.md` (optional ideation).
-
----
-
-## 📚 Related Docs
-
-- `docs/PROKIT_DEV_GUIDE.md` — development philosophy and guardrails.
-- `docs/PROKIT_INFRASTRUCTURE.md` — Azure VNet, Supabase VM, Dokploy VM, MCP bridge, previews.
-- `docs/PROKIT_DATABASE.md` — database architecture, scripts, env contracts.
-- `docs/PROKIT_TENANT_CLEANUP.md` — cleanup rules and SQL patterns.
-- `docs/PROKIT_README_TRUSTLESS.md` — optional trustless features.
-- `docs/PROKIT_REFERENCE.md` — ideation framework (optional).
-- `docs/PROKIT_GETTING_STARTED.md` — step-by-step local setup.
-
-This README is the entry point; treat the other files as the spec for how to extend and operate this boilerplate safely.
+1. Add or update MDX content in the appropriate section root
+2. Use shared taxonomy values where possible
+3. Ensure tags and category align with adjacent cluster content
+4. Link to a next-step asset and a conversion target
+5. Verify route metadata, structured data, and sitemap coverage
