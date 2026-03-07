@@ -1,7 +1,7 @@
 import React from 'react'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/helpers/utils'
-import { Button as CoreButton, type ButtonProps as CoreButtonProps } from '@/components/ui/Button'
+import { Button as CoreButton, type ButtonProps as CoreButtonProps } from '@/components/ui/button'
 
 type MarketingButtonVariant = 'primary' | 'secondary' | 'ghost' | 'glass'
 type MarketingButtonSize = 'sm' | 'md' | 'lg'

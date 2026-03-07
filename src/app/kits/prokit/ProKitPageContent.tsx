@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import { handleCheckoutProcess } from '@/helpers/checkout'
 import { useUser } from '@/libs/safeClerk'
 import { trackEvent } from '@/utils/analytics'

@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 
 import { Reveal } from '../ui/Reveal'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import { Panel, Section } from '@/components/ui/surface'
 
 const ROUTING_TILES = [

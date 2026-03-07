@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useFormik } from 'formik'
 import toast from 'react-hot-toast'
 import * as Yup from 'yup'
-import { Button } from './ui/Button'
+import { Button } from './ui/button'
 
 const validationSchema = Yup.object({
 	apiKey: Yup.string().required('API Key is required'),

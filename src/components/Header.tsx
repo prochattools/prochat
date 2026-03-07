@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { Menu } from 'lucide-react'
 import { useState } from 'react'
 import Logo from '@/components/logo'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import {
 	Sheet,
 	SheetContent,

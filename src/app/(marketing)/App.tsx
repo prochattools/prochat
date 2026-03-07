@@ -11,7 +11,7 @@ import {
 } from 'lucide-react'
 
 import HeroSection from '@/components/marketing/HeroSection'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/button'
 import { Panel, Section } from '@/components/ui/surface'
 
 type SystemCard = {

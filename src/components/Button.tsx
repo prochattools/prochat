@@ -1,5 +1,5 @@
 import React from "react";
-import { Button as ShadeCnButton } from "@/components/ui/Button";
+import { Button as ShadeCnButton } from "@/components/ui/button";
 
 const Button = ({
   text,
