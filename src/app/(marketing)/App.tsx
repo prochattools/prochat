@@ -13,15 +13,6 @@ import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from '@/helpers/action-lab
 
 const systemCards = [
   {
-    title: 'SaaSKit',
-    status: 'Available',
-    description:
-      'Production-readiness is standard. Authentication, billing, and database structure pre-configured and verified.',
-    href: '/kits/saaskit',
-    primary: true,
-    icon: Rocket,
-  },
-  {
     title: 'ProKit',
     status: 'Available',
     description:
@@ -31,22 +22,31 @@ const systemCards = [
     icon: ShieldCheck,
   },
   {
-    title: 'UXKit',
-    status: 'Coming Soon',
+    title: 'SaaSKit',
+    status: 'Available',
     description:
-      'Verified UI component systems. Designed for rapid, error-free dashboard assembly and clarity.',
-    href: '/kits/uxkit-waitlist',
-    primary: false,
-    icon: CircleDot,
+      'Production-readiness is standard. Authentication, billing, and database structure pre-configured and verified.',
+    href: '/kits/saaskit',
+    primary: true,
+    icon: Rocket,
   },
   {
     title: 'WaaSKit',
-    status: 'Roadmap',
+    status: 'Coming Soon',
     description:
       'Predictable deployment wrapper-as-a-service infrastructure. Built to enforce structural integrity.',
     href: '/kits',
     primary: false,
     icon: Cloud,
+  },
+  {
+    title: 'UXKit',
+    status: 'Roadmap',
+    description:
+      'Verified UI component systems. Designed for rapid, error-free dashboard assembly and clarity.',
+    href: '/kits/uxkit-waitlist',
+    primary: false,
+    icon: CircleDot,
   },
 ]
 

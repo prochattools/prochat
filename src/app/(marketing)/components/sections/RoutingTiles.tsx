@@ -16,12 +16,12 @@ export const RoutingTiles: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {[
             {
-              label: "No Idea Yet?",
-              title: "WaaSKit",
-              body: "The Client-First SaaS System. For people who don't know what to build yet. Sell websites to get paid immediately, then discover SaaS ideas from real client needs.",
-              cta: "Coming soon",
-              href: null,
-              anchorId: "waaskit"
+              label: "Just the Code",
+              title: "ProKit",
+              body: "The Developer Core Boilerplate. Pure execution layer for builders. No strategy, no monetization guides—just the raw Next.js engine.",
+              cta: "Inspect the engine",
+              href: "/kits/prokit",
+              anchorId: "prokit"
             },
             {
               label: "Have an Idea?",
@@ -32,12 +32,12 @@ export const RoutingTiles: React.FC = () => {
               anchorId: "saaskit"
             },
             {
-              label: "Just the Code",
-              title: "ProKit",
-              body: "The Developer Core Boilerplate. Pure execution layer for builders. No strategy, no monetization guides—just the raw Next.js engine.",
-              cta: "Inspect the engine",
-              href: "/kits/prokit",
-              anchorId: "prokit"
+              label: "No Idea Yet?",
+              title: "WaaSKit",
+              body: "The Client-First SaaS System. For people who don't know what to build yet. Sell websites to get paid immediately, then discover SaaS ideas from real client needs.",
+              cta: "Coming soon",
+              href: null,
+              anchorId: "waaskit"
             }
           ].map((tile, i) => (
             <Reveal key={i} delay={i * 0.1}>
