@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>ProChat Blog</title>
+    <link>http://localhost:3000</link>
+    <description>The Operating System for SaaS Builders</description>
+    <item>
+      <title>How to Build a SaaS With AI as a Non-Developer (Step-by-Step Production Guide)</title>
+      <link>http://localhost:3000/blog/how-to-build-saas-with-ai-non-developer</link>
+      <guid>http://localhost:3000/blog/how-to-build-saas-with-ai-non-developer</guid>
+      <pubDate>Sat, 07 Mar 2026 00:00:00 GMT</pubDate>
+      <description>A complete production-safe walkthrough for non-technical founders who want to build and launch a SaaS using AI, Next.js, Stripe, and Supabase.</description>
+    </item>
+    <item>
+      <title>The Operating System for SaaS Builders</title>
+      <link>http://localhost:3000/blog/operating-system-for-saas-builders</link>
+      <guid>http://localhost:3000/blog/operating-system-for-saas-builders</guid>
+      <pubDate>Fri, 06 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Why ProChat is building an operating system for SaaS builders instead of publishing disconnected advice, isolated tools, and one-off templates.</description>
+    </item>
+    <item>
+      <title>How Non-Technical Founders Can Build a SaaS MVP Without Writing Production Code</title>
+      <link>http://localhost:3000/blog/how-to-build-a-saas-mvp-without-coding</link>
+      <guid>http://localhost:3000/blog/how-to-build-a-saas-mvp-without-coding</guid>
+      <pubDate>Thu, 05 Mar 2026 00:00:00 GMT</pubDate>
+      <description>A scope-first MVP guide for non-technical founders who need to validate demand, reduce build complexity, and reach a paid test quickly.</description>
+    </item>
+    <item>
+      <title>Single-Feature Profitable Micro SaaS</title>
+      <link>http://localhost:3000/blog/single-feature-profitable-micro-saas</link>
+      <guid>http://localhost:3000/blog/single-feature-profitable-micro-saas</guid>
+      <pubDate>Sat, 07 Mar 2026 00:00:00 GMT</pubDate>
+      <description>A focused guide to choosing one profitable feature, charging for it early, and resisting the urge to turn a micro-SaaS into a platform too soon.</description>
+    </item>
+    <item>
+      <title>How to Validate a SaaS Idea Without Coding (A 7-Day Founder Plan)</title>
+      <link>http://localhost:3000/blog/how-to-validate-a-saas-idea-without-coding</link>
+      <guid>http://localhost:3000/blog/how-to-validate-a-saas-idea-without-coding</guid>
+      <pubDate>Thu, 05 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Learn how to validate a SaaS idea without coding using a 7-day plan: find real users, run quick calls, test demand, and decide with thresholds.</description>
+    </item>
+    <item>
+      <title>The 5 Structural Components Every SaaS Needs Before You Add Features</title>
+      <link>http://localhost:3000/blog/saas-foundation-for-non-technical-founders</link>
+      <guid>http://localhost:3000/blog/saas-foundation-for-non-technical-founders</guid>
+      <pubDate>Thu, 05 Mar 2026 00:00:00 GMT</pubDate>
+      <description>A structural blueprint for non-technical founders who need to understand the five system components that make a SaaS reliable before feature work expands.</description>
+    </item>
+    <item>
+      <title>The Complete Next.js SaaS Infrastructure Checklist (For Non-Technical Founders)</title>
+      <link>http://localhost:3000/blog/nextjs-saas-infrastructure-checklist-for-non-technical-founders</link>
+      <guid>http://localhost:3000/blog/nextjs-saas-infrastructure-checklist-for-non-technical-founders</guid>
+      <pubDate>Thu, 05 Mar 2026 00:00:00 GMT</pubDate>
+      <description>A practical infrastructure audit for non-technical founders building SaaS on Next.js, covering boundaries, billing, data, RBAC, migrations, and logging.</description>
+    </item>
+    <item>
+      <title>Exact AI Prompts to Generate a Production-Ready Next.js SaaS</title>
+      <link>http://localhost:3000/blog/exact-ai-prompts-production-ready-nextjs-saas</link>
+      <guid>http://localhost:3000/blog/exact-ai-prompts-production-ready-nextjs-saas</guid>
+      <pubDate>Sat, 07 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Copy-paste prompts to generate a structured SaaS foundation using AI without breaking production.</description>
+    </item>
+    <item>
+      <title>Why Most AI-Built SaaS Apps Break in Production (And How to Prevent It)</title>
+      <link>http://localhost:3000/blog/build-saas-with-ai-without-breaking-production</link>
+      <guid>http://localhost:3000/blog/build-saas-with-ai-without-breaking-production</guid>
+      <pubDate>Thu, 05 Mar 2026 00:00:00 GMT</pubDate>
+      <description>A failure-analysis guide for non-technical founders who want to understand why AI-built SaaS apps fail after launch and how to prevent the most common production incidents.</description>
+    </item>
+    <item>
+      <title>How to Use AI Without Creating Spaghetti Code</title>
+      <link>http://localhost:3000/blog/how-to-use-ai-without-creating-spaghetti-code</link>
+      <guid>http://localhost:3000/blog/how-to-use-ai-without-creating-spaghetti-code</guid>
+      <pubDate>Sat, 07 Mar 2026 00:00:00 GMT</pubDate>
+      <description>AI can generate code in seconds. But without structure, it creates fragile SaaS apps that collapse under real users. Here’s how non-technical founders can use AI safely.</description>
+    </item>
+    <item>
+      <title>Complete Production Checklist for First-Time SaaS Founders</title>
+      <link>http://localhost:3000/blog/complete-production-checklist-first-time-saas-founders</link>
+      <guid>http://localhost:3000/blog/complete-production-checklist-first-time-saas-founders</guid>
+      <pubDate>Sat, 07 Mar 2026 00:00:00 GMT</pubDate>
+      <description>A practical pre-launch checklist to ensure your SaaS doesn’t silently break in production.</description>
+    </item>
+    <item>
+      <title>How to Deploy AI-Generated Code Safely (Without Breaking Production)</title>
+      <link>http://localhost:3000/blog/how-to-deploy-ai-generated-code-safely</link>
+      <guid>http://localhost:3000/blog/how-to-deploy-ai-generated-code-safely</guid>
+      <pubDate>Sat, 07 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Avoid the most common deployment mistakes when launching AI-generated SaaS applications.</description>
+    </item>
+    <item>
+      <title>Founder Execution System from Idea to Paying Users</title>
+      <link>http://localhost:3000/blog/founder-execution-system-from-idea-to-paying-users</link>
+      <guid>http://localhost:3000/blog/founder-execution-system-from-idea-to-paying-users</guid>
+      <pubDate>Thu, 05 Mar 2026 00:00:00 GMT</pubDate>
+      <description>A calm sequencing system for non-technical founders who need to move from idea to paying users without decision chaos.</description>
+    </item>
+  </channel>
+</rss>

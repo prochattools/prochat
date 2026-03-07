@@ -13,7 +13,7 @@ import {
   ShieldCheck,
 } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/input'
 import { Panel, Section } from '@/components/ui/surface'
 import { renderActionLabel } from '@/helpers/action-label'

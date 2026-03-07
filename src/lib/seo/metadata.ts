@@ -44,7 +44,7 @@ export const getSEOTags = ({
   extraTags?: Record<string, unknown>
 } = {}) => {
   const siteUrl = getSiteUrl()
-  const defaultOgImage = '/og/prochat-home.png'
+  const defaultOgImage = '/og'
   const resolvedTitle =
     typeof title === 'string' ? formatMetaTitle(title) : title || SITE_TITLE_SUFFIX
   const resolvedDescription = description || DEFAULT_DESCRIPTION

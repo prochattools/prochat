@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { Menu } from 'lucide-react'
 import { useState } from 'react'
 import Logo from '@/components/logo'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import {
 	Sheet,
 	SheetContent,
@@ -61,8 +61,9 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 			<div className="justify-self-center">
 				<Button
 					asChild
+					variant="nav"
 					size="sm"
-					className="h-10 rounded-[var(--pc-button-radius)] px-5 text-lg shadow-none hover:brightness-[1.03]"
+					className="h-10 rounded-[var(--pc-button-radius)] px-5 text-lg"
 				>
 					<Link
 						href="/kits"
@@ -84,8 +85,9 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 			<div className="pc-nav-capsule gap-2 px-2 py-2">
 				<Button
 					asChild
+					variant="nav"
 					size="sm"
-					className="h-9 rounded-[var(--pc-button-radius)] px-4 shadow-none hover:brightness-[1.03]"
+					className="h-9 rounded-[var(--pc-button-radius)] px-4"
 				>
 					<Link
 						href="/kits"
@@ -140,6 +142,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 								</p>
 							<Button
 								asChild
+								variant="nav"
 								className="mt-4 h-10 w-full rounded-[var(--pc-button-radius)] shadow-none hover:brightness-[1.03]"
 							>
 								<Link

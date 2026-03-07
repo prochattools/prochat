@@ -376,7 +376,7 @@ const LoginPayment = ({ user }: any) => {
                             }}
                           >
                             <Image
-                              src="/logo/prochat_logo_light.png"
+                              src="/logo/logo-wordmark.svg"
                               alt="ProChat logo"
                               width={180}
                               height={58}

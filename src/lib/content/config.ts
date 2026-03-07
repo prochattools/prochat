@@ -25,7 +25,7 @@ export const CONTENT_SECTIONS: Record<ContentSection, ContentSectionConfig> = {
     routeMode: 'single',
     paramNames: ['slug'],
     schemaType: 'article',
-    roots: [fromRoot('content', 'blog'), fromRoot('src', 'lib', 'content', 'blog')],
+    roots: [fromRoot('src', 'lib', 'content', 'blog')],
     indexPath: '/blog',
     cta: {
       title: 'Turn Reading Into Shipping',

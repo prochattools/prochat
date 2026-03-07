@@ -3,6 +3,7 @@ import type { ComponentPropsWithoutRef } from 'react'
 import type { MDXComponents } from 'mdx/types'
 
 import { cn } from '@/helpers/utils'
+import CTASection from '@/components/content/CTASection'
 
 import Callout from './Callout'
 import PullQuote from './PullQuote'
@@ -58,6 +59,7 @@ export const blogMdxComponents: MDXComponents = {
   code: ({ className, ...props }) => (
     <code className={cn(className)} {...props} />
   ),
+  CTASection,
   PullQuote,
   Callout,
 }

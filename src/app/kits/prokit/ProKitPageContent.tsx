@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
+import { Button } from '@/components/ui/Button'
 import { handleCheckoutProcess } from '@/helpers/checkout'
-import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from '@/helpers/action-label'
 import { useUser } from '@/libs/safeClerk'
 import { trackEvent } from '@/utils/analytics'
 import { FeatureIcon } from './_components/FeatureIcon'
@@ -123,17 +123,13 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
       <div className="[--section-bg-rgb:255_255_255] [--section-alt-bg-rgb:241_245_249] dark:[--section-bg-rgb:15_17_21] dark:[--section-alt-bg-rgb:29_37_49]">
       <section
         id="top"
-        className="relative flex min-h-screen scroll-mt-24 items-center overflow-hidden bg-[rgb(var(--section-bg-rgb))] px-0 pb-16 pt-28 sm:pb-20 sm:pt-32"
+        className="relative isolate flex min-h-screen scroll-mt-24 items-center overflow-hidden bg-[rgb(var(--section-bg-rgb))] px-0 pb-16 pt-28 sm:pb-20 sm:pt-32"
       >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-0 [mask-image:radial-gradient(circle_at_center,black_60%,transparent_100%)]"
-        >
-          <div className="absolute inset-0 z-0 blur-[0.4px] bg-[size:24px_24px] bg-[linear-gradient(to_right,rgba(15,23,42,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.025)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(148,163,184,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.05)_1px,transparent_1px)]" />
-          <div className="absolute inset-0 z-[1] blur-[0.4px] bg-[size:96px_96px] bg-[linear-gradient(to_right,rgba(15,23,42,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.045)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(148,163,184,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.07)_1px,transparent_1px)]" />
-          <div className="absolute inset-0 z-[2] bg-[radial-gradient(circle_at_50%_34%,rgba(255,255,255,0.58)_0%,rgba(255,255,255,0.30)_45%,rgba(255,255,255,0.08)_72%,rgba(255,255,255,0)_100%)] dark:hidden" />
-          <div className="pc-hero-lines z-[3]" />
-        </div>
+        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
+        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
+        <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
+        <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
+        <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
 
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 font-mono text-xs font-medium text-muted-foreground shadow-sm">
@@ -141,7 +137,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
             ProKit Core Engine
           </div>
 
-          <h1 className="mb-8 text-5xl font-bold leading-[1.08] tracking-[-0.05em] text-foreground md:text-7xl">
+          <h1 className="pc-hero-title mb-8 text-foreground">
             Core infrastructure.
             <br />
             <span className="hero-accent">
@@ -178,23 +174,14 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           </div>
 
           <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
-            <a
-              href="#pricing"
-              onClick={handleHeroCtaClick}
-              className={`btn-primary ${ACTION_LABEL_CLASS_NAME} inline-flex -translate-y-0 items-center justify-center rounded-lg px-8 py-4 text-lg transition-all hover:-translate-y-0.5 hover:shadow-level-2-light dark:hover:shadow-level-2-dark`}
-            >
-              {renderActionLabel('Start with ProKit')}
-            </a>
-            <a
-              href="#breakdown"
-              className={`group inline-flex items-center justify-center rounded-lg border border-border bg-background px-8 py-4 text-lg text-foreground shadow-sm transition-all hover:bg-muted ${ACTION_LABEL_CLASS_NAME}`}
-            >
-              {renderActionLabel('View full system breakdown')}
-              <FeatureIcon
-                name="arrow-downward"
-                className="ml-2 h-4 w-4 transition-transform group-hover:translate-y-0.5"
-              />
-            </a>
+            <Button asChild variant="primary" size="lg">
+              <a href="#pricing" onClick={handleHeroCtaClick}>
+                Start with ProKit
+              </a>
+            </Button>
+            <Button asChild variant="secondary" size="lg">
+              <a href="#breakdown">View full system breakdown</a>
+            </Button>
           </div>
 
           <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
@@ -296,14 +283,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
               <div className="relative overflow-hidden rounded-2xl border border-border-strong bg-surface-elevated p-8 text-foreground shadow-elevated transition-transform duration-500 md:p-12">
                 <div
                   aria-hidden
-                  className="absolute inset-0 opacity-20 dark:opacity-15"
-                  style={{
-                    backgroundSize: '32px 32px',
-                    backgroundImage: [
-                      'linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px)',
-                      'linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px)',
-                    ].join(','),
-                  }}
+                  className="pc-surface-grid-overlay absolute inset-0 opacity-20 dark:opacity-15"
                 />
                 <div className="relative z-10">
                   <div className="mb-6 flex items-center gap-3">
@@ -485,14 +465,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
       <section id="pricing" className="relative scroll-mt-24 overflow-hidden bg-[rgb(var(--section-alt-bg-rgb))] py-24">
         <div
           aria-hidden
-          className="absolute inset-0 opacity-40 dark:opacity-20"
-          style={{
-            backgroundSize: '32px 32px',
-            backgroundImage: [
-              'linear-gradient(to right, rgba(var(--pc-border-rgb), 0.25) 1px, transparent 1px)',
-              'linear-gradient(to bottom, rgba(var(--pc-border-rgb), 0.25) 1px, transparent 1px)',
-            ].join(','),
-          }}
+          className="pc-section-grid-overlay absolute inset-0 opacity-40 dark:opacity-20"
         />
         <div className="relative z-10 mx-auto max-w-4xl px-page text-center">
           <div className="mb-8 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1 font-mono text-sm text-primary backdrop-blur-sm">
@@ -539,14 +512,16 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 </li>
               </ul>
 
-              <button
+              <Button
                 type="button"
                 onClick={handleCheckoutClick}
                 disabled={!priceId || isCheckingOut}
-                className={`btn-primary ${ACTION_LABEL_CLASS_NAME} inline-flex w-full items-center justify-center rounded-lg py-4 text-lg transition-colors hover:shadow-level-2-light dark:hover:shadow-level-2-dark disabled:cursor-not-allowed disabled:opacity-60`}
+                variant="primary"
+                size="lg"
+                className="w-full"
               >
-                {renderActionLabel(isCheckingOut ? 'Processing...' : 'Start with ProKit')}
-              </button>
+                {isCheckingOut ? 'Processing' : 'Start with ProKit'}
+              </Button>
               <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
                 <FeatureIcon name="lock-filled" className="h-3 w-3" />
                 Secure payment · Instant GitHub access
@@ -644,12 +619,9 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
             ProKit removes the repetitive work so you can focus on building your product.
           </p>
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
-            <a
-              href="#pricing"
-              className={`w-full rounded-lg bg-foreground px-8 py-4 text-lg text-background shadow-surface transition-colors hover:bg-foreground/90 sm:w-auto ${ACTION_LABEL_CLASS_NAME}`}
-            >
-              {renderActionLabel('Build on ProKit')}
-            </a>
+            <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
+              <a href="#pricing">Build on ProKit</a>
+            </Button>
             <a
               href="#breakdown"
               className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"

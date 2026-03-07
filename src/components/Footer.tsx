@@ -58,7 +58,7 @@ const data = [
 
 const Footer = () => {
   return (
-    <div className="relative flex justify-center items-center w-full">
+    <div className="relative z-[1] isolate flex w-full items-center justify-center">
       <Image
         src={footerBg}
         alt="background"
@@ -126,7 +126,7 @@ const Footer = () => {
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex w-full items-center justify-center sm:w-auto sm:justify-start">
             <div className="w-full max-w-[250px]">
-              <div className="relative h-[30px] w-full">
+              <div className="relative z-[2] h-[30px] w-full">
                 <a
                   href="https://status.prochat.tools/"
                   target="_blank"

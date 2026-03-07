@@ -1,0 +1,13 @@
+name: Scheduled Publish
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Dokploy Redeploy
+        run: curl -X POST https://dokploy.prochat.tools/api/deploy/yDMS8OPbt41UFq0Ne3k5X

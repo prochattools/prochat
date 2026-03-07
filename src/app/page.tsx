@@ -17,12 +17,12 @@ export const metadata = getSEOTags({
     title: 'ProChat',
     description:
       'ProChat is the operating system for SaaS builders. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.',
-    images: ['/og/prochat-home.png'],
+    images: ['/og'],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    images: ['/og/prochat-home.png'],
+    images: ['/og'],
   },
   canonicalUrlRelative: '/',
 })

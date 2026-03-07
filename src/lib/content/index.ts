@@ -1,16 +1,35 @@
 import { promises as fs } from 'fs'
 import path from 'path'
+import { parse as parseYaml } from 'yaml'
 
 import { getContentConfig } from './config'
 import { ContentEntry, ContentSection } from './types'
 
 const cache = new Map<ContentSection, Promise<ContentEntry[]>>()
 
-function parseList(value?: string) {
-  return (value || '')
+function parseList(value?: unknown) {
+  if (Array.isArray(value)) {
+    return value.map(item => String(item).trim()).filter(Boolean)
+  }
+
+  if (typeof value !== 'string') {
+    return []
+  }
+
+  return value
     .split(/[|;,]/)
     .map(item => item.trim())
     .filter(Boolean)
+}
+
+function asOptionalString(value?: unknown) {
+  if (typeof value !== 'string') return undefined
+  const trimmed = value.trim()
+  return trimmed || undefined
+}
+
+function asString(value: unknown, fallback = '') {
+  return asOptionalString(value) || fallback
 }
 
 function stripMarkup(value: string) {
@@ -32,27 +51,39 @@ function readingTimeMinutes(content: string) {
   return Math.max(1, Math.ceil(words / 220))
 }
 
-function parseFrontmatter(rawFile: string) {
-  const match = rawFile.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
+function parseFrontmatter(rawFile: string, filePath: string) {
+  const trimmed = rawFile.trim()
+
+  if (!trimmed) {
+    return null
+  }
+
+  const match = trimmed.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
 
   if (!match) {
-    throw new Error('Missing frontmatter in content file.')
+    throw new Error(`Missing frontmatter in content file: ${filePath}`)
   }
 
   const [, frontmatterRaw, content] = match
-  const parsed = Object.fromEntries(
-    frontmatterRaw
-      .split('\n')
-      .filter(Boolean)
-      .map(line => {
-        const separatorIndex = line.indexOf(':')
-        if (separatorIndex <= 0) return null
-        const key = line.slice(0, separatorIndex).trim()
-        const value = line.slice(separatorIndex + 1).trim()
-        return [key, value] as const
-      })
-      .filter((entry): entry is readonly [string, string] => Boolean(entry)),
-  )
+  let parsed: Record<string, unknown>
+
+  try {
+    parsed = (parseYaml(frontmatterRaw) || {}) as Record<string, unknown>
+  } catch {
+    parsed = Object.fromEntries(
+      frontmatterRaw
+        .split('\n')
+        .filter(Boolean)
+        .map(line => {
+          const separatorIndex = line.indexOf(':')
+          if (separatorIndex <= 0) return null
+          const key = line.slice(0, separatorIndex).trim()
+          const value = line.slice(separatorIndex + 1).trim()
+          return [key, value] as const
+        })
+        .filter((entry): entry is readonly [string, string] => Boolean(entry)),
+    )
+  }
 
   return { parsed, content }
 }
@@ -91,16 +122,34 @@ function buildRoute(section: ContentSection, filePath: string, root: string) {
   return { slug, routeSegments, urlPath }
 }
 
-async function readEntry(section: ContentSection, filePath: string, root: string): Promise<ContentEntry> {
+async function readEntry(section: ContentSection, filePath: string, root: string): Promise<ContentEntry | null> {
   const config = getContentConfig(section)
   const rawFile = await fs.readFile(filePath, 'utf8')
-  const { parsed, content } = parseFrontmatter(rawFile)
-  const { slug, routeSegments, urlPath } = buildRoute(section, filePath, root)
+  const parsedFile = parseFrontmatter(rawFile, filePath)
 
-  const title = parsed.title || slug
-  const description = parsed.description || excerptFromContent(content)
+  if (!parsedFile) {
+    return null
+  }
+
+  const { parsed, content } = parsedFile
+  const { slug, routeSegments, urlPath } = buildRoute(section, filePath, root)
+  const seo = (parsed.seo as Record<string, unknown> | undefined) || {}
+  const isDraft = parsed.draft === true || parsed.draft === 'true'
+
+  if (isDraft) {
+    return null
+  }
+
+  const title = asString(parsed.title, slug)
+  const description =
+    asOptionalString(parsed.description) ||
+    asOptionalString(parsed.excerpt) ||
+    asOptionalString(seo.description) ||
+    excerptFromContent(content)
   const tags = parseList(parsed.tags)
   const keywords = parseList(parsed.keywords)
+  const publishedAt = asOptionalString(parsed.publishedAt)
+  const updated = asOptionalString(parsed.updated)
 
   return {
     section,
@@ -108,19 +157,20 @@ async function readEntry(section: ContentSection, filePath: string, root: string
     description,
     slug,
     routeSegments,
-    category: parsed.category || routeSegments[0],
+    category: asOptionalString(parsed.category) || routeSegments[0],
     tags,
     keywords,
-    date: parsed.date || new Date().toISOString(),
-    updated: parsed.updated || undefined,
-    author: parsed.author || 'Steve',
-    metaTitle: parsed.metaTitle || undefined,
-    metaDescription: parsed.metaDescription || undefined,
-    ogImage: parsed.ogImage || '/og/prochat-home.png',
-    primaryKeyword: parsed.primaryKeyword || undefined,
+    date: publishedAt || asOptionalString(parsed.date) || new Date().toISOString(),
+    updated,
+    author: asOptionalString(parsed.author) || 'Steve',
+    metaTitle: asOptionalString(parsed.metaTitle) || asOptionalString(seo.title),
+    metaDescription:
+      asOptionalString(parsed.metaDescription) || asOptionalString(seo.description),
+    ogImage: asOptionalString(parsed.ogImage) || '/og',
+    primaryKeyword: asOptionalString(parsed.primaryKeyword),
     content,
     readingTimeMinutes: readingTimeMinutes(content),
-    excerpt: excerptFromContent(content),
+    excerpt: asOptionalString(parsed.excerpt) || excerptFromContent(content),
     urlPath,
     schemaType: config.schemaType,
     rawFrontmatter: parsed,
@@ -145,7 +195,8 @@ export async function getSectionEntries(section: ContentSection): Promise<Conten
           }),
         )
 
-        const deduped = Array.from(new Map(entries.map(entry => [entry.urlPath, entry])).values())
+        const validEntries = entries.filter((entry): entry is ContentEntry => Boolean(entry))
+        const deduped = Array.from(new Map(validEntries.map(entry => [entry.urlPath, entry])).values())
 
         return deduped.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       })(),

@@ -90,18 +90,12 @@ const CARD_ELEVATED =
 export default function StartHerePage() {
   return (
     <main className="min-h-screen bg-background text-foreground font-brand selection:bg-primary/20 selection:text-foreground">
-      <section className="relative flex min-h-[100svh] items-center overflow-hidden border-b border-border bg-background py-12 lg:py-0">
-        <div className="pointer-events-none absolute inset-0 z-0">
-          <div
-            className="absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.03)_1px,transparent_1px)] bg-[size:36px_36px]"
-            aria-hidden="true"
-          />
-          <div
-            className="absolute left-1/2 top-0 h-[760px] w-full -translate-x-1/2 bg-[radial-gradient(circle_at_50%_0%,rgba(37,99,235,0.12)_0%,transparent_52%)]"
-            aria-hidden="true"
-          />
-          <div className="pc-hero-lines" aria-hidden="true" />
-        </div>
+      <section className="relative isolate flex min-h-[100svh] items-center overflow-hidden border-b border-border bg-background py-12 lg:py-0">
+        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
+        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
+        <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
+        <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
+        <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
 
         <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-page md:px-12 lg:grid-cols-2 lg:gap-20">
           <div className="order-1 space-y-8 lg:space-y-10">
@@ -109,7 +103,7 @@ export default function StartHerePage() {
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-primary">
                 Preparation Layer
               </p>
-              <h1 className="font-sans text-[2.75rem] font-extrabold leading-[1.08] tracking-[-0.05em] text-foreground md:text-[4.25rem]">
+              <h1 className="pc-hero-title text-foreground">
                 The Operating System
                 <br className="hidden lg:block" />
                 for SaaS Builders.

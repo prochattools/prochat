@@ -8,7 +8,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { useUser, useClerk } from '@/libs/safeClerk'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -75,9 +75,8 @@ const ButtonSignin = ({
 
 	return (
 		<Button
-			className={`btn btn-primary border-none scale-1 rounded-[var(--pc-button-radius)] px-8 transition-all duration-300 hover:scale-[1.05] ${
-				extraStyle ? extraStyle : ''
-			}`}
+			variant="primary"
+			className={extraStyle ? extraStyle : ''}
 			onClick={handleClick}
 		>
 			{text}

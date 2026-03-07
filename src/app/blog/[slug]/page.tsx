@@ -21,6 +21,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageParams) {
   const entry = await getSectionEntry('blog', [params.slug])
+  const ogImagePath = `/blog/${params.slug}/og`
 
   if (!entry) {
     return getSEOTags({
@@ -38,14 +39,14 @@ export async function generateMetadata({ params }: PageParams) {
     openGraph: {
       title: entry.metaTitle || entry.title,
       description: entry.metaDescription || entry.description,
-      images: [entry.ogImage],
+      images: [ogImagePath],
       type: 'article',
     },
     twitter: {
       card: 'summary_large_image',
       title: entry.metaTitle || entry.title,
       description: entry.metaDescription || entry.description,
-      images: [entry.ogImage],
+      images: [ogImagePath],
     },
   })
 }

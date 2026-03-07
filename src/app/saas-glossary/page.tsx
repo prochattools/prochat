@@ -1,5 +1,6 @@
 import { getSEOTags } from '@/libs/seo'
 import { getAllGlossaryTerms } from '@/libs/glossary'
+import HeroSection from '@/components/marketing/HeroSection'
 import GlossaryExplorer from './GlossaryExplorer'
 
 export const metadata = getSEOTags({
@@ -17,12 +18,12 @@ export const metadata = getSEOTags({
     title: 'SaaS Founder Glossary | ProChat',
     description:
       'Plain-language SaaS definitions for non-technical founders building with AI, no-code, and low-code tools.',
-    images: ['/og/prochat-home.png'],
+    images: ['/og'],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    images: ['/og/prochat-home.png'],
+    images: ['/og'],
   },
   canonicalUrlRelative: '/saas-glossary',
 })
@@ -44,19 +45,17 @@ export default async function SaaSGlossaryPage() {
   }))
 
   return (
-    <section className="mx-auto flex h-full max-w-7xl flex-col overflow-hidden px-page pb-4 pt-4 md:pb-5 md:pt-5">
-      <header className="w-full shrink-0 border-b border-border-subtle/80 pb-4 md:pb-5">
-        <h1 className="font-brand text-3xl font-bold tracking-[-0.05em] text-foreground md:text-4xl">
-          SaaS Founder Glossary
-        </h1>
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
-          Fast SaaS definitions for non-technical founders. Search first, preview quickly,
-          then open the full explanation only when needed.
-        </p>
-        <p className="mt-2 text-xs text-muted-foreground">
-          {terms.length} founder terms across validation, MVP, pricing, metrics, and infrastructure.
-        </p>
-      </header>
+    <section className="mx-auto flex h-full max-w-7xl flex-col overflow-hidden px-page pb-4 md:pb-5">
+      <HeroSection
+        align="left"
+        density="compact"
+        title="SaaS Founder Glossary"
+        subtitle="Fast SaaS definitions for non-technical founders. Search first, preview quickly, then open the full explanation only when needed."
+        eyebrow={<p className="pc-kicker">Glossary</p>}
+        className="w-full shrink-0 border-b border-border-subtle/80 pb-4 pt-[calc(var(--pc-header-height)+1rem)] md:pb-5"
+        contentClassName="max-w-3xl"
+        footer={<span>{terms.length} founder terms across validation, MVP, pricing, metrics, and infrastructure.</span>}
+      />
 
       <div className="min-h-0 flex-1 pt-4 md:pt-5">
         <GlossaryExplorer terms={explorerTerms} />

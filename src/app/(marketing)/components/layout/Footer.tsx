@@ -1,11 +1,11 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Youtube } from 'lucide-react';
+import Logo from '@/components/logo';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-background pt-20 pb-10 border-t border-border font-mono [&_*]:font-mono">
+    <footer className="relative z-[1] isolate border-t border-border bg-background pt-20 pb-10 font-mono [&_*]:font-mono">
       <div className="max-w-7xl mx-auto px-page">
         
         <div className="grid md:grid-cols-4 gap-12 mb-16">
@@ -13,20 +13,7 @@ export const Footer: React.FC = () => {
            {/* Brand */}
            <div className="space-y-4">
               <Link href="/" className="inline-flex items-center">
-                 <Image
-                   src="/logo/prochat_logo_light.png"
-                   alt="ProChat"
-                   width={175}
-                   height={56}
-                   className="h-[58.5px] w-auto dark:hidden"
-                 />
-                 <Image
-                   src="/logo/prochat_logo_dark.png"
-                   alt="ProChat"
-                   width={175}
-                   height={56}
-                   className="h-[58.5px] w-auto hidden dark:block"
-                 />
+                 <Logo scale={1.1} />
               </Link>
               <p className="text-muted-foreground text-sm">The Operating System for SaaS Builders.</p>
            </div>
@@ -124,7 +111,7 @@ export const Footer: React.FC = () => {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex w-full items-center justify-center sm:w-auto sm:justify-start">
               <div className="w-full max-w-[250px]">
-                <div className="relative h-[30px] w-full">
+                <div className="relative z-[2] h-[30px] w-full">
                   <a
                     href="https://status.prochat.tools/"
                     target="_blank"

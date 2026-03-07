@@ -1,7 +1,7 @@
 import React from 'react'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/helpers/utils'
-import { Button as CoreButton, type ButtonProps as CoreButtonProps } from '@/components/ui/button'
+import { Button as CoreButton, type ButtonProps as CoreButtonProps } from '@/components/ui/Button'
 
 type MarketingButtonVariant = 'primary' | 'secondary' | 'ghost' | 'glass'
 type MarketingButtonSize = 'sm' | 'md' | 'lg'
@@ -17,10 +17,10 @@ const VARIANT_MAP: Record<
   MarketingButtonVariant,
   NonNullable<CoreButtonProps['variant']>
 > = {
-  primary: 'default',
-  secondary: 'outline',
+  primary: 'primary',
+  secondary: 'secondary',
   ghost: 'ghost',
-  glass: 'outline',
+  glass: 'secondary',
 }
 
 const SIZE_MAP: Record<
@@ -53,7 +53,7 @@ export const Button: React.FC<ButtonProps> = ({
       variant={VARIANT_MAP[variant]}
       size={SIZE_MAP[size]}
       className={cn(
-        'group transition-all duration-300',
+        'group',
         VARIANT_STYLE_MAP[variant],
         className,
       )}

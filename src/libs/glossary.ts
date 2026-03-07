@@ -91,21 +91,36 @@ function extractDefinition(content: string) {
   return stripHtml(firstParagraphMatch[1])
 }
 
-function parseList(value?: string) {
-  return (value || '')
+function parseList(value?: unknown) {
+  if (Array.isArray(value)) {
+    return value.map(item => String(item).trim()).filter(Boolean)
+  }
+
+  if (typeof value !== 'string') {
+    return []
+  }
+
+  return value
     .split(/[|;,]/)
     .map(item => item.trim())
     .filter(Boolean)
 }
 
+function asOptionalString(value?: unknown) {
+  if (typeof value !== 'string') return undefined
+  const trimmed = value.trim()
+  return trimmed || undefined
+}
+
 function mapEntryToGlossaryTerm(entry: Awaited<ReturnType<typeof getSectionEntries>>[number]): GlossaryTerm {
   const metadata = GLOSSARY_METADATA[entry.slug] || DEFAULT_METADATA
-  const category = entry.rawFrontmatter.category || metadata.category
+  const category = asOptionalString(entry.rawFrontmatter.category) || metadata.category
   const stage = (entry.rawFrontmatter.stage as GlossaryStage) || metadata.stage
   const synonyms = parseList(entry.rawFrontmatter.synonyms)
   const priorityRaw = Number(entry.rawFrontmatter.priority)
   const definition = extractDefinition(entry.content)
-  const excerptSource = entry.rawFrontmatter.excerpt || definition || stripHtml(entry.content)
+  const excerptSource =
+    asOptionalString(entry.rawFrontmatter.excerpt) || definition || stripHtml(entry.content)
 
   return {
     title: entry.title,

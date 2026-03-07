@@ -32,5 +32,5 @@ export type ContentEntry = {
   excerpt: string
   urlPath: string
   schemaType: ContentSchemaType
-  rawFrontmatter: Record<string, string>
+  rawFrontmatter: Record<string, unknown>
 }

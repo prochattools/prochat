@@ -8,12 +8,16 @@ import { blogMdxComponents } from '@/components/blog/mdx-components'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 
+function normalizeMdxSource(source: string) {
+  return source.replace(/^import\s+.+$/gm, '').trim()
+}
+
 type EvaluatedMdxModule = {
   default: ComponentType<{ components?: MDXComponents }>
 }
 
 async function getMdxComponent(source: string) {
-  const module = (await evaluate(source, {
+  const module = (await evaluate(normalizeMdxSource(source), {
     ...(isDevelopment ? { ...runtime, ...devRuntime } : runtime),
     development: isDevelopment,
     useMDXComponents: () => blogMdxComponents,

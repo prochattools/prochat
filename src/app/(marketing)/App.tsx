@@ -1,17 +1,48 @@
 import Link from 'next/link'
 import {
-  ArrowRight,
+  BookOpen,
   Check,
   CircleDot,
   Cloud,
   Database,
-  Lock,
+  type LucideIcon,
   Rocket,
   ShieldCheck,
 } from 'lucide-react'
-import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from '@/helpers/action-label'
 
-const systemCards = [
+import HeroSection from '@/components/marketing/HeroSection'
+import { Button } from '@/components/ui/Button'
+import { Panel, Section } from '@/components/ui/surface'
+
+type SystemCard = {
+  title: string
+  status: string
+  description: string
+  href: string
+  primary: boolean
+  icon: LucideIcon
+}
+
+type AuthorityBlock = {
+  title: string
+  description: string
+}
+
+type OperatingSystemCard = {
+  title: string
+  description: string
+  icon: LucideIcon
+  primary?: boolean
+}
+
+type JourneyPath = {
+  title: string
+  description: string
+  href: string
+  action: string
+}
+
+const systemCards: readonly SystemCard[] = [
   {
     title: 'ProKit',
     status: 'Available',
@@ -48,166 +79,216 @@ const systemCards = [
     primary: false,
     icon: CircleDot,
   },
-]
+] as const
 
-const withoutStructure = [
-  'You hesitate before shipping.',
-  'You fear breaking something.',
-  'You delay decisions.',
-  'You compensate with complexity.',
-]
+const authorityBlocks: readonly AuthorityBlock[] = [
+  {
+    title: 'Fast output hides structural gaps',
+    description:
+      'AI can generate features instantly. It does not design system boundaries, state ownership, or failure handling.',
+  },
+  {
+    title: 'Prompts are not architecture',
+    description:
+      'Prompt engineering produces code. Architecture defines constraints, responsibilities, and production safety.',
+  },
+  {
+    title: 'Speed without guardrails breaks',
+    description:
+      'Without enforced structure, velocity turns into regressions, billing bugs, and data inconsistency.',
+  },
+] as const
 
-const withStructure = [
-  'You move with confidence.',
-  'You iterate without anxiety.',
-  'You ship knowing the foundation is verified.',
-  'You focus on growth, not debugging.',
-]
+const operatingSystemCards: readonly OperatingSystemCard[] = [
+  {
+    title: 'Education',
+    description: 'Clear explanations of production concepts for non-technical founders.',
+    icon: BookOpen,
+  },
+  {
+    title: 'Validation',
+    description: 'A disciplined path from idea to paying users without wasted build cycles.',
+    icon: Check,
+  },
+  {
+    title: 'Infrastructure',
+    description: 'A hardened Next.js foundation with billing, auth, and data safety already structured.',
+    icon: Database,
+  },
+  {
+    title: 'Tooling',
+    description: 'A production-ready SaaS foundation designed for controlled execution.',
+    icon: Rocket,
+    primary: true,
+  },
+] as const
+
+const journeyPaths: readonly JourneyPath[] = [
+  {
+    title: 'Idea phase',
+    description: 'Validate demand before writing production code.',
+    href: '/blog/how-to-validate-a-saas-idea-without-coding',
+    action: 'Read the validation guide',
+  },
+  {
+    title: 'MVP phase',
+    description: 'Ship a controlled first version without building infrastructure from scratch.',
+    href: '/blog/how-to-build-a-saas-mvp-without-coding',
+    action: 'Read the MVP guide',
+  },
+  {
+    title: 'Production phase',
+    description: 'Ensure billing, auth, and data boundaries are correct before scaling.',
+    href: '/blog/nextjs-saas-infrastructure-checklist-for-non-technical-founders',
+    action: 'Read the infrastructure checklist',
+  },
+] as const
+
+const socialProofScaffold = [
+  'Verified founder implementation notes',
+  'Production launch reports',
+  'Tester-led system reviews',
+] as const
+
+const SHOW_TESTIMONIAL_SCAFFOLD = false
 
 export default function App() {
   return (
-    <div className="overflow-hidden bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
-      <section
-        id="system"
-        className="relative min-h-[88vh] border-b border-border bg-background pb-24 pt-[calc(var(--pc-header-height)+2.5rem)] sm:pb-28 sm:pt-[calc(var(--pc-header-height)+3rem)]"
+    <div className="bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
+      <HeroSection
+        title={
+          <>
+            Build with AI.
+            <br />
+            <span className="hero-accent">Operate with structure.</span>
+          </>
+        }
+        subtitle="AI made software accessible. It did not remove structural risk. ProChat provides production patterns so your SaaS survives real users, real data, and real billing."
+        primaryCTA={{
+          href: '/kits/saaskit',
+          label: 'Start with SaaSKit',
+          note: 'Production foundation included.',
+        }}
+        secondaryCTA={{
+          href: '/kits',
+          label: 'Explore the framework',
+          variant: 'secondary',
+        }}
+        tertiaryCTA={{ href: '/blog', label: 'Read the build guides' }}
+        eyebrow={
+          <div className="pc-kicker">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+            v2.0 Verified Architecture
+          </div>
+        }
+        microcopy="Production architecture. Not prompt improvisation."
+        footer={
+          <>
+            <ShieldCheck className="h-4 w-4 text-primary" />
+            <span>Built and hardened by a professional software tester.</span>
+          </>
+        }
+        ambientMotion
+        className="border-b border-border"
       >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[size:40px_40px] bg-[linear-gradient(to_right,rgb(var(--pc-border-subtle-rgb)/0.32)_1px,transparent_1px),linear-gradient(to_bottom,rgb(var(--pc-border-subtle-rgb)/0.32)_1px,transparent_1px)] opacity-55"
-        />
-        <div aria-hidden className="pc-hero-backdrop pointer-events-none absolute inset-0" />
-        <div aria-hidden className="pc-hero-lines pointer-events-none z-0" />
-        <div className="relative z-10 mx-auto flex min-h-[calc(88vh-8rem)] max-w-3xl items-center px-page">
-          <div className="w-full text-center">
-            <div className="mx-auto mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-              v2.0 Verified Architecture
-            </div>
-            <h1
-              className="mb-4 font-brand text-5xl font-[700] tracking-[-0.05em] text-foreground md:text-6xl lg:text-7xl"
-              style={{ lineHeight: 0.83 }}
-            >
-              Build with AI.
-              <br />
-              <span className="hero-accent">Operate with structure.</span>
-            </h1>
-            <p className="mx-auto mb-10 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-              AI made software accessible. It did not remove structural risk. ProChat builds production systems
-              that give founders guardrails so ideas do not collapse under hidden complexity.
-            </p>
-            <div className="mb-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Link
-                href="/kits"
-                className={`btn-primary ${ACTION_LABEL_CLASS_NAME} inline-flex items-center justify-center rounded-xl px-8 py-4 text-lg transition-all hover:-translate-y-0.5 hover:shadow-level-2-light dark:hover:shadow-level-2-dark`}
-              >
-                {renderActionLabel('Explore Systems')}
-              </Link>
-              <Link
-                href="/kits/saaskit"
-                className={`inline-flex items-center justify-center rounded-xl border border-border-subtle bg-surface px-8 py-4 text-lg text-foreground shadow-surface transition-all hover:border-border-strong hover:bg-surface-soft ${ACTION_LABEL_CLASS_NAME}`}
-              >
-                {renderActionLabel('Start with SaaSKit')}
-              </Link>
-            </div>
-            <div className="mb-8">
-              <Link
-                href="/blog"
-                className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary"
-              >
-                Read the build guides
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-            <div className="inline-flex items-center justify-center gap-3 text-sm font-medium text-muted-foreground">
-              <ShieldCheck className="h-4 w-4 text-primary" />
-              Built and hardened by a professional software tester.
-            </div>
-          </div>
-        </div>
-      </section>
+        <p className="mx-auto max-w-xl text-sm font-medium text-muted-foreground md:text-base">
+          For non-technical founders shipping real SaaS products.
+        </p>
+      </HeroSection>
 
-      <section className="relative border-y border-border-subtle bg-surface-soft/70 py-28">
-        <div className="mx-auto max-w-4xl px-page text-center">
-          <h2 className="mb-8 font-brand text-4xl font-bold tracking-[-0.03em] text-foreground md:text-5xl">
-            AI Removed the Coding Barrier.
-          </h2>
-          <p className="mb-12 text-xl font-light leading-loose text-muted-foreground md:text-2xl">
-            Today, anyone can generate software. But access to AI is not the same as production readiness.
-            AI expands possibility. Structure preserves it.
-            <br />
-            <br />
-            <span className="text-2xl font-semibold tracking-[-0.02em] text-foreground">
-              AI did not eliminate risk. It redistributed it.
-            </span>
+      <Section tone="muted" spacing="default">
+        <div className="mx-auto max-w-6xl px-page">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="pc-section-title mb-4 text-foreground">Why most AI-built SaaS apps fail.</h2>
+            <p className="pc-body-copy pc-body-muted">
+              AI accelerates output. It does not automatically provide the structure required to keep a real SaaS stable.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {authorityBlocks.map(block => (
+              <Panel key={block.title} tone="default" padding="default" className="h-full">
+                <h3 className="pc-card-title mb-3 text-foreground">{block.title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{block.description}</p>
+              </Panel>
+            ))}
+          </div>
+          <p className="mt-10 text-center font-brand text-xl font-semibold tracking-[-0.02em] text-foreground">
+            AI accelerates code. Structure protects products.
           </p>
-          <div className="mx-auto mb-8 h-px w-full max-w-xs bg-border" />
-          <div className="mx-auto h-16 w-px bg-gradient-to-b from-primary/30 to-transparent" />
         </div>
-      </section>
+      </Section>
 
-      <section id="methodology" className="bg-background py-24">
-        <div className="mx-auto grid max-w-6xl gap-20 px-page md:grid-cols-2 md:items-center">
-          <div>
-            <div className="mb-6 inline-flex items-center gap-2 font-brand text-sm font-bold uppercase tracking-[0.2em] text-primary">
-              <ShieldCheck className="h-4 w-4" />
-              Methodology
-            </div>
-            <h2 className="mb-6 font-brand text-4xl font-bold tracking-[-0.03em] text-foreground">Systems Before Speed.</h2>
-            <p className="mb-6 text-lg leading-relaxed text-muted-foreground">
-              ProChat is not about becoming technical. It is about building inside a controlled environment.
-              Guardrails reduce risk. Structure reduces overwhelm. Clarity drives execution.
-            </p>
-            <p className="rounded-r-lg border-l-4 border-primary bg-primary/5 py-2 pl-6 text-lg leading-relaxed text-muted-foreground">
-              You focus on ideas and marketing. The system handles infrastructure.
+      <Section tone="transparent" spacing="default">
+        <div className="mx-auto max-w-7xl px-page">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="pc-section-title mb-4 text-foreground">The Operating System for SaaS Builders</h2>
+            <p className="pc-body-copy pc-body-muted">
+              ProChat connects education, validation, infrastructure, and tooling into one controlled path from idea to launch.
             </p>
           </div>
+          <div className="grid gap-6 lg:grid-cols-4">
+            {operatingSystemCards.map(card => {
+              const Icon = card.icon
 
-          <div className="relative rounded-2xl border border-border-subtle bg-surface p-10 shadow-surface">
-            <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/10 blur-3xl" />
-            <div className="flex flex-col gap-6">
-              <div className="flex items-center gap-4 rounded-lg border border-border bg-muted/40 p-4 opacity-70">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
-                  <Lock className="h-4 w-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="mb-2 h-2 w-24 rounded bg-muted" />
-                  <div className="h-2 w-32 rounded bg-muted" />
-                </div>
-              </div>
-
-              <div className="z-10 flex scale-[1.03] items-center gap-4 rounded-xl border border-primary/30 bg-surface-elevated p-5 shadow-elevated">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-                  <ShieldCheck className="h-5 w-5" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-brand text-lg font-bold text-foreground">System Architecture</h4>
-                  <p className="text-sm text-muted-foreground">Controlled execution environment</p>
-                </div>
-                <Check className="h-5 w-5 text-primary" />
-              </div>
-
-              <div className="flex items-center gap-4 rounded-lg border border-border bg-muted/40 p-4 opacity-70">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
-                  <Database className="h-4 w-4" />
-                </div>
-                <div className="flex-1">
-                  <div className="mb-2 h-2 w-24 rounded bg-muted" />
-                  <div className="h-2 w-32 rounded bg-muted" />
-                </div>
-              </div>
-            </div>
+              return (
+                <Panel
+                  key={card.title}
+                  tone={card.primary ? 'elevated' : 'default'}
+                  padding="default"
+                  className={card.primary ? 'border-primary/30' : ''}
+                >
+                  <div
+                    className={[
+                      'mb-5 flex h-11 w-11 items-center justify-center rounded-xl border',
+                      card.primary
+                        ? 'border-primary/20 bg-primary/10 text-primary'
+                        : 'border-border bg-muted text-muted-foreground',
+                    ].join(' ')}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="pc-card-title mb-3 text-foreground">{card.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{card.description}</p>
+                </Panel>
+              )
+            })}
+          </div>
+          <div className="mt-10 text-center">
+            <Button asChild variant="tertiary" size="sm">
+              <Link href="/kits/saaskit">Start building on a stable foundation</Link>
+            </Button>
           </div>
         </div>
-      </section>
+      </Section>
 
-      <section id="systems" className="border-y border-border-subtle bg-surface-soft/70 py-28">
+      <Section tone="muted" spacing="default">
+        <div className="mx-auto max-w-6xl px-page">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="pc-section-title mb-4 text-foreground">Where do you start?</h2>
+            <p className="pc-body-copy pc-body-muted">
+              If you&apos;re new, start with the flagship guide. Then follow the structured path that matches your current constraint.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {journeyPaths.map(path => (
+              <Panel key={path.title} tone="default" padding="default" className="h-full">
+                <h3 className="pc-card-title mb-3 text-foreground">{path.title}</h3>
+                <p className="mb-6 text-sm leading-relaxed text-muted-foreground">{path.description}</p>
+                <Button asChild variant="tertiary" size="sm">
+                  <Link href={path.href}>{path.action}</Link>
+                </Button>
+              </Panel>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <Section id="systems" tone="transparent" spacing="loose">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mb-20 text-center">
-            <h2 className="mb-4 font-brand text-4xl font-bold tracking-[-0.03em] text-foreground">
-              Opinionated Systems for Serious Builders.
-            </h2>
+            <h2 className="pc-section-title mb-4 text-foreground">Choose the verified starting point.</h2>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Infrastructure designed to remove structural risk.
+              Each system removes a different layer of structural risk so you can move without guessing.
             </p>
           </div>
 
@@ -215,14 +296,17 @@ export default function App() {
             {systemCards.map(card => {
               const Icon = card.icon
               const isMuted = card.status !== 'Available'
+
               return (
-                <div
+                <Panel
                   key={card.title}
+                  tone={card.primary ? 'elevated' : 'default'}
+                  padding="default"
                   className={[
-                    'flex h-full flex-col rounded-xl border p-8 transition-all duration-300',
+                    'flex h-full flex-col transition-all duration-300',
                     card.primary
-                      ? 'border-primary/30 bg-[linear-gradient(180deg,rgb(var(--pc-blue-600-rgb)/0.14),rgb(var(--pc-surface-elevated-rgb)/1))] text-foreground shadow-elevated hover:-translate-y-1 hover:shadow-elevated'
-                      : 'border-border-subtle bg-surface shadow-surface hover:-translate-y-1 hover:border-border-strong hover:shadow-elevated',
+                      ? 'border-primary/30 hover:-translate-y-1 hover:shadow-elevated'
+                      : 'hover:-translate-y-1 hover:border-border-strong hover:shadow-elevated',
                     isMuted ? 'opacity-80' : '',
                   ].join(' ')}
                 >
@@ -252,132 +336,67 @@ export default function App() {
                       {card.status}
                     </span>
                   </div>
-                  <h3 className={['mb-2 font-brand font-bold', card.primary ? 'text-2xl' : 'text-xl text-foreground'].join(' ')}>
+                  <h3 className={['pc-card-title mb-2 text-foreground', card.primary ? 'text-2xl' : ''].join(' ')}>
                     {card.title}
                   </h3>
-                  <p
-                    className={[
-                      'mb-8 flex-grow text-sm leading-relaxed',
-                      'text-muted-foreground',
-                    ].join(' ')}
-                  >
+                  <p className="mb-8 flex-grow text-sm leading-relaxed text-muted-foreground">
                     {card.description}
                   </p>
-                  <Link
-                    href={card.href}
-                    className={[
-                      'mt-auto inline-flex items-center gap-2 border-t pt-4 text-sm font-bold transition-all',
-                      card.primary
-                        ? 'border-primary/20 text-foreground hover:gap-3 hover:text-primary'
-                        : 'border-border text-foreground hover:gap-3 hover:text-primary',
-                    ].join(' ')}
-                  >
-                    View System
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
+                  <div className={['mt-auto border-t pt-4', card.primary ? 'border-primary/20' : 'border-border'].join(' ')}>
+                    <Button asChild variant={card.primary ? 'secondary' : 'tertiary'} size="sm">
+                      <Link href={card.href}>View system</Link>
+                    </Button>
+                  </div>
+                </Panel>
               )
             })}
           </div>
         </div>
-      </section>
+      </Section>
 
-      <section id="comparison" className="bg-background py-28">
-        <div className="mx-auto max-w-4xl px-page">
-          <div className="mb-16 text-center">
-            <h2 className="font-brand text-3xl font-bold tracking-[-0.03em] text-foreground">Why Structure Wins</h2>
-          </div>
-
-          <div className="overflow-hidden rounded-2xl border border-border-subtle bg-surface shadow-elevated md:grid md:grid-cols-2">
-            <div className="border-b border-border-subtle bg-surface-soft/75 p-10 md:border-b-0 md:border-r">
-              <h3 className="mb-8 flex items-center gap-2 font-brand text-xl font-bold text-muted-foreground">
-                Without Structure
-              </h3>
-              <ul className="space-y-6">
-                {withoutStructure.map(item => (
-                  <li key={item} className="flex items-start gap-4 opacity-80">
-                    <CircleDot className="mt-0.5 h-5 w-5 text-muted-foreground" />
-                    <h4 className="text-sm font-bold uppercase tracking-wide text-foreground">{item}</h4>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="relative bg-surface-elevated p-10">
-              <div className="pointer-events-none absolute right-0 top-0 h-28 w-28 rounded-bl-full bg-primary/10" />
-              <h3 className="mb-8 flex items-center gap-2 font-brand text-xl font-bold text-primary">With Structure</h3>
-              <ul className="space-y-6">
-                {withStructure.map(item => (
-                  <li key={item} className="flex items-start gap-4">
-                    <Check className="mt-0.5 h-5 w-5 text-primary" />
-                    <h4 className="text-sm font-bold uppercase tracking-wide text-foreground">{item}</h4>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-border-subtle bg-surface/85 py-24">
+      <Section tone="muted" spacing="default">
         <div className="mx-auto max-w-5xl px-page text-center">
           <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
             <ShieldCheck className="h-5 w-5" />
           </div>
-          <h2 className="mb-6 font-brand text-3xl font-bold tracking-[-0.03em] text-foreground">No Black Boxes.</h2>
+          <h2 className="pc-section-title mb-6 text-foreground">Built by a professional software tester.</h2>
           <p className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            You do not inherit hidden complexity. Every system includes architecture maps, documentation, and
-            deployment walkthroughs. You see what you ship. You understand what you run.
+            ProChat is shaped by production testing experience. Every system is designed around failure modes, boundary conditions, and real-world usage — not demo scenarios.
           </p>
-          <div className="grid gap-8 text-left md:grid-cols-3">
-            <div className="rounded-lg border border-border-subtle bg-surface p-8 shadow-surface transition-colors hover:border-border-strong hover:bg-surface-soft">
-              <h4 className="font-brand font-bold text-foreground">Detailed Docs</h4>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Step-by-step setup guides that remove ambiguity.
-              </p>
+          {SHOW_TESTIMONIAL_SCAFFOLD ? (
+            <div className="grid gap-6 text-left md:grid-cols-3">
+              {socialProofScaffold.map(item => (
+                <Panel key={item} tone="default" padding="default">
+                  <h3 className="pc-card-title text-foreground">{item}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    Reserved for verified implementation notes once public launch reports are available.
+                  </p>
+                </Panel>
+              ))}
             </div>
-            <div className="rounded-lg border border-border-subtle bg-surface p-8 shadow-surface transition-colors hover:border-border-strong hover:bg-surface-soft">
-              <h4 className="font-brand font-bold text-foreground">Architecture Maps</h4>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Visual database schemas to understand relationships.
-              </p>
-            </div>
-            <div className="rounded-lg border border-border-subtle bg-surface p-8 shadow-surface transition-colors hover:border-border-strong hover:bg-surface-soft">
-              <h4 className="font-brand font-bold text-foreground">Walkthroughs</h4>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Video deployment guides for every major component.
-              </p>
-            </div>
-          </div>
+          ) : null}
         </div>
-      </section>
+      </Section>
 
-      <section id="cta" className="relative overflow-hidden bg-slate-950 py-28 text-white">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[size:32px_32px] bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)]"
-        />
+      <Section id="cta" tone="surface" spacing="loose" className="mt-6">
         <div className="relative z-10 mx-auto max-w-3xl px-page text-center">
-          <h2 className="mb-8 font-brand text-4xl font-bold tracking-[-0.03em] md:text-5xl">You Already Have the Idea.</h2>
-          <p className="mb-12 text-xl font-light leading-relaxed text-white/75">
-            AI removed the coding barrier. Now remove the structural risk. Less doubt. More execution.
+          <h2 className="pc-section-title mb-8 text-foreground">Build your SaaS on structure — not improvisation.</h2>
+          <p className="mb-12 text-xl leading-relaxed text-muted-foreground">
+            Start with the production-ready foundation. Then add features from a controlled system instead of rebuilding architecture by hand.
           </p>
-          <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
-            <Link
-              href="/kits/saaskit"
-              className={`w-full rounded-lg bg-primary px-8 py-5 text-lg text-white shadow-lg transition-all hover:bg-primary/90 sm:w-auto ${ACTION_LABEL_CLASS_NAME}`}
-            >
-              {renderActionLabel('Start with SaaSKit')}
-            </Link>
-            <Link
-              href="/kits"
-              className={`w-full rounded-lg border border-white/30 px-8 py-5 text-lg text-white/80 transition-colors hover:border-white/60 hover:text-white sm:w-auto ${ACTION_LABEL_CLASS_NAME}`}
-            >
-              {renderActionLabel('Explore All Systems')}
-            </Link>
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Button asChild variant="primary" size="lg">
+                <Link href="/kits/saaskit">Start with SaaSKit</Link>
+              </Button>
+              <Button asChild variant="secondary" size="lg">
+                <Link href="/kits">Explore the framework</Link>
+              </Button>
+            </div>
+            <p className="pc-cta-note">Includes auth, billing, and infrastructure patterns.</p>
           </div>
         </div>
-      </section>
+      </Section>
     </div>
   )
 }

@@ -15,7 +15,8 @@ Core layers:
 - `src/lib/content` — placeholder MDX content roots and shared content loader
 - `src/lib/seo` — metadata and schema helpers
 - `src/lib/taxonomy.ts` — categories, tags, and mapping helpers
-- `content/blog`, `content/glossary` — existing blog and glossary content retained in place
+- `src/lib/content/blog` — canonical blog content root
+- `content/glossary` — glossary content retained in place
 
 ## Folder Structure
 
@@ -114,6 +115,19 @@ The SEO system is centralized and route-safe:
 The positioning is consistent across metadata and content:
 
 > ProChat — The Operating System for SaaS Builders
+
+## Blog Architecture
+
+The blog is organized as a guided learning system rather than a flat reverse-chronological archive.
+
+- `Start Here` features the flagship pillar post for first-time readers.
+- `Core Resources` sits directly below the hero to surface glossary and validation assets before the learning path.
+- The learning path is grouped into ordered pillars: `Foundation`, `Build`, `Production Safety`, `Monetization`, and `Advanced`.
+- Posts support `pillarCategory` and `pillarOrder` frontmatter so ordering remains stable as the library grows.
+- Tag filtering is client-side and derived from the current post set, with the default state showing every post.
+- The flagship guide always renders first when a post is marked `pillar: true`.
+
+This keeps the blog aligned to the broader authority architecture: users start with one canonical guide, then move through a controlled sequence of posts instead of browsing an unstructured feed.
 
 ## Conversion Flow Logic
 

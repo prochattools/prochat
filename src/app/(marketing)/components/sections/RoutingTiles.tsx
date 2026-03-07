@@ -1,66 +1,72 @@
-'use client';
-import React from 'react';
-import { BlueprintCard } from '../ui/Scaffolding';
-import { ArrowRight } from 'lucide-react';
-import Link from 'next/link';
-import { Reveal } from '../ui/Reveal';
+'use client'
+
+import React from 'react'
+import Link from 'next/link'
+
+import { Reveal } from '../ui/Reveal'
+import { Button } from '@/components/ui/Button'
+import { Panel, Section } from '@/components/ui/surface'
+
+const ROUTING_TILES = [
+  {
+    label: 'Just the code',
+    title: 'ProKit',
+    body: 'The Developer Core Boilerplate. Pure execution layer for builders. No strategy, no monetization guides—just the raw Next.js engine.',
+    cta: 'Inspect the engine',
+    href: '/kits/prokit',
+    anchorId: 'prokit',
+  },
+  {
+    label: 'Have an idea?',
+    title: 'SaaSKit',
+    body: 'The SaaS Launch Kit. For people who already have an audience or idea. Skip the setup and launch your product using our proven infrastructure.',
+    cta: 'Start with SaaSKit',
+    href: '/kits/saaskit',
+    anchorId: 'saaskit',
+  },
+  {
+    label: 'No idea yet?',
+    title: 'WaaSKit',
+    body: 'The Client-First SaaS System. For people who do not know what to build yet. Sell websites to get paid immediately, then discover SaaS ideas from real client needs.',
+    cta: 'Coming soon',
+    href: null,
+    anchorId: 'waaskit',
+  },
+] as const
 
 export const RoutingTiles: React.FC = () => {
   return (
-    <section className="py-24 bg-slate-50/50 border-y border-slate-200 dark:bg-surface-soft dark:border-border-subtle">
-      <div className="max-w-7xl mx-auto px-page">
+    <Section tone="muted" spacing="default">
+      <div className="mx-auto max-w-7xl px-page">
         <Reveal>
-          <h2 className="text-3xl font-bold text-slate-900 mb-12 text-center dark:text-white">Choose your entry point</h2>
+          <h2 className="pc-section-title mb-12 text-center text-foreground">Choose your entry point</h2>
         </Reveal>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            {
-              label: "Just the Code",
-              title: "ProKit",
-              body: "The Developer Core Boilerplate. Pure execution layer for builders. No strategy, no monetization guides—just the raw Next.js engine.",
-              cta: "Inspect the engine",
-              href: "/kits/prokit",
-              anchorId: "prokit"
-            },
-            {
-              label: "Have an Idea?",
-              title: "SaaSKit",
-              body: "The SaaS Launch Kit. For people who already have an audience or idea. Skip the setup and launch your product using our proven infrastructure.",
-              cta: "Start with SaaSkit",
-              href: "/kits/saaskit",
-              anchorId: "saaskit"
-            },
-            {
-              label: "No Idea Yet?",
-              title: "WaaSKit",
-              body: "The Client-First SaaS System. For people who don't know what to build yet. Sell websites to get paid immediately, then discover SaaS ideas from real client needs.",
-              cta: "Coming soon",
-              href: null,
-              anchorId: "waaskit"
-            }
-          ].map((tile, i) => (
-            <Reveal key={i} delay={i * 0.1}>
+        <div className="grid gap-8 md:grid-cols-3">
+          {ROUTING_TILES.map((tile, index) => (
+            <Reveal key={tile.title} delay={index * 0.1}>
               <div id={tile.anchorId} className="h-full">
-                <BlueprintCard className="h-full p-8 flex flex-col bg-white dark:bg-surface">
-                  <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 dark:text-slate-500">{tile.label}</div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4 dark:text-white">{tile.title}</h3>
-                  <p className="text-slate-500 mb-8 flex-grow leading-relaxed font-light dark:text-slate-400">{tile.body}</p>
+                <Panel tone="default" padding="default" className="flex h-full flex-col">
+                  <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
+                    {tile.label}
+                  </div>
+                  <h3 className="pc-card-title mb-4 text-foreground">{tile.title}</h3>
+                  <p className="mb-8 flex-grow text-sm leading-relaxed text-muted-foreground">{tile.body}</p>
                   {tile.href ? (
-                    <Link href={tile.href} className="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all dark:text-secondary">
-                      {tile.cta} <ArrowRight size={16} />
-                    </Link>
+                    <Button asChild variant="tertiary" size="sm">
+                      <Link href={tile.href}>{tile.cta}</Link>
+                    </Button>
                   ) : (
-                    <span className="inline-flex items-center text-slate-400 font-bold dark:text-slate-500">
-                      {tile.cta}
-                    </span>
+                    <span className="text-sm font-medium text-muted-foreground">{tile.cta}</span>
                   )}
-                </BlueprintCard>
+                </Panel>
               </div>
             </Reveal>
           ))}
         </div>
       </div>
-    </section>
-  );
-};
+    </Section>
+  )
+}
+
+export default RoutingTiles

@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import { Scaffolding } from '@/components/ui/Scaffolding'
 import StructuredData from '@/components/StructuredData'
 import UmamiAnalytics from '@/components/UmamiAnalytics'
+import { brand } from '@/lib/brand'
 import { getSEOTags } from '@/libs/seo'
 import { getOrganizationSchema, getWebsiteSchema } from '@/libs/structured-data'
 import { SafeClerkProvider } from '@/libs/safeClerk'
@@ -48,7 +49,7 @@ const BASE_STYLE_OVERRIDES = `
 `
 
 export const viewport: Viewport = {
-  themeColor: 'rgb(11 18 32)',
+  themeColor: brand.colors.darkBackground,
   width: 'device-width',
   initialScale: 1,
 }
@@ -59,6 +60,11 @@ export const metadata = getSEOTags({
   openGraph: {
     title: ROOT_TITLE,
     description: ROOT_DESCRIPTION,
+    images: ['/og'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og'],
   },
 })
 
