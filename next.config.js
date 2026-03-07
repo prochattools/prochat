@@ -48,6 +48,16 @@ const nextConfig = {
 				destination: '/kits/uxkit-waitlist',
 				permanent: true,
 			},
+			{
+				source: '/blog/is-saaskit-worth-it-for-first-time-founders-honest-breakdown',
+				destination: '/blog/is-saaskit-worth-it-for-first-time-founders-honest-evaluation',
+				permanent: true,
+			},
+			{
+				source: '/blog/is-saaskit-worth-it-for-first-time-founders',
+				destination: '/blog/is-saaskit-worth-it-for-first-time-founders-honest-evaluation',
+				permanent: true,
+			},
 		]
 	},
 	images: {

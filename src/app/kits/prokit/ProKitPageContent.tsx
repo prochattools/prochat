@@ -62,7 +62,7 @@ const techSpecs = [
     icon: <FeatureIcon name="automation" className="h-5 w-5 text-primary" />,
     title: 'What ProKit intentionally does NOT include',
     points: [
-      'No built-in marketing frontend',
+      'No predefined marketing frontend',
       'No blog or SEO system',
       'No workflow automation layer',
     ],
@@ -134,24 +134,24 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 font-mono text-xs font-medium text-muted-foreground shadow-sm">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-            ProKit Core Engine
+            ProKit Infrastructure Layer
           </div>
 
           <h1 className="pc-hero-title mb-8 text-foreground">
             Core infrastructure.
             <br />
             <span className="hero-accent">
-              No marketing layer. No fluff.
+              Full control over your brand.
             </span>
           </h1>
 
           <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
             <p>
-              ProKit gives you the production-ready engine: auth, billing, database, and app
-              structure — so you can build your product without rewriting the basics.
+              ProKit gives you the production-ready engine — authentication, billing, database,
+              deployment — so you control your design, funnel, and growth strategy from day one.
             </p>
             <p className="text-base text-muted-foreground">
-              For builders who want control — not scaffolding.
+              For founders who want ownership — not scaffolding.
             </p>
             <div className="flex flex-col items-center justify-center py-2">
               <div className="flex min-h-11 flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-md border border-border bg-card/90 px-4 py-2 font-mono text-sm leading-none text-foreground shadow-sm backdrop-blur-sm sm:flex-nowrap">
@@ -167,7 +167,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 <span className="hidden text-border sm:inline">|</span>
                 <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
                   <FeatureIcon name="check-green" className="h-4 w-4 text-green-600" />
-                  <span>No fluff.</span>
+                  <span>Design freedom.</span>
                 </span>
               </div>
             </div>
@@ -176,7 +176,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
             <Button asChild variant="primary" size="lg">
               <a href="#pricing" onClick={handleHeroCtaClick}>
-                Start with ProKit
+                Start with a clean infrastructure base
               </a>
             </Button>
             <Button asChild variant="secondary" size="lg">
@@ -185,7 +185,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           </div>
 
           <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
-            For builders who want control — not scaffolding.
+            For founders who want ownership — not scaffolding.
           </p>
         </div>
       </section>
@@ -205,23 +205,26 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
               </h2>
               <div className="space-y-3 text-lg leading-[1.6] text-muted-foreground">
                 <p className="font-medium text-foreground">
-                  ProKit is the core runtime behind a modern SaaS application.
+                  You control the experience. ProKit controls the wiring.
                 </p>
                 <p>
-                  It handles the essential wiring — authentication, subscriptions, database
-                  structure, and deployment guards — without imposing a marketing layer or growth
-                  system.
+                  ProKit handles the infrastructure layer — authentication, subscriptions, database
+                  structure, and deployment safeguards — without imposing a marketing system on top.
                 </p>
                 <p>
-                  You bring the product idea.
+                  You keep control over the brand, the funnel, and the way the product is presented.
                 </p>
                 <p>
-                  ProKit gives you a stable engine.
+                  ProKit gives you a stable base.
+                </p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Built with the same production safeguards used in SaaSKit — without the
+                  opinionated growth layer.
                 </p>
                 <div className="mt-6 flex items-center gap-3 border-t border-border pt-6">
                   <span className="font-mono text-sm text-muted-foreground">POSITIONING:</span>
                   <span className="font-brand font-extrabold uppercase tracking-[0.02em] text-primary">
-                    Core engine only.
+                    Infrastructure only.
                   </span>
                 </div>
               </div>
@@ -273,9 +276,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                   </div>
                 </div>
 
-                <p className="mt-6 text-sm italic text-muted-foreground">
-                  ProKit gives you a stable engine.
-                </p>
+                <p className="mt-6 text-sm italic text-muted-foreground">You control the brand. ProKit handles the infrastructure.</p>
               </div>
             </div>
 
@@ -344,19 +345,19 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
 
       <section id="manual" className="scroll-mt-24 border-y border-border bg-[rgb(var(--section-alt-bg-rgb))] py-24">
         <div className="mx-auto max-w-4xl px-page">
-          <div className="mb-12 text-center">
+              <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground">
-              What ProKit intentionally does NOT include
+              What ProKit does NOT do
             </h2>
             <p className="text-muted-foreground">
-              ProKit is the core engine and deliberately excludes growth-layer systems.
+              ProKit protects infrastructure while leaving design, funnel, and growth decisions in your hands.
             </p>
           </div>
 
           <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
             <div className="grid grid-cols-3 border-b border-border bg-muted text-sm font-bold uppercase tracking-wider text-muted-foreground">
               <div className="p-6">Scope</div>
-              <div className="border-l border-border p-6 text-center">Core Boundary</div>
+              <div className="border-l border-border p-6 text-center">Control Boundary</div>
               <div className="border-l border-border bg-primary/10 p-6 text-center text-primary">
                 ProKit
               </div>
@@ -368,10 +369,10 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 Marketing
               </div>
               <div className="border-l border-border p-6 text-center text-muted-foreground">
-                Frontend Layer
+                Brand Experience
               </div>
               <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
-                No built-in marketing frontend
+                It does not lock you into a marketing framework
               </div>
             </div>
 
@@ -381,10 +382,10 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 SEO
               </div>
               <div className="border-l border-border p-6 text-center text-muted-foreground">
-                Content Discovery
+                Design System
               </div>
               <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
-                No blog or SEO system
+                It does not dictate your design system
               </div>
             </div>
 
@@ -394,17 +395,17 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 Automation
               </div>
               <div className="border-l border-border p-6 text-center text-muted-foreground">
-                Workflow Layer
+                Funnel Structure
               </div>
               <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
-                No workflow automation layer
+                It does not restrict your funnel structure
               </div>
             </div>
           </div>
 
           <div className="mt-8 text-center">
             <p className="font-mono text-sm text-muted-foreground">
-              What ProKit includes — and nothing more.
+              You keep the autonomy. ProKit keeps the infrastructure stable.
             </p>
           </div>
         </div>
@@ -415,47 +416,75 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
               <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] leading-tight text-foreground">
-                For builders who want full control.
+                When to choose ProKit vs SaaSKit
               </h2>
               <p className="mb-8 text-lg text-muted-foreground">
-                If you want growth modules, marketing routes, or workflow systems built-in —
-                that&apos;s a different product.
+                Both are production-ready foundations. The difference is how much launch structure you want around the infrastructure.
               </p>
               <div className="h-1 w-20 rounded-full bg-primary" />
             </div>
             <div className="md:col-span-7">
               <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
-                <h3 className="mb-6 text-lg font-bold text-foreground">ProKit is ideal if:</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">
-                      You already know your product direction
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">You don&apos;t need a marketing scaffold</span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">
-                      You prefer building your own frontend
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="font-medium text-foreground">You want a clean, reusable core engine</span>
-                  </li>
-                </ul>
+                <div className="grid gap-8 md:grid-cols-2">
+                  <div>
+                    <h3 className="mb-6 text-lg font-bold text-foreground">ProKit is for you if:</h3>
+                    <ul className="space-y-4">
+                      <li className="flex items-start gap-4">
+                        <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                          <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                        </div>
+                        <span className="text-muted-foreground">You want full control over branding and funnel</span>
+                      </li>
+                      <li className="flex items-start gap-4">
+                        <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                          <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                        </div>
+                        <span className="text-muted-foreground">You plan to design your own marketing system</span>
+                      </li>
+                      <li className="flex items-start gap-4">
+                        <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                          <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                        </div>
+                        <span className="text-muted-foreground">You do not want predefined growth layers</span>
+                      </li>
+                      <li className="flex items-start gap-4">
+                        <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                          <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                        </div>
+                        <span className="font-medium text-foreground">You want a clean infrastructure base</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="mb-6 text-lg font-bold text-foreground">SaaSKit is better if:</h3>
+                    <ul className="space-y-4">
+                      <li className="flex items-start gap-4">
+                        <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                          <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                        </div>
+                        <span className="text-muted-foreground">You want a structured launch path</span>
+                      </li>
+                      <li className="flex items-start gap-4">
+                        <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                          <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                        </div>
+                        <span className="text-muted-foreground">You prefer pre-wired marketing systems</span>
+                      </li>
+                      <li className="flex items-start gap-4">
+                        <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                          <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                        </div>
+                        <span className="text-muted-foreground">You want faster go-to-market</span>
+                      </li>
+                      <li className="flex items-start gap-4">
+                        <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                          <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
+                        </div>
+                        <span className="font-medium text-foreground">You value opinionated guidance</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -475,7 +504,10 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
             One payment. Unlimited projects.
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
-            Use ProKit as the core engine for as many products as you want.
+            Use ProKit as the infrastructure layer for as many products as you want.
+          </p>
+          <p className="mx-auto mb-8 max-w-2xl text-sm text-muted-foreground">
+            The infrastructure mistakes most founders discover too late are more expensive than this entire foundation.
           </p>
 
           <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border-subtle bg-surface text-foreground shadow-elevated transition-transform duration-300 hover:-translate-y-1">
@@ -520,11 +552,11 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 size="lg"
                 className="w-full"
               >
-                {isCheckingOut ? 'Processing' : 'Start with ProKit'}
+                {isCheckingOut ? 'Processing' : 'Start with a clean infrastructure base'}
               </Button>
               <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
                 <FeatureIcon name="lock-filled" className="h-3 w-3" />
-                Secure payment · Instant GitHub access
+                Includes auth, billing, and infrastructure patterns
               </div>
             </div>
           </div>
@@ -535,12 +567,12 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         <div className="mx-auto max-w-6xl px-page">
           <details className="group overflow-hidden rounded-2xl border border-border-subtle bg-surface shadow-surface transition-shadow open:shadow-elevated">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-left [&::-webkit-details-marker]:hidden md:px-8">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
-                  Technical Deep Dive
-                </span>
-              </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                  System Breakdown
+                  </span>
+                </div>
               <div className="flex items-center gap-2 text-sm font-medium text-primary">
                 <span>View full system breakdown</span>
                 <FeatureIcon
@@ -609,18 +641,18 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
-            Ship what matters.
+            Build your SaaS on structure — not improvisation.
           </h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            You don&apos;t need another idea.
+            You control the brand, the funnel, and the experience.
             <br />
-            <span className="font-medium text-foreground">You need a stable base.</span>
+            <span className="font-medium text-foreground">ProKit gives you the stable base underneath it.</span>
             <br />
-            ProKit removes the repetitive work so you can focus on building your product.
+            Build on the wiring once, then shape the product your way.
           </p>
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
             <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
-              <a href="#pricing">Build on ProKit</a>
+              <a href="#pricing">Start with a clean infrastructure base</a>
             </Button>
             <a
               href="#breakdown"
