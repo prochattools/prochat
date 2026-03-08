@@ -1,17 +1,19 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
-import ThemeTransitionOverlay from '@/components/ThemeTransitionOverlay'
+import ThemeRadialTransition from '@/components/ThemeRadialTransition'
 
 export const ThemeToggle = ({ className = '' }: { className?: string }) => {
   const { resolvedTheme, setTheme } = useTheme()
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [overlayActive, setOverlayActive] = useState(false)
   const [overlayFadeOut, setOverlayFadeOut] = useState(false)
-  const [overlayBackground, setOverlayBackground] = useState('')
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const activateOverlayTimeoutRef = useRef<number | null>(null)
   const switchThemeTimeoutRef = useRef<number | null>(null)
+  const fadeOverlayTimeoutRef = useRef<number | null>(null)
   const clearTransitionTimeoutRef = useRef<number | null>(null)
 
   useEffect(() => {
@@ -32,8 +34,16 @@ export const ThemeToggle = ({ className = '' }: { className?: string }) => {
 
   useEffect(() => {
     return () => {
+      if (activateOverlayTimeoutRef.current !== null) {
+        window.clearTimeout(activateOverlayTimeoutRef.current)
+      }
+
       if (switchThemeTimeoutRef.current !== null) {
         window.clearTimeout(switchThemeTimeoutRef.current)
+      }
+
+      if (fadeOverlayTimeoutRef.current !== null) {
+        window.clearTimeout(fadeOverlayTimeoutRef.current)
       }
 
       if (clearTransitionTimeoutRef.current !== null) {
@@ -42,7 +52,7 @@ export const ThemeToggle = ({ className = '' }: { className?: string }) => {
     }
   }, [])
 
-  const toggleTheme = () => {
+  const toggleTheme = (event: MouseEvent<HTMLButtonElement>) => {
     if (isTransitioning) return
 
     const isDarkTheme =
@@ -55,32 +65,37 @@ export const ThemeToggle = ({ className = '' }: { className?: string }) => {
       return
     }
 
-    const currentBackgroundColor =
-      window.getComputedStyle(document.documentElement).backgroundColor ||
-      window.getComputedStyle(document.body).backgroundColor
+    document.documentElement.style.setProperty('--x', `${event.clientX}px`)
+    document.documentElement.style.setProperty('--y', `${event.clientY}px`)
 
-    setOverlayBackground(currentBackgroundColor)
+    setOverlayActive(false)
     setOverlayFadeOut(false)
     setIsTransitioning(true)
 
+    activateOverlayTimeoutRef.current = window.setTimeout(() => {
+      setOverlayActive(true)
+    }, 16)
+
     switchThemeTimeoutRef.current = window.setTimeout(() => {
       setTheme(isDarkTheme ? 'light' : 'dark')
-      window.requestAnimationFrame(() => {
-        setOverlayFadeOut(true)
-      })
-    }, 50)
+    }, 120)
+
+    fadeOverlayTimeoutRef.current = window.setTimeout(() => {
+      setOverlayFadeOut(true)
+    }, 720)
 
     clearTransitionTimeoutRef.current = window.setTimeout(() => {
       setIsTransitioning(false)
+      setOverlayActive(false)
       setOverlayFadeOut(false)
-    }, 550)
+    }, 1020)
   }
 
   return (
     <>
       {isTransitioning ? (
-        <ThemeTransitionOverlay
-          backgroundColor={overlayBackground}
+        <ThemeRadialTransition
+          active={overlayActive}
           fadeOut={overlayFadeOut}
         />
       ) : null}
@@ -90,7 +105,7 @@ export const ThemeToggle = ({ className = '' }: { className?: string }) => {
         title="Toggle theme"
         onClick={toggleTheme}
         disabled={isTransitioning}
-        className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background text-foreground shadow-sm transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none ${className}`}
+        className={`theme-toggle-button inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground disabled:pointer-events-none ${className}`}
       >
         <Sun className="hidden h-4 w-4 dark:block" />
         <Moon className="h-4 w-4 dark:hidden" />

@@ -18,6 +18,7 @@ import { ThemeToggle } from '@/app/(marketing)/components/ui/ThemeToggle'
 import { isChromelessPath } from '@/helpers/chrome-routes'
 import { cn } from '@/helpers/utils'
 import { trackEvent } from '@/utils/analytics'
+import { buttonVariants } from '@/components/ui/button'
 
 const NAV_ITEMS = [
 	{ label: 'System', href: '/' },
@@ -44,7 +45,10 @@ function HeaderThemeToggle() {
 
 function DesktopNavigation({ pathname }: { pathname: string }) {
 	return (
-		<nav className="pc-nav-capsule grid min-w-[58rem] grid-cols-5 items-center xl:min-w-[64rem]" aria-label="Primary">
+		<nav
+			className="pc-nav-capsule grid min-w-[62rem] grid-cols-[repeat(4,minmax(0,1fr))_auto] items-center xl:min-w-[68rem]"
+			aria-label="Primary"
+		>
 			<ul className="contents">
 				{NAV_ITEMS.map(item => (
 					<li key={item.href} className="justify-self-center">
@@ -58,20 +62,17 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 					</li>
 				))}
 			</ul>
-			<div className="justify-self-center">
-				<Button
-					asChild
-					variant="nav"
-					size="sm"
-					className="h-10 rounded-[var(--pc-button-radius)] px-5 text-2xl"
+			<div className="justify-self-end">
+				<Link
+					href="/kits/saaskit"
+					onClick={() => trackEvent('explore_kits_click', { location: 'header_capsule' })}
+					className={cn(
+						buttonVariants({ variant: 'nav', size: 'sm' }),
+						'h-10 origin-center scale-[1.15] rounded-[var(--pc-button-radius)] px-5 font-mono text-[0.95rem] font-bold tracking-[0.04em] text-white [font-variant-ligatures:none]',
+					)}
 				>
-					<Link
-						href="/kits"
-						onClick={() => trackEvent('explore_kits_click', { location: 'header_capsule' })}
-					>
-						Explore kits
-					</Link>
-				</Button>
+					<span>Start with SaaSKit</span>
+				</Link>
 			</div>
 		</nav>
 	)
@@ -181,14 +182,16 @@ export default function Header() {
 	return (
 		<header className="fixed inset-x-0 top-6 z-50 pointer-events-none">
 			<div className="w-full px-4 sm:px-6 lg:px-[40px] pointer-events-auto">
-				<div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-6">
-					<Link href="/" className="justify-self-start">
+				<div className="relative hidden lg:flex lg:items-center lg:justify-between">
+					<Link href="/" className="relative z-10 shrink-0">
 						<Logo scale={0.76} />
 					</Link>
-					<div className="origin-center justify-self-center scale-[0.6]">
-						<DesktopNavigation pathname={pathname} />
+					<div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+						<div className="pointer-events-auto origin-center scale-[0.6]">
+							<DesktopNavigation pathname={pathname} />
+						</div>
 					</div>
-					<div className="justify-self-end">
+					<div className="relative z-10 shrink-0">
 						<HeaderThemeToggle />
 					</div>
 				</div>
