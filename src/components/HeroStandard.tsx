@@ -9,6 +9,7 @@ type HeroStandardProps = {
   rightSlot?: ReactNode
   footer?: ReactNode
   embedded?: boolean
+  showDivider?: boolean
 }
 
 export default function HeroStandard({
@@ -18,9 +19,15 @@ export default function HeroStandard({
   rightSlot,
   footer,
   embedded = false,
+  showDivider = true,
 }: HeroStandardProps) {
   const hero = (
-    <section className="pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--left w-full shrink-0 border-b border-border-subtle/80 pb-4 pt-[calc(var(--pc-header-height)+1rem)] md:pb-5">
+    <section
+      className={cn(
+        'pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--left w-full shrink-0 pb-4 pt-[calc(var(--pc-header-height)+1rem)] md:pb-5',
+        showDivider && 'border-b border-border-subtle/80',
+      )}
+    >
       <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
       <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
       <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
