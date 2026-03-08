@@ -11,6 +11,8 @@ import {
 } from 'lucide-react'
 
 import HeroSection from '@/components/marketing/HeroSection'
+import HeroBadge from '@/components/ui/hero-badge'
+import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
 import { Panel, Section } from '@/components/ui/surface'
 
@@ -83,19 +85,19 @@ const systemCards: readonly SystemCard[] = [
 
 const authorityBlocks: readonly AuthorityBlock[] = [
   {
-    title: 'Fast output hides structural gaps',
+    title: 'Features ship before boundaries',
     description:
-      'AI can generate features instantly. It does not design system boundaries, state ownership, or failure handling.',
+      'AI can generate output. It does not assign ownership, state boundaries, or failure paths.',
   },
   {
-    title: 'Prompts are not architecture',
+    title: 'Billing and data drift quietly',
     description:
-      'Prompt engineering produces code. Architecture defines constraints, responsibilities, and production safety.',
+      'Without billing lifecycle rules and migration discipline, releases look complete while core state stays unstable.',
   },
   {
-    title: 'Speed without guardrails breaks',
+    title: 'No observability means no control',
     description:
-      'Without enforced structure, velocity turns into regressions, billing bugs, and data inconsistency.',
+      'If nobody can trace failures across boundaries, regressions, access bugs, and deployment mistakes compound.',
   },
 ] as const
 
@@ -158,12 +160,12 @@ export default function App() {
       <HeroSection
         title={
           <>
-            Build with AI.
+            Build AI SaaS.
             <br />
-            <span className="hero-accent">Operate with structure.</span>
+            <span className="hero-accent">Launch with real boundaries.</span>
           </>
         }
-        subtitle="AI made software accessible. It did not remove structural risk. ProChat provides production patterns so your SaaS survives real users, real data, and real billing."
+        subtitle="ProChat gives non-technical founders a structured launch foundation so billing, access, deployment, and content systems do not have to be improvised."
         primaryCTA={{
           href: '/kits/saaskit',
           label: 'Start with SaaSKit',
@@ -175,25 +177,14 @@ export default function App() {
           variant: 'secondary',
         }}
         tertiaryCTA={{ href: '/blog', label: 'Read the build guides' }}
-        eyebrow={
-          <div className="pc-kicker">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-            v2.0 Verified Architecture
-          </div>
-        }
-        microcopy="Production architecture. Not prompt improvisation."
-        footer={
-          <>
-            <ShieldCheck className="h-4 w-4 text-primary" />
-            <span>Built and hardened by a professional software tester.</span>
-          </>
-        }
+        eyebrow={<HeroBadge text="Structured AI SaaS Launch" />}
         ambientMotion
         className="border-b border-border"
       >
-        <p className="mx-auto max-w-xl text-sm font-medium text-muted-foreground md:text-base">
-          For non-technical founders shipping real SaaS products.
-        </p>
+        <HeroCheckRow
+          items={['Skip infra rewrites', 'Define billing early', 'Launch with boundaries']}
+          className="mx-auto"
+        />
       </HeroSection>
 
       <Section tone="muted" spacing="default">
@@ -201,7 +192,7 @@ export default function App() {
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <h2 className="pc-section-title mb-4 text-foreground">Why most AI-built SaaS apps fail.</h2>
             <p className="pc-body-copy pc-body-muted">
-              AI accelerates output. It does not automatically provide the structure required to keep a real SaaS stable.
+              AI shortens implementation. It does not define boundaries, ownership, or release criteria.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
@@ -213,7 +204,7 @@ export default function App() {
             ))}
           </div>
           <p className="mt-10 text-center font-brand text-xl font-semibold tracking-[-0.02em] text-foreground">
-            AI accelerates code. Structure protects products.
+            A launch is only as stable as its boundaries.
           </p>
         </div>
       </Section>

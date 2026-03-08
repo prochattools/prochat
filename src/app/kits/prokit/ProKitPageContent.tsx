@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
+import HeroBadge from '@/components/ui/hero-badge'
+import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
 import { handleCheckoutProcess } from '@/helpers/checkout'
 import { useUser } from '@/libs/safeClerk'
@@ -132,10 +134,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
 
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 font-mono text-xs font-medium text-muted-foreground shadow-sm">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-            ProKit Infrastructure Layer
-          </div>
+          <HeroBadge text="ProKit Infrastructure Layer" className="mb-8" />
 
           <h1 className="pc-hero-title mb-8 text-foreground">
             Core infrastructure.
@@ -154,22 +153,9 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
               For founders who want ownership — not scaffolding.
             </p>
             <div className="flex flex-col items-center justify-center py-2">
-              <div className="flex min-h-11 flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-md border border-border bg-card/90 px-4 py-2 font-mono text-sm leading-none text-foreground shadow-sm backdrop-blur-sm sm:flex-nowrap">
-                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-                  <FeatureIcon name="check-green" className="h-4 w-4 text-green-600" />
-                  <span>Core infrastructure.</span>
-                </span>
-                <span className="hidden text-border sm:inline">|</span>
-                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-                  <FeatureIcon name="check-green" className="h-4 w-4 text-green-600" />
-                  <span>No marketing layer.</span>
-                </span>
-                <span className="hidden text-border sm:inline">|</span>
-                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-                  <FeatureIcon name="check-green" className="h-4 w-4 text-green-600" />
-                  <span>Design freedom.</span>
-                </span>
-              </div>
+              <HeroCheckRow
+                items={['Core infrastructure.', 'No marketing layer.', 'Design freedom.']}
+              />
             </div>
           </div>
 

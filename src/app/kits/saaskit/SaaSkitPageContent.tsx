@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
 import ContextualLinkCta from '@/components/ContextualLinkCta'
+import HeroBadge from '@/components/ui/hero-badge'
+import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
 import { handleCheckoutProcess } from '@/helpers/checkout'
 import { useUser } from '@/libs/safeClerk'
@@ -133,10 +135,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
         <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
 
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 font-mono text-xs font-medium text-muted-foreground shadow-sm">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-            SaaSKit Structured Launch System
-          </div>
+          <HeroBadge text="SaaSKit Structured Launch System" className="mb-8" />
 
           <h1 className="pc-hero-title mb-8 text-foreground">
             Launch your SaaS —
@@ -153,22 +152,13 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
               For non-technical founders who want speed with built-in structure.
             </p>
             <div className="flex flex-col items-center justify-center py-2">
-              <div className="flex min-h-11 flex-wrap items-center justify-center gap-x-3 gap-y-2 rounded-md border border-border bg-card/90 px-4 py-2 font-mono text-sm leading-none text-foreground shadow-sm backdrop-blur-sm sm:flex-nowrap">
-                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-                    <FeatureIcon name="check-green" className="mt-0.5 h-4 w-4 text-green-600" />
-                    <span>Core infrastructure included.</span>
-                </span>
-                <span className="hidden text-border sm:inline">|</span>
-                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-                  <FeatureIcon name="check-green" className="mt-0.5 h-4 w-4 text-green-600" />
-                  <span>Marketing system included.</span>
-                </span>
-                <span className="hidden text-border sm:inline">|</span>
-                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-                  <FeatureIcon name="check-green" className="mt-0.5 h-4 w-4 text-green-600" />
-                  <span>Production-ready from day one.</span>
-                </span>
-              </div>
+              <HeroCheckRow
+                items={[
+                  'Core infrastructure included.',
+                  'Marketing system included.',
+                  'Production-ready from day one.',
+                ]}
+              />
             </div>
             <p className="text-sm font-medium text-foreground">
               You build the product. SaaSKit provides the structure.
