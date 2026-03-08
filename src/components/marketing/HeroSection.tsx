@@ -100,14 +100,14 @@ export function HeroSection({
               <div className="pc-marketing-hero__action-stack">
                 <div className="pc-marketing-hero__actions">
                   {primaryCTA ? (
-                    <Button asChild variant={primaryCTA.variant ?? 'primary'} size="lg">
+                    <Button asChild variant={primaryCTA.variant ?? 'primary'} size="lg" className="w-full whitespace-normal text-center md:w-auto">
                       <Link href={primaryCTA.href} onClick={primaryCTA.onClick}>
                         {primaryCTA.label}
                       </Link>
                     </Button>
                   ) : null}
                   {secondaryCTA ? (
-                    <Button asChild variant={secondaryCTA.variant ?? 'secondary'} size="lg">
+                    <Button asChild variant={secondaryCTA.variant ?? 'secondary'} size="lg" className="w-full whitespace-normal text-center md:w-auto">
                       <Link href={secondaryCTA.href} onClick={secondaryCTA.onClick}>
                         {secondaryCTA.label}
                       </Link>

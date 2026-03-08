@@ -166,12 +166,12 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           </div>
 
           <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
-            <Button asChild variant="primary" size="lg">
+            <Button asChild variant="primary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
               <a href="#pricing" onClick={handleHeroCtaClick}>
                 Start with SaaSKit
               </a>
             </Button>
-            <Button asChild variant="secondary" size="lg">
+            <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
               <a href="#breakdown">See what&apos;s included</a>
             </Button>
           </div>
@@ -360,49 +360,49 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           </div>
 
           <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
-            <div className="grid grid-cols-3 border-b border-border bg-muted text-sm font-bold uppercase tracking-wider text-muted-foreground">
+            <div className="grid grid-cols-1 border-b border-border bg-muted text-sm font-bold uppercase tracking-wider text-muted-foreground md:grid-cols-3">
               <div className="p-6">Metric</div>
-              <div className="border-l border-border p-6 text-center">Manual Setup</div>
-              <div className="border-l border-border bg-primary/10 p-6 text-center text-primary">
+              <div className="border-t border-border p-6 text-center md:border-l md:border-t-0">Manual Setup</div>
+              <div className="border-t border-border bg-primary/10 p-6 text-center text-primary md:border-l md:border-t-0">
                 SaaSKit
               </div>
             </div>
 
-            <div className="grid grid-cols-3 border-b border-border transition-colors hover:bg-muted/60">
+            <div className="grid grid-cols-1 border-b border-border transition-colors hover:bg-muted/60 md:grid-cols-3">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
                 <FeatureIcon name="schedule" className="h-4 w-4 text-muted-foreground" />
                 Time Cost
               </div>
-              <div className="border-l border-border p-6 text-center text-muted-foreground">
+              <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
                 Weeks / Months
               </div>
-              <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
+              <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
                 Immediate
               </div>
             </div>
 
-            <div className="grid grid-cols-3 border-b border-border transition-colors hover:bg-muted/60">
+            <div className="grid grid-cols-1 border-b border-border transition-colors hover:bg-muted/60 md:grid-cols-3">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
                 <FeatureIcon name="bug-report" className="h-4 w-4 text-muted-foreground" />
                 Error Cost
               </div>
-              <div className="border-l border-border p-6 text-center text-muted-foreground">
+              <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
                 High (Unknowns)
               </div>
-              <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
+              <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
                 Minimal (Verified)
               </div>
             </div>
 
-            <div className="grid grid-cols-3 transition-colors hover:bg-muted/60">
+            <div className="grid grid-cols-1 transition-colors hover:bg-muted/60 md:grid-cols-3">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
                 <FeatureIcon name="psychology" className="h-4 w-4 text-muted-foreground" />
                 Confidence Cost
               </div>
-              <div className="border-l border-border p-6 text-center text-muted-foreground">
+              <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
                 Fragile / Anxious
               </div>
-              <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
+              <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
                 Stable / Focused
               </div>
             </div>

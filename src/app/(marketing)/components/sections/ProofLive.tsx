@@ -89,7 +89,7 @@ const ProofLive: React.FC = () => {
                                             <div className="w-32 h-10 bg-primary rounded-lg shadow-lg" />
                                         </div>
                                     </div>
-                                    <div className="grid grid-cols-3 gap-6 pt-8">
+                                    <div className="grid grid-cols-1 gap-6 pt-8 sm:grid-cols-2 lg:grid-cols-3">
                                         {[1, 2, 3].map((i) => (
                                             <div
                                                 key={i}

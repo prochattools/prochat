@@ -44,7 +44,7 @@ function HeaderThemeToggle() {
 
 function DesktopNavigation({ pathname }: { pathname: string }) {
 	return (
-		<nav className="pc-nav-capsule grid min-w-[58rem] grid-cols-5 items-center xl:min-w-[64rem]" aria-label="Primary">
+		<nav className="pc-nav-capsule grid w-full max-w-[52rem] grid-cols-5 items-center" aria-label="Primary">
 			<ul className="contents">
 				{NAV_ITEMS.map(item => (
 					<li key={item.href} className="justify-self-center">
@@ -81,7 +81,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 	const [open, setOpen] = useState(false)
 
 	return (
-		<div className="ml-auto flex items-center gap-3 lg:hidden">
+		<div className="ml-auto flex min-w-0 items-center gap-3 lg:hidden">
 			<div className="pc-nav-capsule gap-2 px-2 py-2">
 				<Button
 					asChild
@@ -108,29 +108,30 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 					</SheetTrigger>
 					<SheetContent
 						side="right"
-						className="pc-mobile-sheet w-[min(22rem,calc(100vw-1rem))] border-l px-5 py-6 sm:max-w-[22rem]"
+						className="pc-mobile-sheet inset-0 w-full max-w-none border-l-0 px-0 py-0"
 					>
-						<SheetHeader className="space-y-1">
-							<SheetTitle className="font-brand text-xl tracking-[-0.05em]">
-								Navigation
-							</SheetTitle>
-							<SheetDescription>
-								Structured navigation for builders working inside ProChat.
-							</SheetDescription>
-						</SheetHeader>
-						<div className="mt-8 flex flex-col gap-2">
-							{NAV_ITEMS.map(item => (
-								<Link
-									key={item.href}
-									href={item.href}
-									aria-current={isActivePath(pathname, item.href) ? 'page' : undefined}
-									onClick={() => setOpen(false)}
-									className={cn(
-										'rounded-[var(--pc-button-radius)] border px-4 py-3 font-mono text-[0.86rem] font-medium uppercase tracking-[0.12em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0',
-										isActivePath(pathname, item.href)
-											? 'border-transparent bg-transparent font-bold text-foreground'
-											: 'border-transparent bg-transparent text-muted-foreground hover:border-transparent hover:bg-transparent hover:font-bold hover:text-foreground',
-									)}
+						<div className="h-full w-full overflow-y-auto overflow-x-hidden bg-background px-6 py-6">
+							<SheetHeader className="space-y-1 text-left">
+								<SheetTitle className="font-brand text-xl tracking-[-0.05em]">
+									Navigation
+								</SheetTitle>
+								<SheetDescription>
+									Structured navigation for builders working inside ProChat.
+								</SheetDescription>
+							</SheetHeader>
+							<div className="mt-8 flex flex-col gap-2">
+								{NAV_ITEMS.map(item => (
+									<Link
+										key={item.href}
+										href={item.href}
+										aria-current={isActivePath(pathname, item.href) ? 'page' : undefined}
+										onClick={() => setOpen(false)}
+										className={cn(
+											'rounded-[var(--pc-button-radius)] border px-4 py-3 font-mono text-[0.86rem] font-medium uppercase tracking-[0.12em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0',
+											isActivePath(pathname, item.href)
+												? 'border-transparent bg-transparent font-bold text-foreground'
+												: 'border-transparent bg-transparent text-muted-foreground hover:border-transparent hover:bg-transparent hover:font-bold hover:text-foreground',
+										)}
 									>
 										{item.label}
 									</Link>
@@ -140,26 +141,32 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 								<p className="text-sm leading-relaxed text-muted-foreground">
 									Get the production-ready kit system without leaving the current flow.
 								</p>
-							<Button
-								asChild
-								variant="nav"
-								className="mt-4 h-10 w-full rounded-[var(--pc-button-radius)] shadow-none hover:brightness-[1.03]"
-							>
-								<Link
-									href="/kits"
-									onClick={() => {
-										trackEvent('explore_kits_click', { location: 'mobile_header_drawer' })
-										setOpen(false)
-									}}
+								<Button
+									asChild
+									variant="nav"
+									className="mt-4 h-10 w-full rounded-[var(--pc-button-radius)] shadow-none hover:brightness-[1.03]"
 								>
-									Explore kits
-								</Link>
-							</Button>
+									<Link
+										href="/kits"
+										onClick={() => {
+											trackEvent('explore_kits_click', { location: 'mobile_header_drawer' })
+											setOpen(false)
+										}}
+									>
+										Explore kits
+									</Link>
+								</Button>
+							</div>
+							<div className="mt-6 border-t border-border pt-6">
+								<p className="mb-3 text-xs font-mono uppercase tracking-[0.12em] text-muted-foreground">
+									Theme
+								</p>
+								<HeaderThemeToggle />
+							</div>
 						</div>
 					</SheetContent>
 				</Sheet>
 			</div>
-			<HeaderThemeToggle />
 		</div>
 	)
 }
@@ -178,12 +185,10 @@ export default function Header() {
 					<Link href="/" className="justify-self-start">
 						<Logo scale={0.76} />
 					</Link>
-					<div className="origin-center justify-self-center scale-[0.7]">
+					<div className="min-w-0 origin-center justify-self-center scale-[0.7]">
 						<DesktopNavigation pathname={pathname} />
 					</div>
-					<div className="justify-self-end">
-						<HeaderThemeToggle />
-					</div>
+					<div />
 				</div>
 
 				<div className="flex items-center gap-3 lg:hidden">

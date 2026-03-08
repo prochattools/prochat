@@ -160,12 +160,12 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           </div>
 
           <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
-            <Button asChild variant="primary" size="lg">
+            <Button asChild variant="primary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
               <a href="#pricing" onClick={handleHeroCtaClick}>
                 Start with a clean infrastructure base
               </a>
             </Button>
-            <Button asChild variant="secondary" size="lg">
+            <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
               <a href="#breakdown">View full system breakdown</a>
             </Button>
           </div>
@@ -341,49 +341,49 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           </div>
 
           <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
-            <div className="grid grid-cols-3 border-b border-border bg-muted text-sm font-bold uppercase tracking-wider text-muted-foreground">
+            <div className="grid grid-cols-1 border-b border-border bg-muted text-sm font-bold uppercase tracking-wider text-muted-foreground md:grid-cols-3">
               <div className="p-6">Scope</div>
-              <div className="border-l border-border p-6 text-center">Control Boundary</div>
-              <div className="border-l border-border bg-primary/10 p-6 text-center text-primary">
+              <div className="border-t border-border p-6 text-center md:border-l md:border-t-0">Control Boundary</div>
+              <div className="border-t border-border bg-primary/10 p-6 text-center text-primary md:border-l md:border-t-0">
                 ProKit
               </div>
             </div>
 
-            <div className="grid grid-cols-3 border-b border-border transition-colors hover:bg-muted/60">
+            <div className="grid grid-cols-1 border-b border-border transition-colors hover:bg-muted/60 md:grid-cols-3">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
                 <FeatureIcon name="schedule" className="h-4 w-4 text-muted-foreground" />
                 Marketing
               </div>
-              <div className="border-l border-border p-6 text-center text-muted-foreground">
+              <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
                 Brand Experience
               </div>
-              <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
+              <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
                 It does not lock you into a marketing framework
               </div>
             </div>
 
-            <div className="grid grid-cols-3 border-b border-border transition-colors hover:bg-muted/60">
+            <div className="grid grid-cols-1 border-b border-border transition-colors hover:bg-muted/60 md:grid-cols-3">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
                 <FeatureIcon name="bug-report" className="h-4 w-4 text-muted-foreground" />
                 SEO
               </div>
-              <div className="border-l border-border p-6 text-center text-muted-foreground">
+              <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
                 Design System
               </div>
-              <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
+              <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
                 It does not dictate your design system
               </div>
             </div>
 
-            <div className="grid grid-cols-3 transition-colors hover:bg-muted/60">
+            <div className="grid grid-cols-1 transition-colors hover:bg-muted/60 md:grid-cols-3">
               <div className="flex items-center gap-2 p-6 font-medium text-foreground">
                 <FeatureIcon name="psychology" className="h-4 w-4 text-muted-foreground" />
                 Automation
               </div>
-              <div className="border-l border-border p-6 text-center text-muted-foreground">
+              <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
                 Funnel Structure
               </div>
-              <div className="border-l border-border bg-primary/5 p-6 text-center font-bold text-primary">
+              <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
                 It does not restrict your funnel structure
               </div>
             </div>
