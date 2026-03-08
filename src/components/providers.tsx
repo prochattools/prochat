@@ -14,7 +14,6 @@ export function Providers({ children }: { children: ReactNode }) {
         themes={['light', 'dark']}
         defaultTheme="dark"
         enableSystem={false}
-        disableTransitionOnChange
       >
         <div className="min-h-screen bg-background text-foreground">
           {children}
