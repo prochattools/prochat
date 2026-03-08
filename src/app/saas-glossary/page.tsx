@@ -1,6 +1,6 @@
 import { getSEOTags } from '@/libs/seo'
 import { getAllGlossaryTerms } from '@/libs/glossary'
-import HeroSection from '@/components/marketing/HeroSection'
+import HeroStandard from '@/components/HeroStandard'
 import GlossaryExplorer from './GlossaryExplorer'
 
 export const metadata = getSEOTags({
@@ -46,14 +46,11 @@ export default async function SaaSGlossaryPage() {
 
   return (
     <section className="mx-auto flex h-full max-w-7xl flex-col overflow-hidden px-page pb-4 md:pb-5">
-      <HeroSection
-        align="left"
-        density="compact"
+      <HeroStandard
+        embedded
+        label="Glossary"
         title="SaaS Founder Glossary"
         subtitle="Fast SaaS definitions for non-technical founders. Search first, preview quickly, then open the full explanation only when needed."
-        eyebrow={<p className="pc-kicker">Glossary</p>}
-        className="w-full shrink-0 border-b border-border-subtle/80 pb-4 pt-[calc(var(--pc-header-height)+1rem)] md:pb-5"
-        contentClassName="max-w-3xl"
         footer={<span>{terms.length} founder terms across validation, MVP, pricing, metrics, and infrastructure.</span>}
       />
 

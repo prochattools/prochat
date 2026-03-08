@@ -57,7 +57,7 @@ export default async function BlogArticlePage({ params }: PageParams) {
   if (!entry) notFound()
 
   const related = await getRelatedEntries('blog', entry.urlPath)
-  const content = await renderMdxContent(entry.content)
+  const content = await renderMdxContent(entry.content, entry.title)
 
   return (
     <>

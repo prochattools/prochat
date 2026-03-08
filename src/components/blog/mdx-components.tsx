@@ -39,7 +39,7 @@ function ArticleLink({
 
 export const blogMdxComponents: MDXComponents = {
   p: ({ className, ...props }) => <p className={cn(className)} {...props} />,
-  h1: ({ className, ...props }) => <h1 className={cn(className)} {...props} />,
+  h1: ({ className, ...props }) => <h2 className={cn(className)} {...props} />,
   h2: ({ className, ...props }) => <h2 className={cn(className)} {...props} />,
   h3: ({ className, ...props }) => <h3 className={cn(className)} {...props} />,
   h4: ({ className, ...props }) => <h4 className={cn(className)} {...props} />,

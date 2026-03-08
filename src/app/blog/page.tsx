@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { getSEOTags } from '@/libs/seo'
 import { getAllBlogPosts } from '@/libs/blog'
-import HeroSection from '@/components/marketing/HeroSection'
 import ContextualLinkCta from '@/components/ContextualLinkCta'
+import HeroStandard from '@/components/HeroStandard'
 import { Panel } from '@/components/ui/surface'
 import BlogIndexClient from './BlogIndexClient'
 
@@ -77,6 +77,15 @@ const blogTagSurfaceClassName = 'bg-surface-soft/65'
 const blogTagDotClassName = 'h-1.5 w-1.5 rounded-full bg-primary/70'
 
 const resourceBadgeClassName = `${blogTagClassName} border-[color-mix(in_srgb,rgb(var(--pc-blue-500-rgb))_20%,white)] bg-[color-mix(in_srgb,rgb(var(--pc-blue-500-rgb))_14%,white)] text-primary/85`
+const canonicalStartHereSlug = 'how-to-build-saas-with-ai-non-developer'
+
+function formatDate(dateIso: string) {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(dateIso))
+}
 
 function ResourcePaneItem({ item }: { item: ResourceLink }) {
   const content = (
@@ -132,19 +141,64 @@ function ResourcePaneItem({ item }: { item: ResourceLink }) {
 
 export default async function BlogPage() {
   const posts = await getAllBlogPosts()
+  const startHerePost =
+    posts.find(post => post.slug === canonicalStartHereSlug) ||
+    posts.find(post => post.pillarCategory === 'start-here' && post.pillar) ||
+    posts.find(post => post.pillarCategory === 'start-here') ||
+    null
 
   return (
-    <>
-      <HeroSection
-        density="compact"
-        title="Build SaaS with AI. Keep the system stable."
-        subtitle="Long-tail guides for non-technical founders shipping with Next.js, Stripe, Supabase, and production-safe execution patterns."
-        className="border-b-0 pb-0 pt-[calc(var(--pc-header-height)+1rem)]"
-        contentClassName="max-w-3xl"
+    <main className="pb-24">
+      <HeroStandard
+        label="BLOG"
+        title="Resources for building SaaS with AI"
+        subtitle="Practical guides for non-technical founders shipping with structure."
+        rightSlot={
+          startHerePost ? (
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
+                START HERE
+              </p>
+              <div className="mt-3">
+                <Panel
+                  tone="soft"
+                  padding="compact"
+                  className="border-border-strong/70 bg-surface-elevated/95 shadow-elevated"
+                >
+                  <div className="grid gap-5">
+                    <div>
+                      <h2 className="font-brand text-2xl font-bold tracking-[-0.05em] text-foreground md:text-[2rem]">
+                        {startHerePost.title}
+                      </h2>
+                      <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                        {startHerePost.description}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col items-start gap-4 text-sm text-tertiary">
+                      <div className="flex items-center gap-3">
+                        <span>{formatDate(startHerePost.date)}</span>
+                        <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border-strong/80" />
+                        <span>{startHerePost.readingTimeMinutes} min read</span>
+                      </div>
+                      <Link
+                        href={`/blog/${startHerePost.slug}`}
+                        className="inline-flex items-center gap-2 rounded-xl border border-border-subtle/80 bg-surface px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-border-strong hover:bg-surface-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      >
+                        Read the guide
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    </div>
+                  </div>
+                </Panel>
+              </div>
+            </div>
+          ) : null
+        }
       />
 
-      <main className="mx-auto max-w-6xl px-page pb-24">
-        <section className="mt-9">
+      <div className="mx-auto w-full max-w-6xl">
+        <section className="mt-6">
           <Panel
             tone="soft"
             padding="compact"
@@ -178,7 +232,7 @@ export default async function BlogPage() {
             { href: '/kits/uxkit-waitlist', label: 'Join UXKit Waitlist' },
           ]}
         />
-      </main>
-    </>
+      </div>
+    </main>
   )
 }

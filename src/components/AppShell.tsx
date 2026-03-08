@@ -5,10 +5,30 @@ import { usePathname } from 'next/navigation'
 import { Footer } from '@/app/(marketing)/components/layout/Footer'
 import { isChromelessPath, isFullscreenPath } from '@/helpers/chrome-routes'
 
+function hasIntrinsicHeaderSpacing(pathname: string) {
+	return (
+		pathname === '/' ||
+		pathname === '/contact' ||
+		pathname === '/starting-point' ||
+		pathname === '/proof' ||
+		pathname === '/studio' ||
+		pathname === '/system/events' ||
+		pathname === '/waiting-list' ||
+		pathname === '/waas/accountants' ||
+		pathname === '/docs' ||
+		pathname === '/guides' ||
+		pathname === '/playbooks' ||
+		pathname === '/prompts' ||
+		pathname === '/snippets' ||
+		pathname.startsWith('/kits')
+	)
+}
+
 export default function AppShell({ children }: { children: ReactNode }) {
 	const pathname = usePathname() || ''
 	const isChromeless = isChromelessPath(pathname)
 	const isFullscreenRoute = isFullscreenPath(pathname)
+	const needsGlobalHeaderOffset = !isFullscreenRoute && !hasIntrinsicHeaderSpacing(pathname)
 
 	if (isChromeless) {
 		return (
@@ -24,7 +44,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
 				className={`font-marketing bg-background text-foreground selection:bg-primary selection:text-primary-foreground ${
 					isFullscreenRoute
 						? 'box-border h-dvh overflow-hidden pt-[var(--pc-header-height)]'
-						: 'min-h-screen'
+						: `min-h-screen ${needsGlobalHeaderOffset ? 'pt-14 md:pt-16 lg:pt-[72px]' : ''}`
 				}`}
 			>
 				{children}

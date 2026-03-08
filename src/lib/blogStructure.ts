@@ -3,7 +3,7 @@ export const BLOG_PILLARS = [
     id: 'start-here',
     title: 'Start Here',
     description:
-      "Begin with the flagship build guide and the operating-system framing before branching into tactical layers.",
+      'Start here if you are building your first production-ready SaaS.',
     order: 1,
   },
   {

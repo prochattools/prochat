@@ -44,7 +44,7 @@ function HeaderThemeToggle() {
 
 function DesktopNavigation({ pathname }: { pathname: string }) {
 	return (
-		<nav className="pc-nav-capsule grid w-full max-w-[52rem] grid-cols-5 items-center" aria-label="Primary">
+		<nav className="pc-nav-capsule grid min-w-[58rem] grid-cols-5 items-center xl:min-w-[64rem]" aria-label="Primary">
 			<ul className="contents">
 				{NAV_ITEMS.map(item => (
 					<li key={item.href} className="justify-self-center">
@@ -185,10 +185,12 @@ export default function Header() {
 					<Link href="/" className="justify-self-start">
 						<Logo scale={0.76} />
 					</Link>
-					<div className="min-w-0 origin-center justify-self-center scale-[0.7]">
+					<div className="origin-center justify-self-center scale-[0.7]">
 						<DesktopNavigation pathname={pathname} />
 					</div>
-					<div />
+					<div className="justify-self-end">
+						<HeaderThemeToggle />
+					</div>
 				</div>
 
 				<div className="flex items-center gap-3 lg:hidden">
