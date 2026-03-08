@@ -10,6 +10,7 @@ type HeroStandardProps = {
   footer?: ReactNode
   embedded?: boolean
   showDivider?: boolean
+  fullBleed?: boolean
 }
 
 export default function HeroStandard({
@@ -20,12 +21,13 @@ export default function HeroStandard({
   footer,
   embedded = false,
   showDivider = true,
+  fullBleed = false,
 }: HeroStandardProps) {
   const hero = (
     <section
       className={cn(
         'pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--left w-full shrink-0 pb-4 pt-[calc(var(--pc-header-height)+1rem)] md:pb-5',
-        showDivider && 'border-b border-border-subtle/80',
+        !showDivider && 'pc-marketing-hero--no-divider',
       )}
     >
       <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
@@ -62,6 +64,14 @@ export default function HeroStandard({
 
   if (embedded) {
     return hero
+  }
+
+  if (fullBleed) {
+    return (
+      <section className="-mt-14 flex h-full w-full flex-col pb-4 md:-mt-16 md:pb-5 lg:-mt-[72px]">
+        {hero}
+      </section>
+    )
   }
 
   return (

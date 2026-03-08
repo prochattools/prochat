@@ -143,7 +143,7 @@ svg {
 			rgb(var(--gray-0-rgb) / 1) 0%,
 			rgb(var(--background-light-rgb) / 1) 100%);
 	--pc-gradient-glow: var(--ai-glow);
-	--pc-hero-lines-url: url("/assets/backgrounds/hero-main-lines-light.svg");
+	--pc-hero-lines-url: url("/assets/backgrounds/hero-main-lines-light-alternating.svg");
 
 	--pc-blue-600: var(--blue-600);
 	--pc-blue-500: var(--blue-500);
@@ -520,6 +520,10 @@ samp {
 		padding-bottom: 3.5rem;
 	}
 
+	.pc-marketing-hero--no-divider {
+		border-bottom: 0;
+	}
+
 	.pc-marketing-hero__bg,
 	.pc-marketing-hero__wash,
 	.pc-marketing-hero__glow,
@@ -531,20 +535,40 @@ samp {
 		pointer-events: none;
 	}
 
+	.pc-kits-page__bg {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+		background-position: top center;
+		background-repeat: repeat-y;
+		background-size: 100% auto;
+	}
+
+	.pc-kits-page__bg--light {
+		background-color: rgb(var(--background-light-rgb) / 1);
+		background-image: url("/assets/backgrounds/hero-main-lines-light-alternating.svg");
+	}
+
+	.pc-kits-page__bg--dark {
+		background-color: rgb(var(--background-dark-rgb) / 1);
+		background-image: url("/assets/backgrounds/hero-main-lines-dark-alternating.svg");
+	}
+
 	.pc-marketing-hero__bg--light {
 		background-color: rgb(var(--background-light-rgb) / 1);
-		background-image: url("/assets/backgrounds/hero-main-lines-light.svg");
-		background-position: center bottom;
-		background-repeat: no-repeat;
-		background-size: cover;
+		background-image: url("/assets/backgrounds/hero-main-lines-light-alternating.svg");
+		background-position: top center;
+		background-repeat: repeat-y;
+		background-size: 100% auto;
 	}
 
 	.pc-marketing-hero__bg--dark {
 		background-color: rgb(var(--background-dark-rgb) / 1);
-		background-image: url("/assets/backgrounds/hero-main-lines-dark.svg");
-		background-position: center bottom;
-		background-repeat: no-repeat;
-		background-size: cover;
+		background-image: url("/assets/backgrounds/hero-main-lines-dark-alternating.svg");
+		background-position: top center;
+		background-repeat: repeat-y;
+		background-size: 100% auto;
 	}
 
 	.pc-marketing-hero__wash {
@@ -1109,7 +1133,7 @@ html.dark {
 			rgb(var(--gray-50-rgb) / 1) 0%,
 			rgb(var(--background-dark-rgb) / 1) 100%);
 	--pc-gradient-glow: var(--ai-glow);
-	--pc-hero-lines-url: url("/assets/backgrounds/hero-main-lines-dark.svg");
+	--pc-hero-lines-url: url("/assets/backgrounds/hero-main-lines-dark-alternating.svg");
 
 	--pc-bg: var(--bg-primary);
 	--pc-surface: var(--surface-primary);

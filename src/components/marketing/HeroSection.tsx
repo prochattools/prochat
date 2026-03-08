@@ -31,6 +31,8 @@ export interface HeroSectionProps {
   microcopy?: ReactNode
   footer?: ReactNode
   ambientMotion?: boolean
+  showBackgrounds?: boolean
+  showDivider?: boolean
   className?: string
   contentClassName?: string
   titleClassName?: string
@@ -50,6 +52,8 @@ export function HeroSection({
   microcopy,
   footer,
   ambientMotion = false,
+  showBackgrounds = true,
+  showDivider = true,
   className,
   contentClassName,
   titleClassName,
@@ -64,23 +68,28 @@ export function HeroSection({
         'pc-marketing-hero',
         density === 'full' ? 'pc-marketing-hero--full' : 'pc-marketing-hero--compact',
         align === 'center' ? 'pc-marketing-hero--center' : 'pc-marketing-hero--left',
+        !showDivider && 'pc-marketing-hero--no-divider',
         className,
       )}
     >
-      <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
-      <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
-      <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
-      <div
-        aria-hidden
-        className={cn(
-          'pc-marketing-hero__glow hidden dark:block',
-          ambientMotion && 'pc-hero-glow-pulse',
-        )}
-      />
-      {ambientMotion ? (
-        <div aria-hidden className="pc-marketing-hero__logo-halo pc-hero-halo-float hidden dark:block" />
+      {showBackgrounds ? (
+        <>
+          <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
+          <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
+          <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
+          <div
+            aria-hidden
+            className={cn(
+              'pc-marketing-hero__glow hidden dark:block',
+              ambientMotion && 'pc-hero-glow-pulse',
+            )}
+          />
+          {ambientMotion ? (
+            <div aria-hidden className="pc-marketing-hero__logo-halo pc-hero-halo-float hidden dark:block" />
+          ) : null}
+          <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
+        </>
       ) : null}
-      <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
 
       <div className="pc-marketing-hero__inner">
         <div className="pc-marketing-hero__layout">

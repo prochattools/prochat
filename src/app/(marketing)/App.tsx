@@ -142,7 +142,7 @@ const journeyPaths: readonly JourneyPath[] = [
     title: 'Production phase',
     description: 'Ensure billing, auth, and data boundaries are correct before scaling.',
     href: '/blog/nextjs-saas-infrastructure-checklist-for-non-technical-founders',
-    action: 'Read the infrastructure checklist',
+    action: 'Read the infra checklist',
   },
 ] as const
 
@@ -256,7 +256,7 @@ export default function App() {
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <h2 className="pc-section-title mb-4 text-foreground">Where do you start?</h2>
             <p className="pc-body-copy pc-body-muted">
-              If you&apos;re new, start with the flagship guide. Then follow the structured path that matches your current constraint.
+              If you&apos;re new, start with the production-ready SaaS guide. Then follow the structured path that matches your current constraint.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">

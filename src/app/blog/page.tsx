@@ -57,6 +57,7 @@ export default async function BlogPage() {
         title="Resources for building SaaS with AI"
         subtitle="Practical guides for non-technical founders shipping with structure."
         showDivider={false}
+        fullBleed
         rightSlot={
           startHerePost ? (
             <div>
