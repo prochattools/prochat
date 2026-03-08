@@ -63,7 +63,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 					asChild
 					variant="nav"
 					size="sm"
-					className="h-10 rounded-[var(--pc-button-radius)] px-5 text-lg"
+					className="h-10 rounded-[var(--pc-button-radius)] px-5 text-2xl"
 				>
 					<Link
 						href="/kits"
@@ -185,7 +185,7 @@ export default function Header() {
 					<Link href="/" className="justify-self-start">
 						<Logo scale={0.76} />
 					</Link>
-					<div className="origin-center justify-self-center scale-[0.7]">
+					<div className="origin-center justify-self-center scale-[0.6]">
 						<DesktopNavigation pathname={pathname} />
 					</div>
 					<div className="justify-self-end">

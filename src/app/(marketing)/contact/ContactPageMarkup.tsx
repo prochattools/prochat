@@ -81,7 +81,14 @@ const FAST_LINKS: Array<{
 export default function ContactPageMarkup() {
   return (
     <>
-      <section className="mx-auto max-w-7xl px-page pb-10 pt-[calc(var(--pc-header-height)+1.75rem)] md:pb-12 md:pt-[calc(var(--pc-header-height)+2.5rem)]">
+      <section className="pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--left">
+        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
+        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
+        <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
+        <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
+        <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
+
+        <div className="pc-marketing-hero__inner pb-10 md:pb-12">
         <div className="grid items-start gap-6 lg:grid-cols-12 lg:gap-6 xl:gap-8">
           <div className="order-1 lg:col-span-5 lg:pt-2">
             <div className="max-w-[46rem] space-y-5">
@@ -262,6 +269,7 @@ export default function ContactPageMarkup() {
               </div>
             </Panel>
           </div>
+        </div>
         </div>
       </section>
 

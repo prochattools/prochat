@@ -45,16 +45,17 @@ export default async function SaaSGlossaryPage() {
   }))
 
   return (
-    <section className="mx-auto flex h-full max-w-7xl flex-col overflow-hidden px-page pb-4 md:pb-5">
+    <section className="w-full pb-16 md:pb-20 lg:pb-24">
       <HeroStandard
-        embedded
+        fullBleed
+        showDivider={false}
         label="Glossary"
         title="SaaS Founder Glossary"
         subtitle="Fast SaaS definitions for non-technical founders. Search first, preview quickly, then open the full explanation only when needed."
         footer={<span>{terms.length} founder terms across validation, MVP, pricing, metrics, and infrastructure.</span>}
       />
 
-      <div className="min-h-0 flex-1 pt-4 md:pt-5">
+      <div className="mx-auto w-full max-w-7xl px-page pt-4 md:pt-5">
         <GlossaryExplorer terms={explorerTerms} />
       </div>
     </section>

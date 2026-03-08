@@ -11,6 +11,7 @@ type HeroStandardProps = {
   embedded?: boolean
   showDivider?: boolean
   fullBleed?: boolean
+  showBackgrounds?: boolean
 }
 
 export default function HeroStandard({
@@ -22,6 +23,7 @@ export default function HeroStandard({
   embedded = false,
   showDivider = true,
   fullBleed = false,
+  showBackgrounds = true,
 }: HeroStandardProps) {
   const hero = (
     <section
@@ -30,11 +32,15 @@ export default function HeroStandard({
         !showDivider && 'pc-marketing-hero--no-divider',
       )}
     >
-      <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
-      <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
-      <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
-      <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
-      <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
+      {showBackgrounds ? (
+        <>
+          <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
+          <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
+          <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
+          <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
+          <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
+        </>
+      ) : null}
 
       <div className="pc-marketing-hero__inner">
         <div

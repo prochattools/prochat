@@ -173,119 +173,108 @@ function ProductCard({
 const KitsPageContent = () => {
   return (
     <KitsShell>
-      <div className="relative isolate">
-        <div aria-hidden className="pc-kits-page__bg pc-kits-page__bg--light dark:hidden" />
-        <div aria-hidden className="pc-kits-page__bg pc-kits-page__bg--dark hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
+      <HeroSection
+        density="compact"
+        showDivider={false}
+        className="pb-20 pt-24 lg:pb-24 lg:pt-32"
+        title="Kits, not guesses."
+        subtitle="Different builders need different starting points."
+        primaryCTA={{ href: '/kits/saaskit', label: 'Explore SaaSKit' }}
+        secondaryCTA={{ href: '#comparison', label: 'Compare Kits', variant: 'secondary' }}
+      />
 
-        <div className="relative z-10">
-          <HeroSection
-            density="compact"
-            showBackgrounds={false}
-            showDivider={false}
-            className="pb-20 pt-24 lg:pb-24 lg:pt-32"
-            title="Kits, not guesses."
-            subtitle="Different builders need different starting points."
-            primaryCTA={{ href: '/kits/saaskit', label: 'Explore SaaSKit' }}
-            secondaryCTA={{ href: '#comparison', label: 'Compare Kits', variant: 'secondary' }}
-          />
-
-          <Section className="py-16 md:py-20 lg:py-[120px]">
-            <div className="mx-auto w-full max-w-7xl px-page">
-              <div className="mx-auto mb-10 max-w-3xl text-center">
-                <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
-                  One system. Multiple ways in.
-                </div>
-                <h2 className="pc-section-title mt-4 text-foreground">Choose the product that matches your entry point.</h2>
-              </div>
-
-              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                {PRODUCT_CARDS.map((card) => (
-                  <ProductCard key={card.name} {...card} />
-                ))}
-              </div>
+      <Section className="py-16 md:py-20 lg:py-[120px]">
+        <div className="mx-auto w-full max-w-7xl px-page">
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
+              One system. Multiple ways in.
             </div>
-          </Section>
+            <h2 className="pc-section-title mt-4 text-foreground">Choose the product that matches your entry point.</h2>
+          </div>
 
-          <Section className="py-16 md:py-20 lg:py-[120px]">
-            <div className="mx-auto w-full max-w-7xl px-page">
-              <div className="mx-auto mb-10 max-w-3xl text-center">
-                <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
-                  How the products differ
-                </div>
-                <h2 className="pc-section-title mt-4 text-foreground">Independent layers for distinct needs.</h2>
-              </div>
-
-              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                {DIFFERENTIATION_GROUPS.map((group) => (
-                  <Panel key={group.name} tone="soft" padding="default" className="flex h-full flex-col gap-4">
-                    <div className="space-y-2">
-                      <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
-                        {group.products}
-                      </div>
-                      <h3 className="text-lg font-semibold text-foreground">{group.name}</h3>
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted-foreground">{group.description}</p>
-                  </Panel>
-                ))}
-              </div>
-            </div>
-          </Section>
-
-          <Section id="comparison" className="pb-16 pt-16 md:pb-20 md:pt-20 lg:pb-[120px] lg:pt-[120px]">
-            <div className="mx-auto w-full max-w-7xl px-page">
-              <div className="mx-auto mb-10 max-w-3xl text-center">
-                <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
-                  Compare the kits
-                </div>
-                <h2 className="pc-section-title mt-4 text-foreground">See where each product stands on its own.</h2>
-              </div>
-
-              <Panel tone="default" padding="none" className="overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="min-w-full border-collapse text-left text-sm">
-                    <thead className="bg-surface-soft">
-                      <tr className="border-b border-border-subtle">
-                        <th className="min-w-[12rem] px-4 py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                          Layer
-                        </th>
-                        {PRODUCT_CARDS.map((card) => (
-                          <th key={card.name} className="min-w-[13rem] px-4 py-4">
-                            <div className="text-base font-semibold text-foreground">{card.name}</div>
-                            <div className="mt-2">
-                              <StatusBadge status={card.status} live={card.live} />
-                            </div>
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {COMPARISON_ROWS.map((row, index) => (
-                        <tr
-                          key={row.label}
-                          className={cn(
-                            'border-b border-border-subtle last:border-b-0',
-                            index % 2 === 0 ? 'bg-background' : 'bg-surface/60',
-                          )}
-                        >
-                          <th className="px-4 py-4 font-medium text-foreground">{row.label}</th>
-                          {row.values.map((value, valueIndex) => (
-                            <td key={`${row.label}-${valueIndex}`} className="px-4 py-4 text-muted-foreground">
-                              {value}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </Panel>
-            </div>
-          </Section>
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {PRODUCT_CARDS.map((card) => (
+              <ProductCard key={card.name} {...card} />
+            ))}
+          </div>
         </div>
-      </div>
+      </Section>
+
+      <Section className="py-16 md:py-20 lg:py-[120px]">
+        <div className="mx-auto w-full max-w-7xl px-page">
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
+              How the products differ
+            </div>
+            <h2 className="pc-section-title mt-4 text-foreground">Independent layers for distinct needs.</h2>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {DIFFERENTIATION_GROUPS.map((group) => (
+              <Panel key={group.name} tone="soft" padding="default" className="flex h-full flex-col gap-4">
+                <div className="space-y-2">
+                  <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
+                    {group.products}
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground">{group.name}</h3>
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">{group.description}</p>
+              </Panel>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <Section id="comparison" className="pb-16 pt-16 md:pb-20 md:pt-20 lg:pb-[120px] lg:pt-[120px]">
+        <div className="mx-auto w-full max-w-7xl px-page">
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
+              Compare the kits
+            </div>
+            <h2 className="pc-section-title mt-4 text-foreground">See where each product stands on its own.</h2>
+          </div>
+
+          <Panel tone="default" padding="none" className="overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse text-left text-sm">
+                <thead className="bg-surface-soft">
+                  <tr className="border-b border-border-subtle">
+                    <th className="min-w-[12rem] px-4 py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                      Layer
+                    </th>
+                    {PRODUCT_CARDS.map((card) => (
+                      <th key={card.name} className="min-w-[13rem] px-4 py-4">
+                        <div className="text-base font-semibold text-foreground">{card.name}</div>
+                        <div className="mt-2">
+                          <StatusBadge status={card.status} live={card.live} />
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {COMPARISON_ROWS.map((row, index) => (
+                    <tr
+                      key={row.label}
+                      className={cn(
+                        'border-b border-border-subtle last:border-b-0',
+                        index % 2 === 0 ? 'bg-background' : 'bg-surface/60',
+                      )}
+                    >
+                      <th className="px-4 py-4 font-medium text-foreground">{row.label}</th>
+                      {row.values.map((value, valueIndex) => (
+                        <td key={`${row.label}-${valueIndex}`} className="px-4 py-4 text-muted-foreground">
+                          {value}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Panel>
+        </div>
+      </Section>
     </KitsShell>
   )
 }

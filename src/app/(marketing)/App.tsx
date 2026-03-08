@@ -160,33 +160,36 @@ export default function App() {
       <HeroSection
         title={
           <>
-            Build AI SaaS.
-            <br />
-            <span className="hero-accent">Launch with real boundaries.</span>
+            <span className="block text-foreground dark:text-white">AI builds it.</span>
+            <span className="hero-accent block">Structure ships it.</span>
           </>
         }
-        subtitle="ProChat gives non-technical founders a structured launch foundation so billing, access, deployment, and content systems are defined before launch."
+        subtitle="ProChat gives SaaS builders production-ready infrastructure — auth, billing, deployment, and boundaries defined before launch."
         primaryCTA={{
           href: '/kits/saaskit',
           label: 'Start with SaaSKit',
-          note: 'Not sure where to start? Start with SaaSKit.',
         }}
         secondaryCTA={{
-          href: '/blog',
-          label: 'Read Guides',
+          href: '#why-most-ai-built-saas-apps-fail',
+          label: 'Explore the system',
           variant: 'secondary',
         }}
-        eyebrow={<HeroBadge text="Structured AI SaaS Launch" />}
+        eyebrow={<HeroBadge text="Operating System for SaaS Builders" />}
         ambientMotion
         className="border-b border-border"
       >
         <HeroCheckRow
-          items={['Skip infra rewrites', 'Avoid Stripe mistakes', 'Launch with boundaries']}
+          items={['Save setup weeks', 'Reduce launch risk', 'Ship confidently']}
           className="mx-auto"
         />
       </HeroSection>
 
-      <Section tone="muted" spacing="default">
+      <Section
+        id="why-most-ai-built-saas-apps-fail"
+        tone="muted"
+        spacing="default"
+        className="scroll-mt-28 md:scroll-mt-32"
+      >
         <div className="mx-auto max-w-6xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <h2 className="pc-section-title mb-4 text-foreground">Why most AI-built SaaS apps fail.</h2>

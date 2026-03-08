@@ -607,7 +607,7 @@ function TermsList({
       aria-activedescendant={activeIndex >= 0 ? `glossary-term-${terms[activeIndex]?.slug}` : undefined}
       tabIndex={0}
       onKeyDown={onKeyDown}
-      className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-inset [scroll-padding-top:3.75rem]"
+      className="overflow-visible p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-inset lg:h-full lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:overscroll-contain [scroll-padding-top:3.75rem]"
     >
       {terms.length === 0 ? (
         <div className="rounded-xl border border-dashed border-border-subtle/80 bg-surface-soft/70 p-4 text-sm text-muted-foreground">
@@ -1070,12 +1070,13 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
 
   return (
     <>
-      <Panel
-        tone="elevated"
-        padding="none"
-        className="flex h-full min-h-0 flex-col overflow-hidden border-border/80 bg-surface-elevated/95 shadow-elevated"
-      >
-        <header className="shrink-0 border-b border-border-subtle/80 bg-surface/92 px-4 py-4 backdrop-blur md:px-5">
+      <div className="relative md:h-[1000px] md:max-h-[1000px] md:overflow-hidden">
+        <Panel
+          tone="elevated"
+          padding="none"
+          className="overflow-hidden border-border/80 bg-surface-elevated/95 shadow-elevated md:h-full"
+        >
+          <header className="sticky top-0 z-20 shrink-0 border-b border-border-subtle/80 bg-surface/92 px-4 py-4 backdrop-blur md:px-5">
           <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
             <div className="min-w-0">
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
@@ -1154,17 +1155,17 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
               </button>
             </div>
           ) : null}
-        </header>
+          </header>
 
-        <div
-          className={cn(
-            'grid min-h-0 flex-1',
-            showDesktopFilters
-              ? 'lg:grid-cols-[18rem_minmax(0,1fr)_16rem] xl:grid-cols-[19rem_minmax(0,1fr)_17rem]'
-              : 'lg:grid-cols-[18rem_minmax(0,1fr)] xl:grid-cols-[19rem_minmax(0,1fr)]',
-          )}
-        >
-          <aside className="pc-rail hidden min-h-0 flex-col overflow-hidden border-r border-border-subtle/80 lg:flex">
+          <div
+            className={cn(
+              'grid',
+              showDesktopFilters
+                ? 'lg:grid-cols-[18rem_minmax(0,1fr)_16rem] xl:grid-cols-[19rem_minmax(0,1fr)_17rem]'
+                : 'lg:grid-cols-[18rem_minmax(0,1fr)] xl:grid-cols-[19rem_minmax(0,1fr)]',
+            )}
+          >
+            <aside className="pc-rail hidden border-r border-border-subtle/80 lg:flex lg:min-h-0 lg:flex-col lg:overflow-hidden">
             <div className="shrink-0 border-b border-border-subtle/80 bg-surface-soft/55 px-4 py-3">
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
                 Terms
@@ -1183,12 +1184,12 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
               rowRefs={rowRefs}
               onKeyDown={handleListKeyboardNavigation}
             />
-          </aside>
+            </aside>
 
-          <section className="min-h-0 min-w-0 overflow-hidden border-r border-border-subtle/70 bg-surface/45 lg:border-r-0 xl:border-r xl:border-border-subtle/80">
-            {selectedTerm ? (
-              <div className="flex h-full min-h-0 flex-col">
-                <div className="shrink-0 border-b border-border-subtle/80 bg-surface/88 px-4 py-4 backdrop-blur md:px-5">
+            <section className="min-w-0 border-r border-border-subtle/70 bg-surface/45 lg:min-h-0 lg:overflow-hidden lg:border-r-0 xl:border-r xl:border-border-subtle/80">
+              {selectedTerm ? (
+                <div className="flex flex-col lg:h-full lg:min-h-0">
+                  <div className="shrink-0 border-b border-border-subtle/80 bg-surface/88 px-4 py-4 backdrop-blur md:px-5">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-tertiary">
                       <span className="h-1.5 w-1.5 rounded-full bg-primary/80" />
@@ -1235,127 +1236,128 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
                       </Link>
                     </div>
                   </div>
-                </div>
+                  </div>
 
-                <div
-                  tabIndex={0}
-                  className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-inset [scroll-padding-top:4.5rem] md:px-5"
-                >
-                  <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_15rem]">
-                    <article
-                      className="prose-premium max-w-none rounded-2xl border border-border-subtle/80 bg-surface/85 px-5 py-5 shadow-surface"
-                      dangerouslySetInnerHTML={{ __html: selectedTerm.content }}
-                    />
+                  <div
+                    tabIndex={0}
+                    className="overflow-visible px-4 py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-inset [scroll-padding-top:4.5rem] md:px-5 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:overscroll-contain"
+                  >
+                    <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_15rem]">
+                      <article
+                        className="prose-premium max-w-none rounded-2xl border border-border-subtle/80 bg-surface/85 px-5 py-5 shadow-surface"
+                        dangerouslySetInnerHTML={{ __html: selectedTerm.content }}
+                      />
 
-                    <div className="space-y-4">
-                      <Panel tone="soft" padding="compact">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
-                          Focus tags
-                        </p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {selectedTerm.focusTags.map(tag => (
-                            <button
-                              key={tag}
-                              type="button"
-                              onClick={() => toggleTag(tag)}
-                              className={cn(
-                                'rounded-full border px-2.5 py-1 text-xs transition-colors',
-                                selectedTags.includes(tag)
-                                  ? 'border-primary/25 bg-primary/10 text-foreground'
-                                  : 'border-border-subtle bg-surface text-muted-foreground hover:border-border hover:text-foreground',
-                              )}
-                            >
-                              {tag}
-                            </button>
-                          ))}
-                        </div>
-                      </Panel>
-
-                      {relatedTerms.length > 0 ? (
+                      <div className="space-y-4">
                         <Panel tone="soft" padding="compact">
                           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
-                            Related terms
+                            Focus tags
                           </p>
                           <div className="mt-3 flex flex-wrap gap-2">
-                            {relatedTerms.map(term => (
+                            {selectedTerm.focusTags.map(tag => (
                               <button
-                                key={term.slug}
+                                key={tag}
                                 type="button"
-                                onClick={() => openTerm(term)}
-                                className="rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-border hover:text-foreground"
+                                onClick={() => toggleTag(tag)}
+                                className={cn(
+                                  'rounded-full border px-2.5 py-1 text-xs transition-colors',
+                                  selectedTags.includes(tag)
+                                    ? 'border-primary/25 bg-primary/10 text-foreground'
+                                    : 'border-border-subtle bg-surface text-muted-foreground hover:border-border hover:text-foreground',
+                                )}
                               >
-                                {term.title}
+                                {tag}
                               </button>
                             ))}
                           </div>
                         </Panel>
-                      ) : null}
+
+                        {relatedTerms.length > 0 ? (
+                          <Panel tone="soft" padding="compact">
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
+                              Related terms
+                            </p>
+                            <div className="mt-3 flex flex-wrap gap-2">
+                              {relatedTerms.map(term => (
+                                <button
+                                  key={term.slug}
+                                  type="button"
+                                  onClick={() => openTerm(term)}
+                                  className="rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-border hover:text-foreground"
+                                >
+                                  {term.title}
+                                </button>
+                              ))}
+                            </div>
+                          </Panel>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <div className="flex h-full items-center justify-center px-6">
-                <Panel tone="soft" padding="compact" className="max-w-lg text-center">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
-                    Keyboard ready
-                  </p>
-                  <h3 className="mt-2 font-brand text-xl font-semibold text-foreground">
-                    {activeTerm ? `Press Enter to open ${activeTerm.title}` : 'Select a term'}
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {activeTerm
-                      ? activeTerm.excerpt
-                      : 'Use arrow keys or search to move through glossary terms.'}
-                  </p>
-                </Panel>
-              </div>
-            )}
-          </section>
+              ) : (
+                <div className="flex h-full items-center justify-center px-6">
+                  <Panel tone="soft" padding="compact" className="max-w-lg text-center">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
+                      Keyboard ready
+                    </p>
+                    <h3 className="mt-2 font-brand text-xl font-semibold text-foreground">
+                      {activeTerm ? `Press Enter to open ${activeTerm.title}` : 'Select a term'}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      {activeTerm
+                        ? activeTerm.excerpt
+                        : 'Use arrow keys or search to move through glossary terms.'}
+                    </p>
+                  </Panel>
+                </div>
+              )}
+            </section>
 
-          {showDesktopFilters ? (
-            <aside
-              id="glossary-filters-pane"
-              className="hidden min-h-0 flex-col overflow-hidden bg-surface-soft/45 lg:flex"
-            >
-              <div className="shrink-0 border-b border-border-subtle/80 bg-surface-soft/65 px-4 py-3">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
-                  Filters
-                </p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Narrow the glossary without leaving the page.
-                </p>
-              </div>
-
-              <div
-                tabIndex={0}
-                className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-inset [scroll-padding-top:3.5rem]"
+            {showDesktopFilters ? (
+              <aside
+                id="glossary-filters-pane"
+                className="hidden bg-surface-soft/45 lg:flex lg:min-h-0 lg:flex-col lg:overflow-hidden"
               >
-                <FilterAccordion
-                  groupValue={openFilterGroup}
-                  onGroupChange={value => setOpenFilterGroup((value || '') as FilterGroupKey | '')}
-                  categoryOptions={categoryOptions}
-                  categoryCounts={categoryCounts}
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
-                  stageOptions={stageOptions}
-                  stageCounts={stageCounts}
-                  selectedStage={selectedStage}
-                  setSelectedStage={setSelectedStage}
-                  letters={availableLetters}
-                  selectedLetter={selectedLetter}
-                  setSelectedLetter={setSelectedLetter}
-                  tagOptions={tagOptions}
-                  tagCounts={tagCounts}
-                  selectedTags={selectedTags}
-                  toggleTag={toggleTag}
-                  totalTerms={terms.length}
-                />
-              </div>
-            </aside>
-          ) : null}
-        </div>
-      </Panel>
+                <div className="shrink-0 border-b border-border-subtle/80 bg-surface-soft/65 px-4 py-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
+                    Filters
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Narrow the glossary without leaving the page.
+                  </p>
+                </div>
+
+                <div
+                  tabIndex={0}
+                  className="overflow-visible p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-inset [scroll-padding-top:3.5rem] lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:overscroll-contain"
+                >
+                  <FilterAccordion
+                    groupValue={openFilterGroup}
+                    onGroupChange={value => setOpenFilterGroup((value || '') as FilterGroupKey | '')}
+                    categoryOptions={categoryOptions}
+                    categoryCounts={categoryCounts}
+                    selectedCategory={selectedCategory}
+                    setSelectedCategory={setSelectedCategory}
+                    stageOptions={stageOptions}
+                    stageCounts={stageCounts}
+                    selectedStage={selectedStage}
+                    setSelectedStage={setSelectedStage}
+                    letters={availableLetters}
+                    selectedLetter={selectedLetter}
+                    setSelectedLetter={setSelectedLetter}
+                    tagOptions={tagOptions}
+                    tagCounts={tagCounts}
+                    selectedTags={selectedTags}
+                    toggleTag={toggleTag}
+                    totalTerms={terms.length}
+                  />
+                </div>
+              </aside>
+            ) : null}
+          </div>
+        </Panel>
+      </div>
 
       <Sheet open={mobileTermsOpen} onOpenChange={setMobileTermsOpen}>
         <SheetContent

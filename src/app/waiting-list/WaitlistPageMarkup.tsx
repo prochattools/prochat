@@ -1,16 +1,33 @@
 import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from '@/helpers/action-label'
+import RotatingText from '@/components/RotatingText'
 
 export default function WaitlistPageMarkup() {
   return (
     <>
-<section className="max-w-4xl mx-auto px-page pt-24 pb-12 lg:pt-32 lg:pb-24">
+<section className="pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--center">
+  <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
+  <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
+  <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
+  <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
+  <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
+
+  <div className="pc-marketing-hero__inner pb-12 lg:pb-24">
+  <div className="mx-auto max-w-4xl">
   <div className="flex flex-col items-center text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-8">
       <span className="size-2 rounded-full bg-primary"></span>
       <span className="text-[10px] font-bold tracking-widest uppercase text-primary mono-text">Waitlist</span>
     </div>
         <h1 className="mb-8 text-3xl font-black leading-[1.1] tracking-[-0.05em] text-slate-900 dark:text-white sm:text-4xl md:text-5xl lg:text-6xl">
-      Join the UXKit <span className="text-primary">Waiting List.</span>
+      <span className="block">Join the</span>
+      <span className="block whitespace-nowrap">
+        <RotatingText
+          words={['UXKit', 'WaaSKit', 'ProChat OS']}
+          className="hero-accent"
+          wrapperClassName="align-baseline"
+        />
+        <span className="text-slate-900 dark:text-white"> Waitlist</span>
+      </span>
     </h1>
         <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed mb-10">
       UXKit is the upcoming interface system for building structured SaaS dashboards. Join the waiting list to get early access, release updates, and launch pricing.
@@ -72,6 +89,8 @@ export default function WaitlistPageMarkup() {
       Explore ProChat Systems
       <span className="material-symbols-outlined text-xs transform group-hover:translate-x-1 transition-transform">arrow_forward</span>
     </a>
+  </div>
+  </div>
   </div>
 </section>
 <section className="max-w-7xl mx-auto px-page py-24 bg-slate-50/50 dark:bg-slate-900/20 rounded-t-[3rem]">
