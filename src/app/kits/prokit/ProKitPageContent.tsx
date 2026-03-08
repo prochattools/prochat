@@ -150,7 +150,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
               deployment — so you control your design, funnel, and growth strategy from day one.
             </p>
             <p className="text-base text-muted-foreground">
-              For founders who want ownership — not scaffolding.
+              ProKit gives you the wiring — you control the rest.
             </p>
             <div className="flex flex-col items-center justify-center py-2">
               <HeroCheckRow
@@ -162,17 +162,13 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
             <Button asChild variant="primary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
               <a href="#pricing" onClick={handleHeroCtaClick}>
-                Start with a clean infrastructure base
+                Buy ProKit
               </a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="#breakdown">View full system breakdown</a>
+              <a href="/kits/saaskit">See SaaSKit</a>
             </Button>
           </div>
-
-          <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
-            For founders who want ownership — not scaffolding.
-          </p>
         </div>
       </section>
 
@@ -405,7 +401,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 When to choose ProKit vs SaaSKit
               </h2>
               <p className="mb-8 text-lg text-muted-foreground">
-                Both are production-ready foundations. The difference is how much launch structure you want around the infrastructure.
+                Both are production-ready foundations. The difference is how much launch structure you want around the infrastructure. <a href="/kits/saaskit" className="font-medium text-foreground underline-offset-4 hover:underline">See SaaSKit</a> if you want the structured launch layer included.
               </p>
               <div className="h-1 w-20 rounded-full bg-primary" />
             </div>
@@ -538,7 +534,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 size="lg"
                 className="w-full"
               >
-                {isCheckingOut ? 'Processing' : 'Start with a clean infrastructure base'}
+                {isCheckingOut ? 'Processing' : 'Buy ProKit'}
               </Button>
               <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
                 <FeatureIcon name="lock-filled" className="h-3 w-3" />
@@ -638,13 +634,13 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           </p>
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
             <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
-              <a href="#pricing">Start with a clean infrastructure base</a>
+              <a href="#pricing">Buy ProKit</a>
             </Button>
             <a
-              href="#breakdown"
+              href="/kits/saaskit"
               className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
             >
-              View full system breakdown
+              See SaaSKit
               <FeatureIcon
                 name="arrow-forward"
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"

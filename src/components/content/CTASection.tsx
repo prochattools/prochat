@@ -21,6 +21,10 @@ export default function CTASection({
   secondaryHref,
   secondaryLabel,
 }: CTASectionProps) {
+  if (!section) {
+    return null
+  }
+
   const config = section ? getContentConfig(section) : null
   const links = [
     primaryHref && primaryLabel ? { href: primaryHref, label: primaryLabel } : null,

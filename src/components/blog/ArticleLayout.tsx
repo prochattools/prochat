@@ -60,13 +60,10 @@ export default function ArticleLayout({
 
       <ContextualLinkCta
         className="mx-auto mt-14 max-w-4xl border-border/80 bg-surface-elevated/95 shadow-elevated"
-        title="Build on Stable Ground"
-        description="Use a production-ready Next.js SaaS baseline while you execute on distribution and customer value."
+        title="Ready to launch without infrastructure improvisation?"
+        description="SaaSKit gives you a production-ready SaaS foundation so you can build the product instead of wiring the system."
         analytics={{ eventName: 'blog_cta_click', location: 'blog_post_footer' }}
-        links={[
-          { href: '/kits/saaskit', label: 'Explore SaaSKit' },
-          { href: '/kits/uxkit-waitlist', label: 'Join UXKit Waitlist' },
-        ]}
+        links={[{ href: '/kits/saaskit', label: 'Start with SaaSKit' }]}
       />
 
       {relatedPosts.length > 0 ? (

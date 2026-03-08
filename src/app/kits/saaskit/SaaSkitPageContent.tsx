@@ -148,9 +148,6 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
               SaaSKit gives you a production-ready SaaS engine and integrated marketing layer —
               authentication, billing, database, deployment, and growth structure already wired.
             </p>
-            <p className="text-base text-muted-foreground">
-              For non-technical founders who want speed with built-in structure.
-            </p>
             <div className="flex flex-col items-center justify-center py-2">
               <HeroCheckRow
                 items={[
@@ -160,19 +157,16 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
                 ]}
               />
             </div>
-            <p className="text-sm font-medium text-foreground">
-              You build the product. SaaSKit provides the structure.
-            </p>
           </div>
 
           <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
             <Button asChild variant="primary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
               <a href="#pricing" onClick={handleHeroCtaClick}>
-                Start with SaaSKit
+                Buy SaaSKit
               </a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="#breakdown">See what&apos;s included</a>
+              <a href="#manual">Compare with ProKit</a>
             </Button>
           </div>
 
@@ -480,6 +474,9 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           className="pc-section-grid-overlay absolute inset-0 opacity-40 dark:opacity-20"
         />
         <div className="relative z-10 mx-auto max-w-4xl px-page text-center">
+          <p className="mx-auto mb-4 max-w-2xl text-sm font-medium text-muted-foreground">
+            This is for founders who want to launch — not assemble infrastructure.
+          </p>
           <div className="mb-8 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1 font-mono text-sm text-primary backdrop-blur-sm">
             Documentation & Reuse Included
           </div>
@@ -537,11 +534,14 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
                 size="lg"
                 className="w-full"
               >
-                {isCheckingOut ? 'Processing' : 'Start with SaaSKit'}
+                {isCheckingOut ? 'Processing' : 'Buy SaaSKit'}
               </Button>
-              <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                <FeatureIcon name="lock-filled" className="h-3 w-3" />
-                Secure payment · Instant GitHub access
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
+                <span>Lifetime updates</span>
+                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border-strong/80" />
+                <span>No recurring fees</span>
+                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border-strong/80" />
+                <span>Production-ready foundation</span>
               </div>
             </div>
           </div>
@@ -627,12 +627,9 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
         <div className="mx-auto max-w-2xl px-page">
           <ContextualLinkCta
             className="mb-10 text-left"
-            title="Keep Executing After Setup"
-            description="Go deeper with practical guides and get notified when UXKit early access opens."
-            links={[
-              { href: '/blog', label: 'Read Build Guides' },
-              { href: '/kits/uxkit-waitlist', label: 'Join UXKit Waitlist' },
-            ]}
+            title="Need more control over brand and funnel?"
+            description="ProKit keeps the same production safeguards without the integrated marketing layer."
+            links={[{ href: '/kits/prokit', label: 'Compare with ProKit' }]}
           />
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
             You already have the idea.
@@ -646,13 +643,13 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           </p>
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
             <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
-              <a href="#pricing">Start building on structure</a>
+              <a href="#pricing">Buy SaaSKit</a>
             </Button>
             <a
-              href="#breakdown"
+              href="/kits/prokit"
               className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
             >
-              Preview documentation
+              Compare with ProKit
               <FeatureIcon
                 name="arrow-forward"
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"

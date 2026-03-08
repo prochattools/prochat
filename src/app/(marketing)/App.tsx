@@ -165,24 +165,23 @@ export default function App() {
             <span className="hero-accent">Launch with real boundaries.</span>
           </>
         }
-        subtitle="ProChat gives non-technical founders a structured launch foundation so billing, access, deployment, and content systems do not have to be improvised."
+        subtitle="ProChat gives non-technical founders a structured launch foundation so billing, access, deployment, and content systems are defined before launch."
         primaryCTA={{
           href: '/kits/saaskit',
           label: 'Start with SaaSKit',
-          note: 'Production foundation included.',
+          note: 'Not sure where to start? Start with SaaSKit.',
         }}
         secondaryCTA={{
-          href: '/kits',
-          label: 'Explore the framework',
+          href: '/blog',
+          label: 'Read Guides',
           variant: 'secondary',
         }}
-        tertiaryCTA={{ href: '/blog', label: 'Read the build guides' }}
         eyebrow={<HeroBadge text="Structured AI SaaS Launch" />}
         ambientMotion
         className="border-b border-border"
       >
         <HeroCheckRow
-          items={['Skip infra rewrites', 'Define billing early', 'Launch with boundaries']}
+          items={['Skip infra rewrites', 'Avoid Stripe mistakes', 'Launch with boundaries']}
           className="mx-auto"
         />
       </HeroSection>
@@ -246,7 +245,7 @@ export default function App() {
           </div>
           <div className="mt-10 text-center">
             <Button asChild variant="tertiary" size="sm">
-              <Link href="/kits/saaskit">Start building on a stable foundation</Link>
+              <Link href="/blog/structured-ai-saas-launch-framework">Read the framework</Link>
             </Button>
           </div>
         </div>
