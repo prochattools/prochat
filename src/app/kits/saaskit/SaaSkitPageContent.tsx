@@ -7,7 +7,7 @@ import HeroBadge from '@/components/ui/hero-badge'
 import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
 import { handleCheckoutProcess } from '@/helpers/checkout'
-import { useUser } from '@/libs/safeClerk'
+import { useUser } from '@/libs/safeClerkHooks'
 import { trackEvent } from '@/utils/analytics'
 import { FeatureIcon } from './_components/FeatureIcon'
 

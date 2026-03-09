@@ -13,7 +13,7 @@ export default function UmamiAnalytics() {
       id="umami-analytics"
       src={umamiScriptUrl}
       data-website-id={umamiWebsiteId}
-      strategy="afterInteractive"
+      strategy="lazyOnload"
     />
   )
 }

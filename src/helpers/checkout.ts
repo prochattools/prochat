@@ -1,8 +1,4 @@
-import { loadStripe } from '@stripe/stripe-js';
-import { getStripePublishableKey } from '@/libs/stripe-env';
-
-const stripePublishableKey = getStripePublishableKey();
-const stripePromise = loadStripe(stripePublishableKey);
+import { getStripeClient } from '@/components/stripe/StripeClient'
 
 export const handleCheckoutProcess = async (
     priceId: string,
@@ -49,7 +45,7 @@ export const handleCheckoutProcess = async (
         throw new Error('No checkoutUrl or sessionId received from the server');
       }
 
-      const stripe = await stripePromise;
+      const stripe = await getStripeClient();
       if (!stripe) {
         throw new Error(
           'Failed to load Stripe. Verify NEXT_PUBLIC_STRIPE_MODE and mode-specific publishable key values.'

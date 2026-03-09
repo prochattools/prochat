@@ -9,7 +9,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { useUser, useClerk } from '@/libs/safeClerk'
+import { useUser, useClerk } from '@/libs/safeClerkHooks'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'

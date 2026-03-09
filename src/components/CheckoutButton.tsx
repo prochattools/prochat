@@ -4,7 +4,7 @@ import { useState } from 'react';
 //import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { Button } from '@/components/ui/button';
 import { renderActionLabel } from '@/helpers/action-label';
-import { useUser } from '@/libs/safeClerk';
+import { useUser } from '@/libs/safeClerkHooks';
 import { handleCheckoutProcess } from '@/helpers/checkout';
 
 interface CheckoutButtonProps {

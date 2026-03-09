@@ -29,14 +29,14 @@ const fontSans = localFont({
 
 const fontBrand = Golos_Text({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '600', '700'],
   variable: '--font-brand',
   display: 'swap',
 })
 
 const fontMono = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['400', '600', '700'],
+  weight: ['400', '700'],
   variable: '--font-mono',
   display: 'swap',
 })
@@ -86,6 +86,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           rel="preload"
           href="/assets/backgrounds/hero-main-lines-dark-alternating.svg"
           as="image"
+          media="(min-width: 768px)"
           fetchPriority="high"
         />
         <style dangerouslySetInnerHTML={{ __html: BASE_STYLE_OVERRIDES }} />
@@ -94,7 +95,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <UmamiAnalytics />
       </head>
       <body className="font-body bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
-        <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
+        <div className="fixed inset-0 z-0 hidden pointer-events-none md:block" aria-hidden="true">
           <Scaffolding opacity={0.6} />
         </div>
 
