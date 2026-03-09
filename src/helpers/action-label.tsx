@@ -46,10 +46,10 @@ export function renderActionLabel(label: string) {
       <span className="font-semibold text-current">{actionWord}</span>
       {descriptor ? (
         <>
-          <span aria-hidden="true" className="opacity-50">
+          <span aria-hidden="true" className="opacity-70">
             {' - '}
           </span>
-          <span className="opacity-50">{descriptor}</span>
+          <span className="opacity-70">{descriptor}</span>
         </>
       ) : null}
     </span>
