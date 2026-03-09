@@ -1077,7 +1077,7 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
         <Panel
           tone="elevated"
           padding="none"
-          className="overflow-hidden border-border/80 bg-surface-elevated/95 shadow-elevated md:h-full"
+          className="overflow-visible border-border/80 bg-surface-elevated/95 shadow-elevated md:h-full md:overflow-hidden"
         >
           <header className="sticky top-0 z-20 shrink-0 border-b border-border-subtle/80 bg-surface/92 px-4 py-4 backdrop-blur md:px-5">
           <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
@@ -1246,12 +1246,57 @@ export default function GlossaryExplorer({ terms }: { terms: ExplorerTerm[] }) {
                     className="overflow-visible px-4 py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-inset [scroll-padding-top:4.5rem] md:px-5 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:overscroll-contain"
                   >
                     <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_15rem]">
+                      <div className="order-1 space-y-4 md:hidden">
+                        <Panel tone="soft" padding="compact">
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
+                            Focus tags
+                          </p>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {selectedTerm.focusTags.map(tag => (
+                              <button
+                                key={tag}
+                                type="button"
+                                onClick={() => toggleTag(tag)}
+                                className={cn(
+                                  'rounded-full border px-2.5 py-1 text-xs transition-colors',
+                                  selectedTags.includes(tag)
+                                    ? 'border-primary/25 bg-primary/10 text-foreground'
+                                    : 'border-border-subtle bg-surface text-muted-foreground hover:border-border hover:text-foreground',
+                                )}
+                              >
+                                {tag}
+                              </button>
+                            ))}
+                          </div>
+                        </Panel>
+
+                        {relatedTerms.length > 0 ? (
+                          <Panel tone="soft" padding="compact">
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
+                              Related terms
+                            </p>
+                            <div className="mt-3 flex flex-wrap gap-2">
+                              {relatedTerms.map(term => (
+                                <button
+                                  key={term.slug}
+                                  type="button"
+                                  onClick={() => openTerm(term)}
+                                  className="rounded-full border border-border-subtle bg-surface px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-border hover:text-foreground"
+                                >
+                                  {term.title}
+                                </button>
+                              ))}
+                            </div>
+                          </Panel>
+                        ) : null}
+                      </div>
+
                       <article
-                        className="prose-premium max-w-none rounded-2xl border border-border-subtle/80 bg-surface/85 px-5 py-5 shadow-surface"
+                        className="order-2 prose-premium max-w-none rounded-2xl border border-border-subtle/80 bg-surface/85 px-5 py-5 shadow-surface md:order-none"
                         dangerouslySetInnerHTML={{ __html: selectedTerm.content }}
                       />
 
-                      <div className="space-y-4">
+                      <div className="order-3 hidden space-y-4 md:block">
                         <Panel tone="soft" padding="compact">
                           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
                             Focus tags
