@@ -2,15 +2,14 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu } from 'lucide-react'
+import { Github, Linkedin, Menu, MessageCircle, X } from 'lucide-react'
 import { useState } from 'react'
 import Logo from '@/components/logo'
 import { Button } from '@/components/ui/button'
 import {
 	Sheet,
+	SheetClose,
 	SheetContent,
-	SheetDescription,
-	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
 } from '@/components/ui/sheet'
@@ -25,6 +24,12 @@ const NAV_ITEMS = [
 	{ label: 'Kits', href: '/kits' },
 	{ label: 'Blog', href: '/blog' },
 	{ label: 'Contact', href: '/contact' },
+] as const
+
+const MOBILE_SECONDARY_ITEMS = [
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/', icon: Linkedin },
+	{ label: 'GitHub', href: 'https://github.com/prochattools', icon: Github },
+	{ label: 'Community', href: 'https://discord.gg/U75p2BQuAH', icon: MessageCircle },
 ] as const
 
 function isActivePath(pathname: string, href: string) {
@@ -109,18 +114,28 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 					</SheetTrigger>
 					<SheetContent
 						side="right"
-						className="pc-mobile-sheet inset-0 w-full max-w-none border-l-0 px-0 py-0"
+						className="pc-mobile-sheet inset-0 w-full max-w-none border-l-0 px-0 py-0 [&>button.absolute]:hidden lg:hidden"
 					>
-						<div className="h-full w-full overflow-y-auto overflow-x-hidden bg-background px-6 py-6">
-							<SheetHeader className="space-y-1 text-left">
-								<SheetTitle className="font-brand text-xl tracking-[-0.05em]">
-									Navigation
-								</SheetTitle>
-								<SheetDescription>
-									Structured navigation for builders working inside ProChat.
-								</SheetDescription>
-							</SheetHeader>
-							<div className="mt-8 flex flex-col gap-2">
+						<div className="fixed inset-0 z-50 flex flex-col bg-background px-6 pt-6 pb-8 lg:hidden">
+							<SheetTitle className="sr-only">Navigation</SheetTitle>
+							<div className="flex items-center justify-between">
+								<Link href="/" onClick={() => setOpen(false)} className="shrink-0">
+									<Logo scale={0.72} />
+								</Link>
+								<div className="flex items-center gap-3">
+									<HeaderThemeToggle />
+									<SheetClose asChild>
+										<button
+											type="button"
+											aria-label="Close navigation menu"
+											className="pc-mobile-nav-trigger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0"
+										>
+											<X className="h-4 w-4" />
+										</button>
+									</SheetClose>
+								</div>
+							</div>
+							<nav aria-label="Mobile" className="mt-10 flex flex-col space-y-2">
 								{NAV_ITEMS.map(item => (
 									<Link
 										key={item.href}
@@ -128,24 +143,40 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 										aria-current={isActivePath(pathname, item.href) ? 'page' : undefined}
 										onClick={() => setOpen(false)}
 										className={cn(
-											'rounded-[var(--pc-button-radius)] border px-4 py-3 font-mono text-[0.86rem] font-medium uppercase tracking-[0.12em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0',
+											'py-3 font-mono text-2xl font-medium uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0',
 											isActivePath(pathname, item.href)
-												? 'border-transparent bg-transparent font-bold text-foreground'
-												: 'border-transparent bg-transparent text-muted-foreground hover:border-transparent hover:bg-transparent hover:font-bold hover:text-foreground',
+												? 'font-semibold text-foreground'
+												: 'text-foreground/72 hover:text-primary',
 										)}
 									>
 										{item.label}
 									</Link>
 								))}
+							</nav>
+							<div className="mt-10 flex flex-col">
+								{MOBILE_SECONDARY_ITEMS.map(item => {
+									const Icon = item.icon
+
+									return (
+										<Link
+											key={item.label}
+											href={item.href}
+											target="_blank"
+											rel="noreferrer"
+											onClick={() => setOpen(false)}
+											className="flex items-center gap-2 py-2 text-sm text-foreground/70 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0"
+										>
+											<Icon className="h-4 w-4" />
+											<span>{item.label}</span>
+										</Link>
+									)
+								})}
 							</div>
-							<div className="mt-6 rounded-[var(--pc-button-radius)] border border-white/10 bg-white/5 p-4">
-								<p className="text-sm leading-relaxed text-muted-foreground">
-									Get the production-ready kit system without leaving the current flow.
-								</p>
+							<div className="mt-auto pt-10">
 								<Button
 									asChild
 									variant="nav"
-									className="mt-4 h-10 w-full rounded-[var(--pc-button-radius)] shadow-none hover:brightness-[1.03]"
+									className="h-auto w-full rounded-[var(--pc-button-radius)] py-4 shadow-none hover:brightness-[1.03]"
 								>
 									<Link
 										href="/kits/saaskit"
@@ -157,12 +188,6 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 										Start with SaaSKit
 									</Link>
 								</Button>
-							</div>
-							<div className="mt-6 border-t border-border pt-6">
-								<p className="mb-3 text-xs font-mono uppercase tracking-[0.12em] text-muted-foreground">
-									Theme
-								</p>
-								<HeaderThemeToggle />
 							</div>
 						</div>
 					</SheetContent>
