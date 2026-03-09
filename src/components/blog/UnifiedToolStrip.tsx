@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 
 import { BLOG_PILLARS } from '@/lib/blogStructure'
+import ScrollHintWrapper from '@/components/ui/ScrollHintWrapper'
 import { cn } from '@/helpers/utils'
 
 type ResourceLink = {
@@ -63,17 +64,21 @@ const comingSoonBadgeClassName =
 function ToolRow({
   children,
   ariaLabel,
+  storageKey,
 }: {
   children: ReactNode
   ariaLabel: string
+  storageKey: string
 }) {
   return (
-    <div
-      aria-label={ariaLabel}
-      className="flex items-center gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:flex-wrap md:overflow-visible"
-    >
-      {children}
-    </div>
+    <ScrollHintWrapper direction="horizontal" storageKey={storageKey}>
+      <div
+        aria-label={ariaLabel}
+        className="flex items-center gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:flex-wrap md:overflow-visible"
+      >
+        {children}
+      </div>
+    </ScrollHintWrapper>
   )
 }
 
@@ -154,7 +159,7 @@ export default function UnifiedToolStrip() {
             Core Resources
           </p>
           <div className="mt-3">
-            <ToolRow ariaLabel="Blog resources">
+            <ToolRow ariaLabel="Blog resources" storageKey="blog-core-resources">
               {resourceLinks.map(item => (
                 <ResourceTool key={item.href ?? item.title} item={item} />
               ))}
@@ -167,7 +172,7 @@ export default function UnifiedToolStrip() {
             Lifecycle
           </p>
           <div className="mt-3">
-            <ToolRow ariaLabel="Blog lifecycle">
+            <ToolRow ariaLabel="Blog lifecycle" storageKey="blog-lifecycle">
               {lifecycleItems.map(item => {
                 const isActive = activeId === item.id
 

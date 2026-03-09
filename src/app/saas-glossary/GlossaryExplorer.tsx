@@ -32,6 +32,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import ScrollHintWrapper from '@/components/ui/ScrollHintWrapper'
 import { Panel, listRowVariants } from '@/components/ui/surface'
 import {
   Sheet,
@@ -493,66 +494,68 @@ function GlossaryCommandPalette({
             />
           </div>
 
-          <div
-            role="listbox"
-            aria-label="Glossary command results"
-            aria-activedescendant={
-              activeIndex >= 0 ? `glossary-command-option-${filteredTerms[activeIndex]?.slug}` : undefined
-            }
-            className="max-h-[min(26rem,60vh)] overflow-y-auto overscroll-contain rounded-2xl border border-border-subtle/80 bg-surface/70 p-2"
-            onKeyDown={handleKeyDown}
-          >
-            {filteredTerms.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-border-subtle/80 bg-surface-soft/70 p-4 text-sm text-muted-foreground">
-                No glossary terms match this search.
-              </div>
-            ) : (
-              <ul className="space-y-1.5">
-                {filteredTerms.map((term, index) => {
-                  const isActive = activeIndex === index
+          <ScrollHintWrapper direction="vertical" storageKey="glossary-command-results">
+            <div
+              role="listbox"
+              aria-label="Glossary command results"
+              aria-activedescendant={
+                activeIndex >= 0 ? `glossary-command-option-${filteredTerms[activeIndex]?.slug}` : undefined
+              }
+              className="max-h-[min(26rem,60vh)] overflow-y-auto overscroll-contain rounded-2xl border border-border-subtle/80 bg-surface/70 p-2"
+              onKeyDown={handleKeyDown}
+            >
+              {filteredTerms.length === 0 ? (
+                <div className="rounded-xl border border-dashed border-border-subtle/80 bg-surface-soft/70 p-4 text-sm text-muted-foreground">
+                  No glossary terms match this search.
+                </div>
+              ) : (
+                <ul className="space-y-1.5">
+                  {filteredTerms.map((term, index) => {
+                    const isActive = activeIndex === index
 
-                  return (
-                    <li key={term.slug}>
-                      <button
-                        id={`glossary-command-option-${term.slug}`}
-                        ref={element => {
-                          rowRefs.current[term.slug] = element
-                        }}
-                        type="button"
-                        role="option"
-                        aria-selected={isActive}
-                        onClick={() => commitSelection(term)}
-                        onFocus={() => setActiveIndex(index)}
-                        className={cn(
-                          'w-full rounded-2xl border px-3 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-                          isActive
-                            ? 'border-primary/25 bg-primary/10 shadow-surface'
-                            : 'border-transparent bg-transparent hover:border-border-subtle hover:bg-surface-soft/80',
-                        )}
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="min-w-0">
-                            <p className="truncate font-brand text-[15px] font-semibold text-foreground">
-                              {term.title}
-                            </p>
-                            <p className="mt-1 line-clamp-2 text-sm leading-5 text-muted-foreground">
-                              {term.excerpt}
-                            </p>
+                    return (
+                      <li key={term.slug}>
+                        <button
+                          id={`glossary-command-option-${term.slug}`}
+                          ref={element => {
+                            rowRefs.current[term.slug] = element
+                          }}
+                          type="button"
+                          role="option"
+                          aria-selected={isActive}
+                          onClick={() => commitSelection(term)}
+                          onFocus={() => setActiveIndex(index)}
+                          className={cn(
+                            'w-full rounded-2xl border px-3 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+                            isActive
+                              ? 'border-primary/25 bg-primary/10 shadow-surface'
+                              : 'border-transparent bg-transparent hover:border-border-subtle hover:bg-surface-soft/80',
+                          )}
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="min-w-0">
+                              <p className="truncate font-brand text-[15px] font-semibold text-foreground">
+                                {term.title}
+                              </p>
+                              <p className="mt-1 line-clamp-2 text-sm leading-5 text-muted-foreground">
+                                {term.excerpt}
+                              </p>
+                            </div>
+                            <Badge
+                              variant="outline"
+                              className="h-6 shrink-0 rounded-full border-border-subtle bg-surface px-2 py-0 text-[10px] font-medium text-muted-foreground"
+                            >
+                              {term.stage}
+                            </Badge>
                           </div>
-                          <Badge
-                            variant="outline"
-                            className="h-6 shrink-0 rounded-full border-border-subtle bg-surface px-2 py-0 text-[10px] font-medium text-muted-foreground"
-                          >
-                            {term.stage}
-                          </Badge>
-                        </div>
-                      </button>
-                    </li>
-                  )
-                })}
-              </ul>
-            )}
-          </div>
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
+            </div>
+          </ScrollHintWrapper>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border-subtle/70 pt-2 text-xs text-muted-foreground">
             <span>

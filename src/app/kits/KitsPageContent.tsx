@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import KitsShell from './_components/KitsShell'
 import HeroSection from '@/components/marketing/HeroSection'
+import ScrollHintWrapper from '@/components/ui/ScrollHintWrapper'
 import { Button } from '@/components/ui/button'
 import { Panel, Section } from '@/components/ui/surface'
 import { cn } from '@/helpers/utils'
@@ -235,43 +236,45 @@ const KitsPageContent = () => {
           </div>
 
           <Panel tone="default" padding="none" className="overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="min-w-full border-collapse text-left text-sm">
-                <thead className="bg-surface-soft">
-                  <tr className="border-b border-border-subtle">
-                    <th className="min-w-[12rem] px-4 py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                      Layer
-                    </th>
-                    {PRODUCT_CARDS.map((card) => (
-                      <th key={card.name} className="min-w-[13rem] px-4 py-4">
-                        <div className="text-base font-semibold text-foreground">{card.name}</div>
-                        <div className="mt-2">
-                          <StatusBadge status={card.status} live={card.live} />
-                        </div>
+            <ScrollHintWrapper direction="horizontal" storageKey="kits-comparison-table">
+              <div className="overflow-x-auto">
+                <table className="min-w-full border-collapse text-left text-sm">
+                  <thead className="bg-surface-soft">
+                    <tr className="border-b border-border-subtle">
+                      <th className="min-w-[12rem] px-4 py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                        Layer
                       </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {COMPARISON_ROWS.map((row, index) => (
-                    <tr
-                      key={row.label}
-                      className={cn(
-                        'border-b border-border-subtle last:border-b-0',
-                        index % 2 === 0 ? 'bg-background' : 'bg-surface/60',
-                      )}
-                    >
-                      <th className="px-4 py-4 font-medium text-foreground">{row.label}</th>
-                      {row.values.map((value, valueIndex) => (
-                        <td key={`${row.label}-${valueIndex}`} className="px-4 py-4 text-muted-foreground">
-                          {value}
-                        </td>
+                      {PRODUCT_CARDS.map((card) => (
+                        <th key={card.name} className="min-w-[13rem] px-4 py-4">
+                          <div className="text-base font-semibold text-foreground">{card.name}</div>
+                          <div className="mt-2">
+                            <StatusBadge status={card.status} live={card.live} />
+                          </div>
+                        </th>
                       ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {COMPARISON_ROWS.map((row, index) => (
+                      <tr
+                        key={row.label}
+                        className={cn(
+                          'border-b border-border-subtle last:border-b-0',
+                          index % 2 === 0 ? 'bg-background' : 'bg-surface/60',
+                        )}
+                      >
+                        <th className="px-4 py-4 font-medium text-foreground">{row.label}</th>
+                        {row.values.map((value, valueIndex) => (
+                          <td key={`${row.label}-${valueIndex}`} className="px-4 py-4 text-muted-foreground">
+                            {value}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </ScrollHintWrapper>
           </Panel>
         </div>
       </Section>
