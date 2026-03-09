@@ -43,17 +43,18 @@ export function useScrollDirection({
 			tickingRef.current = true
 
 			window.requestAnimationFrame(() => {
-				const currentScrollY = window.scrollY
+				const currentScrollY = Math.max(window.scrollY, 0)
 				const delta = currentScrollY - lastScrollYRef.current
 
-				if (Math.abs(delta) > threshold) {
-					setDirection(delta > 0 ? 'down' : 'up')
-					lastScrollYRef.current = currentScrollY
-				} else if (currentScrollY <= threshold) {
+				if (currentScrollY <= threshold) {
 					setDirection('up')
-					lastScrollYRef.current = currentScrollY
+				} else if (delta > threshold) {
+					setDirection('down')
+				} else if (delta < -threshold) {
+					setDirection('up')
 				}
 
+				lastScrollYRef.current = currentScrollY
 				tickingRef.current = false
 			})
 		}

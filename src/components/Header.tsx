@@ -229,12 +229,14 @@ export default function Header() {
 	return (
 		<header
 			className={cn(
-				'fixed inset-x-0 top-6 z-50 pointer-events-none transition-transform transition-opacity duration-300 will-change-transform motion-reduce:transition-none md:translate-y-0 md:opacity-100',
-				scrollDirection === 'down' ? '-translate-y-full opacity-95' : 'translate-y-0 opacity-100',
+				'fixed inset-x-0 top-0 z-50 pointer-events-none transition-transform transition-opacity duration-300 will-change-transform motion-reduce:transition-none md:top-6 md:translate-y-0 md:opacity-100 md:transition-none',
+				scrollDirection === 'down'
+					? '-translate-y-full opacity-95 md:translate-y-0 md:opacity-100'
+					: 'translate-y-0 opacity-100',
 			)}
-			style={{ transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)' }}
+			style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }}
 		>
-			<div className="w-full px-4 sm:px-6 lg:px-[40px] pointer-events-auto">
+			<div className="w-full px-4 pt-6 pointer-events-auto sm:px-6 md:pt-0 lg:px-[40px]">
 				<div className="relative hidden lg:flex lg:items-center lg:justify-between">
 					<Link href="/" className="relative z-10 shrink-0 translate-y-[4px]">
 						<Logo scale={0.76} />
