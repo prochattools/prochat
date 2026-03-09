@@ -44,7 +44,7 @@ function ProChatMark() {
 export function BuiltWithBadge({
   className,
   href,
-  label = 'Build with',
+  label = 'Built with',
   productName = 'SaaSKit',
 }: BuiltWithBadgeProps) {
   const classes = cn(

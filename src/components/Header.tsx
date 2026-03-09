@@ -19,6 +19,7 @@ import { cn } from '@/helpers/utils'
 import { trackEvent } from '@/utils/analytics'
 import { buttonVariants } from '@/components/ui/button'
 import { SocialIcon, type SocialIconName } from '@/components/ui/social-icons'
+import { useScrollDirection } from '@/hooks/useScrollDirection'
 
 const NAV_ITEMS = [
 	{ label: 'System', href: '/' },
@@ -219,13 +220,20 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 
 export default function Header() {
 	const pathname = usePathname() || ''
+	const scrollDirection = useScrollDirection()
 
 	if (isChromelessPath(pathname)) {
 		return null
 	}
 
 	return (
-		<header className="fixed inset-x-0 top-6 z-50 pointer-events-none">
+		<header
+			className={cn(
+				'fixed inset-x-0 top-6 z-50 pointer-events-none transition-transform transition-opacity duration-300 will-change-transform motion-reduce:transition-none md:translate-y-0 md:opacity-100',
+				scrollDirection === 'down' ? '-translate-y-full opacity-95' : 'translate-y-0 opacity-100',
+			)}
+			style={{ transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)' }}
+		>
 			<div className="w-full px-4 sm:px-6 lg:px-[40px] pointer-events-auto">
 				<div className="relative hidden lg:flex lg:items-center lg:justify-between">
 					<Link href="/" className="relative z-10 shrink-0 translate-y-[4px]">
