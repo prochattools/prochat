@@ -92,93 +92,95 @@ function FooterActionIcon({ icon }: { icon: (typeof CONTACT_ACTIONS)[number]['ic
 export const Footer: React.FC = () => {
   return (
     <footer className="relative z-[1] isolate border-t border-border bg-background pt-20 pb-10 font-mono [&_*]:font-mono">
-      <div className="max-w-7xl mx-auto px-page">
-        <div className="mb-14 grid gap-x-10 gap-y-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.7fr)_minmax(0,0.7fr)_minmax(0,0.9fr)_minmax(0,0.85fr)]">
-          <div className="space-y-5">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 lg:px-page">
+        <div className="mb-14 lg:grid lg:gap-x-10 lg:gap-y-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.7fr)_minmax(0,0.7fr)_minmax(0,0.9fr)_minmax(0,0.85fr)]">
+          <div className="space-y-5 text-center lg:text-left">
             <Link href="/" className="inline-flex items-center">
               <Logo scale={1.1} />
             </Link>
-            <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
+            <p className="mx-auto max-w-xs text-sm leading-relaxed text-muted-foreground lg:mx-0">
               <span className="block">The Operating System</span>
               <span className="block">for SaaS Builders.</span>
             </p>
-            <BuiltWithBadge href="/kits/saaskit" className="w-fit" />
+            <BuiltWithBadge href="/kits/saaskit" className="mx-auto w-fit lg:mx-0" />
           </div>
 
-          <div>
-            <h4 className="mb-5 text-sm font-semibold uppercase tracking-[0.14em] text-foreground/92">Products</h4>
-            <ul className="space-y-4 text-sm text-muted-foreground">
-              {PRODUCT_LINKS.map(link => (
-                <li key={`${link.href}-${link.label}`}>
-                  <Link href={link.href} className="transition-colors hover:text-primary">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-              <li className="pt-0">
-                <span
-                  aria-hidden="true"
-                  className="mt-[5px] mb-[15px] block h-px w-[11ch] bg-gradient-to-r from-border/40 to-transparent"
-                />
-                <a
-                  href={PRODUCT_CORE_LINK.href}
-                  target="_blank"
-                  rel="nofollow noopener noreferrer"
-                  className="text-muted-foreground/72 transition-colors hover:text-muted-foreground"
-                >
-                  {PRODUCT_CORE_LINK.label}
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-5 text-sm font-semibold uppercase tracking-[0.14em] text-foreground/92">Roadmap</h4>
-            <ul className="space-y-4 text-sm text-muted-foreground">
-              {ROADMAP_LINKS.map(link => (
-                <li key={`${link.href}-${link.label}`}>
-                  <Link href={link.href} className="transition-colors hover:text-primary">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-5 text-sm font-semibold uppercase tracking-[0.14em] text-foreground/92">Resources</h4>
-            <ul className="space-y-4 text-sm text-muted-foreground">
-              {RESOURCE_LINKS.map(link => (
-                <li key={link.href}>
-                  <Link href={link.href} className="transition-colors hover:text-primary">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-5 text-sm font-semibold uppercase tracking-[0.14em] text-foreground/92">Contact</h4>
-            <div className="space-y-4 text-sm text-muted-foreground">
-              {CONTACT_ACTIONS.map(action => (
-                <div key={action.label}>
+          <div className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:gap-x-10 md:gap-x-12 lg:mt-0 lg:grid-cols-none lg:gap-0 lg:contents">
+            <div className="min-w-0">
+              <h4 className="mb-4 text-xs font-semibold uppercase tracking-widest text-foreground/92 lg:mb-5 lg:text-sm lg:tracking-[0.14em]">Products</h4>
+              <ul className="space-y-4 text-sm text-muted-foreground">
+                {PRODUCT_LINKS.map(link => (
+                  <li key={`${link.href}-${link.label}`}>
+                    <Link href={link.href} className="break-words leading-relaxed transition-colors hover:text-primary md:break-normal">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+                <li className="pt-0">
+                  <span
+                    aria-hidden="true"
+                    className="mt-[7px] mb-[13px] block h-px w-[11ch] bg-gradient-to-r from-border/40 to-transparent"
+                  />
                   <a
-                    href={action.href}
+                    href={PRODUCT_CORE_LINK.href}
                     target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+                    rel="nofollow noopener noreferrer"
+                    className="break-words leading-relaxed text-muted-foreground/72 transition-colors hover:text-muted-foreground md:break-normal"
                   >
-                    <FooterActionIcon icon={action.icon} />
-                    <span>{action.label}</span>
+                    {PRODUCT_CORE_LINK.label}
                   </a>
-                </div>
-              ))}
+                </li>
+              </ul>
+            </div>
+
+            <div className="min-w-0">
+              <h4 className="mb-4 text-xs font-semibold uppercase tracking-widest text-foreground/92 lg:mb-5 lg:text-sm lg:tracking-[0.14em]">Roadmap</h4>
+              <ul className="space-y-4 text-sm text-muted-foreground">
+                {ROADMAP_LINKS.map(link => (
+                  <li key={`${link.href}-${link.label}`}>
+                    <Link href={link.href} className="break-words leading-relaxed transition-colors hover:text-primary md:break-normal">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="min-w-0">
+              <h4 className="mb-4 text-xs font-semibold uppercase tracking-widest text-foreground/92 lg:mb-5 lg:text-sm lg:tracking-[0.14em]">Resources</h4>
+              <ul className="space-y-4 text-sm text-muted-foreground">
+                {RESOURCE_LINKS.map(link => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="break-words leading-relaxed transition-colors hover:text-primary md:break-normal">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="min-w-0">
+              <h4 className="mb-4 text-xs font-semibold uppercase tracking-widest text-foreground/92 lg:mb-5 lg:text-sm lg:tracking-[0.14em]">Contact</h4>
+              <div className="space-y-4 text-sm text-muted-foreground">
+                {CONTACT_ACTIONS.map(action => (
+                  <div key={action.label}>
+                    <a
+                      href={action.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-start gap-2 break-words leading-relaxed transition-colors hover:text-primary md:break-normal"
+                    >
+                      <FooterActionIcon icon={action.icon} />
+                      <span>{action.label}</span>
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="mb-4 flex justify-center sm:justify-end">
+        <div className="mb-4 flex justify-center text-center sm:justify-end">
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65 sm:justify-end">
             {LEGAL_LINKS.map(link =>
               'external' in link ? (
@@ -204,7 +206,7 @@ export const Footer: React.FC = () => {
 
         <div className="border-t border-border pt-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div className="flex w-full items-center justify-center sm:w-auto sm:justify-start">
+            <div className="flex w-full items-center justify-center text-center sm:w-auto sm:justify-start">
               <div className="w-full max-w-[250px]">
                 <div className="relative z-[2] h-[30px] w-full">
                   <a
