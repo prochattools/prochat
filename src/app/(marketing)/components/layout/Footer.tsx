@@ -44,7 +44,7 @@ export const Footer: React.FC = () => {
     <footer className="relative z-[1] isolate border-t border-border bg-background pt-20 pb-10 font-mono [&_*]:font-mono">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 lg:px-page">
         <div className="mb-14 lg:grid lg:gap-x-10 lg:gap-y-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.7fr)_minmax(0,0.7fr)_minmax(0,0.9fr)_minmax(0,0.85fr)]">
-          <div className="space-y-5 text-center lg:text-left">
+          <div className="flex flex-col items-center space-y-6 pt-16 pb-16 text-center md:pt-12 md:pb-8 md:space-y-4 lg:block lg:space-y-5 lg:pt-0 lg:pb-0 lg:text-left">
             <Link href="/" className="inline-flex items-center">
               <Logo scale={1.1} />
             </Link>
@@ -55,7 +55,7 @@ export const Footer: React.FC = () => {
             <BuiltWithBadge href="/kits/saaskit" className="mx-auto w-fit lg:mx-0" />
           </div>
 
-          <div className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 sm:gap-x-10 md:gap-x-12 lg:mt-0 lg:grid-cols-none lg:gap-0 lg:contents">
+          <div className="mt-16 grid grid-cols-2 gap-x-8 gap-y-10 sm:gap-x-10 md:mt-10 md:gap-x-12 lg:mt-0 lg:grid-cols-none lg:gap-0 lg:contents">
             <div className="min-w-0">
               <h4 className="mb-4 text-xs font-semibold uppercase tracking-widest text-foreground/92 lg:mb-5 lg:text-sm lg:tracking-[0.14em]">Products</h4>
               <ul className="space-y-4 text-sm text-muted-foreground">
@@ -118,10 +118,17 @@ export const Footer: React.FC = () => {
                       href={action.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-start gap-2 break-words leading-relaxed transition-colors hover:text-primary md:break-normal"
+                      className="inline-flex items-center gap-3 break-words leading-relaxed transition-colors hover:text-primary md:break-normal"
                     >
-                      <SocialIcon icon={action.icon} />
-                      <span>{action.label}</span>
+                      <SocialIcon icon={action.icon} className="h-5 w-5 shrink-0 fill-current" />
+                      <span className="hidden md:inline">{action.label}</span>
+                      <span className="md:hidden">
+                        {action.icon === 'linkedin'
+                          ? 'LinkedIn'
+                          : action.icon === 'github'
+                            ? 'GitHub'
+                            : 'Community'}
+                      </span>
                     </a>
                   </div>
                 ))}
@@ -130,8 +137,8 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="mb-4 flex justify-center text-center sm:justify-end">
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65 sm:justify-end">
+        <div className="mb-4 flex justify-center text-center lg:justify-end">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65 lg:justify-end">
             {LEGAL_LINKS.map(link =>
               'external' in link ? (
                 <a
@@ -155,8 +162,8 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-border pt-8">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div className="flex w-full items-center justify-center text-center sm:w-auto sm:justify-start">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div className="mt-10 flex w-full justify-center text-center lg:mt-0 lg:w-auto lg:justify-start">
               <div className="w-full max-w-[250px]">
                 <div className="relative z-[2] h-[30px] w-full">
                   <a
@@ -203,7 +210,7 @@ export const Footer: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="text-center text-sm text-muted-foreground sm:text-right">
+            <div className="text-center text-sm text-muted-foreground lg:text-right">
               © 2026 ProChat — All rights reserved
             </div>
           </div>
