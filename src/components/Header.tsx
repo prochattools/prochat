@@ -88,7 +88,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 					asChild
 					variant="nav"
 					size="sm"
-					className="h-9 rounded-[var(--pc-button-radius)] px-2.5 text-[0.62rem] font-bold tracking-[0.05em] sm:px-3 sm:text-[0.7rem] sm:tracking-[0.08em]"
+					className="h-9 rounded-[var(--pc-button-radius)] px-2.5 text-[0.72rem] font-bold tracking-[0.05em] sm:px-3 sm:text-[0.7rem] sm:tracking-[0.08em]"
 				>
 					<Link
 						href="/kits/saaskit"
