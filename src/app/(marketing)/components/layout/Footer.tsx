@@ -164,8 +164,8 @@ export const Footer: React.FC = () => {
         <div className="border-t border-border pt-8">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="mt-10 flex w-full justify-center text-center lg:mt-0 lg:w-auto lg:justify-start">
-              <div className="w-full max-w-[250px]">
-                <div className="relative z-[2] h-[30px] w-full">
+              <div className="flex min-h-[32px] w-full justify-center md:block md:min-h-0">
+                <div className="relative z-[2] mx-auto h-[30px] w-[250px] md:mx-0">
                   <a
                     href="https://status.prochat.tools/"
                     target="_blank"
@@ -175,7 +175,7 @@ export const Footer: React.FC = () => {
                   >
                     <span className="sr-only">Open ProChat service status</span>
                   </a>
-                  <div className="block dark:hidden">
+                  <div className="mx-auto block md:mx-0 dark:hidden">
                     <iframe
                       src="https://status.prochat.tools/badge?theme=light"
                       title="ProChat service status badge"
@@ -191,7 +191,7 @@ export const Footer: React.FC = () => {
                       style={{ colorScheme: "normal" }}
                     />
                   </div>
-                  <div className="hidden dark:block">
+                  <div className="mx-auto hidden md:mx-0 dark:block">
                     <iframe
                       src="https://status.prochat.tools/badge?theme=dark"
                       title="ProChat service status badge"
