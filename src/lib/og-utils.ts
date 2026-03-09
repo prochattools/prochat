@@ -20,6 +20,16 @@ export function applySvgGradient(svg: string, start: string, end: string) {
     .replace(/fill="currentColor"/g, `fill="url(#${gradientId})"`)
 }
 
+export function applyWordmarkGradient(svg: string, start: string, end: string, textColor: string) {
+  const gradientId = 'prochatWordmarkGradient'
+  const defs = `<defs><linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="${start}" /><stop offset="100%" stop-color="${end}" /></linearGradient></defs>`
+
+  return svg
+    .replace(/<svg([^>]*)>/, `<svg$1>${defs}`)
+    .replace(/id="logo-mark" fill="currentColor"/, `id="logo-mark" fill="url(#${gradientId})"`)
+    .replace(/id="logo-text" fill="currentColor"/, `id="logo-text" fill="${textColor}"`)
+}
+
 export function clampOgTitle(title: string, maxLength = 96) {
   const trimmed = title.trim()
   if (trimmed.length <= maxLength) return trimmed

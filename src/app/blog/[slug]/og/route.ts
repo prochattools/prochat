@@ -5,14 +5,14 @@ import { ImageResponse } from 'next/og'
 
 import { brand } from '@/lib/brand'
 import { ogFonts } from '@/lib/ogFonts'
-import { applySvgGradient, clampOgTitle, ogImageSize, svgToDataUri } from '@/lib/og-utils'
+import { applyWordmarkGradient, clampOgTitle, ogImageSize, svgToDataUri } from '@/lib/og-utils'
 import { getBlogPostBySlug } from '@/libs/blog'
 
 export const runtime = 'nodejs'
 
 const h = React.createElement
-const logoMarkSvg = fs.readFileSync(
-  path.join(process.cwd(), 'public', 'logo', 'logo-mark.svg'),
+const logoWordmarkSvg = fs.readFileSync(
+  path.join(process.cwd(), 'public', 'logo', 'logo-wordmark.svg'),
   'utf8',
 )
 
@@ -23,6 +23,31 @@ function formatLabel(value?: string) {
     .split('-')
     .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1))
     .join(' ')
+}
+
+function splitTitleForOg(title: string) {
+  const match = title.match(/^(.*?)(?:\s*\(([^()]+)\))$/)
+  if (!match) {
+    return {
+      main: clampOgTitle(title, 62),
+      detail: '',
+    }
+  }
+
+  return {
+    main: clampOgTitle(match[1].trim(), 58),
+    detail: clampOgTitle(match[2].trim(), 34),
+  }
+}
+
+function clampLine(text: string, maxLength: number) {
+  const trimmed = text.trim()
+  if (trimmed.length <= maxLength) return trimmed
+
+  const candidate = trimmed.slice(0, maxLength)
+  const lastSpace = candidate.lastIndexOf(' ')
+
+  return `${candidate.slice(0, lastSpace > 24 ? lastSpace : maxLength).trimEnd()}…`
 }
 
 type RouteContext = {
@@ -38,11 +63,17 @@ export async function GET(_request: Request, { params }: RouteContext) {
     return new Response('Not found', { status: 404 })
   }
 
-  const logoMark = svgToDataUri(
-    applySvgGradient(logoMarkSvg, brand.colors.primary, brand.colors.primaryStrong),
+  const wordmark = svgToDataUri(
+    applyWordmarkGradient(
+      logoWordmarkSvg,
+      brand.colors.primary,
+      brand.colors.primaryStrong,
+      brand.colors.white,
+    ),
   )
   const badgeLabel = formatLabel(entry.pillarCategory || entry.category)
-  const title = clampOgTitle(entry.title, 112)
+  const title = splitTitleForOg(entry.title)
+  const subtitle = clampLine(entry.description, 84)
 
   return new ImageResponse(
     h(
@@ -54,8 +85,6 @@ export async function GET(_request: Request, { params }: RouteContext) {
           display: 'flex',
           position: 'relative',
           overflow: 'hidden',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
           padding: brand.spacing.xxl,
           backgroundColor: brand.colors.dark,
           backgroundImage: `${brand.gradients.deepBackground}, ${brand.gradients.canvas}`,
@@ -65,24 +94,48 @@ export async function GET(_request: Request, { params }: RouteContext) {
       h('div', {
         style: {
           position: 'absolute',
-          inset: brand.spacing.lg,
-          borderRadius: brand.radii.card,
-          border: `1px solid ${brand.colors.surfaceBorder}`,
-          background: brand.gradients.surfaceOverlay,
+          inset: 0,
+          background: brand.gradients.canvasOverlay,
         },
       }),
       h('div', {
         style: {
           position: 'absolute',
-          left: '50%',
-          top: '52%',
+          inset: 0,
+          opacity: 0.06,
+          backgroundImage: brand.gradients.gridOverlay,
+          backgroundSize: '72px 72px',
+        },
+      }),
+      h('div', {
+        style: {
+          position: 'absolute',
+          left: '28%',
+          top: '24%',
           width: '760px',
-          height: '280px',
+          height: '760px',
           transform: 'translate(-50%, -50%)',
-          borderRadius: brand.radii.card,
+          borderRadius: brand.radii.pill,
           backgroundImage: brand.gradients.subtleGlow,
-          filter: `blur(${brand.effects.haloBlur}px)`,
-          opacity: brand.effects.titleGlowOpacity,
+          filter: `blur(${brand.effects.haloBlur + 26}px)`,
+          opacity: 0.18,
+        },
+      }),
+      h('div', {
+        style: {
+          position: 'absolute',
+          inset: 0,
+          opacity: 0.035,
+          backgroundImage: 'radial-gradient(circle, rgba(255, 255, 255, 0.85) 0.8px, transparent 0.8px)',
+          backgroundSize: '18px 18px',
+        },
+      }),
+      h('div', {
+        style: {
+          position: 'absolute',
+          inset: 0,
+          background:
+            'radial-gradient(ellipse at center, rgba(11,18,32,0) 44%, rgba(11,18,32,0.34) 100%)',
         },
       }),
       h(
@@ -92,7 +145,12 @@ export async function GET(_request: Request, { params }: RouteContext) {
             position: 'relative',
             zIndex: 1,
             display: 'flex',
-            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+            padding: '80px',
           },
         },
         h(
@@ -100,127 +158,118 @@ export async function GET(_request: Request, { params }: RouteContext) {
           {
             style: {
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'flex-start',
-              gap: brand.spacing.sm,
+              justifyContent: 'center',
+              width: '100%',
+              maxWidth: '76%',
             },
           },
-          h('img', { src: logoMark, alt: '', width: 62, height: 58 }),
+          h('img', { src: wordmark, alt: '', width: 198, height: 64 }),
+          h(
+            'span',
+            {
+              style: {
+                marginTop: '16px',
+                fontFamily: brand.typography.meta.family,
+                fontSize: 15,
+                lineHeight: brand.typography.meta.lineHeight,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                color: brand.colors.mutedText,
+              },
+            },
+            'ProChat Blog',
+          ),
           h(
             'div',
             {
               style: {
                 display: 'flex',
-                flexDirection: 'column',
-                gap: brand.spacing.xxs,
+                alignItems: 'center',
+                marginTop: '24px',
+                padding: `${brand.spacing.xxs} ${brand.spacing.xs}`,
+                borderRadius: brand.radii.badge,
+                backgroundColor: brand.colors.badgeBackground,
+                border: `1px solid ${brand.colors.badgeBorder}`,
               },
             },
             h(
               'span',
               {
                 style: {
-                  fontFamily: brand.typography.meta.family,
-                  fontSize: brand.typography.meta.size,
-                  lineHeight: brand.typography.meta.lineHeight,
-                  color: brand.colors.mutedText,
+                  fontFamily: brand.typography.chip.family,
+                  fontSize: 15,
+                  lineHeight: brand.typography.chip.lineHeight,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: brand.colors.white,
                 },
               },
-              'ProChat Blog',
-            ),
-            h(
-              'div',
-              {
-                style: {
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: `${brand.spacing.xxs} ${brand.spacing.xs}`,
-                  borderRadius: brand.radii.badge,
-                  backgroundColor: brand.colors.badgeBackground,
-                  border: `1px solid ${brand.colors.badgeBorder}`,
-                },
-              },
-              h(
-                'span',
-                {
-                  style: {
-                    fontFamily: brand.typography.chip.family,
-                    fontSize: 15,
-                    lineHeight: brand.typography.chip.lineHeight,
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
-                    color: brand.colors.white,
-                  },
-                },
-                badgeLabel,
-              ),
+              badgeLabel,
             ),
           ),
-        ),
-      ),
-      h(
-        'div',
-        {
-          style: {
-            position: 'relative',
-            zIndex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: brand.spacing.sm,
-            maxWidth: '80%',
-          },
-        },
-        h(
-          'h1',
-          {
-            style: {
-              margin: 0,
-              fontFamily: brand.typography.blogOgTitle.family,
-              fontWeight: brand.typography.blogOgTitle.weight,
-              fontSize: brand.typography.blogOgTitle.size,
-              lineHeight: brand.typography.blogOgTitle.lineHeight,
-              letterSpacing: '-0.05em',
-              color: brand.colors.white,
+          h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                gap: '20px',
+                marginTop: '60px',
+              },
             },
-          },
-          title,
-        ),
-        h(
-          'p',
-          {
-            style: {
-              margin: 0,
-              fontFamily: brand.typography.bodySmall.family,
-              fontWeight: brand.typography.bodySmall.weight,
-              fontSize: 22,
-              lineHeight: brand.typography.bodySmall.lineHeight,
-              color: brand.colors.mutedText,
-              maxWidth: '78%',
-            },
-          },
-          entry.description,
-        ),
-      ),
-      h(
-        'div',
-        {
-          style: {
-            position: 'relative',
-            zIndex: 1,
-            display: 'flex',
-            alignItems: 'center',
-          },
-        },
-        h(
-          'span',
-          {
-            style: {
-              fontFamily: brand.typography.mono.family,
-              fontSize: 22,
-              lineHeight: brand.typography.mono.lineHeight,
-              letterSpacing: '0.01em',
-              color: brand.colors.mutedText,
-            },
-          },
-          `prochat.tools • ${formatLabel(entry.category)}`,
+            h(
+              'h1',
+              {
+                style: {
+                  margin: 0,
+                  maxWidth: '100%',
+                  fontFamily: brand.typography.blogOgTitle.family,
+                  fontWeight: 700,
+                  fontSize: 58,
+                  lineHeight: 1.18,
+                  letterSpacing: '-0.045em',
+                  color: brand.colors.white,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
+                },
+              },
+              title.main,
+              title.detail
+                ? h(
+                    'span',
+                    {
+                      style: {
+                        fontSize: 40,
+                        lineHeight: 1.18,
+                        fontWeight: 500,
+                        color: brand.colors.subtleText,
+                      },
+                    },
+                    `(${title.detail})`,
+                  )
+                : null,
+            ),
+            h(
+              'p',
+              {
+                style: {
+                  margin: 0,
+                  fontFamily: brand.typography.bodySmall.family,
+                  fontWeight: brand.typography.bodySmall.weight,
+                  fontSize: 24,
+                  lineHeight: 1.34,
+                  color: brand.colors.white,
+                  opacity: 0.9,
+                  maxWidth: '88%',
+                },
+              },
+              subtitle,
+            ),
+          ),
         ),
       ),
     ),

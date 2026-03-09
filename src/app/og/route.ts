@@ -5,19 +5,24 @@ import { ImageResponse } from 'next/og'
 
 import { brand } from '@/lib/brand'
 import { ogFonts } from '@/lib/ogFonts'
-import { applySvgGradient, ogImageSize, svgToDataUri } from '@/lib/og-utils'
+import { applyWordmarkGradient, ogImageSize, svgToDataUri } from '@/lib/og-utils'
 
 export const runtime = 'nodejs'
 
 const h = React.createElement
-const logoMarkSvg = fs.readFileSync(
-  path.join(process.cwd(), 'public', 'logo', 'logo-mark.svg'),
+const logoWordmarkSvg = fs.readFileSync(
+  path.join(process.cwd(), 'public', 'logo', 'logo-wordmark.svg'),
   'utf8',
 )
 
 export async function GET() {
-  const logoMark = svgToDataUri(
-    applySvgGradient(logoMarkSvg, brand.colors.primary, brand.colors.primaryStrong),
+  const logoWordmark = svgToDataUri(
+    applyWordmarkGradient(
+      logoWordmarkSvg,
+      brand.colors.primary,
+      brand.colors.primaryStrong,
+      brand.colors.white,
+    ),
   )
 
   return new ImageResponse(
@@ -31,8 +36,6 @@ export async function GET() {
           position: 'relative',
           overflow: 'hidden',
           flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
           padding: brand.spacing.xxl,
           backgroundColor: brand.colors.dark,
           backgroundImage: `${brand.gradients.deepBackground}, ${brand.gradients.canvas}`,
@@ -50,23 +53,40 @@ export async function GET() {
         style: {
           position: 'absolute',
           inset: 0,
-          opacity: brand.effects.gridOpacity,
+          opacity: 0.06,
           backgroundImage: brand.gradients.gridOverlay,
-          backgroundSize: '56px 56px',
+          backgroundSize: '72px 72px',
         },
       }),
       h('div', {
         style: {
           position: 'absolute',
           left: '50%',
-          top: '30%',
-          width: '340px',
-          height: '340px',
+          top: '46%',
+          width: '700px',
+          height: '700px',
           transform: 'translate(-50%, -50%)',
           borderRadius: brand.radii.pill,
           backgroundImage: brand.gradients.subtleGlow,
-          filter: `blur(${brand.effects.haloBlur}px)`,
-          opacity: brand.effects.haloOpacity,
+          filter: `blur(${brand.effects.haloBlur + 18}px)`,
+          opacity: 0.4,
+        },
+      }),
+      h('div', {
+        style: {
+          position: 'absolute',
+          inset: 0,
+          opacity: 0.05,
+          backgroundImage: 'radial-gradient(circle, rgba(255, 255, 255, 0.8) 0.8px, transparent 0.8px)',
+          backgroundSize: '18px 18px',
+        },
+      }),
+      h('div', {
+        style: {
+          position: 'absolute',
+          inset: 0,
+          background:
+            'radial-gradient(ellipse at center, rgba(11,18,32,0) 44%, rgba(11,18,32,0.34) 100%)',
         },
       }),
       h(
@@ -75,15 +95,12 @@ export async function GET() {
           style: {
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            gap: brand.spacing.lg,
+            justifyContent: 'space-between',
             position: 'relative',
             zIndex: 1,
-            marginTop: '-34px',
-            maxWidth: '82%',
+            height: '100%',
           },
         },
-        h('img', { src: logoMark, alt: '', width: 102, height: 94 }),
         h(
           'div',
           {
@@ -91,7 +108,36 @@ export async function GET() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: brand.spacing.sm,
+              gap: '20px',
+            },
+          },
+          h('img', { src: logoWordmark, alt: '', width: 248, height: 82 }),
+          h(
+            'span',
+            {
+              style: {
+                fontFamily: brand.typography.meta.family,
+                fontSize: 15,
+                lineHeight: brand.typography.meta.lineHeight,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                color: brand.colors.mutedText,
+                opacity: 0.9,
+              },
+            },
+            'Production-Ready SaaS Infrastructure',
+          ),
+        ),
+        h(
+          'div',
+          {
+            style: {
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '10px',
+              maxWidth: '86%',
+              alignSelf: 'center',
             },
           },
           h(
@@ -101,70 +147,73 @@ export async function GET() {
                 margin: 0,
                 textAlign: 'center',
                 fontFamily: brand.typography.ogTitle.family,
-                fontWeight: brand.typography.ogTitle.weight,
-                fontSize: brand.typography.ogTitle.size,
-                lineHeight: brand.typography.ogTitle.lineHeight,
+                fontWeight: 700,
+                fontSize: 78,
+                lineHeight: 1.08,
                 letterSpacing: '-0.06em',
                 color: brand.colors.white,
               },
             },
-            'ProChat',
+            'The Operating System',
           ),
           h(
             'p',
             {
               style: {
                 margin: 0,
-                maxWidth: '860px',
                 textAlign: 'center',
                 fontFamily: brand.typography.subtitle.family,
-                fontWeight: brand.typography.subtitle.weight,
-                fontSize: brand.typography.subtitle.size,
-                lineHeight: brand.typography.subtitle.lineHeight,
-                letterSpacing: '0.02em',
-                color: brand.colors.mutedText,
+                fontWeight: 700,
+                fontSize: 66,
+                lineHeight: 1.08,
+                letterSpacing: '-0.045em',
+                color: brand.colors.subtleText,
               },
             },
-            'The Operating System for SaaS Builders',
+            'for SaaS Builders',
           ),
         ),
-      ),
-      h(
-        'div',
-        {
-          style: {
-            position: 'absolute',
-            insetInline: brand.spacing.xxl,
-            bottom: brand.spacing.lg,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            zIndex: 1,
-          },
-        },
         h(
-          'span',
+          'div',
           {
             style: {
-              fontFamily: brand.typography.mono.family,
-              fontSize: brand.typography.meta.size,
-              lineHeight: brand.typography.meta.lineHeight,
-              color: brand.colors.subtleText,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
+              gap: brand.spacing.lg,
+              marginTop: '12px',
             },
           },
-          'prochat.tools',
-        ),
-        h(
-          'span',
-          {
-            style: {
-              fontFamily: brand.typography.mono.family,
-              fontSize: brand.typography.meta.size,
-              lineHeight: brand.typography.meta.lineHeight,
-              color: brand.colors.mutedText,
+          h(
+            'p',
+            {
+              style: {
+                margin: 0,
+                maxWidth: '840px',
+                fontFamily: brand.typography.bodySmall.family,
+                fontWeight: brand.typography.bodySmall.weight,
+                fontSize: 28,
+                lineHeight: 1.34,
+                color: brand.colors.white,
+                whiteSpace: 'nowrap',
+              },
             },
-          },
-          'Structured systems for shipping SaaS',
+            'Structured infrastructure for launching with confidence.',
+          ),
+          h(
+            'span',
+            {
+              style: {
+                fontFamily: brand.typography.mono.family,
+                fontSize: 16,
+                lineHeight: brand.typography.meta.lineHeight,
+                letterSpacing: '0.03em',
+                color: brand.colors.mutedText,
+                opacity: 0.72,
+              },
+            },
+            'prochat.tools',
+          ),
         ),
       ),
     ),
