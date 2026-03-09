@@ -14,7 +14,7 @@ import {
 	SheetTrigger,
 } from '@/components/ui/sheet'
 import { ThemeToggle } from '@/app/(marketing)/components/ui/ThemeToggle'
-import { isChromelessPath } from '@/helpers/chrome-routes'
+import { isChromelessPath, isMinimalHeaderPath } from '@/helpers/chrome-routes'
 import { cn } from '@/helpers/utils'
 import { trackEvent } from '@/utils/analytics'
 import { buttonVariants } from '@/components/ui/button'
@@ -226,6 +226,8 @@ export default function Header() {
 		return null
 	}
 
+	const isMinimalHeader = isMinimalHeaderPath(pathname)
+
 	return (
 		<header
 			className={cn(
@@ -237,6 +239,17 @@ export default function Header() {
 			style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }}
 		>
 			<div className="w-full px-4 pt-6 pointer-events-auto sm:px-6 md:pt-0 lg:px-[40px]">
+				{isMinimalHeader ? (
+					<div className="flex items-center justify-between">
+						<Link href="/" className="shrink-0 translate-y-[4px] md:translate-y-[2px]">
+							<Logo scale={0.82} />
+						</Link>
+						<div className="shrink-0">
+							<HeaderThemeToggle />
+						</div>
+					</div>
+				) : (
+					<>
 				<div className="relative hidden lg:flex lg:items-center lg:justify-between">
 					<Link href="/" className="relative z-10 shrink-0 translate-y-[4px]">
 						<Logo scale={0.76} />
@@ -257,6 +270,8 @@ export default function Header() {
 					</Link>
 					<MobileNavigation pathname={pathname} />
 				</div>
+					</>
+				)}
 			</div>
 		</header>
 	)

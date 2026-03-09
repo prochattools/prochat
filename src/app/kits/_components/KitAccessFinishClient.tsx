@@ -20,13 +20,18 @@ type ClaimResponse = {
 	message?: string
 }
 
+type SuccessState = {
+	githubUsername: string
+	alreadyProvisioned: boolean
+}
+
 interface KitAccessFinishClientProps {
 	productSlug: ProductSlug
 }
 
 const productLabelMap: Record<ProductSlug, string> = {
 	prokit: 'ProKit',
-	saaskit: 'SaaSkit',
+	saaskit: 'SaaSKit',
 }
 
 export default function KitAccessFinishClient({
@@ -41,7 +46,7 @@ export default function KitAccessFinishClient({
 	const [email, setEmail] = useState('')
 	const [submitting, setSubmitting] = useState(false)
 	const [errorMessage, setErrorMessage] = useState('')
-	const [successMessage, setSuccessMessage] = useState('')
+	const [successState, setSuccessState] = useState<SuccessState | null>(null)
 	const [errorCode, setErrorCode] = useState('')
 	const [fallbackVisible, setFallbackVisible] = useState(!sessionId)
 
@@ -61,7 +66,7 @@ export default function KitAccessFinishClient({
 	}) {
 		setSubmitting(true)
 		setErrorMessage('')
-		setSuccessMessage('')
+		setSuccessState(null)
 
 		try {
 			const response = await fetch(claimEndpoint, {
@@ -87,18 +92,10 @@ export default function KitAccessFinishClient({
 
 			setErrorCode('')
 			const linkedUsername = (data.githubUsername || payload.github_username).trim()
-			if (data.alreadyProvisioned) {
-				setSuccessMessage(
-					`Your purchase is already linked to @${linkedUsername}. Check your GitHub account for access.`
-				)
-			} else {
-				const collaboratorLine = data.alreadyCollaborator
-					? 'You already had collaborator access.'
-					: 'You will receive a GitHub invite in your notifications or email.'
-				setSuccessMessage(
-					`We've requested GitHub access for @${payload.github_username}. ${collaboratorLine} Once you accept it, you can clone the repository from your GitHub account.`
-				)
-			}
+			setSuccessState({
+				githubUsername: linkedUsername,
+				alreadyProvisioned: Boolean(data.alreadyProvisioned),
+			})
 		} catch (error) {
 			console.error(`[kits/${productSlug}/finish] Claim request failed`, error)
 			setErrorCode('server_error')
@@ -138,139 +135,177 @@ export default function KitAccessFinishClient({
 	const showFallback = !sessionId || fallbackVisible || errorCode === 'invalid_session'
 
 	return (
-		<div className='mx-auto max-w-3xl px-page py-16'>
-			<p className='text-sm uppercase tracking-wide text-slate-500'>ProChat</p>
-			<h1 className='mt-2 text-3xl font-bold tracking-[-0.05em] text-slate-900 dark:text-white'>
-				Finalize your {productLabel} access
-			</h1>
-			<p className='mt-3 text-slate-600 dark:text-slate-300'>
-				You&apos;ve completed payment. To unlock the private GitHub repository, we
-				need your GitHub username.
-			</p>
+		<section className='relative isolate flex min-h-screen items-center overflow-hidden bg-background px-0 py-24'>
+			<div aria-hidden className='pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden' />
+			<div aria-hidden className='pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block' />
+			<div aria-hidden className='pc-marketing-hero__wash hidden dark:block' />
+			<div aria-hidden className='pc-marketing-hero__glow hidden dark:block' />
+			<div aria-hidden className='pc-marketing-hero__vignette hidden dark:block' />
 
-			<ol className='mt-6 space-y-2 text-slate-700 dark:text-slate-200'>
-				<li>
-					1. Create a GitHub account, if you do not have one yet.{' '}
-					<Link
-						href='https://github.com/join'
-						target='_blank'
-						className='text-secondary underline'
-					>
-						Create account
-					</Link>
-				</li>
-				<li>2. Tell us your GitHub username.</li>
-				<li>3. Accept the GitHub invite from your notifications or email.</li>
-			</ol>
-
-			{sessionId ? (
-				<div className='mt-8 rounded-2xl border border-border-subtle bg-surface p-6 shadow-sm'>
-					<h2 className='text-lg font-semibold text-slate-900 dark:text-white'>
-						Claim with checkout session
-					</h2>
-					<p className='mt-2 text-sm text-slate-600 dark:text-slate-300'>
-						Session detected. Enter your GitHub username to complete provisioning.
-					</p>
-					<div className='mt-4 space-y-3'>
-						<label className='block text-sm font-medium text-slate-700 dark:text-slate-200'>
-							GitHub username
-							<input
-								value={username}
-								onChange={event => setUsername(event.target.value)}
-								placeholder='your-github-username'
-								className='mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-secondary/50'
-							/>
-						</label>
-						<button
-							type='button'
-							onClick={onSessionSubmit}
-							disabled={!canSubmitSession}
-							className={`inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm text-primary-foreground transition hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-60 ${ACTION_LABEL_CLASS_NAME}`}
-						>
-							{renderActionLabel(submitting ? 'Submitting...' : 'Link GitHub username')}
-						</button>
+			<div className='relative z-10 mx-auto flex w-full max-w-4xl flex-col justify-center px-page'>
+				<div className='mx-auto w-full max-w-4xl'>
+					<div className='text-center'>
+						<h1 className='text-4xl font-bold tracking-[-0.05em] text-foreground sm:text-5xl'>
+							Finalize your {productLabel} access
+						</h1>
+						<p className='mx-auto mt-4 max-w-3xl text-lg text-muted-foreground'>
+							You&apos;ve completed payment. To unlock the private GitHub repository, we
+							need your GitHub username.
+						</p>
 					</div>
-				</div>
-			) : (
-				<div className='mt-8 rounded-lg border border-amber-300 bg-amber-50 p-4 text-amber-900'>
-					<p>
-						No checkout session was found in this URL. Use your checkout email
-						below to recover access.
-					</p>
-					<Link
-						href='/kits'
-						className='mt-2 inline-flex text-sm font-medium text-amber-900 underline'
-					>
-						Back to Kits
-					</Link>
-				</div>
-			)}
 
-			{showFallback && (
-				<div className='mt-6 rounded-2xl border border-border-subtle bg-surface p-6 shadow-sm'>
-					<h2 className='text-lg font-semibold text-slate-900 dark:text-white'>
-						Recover access with checkout email
-					</h2>
-					<p className='mt-2 text-sm text-slate-600 dark:text-slate-300'>
-						Use the email you entered during Stripe checkout. We will find your
-						latest paid {productLabel} purchase and link it.
-					</p>
-					<div className='mt-4 space-y-3'>
-						<label className='block text-sm font-medium text-slate-700 dark:text-slate-200'>
-							Checkout email
-							<input
-								type='email'
-								value={email}
-								onChange={event => setEmail(event.target.value)}
-								placeholder='you@company.com'
-								className='mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-secondary/50'
-							/>
-						</label>
-						<label className='block text-sm font-medium text-slate-700 dark:text-slate-200'>
-							GitHub username
-							<input
-								value={username}
-								onChange={event => setUsername(event.target.value)}
-								placeholder='your-github-username'
-								className='mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-secondary/50'
-							/>
-						</label>
-						<button
-							type='button'
-							onClick={onFallbackSubmit}
-							disabled={!canSubmitEmailFallback}
-							className={`inline-flex items-center justify-center rounded-lg bg-slate-900 px-5 py-2.5 text-sm text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white ${ACTION_LABEL_CLASS_NAME}`}
-						>
-							{renderActionLabel(submitting ? 'Checking purchase...' : 'Find purchase and link access')}
-						</button>
-					</div>
-				</div>
-			)}
+					<ol className='mx-auto mt-8 max-w-3xl space-y-3 text-left text-lg text-foreground/90'>
+						<li>
+							1. Create a GitHub account, if you do not have one yet.{' '}
+							<Link
+								href='https://github.com/join'
+								target='_blank'
+								className='text-primary underline underline-offset-4'
+							>
+								Create account
+							</Link>
+						</li>
+						<li>2. Tell us your GitHub username.</li>
+						<li>3. Accept the GitHub invite from your notifications or email.</li>
+					</ol>
 
-			{errorMessage && (
-				<div className='mt-6 rounded-lg border border-red-300 bg-red-50 p-4 text-red-800'>
-					<p>{errorMessage}</p>
-					{errorCode === 'invalid_session' && (
-						<Link
-							href='/kits'
-							className='mt-2 inline-flex text-sm font-medium text-red-800 underline'
-						>
-							Back to Kits
-						</Link>
+					{sessionId ? (
+						<div className='mt-10 rounded-2xl border border-border bg-surface/95 p-8 shadow-sm backdrop-blur-sm'>
+							<h2 className='text-lg font-semibold text-foreground'>
+								Claim with checkout session
+							</h2>
+							<p className='mt-2 text-sm text-muted-foreground'>
+								Session detected. Enter your GitHub username to complete provisioning.
+							</p>
+							<div className='mt-4 space-y-3'>
+								<label className='block text-sm font-medium text-foreground'>
+									GitHub username
+									<input
+										value={username}
+										onChange={event => setUsername(event.target.value)}
+										placeholder='your-github-username'
+										className='mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-secondary/50'
+									/>
+								</label>
+								<button
+									type='button'
+									onClick={onSessionSubmit}
+									disabled={!canSubmitSession}
+									className={`inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm text-primary-foreground transition hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-60 ${ACTION_LABEL_CLASS_NAME}`}
+								>
+									{renderActionLabel(submitting ? 'Submitting...' : 'Link GitHub username')}
+								</button>
+							</div>
+						</div>
+					) : (
+						<div className='mt-10 rounded-lg border border-amber-400/35 bg-amber-500/10 p-4 text-amber-100'>
+							<p>
+								No checkout session was found in this URL. Use your checkout email
+								below to recover access.
+							</p>
+							<Link
+								href='/kits'
+								className='mt-2 inline-flex text-sm font-medium text-amber-100 underline underline-offset-4'
+							>
+								Back to Kits
+							</Link>
+						</div>
 					)}
-				</div>
-			)}
-			{successMessage && (
-				<div className='mt-6 rounded-lg border border-green-300 bg-green-50 p-4 text-green-800'>
-					{successMessage}
-				</div>
-			)}
 
-			<p className='mt-8 text-sm text-slate-600 dark:text-slate-300'>
-				Lost your checkout email or seeing errors? Contact us at
-				support@prochat.tools with your payment email and we will manually grant
-				access.
-			</p>
-		</div>
+					{showFallback && (
+						<div className='mt-6 rounded-2xl border border-border bg-surface/95 p-8 shadow-sm backdrop-blur-sm'>
+							<h2 className='text-lg font-semibold text-foreground'>
+								Recover access with checkout email
+							</h2>
+							<p className='mt-2 text-sm text-muted-foreground'>
+								Use the email you entered during Stripe checkout. We will find your
+								latest paid {productLabel} purchase and link it.
+							</p>
+							<div className='mt-4 space-y-3'>
+								<label className='block text-sm font-medium text-foreground'>
+									Checkout email
+									<input
+										type='email'
+										value={email}
+										onChange={event => setEmail(event.target.value)}
+										placeholder='you@company.com'
+										className='mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-secondary/50'
+									/>
+								</label>
+								<label className='block text-sm font-medium text-foreground'>
+									GitHub username
+									<input
+										value={username}
+										onChange={event => setUsername(event.target.value)}
+										placeholder='your-github-username'
+										className='mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground outline-none focus:ring-2 focus:ring-secondary/50'
+									/>
+								</label>
+								<button
+									type='button'
+									onClick={onFallbackSubmit}
+									disabled={!canSubmitEmailFallback}
+									className={`inline-flex items-center justify-center rounded-lg bg-slate-900 px-5 py-2.5 text-sm text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white ${ACTION_LABEL_CLASS_NAME}`}
+								>
+									{renderActionLabel(submitting ? 'Checking purchase...' : 'Find purchase and link access')}
+								</button>
+							</div>
+						</div>
+					)}
+
+					{errorMessage && (
+						<div className='mt-6 rounded-xl border border-red-400/30 bg-red-500/10 p-5 text-red-100'>
+							{errorCode === 'already_linked' ? (
+								<p>
+									This purchase has already been linked to a different GitHub username.{' '}
+									<Link
+										href='https://prochat.tools/contact'
+										target='_blank'
+										rel='noopener noreferrer'
+										className='font-medium underline underline-offset-4'
+									>
+										Contact Support
+									</Link>{' '}
+									if this is unexpected.
+								</p>
+							) : (
+								<p>{errorMessage}</p>
+							)}
+							{errorCode === 'invalid_session' && (
+								<Link
+									href='/kits'
+									className='mt-2 inline-flex text-sm font-medium text-red-100 underline underline-offset-4'
+								>
+									Back to Kits
+								</Link>
+							)}
+						</div>
+					)}
+					{successState && (
+						<div className='mt-6 flex flex-col gap-4 rounded-xl border border-emerald-400/30 bg-emerald-500/10 p-5 text-emerald-50'>
+							<p>
+								{successState.alreadyProvisioned
+									? `Your purchase is already linked to @${successState.githubUsername}. Check your GitHub account for access.`
+									: `We've requested GitHub access for @${successState.githubUsername}. You will receive a GitHub invite in your notifications or email. Once you accept it, you can clone the repository from your GitHub account.`}
+							</p>
+							<div>
+								<Link
+									href='https://prochat.tools/docs'
+									className='inline-flex items-center justify-center rounded-lg border border-emerald-300/35 bg-emerald-500/15 px-4 py-2 text-sm font-semibold text-emerald-50 transition hover:bg-emerald-500/25'
+								>
+									Start Building
+								</Link>
+							</div>
+						</div>
+					)}
+
+					<p className='mt-8 text-sm text-muted-foreground'>
+						Lost your checkout email or seeing errors? Contact us at
+						support@prochat.tools with your payment email and we will manually grant
+						access.
+					</p>
+				</div>
+			</div>
+		</section>
 	)
 }

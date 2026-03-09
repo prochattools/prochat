@@ -3,7 +3,7 @@
 import { ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import { Footer } from '@/app/(marketing)/components/layout/Footer'
-import { isChromelessPath, isFullscreenPath } from '@/helpers/chrome-routes'
+import { isChromelessPath, isFooterlessPath, isFullscreenPath } from '@/helpers/chrome-routes'
 
 function hasIntrinsicHeaderSpacing(pathname: string) {
 	return (
@@ -28,6 +28,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
 	const pathname = usePathname() || ''
 	const isChromeless = isChromelessPath(pathname)
 	const isFullscreenRoute = isFullscreenPath(pathname)
+	const isFooterlessRoute = isFooterlessPath(pathname)
 	const needsGlobalHeaderOffset = !isFullscreenRoute && !hasIntrinsicHeaderSpacing(pathname)
 
 	if (isChromeless) {
@@ -49,7 +50,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
 			>
 				{children}
 			</main>
-			{!isFullscreenRoute && <Footer />}
+			{!isFullscreenRoute && !isFooterlessRoute && <Footer />}
 		</>
 	)
 }
