@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react'
 
 import { contactSubmissionSchema } from '@/lib/contact/schema'
-import { getActionLabelHtml } from '@/helpers/action-label'
 import { trackEvent } from '@/utils/analytics'
 
 import './contact-page.css'
@@ -31,6 +30,20 @@ const FORM_FIELDS: ContactFieldName[] = [
   'companyOrProjectUrl',
   'message',
 ]
+
+const CONTACT_SUBMIT_IDLE_HTML = `
+  <span class="pc-action-label">
+    <span class="text-current">SEND MY BRIEF</span>
+    <span aria-hidden="true" class="opacity-50"> - </span>
+    <span class="opacity-50">USUALLY REPLIES WITHIN 1 BUSINESS DAY</span>
+  </span>
+`
+
+const CONTACT_SUBMIT_SUBMITTING_HTML = `
+  <span class="pc-action-label">
+    <span class="text-current">SENDING BRIEF...</span>
+  </span>
+`
 
 function normalizeFieldName(raw: string): ContactFieldName | null {
   if (raw === 'companyUrl') return 'companyOrProjectUrl'
@@ -115,7 +128,9 @@ export default function ContactPage() {
 
     const setSubmitting = (isSubmitting: boolean) => {
       submitButton.disabled = isSubmitting
-      submitLabel.innerHTML = getActionLabelHtml(isSubmitting ? 'Sending...' : 'Send Message')
+      submitLabel.innerHTML = isSubmitting
+        ? CONTACT_SUBMIT_SUBMITTING_HTML
+        : CONTACT_SUBMIT_IDLE_HTML
     }
 
     let openIndex: number | null = null

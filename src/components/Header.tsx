@@ -88,13 +88,13 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 					asChild
 					variant="nav"
 					size="sm"
-					className="h-9 rounded-[var(--pc-button-radius)] px-4"
+					className="h-9 rounded-[var(--pc-button-radius)] px-2.5 text-[0.62rem] font-bold tracking-[0.05em] sm:px-3 sm:text-[0.7rem] sm:tracking-[0.08em]"
 				>
 					<Link
-						href="/kits"
+						href="/kits/saaskit"
 						onClick={() => trackEvent('explore_kits_click', { location: 'mobile_header_capsule' })}
 					>
-						Explore
+						<span className="whitespace-nowrap">Start with SaaSKit</span>
 					</Link>
 				</Button>
 				<Sheet open={open} onOpenChange={setOpen}>
@@ -148,13 +148,13 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 									className="mt-4 h-10 w-full rounded-[var(--pc-button-radius)] shadow-none hover:brightness-[1.03]"
 								>
 									<Link
-										href="/kits"
+										href="/kits/saaskit"
 										onClick={() => {
 											trackEvent('explore_kits_click', { location: 'mobile_header_drawer' })
 											setOpen(false)
 										}}
 									>
-										Explore kits
+										Start with SaaSKit
 									</Link>
 								</Button>
 							</div>
@@ -183,7 +183,7 @@ export default function Header() {
 		<header className="fixed inset-x-0 top-6 z-50 pointer-events-none">
 			<div className="w-full px-4 sm:px-6 lg:px-[40px] pointer-events-auto">
 				<div className="relative hidden lg:flex lg:items-center lg:justify-between">
-					<Link href="/" className="relative z-10 shrink-0">
+					<Link href="/" className="relative z-10 shrink-0 translate-y-[4px]">
 						<Logo scale={0.76} />
 					</Link>
 					<div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -197,7 +197,7 @@ export default function Header() {
 				</div>
 
 				<div className="flex items-center gap-3 lg:hidden">
-					<Link href="/" className="shrink-0">
+					<Link href="/" className="shrink-0 translate-y-[6px]">
 						<Logo scale={0.88} />
 					</Link>
 					<MobileNavigation pathname={pathname} />
