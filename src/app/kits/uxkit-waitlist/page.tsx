@@ -4,14 +4,14 @@ import StructuredData from '@/components/StructuredData'
 import { getEventSchema } from '@/libs/structured-data'
 
 export const metadata = getSEOTags({
-  title: 'UXKit — UX System for AI SaaS Builders (Early Access)',
+  title: 'ProChat Waitlist — Early Access for Upcoming Products',
   description:
-    'Join the UXKit waitlist. A structured UX system for non-technical founders building SaaS with AI.',
+    'Join the ProChat waitlist for UXKit, WaaSKit, and ProChat OS. Get early access, roadmap updates, and launch pricing.',
   canonicalUrlRelative: '/kits/uxkit-waitlist',
   openGraph: {
-    title: 'UXKit — UX System for AI SaaS Builders (Early Access)',
+    title: 'ProChat Waitlist — Early Access for Upcoming Products',
     description:
-      'Join the UXKit waitlist. A structured UX system for non-technical founders building SaaS with AI.',
+      'Join the ProChat waitlist for UXKit, WaaSKit, and ProChat OS. Get early access, roadmap updates, and launch pricing.',
     images: ['/og/uxkit-waitlist.png'],
     type: 'website',
   },
@@ -31,9 +31,9 @@ export default function UXKitWaitlistPage() {
       <StructuredData
         id="schema-uxkit-event"
         data={getEventSchema({
-          name: 'UXKit Early Access',
+          name: 'ProChat Waitlist',
           description:
-            'Early access waitlist for UXKit, a structured UX system for AI SaaS builders.',
+            'Early access waitlist for upcoming ProChat products including UXKit, WaaSKit, and ProChat OS.',
           urlPath: '/kits/uxkit-waitlist',
         })}
       />

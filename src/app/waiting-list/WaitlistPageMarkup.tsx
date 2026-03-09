@@ -1,5 +1,6 @@
-import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from '@/helpers/action-label'
+import { Check, Rocket, TimerReset, Wallet } from 'lucide-react'
 import RotatingText from '@/components/RotatingText'
+import { WAITLIST_PRODUCT_OPTIONS } from '@/lib/waitlist/products'
 
 export default function WaitlistPageMarkup() {
   return (
@@ -30,7 +31,7 @@ export default function WaitlistPageMarkup() {
       </span>
     </h1>
         <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed mb-10">
-      UXKit is the upcoming interface system for building structured SaaS dashboards. Join the waiting list to get early access, release updates, and launch pricing.
+      ProChat products evolve in public. Join the waitlist to get early access, roadmap updates, and launch pricing for the tools you care about.
     </p>
         <div className="w-full max-w-lg mb-4">
       <p
@@ -42,7 +43,7 @@ export default function WaitlistPageMarkup() {
       ></p>
       <form
         data-waitlist-form=""
-        className="flex flex-col sm:flex-row gap-3 p-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none"
+        className="space-y-4 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none"
         noValidate
         method="post"
         action="/api/waitlist"
@@ -57,24 +58,58 @@ export default function WaitlistPageMarkup() {
             tabIndex={-1}
           />
         </div>
-        <input
-          id="waitlist-email"
-          name="email"
-          className="flex-1 bg-transparent border-none px-4 py-3 focus:ring-0 outline-none text-slate-900 dark:text-white"
-          placeholder="you@company.com"
-          required
-          type="email"
-          autoComplete="email"
-          inputMode="email"
-        />
-        <button
-          data-waitlist-submit=""
-          className={`bg-primary text-white px-8 py-3 rounded-xl hover:opacity-90 transition-opacity whitespace-nowrap ${ACTION_LABEL_CLASS_NAME}`}
-          type="submit"
-        >
-          <span data-waitlist-submit-label="">{renderActionLabel('Join Waitlist')}</span>
-        </button>
+        <fieldset className="px-1 pt-1 pb-0">
+          <legend className="mb-3 text-left text-[13px] font-medium text-slate-600 dark:text-slate-300">
+            Select products you're interested in:
+          </legend>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+            {WAITLIST_PRODUCT_OPTIONS.map(option => (
+              <label
+                key={option.value}
+                className="group flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200/80 bg-slate-50/70 px-3 py-3 transition-colors hover:border-primary/35 hover:bg-primary/5 dark:border-slate-800 dark:bg-slate-950/40 dark:hover:border-primary/45 dark:hover:bg-primary/10"
+              >
+                <input
+                  type="checkbox"
+                  name="products"
+                  value={option.value}
+                  className="peer sr-only"
+                  aria-describedby="waitlist-products-error"
+                />
+                <span className="flex h-5 w-5 items-center justify-center rounded-md border border-slate-300 bg-white text-transparent transition-all peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white dark:border-slate-700 dark:bg-slate-950">
+                  <Check className="h-3.5 w-3.5" />
+                </span>
+                <span className="text-sm font-medium text-slate-800 transition-colors group-hover:text-slate-950 dark:text-slate-200 dark:group-hover:text-white">
+                  {option.label}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <input
+            id="waitlist-email"
+            name="email"
+            className="flex-1 bg-transparent border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 focus:ring-0 outline-none text-slate-900 dark:text-white"
+            placeholder="you@company.com"
+            required
+            type="email"
+            autoComplete="email"
+            inputMode="email"
+          />
+          <button
+            data-waitlist-submit=""
+            className="bg-primary text-white px-8 py-3 rounded-xl hover:opacity-90 transition-opacity whitespace-nowrap text-sm font-semibold"
+            type="submit"
+          >
+            <span data-waitlist-submit-label="">Join waitlist</span>
+          </button>
+        </div>
       </form>
+      <p
+        id="waitlist-products-error"
+        className="waitlist-field-error hidden mt-2 text-left"
+        data-error-for="products"
+      ></p>
       <p
         id="waitlist-email-error"
         className="waitlist-field-error hidden mt-2 text-left"
@@ -96,28 +131,28 @@ export default function WaitlistPageMarkup() {
 <section className="max-w-7xl mx-auto px-page py-24 bg-slate-50/50 dark:bg-slate-900/20 rounded-t-[3rem]">
   <div className="max-w-7xl mx-auto">
     <div className="w-full">
-      <h2 className="text-3xl font-bold mb-10 text-slate-900 dark:text-white text-center">Why join the UXKit waitlist?</h2>
+      <h2 className="text-3xl font-bold mb-10 text-slate-900 dark:text-white text-center">Why join the ProChat waitlist?</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary/30 transition-colors">
           <div className="size-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
-            <span className="material-symbols-outlined">rocket_launch</span>
+            <Rocket className="h-5 w-5" />
           </div>
           <h4 className="font-bold text-lg mb-2">Early access</h4>
-          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Be first to try UXKit before public release and shape the product.</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Be first to try upcoming ProChat products before public release and help shape their direction.</p>
         </div>
                 <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary/30 transition-colors">
           <div className="size-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
-            <span className="material-symbols-outlined">notifications</span>
+            <TimerReset className="h-5 w-5" />
           </div>
-          <h4 className="font-bold text-lg mb-2">Launch updates</h4>
-          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Receive release notes, exclusive devlogs and roadmap updates.</p>
+          <h4 className="font-bold text-lg mb-2">Roadmap visibility</h4>
+          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Receive development updates, milestone announcements, and behind-the-scenes build notes.</p>
         </div>
                 <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary/30 transition-colors">
           <div className="size-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
-            <span className="material-symbols-outlined">sell</span>
+            <Wallet className="h-5 w-5" />
           </div>
           <h4 className="font-bold text-lg mb-2">Founding pricing</h4>
-          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Get special launch pricing locked in before general availability.</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Lock in early launch pricing before general availability.</p>
         </div>
       </div>
     </div>

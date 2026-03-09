@@ -45,3 +45,16 @@ model Audiences {
   resend_id String @unique
   name      String
 }
+
+model WaitlistSignup {
+  id                    String   @id @default(cuid())
+  email                 String
+  selected_products     Json
+  selected_products_csv String
+  source                String    @default("waitlist")
+  unsubscribe_token     String?   @unique
+  unsubscribed_at       DateTime?
+  created_at            DateTime  @default(now())
+
+  @@index([source, created_at])
+}

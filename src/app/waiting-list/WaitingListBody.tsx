@@ -1,8 +1,6 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-
-import { getActionLabelHtml } from '@/helpers/action-label'
 import { waitlistSubmissionSchema } from '@/lib/waitlist/schema'
 
 import './waitlist-page.css'
@@ -25,12 +23,16 @@ export default function WaitingListBody() {
 
     const form = root.querySelector<HTMLFormElement>('form[data-waitlist-form]')
     const emailInput = root.querySelector<HTMLInputElement>('input[name="email"]')
+    const productInputs = Array.from(
+      root.querySelectorAll<HTMLInputElement>('input[name="products"]'),
+    )
     const submitButton = root.querySelector<HTMLButtonElement>('button[data-waitlist-submit]')
     const submitLabel = root.querySelector<HTMLElement>('[data-waitlist-submit-label]')
     const emailErrorEl = root.querySelector<HTMLElement>('[data-error-for="email"]')
+    const productsErrorEl = root.querySelector<HTMLElement>('[data-error-for="products"]')
     const statusEl = root.querySelector<HTMLElement>('[data-waitlist-status]')
 
-    if (!form || !emailInput || !submitButton || !submitLabel || !statusEl) {
+    if (!form || !emailInput || productInputs.length === 0 || !submitButton || !submitLabel || !statusEl) {
       return
     }
 
@@ -72,26 +74,56 @@ export default function WaitingListBody() {
       }
     }
 
+    const clearProductsError = () => {
+      productInputs.forEach(input => {
+        input.removeAttribute('aria-invalid')
+      })
+
+      if (productsErrorEl) {
+        productsErrorEl.textContent = ''
+        productsErrorEl.classList.add('hidden')
+      }
+    }
+
+    const setProductsError = (message: string) => {
+      productInputs.forEach(input => {
+        input.setAttribute('aria-invalid', 'true')
+        input.setAttribute('aria-describedby', 'waitlist-products-error')
+      })
+
+      if (productsErrorEl) {
+        productsErrorEl.textContent = message
+        productsErrorEl.classList.remove('hidden')
+      }
+    }
+
     const setSubmitting = (isSubmitting: boolean) => {
       submitButton.disabled = isSubmitting
-      submitLabel.innerHTML = getActionLabelHtml(isSubmitting ? 'Joining...' : 'Join Waitlist')
+      submitLabel.textContent = isSubmitting ? 'Joining waitlist...' : 'Join waitlist'
     }
 
     const handleInput = () => {
       clearEmailError()
+      clearProductsError()
       setStatus('idle')
     }
 
     const handleSubmit = async (event: SubmitEvent) => {
       event.preventDefault()
       clearEmailError()
+      clearProductsError()
       setStatus('idle')
 
       const formData = new FormData(form)
+      const selectedProducts = formData
+        .getAll('products')
+        .map(value => String(value).trim().toLowerCase())
+        .filter(Boolean)
+
       const payload = {
-        name: String(formData.get('name') || '').trim(),
-        role: String(formData.get('role') || '').trim(),
         email: String(formData.get('email') || '').trim().toLowerCase(),
+        products: selectedProducts,
+        selectedProducts,
         company_website: String(formData.get('company_website') || '').trim(),
         honeypot: String(formData.get('honeypot') || '').trim(),
       }
@@ -99,12 +131,21 @@ export default function WaitingListBody() {
       const validation = waitlistSubmissionSchema.safeParse(payload)
       if (!validation.success) {
         const emailMessage = validation.error.flatten().fieldErrors.email?.[0]
+        const productsMessage = validation.error.flatten().fieldErrors.products?.[0]
         if (emailMessage) {
           setEmailError(emailMessage)
-        } else {
+        }
+        if (productsMessage) {
+          setProductsError(productsMessage)
+        }
+        if (!emailMessage && !productsMessage) {
           setEmailError('Please enter a valid email address.')
         }
-        emailInput.focus()
+        if (productsMessage) {
+          productInputs[0]?.focus()
+        } else {
+          emailInput.focus()
+        }
         return
       }
 
@@ -137,7 +178,7 @@ export default function WaitingListBody() {
         }
 
         form.reset()
-        setStatus('success', json?.message || "You're on the UXKit waitlist.")
+        setStatus('success', json?.message || "You're on the ProChat waitlist.")
       } catch (error) {
         setStatus(
           'error',
@@ -149,10 +190,12 @@ export default function WaitingListBody() {
     }
 
     emailInput.addEventListener('input', handleInput)
+    productInputs.forEach(input => input.addEventListener('change', handleInput))
     form.addEventListener('submit', handleSubmit)
 
     return () => {
       emailInput.removeEventListener('input', handleInput)
+      productInputs.forEach(input => input.removeEventListener('change', handleInput))
       form.removeEventListener('submit', handleSubmit)
     }
   }, [])

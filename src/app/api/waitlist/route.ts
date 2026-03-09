@@ -3,7 +3,10 @@ import { Resend } from 'resend'
 
 import WaitlistAdminNotificationEmail from '@/components/email-templates/WaitlistAdminNotificationEmail'
 import WaitlistConfirmationEmail from '@/components/email-templates/WaitlistConfirmationEmail'
+import prisma from '@/libs/prisma'
 import { waitlistSubmissionSchema } from '@/lib/waitlist/schema'
+import { formatWaitlistProducts } from '@/lib/waitlist/products'
+import { buildWaitlistPreferenceUrls } from '@/lib/waitlist/server'
 
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX_REQUESTS = 6
@@ -120,10 +123,6 @@ export async function POST(request: Request) {
       )
     }
 
-    const productName = (process.env.WAITLIST_PRODUCT_NAME || 'UXKit').trim() || 'UXKit'
-    const audienceTag =
-      (process.env.WAITLIST_AUDIENCE_TAG || 'uxkit-waitlist').trim() || 'uxkit-waitlist'
-
     const fromRaw =
       process.env.WAITLIST_FROM_EMAIL ||
       process.env.CONTACT_FROM_EMAIL ||
@@ -169,7 +168,24 @@ export async function POST(request: Request) {
       )
     }
 
-    const timestampIso = new Date().toISOString()
+    const unsubscribeToken = crypto.randomUUID()
+    const formattedProducts = formatWaitlistProducts(submission.products)
+    const selectedProductsCsv = formattedProducts.join(', ')
+
+    const signup = await prisma.waitlistSignup.create({
+      data: {
+        email: submission.email,
+        selected_products: submission.products,
+        selected_products_csv: selectedProductsCsv,
+        source: 'waitlist',
+        unsubscribe_token: unsubscribeToken,
+      },
+    })
+
+    const timestampIso = signup.created_at.toISOString()
+    const { logoUrl, preferencesUrl, unsubscribeUrl } =
+      buildWaitlistPreferenceUrls(unsubscribeToken)
+
     const resend = new Resend(resendApiKey)
 
     const [adminResult, confirmationResult] = await Promise.all([
@@ -177,27 +193,25 @@ export async function POST(request: Request) {
         from,
         to: [adminInbox],
         replyTo: [submission.email],
-        subject: `New ${productName} waitlist signup`,
+        subject: 'New ProChat Waitlist Signup',
         react: WaitlistAdminNotificationEmail({
           email: submission.email,
-          name: submission.name,
-          role: submission.role,
           timestampIso,
-          productName,
-          audienceTag,
+          products: formattedProducts,
+          logoUrl,
         }),
       }),
       resend.emails.send({
         from,
         to: [submission.email],
         replyTo: [adminInbox],
-        subject: `You're on the ${productName} waitlist`,
+        subject: "You're on the ProChat waitlist",
         react: WaitlistConfirmationEmail({
           email: submission.email,
-          name: submission.name,
-          role: submission.role,
-          productName,
-          audienceTag,
+          products: formattedProducts,
+          logoUrl,
+          preferencesUrl,
+          unsubscribeUrl,
         }),
       }),
     ])
@@ -216,9 +230,7 @@ export async function POST(request: Request) {
     if (process.env.NODE_ENV !== 'production') {
       console.info('[waitlist] signup accepted', {
         email: maskEmail(submission.email),
-        hasName: Boolean(submission.name),
-        hasRole: Boolean(submission.role),
-        audienceTag,
+        selectedProducts: submission.products,
         confirmationId: confirmationResult.data?.id ?? null,
         adminId: adminResult.data?.id ?? null,
       })
@@ -226,12 +238,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      message: `You're on the ${productName} waitlist.`,
+      message: "You're on the ProChat waitlist.",
       ids: {
         admin: adminResult.data?.id ?? null,
         confirmation: confirmationResult.data?.id ?? null,
       },
-      audienceTag,
+      selectedProducts: submission.products,
+      selectedProductsCsv,
     })
   } catch (error) {
     console.error('Waitlist API Error:', error)

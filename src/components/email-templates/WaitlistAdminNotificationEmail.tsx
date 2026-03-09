@@ -9,134 +9,166 @@ import {
   Text,
 } from '@react-email/components'
 
+import { brand } from '@/lib/brand'
+
 interface WaitlistAdminNotificationEmailProps {
   email: string
-  name?: string
-  role?: string
   timestampIso: string
-  productName: string
-  audienceTag: string
+  products: string[]
+  logoUrl: string
 }
-
-const EMAIL_COLORS = {
-  background: 'rgb(248 250 252)',
-  textPrimary: 'rgb(11 18 32)',
-  textMuted: 'rgb(100 116 139)',
-  surface: 'rgb(255 255 255)',
-  headerSurface: 'rgb(239 246 255)',
-  headerAccent: 'rgb(29 78 216)',
-} as const
-
-const EMAIL_BORDERS = {
-  soft: '1px solid rgb(226 232 240)',
-  header: '1px solid rgb(219 234 254)',
-} as const
 
 const styles = {
   body: {
-    backgroundColor: EMAIL_COLORS.background,
-    color: EMAIL_COLORS.textPrimary,
-    fontFamily: 'Host Grotesk, Golos Text, -apple-system, Segoe UI, Arial, sans-serif',
+    backgroundColor: brand.colors.darkBackground,
+    color: brand.colors.textLight,
+    fontFamily: 'Host Grotesk, Golos Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif',
     margin: 0,
-    padding: '24px 12px',
+    padding: '32px 14px',
   },
   container: {
     margin: '0 auto',
-    maxWidth: '640px',
+    maxWidth: '600px',
     width: '100%',
   },
-  card: {
-    backgroundColor: EMAIL_COLORS.surface,
-    border: EMAIL_BORDERS.soft,
-    borderRadius: '16px',
+  shell: {
+    backgroundColor: brand.surface.section,
+    border: `1px solid ${brand.colors.surfaceBorder}`,
+    borderRadius: '24px',
     overflow: 'hidden',
   },
+  accentBar: {
+    backgroundImage: brand.gradients.primary,
+    height: '6px',
+    width: '100%',
+  },
   header: {
-    backgroundColor: EMAIL_COLORS.headerSurface,
-    borderBottom: EMAIL_BORDERS.header,
-    padding: '18px 24px',
+    padding: '28px 28px 12px',
   },
-  headerKicker: {
-    color: EMAIL_COLORS.headerAccent,
-    fontFamily: 'JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace',
-    fontSize: '11px',
-    letterSpacing: '0.08em',
-    margin: '0 0 6px',
-    textTransform: 'uppercase' as const,
-  },
-  headerTitle: {
-    color: EMAIL_COLORS.textPrimary,
-    fontSize: '24px',
-    fontWeight: 700,
+  logoName: {
+    color: brand.colors.textLight,
+    fontFamily: 'Host Grotesk, Golos Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif',
+    fontSize: '18px',
+    fontWeight: 600,
     lineHeight: '1.2',
     margin: 0,
   },
-  section: {
-    padding: '20px 24px',
-  },
-  label: {
-    color: EMAIL_COLORS.textMuted,
+  eyebrow: {
+    color: brand.colors.primary,
     fontFamily: 'JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace',
     fontSize: '11px',
-    letterSpacing: '0.08em',
-    margin: '0 0 6px',
+    letterSpacing: '0.12em',
+    margin: '14px 0 10px',
+    textTransform: 'uppercase' as const,
+  },
+  title: {
+    color: brand.colors.textLight,
+    fontFamily: 'Golos Text, Host Grotesk, sans-serif',
+    fontSize: '28px',
+    fontWeight: 700,
+    lineHeight: '1.16',
+    letterSpacing: '-0.03em',
+    margin: 0,
+  },
+  section: {
+    padding: '8px 28px 28px',
+  },
+  label: {
+    color: brand.colors.primary,
+    fontFamily: 'JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace',
+    fontSize: '11px',
+    letterSpacing: '0.12em',
+    margin: '0 0 8px',
     textTransform: 'uppercase' as const,
   },
   value: {
-    color: EMAIL_COLORS.textPrimary,
+    color: brand.colors.textLight,
+    fontSize: '16px',
+    lineHeight: '1.7',
+    margin: '0 0 18px',
+  },
+  card: {
+    backgroundColor: brand.surface.elevated,
+    border: `1px solid ${brand.colors.surfaceBorder}`,
+    borderRadius: '18px',
+    margin: '18px 0',
+    padding: '16px 18px',
+  },
+  bullet: {
+    color: brand.colors.textLight,
     fontSize: '15px',
-    lineHeight: '1.5',
-    margin: '0 0 14px',
+    lineHeight: '1.65',
+    margin: '0 0 6px',
   },
   footer: {
-    borderTop: EMAIL_BORDERS.soft,
-    color: EMAIL_COLORS.textMuted,
+    borderTop: `1px solid ${brand.colors.surfaceBorder}`,
+    color: brand.colors.mutedText,
     fontFamily: 'JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace',
     fontSize: '11px',
-    letterSpacing: '0.06em',
+    letterSpacing: '0.08em',
     margin: 0,
-    padding: '16px 24px',
+    padding: '18px 28px 24px',
     textTransform: 'uppercase' as const,
   },
 } as const
 
-const Field = ({ label, value }: { label: string; value: string }) => (
-  <Section>
-    <Text style={styles.label}>{label}</Text>
-    <Text style={styles.value}>{value}</Text>
-  </Section>
-)
-
 const WaitlistAdminNotificationEmail: React.FC<Readonly<WaitlistAdminNotificationEmailProps>> = ({
   email,
-  name,
-  role,
   timestampIso,
-  productName,
-  audienceTag,
+  products,
+  logoUrl,
 }) => (
   <Html>
     <Head />
-    <Preview>New {productName} waitlist signup</Preview>
+    <Preview>New ProChat Waitlist Signup</Preview>
     <Body style={styles.body}>
       <Container style={styles.container}>
-        <Section style={styles.card}>
+        <Section style={styles.shell}>
+          <Section style={styles.accentBar} />
+
           <Section style={styles.header}>
-            <Text style={styles.headerKicker}>ProChat Waitlist Intake</Text>
-            <Text style={styles.headerTitle}>New {productName} waitlist signup</Text>
+            <table width="100%" cellPadding="0" cellSpacing="0" role="presentation">
+              <tbody>
+                <tr>
+                  <td align="center">
+                    <img
+                      src={logoUrl}
+                      width="40"
+                      height="40"
+                      alt="ProChat"
+                      style={{ display: 'block', height: '40px', width: '40px' }}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style={{ paddingTop: '8px' }}>
+                    <span style={styles.logoName}>ProChat</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <Text style={styles.eyebrow}>ProChat Waitlist Intake</Text>
+            <Text style={styles.title}>New ProChat Waitlist Signup</Text>
           </Section>
 
           <Section style={styles.section}>
-            <Field label="List Tag" value={audienceTag} />
-            <Field label="Email" value={email} />
-            <Field label="Name" value={name || 'Not provided'} />
-            <Field label="Role" value={role || 'Not provided'} />
-            <Field label="Timestamp" value={timestampIso} />
+            <Text style={styles.label}>Email</Text>
+            <Text style={styles.value}>{email}</Text>
+
+            <Section style={styles.card}>
+              <Text style={styles.label}>Products selected</Text>
+              {products.map(product => (
+                <Text key={product} style={styles.bullet}>
+                  • {product}
+                </Text>
+              ))}
+            </Section>
+
+            <Text style={styles.label}>Timestamp</Text>
+            <Text style={styles.value}>{timestampIso}</Text>
           </Section>
 
-          <Text style={styles.footer}>
-            Status: WAITLIST_NOTIFICATION_SENT // LIST: {audienceTag.toUpperCase()}
-          </Text>
+          <Text style={styles.footer}>Status: WAITLIST NOTIFICATION SENT</Text>
         </Section>
       </Container>
     </Body>
