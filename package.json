@@ -6,8 +6,10 @@
   "author": "Steve Westhoek",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npm run sitemap && npm run rss",
+    "build": "npm run generate:social && next build && npm run sitemap && npm run rss",
+    "analyze": "ANALYZE=true next build",
     "start": "sh scripts/start-production.sh",
+    "generate:social": "tsx scripts/generate-social-images.ts",
     "sitemap": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' -r tsconfig-paths/register scripts/generate-sitemap.ts",
     "rss": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' -r tsconfig-paths/register scripts/generate-rss.ts",
     "prebuild": "NODE_ENV=production npm run provision:auto",
@@ -72,6 +74,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^16.1.6",
     "@types/jest": "^29.5.12",
     "@types/mdx": "^2.0.12",
     "@types/node": "^20",
@@ -91,6 +94,7 @@
     "tailwindcss-animate": "^1.0.7",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

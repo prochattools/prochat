@@ -10,6 +10,7 @@ import { getSEOTags } from '@/libs/seo'
 import { getOrganizationSchema, getWebsiteSchema } from '@/libs/structured-data'
 import { SafeClerkProvider } from '@/libs/safeClerk'
 import { Golos_Text, JetBrains_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Viewport } from 'next'
 import { ReactNode } from 'react'
 
@@ -19,7 +20,12 @@ const ROOT_TITLE = 'ProChat — The Operating System for SaaS Builders'
 const ROOT_DESCRIPTION =
   'ProChat is the operating system for SaaS builders. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.'
 
-const fontSans = { variable: '' }
+const fontSans = localFont({
+  src: '../assets/fonts/HostGrotesk-latin.woff2',
+  weight: '400 700',
+  variable: '--font-sans',
+  display: 'swap',
+})
 
 const fontBrand = Golos_Text({
   subsets: ['latin'],
@@ -76,6 +82,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
     >
       <head>
+        <link
+          rel="preload"
+          href="/assets/backgrounds/hero-main-lines-dark-alternating.svg"
+          as="image"
+          fetchPriority="high"
+        />
         <style dangerouslySetInnerHTML={{ __html: BASE_STYLE_OVERRIDES }} />
         <StructuredData id="schema-organization" data={getOrganizationSchema()} />
         <StructuredData id="schema-website" data={getWebsiteSchema()} />

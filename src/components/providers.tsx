@@ -1,9 +1,18 @@
 'use client';
 
+import dynamic from 'next/dynamic'
 import { ReactNode } from "react";
 import { ThemeProvider } from "next-themes";
-import { Toaster } from "react-hot-toast";
-import { Tooltip } from "react-tooltip";
+
+const Toaster = dynamic(
+  () => import('react-hot-toast').then(module => module.Toaster),
+  { ssr: false, loading: () => null }
+)
+
+const Tooltip = dynamic(
+  () => import('react-tooltip').then(module => module.Tooltip),
+  { ssr: false, loading: () => null }
+)
 
 export function Providers({ children }: { children: ReactNode }) {
   return (

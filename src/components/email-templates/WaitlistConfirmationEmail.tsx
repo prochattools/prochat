@@ -22,7 +22,7 @@ interface WaitlistConfirmationEmailProps {
 
 const styles = {
   body: {
-    backgroundColor: brand.colors.darkBackground,
+    backgroundColor: brand.surface.section,
     color: brand.colors.textLight,
     fontFamily: 'Host Grotesk, Golos Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif',
     margin: 0,
@@ -47,6 +47,15 @@ const styles = {
   header: {
     padding: '28px 28px 12px',
   },
+  logoTable: {
+    margin: '0 auto',
+  },
+  logoCell: {
+    verticalAlign: 'middle' as const,
+  },
+  logoSpacer: {
+    width: '10px',
+  },
   logoName: {
     color: brand.colors.textLight,
     fontFamily: 'Host Grotesk, Golos Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif',
@@ -54,6 +63,7 @@ const styles = {
     fontWeight: 600,
     lineHeight: '1.2',
     margin: 0,
+    verticalAlign: 'middle' as const,
   },
   eyebrow: {
     color: brand.colors.primary,
@@ -147,18 +157,30 @@ const WaitlistConfirmationEmail: React.FC<Readonly<WaitlistConfirmationEmailProp
                 <tbody>
                   <tr>
                     <td align="center">
-                      <img
-                        src={logoUrl}
-                        width="40"
-                        height="40"
-                        alt="ProChat"
-                        style={{ display: 'block', height: '40px', width: '40px' }}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td align="center" style={{ paddingTop: '8px' }}>
-                      <span style={styles.logoName}>ProChat</span>
+                      <table
+                        cellPadding="0"
+                        cellSpacing="0"
+                        role="presentation"
+                        style={styles.logoTable}
+                      >
+                        <tbody>
+                          <tr>
+                            <td style={styles.logoCell}>
+                              <img
+                                src={logoUrl}
+                                width="40"
+                                height="40"
+                                alt="ProChat"
+                                style={{ display: 'block', height: '40px', width: '40px' }}
+                              />
+                            </td>
+                            <td style={styles.logoSpacer} />
+                            <td style={styles.logoCell}>
+                              <span style={styles.logoName}>ProChat</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </td>
                   </tr>
                 </tbody>
@@ -191,7 +213,8 @@ const WaitlistConfirmationEmail: React.FC<Readonly<WaitlistConfirmationEmailProp
               </Section>
 
               <Text style={styles.paragraph}>
-                We build in public — expect transparent progress updates.
+                You’ll receive thoughtful updates as we release improvements and new
+                features.
               </Text>
 
               <Text style={styles.paragraph}>Signed up with: {email}</Text>

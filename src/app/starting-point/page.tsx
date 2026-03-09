@@ -1,20 +1,36 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import StartSignupForm from './_components/StartSignupForm'
+import StartingPointFaq from './_components/StartingPointFaq'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
-import { AlertCircle, BookOpen, Check, MonitorPlay } from 'lucide-react'
+import { AlertCircle, BookOpen, MonitorPlay } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'The SaaS Starting Point | ProChat',
   description:
     'The Operating System for SaaS Builders. A preparation framework to reduce risk before you build.',
 }
+
+const NEXT_STEP_COLUMNS = [
+  {
+    title: 'Validate',
+    copy: 'Read the validation guide before writing production code.',
+    href: '/blog/how-to-validate-a-saas-idea-without-coding',
+    cta: 'Read the guide',
+  },
+  {
+    title: 'Define Infrastructure',
+    copy: 'Understand auth, billing, deployment, and boundaries.',
+    href: '/blog/what-makes-a-saas-boilerplate-production-ready',
+    cta: 'Review the system',
+  },
+  {
+    title: 'Implement',
+    copy: 'Apply structure using SaaSKit.',
+    href: '/kits',
+    cta: 'Explore the kits',
+  },
+] as const
 
 const AUDIENCE_CARDS = [
   {
@@ -57,35 +73,55 @@ const PDF_ITEMS = [
 
 const FAQ_ITEMS = [
   {
-    question: 'Is this technical?',
+    question: 'Is this for AI founders using no-code or AI tools?',
     answer:
-      'Not in the coding sense. This is structural preparation: risk, scope, cost, and decision quality before you build.',
+      'Yes. It is written for founders using AI coding tools, no-code systems, or hybrid workflows. The focus is not the tool itself. The focus is how to make better structural decisions before you build.',
   },
   {
-    question: 'Is this a make-money guide?',
+    question: 'Do I need to be technical?',
     answer:
-      'No. It does not teach growth tactics or revenue shortcuts. It prevents wasted effort before execution starts.',
+      'No. You do not need to write code to use this framework. You do need to think clearly about scope, risk, cost, and sequence before you move into infrastructure.',
   },
   {
-    question: 'Do I need money to start?',
+    question: 'Is this about validation or infrastructure?',
     answer:
-      'Preparation phase: $0-$50. You can validate commitment and define scope before meaningful infrastructure spend.',
+      'It sits before both. Preparation helps you decide what should be validated, what can wait, and what infrastructure later needs to support. That makes validation cleaner and implementation less fragile.',
   },
   {
-    question: 'Should I watch YouTube first?',
+    question: 'How is this different from YouTube advice?',
     answer:
-      'No. Read the PDF first. YouTube makes more sense once your outcome, boundaries, and risk profile are clear.',
+      'Most YouTube advice starts at execution. This framework starts at sequence and decision quality. It gives you a preparation layer first, so tutorials do not pull you into implementation before the structure is clear.',
   },
   {
     question: 'What happens if I skip preparation?',
     answer:
-      'Risk rises quickly. Rebuild cost rises with it, and emotional burnout follows when effort compounds in the wrong direction.',
+      'You usually overbuild, choose tools too early, or define the wrong system boundary. That pushes mistakes deeper into infrastructure, where they are more expensive to unwind. Preparation is what prevents that rebuild cycle.',
   },
 ]
 
 const CARD_BASE = 'rounded-2xl border border-border bg-card shadow-sm'
 const CARD_ELEVATED =
   'rounded-2xl border border-border bg-card shadow-[0_24px_60px_rgba(15,23,42,0.08)]'
+
+function BrandCheckIcon() {
+  return (
+    <svg
+      viewBox="0 0 18 18"
+      aria-hidden="true"
+      className="mt-0.5 h-[18px] w-[18px] shrink-0"
+    >
+      <circle cx="9" cy="9" r="9" fill="currentColor" className="text-primary" />
+      <path
+        d="M5.3 9.2 7.5 11.35 12.6 6.35"
+        fill="none"
+        stroke="#fff"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
 
 export default function StartHerePage() {
   return (
@@ -104,9 +140,9 @@ export default function StartHerePage() {
                 Preparation Layer
               </p>
               <h1 className="pc-hero-title text-foreground">
-                The Operating System
+                Before You Build,
                 <br className="hidden lg:block" />
-                for SaaS Builders.
+                Prepare.
               </h1>
               <p className="font-sans max-w-[40ch] text-xl font-semibold leading-[1.45] text-foreground md:text-2xl">
                 AI removed the coding barrier.
@@ -114,8 +150,7 @@ export default function StartHerePage() {
                 It did not remove consequences.
               </p>
               <p className="max-w-[52ch] text-lg leading-[1.7] text-muted-foreground md:text-xl">
-                Building software is accessible now, which means mistakes scale faster too. Overbuilding can happen in days when boundaries are unclear.
-                This page gives you a preparation system to reduce fragility before you deploy anything.
+                Building software is accessible now, which means mistakes scale faster too. This page gives you a preparation system to reduce fragility before you deploy anything.
               </p>
             </div>
 
@@ -146,7 +181,7 @@ export default function StartHerePage() {
                     Free PDF
                   </p>
                   <h3 className="font-sans text-2xl font-bold leading-tight text-foreground lg:text-3xl">
-                    Get The SaaS Starting Point
+                    Download the Preparation Framework
                   </h3>
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     This is the preparation phase. It helps you define a viable outcome before technical execution starts.
@@ -158,13 +193,30 @@ export default function StartHerePage() {
                 </div>
 
                 <div className="border-t border-border pt-5">
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    Preparation before infrastructure.
-                    <br />
+                  <p className="text-sm leading-relaxed text-foreground/72">
                     Clarity before complexity.
+                    <br />
+                    Structure before execution.
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-border bg-background py-16">
+        <div className="mx-auto max-w-4xl px-page">
+          <div className={`${CARD_BASE} p-8 md:p-10`}>
+            <div className="space-y-3">
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">
+                Who This Is For
+              </p>
+              <p className="text-lg leading-relaxed text-muted-foreground">
+                This is for AI founders who can build quickly but want fewer rebuild cycles.
+                <br />
+                If you&apos;re moving fast, this keeps you from breaking structure.
+              </p>
             </div>
           </div>
         </div>
@@ -194,7 +246,7 @@ export default function StartHerePage() {
                 <ul className="space-y-4">
                   {PREPARATION_POINTS.map(item => (
                     <li key={item} className="flex items-start gap-3 text-base text-muted-foreground">
-                      <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary/70" strokeWidth={2.25} />
+                      <BrandCheckIcon />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -213,7 +265,7 @@ export default function StartHerePage() {
                 <ul className="space-y-4">
                   {EXECUTION_POINTS.map(item => (
                     <li key={item} className="flex items-start gap-3 text-base text-muted-foreground">
-                      <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary/70" strokeWidth={2.25} />
+                      <BrandCheckIcon />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -272,7 +324,7 @@ export default function StartHerePage() {
             <ul className="space-y-4">
               {PDF_ITEMS.map(item => (
                 <li key={item} className="flex items-start gap-3 text-base text-muted-foreground">
-                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-primary/70" strokeWidth={2.25} />
+                  <BrandCheckIcon />
                   <span>{item}</span>
                 </li>
               ))}
@@ -283,6 +335,33 @@ export default function StartHerePage() {
               <br />
               It is protective.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-border bg-background py-24">
+        <div className="mx-auto max-w-6xl px-page">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="font-sans mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
+              What Comes After Preparation?
+            </h2>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            {NEXT_STEP_COLUMNS.map(item => (
+              <Card key={item.title} className={CARD_BASE}>
+                <CardContent className="space-y-5 p-8">
+                  <h3 className="font-sans text-lg font-bold text-foreground">{item.title}</h3>
+                  <p className="text-base leading-relaxed text-muted-foreground">{item.copy}</p>
+                  <Link
+                    href={item.href}
+                    className="inline-flex items-center font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary transition-opacity hover:opacity-80"
+                  >
+                    {item.cta}
+                  </Link>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
@@ -320,22 +399,7 @@ export default function StartHerePage() {
           <h2 className="font-sans mb-12 text-center text-3xl font-bold text-foreground">FAQ</h2>
 
           <div className={`${CARD_BASE} overflow-hidden`}>
-            <Accordion type="single" collapsible className="w-full">
-              {FAQ_ITEMS.map((item, index) => (
-                <AccordionItem
-                  key={item.question}
-                  value={`item-${index}`}
-                  className="border-b border-border px-6 last:border-0"
-                >
-                  <AccordionTrigger className="py-5 text-left text-base font-semibold text-foreground hover:no-underline">
-                    <span className="pr-4">{item.question}</span>
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-5 text-[15px] leading-relaxed text-muted-foreground">
-                    {item.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+            <StartingPointFaq items={FAQ_ITEMS} />
           </div>
         </div>
       </section>
@@ -343,12 +407,13 @@ export default function StartHerePage() {
       <footer className="bg-muted/70 py-8 text-center">
         <div className="mx-auto px-6">
           <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
-            Built by Steve Westhoek. Software tester. The Operating System for SaaS Builders.
+            Built by Steve Westhoek. SaaS Infrastructure Architect.
           </p>
-          <div className="flex items-center justify-center gap-5 text-xs font-medium text-muted-foreground">
+          <div className="flex items-center justify-center gap-3 text-xs font-normal text-muted-foreground">
             <Link href="/privacy" className="transition-colors hover:text-primary">
               Privacy
             </Link>
+            <span aria-hidden="true">·</span>
             <Link href="/terms" className="transition-colors hover:text-primary">
               Terms
             </Link>

@@ -1,7 +1,12 @@
 // ProChat marketing site – powered by the ProKit engine
 // (c) 2025 Steve Westhoek / ProChat
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+	enabled: process.env.ANALYZE === 'true',
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	compress: true,
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
@@ -123,4 +128,4 @@ const nextConfig = {
 	},
 }
 
-module.exports = nextConfig
+module.exports = withBundleAnalyzer(nextConfig)

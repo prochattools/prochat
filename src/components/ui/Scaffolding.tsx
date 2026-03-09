@@ -1,13 +1,6 @@
-'use client';
-
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 
 export const Scaffolding: React.FC<{ opacity?: number, className?: string }> = ({ opacity = 0.4, className = '' }) => {
-    const { scrollY } = useScroll();
-    const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
-    const y2 = useTransform(scrollY, [0, 1000], [0, -150]);
-
     return (
         <div className={`absolute inset-0 pointer-events-none overflow-hidden select-none z-0 ${className}`} style={{ opacity }}>
             {/* Base Grid */}
@@ -18,8 +11,8 @@ export const Scaffolding: React.FC<{ opacity?: number, className?: string }> = (
             <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px border-l border-dashed border-border-subtle/45" />
 
             {/* Floating Technical Elements (Parallax) */}
-            <motion.div style={{ y: y1 }} className="absolute top-20 left-[10%] w-64 h-64 border border-dashed border-border-subtle/35 rounded-full" />
-            <motion.div style={{ y: y2 }} className="absolute top-[40%] right-[5%] w-96 h-96 border border-dashed border-border-subtle/35 rounded-full" />
+            <div className="absolute top-20 left-[10%] h-64 w-64 rounded-full border border-dashed border-border-subtle/35" />
+            <div className="absolute top-[40%] right-[5%] h-96 w-96 rounded-full border border-dashed border-border-subtle/35" />
 
             {/* Measurement Markers */}
             <div className="absolute top-32 left-6 hidden origin-left rotate-90 font-mono text-[9px] tracking-widest text-tertiary lg:block">

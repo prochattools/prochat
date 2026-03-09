@@ -1,9 +1,15 @@
+import fs from 'fs'
+import path from 'path'
 import { notFound } from 'next/navigation'
 
 import ContentLayout from '@/components/content/ContentLayout'
 import { renderMdxContent } from '@/components/content/MDXRenderer'
 import StructuredData from '@/components/StructuredData'
 import { getSectionEntry, getSectionStaticParams, getRelatedEntries } from '@/lib/content'
+import {
+  generateSocialImageUrl,
+  generateStaticSocialImageUrl,
+} from '@/lib/generateSocialImageUrl'
 import { getSEOTags } from '@/lib/seo/metadata'
 import { articleSchema } from '@/lib/seo/schema'
 
@@ -21,7 +27,6 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageParams) {
   const entry = await getSectionEntry('blog', [params.slug])
-  const ogImagePath = `/blog/${params.slug}/og`
 
   if (!entry) {
     return getSEOTags({
@@ -31,6 +36,13 @@ export async function generateMetadata({ params }: PageParams) {
     })
   }
 
+  const staticImagePath = path.join(process.cwd(), 'public', 'social', `${entry.slug}.png`)
+  const socialImageUrl = entry.title
+    ? fs.existsSync(staticImagePath)
+      ? generateStaticSocialImageUrl(entry.slug)
+      : generateSocialImageUrl(entry.title)
+    : '/og'
+
   return getSEOTags({
     title: entry.metaTitle || entry.title,
     description: entry.metaDescription || entry.description,
@@ -39,14 +51,21 @@ export async function generateMetadata({ params }: PageParams) {
     openGraph: {
       title: entry.metaTitle || entry.title,
       description: entry.metaDescription || entry.description,
-      images: [ogImagePath],
+      images: [
+        {
+          url: socialImageUrl,
+          width: 1200,
+          height: 630,
+          alt: entry.title || entry.metaTitle || 'ProChat social image',
+        },
+      ],
       type: 'article',
     },
     twitter: {
       card: 'summary_large_image',
       title: entry.metaTitle || entry.title,
       description: entry.metaDescription || entry.description,
-      images: [ogImagePath],
+      images: [socialImageUrl],
     },
   })
 }

@@ -1,0 +1,84 @@
+import fs from 'fs'
+import path from 'path'
+
+import { brand } from '@/lib/brand'
+import { applyWordmarkGradient, svgToDataUri } from '@/lib/og-utils'
+
+const DEFAULT_SOCIAL_TITLE = 'The Operating System for SaaS Builders'
+const SOCIAL_TITLE_MAX_LENGTH = 90
+
+const logoWordmarkSvg = fs.readFileSync(
+  path.join(process.cwd(), 'public', 'logo', 'logo-wordmark.svg'),
+  'utf8',
+)
+
+export function getSocialDefaultTitle() {
+  return DEFAULT_SOCIAL_TITLE
+}
+
+function stripHtml(input: string) {
+  return input.replace(/<[^>]*>/g, ' ')
+}
+
+function collapseWhitespace(input: string) {
+  return input.replace(/\s+/g, ' ').trim()
+}
+
+function clampTitleLength(input: string, maxLength: number) {
+  if (input.length <= maxLength) return input
+
+  const candidate = input.slice(0, maxLength)
+  const lastSpace = candidate.lastIndexOf(' ')
+
+  return `${candidate.slice(0, lastSpace > 36 ? lastSpace : maxLength).trimEnd()}…`
+}
+
+export function sanitizeSocialTitle(input?: string | null) {
+  const cleaned = collapseWhitespace(stripHtml(input ?? ''))
+  if (!cleaned) return DEFAULT_SOCIAL_TITLE
+
+  return clampTitleLength(cleaned, SOCIAL_TITLE_MAX_LENGTH)
+}
+
+export function splitSocialTitle(title: string) {
+  const words = title.split(' ').filter(Boolean)
+  if (words.length <= 3 || title.length <= 42) {
+    return [title]
+  }
+
+  let bestIndex = 1
+  let bestScore = Number.POSITIVE_INFINITY
+
+  for (let index = 1; index < words.length; index += 1) {
+    const left = words.slice(0, index).join(' ')
+    const right = words.slice(index).join(' ')
+    const score = Math.abs(left.length - right.length)
+
+    if (score < bestScore) {
+      bestScore = score
+      bestIndex = index
+    }
+  }
+
+  return [words.slice(0, bestIndex).join(' '), words.slice(bestIndex).join(' ')]
+}
+
+export function getSocialHeadlineFontSize(lines: string[]) {
+  const longestLine = Math.max(...lines.map(line => line.length))
+
+  if (longestLine > 34) return 68
+  if (longestLine > 28) return 74
+  if (longestLine > 22) return 80
+  return 88
+}
+
+export function getSocialWordmarkDataUri() {
+  return svgToDataUri(
+    applyWordmarkGradient(
+      logoWordmarkSvg,
+      brand.colors.primary,
+      brand.colors.primaryStrong,
+      brand.colors.white,
+    ),
+  )
+}
