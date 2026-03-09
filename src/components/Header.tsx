@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Github, Linkedin, Menu, MessageCircle, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import Logo from '@/components/logo'
 import { Button } from '@/components/ui/button'
@@ -18,6 +18,7 @@ import { isChromelessPath } from '@/helpers/chrome-routes'
 import { cn } from '@/helpers/utils'
 import { trackEvent } from '@/utils/analytics'
 import { buttonVariants } from '@/components/ui/button'
+import { SocialIcon, type SocialIconName } from '@/components/ui/social-icons'
 
 const NAV_ITEMS = [
 	{ label: 'System', href: '/' },
@@ -27,9 +28,9 @@ const NAV_ITEMS = [
 ] as const
 
 const MOBILE_SECONDARY_ITEMS = [
-	{ label: 'LinkedIn', href: 'https://www.linkedin.com/', icon: Linkedin },
-	{ label: 'GitHub', href: 'https://github.com/prochattools', icon: Github },
-	{ label: 'Community', href: 'https://discord.gg/U75p2BQuAH', icon: MessageCircle },
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/', icon: 'linkedin' },
+	{ label: 'GitHub', href: 'https://github.com/prochattools', icon: 'github' },
+	{ label: 'Discord', href: 'https://discord.gg/U75p2BQuAH', icon: 'discord' },
 ] as const
 
 function isActivePath(pathname: string, href: string) {
@@ -40,10 +41,21 @@ function isActivePath(pathname: string, href: string) {
 	return pathname === href || pathname.startsWith(`${href}/`)
 }
 
-function HeaderThemeToggle() {
+function HeaderThemeToggle({
+	shellClassName,
+	toggleClassName,
+}: {
+	shellClassName?: string
+	toggleClassName?: string
+} = {}) {
 	return (
-		<div className="pc-toggle-shell shrink-0">
-			<ThemeToggle className="h-full w-full rounded-full border-0 bg-transparent text-foreground shadow-none hover:bg-transparent focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0" />
+		<div className={cn('pc-toggle-shell shrink-0', shellClassName)}>
+			<ThemeToggle
+				className={cn(
+					'h-full w-full rounded-full border-0 bg-transparent text-foreground shadow-none hover:bg-transparent focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0 [&>svg]:h-4 [&>svg]:w-4',
+					toggleClassName,
+				)}
+			/>
 		</div>
 	)
 }
@@ -119,18 +131,25 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 						<div className="fixed inset-0 z-50 flex flex-col bg-background px-6 pt-6 pb-8 lg:hidden">
 							<SheetTitle className="sr-only">Navigation</SheetTitle>
 							<div className="flex items-center justify-between">
-								<Link href="/" onClick={() => setOpen(false)} className="shrink-0">
-									<Logo scale={0.72} />
+								<Link
+									href="/"
+									onClick={() => setOpen(false)}
+									className="inline-flex shrink-0 translate-y-[1px] items-center"
+								>
+									<Logo scale={0.78} />
 								</Link>
 								<div className="flex items-center gap-3">
-									<HeaderThemeToggle />
+									<HeaderThemeToggle
+										shellClassName="h-11 w-11"
+										toggleClassName="!h-11 !w-11 [&>svg]:h-5 [&>svg]:w-5"
+									/>
 									<SheetClose asChild>
 										<button
 											type="button"
 											aria-label="Close navigation menu"
-											className="pc-mobile-nav-trigger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0"
+											className="pc-toggle-shell h-11 w-11 rounded-full border-0 bg-transparent p-0 text-foreground shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0"
 										>
-											<X className="h-4 w-4" />
+											<X className="h-5 w-5" />
 										</button>
 									</SheetClose>
 								</div>
@@ -143,7 +162,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 										aria-current={isActivePath(pathname, item.href) ? 'page' : undefined}
 										onClick={() => setOpen(false)}
 										className={cn(
-											'py-3 font-mono text-2xl font-medium uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0',
+											'py-3 font-mono text-[1.375rem] font-medium uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0 sm:text-[1.5rem] md:text-[1.625rem]',
 											isActivePath(pathname, item.href)
 												? 'font-semibold text-foreground'
 												: 'text-foreground/72 hover:text-primary',
@@ -155,8 +174,6 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 							</nav>
 							<div className="mt-10 flex flex-col">
 								{MOBILE_SECONDARY_ITEMS.map(item => {
-									const Icon = item.icon
-
 									return (
 										<Link
 											key={item.label}
@@ -164,9 +181,12 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 											target="_blank"
 											rel="noreferrer"
 											onClick={() => setOpen(false)}
-											className="flex items-center gap-2 py-2 text-sm text-foreground/70 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0"
+											className="flex items-center gap-3 py-2 text-base text-foreground/70 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-0"
 										>
-											<Icon className="h-4 w-4" />
+											<SocialIcon
+												icon={item.icon as SocialIconName}
+												className="h-4 w-4 shrink-0 fill-current"
+											/>
 											<span>{item.label}</span>
 										</Link>
 									)
@@ -176,7 +196,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 								<Button
 									asChild
 									variant="nav"
-									className="h-auto w-full rounded-[var(--pc-button-radius)] py-4 shadow-none hover:brightness-[1.03]"
+									className="h-auto w-full rounded-[var(--pc-button-radius)] py-4 shadow-none hover:brightness-[1.03] [&_.pc-action-label]:text-base [&_.pc-action-label]:tracking-[0.14em]"
 								>
 									<Link
 										href="/kits/saaskit"
