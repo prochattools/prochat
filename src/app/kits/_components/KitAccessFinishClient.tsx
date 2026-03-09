@@ -14,7 +14,7 @@ import type { ProductSlug } from '@/lib/store/types'
 type ClaimResponse = {
 	success?: boolean
 	alreadyProvisioned?: boolean
-	alreadyCollaborator?: boolean
+	accessState?: 'invited' | 'pending_invitation' | 'already_has_access'
 	githubUsername?: string
 	error?: string
 	message?: string
@@ -23,6 +23,7 @@ type ClaimResponse = {
 type SuccessState = {
 	githubUsername: string
 	alreadyProvisioned: boolean
+	accessState?: 'invited' | 'pending_invitation' | 'already_has_access'
 }
 
 interface KitAccessFinishClientProps {
@@ -95,6 +96,7 @@ export default function KitAccessFinishClient({
 			setSuccessState({
 				githubUsername: linkedUsername,
 				alreadyProvisioned: Boolean(data.alreadyProvisioned),
+				accessState: data.accessState,
 			})
 		} catch (error) {
 			console.error(`[kits/${productSlug}/finish] Claim request failed`, error)
@@ -286,7 +288,11 @@ export default function KitAccessFinishClient({
 							<p>
 								{successState.alreadyProvisioned
 									? `Your purchase is already linked to @${successState.githubUsername}. Check your GitHub account for access.`
-									: `We've requested GitHub access for @${successState.githubUsername}. You will receive a GitHub invite in your notifications or email. Once you accept it, you can clone the repository from your GitHub account.`}
+									: successState.accessState === 'already_has_access'
+										? `@${successState.githubUsername} already has access to the repository. You can start building now from your GitHub account.`
+										: successState.accessState === 'pending_invitation'
+											? `GitHub already has a pending repository invitation for @${successState.githubUsername}. Check your GitHub notifications or email, then accept the invite before cloning the repository.`
+											: `We've requested GitHub access for @${successState.githubUsername}. You will receive a GitHub invite in your notifications or email. Once you accept it, you can clone the repository from your GitHub account.`}
 							</p>
 							<div>
 								<Link

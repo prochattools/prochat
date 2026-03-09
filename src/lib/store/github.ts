@@ -9,8 +9,7 @@ type GithubConfig = {
 }
 
 type AddCollaboratorResult =
-	| 'ok'
-	| 'already'
+	| { ok: true; accessState: 'invited' | 'pending_invitation' | 'already_has_access' }
 	| { error: 'not_found' | 'forbidden' | 'unknown'; message?: string }
 
 type GithubInstallationTokenResponse = {
@@ -20,6 +19,13 @@ type GithubInstallationTokenResponse = {
 
 type GithubRepositoryInstallationResponse = {
 	id?: number
+}
+
+type GithubInvitation = {
+	id?: number
+	invitee?: {
+		login?: string
+	}
 }
 
 type CachedInstallationToken = {
@@ -334,6 +340,66 @@ export function getGithubConfig(productSlug: ProductSlug): GithubConfig {
 	return repo
 }
 
+async function hasRepositoryAccess(
+	installationToken: string,
+	repoOwner: string,
+	repoName: string,
+	username: string
+): Promise<boolean | null> {
+	const response = await fetch(
+		`https://api.github.com/repos/${repoOwner}/${repoName}/collaborators/${username}`,
+		{
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${installationToken}`,
+				Accept: 'application/vnd.github+json',
+				'X-GitHub-Api-Version': '2022-11-28',
+			},
+		}
+	)
+
+	if (response.status === 204) {
+		return true
+	}
+
+	if (response.status === 404) {
+		return false
+	}
+
+	return null
+}
+
+async function hasPendingRepositoryInvitation(
+	installationToken: string,
+	repoOwner: string,
+	repoName: string,
+	username: string
+): Promise<boolean | null> {
+	const response = await fetch(
+		`https://api.github.com/repos/${repoOwner}/${repoName}/invitations`,
+		{
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${installationToken}`,
+				Accept: 'application/vnd.github+json',
+				'X-GitHub-Api-Version': '2022-11-28',
+			},
+		}
+	)
+
+	if (response.status === 404) {
+		return false
+	}
+
+	if (!response.ok) {
+		return null
+	}
+
+	const invitations = (await response.json()) as GithubInvitation[]
+	const normalizedUsername = username.trim().toLowerCase()
+	return invitations.some(invitation => invitation.invitee?.login?.trim().toLowerCase() === normalizedUsername)
+}
+
 export async function addCollaborator(
 	productSlug: ProductSlug,
 	githubUsername: string
@@ -387,13 +453,49 @@ export async function addCollaborator(
 		})
 
 		if (response.status === 201) {
-			return 'ok'
+			return { ok: true, accessState: 'invited' }
 		}
 		if (response.status === 204) {
-			return 'already'
+			const alreadyHasAccess = await hasRepositoryAccess(
+				installationToken,
+				repoOwner,
+				repoName,
+				normalizedUsername
+			)
+
+			if (alreadyHasAccess === true) {
+				return { ok: true, accessState: 'already_has_access' }
+			}
+
+			const hasPendingInvitation = await hasPendingRepositoryInvitation(
+				installationToken,
+				repoOwner,
+				repoName,
+				normalizedUsername
+			)
+
+			if (hasPendingInvitation === true) {
+				return { ok: true, accessState: 'pending_invitation' }
+			}
+
+			console.error('[store] GitHub collaborator verification failed after 204', {
+				requestId,
+				productSlug,
+				repo,
+				username: normalizedUsername,
+				statusCode,
+				githubRequestId,
+				alreadyHasAccess,
+				hasPendingInvitation,
+			})
+			return {
+				error: 'unknown',
+				message:
+					"We couldn't confirm whether GitHub created an invitation or whether this account already has repository access.",
+			}
 		}
 		if (response.status === 422) {
-			return 'already'
+			return { ok: true, accessState: 'already_has_access' }
 		}
 		if (response.status === 404) {
 			return { error: 'not_found' }
