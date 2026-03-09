@@ -33,9 +33,10 @@ const FORM_FIELDS: ContactFieldName[] = [
 
 const CONTACT_SUBMIT_IDLE_HTML = `
   <span class="pc-action-label">
-    <span class="text-current">SEND MY BRIEF</span>
-    <span aria-hidden="true" class="opacity-50"> - </span>
-    <span class="opacity-50">USUALLY REPLIES WITHIN 1 BUSINESS DAY</span>
+    <span class="text-current md:hidden">SEND MY BRIEF</span>
+    <span class="hidden text-current md:inline">SEND MY BRIEF</span>
+    <span aria-hidden="true" class="hidden opacity-50 md:inline"> - </span>
+    <span class="hidden opacity-50 md:inline">USUALLY REPLIES WITHIN 1 BUSINESS DAY</span>
   </span>
 `
 

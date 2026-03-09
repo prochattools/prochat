@@ -79,9 +79,10 @@ const FAST_LINKS: Array<{
 
 const CONTACT_SUBMIT_IDLE_HTML = `
   <span class="pc-action-label">
-    <span class="text-current">SEND MY BRIEF</span>
-    <span aria-hidden="true" class="opacity-50"> - </span>
-    <span class="opacity-50">USUALLY REPLIES WITHIN 1 BUSINESS DAY</span>
+    <span class="text-current md:hidden">SEND MY BRIEF</span>
+    <span class="hidden text-current md:inline">SEND MY BRIEF</span>
+    <span aria-hidden="true" class="hidden opacity-50 md:inline"> - </span>
+    <span class="hidden opacity-50 md:inline">USUALLY REPLIES WITHIN 1 BUSINESS DAY</span>
   </span>
 `
 
@@ -95,20 +96,20 @@ export default function ContactPageMarkup() {
         <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
         <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
 
-        <div className="pc-marketing-hero__inner pb-10 md:pb-12">
-        <div className="grid items-start gap-6 lg:grid-cols-12 lg:gap-6 xl:gap-8">
+        <div className="pc-marketing-hero__inner pb-6 md:pb-12">
+        <div className="grid items-start gap-4 md:gap-6 lg:grid-cols-12 lg:gap-6 xl:gap-8">
           <div className="order-1 lg:col-span-5 lg:pt-2">
-            <div className="max-w-[46rem] space-y-5">
+            <div className="max-w-[46rem] space-y-3.5 md:space-y-5">
               <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-primary">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                 Contact
               </div>
 
-              <div className="space-y-4">
-                <h1 className="max-w-[15ch] font-brand text-[2.35rem] font-bold leading-[1.02] tracking-[-0.05em] text-foreground md:text-[2.8rem]">
+              <div className="space-y-2.5 md:space-y-4">
+                <h1 className="max-w-[15ch] font-brand text-[1.95rem] font-bold leading-[1.02] tracking-[-0.05em] text-foreground md:text-[2.8rem]">
                   Talk to ProChat.
                 </h1>
-                <p className="max-w-[42rem] text-[0.98rem] leading-7 text-muted-foreground">
+                <p className="max-w-[42rem] text-[0.92rem] leading-7 text-muted-foreground md:text-[0.98rem]">
                   Questions about SaaSKit, ProKit, UXKit, or Studio work? Send one message and
                   we’ll point you to the right next step without wasting time.
                 </p>
@@ -128,7 +129,7 @@ export default function ContactPageMarkup() {
               padding="compact"
               className="w-full border-border/85 bg-surface-elevated/95 shadow-elevated"
             >
-              <div className="mb-5 border-b border-border-subtle/80 pb-4">
+              <div className="mb-3 border-b border-border-subtle/80 pb-3 md:mb-5 md:pb-4">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">
                   Contact form
                 </p>
@@ -142,7 +143,7 @@ export default function ContactPageMarkup() {
 
               <form
                 data-contact-form=""
-                className="space-y-4"
+                className="space-y-3.5 md:space-y-4"
                 noValidate
                 method="post"
                 action="/api/contact"
@@ -161,7 +162,7 @@ export default function ContactPageMarkup() {
                 <input type="hidden" name="topic" value="General Question" />
                 <input type="hidden" name="companyOrProjectUrl" value="" />
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
                   <div className="space-y-1.5">
                     <label htmlFor="contact-name" className="contact-field-label">
                       Name <span aria-hidden="true" className="text-primary">*</span>
@@ -230,7 +231,7 @@ export default function ContactPageMarkup() {
                 <Button
                   data-contact-submit=""
                   type="submit"
-                  className="contact-submit-button h-11 w-full justify-center gap-2 rounded-lg text-[13px] shadow-surface hover:bg-primary/92 active:scale-[0.98]"
+                  className="contact-submit-button h-11 w-full justify-center gap-2 rounded-lg text-[13px] shadow-surface hover:bg-primary/92 active:scale-[0.98] md:text-[13px]"
                 >
                   <span
                     data-contact-submit-label=""
@@ -248,7 +249,7 @@ export default function ContactPageMarkup() {
               padding="compact"
               className="contact-community-panel border-border-subtle/85 bg-surface/92"
             >
-              <div className="space-y-2.5">
+              <div className="space-y-2 md:space-y-2.5">
                 <div className="contact-community-icon" aria-hidden="true">
                   <MessageSquare className="h-4 w-4" />
                 </div>
@@ -283,9 +284,9 @@ export default function ContactPageMarkup() {
         </div>
       </section>
 
-      <Section tone="muted" spacing="compact" className="py-16 md:py-20">
+      <Section tone="muted" spacing="compact" className="py-12 md:py-20">
         <div className="mx-auto max-w-7xl px-page">
-          <div className="grid gap-8 lg:grid-cols-12 lg:gap-8">
+          <div className="grid gap-6 md:gap-8 lg:grid-cols-12 lg:gap-8">
             <div className="space-y-6 lg:col-span-8">
               <div className="max-w-2xl space-y-3">
                 <h2 className="font-brand text-2xl font-bold tracking-[-0.02em] text-foreground md:text-[1.75rem]">

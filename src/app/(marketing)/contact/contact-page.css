@@ -43,18 +43,28 @@
 }
 
 .contact-page-root .contact-field {
-  height: 2.875rem;
+  height: 2.625rem;
   padding-inline: 0.95rem;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.4;
 }
 
 .contact-page-root .contact-textarea {
-  min-height: 8.75rem;
+  min-height: 7rem;
   padding: 0.8rem 0.95rem;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.55;
   resize: vertical;
+}
+
+@media (min-width: 768px) {
+  .contact-page-root .contact-field {
+    height: 2.875rem;
+  }
+
+  .contact-page-root .contact-textarea {
+    min-height: 8.75rem;
+  }
 }
 
 .contact-page-root .contact-field::placeholder,
