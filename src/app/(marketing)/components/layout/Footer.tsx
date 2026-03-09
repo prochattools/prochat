@@ -165,7 +165,7 @@ export const Footer: React.FC = () => {
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="mt-10 flex w-full justify-center text-center lg:mt-0 lg:w-auto lg:justify-start">
               <div className="flex min-h-[32px] w-full justify-center md:block md:min-h-0">
-                <div className="relative z-[2] mx-auto h-[30px] w-[250px] md:mx-0">
+                <div className="relative z-[2] mx-auto h-[30px] w-[250px] translate-x-3 sm:translate-x-4 md:mx-0 md:translate-x-0">
                   <a
                     href="https://status.prochat.tools/"
                     target="_blank"
