@@ -2,13 +2,13 @@
 
 ## Current Umami integration
 - Base script injection already exists in `src/app/layout.tsx` via `src/components/UmamiAnalytics.tsx`.
-- The legacy public env setup used a script URL variable alias plus `NEXT_PUBLIC_UMAMI_WEBSITE_ID`.
-- The script is loaded with `strategy="lazyOnload"`.
-- The env example contained a stale website ID before this implementation pass.
+- Public env setup uses `NEXT_PUBLIC_UMAMI_SCRIPT_URL` plus `NEXT_PUBLIC_UMAMI_WEBSITE_ID`.
+- The script is rendered once in the root layout head as a deferred Umami script tag.
+- The website ID should match the Umami property configured for ProChat.
 
 ## Current analytics layer
-- Tracking is partially centralized in `src/utils/analytics.ts`.
-- That helper already prefers `window.umami.track(...)` and falls back to other analytics globals if present.
+- Tracking is centralized in `src/utils/analytics.ts` and implemented in `src/lib/analytics/umami.ts`.
+- The helper uses `window.umami.track(...)` only and queues early events briefly until the tracker is available.
 - Event usage is fragmented:
   - `explore_kits_click`
   - `kit_view`

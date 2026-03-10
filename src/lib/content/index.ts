@@ -32,6 +32,24 @@ function asString(value: unknown, fallback = '') {
   return asOptionalString(value) || fallback
 }
 
+function asOptionalNumber(value?: unknown) {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value
+  }
+
+  if (typeof value === 'string') {
+    const trimmed = value.trim()
+    if (!trimmed) return undefined
+
+    const parsed = Number(trimmed)
+    if (Number.isFinite(parsed)) {
+      return parsed
+    }
+  }
+
+  return undefined
+}
+
 function stripMarkup(value: string) {
   return value
     .replace(/<[^>]+>/g, ' ')
@@ -148,6 +166,7 @@ async function readEntry(section: ContentSection, filePath: string, root: string
     excerptFromContent(content)
   const tags = parseList(parsed.tags)
   const keywords = parseList(parsed.keywords)
+  const order = asOptionalNumber(parsed.order)
   const publishedAt = asOptionalString(parsed.publishedAt)
   const updated = asOptionalString(parsed.updated)
 
@@ -156,10 +175,12 @@ async function readEntry(section: ContentSection, filePath: string, root: string
     title,
     description,
     slug,
+    frontmatterSlug: asOptionalString(parsed.slug),
     routeSegments,
     category: asOptionalString(parsed.category) || routeSegments[0],
     tags,
     keywords,
+    order,
     date: publishedAt || asOptionalString(parsed.date) || new Date().toISOString(),
     updated,
     author: asOptionalString(parsed.author) || 'Steve',
@@ -198,7 +219,16 @@ export async function getSectionEntries(section: ContentSection): Promise<Conten
         const validEntries = entries.filter((entry): entry is ContentEntry => Boolean(entry))
         const deduped = Array.from(new Map(validEntries.map(entry => [entry.urlPath, entry])).values())
 
-        return deduped.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        return deduped.sort((a, b) => {
+          const leftOrder = a.order ?? Number.POSITIVE_INFINITY
+          const rightOrder = b.order ?? Number.POSITIVE_INFINITY
+
+          if (leftOrder !== rightOrder) {
+            return leftOrder - rightOrder
+          }
+
+          return new Date(b.date).getTime() - new Date(a.date).getTime()
+        })
       })(),
     )
   }

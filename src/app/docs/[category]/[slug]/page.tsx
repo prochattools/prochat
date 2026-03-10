@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation'
 
 import ContentLayout from '@/components/content/ContentLayout'
-import { renderMdxContent } from '@/components/content/MDXRenderer'
 import StructuredData from '@/components/StructuredData'
 import { getSectionEntry, getSectionStaticParams, getRelatedEntries } from '@/lib/content'
+import { renderDocsMdxContent } from '@/lib/docs/nextra'
 import { getSEOTags } from '@/lib/seo/metadata'
 import { articleSchema } from '@/lib/seo/schema'
 
@@ -34,12 +34,20 @@ export default async function DocsPage({ params }: PageParams) {
   const entry = await getSectionEntry('docs', [params.category, params.slug])
   if (!entry) notFound()
   const related = await getRelatedEntries('docs', entry.urlPath)
-  const content = await renderMdxContent(entry.content)
+  let content = null
+
+  try {
+    content = await renderDocsMdxContent([params.category, params.slug], entry.content)
+  } catch {
+    notFound()
+  }
 
   return (
     <>
       <StructuredData id={`schema-docs-${entry.slug}`} data={articleSchema({ title: entry.title, description: entry.description, urlPath: entry.urlPath, datePublished: entry.date, dateModified: entry.updated })} />
-      <ContentLayout entry={entry} related={related}>{content}</ContentLayout>
+      <ContentLayout entry={entry} related={related}>
+        {content}
+      </ContentLayout>
     </>
   )
 }

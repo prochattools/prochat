@@ -1,0 +1,40 @@
+{
+  "products": [
+    {
+      "id": "prokit",
+      "title": "ProKit",
+      "category": "boilerplate",
+      "docsPath": "src/content/docs/prokit",
+      "template": "boilerplate",
+      "apiSource": "typescript",
+      "apiSourcePaths": ["src/lib/analytics", "src/lib/store", "src/helpers"]
+    },
+    {
+      "id": "saaskit",
+      "title": "SaaSKit",
+      "category": "boilerplate",
+      "docsPath": "src/content/docs/saaskit",
+      "template": "platform",
+      "apiSource": "none",
+      "apiSourcePaths": []
+    },
+    {
+      "id": "waaskit",
+      "title": "WaaSKit",
+      "category": "platform",
+      "docsPath": "src/content/docs/waaskit",
+      "template": "platform",
+      "apiSource": "none",
+      "apiSourcePaths": []
+    },
+    {
+      "id": "future",
+      "title": "Future Products",
+      "category": "future",
+      "docsPath": "src/content/docs/future",
+      "template": "api",
+      "apiSource": "none",
+      "apiSourcePaths": []
+    }
+  ]
+}

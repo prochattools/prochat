@@ -16,10 +16,12 @@ export type ContentEntry = {
   title: string
   description: string
   slug: string
+  frontmatterSlug?: string
   routeSegments: string[]
   category?: string
   tags: string[]
   keywords: string[]
+  order?: number
   date: string
   updated?: string
   author: string

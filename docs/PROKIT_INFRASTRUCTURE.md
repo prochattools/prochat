@@ -1,11 +1,11 @@
-# PROKIT Infrastructure Guide
+# ProChat Infrastructure Guide
 
-ProKit ships with a scripted, environment-safe way to provision tenant schemas in existing databases, run migrations, and manage single-tenant deployments. This keeps humans and automation on the same rails: call the documented commands instead of inventing SQL.
+The ProChat system uses SaaSKit's scripted, environment-safe approach to provision tenant schemas in existing databases, run migrations, and manage single-tenant deployments. This keeps humans and automation on the same rails: call the documented commands instead of inventing SQL.
 
 ## Architecture snapshot
 - One already existing Postgres database per environment.  
 - Production uses the already existing Supabase Postgres database.  
-- ProKit scripts never create databases; they provision schema + role only.  
+- The platform scripts never create databases; they provision schema + role only.  
 - One app → one schema (`tenant_<slug>`) → one DB user (`tenant_<slug>_user`).  
 - Tenant DB users are restricted to their own schema; access to `public` and other `tenant_*` schemas is revoked during provisioning.
 - Registry table `public.tenants` is infra-only (provision/cleanup), never read by runtime.  
@@ -49,11 +49,11 @@ AI/agents must use these commands (or MCP wrappers), not raw SQL.
   - `SYSTEM_DATABASE_URL=postgresql://postgres:<admin>@localhost:5433/postgres?schema=public`
   - `SHADOW_DATABASE_URL=postgresql://postgres:<admin>@localhost:5433/postgres?schema=public`
 
-## Starting a new project
+## Starting the ProChat system locally
 1) Clone + install  
 ```
-git clone https://github.com/prochattools/prokit-core.git my-new-app
-cd my-new-app
+git clone https://github.com/prochattools/prochat.git prochat
+cd prochat
 npm install
 ```
 2) Provision  

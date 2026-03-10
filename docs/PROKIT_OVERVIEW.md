@@ -1,6 +1,6 @@
-# ProKit Overview
+# ProChat Platform Overview
 
-ProKit is ProChat’s internal SaaS starter (built by Steve Westhoek) for launching micro-SaaS apps quickly. It preserves the existing Next.js + TypeScript + Tailwind/shadcn + Clerk + Postgres/Prisma + Stripe + Resend + n8n stack while standardizing infra and workflows.
+ProChat is the active SaaS system in this repository. It is built on SaaSKit conventions, and SaaSKit itself inherits the smaller shared ProKit base. This overview captures the platform contracts, infra expectations, and working rules that keep the ProChat system stable while standardizing workflows.
 
 ## Quick links
 - Invariants: `docs/PROKIT_INVARIANTS.md`

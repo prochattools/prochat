@@ -29,6 +29,11 @@ type UmamiTracker = {
 }
 
 const isDev = process.env.NODE_ENV === 'development'
+const FLUSH_INTERVAL_MS = 500
+const MAX_FLUSH_ATTEMPTS = 20
+const pendingEvents: Array<{ name: AnalyticsEventName; payload: AnalyticsPayload }> = []
+let flushTimer: number | null = null
+let flushAttempts = 0
 
 function isBrowser() {
   return typeof window !== 'undefined'
@@ -48,6 +53,63 @@ function getStorageKey(key: string) {
   return `umami:${key}`
 }
 
+function sendToUmami(tracker: UmamiTracker, name: AnalyticsEventName, payload: AnalyticsPayload) {
+  if (Object.keys(payload).length > 0) {
+    tracker.track?.(name, payload)
+  } else {
+    tracker.track?.(name)
+  }
+}
+
+function clearFlushTimer() {
+  if (!isBrowser() || flushTimer === null) return
+  window.clearTimeout(flushTimer)
+  flushTimer = null
+}
+
+function scheduleFlush() {
+  if (!isBrowser() || flushTimer !== null || pendingEvents.length === 0) {
+    return
+  }
+
+  flushTimer = window.setTimeout(() => {
+    flushTimer = null
+    flushPendingEvents()
+  }, FLUSH_INTERVAL_MS)
+}
+
+function flushPendingEvents() {
+  if (!isBrowser() || pendingEvents.length === 0) {
+    clearFlushTimer()
+    return
+  }
+
+  const umami = getUmamiTracker()
+  if (typeof umami?.track !== 'function') {
+    flushAttempts += 1
+    if (flushAttempts < MAX_FLUSH_ATTEMPTS) {
+      scheduleFlush()
+      return
+    }
+
+    if (isDev) {
+      console.warn('[umami] tracker unavailable, dropping queued events', pendingEvents)
+    }
+    pendingEvents.length = 0
+    clearFlushTimer()
+    return
+  }
+
+  flushAttempts = 0
+  clearFlushTimer()
+
+  while (pendingEvents.length > 0) {
+    const nextEvent = pendingEvents.shift()
+    if (!nextEvent) continue
+    sendToUmami(umami, nextEvent.name, nextEvent.payload)
+  }
+}
+
 export function trackEvent(
   name: AnalyticsEventName,
   payload: AnalyticsPayload = {},
@@ -56,48 +118,16 @@ export function trackEvent(
 
   const umami = getUmamiTracker()
   if (typeof umami?.track === 'function') {
-    if (Object.keys(payload).length > 0) {
-      umami.track(name, payload)
-    } else {
-      umami.track(name)
-    }
+    sendToUmami(umami, name, payload)
+    flushPendingEvents()
     return
   }
 
-  const gtag = (
-    window as typeof window & {
-      gtag?: (...args: unknown[]) => void
-    }
-  ).gtag
-  if (typeof gtag === 'function') {
-    gtag('event', name, payload)
-    return
-  }
-
-  const plausible = (
-    window as typeof window & {
-      plausible?: (event: string, options?: { props?: AnalyticsPayload }) => void
-    }
-  ).plausible
-  if (typeof plausible === 'function') {
-    plausible(name, { props: payload })
-    return
-  }
-
-  const analyticsTrack = (
-    window as typeof window & {
-      analytics?: {
-        track?: (event: string, props?: AnalyticsPayload) => void
-      }
-    }
-  ).analytics?.track
-  if (typeof analyticsTrack === 'function') {
-    analyticsTrack(name, payload)
-    return
-  }
+  pendingEvents.push({ name, payload })
+  scheduleFlush()
 
   if (isDev) {
-    console.debug('[analytics]', name, payload)
+    console.debug('[umami:queued]', name, payload)
   }
 }
 

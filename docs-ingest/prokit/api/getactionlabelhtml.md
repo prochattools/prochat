@@ -1,0 +1,41 @@
+<!-- GENERATED FILE - DO NOT EDIT -->
+---
+title: Getactionlabelhtml
+description: Documentation for Getactionlabelhtml.
+category: boilerplate
+slug: getactionlabelhtml
+order: 100
+sourceRepo: prokit
+generator: auto
+generatedAt: 2026-03-10T23:47:16.811Z
+sourceCommit: null
+keywords:
+  - Boilerplate
+  - Getactionlabelhtml
+  - boilerplate
+---
+<!-- AI:overview:start -->
+## Overview
+Documentation for Getactionlabelhtml.
+
+Keywords: Boilerplate, Getactionlabelhtml, boilerplate
+<!-- AI:overview:end -->
+
+<!-- AI:installation:start -->
+## Installation
+- Step 1: Install dependencies
+- Step 2: Configure getactionlabelhtml
+- Step 3: Validate the boilerplate environment
+<!-- AI:installation:end -->
+
+<!-- AI:usage:start -->
+## Usage
+Describe how to use getactionlabelhtml within boilerplate, including any common workflows or edge cases.
+<!-- AI:usage:end -->
+
+<!-- AI:examples:start -->
+## Examples
+```bash
+# Example usage for getactionlabelhtml
+```
+<!-- AI:examples:end -->

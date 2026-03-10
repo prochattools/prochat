@@ -43,7 +43,7 @@ export const CONTENT_SECTIONS: Record<ContentSection, ContentSectionConfig> = {
     routeMode: 'nested',
     paramNames: ['category', 'slug'],
     schemaType: 'article',
-    roots: [fromRoot('src', 'lib', 'content', 'docs')],
+    roots: [fromRoot('src', 'content', 'docs')],
     indexPath: '/docs',
     cta: {
       title: 'Need the production context?',

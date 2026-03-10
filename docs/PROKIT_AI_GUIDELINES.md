@@ -1,9 +1,9 @@
-# PROKIT AI Guidelines
+# ProChat AI Guidelines
 
-These rules define how AI assistants and automation may interact with ProKit. ProKit is a reusable single-tenant SaaS foundation, not a finished app. The goal is to let AI help while protecting the architecture.
+These rules define how AI assistants and automation may interact with the ProChat system. ProChat is the active SaaS platform in this repository. It is built on SaaSKit conventions, and SaaSKit inherits its smallest shared boilerplate layer from ProKit. The goal is to let AI help while protecting the architecture.
 
 ## 1) Purpose & scope
-ProKit provides a repeatable starting point for new SaaS apps, including infra contracts for provisioning, migrations, and env setup. These guidelines apply to code, docs, database schema/migrations, and infra scripts.
+The ProChat platform reuses SaaSKit contracts for provisioning, migrations, and environment setup. These guidelines apply to code, docs, database schema/migrations, and infra scripts inside this repository.
 
 ## 2) Core architectural invariants (do not break)
 ### Single-tenant runtime
@@ -55,7 +55,7 @@ Allowed: add models/fields useful for future SaaS apps; generate migrations when
 Forbidden: remove core models, change IDs/PKs without explicit instruction.
 
 ## 5) Boilerplate vs app-specific logic
-ProKit must remain generic.
+The underlying SaaSKit and ProKit layers must remain generic.
 - Allowed: reusable dashboards, billing scaffolding, onboarding patterns, generic APIs.  
 - Not allowed: niche-specific branding/flows tightly coupled to one vertical.
 
@@ -67,7 +67,7 @@ ProKit must remain generic.
 - If anything conflicts with this file, this file wins unless a human explicitly approves the change.
 
 ## 7) Summary
-ProKit is a stable SaaS starter. AI may improve features, fix bugs, and enhance DX, but must not:
+The ProChat platform runs on a stable SaaSKit foundation. AI may improve features, fix bugs, and enhance DX, but must not:
 - break single-tenant architecture  
 - change env contracts  
 - alter provisioning semantics  

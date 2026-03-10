@@ -1,6 +1,6 @@
-# PROKIT Database Guide
+# ProChat Database Guide
 
-This is the authoritative reference for how ProKit talks to Postgres: the schema-per-tenant shape, required env vars, and the provisioning/migration/cleanup scripts. Everything else should defer here for database behavior.
+This is the authoritative reference for how the ProChat system talks to Postgres: the schema-per-tenant shape, required env vars, and the provisioning/migration/cleanup scripts. The implementation follows the SaaSKit single-tenant database model, and everything else should defer here for database behavior.
 
 ## Objectives
 - Single, consistent model for local and production.
@@ -16,7 +16,7 @@ This is the authoritative reference for how ProKit talks to Postgres: the schema
 ### Postgres instances
 - Each environment uses an already existing Postgres database.
 - Production uses the already existing Supabase Postgres database.
-- No database provisioning is performed by ProKit scripts.
+- No database provisioning is performed by ProChat platform scripts.
 - Per-app schema: `tenant_<slug>`.
 - Per-app DB user: `tenant_<slug>_user` scoped to that schema.
 - Registry lives in `public.tenants` for infra (provision/cleanup) only.

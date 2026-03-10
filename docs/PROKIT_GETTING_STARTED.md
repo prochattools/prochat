@@ -1,6 +1,6 @@
-# ProKit Getting Started
+# ProChat Getting Started
 
-Follow these steps to run ProKit locally and complete the first sign-in/checkout flow.
+Follow these steps to run the ProChat system locally and complete the first sign-in/checkout flow.
 
 ## Prerequisites
 - Node.js + npm
@@ -9,8 +9,8 @@ Follow these steps to run ProKit locally and complete the first sign-in/checkout
 
 ## 1) Clone & install
 ```bash
-git clone https://github.com/prochattools/prokit-core.git prokit-core
-cd prokit-core
+git clone https://github.com/prochattools/prochat.git prochat
+cd prochat
 npm install
 ```
 
@@ -26,7 +26,7 @@ Create `.env` (or let `npm run dev` generate it) and set:
 - `STRIPE_SECRET_KEY_TEST`, `STRIPE_SECRET_KEY_LIVE` – server Stripe keys
 - `STRIPE_WEBHOOK_SECRET_TEST`, `STRIPE_WEBHOOK_SECRET_LIVE` – Stripe webhook signing secrets
 - `NEXT_PUBLIC_APP_URL` – app base URL (e.g., http://localhost:3000)
-- `NEXT_PUBLIC_UMAMI_SRC`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` – optional public analytics config for Umami
+- `NEXT_PUBLIC_UMAMI_SCRIPT_URL`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` – optional public analytics config for Umami
 - Optional: MAKE_*, N8N_*, RESEND_API_KEY, WP_REST_ENDPOINT, MCP_* as needed
 
 Reference: `.env.example`.

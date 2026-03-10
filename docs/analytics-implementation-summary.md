@@ -25,7 +25,7 @@
 ## Umami base integration
 - Global script injection remains centralized in `src/app/layout.tsx` through `src/components/UmamiAnalytics.tsx`.
 - Public env contract is now:
-  - `NEXT_PUBLIC_UMAMI_SRC=https://umami.prochat.tools/script.js`
+  - `NEXT_PUBLIC_UMAMI_SCRIPT_URL=https://umami.prochat.tools/script.js`
   - `NEXT_PUBLIC_UMAMI_WEBSITE_ID=5ceba17d-4125-4a75-a1f6-9add5c4b1803`
 - Legacy script URL alias usage was removed from the runtime component to keep one canonical public configuration path.
 
@@ -86,7 +86,7 @@
 
 ## Verification
 1. Confirm envs are set:
-   - `NEXT_PUBLIC_UMAMI_SRC`
+   - `NEXT_PUBLIC_UMAMI_SCRIPT_URL`
    - `NEXT_PUBLIC_UMAMI_WEBSITE_ID`
 2. Open the site and verify one Umami script tag is present in the document head.
 3. In Umami live view, verify:

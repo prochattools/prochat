@@ -1,6 +1,6 @@
-# PROKIT Invariants
+# ProChat Platform Invariants
 
-This file captures the contracts that must stay stable while rebranding the boilerplate into **ProKit**. Behavior stays the same; wording and structure can change later phases.
+This file captures the contracts that must stay stable in the ProChat system. ProChat runs on SaaSKit conventions and retains some legacy `PROKIT_*` document names in this internal folder for continuity, but the active product in this repository is ProChat.
 
 ## Environment Contract (must exist unless marked optional)
 - Core DB + runtime  
@@ -11,7 +11,7 @@ This file captures the contracts that must stay stable while rebranding the boil
   - `TENANT_DB_PASSWORD` – tenant DB user password (required in production; defaults to `devpass` locally).
 - App host + URLs  
   - `NEXT_PUBLIC_APP_URL` – base URL for links and metadata.  
-  - `NEXT_PUBLIC_UMAMI_SRC`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` – optional public analytics script config for Umami pageviews + custom events.  
+  - `NEXT_PUBLIC_UMAMI_SCRIPT_URL`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` – optional public analytics script config for Umami pageviews + custom events.  
   - `PORT` (Dokploy) – app listen port; default 3000 in scripts/config.
 - Auth (Clerk)  
   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` – turn on Clerk middleware + components.  

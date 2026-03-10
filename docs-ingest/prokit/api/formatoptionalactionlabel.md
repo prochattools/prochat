@@ -1,0 +1,41 @@
+<!-- GENERATED FILE - DO NOT EDIT -->
+---
+title: Formatoptionalactionlabel
+description: Documentation for Formatoptionalactionlabel.
+category: boilerplate
+slug: formatoptionalactionlabel
+order: 100
+sourceRepo: prokit
+generator: auto
+generatedAt: 2026-03-10T23:47:16.810Z
+sourceCommit: null
+keywords:
+  - Boilerplate
+  - Formatoptionalactionlabel
+  - boilerplate
+---
+<!-- AI:overview:start -->
+## Overview
+Documentation for Formatoptionalactionlabel.
+
+Keywords: Boilerplate, Formatoptionalactionlabel, boilerplate
+<!-- AI:overview:end -->
+
+<!-- AI:installation:start -->
+## Installation
+- Step 1: Install dependencies
+- Step 2: Configure formatoptionalactionlabel
+- Step 3: Validate the boilerplate environment
+<!-- AI:installation:end -->
+
+<!-- AI:usage:start -->
+## Usage
+Describe how to use formatoptionalactionlabel within boilerplate, including any common workflows or edge cases.
+<!-- AI:usage:end -->
+
+<!-- AI:examples:start -->
+## Examples
+```bash
+# Example usage for formatoptionalactionlabel
+```
+<!-- AI:examples:end -->
