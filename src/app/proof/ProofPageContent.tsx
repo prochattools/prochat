@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { Check, Users } from 'lucide-react'
 import { trackEvent } from '@/utils/analytics'
 import { Scaffolding } from '@/app/(marketing)/components/ui/Scaffolding'
@@ -41,12 +41,12 @@ const Container = ({ className = '', children }: ContainerProps) => (
 )
 
 export default function ProofPageContent() {
-	useEffect(() => {
-		trackEvent('proof_view', { page: '/proof' })
-	}, [])
-
 	const handleCtaClick = (label: string) => () => {
-		trackEvent('cta_click', { location: 'proof_page', cta: label })
+		trackEvent('product_cta_click', {
+			location: 'proof_page',
+			source_page: '/proof',
+			cta: label,
+		})
 	}
 
 	return (

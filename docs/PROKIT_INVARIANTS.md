@@ -11,7 +11,7 @@ This file captures the contracts that must stay stable while rebranding the boil
   - `TENANT_DB_PASSWORD` – tenant DB user password (required in production; defaults to `devpass` locally).
 - App host + URLs  
   - `NEXT_PUBLIC_APP_URL` – base URL for links and metadata.  
-  - `NEXT_PUBLIC_UMAMI_SCRIPT_URL`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` – optional public analytics script config for Umami pageviews + custom events.  
+  - `NEXT_PUBLIC_UMAMI_SRC`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` – optional public analytics script config for Umami pageviews + custom events.  
   - `PORT` (Dokploy) – app listen port; default 3000 in scripts/config.
 - Auth (Clerk)  
   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` – turn on Clerk middleware + components.  

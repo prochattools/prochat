@@ -6,44 +6,79 @@ import { Panel, Section } from '@/components/ui/surface'
 
 const EVENTS = [
 	{
-		name: 'cta_click',
-		description: 'Primary call-to-action clicks across marketing and kit pages.',
-		payload: '{ location: "string", cta: "string", href?: "string" }',
+		name: 'lead_magnet_view',
+		description: 'First viewed state for the SaaS Starting Point lead magnet flow.',
+		payload: '{ source_page: "/starting-point", asset: "preparation_framework" }',
 	},
 	{
-		name: 'kit_view',
-		description: 'Kit detail page impressions (per kit).',
-		payload: '{ kit: "prokit|saaskit|waaskit", page: "/kits/..." }',
+		name: 'lead_magnet_submit',
+		description: 'Email submission attempt for the Starting Point lead magnet.',
+		payload: '{ source_page: "/starting-point", asset: "preparation_framework" }',
+	},
+	{
+		name: 'lead_magnet_success',
+		description: 'Successful lead magnet signup after provider acceptance.',
+		payload: '{ source_page: "/starting-point", asset: "preparation_framework" }',
+	},
+	{
+		name: 'waitlist_view',
+		description: 'First viewed state for the roadmap waitlist flow.',
+		payload: '{ source_page: "string" }',
+	},
+	{
+		name: 'waitlist_submit',
+		description: 'Waitlist form submit attempt with selected roadmap products.',
+		payload: '{ source_page: "string", product: "uxkit|waaskit|prochat-os|other", products: "comma,separated" }',
+	},
+	{
+		name: 'waitlist_success',
+		description: 'Successful waitlist signup.',
+		payload: '{ source_page: "string", product: "uxkit|waaskit|prochat-os|other", products: "comma,separated" }',
+	},
+	{
+		name: 'nav_cta_click',
+		description: 'High-intent primary navigation CTA click into the SaaSKit funnel.',
+		payload: '{ location: "header_capsule|mobile_header_capsule|mobile_header_drawer", product: "saaskit", source_page: "string" }',
+	},
+	{
+		name: 'product_cta_click',
+		description: 'Meaningful product-page CTA click before checkout.',
+		payload: '{ product: "prokit|saaskit|waaskit", location: "string", cta: "string", source_page: "string" }',
+	},
+	{
+		name: 'pricing_view',
+		description: 'Pricing section became visible on a commercial product page.',
+		payload: '{ product: "prokit|saaskit", location: "pricing_section", source_page: "string" }',
 	},
 	{
 		name: 'checkout_start',
-		description: 'Intent to purchase a kit via checkout.',
-		payload: '{ kit: "string", page: "/kits/..." }',
+		description: 'Checkout initiation for a paid product.',
+		payload: '{ product: "prokit|saaskit", location: "string", cta: "string", source_page: "string", value: number, currency: "USD" }',
 	},
 	{
-		name: 'proof_view',
-		description: 'Proof page view for evidence inspection.',
-		payload: '{ page: "/proof" }',
+		name: 'checkout_success',
+		description: 'Successful return to the checkout completion page.',
+		payload: '{ product: "prokit|saaskit", source_page: "string", value: number, currency: "USD" }',
 	},
 	{
-		name: 'proof_evidence_click',
-		description: 'Evidence card click from the proof page.',
-		payload: '{ id: "string", href: "string" }',
-	},
-	{
-		name: 'explore_kits_click',
-		description: 'Primary Explore kits CTA click from the global navigation.',
-		payload: '{ location: "navbar|mobile_navbar" }',
+		name: 'checkout_cancel',
+		description: 'User returned from Stripe without completing checkout.',
+		payload: '{ product: "prokit|saaskit", source_page: "string", value: number, currency: "USD" }',
 	},
 	{
 		name: 'contact_submit',
 		description: 'Successful submission of the main contact form.',
-		payload: '{ form: "contact" }',
+		payload: '{ form: "contact", source_page: "/contact" }',
 	},
 	{
 		name: 'blog_cta_click',
 		description: 'Key conversion CTA click from blog index and blog article footers.',
 		payload: '{ cta_type: "explore_kits|contact|related_article|blog|link", location: "blog_index_footer|blog_post_footer", href: "string" }',
+	},
+	{
+		name: 'outbound_funnel_click',
+		description: 'Outbound click into an external or bridge funnel with commercial intent.',
+		payload: '{ location: "string", href: "string", product?: "waaskit|other", destination?: "string" }',
 	},
 ]
 

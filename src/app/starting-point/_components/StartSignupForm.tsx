@@ -1,8 +1,9 @@
 'use client'
 
-import { FormEvent, useId, useState } from 'react'
+import { FormEvent, useEffect, useId, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
 
 interface StartSignupFormProps {
   buttonLabel?: string
@@ -18,6 +19,13 @@ export default function StartSignupForm({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+
+  useEffect(() => {
+    trackEventOncePerSession('lead_magnet_view', 'lead_magnet_view:/starting-point', {
+      source_page: '/starting-point',
+      asset: 'preparation_framework',
+    })
+  }, [])
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -37,6 +45,10 @@ export default function StartSignupForm({
     }
 
     setIsSubmitting(true)
+    trackEvent('lead_magnet_submit', {
+      source_page: '/starting-point',
+      asset: 'preparation_framework',
+    })
 
     try {
       const response = await fetch('/api/mailerlite/subscribe', {
@@ -61,6 +73,10 @@ export default function StartSignupForm({
       setSuccess(
         payload.message || 'Check your inbox — your copy is on its way.'
       )
+      trackEvent('lead_magnet_success', {
+        source_page: '/starting-point',
+        asset: 'preparation_framework',
+      })
       setEmail('')
     } catch (submitError) {
       console.error('MailerLite subscription error:', submitError)

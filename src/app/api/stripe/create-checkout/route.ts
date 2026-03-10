@@ -79,7 +79,7 @@ export async function POST(req: Request) {
       : `${origin}/dashboard?session_id={CHECKOUT_SESSION_ID}`;
 
     const cancelUrl = productSlug
-      ? `${origin}/kits/${productSlug}`
+      ? `${origin}/kits/${productSlug}?checkout=cancelled&session_id={CHECKOUT_SESSION_ID}`
       : `${origin}/cancel?session_id={CHECKOUT_SESSION_ID}`;
 
     const session = await stripe.checkout.sessions.create({

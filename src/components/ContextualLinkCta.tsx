@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Panel } from '@/components/ui/surface'
+import type { AnalyticsEventName } from '@/utils/analytics'
 import { trackEvent } from '@/utils/analytics'
 
 type CtaLink = {
@@ -11,7 +12,7 @@ type CtaLink = {
 }
 
 type AnalyticsContext = {
-  eventName: string
+  eventName: AnalyticsEventName
   location: string
 }
 

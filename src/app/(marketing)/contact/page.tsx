@@ -251,7 +251,10 @@ export default function ContactPage() {
         }
 
         form.reset()
-        trackEvent('contact_submit', { form: 'contact' })
+        trackEvent('contact_submit', {
+          form: 'contact',
+          source_page: '/contact',
+        })
         setStatus(
           'success',
           json?.message ||

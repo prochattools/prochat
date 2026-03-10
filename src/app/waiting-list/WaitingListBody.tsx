@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { waitlistSubmissionSchema } from '@/lib/waitlist/schema'
+import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
 
 import './waitlist-page.css'
 import WaitlistPageMarkup from './WaitlistPageMarkup'
@@ -35,6 +36,14 @@ export default function WaitingListBody() {
     if (!form || !emailInput || productInputs.length === 0 || !submitButton || !submitLabel || !statusEl) {
       return
     }
+
+    const sourcePage = window.location.pathname
+    trackEventOncePerSession('waitlist_view', `waitlist_view:${sourcePage}`, {
+      source_page: sourcePage,
+    })
+
+    const getPrimaryProduct = (products: string[]) =>
+      products.length === 1 ? products[0] : 'other'
 
     const setStatus = (type: 'idle' | 'success' | 'error', message = '') => {
       statusEl.textContent = message
@@ -150,6 +159,11 @@ export default function WaitingListBody() {
       }
 
       setSubmitting(true)
+      trackEvent('waitlist_submit', {
+        source_page: sourcePage,
+        product: getPrimaryProduct(validation.data.products),
+        products: validation.data.products.join(','),
+      })
 
       try {
         const response = await fetch('/api/waitlist', {
@@ -178,6 +192,11 @@ export default function WaitingListBody() {
         }
 
         form.reset()
+        trackEvent('waitlist_success', {
+          source_page: sourcePage,
+          product: getPrimaryProduct(validation.data.products),
+          products: validation.data.products.join(','),
+        })
         setStatus('success', json?.message || "You're on the ProChat waitlist.")
       } catch (error) {
         setStatus(

@@ -1,18 +1,21 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
 import HeroBadge from '@/components/ui/hero-badge'
 import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
 import { handleCheckoutProcess } from '@/helpers/checkout'
 import { useUser } from '@/libs/safeClerkHooks'
-import { trackEvent } from '@/utils/analytics'
+import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
 import { FeatureIcon } from './_components/FeatureIcon'
 
 interface ProKitPageContentProps {
   priceId: string | null
 }
+
+const PROKIT_PRICE = 97
+const PRICE_CURRENCY = 'USD'
 
 const techSpecs = [
   {
@@ -75,29 +78,76 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
   const { isLoaded, isSignedIn, user } = useUser()
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const [, setCheckoutError] = useState<string | null>(null)
+  const hasTrackedPricingView = useRef(false)
 
   useEffect(() => {
-    trackEvent('kit_view', { kit: 'prokit', page: '/kits/prokit' })
+    const pricingSection = document.getElementById('pricing')
+    if (!pricingSection) return
+
+    const observer = new IntersectionObserver(
+      entries => {
+        const entry = entries[0]
+        if (!entry?.isIntersecting || hasTrackedPricingView.current) {
+          return
+        }
+
+        hasTrackedPricingView.current = true
+        trackEvent('pricing_view', {
+          product: 'prokit',
+          source_page: '/kits/prokit',
+          location: 'pricing_section',
+        })
+      },
+      { threshold: 0.45 },
+    )
+
+    observer.observe(pricingSection)
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search)
+    if (searchParams.get('checkout') !== 'cancelled') return
+
+    trackEventOncePerSession(
+      'checkout_cancel',
+      `checkout_cancel:prokit:${searchParams.get('session_id') || 'no-session'}`,
+      {
+        product: 'prokit',
+        value: PROKIT_PRICE,
+        currency: PRICE_CURRENCY,
+        source_page: '/kits/prokit',
+      },
+    )
   }, [])
 
   const handleHeroCtaClick = useCallback(() => {
-    trackEvent('cta_click', {
-      kit: 'prokit',
-      cta: 'hero_buy_prokit',
-      page: '/kits/prokit',
+    trackEvent('product_cta_click', {
+      product: 'prokit',
+      location: 'hero_cta',
+      cta: 'buy_prokit',
+      source_page: '/kits/prokit',
+    })
+  }, [])
+
+  const handleComparisonCtaClick = useCallback(() => {
+    trackEvent('product_cta_click', {
+      product: 'saaskit',
+      location: 'comparison_cta',
+      cta: 'see_saaskit',
+      source_page: '/kits/prokit',
     })
   }, [])
 
   const handleCheckoutClick = useCallback(() => {
-    trackEvent('cta_click', {
-      kit: 'prokit',
-      cta: 'pricing_get_prokit',
-      page: '/kits/prokit',
-    })
     trackEvent('checkout_start', {
-      kit: 'prokit',
-      cta: 'pricing_get_prokit',
-      page: '/kits/prokit',
+      product: 'prokit',
+      location: 'pricing_section',
+      cta: 'buy_prokit',
+      source_page: '/kits/prokit',
+      value: PROKIT_PRICE,
+      currency: PRICE_CURRENCY,
     })
 
     if (!priceId || isCheckingOut) return
@@ -166,7 +216,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
               </a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="/kits/saaskit">See SaaSKit</a>
+              <a href="/kits/saaskit" onClick={handleComparisonCtaClick}>See SaaSKit</a>
             </Button>
           </div>
         </div>
@@ -634,10 +684,11 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           </p>
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
             <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
-              <a href="#pricing">Buy ProKit</a>
+              <a href="#pricing" onClick={handleHeroCtaClick}>Buy ProKit</a>
             </Button>
             <a
               href="/kits/saaskit"
+              onClick={handleComparisonCtaClick}
               className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
             >
               See SaaSKit

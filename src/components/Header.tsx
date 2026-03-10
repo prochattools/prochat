@@ -83,7 +83,13 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 			<div className="justify-self-end">
 				<Link
 					href="/kits/saaskit"
-					onClick={() => trackEvent('explore_kits_click', { location: 'header_capsule' })}
+					onClick={() =>
+						trackEvent('nav_cta_click', {
+							location: 'header_capsule',
+							product: 'saaskit',
+							source_page: pathname,
+						})
+					}
 					className={cn(
 						buttonVariants({ variant: 'nav', size: 'sm' }),
 						'h-10 origin-center scale-[1.15] rounded-[var(--pc-button-radius)] px-5 font-mono text-[0.95rem] font-bold tracking-[0.04em] text-white [font-variant-ligatures:none]',
@@ -110,7 +116,13 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 				>
 					<Link
 						href="/kits/saaskit"
-						onClick={() => trackEvent('explore_kits_click', { location: 'mobile_header_capsule' })}
+						onClick={() =>
+							trackEvent('nav_cta_click', {
+								location: 'mobile_header_capsule',
+								product: 'saaskit',
+								source_page: pathname,
+							})
+						}
 					>
 						<span className="whitespace-nowrap">Start with SaaSKit</span>
 					</Link>
@@ -202,7 +214,11 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 									<Link
 										href="/kits/saaskit"
 										onClick={() => {
-											trackEvent('explore_kits_click', { location: 'mobile_header_drawer' })
+											trackEvent('nav_cta_click', {
+												location: 'mobile_header_drawer',
+												product: 'saaskit',
+												source_page: pathname,
+											})
 											setOpen(false)
 										}}
 									>

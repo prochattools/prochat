@@ -2,8 +2,9 @@
 
 import Link from 'next/link'
 import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from '@/helpers/action-label'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { trackEventOncePerSession } from '@/utils/analytics'
 
 import {
 	isValidGithubUsernameInput,
@@ -35,12 +36,18 @@ const productLabelMap: Record<ProductSlug, string> = {
 	saaskit: 'SaaSKit',
 }
 
+const productValueMap: Record<ProductSlug, number> = {
+	prokit: 97,
+	saaskit: 247,
+}
+
 export default function KitAccessFinishClient({
 	productSlug,
 }: KitAccessFinishClientProps) {
 	const searchParams = useSearchParams()
 	const sessionId = searchParams?.get('session_id')?.trim() || ''
 	const productLabel = productLabelMap[productSlug]
+	const productValue = productValueMap[productSlug]
 	const claimEndpoint = `/api/store/${productSlug}/claim`
 
 	const [username, setUsername] = useState('')
@@ -59,6 +66,23 @@ export default function KitAccessFinishClient({
 	const canSubmitEmailFallback = useMemo(() => {
 		return !!email.trim() && isValidGithubUsernameInput(username) && !submitting
 	}, [email, username, submitting])
+
+	useEffect(() => {
+		if (!sessionId) {
+			return
+		}
+
+		trackEventOncePerSession(
+			'checkout_success',
+			`checkout_success:${productSlug}:${sessionId}`,
+			{
+				product: productSlug,
+				value: productValue,
+				currency: 'USD',
+				source_page: `/kits/${productSlug}/finish`,
+			},
+		)
+	}, [productSlug, productValue, sessionId])
 
 	async function submitClaim(payload: {
 		session_id?: string

@@ -1,15 +1,15 @@
 'use client'
 
 import { MouseEvent } from 'react'
-import { trackEvent } from '@/utils/analytics'
+import { trackEvent, type AnalyticsEventName } from '@/utils/analytics'
 
 type TrackedOutboundLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-	eventName?: string
+	eventName?: AnalyticsEventName
 	eventPayload?: Parameters<typeof trackEvent>[1]
 }
 
 const TrackedOutboundLink = ({
-	eventName = 'cta_click',
+	eventName = 'outbound_funnel_click',
 	eventPayload = {},
 	onClick,
 	...props

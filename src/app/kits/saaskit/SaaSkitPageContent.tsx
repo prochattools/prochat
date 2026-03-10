@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
 import ContextualLinkCta from '@/components/ContextualLinkCta'
 import HeroBadge from '@/components/ui/hero-badge'
@@ -8,12 +8,15 @@ import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
 import { handleCheckoutProcess } from '@/helpers/checkout'
 import { useUser } from '@/libs/safeClerkHooks'
-import { trackEvent } from '@/utils/analytics'
+import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
 import { FeatureIcon } from './_components/FeatureIcon'
 
 interface SaaSkitPageContentProps {
   priceId: string | null
 }
+
+const SAASKIT_PRICE = 247
+const PRICE_CURRENCY = 'USD'
 
 const techSpecs = [
   {
@@ -72,33 +75,101 @@ const techSpecs = [
   },
 ]
 
+const comparisonData = [
+  {
+    metric: 'Time Cost',
+    manual: 'Weeks / Months',
+    saasKit: 'Immediate',
+    iconName: 'schedule',
+  },
+  {
+    metric: 'Error Cost',
+    manual: 'High (Unknowns)',
+    saasKit: 'Minimal (Verified)',
+    iconName: 'bug-report',
+  },
+  {
+    metric: 'Confidence Cost',
+    manual: 'Fragile / Anxious',
+    saasKit: 'Stable / Focused',
+    iconName: 'psychology',
+  },
+]
+
 const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
   const { isLoaded, isSignedIn, user } = useUser()
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const [, setCheckoutError] = useState<string | null>(null)
+  const hasTrackedPricingView = useRef(false)
 
   useEffect(() => {
-    trackEvent('kit_view', { kit: 'saaskit', page: '/kits/saaskit' })
+    const pricingSection = document.getElementById('pricing')
+    if (!pricingSection) return
+
+    const observer = new IntersectionObserver(
+      entries => {
+        const entry = entries[0]
+        if (!entry?.isIntersecting || hasTrackedPricingView.current) {
+          return
+        }
+
+        hasTrackedPricingView.current = true
+        trackEvent('pricing_view', {
+          product: 'saaskit',
+          source_page: '/kits/saaskit',
+          location: 'pricing_section',
+        })
+      },
+      { threshold: 0.45 },
+    )
+
+    observer.observe(pricingSection)
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search)
+    if (searchParams.get('checkout') !== 'cancelled') return
+
+    trackEventOncePerSession(
+      'checkout_cancel',
+      `checkout_cancel:saaskit:${searchParams.get('session_id') || 'no-session'}`,
+      {
+        product: 'saaskit',
+        value: SAASKIT_PRICE,
+        currency: PRICE_CURRENCY,
+        source_page: '/kits/saaskit',
+      },
+    )
   }, [])
 
   const handleHeroCtaClick = useCallback(() => {
-    trackEvent('cta_click', {
-      kit: 'saaskit',
-      cta: 'hero_buy_saaskit',
-      page: '/kits/saaskit',
+    trackEvent('product_cta_click', {
+      product: 'saaskit',
+      location: 'hero_cta',
+      cta: 'buy_saaskit',
+      source_page: '/kits/saaskit',
+    })
+  }, [])
+
+  const handleComparisonCtaClick = useCallback(() => {
+    trackEvent('product_cta_click', {
+      product: 'prokit',
+      location: 'comparison_cta',
+      cta: 'compare_with_prokit',
+      source_page: '/kits/saaskit',
     })
   }, [])
 
   const handleCheckoutClick = useCallback(() => {
-    trackEvent('cta_click', {
-      kit: 'saaskit',
-      cta: 'pricing_get_saaskit',
-      page: '/kits/saaskit',
-    })
     trackEvent('checkout_start', {
-      kit: 'saaskit',
-      cta: 'pricing_get_saaskit',
-      page: '/kits/saaskit',
+      product: 'saaskit',
+      location: 'pricing_section',
+      cta: 'buy_saaskit',
+      source_page: '/kits/saaskit',
+      value: SAASKIT_PRICE,
+      currency: PRICE_CURRENCY,
     })
 
     if (!priceId || isCheckingOut) return
@@ -166,7 +237,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
               </a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="#manual">Compare with ProKit</a>
+              <a href="#manual" onClick={handleComparisonCtaClick}>Compare with ProKit</a>
             </Button>
           </div>
 
@@ -353,7 +424,38 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
             </p>
           </div>
 
-          <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
+          <div className="md:hidden space-y-6">
+            {comparisonData.map((item) => (
+              <div
+                key={item.metric}
+                className="space-y-4 rounded-xl border border-white/10 bg-white/[0.03] p-5"
+              >
+                <h3 className="text-sm uppercase tracking-wide text-white/60">{item.metric}</h3>
+
+                <div className="space-y-3">
+                  <div className="rounded-lg bg-white/[0.02] p-3">
+                    <div className="text-xs uppercase tracking-wide text-white/50">
+                      Manual Setup
+                    </div>
+                    <div className="mt-1 flex items-center gap-2 text-base font-medium text-white/80">
+                      <FeatureIcon name={item.iconName} className="h-4 w-4 text-white/45" />
+                      <span>{item.manual}</span>
+                    </div>
+                  </div>
+
+                  <div className="rounded-lg border border-primary/30 bg-primary/10 p-3">
+                    <div className="text-xs uppercase tracking-wide text-primary/75">SaaSKit</div>
+                    <div className="mt-1 flex items-center gap-2 text-base font-semibold text-primary">
+                      <FeatureIcon name={item.iconName} className="h-4 w-4 text-primary" />
+                      <span>{item.saasKit}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="hidden overflow-hidden rounded-lg border border-border bg-card shadow-sm md:block">
             <div className="grid grid-cols-1 border-b border-border bg-muted text-sm font-bold uppercase tracking-wider text-muted-foreground md:grid-cols-3">
               <div className="p-6">Metric</div>
               <div className="border-t border-border p-6 text-center md:border-l md:border-t-0">Manual Setup</div>
@@ -362,44 +464,25 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 border-b border-border transition-colors hover:bg-muted/60 md:grid-cols-3">
-              <div className="flex items-center gap-2 p-6 font-medium text-foreground">
-                <FeatureIcon name="schedule" className="h-4 w-4 text-muted-foreground" />
-                Time Cost
+            {comparisonData.map((item, index) => (
+              <div
+                key={item.metric}
+                className={`grid grid-cols-1 transition-colors hover:bg-muted/60 md:grid-cols-3 ${
+                  index < comparisonData.length - 1 ? 'border-b border-border' : ''
+                }`}
+              >
+                <div className="flex items-center gap-2 p-6 font-medium text-foreground">
+                  <FeatureIcon name={item.iconName} className="h-4 w-4 text-muted-foreground" />
+                  {item.metric}
+                </div>
+                <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
+                  {item.manual}
+                </div>
+                <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
+                  {item.saasKit}
+                </div>
               </div>
-              <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
-                Weeks / Months
-              </div>
-              <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
-                Immediate
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 border-b border-border transition-colors hover:bg-muted/60 md:grid-cols-3">
-              <div className="flex items-center gap-2 p-6 font-medium text-foreground">
-                <FeatureIcon name="bug-report" className="h-4 w-4 text-muted-foreground" />
-                Error Cost
-              </div>
-              <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
-                High (Unknowns)
-              </div>
-              <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
-                Minimal (Verified)
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 transition-colors hover:bg-muted/60 md:grid-cols-3">
-              <div className="flex items-center gap-2 p-6 font-medium text-foreground">
-                <FeatureIcon name="psychology" className="h-4 w-4 text-muted-foreground" />
-                Confidence Cost
-              </div>
-              <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
-                Fragile / Anxious
-              </div>
-              <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
-                Stable / Focused
-              </div>
-            </div>
+            ))}
           </div>
 
           <div className="mt-8 text-center">
@@ -643,10 +726,11 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           </p>
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
             <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
-              <a href="#pricing">Buy SaaSKit</a>
+              <a href="#pricing" onClick={handleHeroCtaClick}>Buy SaaSKit</a>
             </Button>
             <a
               href="/kits/prokit"
+              onClick={handleComparisonCtaClick}
               className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
             >
               Compare with ProKit

@@ -17,9 +17,10 @@ const AccountantBridgePage = () => {
 				target="_blank"
 				rel="nofollow noopener noreferrer"
 				className="mt-6 inline-flex items-center justify-center rounded-md border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-900 transition-colors hover:bg-slate-100 dark:border-border-subtle dark:text-white dark:hover:bg-surface-soft"
-				eventName="cta_click"
+				eventName="outbound_funnel_click"
 				eventPayload={{
 					location: 'bridge_page',
+					product: 'waaskit',
 					destination: 'accountant_funnel',
 					href: 'https://accountant.prochat.tools',
 				}}
