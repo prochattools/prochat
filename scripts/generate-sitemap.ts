@@ -1,13 +1,16 @@
 import fs from 'fs'
 import path from 'path'
 
-import { getAllBlogPosts } from '@/libs/blog'
-
-type SitemapEntry = {
+type UrlSitemapEntry = {
   loc: string
   lastmod: string
   changefreq: 'weekly'
   priority: string
+}
+
+type SitemapIndexEntry = {
+  loc: string
+  lastmod: string
 }
 
 function getSiteUrl() {
@@ -33,7 +36,7 @@ function escapeXml(value: string) {
     .replace(/'/g, '&apos;')
 }
 
-function renderEntry(entry: SitemapEntry) {
+function renderUrlEntry(entry: UrlSitemapEntry) {
   return [
     '  <url>',
     `    <loc>${escapeXml(entry.loc)}</loc>`,
@@ -44,41 +47,68 @@ function renderEntry(entry: SitemapEntry) {
   ].join('\n')
 }
 
+function renderSitemapIndexEntry(entry: SitemapIndexEntry) {
+  return [
+    '  <sitemap>',
+    `    <loc>${escapeXml(entry.loc)}</loc>`,
+    `    <lastmod>${escapeXml(entry.lastmod)}</lastmod>`,
+    '  </sitemap>',
+  ].join('\n')
+}
+
+function writeXmlFile(outputPath: string, xml: string) {
+  fs.writeFileSync(outputPath, xml, 'utf8')
+}
+
 async function main() {
   const baseUrl = getSiteUrl()
-  const posts = await getAllBlogPosts()
+  const generatedAt = new Date().toISOString()
 
-  const entries: SitemapEntry[] = [
+  const pageEntries: UrlSitemapEntry[] = [
     {
       loc: `${baseUrl}/`,
-      lastmod: new Date().toISOString(),
+      lastmod: generatedAt,
       changefreq: 'weekly',
       priority: '0.7',
     },
     {
       loc: `${baseUrl}/blog`,
-      lastmod: new Date().toISOString(),
+      lastmod: generatedAt,
       changefreq: 'weekly',
       priority: '0.7',
     },
-    ...posts.map(post => ({
-      loc: `${baseUrl}/blog/${post.slug}`,
-      lastmod: new Date(post.date).toISOString(),
-      changefreq: 'weekly' as const,
-      priority: '0.7',
-    })),
   ]
 
-  const xml = [
+  const pagesXml = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    ...entries.map(renderEntry),
+    ...pageEntries.map(renderUrlEntry),
     '</urlset>',
     '',
   ].join('\n')
 
-  const outputPath = path.join(process.cwd(), 'public', 'sitemap.xml')
-  fs.writeFileSync(outputPath, xml, 'utf8')
+  const sitemapEntries: SitemapIndexEntry[] = [
+    { loc: `${baseUrl}/sitemap-pages.xml`, lastmod: generatedAt },
+    { loc: `${baseUrl}/blog/sitemap.xml`, lastmod: generatedAt },
+    { loc: `${baseUrl}/docs/sitemap.xml`, lastmod: generatedAt },
+    { loc: `${baseUrl}/glossary/sitemap.xml`, lastmod: generatedAt },
+    { loc: `${baseUrl}/guides/sitemap.xml`, lastmod: generatedAt },
+    { loc: `${baseUrl}/playbooks/sitemap.xml`, lastmod: generatedAt },
+    { loc: `${baseUrl}/prompts/sitemap.xml`, lastmod: generatedAt },
+    { loc: `${baseUrl}/snippets/sitemap.xml`, lastmod: generatedAt },
+  ]
+
+  const sitemapIndexXml = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...sitemapEntries.map(renderSitemapIndexEntry),
+    '</sitemapindex>',
+    '',
+  ].join('\n')
+
+  const publicDir = path.join(process.cwd(), 'public')
+  writeXmlFile(path.join(publicDir, 'sitemap-pages.xml'), pagesXml)
+  writeXmlFile(path.join(publicDir, 'sitemap.xml'), sitemapIndexXml)
 }
 
 main().catch(error => {
