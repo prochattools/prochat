@@ -407,7 +407,7 @@ export default function StartHerePage() {
       <footer className="bg-muted/70 py-8 text-center">
         <div className="mx-auto px-6">
           <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
-            Built by Steve Westhoek. SaaS Infrastructure Architect.
+            Built by Steve Westhoek. SaaS Foundation Builder.
           </p>
           <div className="flex items-center justify-center gap-3 text-xs font-normal text-muted-foreground">
             <Link href="/privacy" className="transition-colors hover:text-primary">

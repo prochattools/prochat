@@ -6,6 +6,7 @@ import { ogFonts } from '@/lib/ogFonts'
 import { ogImageSize } from '@/lib/og-utils'
 import {
   getSocialHeadlineFontSize,
+  sanitizeSocialSubtitle,
   getSocialWordmarkDataUri,
   sanitizeSocialTitle,
   splitSocialTitle,
@@ -13,8 +14,9 @@ import {
 
 const h = React.createElement
 
-function createSocialImageResponse(title: string) {
+function createSocialImageResponse(title: string, subtitle?: string) {
   const normalizedTitle = sanitizeSocialTitle(title)
+  const normalizedSubtitle = sanitizeSocialSubtitle(subtitle)
   const titleLines = splitSocialTitle(normalizedTitle)
   const titleFontSize = getSocialHeadlineFontSize(titleLines)
   const wordmark = getSocialWordmarkDataUri()
@@ -143,9 +145,38 @@ function createSocialImageResponse(title: string) {
           {
             style: {
               display: 'flex',
-              justifyContent: 'flex-end',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
+              gap: '24px',
             },
           },
+          h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                flex: 1,
+                minWidth: 0,
+                alignItems: 'flex-end',
+              },
+            },
+            normalizedSubtitle
+              ? h(
+                  'span',
+                  {
+                    style: {
+                      fontFamily: brand.typography.bodySmall.family,
+                      fontSize: 22,
+                      fontWeight: 500,
+                      lineHeight: 1.3,
+                      color: brand.colors.subtleText,
+                      opacity: 0.88,
+                    },
+                  },
+                  normalizedSubtitle,
+                )
+              : null,
+          ),
           h(
             'span',
             {
@@ -169,8 +200,8 @@ function createSocialImageResponse(title: string) {
   )
 }
 
-export async function renderSocialImage(title: string): Promise<Buffer> {
-  const response = createSocialImageResponse(title)
+export async function renderSocialImage(title: string, subtitle?: string): Promise<Buffer> {
+  const response = createSocialImageResponse(title, subtitle)
   const arrayBuffer = await response.arrayBuffer()
   return Buffer.from(arrayBuffer)
 }

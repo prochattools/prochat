@@ -6,6 +6,7 @@ import { applyWordmarkGradient, svgToDataUri } from '@/lib/og-utils'
 
 const DEFAULT_SOCIAL_TITLE = 'The Operating System for SaaS Builders'
 const SOCIAL_TITLE_MAX_LENGTH = 90
+const SOCIAL_SUBTITLE_MAX_LENGTH = 48
 
 const logoWordmarkSvg = fs.readFileSync(
   path.join(process.cwd(), 'public', 'logo', 'logo-wordmark.svg'),
@@ -16,12 +17,31 @@ export function getSocialDefaultTitle() {
   return DEFAULT_SOCIAL_TITLE
 }
 
+export function sanitizeSocialSubtitle(input?: string | null) {
+  const cleaned = collapseWhitespace(stripHtml(input ?? ''))
+  if (!cleaned) return ''
+
+  return clampTitleLength(cleaned, SOCIAL_SUBTITLE_MAX_LENGTH)
+}
+
 function stripHtml(input: string) {
   return input.replace(/<[^>]*>/g, ' ')
 }
 
 function collapseWhitespace(input: string) {
   return input.replace(/\s+/g, ' ').trim()
+}
+
+function normalizeLineBreaks(input: string) {
+  return input.replace(/\r\n?/g, '\n')
+}
+
+function sanitizeSocialTitleLines(input: string) {
+  return normalizeLineBreaks(stripHtml(input))
+    .split('\n')
+    .map(line => collapseWhitespace(line))
+    .filter(Boolean)
+    .slice(0, 2)
 }
 
 function clampTitleLength(input: string, maxLength: number) {
@@ -34,13 +54,24 @@ function clampTitleLength(input: string, maxLength: number) {
 }
 
 export function sanitizeSocialTitle(input?: string | null) {
-  const cleaned = collapseWhitespace(stripHtml(input ?? ''))
-  if (!cleaned) return DEFAULT_SOCIAL_TITLE
+  const lines = sanitizeSocialTitleLines(input ?? '')
+  if (lines.length === 0) return DEFAULT_SOCIAL_TITLE
+
+  const cleaned = lines.join('\n')
 
   return clampTitleLength(cleaned, SOCIAL_TITLE_MAX_LENGTH)
 }
 
 export function splitSocialTitle(title: string) {
+  const explicitLines = normalizeLineBreaks(title)
+    .split('\n')
+    .map(line => collapseWhitespace(line))
+    .filter(Boolean)
+
+  if (explicitLines.length > 1) {
+    return explicitLines.slice(0, 2)
+  }
+
   const words = title.split(' ').filter(Boolean)
   if (words.length <= 3 || title.length <= 42) {
     return [title]
