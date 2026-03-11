@@ -3,9 +3,6 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
 	enabled: process.env.ANALYZE === 'true',
 })
-const createNextra = require('nextra').default
-
-const withNextra = createNextra({})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -131,4 +128,9 @@ const nextConfig = {
 	},
 }
 
-module.exports = withBundleAnalyzer(withNextra(nextConfig))
+module.exports = async () => {
+	const createNextra = (await import('nextra')).default
+	const withNextra = createNextra({})
+
+	return withBundleAnalyzer(withNextra(nextConfig))
+}
