@@ -3,16 +3,16 @@
 ## Rules
 - Never push directly to `main`.
 - Always create a feature branch for new work.
-- Dokploy Preview Deployments are enabled: each branch auto-deploys to its own preview domain.
-- Merge to `main` only after testing preview.
+- Wait for CI/docs workflows to pass before merging.
+- Merge to `main` only after all checks succeed; Dokploy will build/deploy from `main`.
 
 ## Steps
 1. git checkout main && git pull origin main
 2. git checkout -b feature/branch-name
 3. git add . && git commit -m "Message"
 4. git push origin feature/branch-name
-5. Test preview deployment in Dokploy
-6. Merge into main → deploys to production
+5. Wait for CI/docs workflows to finish on the PR
+6. Merge into main → Dokploy rebuilds and deploys
 7. git branch -d feature/branch-name && git push origin --delete feature/branch-name
 
 ## Automation Tasks

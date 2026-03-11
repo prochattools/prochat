@@ -11,6 +11,28 @@ body {
 		color 650ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+:root {
+	--pc-logo-wordmark-light: #0f172a;
+	--pc-logo-wordmark-dark: #ffffff;
+	--docs-dropdown-bg: 255 255 255;
+	--docs-dropdown-border: 148 163 184;
+	--docs-dropdown-foreground: 15 23 42;
+}
+
+.dark {
+	--docs-dropdown-bg: 15 23 42;
+	--docs-dropdown-border: 99 102 241;
+	--docs-dropdown-foreground: 241 245 249;
+}
+
+.pc-logo-wordmark {
+	color: var(--pc-logo-wordmark-light);
+}
+
+.dark .pc-logo-wordmark {
+	color: var(--pc-logo-wordmark-dark);
+}
+
 *,
 *::before,
 *::after {
@@ -185,6 +207,41 @@ svg {
 .scroll-hint-overlay--vertical .scroll-hint-overlay__arrow,
 .scroll-hint-overlay--vertical .scroll-hint-overlay__hand {
 	animation: scroll-hint-slide-y 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+.docs-shell {
+	--nextra-bg: 255 255 255;
+	--nextra-border: 148 163 184;
+	--nextra-foreground: 15 23 42;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.dark .docs-shell {
+	--nextra-bg: 11 18 32;
+	--nextra-border: 148 163 184;
+	--nextra-foreground: 241 245 249;
+}
+
+.docs-shell-inner {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+#headlessui-portal-root > [data-headlessui-portal] > ul[id^='headlessui-listbox-options-'][role='listbox'][data-anchor] {
+	background-color: rgb(var(--docs-dropdown-bg) / 0.97) !important;
+	border: 1px solid rgb(var(--docs-dropdown-border) / 0.6) !important;
+	box-shadow: 0 30px 60px rgba(2, 6, 23, 0.55) !important;
+	color: rgb(var(--docs-dropdown-foreground)) !important;
+	backdrop-filter: none !important;
+	z-index: 110 !important;
+	min-width: 12rem;
+}
+
+#headlessui-portal-root > [data-headlessui-portal] > ul[id^='headlessui-listbox-options-'][role='listbox'][data-anchor] > li {
+	backdrop-filter: none;
 }
 
 @keyframes scroll-hint-slide-x {

@@ -1,8 +1,6 @@
 // src/app/layout.tsx
 import { Providers } from '@/components/providers'
-import AppShell from '@/components/AppShell'
-import Header from '@/components/Header'
-import { Scaffolding } from '@/components/ui/Scaffolding'
+import AppChrome from '@/components/AppChrome'
 import StructuredData from '@/components/StructuredData'
 import UmamiAnalytics from '@/components/UmamiAnalytics'
 import { brand } from '@/lib/brand'
@@ -95,18 +93,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <UmamiAnalytics />
       </head>
       <body className="font-body bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
-        <div className="fixed inset-0 z-0 hidden pointer-events-none md:block" aria-hidden="true">
-          <Scaffolding opacity={0.6} />
-        </div>
-
-        <div className="relative z-10">
-          <Providers>
-            <SafeClerkProvider>
-              <Header />
-              <AppShell>{children}</AppShell>
-            </SafeClerkProvider>
-          </Providers>
-        </div>
+        <Providers>
+          <SafeClerkProvider>
+            <AppChrome>{children}</AppChrome>
+          </SafeClerkProvider>
+        </Providers>
       </body>
     </html>
   )

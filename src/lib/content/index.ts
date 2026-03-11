@@ -135,12 +135,20 @@ async function listMdxFiles(root: string): Promise<string[]> {
 function buildRoute(section: ContentSection, filePath: string, root: string) {
   const config = getContentConfig(section)
   const relativePath = path.relative(root, filePath).replace(/\\/g, '/')
-  const routeSegments = relativePath.replace(/\.mdx$/, '').split('/')
-  const slug = routeSegments[routeSegments.length - 1]
+  const rawRouteSegments = relativePath.replace(/\.mdx$/, '').split('/')
+  const isIndexPage =
+    config.routeMode === 'nested' &&
+    rawRouteSegments[rawRouteSegments.length - 1] === 'index'
+  const routeSegments = isIndexPage
+    ? rawRouteSegments.slice(0, -1)
+    : rawRouteSegments
+  const slug = routeSegments[routeSegments.length - 1] || 'index'
   const urlPath =
     config.routeMode === 'single'
       ? `/${section}/${slug}`
-      : `/${section}/${routeSegments.join('/')}`
+      : routeSegments.length > 0
+        ? `/${section}/${routeSegments.join('/')}`
+        : `/${section}`
 
   return { slug, routeSegments, urlPath }
 }
@@ -177,6 +185,7 @@ async function readEntry(section: ContentSection, filePath: string, root: string
 
   return {
     section,
+    sourcePath: path.relative(process.cwd(), filePath).replace(/\\/g, '/'),
     title,
     description,
     slug,

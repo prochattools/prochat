@@ -13,6 +13,7 @@ export type ContentRouteMode = 'single' | 'nested'
 
 export type ContentEntry = {
   section: ContentSection
+  sourcePath: string
   title: string
   description: string
   slug: string

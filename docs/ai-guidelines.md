@@ -1,6 +1,6 @@
 # ProChat AI Guidelines
 
-These rules define how AI assistants and automation may interact with the ProChat system. ProChat is the active SaaS platform in this repository. It is built on SaaSKit conventions, and SaaSKit inherits its smallest shared boilerplate layer from ProKit. The goal is to let AI help while protecting the architecture.
+These rules define how AI assistants and automation may interact with the ProChat system. ProChat is the active SaaS platform in this repository, powered by SaaSKit conventions and the smaller ProKit boilerplate lineage. The goal is to let AI help while protecting the architecture.
 
 ## 1) Purpose & scope
 The ProChat platform reuses SaaSKit contracts for provisioning, migrations, and environment setup. These guidelines apply to code, docs, database schema/migrations, and infra scripts inside this repository.
@@ -62,7 +62,7 @@ The underlying SaaSKit and ProKit layers must remain generic.
 ## 6) AI behavior rules
 - Confirm intent before touching migrations, tenant model, provisioning scripts, or env contracts.  
 - Keep diffs minimal; do not rewrite entire files unless requested.  
-- Infra changes must be reflected in `README.md`, `docs/PROKIT_DATABASE.md`, `docs/PROKIT_INFRASTRUCTURE.md`, `docs/PROKIT_TENANT_CLEANUP.md`.
+- Infra changes must be reflected in `README.md`, `docs/database.md`, `docs/deployment.md`, `docs/tenant-cleanup.md`.
 - Do not modify `scripts/provision-saas.sh` unless explicitly instructed.  
 - If anything conflicts with this file, this file wins unless a human explicitly approves the change.
 

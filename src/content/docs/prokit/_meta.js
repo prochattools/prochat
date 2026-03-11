@@ -1,7 +1,6 @@
 export default {
   '*': {
     title: 'ProKit',
-    display: 'hidden',
   },
   'addcollaborator': {
     title: 'Addcollaborator',

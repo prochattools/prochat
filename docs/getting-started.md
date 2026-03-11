@@ -27,7 +27,7 @@ Create `.env` (or let `npm run dev` generate it) and set:
 - `STRIPE_WEBHOOK_SECRET_TEST`, `STRIPE_WEBHOOK_SECRET_LIVE` – Stripe webhook signing secrets
 - `NEXT_PUBLIC_APP_URL` – app base URL (e.g., http://localhost:3000)
 - `NEXT_PUBLIC_UMAMI_SCRIPT_URL`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` – optional public analytics config for Umami
-- Optional: MAKE_*, N8N_*, RESEND_API_KEY, WP_REST_ENDPOINT, MCP_* as needed
+- Optional: `MAKE_*`, `N8N_*`, `RESEND_API_KEY`, `MAILERLITE_*`, and analytics values as needed
 
 Reference: `.env.example`.
 
@@ -73,4 +73,4 @@ npm run dev
 - Production assumes the existing Supabase Postgres database is already present; only schema/role provisioning is performed.
 - Do not add manual production hooks for `db:init` or `db:migrate:prod`.
 
-If you hit issues, see `docs/PROKIT_INFRASTRUCTURE.md` and `instructions/troubleshooting.md`.
+If you hit issues, see `docs/deployment.md` and `instructions/troubleshooting.md`.

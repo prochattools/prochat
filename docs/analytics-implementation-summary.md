@@ -2,8 +2,8 @@
 
 ## Files changed
 - `.env.example`
-- `docs/PROKIT_GETTING_STARTED.md`
-- `docs/PROKIT_INVARIANTS.md`
+- `docs/getting-started.md`
+- `docs/environment.md`
 - `docs/analytics-audit.md`
 - `src/components/UmamiAnalytics.tsx`
 - `src/lib/analytics/umami.ts`

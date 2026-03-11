@@ -5,7 +5,7 @@ import { getSiteUrl } from '@/libs/site-url'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getSiteUrl()
-  const entries = await getSectionEntries('docs')
+  const entries = (await getSectionEntries('docs')).filter(entry => entry.urlPath !== '/docs')
   const indexLastModified =
     entries.length > 0
       ? new Date(

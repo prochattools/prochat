@@ -1,4 +1,4 @@
-export const CHROMELESS_ROUTES = ['/starting-point']
+export const CHROMELESS_ROUTES = ['/starting-point', '/docs']
 export const FULLSCREEN_ROUTES: string[] = []
 export const MINIMAL_HEADER_ROUTES = ['/kits/prokit/finish', '/kits/saaskit/finish']
 export const FOOTERLESS_ROUTES = ['/kits/prokit/finish', '/kits/saaskit/finish']

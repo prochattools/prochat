@@ -2,6 +2,9 @@
   "name": "@prochat/saaskit",
   "version": "2.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "description": "ProKit – ProChat’s SaaS starter for micro-SaaS apps.",
   "author": "Steve Westhoek",
   "scripts": {

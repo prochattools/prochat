@@ -2,9 +2,9 @@
 
 This is the implementation reference for safely deleting a tenant (schema, DB user, registry row). It backs:
 - `npm run db:cleanup -- --slug <slug> [--force]`
-- Any automation (CI, Dokploy jobs, MCP tools) that removes preview tenants.
+- Any automation (CI, Dokploy jobs) that removes preview tenants.
 
-For the full database model and lifecycle, see `docs/PROKIT_DATABASE.md`.
+For the full database model and lifecycle, see `docs/database.md`.
 
 ## Purpose & scope
 - Designed for **preview tenants** (`type = 'preview'` in `public.tenants`).  
@@ -58,10 +58,6 @@ npm run db:cleanup -- --slug <slug> [--force]
 - PR close/merge: `NODE_ENV=production npm run db:cleanup -- --slug pr_42`
 
 (`pr_42` = DB-safe slug derived from PR number.)
-
-## MCP integration (optional)
-- Tool example: `cleanupTenant(slug)` → `NODE_ENV=production npm run db:cleanup -- --slug <slug>`
-- MCP must not issue raw DROP statements or bypass script safeguards.
 
 ## AI & automation rules
 - Use `npm run db:cleanup -- --slug <slug>` (or a documented wrapper).  

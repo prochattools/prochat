@@ -97,19 +97,9 @@ const Logo = ({ isLarge = false, scale = 1 }: LogoProps) => {
 					</g>
 				</g>
 			</svg>
-			<style jsx>{`
-				.pc-logo-wordmark {
-					--pc-logo-wordmark-light: ${brand.colors.textDark};
-					--pc-logo-wordmark-dark: ${brand.colors.textLight};
-					color: var(--pc-logo-wordmark-light);
-				}
-
-				:global(html:not(.light)) .pc-logo-wordmark {
-					color: var(--pc-logo-wordmark-dark);
-				}
-			`}</style>
-		</div>
-	)
+		{/* Styling managed globally */}
+	</div>
+)
 }
 
 export default Logo

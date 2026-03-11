@@ -15,7 +15,7 @@ Ship small B2B SaaS products fast, cheap, and often. Aim for 80% ideation/valida
 - Email: Resend  
 - Payments: Stripe  
 - Automation: n8n  
-- Included utilities: SEO + blog (Headless WordPress), dashboard, invoice generator, waiting list, component library/animations, built-in analytics and deployment workflow
+- Included utilities: SEO and MDX content system, dashboard, invoice generator, waiting list, component library/animations, built-in analytics, and deployment workflow
 
 Ideas must adapt to this stack, not vice versa.
 

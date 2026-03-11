@@ -22,7 +22,7 @@ export function Providers({ children }: { children: ReactNode }) {
         storageKey="theme"
         themes={['light', 'dark']}
         defaultTheme="dark"
-        enableSystem={false}
+        enableSystem={true}
       >
         <div className="min-h-screen bg-background text-foreground">
           {children}

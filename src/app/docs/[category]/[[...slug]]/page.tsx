@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation'
 
-import ContentLayout from '@/components/content/ContentLayout'
 import StructuredData from '@/components/StructuredData'
-import { getRelatedEntries, getSectionEntries, getSectionEntry } from '@/lib/content'
+import { getPublicDocEntry, getPublicDocsStaticParams } from '@/lib/docs/public-docs'
 import { renderDocsMdxContent } from '@/lib/docs/nextra'
 import { getSEOTags } from '@/lib/seo/metadata'
 import { articleSchema } from '@/lib/seo/schema'
@@ -16,15 +15,11 @@ function getRouteSegments(params: PageParams['params']) {
 }
 
 export async function generateStaticParams() {
-  const entries = await getSectionEntries('docs')
-  return entries.map(entry => ({
-    category: entry.routeSegments[0],
-    slug: entry.routeSegments.slice(1),
-  }))
+  return getPublicDocsStaticParams()
 }
 
 export async function generateMetadata({ params }: PageParams) {
-  const entry = await getSectionEntry('docs', getRouteSegments(params))
+  const entry = await getPublicDocEntry(getRouteSegments(params))
   if (!entry) {
     return getSEOTags({
       title: 'Doc Not Found',
@@ -49,17 +44,10 @@ export async function generateMetadata({ params }: PageParams) {
 
 export default async function DocsPage({ params }: PageParams) {
   const routeSegments = getRouteSegments(params)
-  const entry = await getSectionEntry('docs', routeSegments)
+  const entry = await getPublicDocEntry(routeSegments)
   if (!entry) notFound()
 
-  const related = await getRelatedEntries('docs', entry.urlPath)
-  let content = null
-
-  try {
-    content = await renderDocsMdxContent(routeSegments, entry.content)
-  } catch {
-    notFound()
-  }
+  const content = await renderDocsMdxContent(entry)
 
   return (
     <>
@@ -73,9 +61,7 @@ export default async function DocsPage({ params }: PageParams) {
           dateModified: entry.updated,
         })}
       />
-      <ContentLayout entry={entry} related={related}>
-        {content}
-      </ContentLayout>
+      {content}
     </>
   )
 }
