@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { createHash } from 'crypto'
-import { readFile, readdir, writeFile } from 'fs/promises'
+import { mkdir, readFile, readdir, writeFile } from 'fs/promises'
 import path from 'path'
 
 import yaml from 'yaml'
@@ -19,6 +19,7 @@ const INGEST_ROOT = path.resolve('docs-ingest')
 const REGISTRY_PATH = path.resolve('scripts', 'docs', 'products-registry.json')
 const MANIFEST_PATH = path.resolve('src', 'content', 'docs', '.generated-manifest.json')
 const VERSION_PATTERN = /^v\d+$/i
+const CACHE_PATH = path.resolve('scripts', 'docs', 'cache', 'doc-hashes.json')
 const SKIP_AI = process.env.DOCS_SKIP_AI === 'true'
 const SOURCE_COMMIT = process.env.DOCS_SOURCE_COMMIT?.trim() || null
 
@@ -114,6 +115,27 @@ async function listVersionFiles(productRoot: string, productId: string) {
   return versionFiles
 }
 
+async function loadCache(): Promise<Record<string, string>> {
+  try {
+    const raw = await readFile(CACHE_PATH, 'utf-8')
+    return JSON.parse(raw)
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      return {}
+    }
+    throw error
+  }
+}
+
+function hashContent(content: string) {
+  return createHash('sha256').update(content, 'utf-8').digest('hex')
+}
+
+async function persistCache(cache: Record<string, string>) {
+  await mkdir(path.dirname(CACHE_PATH), { recursive: true })
+  await writeFile(CACHE_PATH, JSON.stringify(cache, null, 2), 'utf-8')
+}
+
 function splitFrontmatter(raw: string) {
   let trimmed = raw.trimStart()
 
@@ -146,6 +168,8 @@ async function run() {
     ? registry.filter((entry: RegistryEntry) => entry.id === categoryArg)
     : registry
 
+  const cache = await loadCache()
+
   if (categoryArg && products.length === 0) {
     console.error(
       `Unsupported category ${categoryArg}. Available: ${registry.map((entry: RegistryEntry) => entry.id).join(', ')}`,
@@ -164,10 +188,14 @@ async function run() {
     for (const { filePath } of files) {
       analyzed += 1
       const raw = await readFile(filePath, 'utf-8')
-      const hash = createHash('sha256').update(raw, 'utf-8').digest('hex')
+      const sourceHash = hashContent(raw)
       const relativeSource = path.relative(process.cwd(), filePath)
       const manifestHash = manifest.get(relativeSource)
-      if (manifestHash && manifestHash === hash) {
+      if (cache[relativeSource] && cache[relativeSource] === sourceHash) {
+        skipped += 1
+        continue
+      }
+      if (manifestHash && manifestHash === sourceHash) {
         skipped += 1
         continue
       }
@@ -257,17 +285,21 @@ async function run() {
       const keywordsBlock = ['keywords:', ...keywords.map(keyword => `  - ${keyword}`)].join('\n')
       const frontmatterBlock = `---\n${baseYaml ? `${baseYaml}\n` : ''}${keywordsBlock}\n---\n`
       const payload = `${GENERATED_FILE_MARKER}\n${frontmatterBlock}${finalContent}\n`
-      const finalHash = createHash('sha256').update(payload, 'utf-8').digest('hex')
+      const finalHash = hashContent(payload)
 
       if (manifestHash && manifestHash === finalHash) {
         skipped += 1
+        cache[relativeSource] = sourceHash
         continue
       }
 
       await writeFile(filePath, payload, 'utf-8')
       regenerated += 1
+      cache[relativeSource] = sourceHash
     }
   }
+
+  await persistCache(cache)
 
   console.log(`Docs analyzed: ${analyzed}; regenerated: ${regenerated}; skipped unchanged: ${skipped}`)
 }

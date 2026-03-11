@@ -1,11 +1,72 @@
 ---
 title: Quick Start
-description: Short guide to get going
-slug: quick-start
-order: 5
+category: Getting Started
+order: 1
+keywords:
+  - quick start
+  - install
+  - deployment
 ---
 
-## Related technical docs
+**Time required:** about 10 minutes.
 
-No matching technical docs were detected yet.
+By the end of this guide you will have a running SaaS with authentication, a dashboard, and a tenant-aware database.
 
+This guide proves you can have ProKit up, running, and ready for deployment in minutes.
+
+### Install in 30 seconds
+
+```bash
+git clone https://github.com/stevewesthoek/prokit
+cd prokit
+npm install
+npm run dev
+```
+
+The dashboard is live at http://localhost:3000.
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure environment
+
+Copy the sample env file and adjust any production secrets before starting:
+
+```bash
+cp .env.example .env
+# edit .env and fill in your database, Clerk, and Stripe credentials
+```
+
+Need help? See the shared [authentication reference](/docs/features/auth).
+
+Want to understand billing controls? Visit the shared [billing doc](/docs/features/billing) while filling Stripe keys.
+
+### 3. Start locally
+
+```bash
+npm run dev
+```
+
+Point your browser to http://localhost:3000 to confirm the dashboard loads.
+
+### 4. Deploy to Vercel
+
+1. Connect the repository to Vercel (Owner or Organisational scope).
+2. Add the same environment variables you filled inside `.env`.
+3. Set the build command to `npm run build` and the output directory to `.next`.
+
+Need deployment playbooks? Read the shared [deployment guide](/docs/features/deployment).
+
+### 🎉 Your SaaS is live
+
+Once these steps complete you should see:
+
+- A working login page powered by Clerk
+- The dashboard rendering analytics data
+- Authentication flows securing every route
+- Stripe subscriptions, metering, and webhook handling
+
+If everything is green, you now have a full ProKit SaaS ready for customers or deeper feature work.

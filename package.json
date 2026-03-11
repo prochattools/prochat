@@ -38,7 +38,8 @@
     "docs:extract:openapi": "node -r ts-node/register/transpile-only scripts/docs/extract/extract-openapi.ts",
     "docs:extract:repo": "node -r ts-node/register/transpile-only scripts/docs/extract/extract-repo.ts",
     "docs:extract": "npm run docs:extract:typescript && npm run docs:extract:openapi",
-    "docs:restructure": "node -r ts-node/register/transpile-only scripts/docs/restructure-product-docs.ts"
+    "docs:restructure": "node -r ts-node/register/transpile-only scripts/docs/restructure-product-docs.ts",
+    "docs:watch": "tsx scripts/docs/watch-docs.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.7.1",

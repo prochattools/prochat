@@ -25,6 +25,23 @@ type DocsFolderItem = {
 type DocsPageMapItem = DocsMetaItem | DocsPageItem | DocsFolderItem
 type DocsNavigableItem = DocsPageItem | DocsFolderItem
 
+const PRODUCT_GETTING_STARTED = new Set(['prokit', 'saaskit', 'future', 'waaskit'])
+const GETTING_STARTED_CHILDREN = [
+  { slug: 'try', title: 'Try the boilerplate in 2 minutes' },
+  { slug: 'quick-start', title: 'Quick Start' },
+]
+const PRODUCT_CHILDREN = [
+  { slug: 'what-you-get', title: 'What You Get' },
+  { slug: 'use-cases', title: 'Use Cases' },
+  { slug: 'how-it-works', title: 'How It Works' },
+  { slug: 'launch-checklist', title: 'Launch Checklist' },
+  { slug: 'who-this-is-for', title: 'Who This Is For' },
+  { slug: 'why-a-boilerplate', title: 'Why a Boilerplate?' },
+]
+const SHARED_ROUTE_OVERRIDES: Record<string, string> = {
+  try: 'try-in-2-minutes',
+}
+
 const PUBLIC_DOCS_ROOT = path.join(process.cwd(), 'src', 'content', 'docs')
 let publicDocsEntryMapPromise: Promise<Map<string, ContentEntry>> | null = null
 let publicDocsPageMapPromise: Promise<PageMapItem[]> | null = null
@@ -121,7 +138,7 @@ async function buildDirectory(relativeDir = ''): Promise<DocsPageMapItem[]> {
     fs.readdir(path.join(PUBLIC_DOCS_ROOT, relativeDir), { withFileTypes: true }),
   ])
 
-  const pageItems: DocsNavigableItem[] = []
+  let pageItems: DocsNavigableItem[] = []
 
   for (const dirent of dirents) {
     if (dirent.name.startsWith('.')) continue
@@ -169,13 +186,72 @@ async function buildDirectory(relativeDir = ''): Promise<DocsPageMapItem[]> {
     })
   }
 
-  const sortedItems = sortByMetaOrder(pageItems, meta)
+  if (PRODUCT_GETTING_STARTED.has(relativeDir)) {
+    const gettingStartedSlugs = new Set(GETTING_STARTED_CHILDREN.map(child => child.slug))
+    const productChildSlugs = new Set(PRODUCT_CHILDREN.map(child => child.slug))
+    const allSlugs = new Set([...gettingStartedSlugs, ...productChildSlugs])
+    const productIndexRoute = toRoutePath(toRouteSegments(relativeDir, 'index'))
 
-  if (meta && Object.keys(meta).length > 0) {
-    return [{ data: meta }, ...sortedItems]
+    const gettingStartedChildren = GETTING_STARTED_CHILDREN.map(child => ({
+      name: child.slug,
+      route: toRoutePath([...toRouteSegments(relativeDir, child.slug)]),
+      title: child.title,
+    }))
+
+    const productChildren = PRODUCT_CHILDREN.map(child => ({
+      name: child.slug,
+      route: toRoutePath([...toRouteSegments(relativeDir, child.slug)]),
+      title: child.title,
+    }))
+
+    pageItems = pageItems.filter(
+      item => !('name' in item && allSlugs.has(item.name)),
+    )
+
+    pageItems.unshift({
+      name: 'product',
+      route: productIndexRoute,
+      title: 'Product',
+      children: productChildren,
+    })
+
+    pageItems.unshift({
+      name: 'getting-started',
+      route: productIndexRoute,
+      title: 'Getting Started',
+      children: gettingStartedChildren,
+    })
   }
 
-  return sortedItems
+  const sortedItems = sortByMetaOrder(pageItems, meta)
+
+  if (relativeDir === '') {
+    const featureIndex = sortedItems.findIndex(
+      item => 'name' in item && item.name === 'features' && 'children' in item,
+    )
+
+    if (featureIndex >= 0) {
+      const [featureFolder] = sortedItems.splice(featureIndex, 1)
+      const featureChildren = (featureFolder as DocsFolderItem).children
+
+      sortedItems.unshift({
+        name: 'core-features',
+        route: '/docs/features',
+        title: 'Core Features',
+        children: featureChildren,
+      })
+    }
+  }
+
+  const validItems = sortedItems.filter(
+    (item): item is DocsNavigableItem => 'name' in item && 'route' in item,
+  )
+
+  if (meta && Object.keys(meta).length > 0) {
+    return [{ data: meta }, ...validItems]
+  }
+
+  return validItems
 }
 
 export async function getPublicDocsPageMap() {
@@ -189,7 +265,34 @@ export async function getPublicDocsPageMap() {
 }
 
 export async function getPublicDocEntry(routeSegments: string[]): Promise<ContentEntry | null> {
-  return getSectionEntry('docs', routeSegments)
+  const primary = await getSectionEntry('docs', routeSegments)
+  if (primary) return primary
+
+  if (routeSegments.length < 2) return null
+
+  const sharedSlug = SHARED_ROUTE_OVERRIDES[routeSegments[1]]
+  if (sharedSlug) {
+    const sharedEntry = await getSectionEntry('docs', ['shared', sharedSlug])
+    if (sharedEntry) {
+      return {
+        ...sharedEntry,
+        routeSegments,
+        category: routeSegments[0],
+        urlPath: `/docs/${routeSegments.join('/')}`,
+      }
+    }
+  }
+
+  const featureSegments = ['features', ...routeSegments.slice(1)]
+  const fallback = await getSectionEntry('docs', featureSegments)
+  if (!fallback) return null
+
+  return {
+    ...fallback,
+    routeSegments,
+    category: routeSegments[0],
+    urlPath: `/docs/${routeSegments.join('/')}`,
+  }
 }
 
 export async function getPublicDocsStaticParams() {

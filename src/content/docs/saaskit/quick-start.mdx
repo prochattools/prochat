@@ -1,11 +1,72 @@
 ---
 title: Quick Start
-description: Short guide to get going
-slug: quick-start
-order: 5
+category: Getting Started
+order: 1
+keywords:
+  - quick start
+  - install
+  - deployment
 ---
 
-## Related technical docs
+**Time required:** about 10 minutes.
 
-No matching technical docs were detected yet.
+By the end of this guide you will have a running SaaS with authentication, a dashboard, and a tenant-aware database.
 
+SaaSKit is ready to build a SaaS in minutes—this Quick Start walks through the critical steps.
+
+### Install in 30 seconds
+
+```bash
+git clone https://github.com/stevewesthoek/saaskit
+cd saaskit
+npm install
+npm run dev
+```
+
+The dashboard is live at http://localhost:3000.
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure environment
+
+Duplicate the example env file before first startup:
+
+```bash
+cp .env.example .env
+# fill in the PostgreSQL, Clerk, and Stripe secrets
+```
+
+Review the shared [auth documentation](/docs/features/auth) while configuring Clerk.
+
+Need billing controls? The shared [billing guide](/docs/features/billing) covers pricing, trials, and Stripe webhooks.
+
+### 3. Start locally
+
+```bash
+npm run dev
+```
+
+Visit http://localhost:3000 to confirm the SaaS shell loads.
+
+### 4. Deploy to Vercel
+
+1. Link the repo to Vercel and set the branch you are working on.
+2. Propagate the environment variables from your local `.env`.
+3. Set the build command to `npm run build`.
+
+Need a release checklist? Check the shared [deployment guide](/docs/features/deployment).
+
+### 🎉 Your SaaS is live
+
+After these steps you should see:
+
+- The SaaS login page responding to real users
+- Dashboards rendering live metrics
+- Authentication flows verifying sessions
+- Stripe subscriptions charging and recording webhooks
+
+If the experience matches this checklist your SaaS is live and ready for customers.

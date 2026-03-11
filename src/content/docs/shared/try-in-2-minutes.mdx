@@ -1,0 +1,41 @@
+---
+title: Try the boilerplate in 2 minutes
+category: Getting Started
+order: 0
+keywords:
+  - demo
+  - quick start
+  - tutorial
+---
+
+This quick walkthrough proves the boilerplate works end-to-end before you dive deeper.
+
+### Step 1 – Clone the project
+
+```bash
+git clone https://github.com/prochattools/prochat.git
+cd prochat
+```
+
+### Step 2 – Install dependencies
+
+```bash
+npm install
+```
+
+### Step 3 – Start locally
+
+```bash
+npx prisma generate # optional if you change the schema
+npm run dev
+```
+
+Open http://localhost:3000 to confirm the marketing shell renders. The console should say the server is listening.
+
+### Step 4 – Deploy to Vercel
+
+1. Push your branch to GitHub.
+2. Connect the repo in Vercel, select the branch, and add the environment variables from `.env.example`.
+3. Let Vercel build using `npm run build`.
+
+After deployment, production is live—head back to the [Quick Start guide](/docs/prokit/quick-start) or the [shared deployment reference](/docs/features/deployment).
