@@ -9,15 +9,16 @@
     "description": "Documentation for Install.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Install",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "b30784bad71793cbfdddbde2ab15f4e6469027f0d523def6806cd24c2c12f497",
+    "contentHash": "579aabd488e04a534831b0b8de942362ccd3a253be34507e1dd5162ba124a7de",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.085Z",
+    "generatedAt": "2026-03-11T08:19:44.441Z",
     "generator": "ai",
     "sourceCommit": null
   },
@@ -31,15 +32,16 @@
     "description": "Documentation for Addcollaborator.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Addcollaborator",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "0d081bfb72fc9089d2390a41ca64c0b36f4985b8b7cd001487280c29d3fc5249",
+    "contentHash": "b7ecf82c208be2b6dd2d4d27b5460ef1f5ad0079f655e40e373c235e4d32acc6",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.086Z",
+    "generatedAt": "2026-03-11T08:19:44.443Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -53,15 +55,16 @@
     "description": "Documentation for Analyticseventname.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Analyticseventname",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "543eeff8841d01f9138d121fa17b56dbd62281e57ef14d75c8e75bbec9c79229",
+    "contentHash": "bb35552084116a38251d1e71171cc773558b3df9113ffd47a94f09259b6d07b8",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.087Z",
+    "generatedAt": "2026-03-11T08:19:44.444Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -75,15 +78,16 @@
     "description": "Documentation for Analyticspayload.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Analyticspayload",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "f4ac5bc398a4601ee074b50b5b6495560f872440dc6424a135d339651c06283c",
+    "contentHash": "dbf0d2866e0c8d5f2fd69c3187da642ca3e190631cdf74f84ecf95e95fcb16c2",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.087Z",
+    "generatedAt": "2026-03-11T08:19:44.444Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -97,15 +101,16 @@
     "description": "Documentation for Analyticspayloadvalue.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Analyticspayloadvalue",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "baf56bf82b54a472aa51c94c4d9698456fdea7f564feda5675784acdd86cda82",
+    "contentHash": "a90b4a309a55c92c451888a9c50262879a25982efec915d276b3c31342f09f17",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.087Z",
+    "generatedAt": "2026-03-11T08:19:44.445Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -119,15 +124,16 @@
     "description": "Documentation for Cn.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Cn",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "af2c65246d8021db6e4cce4f3f8f20bbf0ad466b22dba443e2a6003a1f344ac9",
+    "contentHash": "7a430e18b876e1bfa582c9376660ebbdb4158cb06ef664069201e8d5de2140fe",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.087Z",
+    "generatedAt": "2026-03-11T08:19:44.445Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -141,15 +147,16 @@
     "description": "Documentation for Entitlementstatus.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Entitlementstatus",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "9f5c8795a20d928f0072c59cbe2fd2e9f30b0bf66b2c3d26d5f7c63287cfab62",
+    "contentHash": "859ad5377d9e2b3b402aa15b780f424cc8bf28978ec3d378a40731cba7b10496",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.088Z",
+    "generatedAt": "2026-03-11T08:19:44.446Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -163,15 +170,16 @@
     "description": "Documentation for Findlatestpaidunprovisionedsessionbyemail.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Findlatestpaidunprovisionedsessionbyemail",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "8d83d0298aa9e180bd1215f5ce245839e267d9b701f1913487039b7a61d4f2ec",
+    "contentHash": "a9c8e498ed465705943e1da3fb6b7e8ab93257a30c6359de312144627ddeb746",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.088Z",
+    "generatedAt": "2026-03-11T08:19:44.447Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -185,15 +193,16 @@
     "description": "Documentation for Formatactionlabel.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Formatactionlabel",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "a3b91f48aede267c691b9baf98377c703a979949c43b45e355b8475f3922ee28",
+    "contentHash": "2a053061164c09ffd45cc15f47bf30e610cf322cf7f9a72b5457d7e303e79ac5",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.088Z",
+    "generatedAt": "2026-03-11T08:19:44.447Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -207,15 +216,16 @@
     "description": "Documentation for Formatactionlabelnode.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Formatactionlabelnode",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "04cb92432e406884ff970e90ccd11c205b4f234c59e499e6a7830f671842d452",
+    "contentHash": "8639a875ff7084caf509c4831c7667def3375fe26b2359bbad817a5d48922683",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.088Z",
+    "generatedAt": "2026-03-11T08:19:44.449Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -229,15 +239,16 @@
     "description": "Documentation for Formatoptionalactionlabel.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Formatoptionalactionlabel",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "19141bff076057d69b7ba29a3466424dc11c52ce1d6991ed2b42f8d499398587",
+    "contentHash": "06dbdbea2d30fd5cf88efb7858773b95cd4fe8655da8a5013f3a2b74768a1024",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.089Z",
+    "generatedAt": "2026-03-11T08:19:44.449Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -251,15 +262,16 @@
     "description": "Documentation for Getactionlabelhtml.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Getactionlabelhtml",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "b035aaaa18fc4f285b305ca67ef8e9e27d882a77703e15df427c704037406fde",
+    "contentHash": "61c1d72c56eac4b868756977a8f9bfc2aa2a9028101a56d9f7a1a2ffb0f2c925",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.089Z",
+    "generatedAt": "2026-03-11T08:19:44.450Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -273,15 +285,16 @@
     "description": "Documentation for Getgithubconfig.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Getgithubconfig",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "201dcc2b393fddbd6c5f950768b887a39d73821098f9265445ab2512bc2d77bf",
+    "contentHash": "4412174461fa16448481e8d61d48f7084a6d7f77d201f3d121da29829bc1d2d3",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.089Z",
+    "generatedAt": "2026-03-11T08:19:44.450Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -295,15 +308,16 @@
     "description": "Documentation for Getproductconfig.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Getproductconfig",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "29314fd34945892f9211ec3ac5189b4eb78aea63babfa7c4b21b8594fe56585a",
+    "contentHash": "a06753a36e5ef87a4e3ee2e762c1546d4bd352ecba8c8600eef28ea8b920b74a",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.089Z",
+    "generatedAt": "2026-03-11T08:19:44.452Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -317,15 +331,16 @@
     "description": "Documentation for Getsessionstatusbyid.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Getsessionstatusbyid",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "116e846d9d02a04eb12af35e3b394a3fb64ad4e4e99bf4a3e324962d94850270",
+    "contentHash": "46e501e90c8242c17c562ed69babed06a07cce6bfcd7f27304eb6e73c61f7436",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.089Z",
+    "generatedAt": "2026-03-11T08:19:44.452Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -339,15 +354,16 @@
     "description": "Documentation for Getstripeclient.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Getstripeclient",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "42fbeff968eacbad18615ed48eb81e3a2fd9099bc63203857bf3770da9c89732",
+    "contentHash": "e41f1a9c92a4318ea754c05ec7a6d5344d3a033872780a436a4872c57092c572",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.090Z",
+    "generatedAt": "2026-03-11T08:19:44.452Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -361,15 +377,16 @@
     "description": "Documentation for Handlecheckoutprocess.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Handlecheckoutprocess",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "0220c8a93afde4b74565855ddbe5b6a03cd1d9ef6b2f4813a39f5f483dba791a",
+    "contentHash": "63032d8b93b6db03384ebdedde5afe9c07afff1f67e2b3312870be877d2a193f",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.090Z",
+    "generatedAt": "2026-03-11T08:19:44.453Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -383,15 +400,16 @@
     "description": "Documentation for Ischromelesspath.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Ischromelesspath",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "7c236abd0e6cbfd3762a47e4867cfb1e085fc8337bb953a161f05f741e218589",
+    "contentHash": "3829aa4802db71cef1457935fc078aa9f7c15c63e569bcd03cfd259bef542c5c",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.090Z",
+    "generatedAt": "2026-03-11T08:19:44.453Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -405,15 +423,16 @@
     "description": "Documentation for Isfooterlesspath.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Isfooterlesspath",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "4559815033ed4ad8484479c882998376666e3f10f42fae39e488c2d7cd8982bc",
+    "contentHash": "c60363a7dc261de86416fbf976af5719e3b45f8133ef8213e3d7c3f356ead201",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.090Z",
+    "generatedAt": "2026-03-11T08:19:44.454Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -427,15 +446,16 @@
     "description": "Documentation for Isfullscreenpath.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Isfullscreenpath",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "f35a98ba2d6d09bf9b7e8dc2e4bb96d0d71a269c7b68e947491bf4bf16c309b0",
+    "contentHash": "4f742e5b1b47f804f3ce14e56799a6d1f342e4e9e82ee9609f6da85fa38e82b9",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.090Z",
+    "generatedAt": "2026-03-11T08:19:44.454Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -449,15 +469,16 @@
     "description": "Documentation for Isminimalheaderpath.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Isminimalheaderpath",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "b970997f22f7504f801908756ca20b31583ee546410a9236c94369c5329831c7",
+    "contentHash": "9fc82a49ea563f37c980a1d8a33f6742b3fe47ed3c7f4043268ff796ea975846",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.090Z",
+    "generatedAt": "2026-03-11T08:19:44.455Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -471,15 +492,16 @@
     "description": "Documentation for Isvalidgithubusernameinput.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Isvalidgithubusernameinput",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "fc6751e3948b19aa608cde77f2f680c02623fa20c596415417b9e826bd9f9832",
+    "contentHash": "da4cad719847dbfdb4cb45b262c8a470a5af4ead1ddad7f9b42696d62fe43cf1",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.091Z",
+    "generatedAt": "2026-03-11T08:19:44.455Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -493,15 +515,16 @@
     "description": "Documentation for Marksessionpaid.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Marksessionpaid",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "db3ed66c323833f321bf921c20ff3d035890e5574856df5480036003c32837bc",
+    "contentHash": "bb44f27fcb2f159b409ed111415d5597a38ecf1fbdf219174db0ec2cf0141205",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.091Z",
+    "generatedAt": "2026-03-11T08:19:44.455Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -515,15 +538,16 @@
     "description": "Documentation for Marksessionprovisioned.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Marksessionprovisioned",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "1a4502326d950827d6fc5bfa1694c2959e748f2c87af4a66a9ce225f00c6f1ad",
+    "contentHash": "cdc333573087ae493eb054f75d9a4059191eb2c67187d0314c2d3c85d59d0eea",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.091Z",
+    "generatedAt": "2026-03-11T08:19:44.456Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -537,15 +561,16 @@
     "description": "Documentation for Normalizegithubusernameforcomparison.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Normalizegithubusernameforcomparison",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "531a7e729a2e9003b40d15bd97e6734bbad13f266e8c495a3b2d41ee22ab5d57",
+    "contentHash": "77b040cdb74504669a972b7cebd03eab759589de5488b19021f5427efbf1d71a",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.092Z",
+    "generatedAt": "2026-03-11T08:19:44.456Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -559,15 +584,16 @@
     "description": "Documentation for Parsegithubusername.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Parsegithubusername",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "c1b986f266d6c8c8a7d5cf34a273fe46425da7f836a05ebb4ddfc75f6df5e8ef",
+    "contentHash": "fd8ecbfe61dfd84c3afd7d02a9ababc6eaa7c8b74cd76a3663ac88895346de71",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.092Z",
+    "generatedAt": "2026-03-11T08:19:44.457Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -581,15 +607,16 @@
     "description": "Documentation for Productconfig.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Productconfig",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "697b3f710186a22e244809e66f1f09df702cff38bda64da501c1274eeb6170d0",
+    "contentHash": "66317b6642d72e93a0aa258990db398f473edda9ed026b20856ef23ed5e480f6",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.092Z",
+    "generatedAt": "2026-03-11T08:19:44.457Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -603,15 +630,16 @@
     "description": "Documentation for Productslug.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Productslug",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "992935024a56fc0cae80f2f47828c695d025b574fee8f63c43d4575849cd235c",
+    "contentHash": "0279f7bb1575739043cc098d54f9b8df15e532ff811ae942004dcf3e32554f24",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.092Z",
+    "generatedAt": "2026-03-11T08:19:44.458Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -625,15 +653,16 @@
     "description": "Documentation for Renderactionlabel.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Renderactionlabel",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "8cae4897beb777325a1e451ba406337e729bcf5cd16c2c9aac59c7e6982aed2f",
+    "contentHash": "4bc4ae7f82c59141c06aa539ecc01feab7f937d635c5209015bdd2e8fc107b95",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.093Z",
+    "generatedAt": "2026-03-11T08:19:44.458Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -647,15 +676,16 @@
     "description": "Documentation for Retrievesessionbyid.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Retrievesessionbyid",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "ff98fe0f882f20c5e657bda5b11e6907fdbf21adf0af08341dfee16a1d68e0cd",
+    "contentHash": "d7751d2f6a86630e8b4e2cfde94a51ca24a6188bfcdbf807398070bf34e5220f",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.093Z",
+    "generatedAt": "2026-03-11T08:19:44.458Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -669,15 +699,16 @@
     "description": "Documentation for Trackevent.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Trackevent",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "b0daca9b17aa448f2d10ec8afbfecccdc2d9005aa3bfdf8bbc588e70431828d5",
+    "contentHash": "0de9f8e6ebe1a0978ce718b820ca481f731f8da1248444f3f5dbd0ccd2651249",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.093Z",
+    "generatedAt": "2026-03-11T08:19:44.459Z",
     "generator": "auto",
     "sourceCommit": null
   },
@@ -691,15 +722,16 @@
     "description": "Documentation for Trackeventoncepersession.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Trackeventoncepersession",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "afaf844a23371bc751ec600b6f99e2aaeda67b36b5a1380a3e9e1af8124584f9",
+    "contentHash": "ee7901bf06e7eda6b9bd4ab9eca9c7a3ddcd580109f1928eeb281bdda53505e0",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-10T23:47:17.093Z",
+    "generatedAt": "2026-03-11T08:19:44.459Z",
     "generator": "auto",
     "sourceCommit": null
   }

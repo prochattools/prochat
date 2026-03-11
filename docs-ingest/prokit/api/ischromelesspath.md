@@ -7,7 +7,7 @@ slug: ischromelesspath
 order: 100
 sourceRepo: prokit
 generator: auto
-generatedAt: 2026-03-10T23:47:16.812Z
+generatedAt: 2026-03-11T08:19:44.130Z
 sourceCommit: null
 keywords:
   - Boilerplate

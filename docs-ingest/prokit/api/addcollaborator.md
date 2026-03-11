@@ -7,7 +7,7 @@ slug: addcollaborator
 order: 100
 sourceRepo: prokit
 generator: auto
-generatedAt: 2026-03-10T23:47:16.807Z
+generatedAt: 2026-03-11T08:19:44.121Z
 sourceCommit: null
 keywords:
   - Boilerplate

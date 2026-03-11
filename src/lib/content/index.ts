@@ -6,6 +6,7 @@ import { getContentConfig } from './config'
 import { ContentEntry, ContentSection } from './types'
 
 const cache = new Map<ContentSection, Promise<ContentEntry[]>>()
+const GENERATED_FILE_MARKER = '<!-- GENERATED FILE - DO NOT EDIT -->'
 
 function parseList(value?: unknown) {
   if (Array.isArray(value)) {
@@ -70,10 +71,14 @@ function readingTimeMinutes(content: string) {
 }
 
 function parseFrontmatter(rawFile: string, filePath: string) {
-  const trimmed = rawFile.trim()
+  let trimmed = rawFile.trim()
 
   if (!trimmed) {
     return null
+  }
+
+  while (trimmed.startsWith(GENERATED_FILE_MARKER)) {
+    trimmed = trimmed.slice(GENERATED_FILE_MARKER.length).trimStart()
   }
 
   const match = trimmed.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)

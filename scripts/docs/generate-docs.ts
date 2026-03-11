@@ -92,9 +92,15 @@ async function gatherMarkdownFiles(dir: string): Promise<string[]> {
 }
 
 function splitFrontmatter(raw: string) {
-  const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
+  let trimmed = raw.trimStart()
+
+  while (trimmed.startsWith(GENERATED_FILE_MARKER)) {
+    trimmed = trimmed.slice(GENERATED_FILE_MARKER.length).trimStart()
+  }
+
+  const match = trimmed.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
   if (!match) {
-    return { frontmatter: '', content: raw }
+    return { frontmatter: '', content: trimmed }
   }
 
   return { frontmatter: match[1], content: match[2] }

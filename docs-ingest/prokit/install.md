@@ -6,7 +6,7 @@ category: boilerplate
 slug: install
 order: 100
 sourceRepo: prokit
-generatedAt: 2026-03-10T23:47:16.804Z
+generatedAt: 2026-03-11T08:19:44.118Z
 sourceCommit: null
 generator: ai
 keywords:
