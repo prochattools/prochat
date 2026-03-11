@@ -17,7 +17,7 @@ The authoritative internal docs for architecture are:
 - `docs/overview.md`
 - `docs/deployment.md`
 - `docs/database.md`
-- `docs/environment.md`
+- `docs-public/environment.md`
 - `docs/development.md`
 - `docs/integrations.md`
 - `docs/production-lifecycle.md`
@@ -28,7 +28,7 @@ Refer to these before making changes; they capture the implementation details an
 
 ## Environment Contract
 
-The environment variable contract lives in `docs/environment.md` and `.env.example`. Runtime enforcement is supported by `scripts/check-env.js`, while `scripts/check-env-docs.js` ensures every code-facing `process.env.*` variable is documented.
+The environment variable contract lives in `docs-public/environment.md` and `.env.example`. Runtime enforcement is supported by `scripts/check-env.js`, while `scripts/check-env-docs.js` ensures every code-facing `process.env.*` variable is documented.
 
 ## Documentation System
 
@@ -40,7 +40,7 @@ The environment variable contract lives in `docs/environment.md` and `.env.examp
 ## Editing Rules for AI Agents
 
 1. Do not invent infrastructure that is not described in the canonical docs listed above.
-2. Never adjust environment contracts without updating `docs/environment.md` (and `.env.example` if needed).
+2. Never adjust environment contracts without updating `docs-public/environment.md` (and `.env.example` if needed).
 3. Do not reintroduce legacy systems that were removed (WordPress, MCP bridge, Dokploy branch previews).
 4. Node 20 is the supported runtime for Docker, CI, and local tooling.
 5. Stripe uses mode-based env keys (`STRIPE_MODE`, `STRIPE_SECRET_KEY_{TEST|LIVE}`, etc.).

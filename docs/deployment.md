@@ -124,5 +124,5 @@ These behaviors should not be documented as active ProChat deployment features:
 - [overview.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/overview.md)
 - [production-lifecycle.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/production-lifecycle.md)
 - [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md)
+- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
 - [development.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/development.md)

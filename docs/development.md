@@ -24,7 +24,7 @@ prisma generate --schema=prisma/system.prisma
 
 ## Environment setup
 
-Use [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md) as the canonical env reference.
+Use [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md) as the canonical env reference.
 
 In development, bootstrap scripts can fill some defaults automatically, but local development still depends on a valid database connection and app slug.
 
@@ -99,7 +99,7 @@ Auth behavior depends on env configuration.
 - if Clerk keys are present, Clerk middleware is used
 - if Clerk is disabled or keys are absent outside production, the repo can run in mock mode
 
-Relevant toggles are documented in [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md).
+Relevant toggles are documented in [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md).
 
 ## Local docs workflow
 
@@ -119,5 +119,5 @@ When working on the generated public docs pipeline, use [scripts/docs/README.md]
 - [overview.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/overview.md)
 - [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md)
 - [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md)
+- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
 - [scripts/docs/README.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/docs/README.md)

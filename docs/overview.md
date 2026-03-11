@@ -27,7 +27,7 @@ Reference docs:
 - [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md)
 - [production-lifecycle.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/production-lifecycle.md)
 - [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md)
+- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
 - [development.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/development.md)
 - [integrations.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/integrations.md)
 - [github-entitlements.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/github-entitlements.md)
@@ -104,7 +104,7 @@ These patterns are central across the repo:
 
 - [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md) for build, provisioning, migration, and startup behavior
 - [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md) for the tenant schema model
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md) for the full env contract
+- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md) for the full env contract
 - [development.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/development.md) for local workflow
 - [integrations.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/integrations.md) for external service behavior
 - [docs-automation.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/docs-automation.md) for the generated public docs system

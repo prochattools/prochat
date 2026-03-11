@@ -161,7 +161,7 @@
 - `src/app/api/stripe/create-checkout/route.ts`
 - `.env.example`
 - `docs/getting-started.md`
-- `docs/environment.md`
+- `docs-public/environment.md`
 
 ## Implementation recommendation
 - Keep one global Umami script injection point.

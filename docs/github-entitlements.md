@@ -96,7 +96,7 @@ The entitlement state is therefore spread across:
 
 ## Required environment variables
 
-The env contract lives in [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md).
+The env contract lives in [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md).
 
 GitHub App-specific values:
 
@@ -121,5 +121,5 @@ This doc should not be read as a generic entitlement framework. It documents the
 ## Related references
 
 - [integrations.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/integrations.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md)
+- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
 - [production-lifecycle.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/production-lifecycle.md)

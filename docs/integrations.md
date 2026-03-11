@@ -2,7 +2,7 @@
 
 This document summarizes the external services that ProChat actively integrates with in the current codebase.
 
-Use [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md) for the env contract. This document focuses on behavior and system role.
+Use [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md) for the env contract. This document focuses on behavior and system role.
 
 ## Clerk
 
@@ -148,4 +148,4 @@ Low-level reference:
 
 - [overview.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/overview.md)
 - [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md)
+- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)

@@ -117,7 +117,7 @@ Prisma commands used by the repo:
 
 ## Environment split
 
-The full env contract lives in [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md).
+The full env contract lives in [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md).
 
 At a database level, the important split is:
 
@@ -141,6 +141,6 @@ The docs should not describe database creation, multi-database tenancy, or runti
 ## Related references
 
 - [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md)
+- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
 - [development.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/development.md)
 - [tenant-cleanup.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/tenant-cleanup.md)

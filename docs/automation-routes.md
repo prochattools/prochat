@@ -156,5 +156,5 @@ Required env:
 ## Related references
 
 - [integrations.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/integrations.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/environment.md)
+- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
 - [development.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/development.md)
