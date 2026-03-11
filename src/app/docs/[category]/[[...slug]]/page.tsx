@@ -1,10 +1,11 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import StructuredData from '@/components/StructuredData'
 import { getPublicDocEntry, getPublicDocsStaticParams } from '@/lib/docs/public-docs'
 import { renderDocsMdxContent } from '@/lib/docs/nextra'
-import { getSEOTags } from '@/lib/seo/metadata'
 import { articleSchema } from '@/lib/seo/schema'
+import { getSiteUrl } from '@/libs/site-url'
 
 export const dynamic = 'force-static'
 
@@ -14,32 +15,54 @@ function getRouteSegments(params: PageParams['params']) {
   return [params.category, ...(params.slug ?? [])]
 }
 
+function getDocKeywords(entry: Awaited<ReturnType<typeof getPublicDocEntry>>, routeSegments: string[]) {
+  if (entry?.keywords && entry.keywords.length > 0) {
+    return entry.keywords
+  }
+
+  return ['documentation', ...routeSegments]
+}
+
 export async function generateStaticParams() {
   return getPublicDocsStaticParams()
 }
 
 export async function generateMetadata({ params }: PageParams) {
-  const entry = await getPublicDocEntry(getRouteSegments(params))
+  const routeSegments = getRouteSegments(params)
+  const entry = await getPublicDocEntry(routeSegments)
+  const metadataBase = new URL(`${getSiteUrl()}/`)
+
   if (!entry) {
-    return getSEOTags({
+    return {
       title: 'Doc Not Found',
       description: 'The requested doc page could not be found.',
-      canonicalUrlRelative: '/docs',
-    })
+      applicationName: 'Product Documentation',
+      metadataBase,
+      alternates: { canonical: '/docs' },
+    } satisfies Metadata
   }
 
-  return getSEOTags({
+  return {
     title: entry.metaTitle || entry.title,
     description: entry.metaDescription || entry.description,
-    keywords: entry.keywords,
-    canonicalUrlRelative: entry.urlPath,
+    applicationName: 'Product Documentation',
+    keywords: getDocKeywords(entry, routeSegments),
+    metadataBase,
+    alternates: { canonical: entry.urlPath },
     openGraph: {
       title: entry.metaTitle || entry.title,
       description: entry.metaDescription || entry.description,
+      url: entry.urlPath,
       images: [entry.ogImage],
       type: 'article',
     },
-  })
+    twitter: {
+      title: entry.metaTitle || entry.title,
+      description: entry.metaDescription || entry.description,
+      images: [entry.ogImage],
+      card: 'summary_large_image',
+    },
+  } satisfies Metadata
 }
 
 export default async function DocsPage({ params }: PageParams) {

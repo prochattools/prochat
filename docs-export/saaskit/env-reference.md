@@ -1,0 +1,139 @@
+# Environment Variables
+
+This guide matches `.env.example` exactly.
+
+## What these files are for
+
+- `.env.example`: safe template with placeholders
+- `.env`: local development values (use Supabase Dev values here)
+- Vercel Environment Variables: production values (use Supabase Prod values here)
+
+Never commit real secrets to git.
+
+## Setup order
+
+1. Copy template: `cp .env.example .env`
+2. Set `DATABASE_URL` to your Supabase Dev project
+3. Run: `npm run db:init && npm run db:migrate:dev && npm run dev`
+4. Set Supabase Prod values only in Vercel for production
+
+## Required to run
+
+- `DATABASE_URL`  
+  What it does: connects the app and Prisma to your Supabase Postgres database.  
+  Where to get it: Supabase -> Project Settings -> Database -> Connection string.
+
+## Recommended before launch
+
+- `NEXT_PUBLIC_APP_URL`  
+  What it does: used for links, SEO, and callback URLs.
+- `NEXT_PUBLIC_APP_NAME`  
+  What it does: your product name in UI and metadata.
+- `NEXT_PUBLIC_COMPANY_NAME`  
+  What it does: used in legal/footer/email defaults.
+- `NEXT_PUBLIC_SUPPORT_EMAIL`  
+  What it does: support contact shown in UI/legal pages.
+
+## Core runtime (optional)
+
+- `SAASKIT_VERSION`  
+  What it does: version shown in parts of the UI.
+- `PROCHAT_VERSION`  
+  What it does: legacy compatibility fallback for older setups.
+- `NODE_ENV`  
+  What it does: runtime mode (`development` or `production`).
+- `PORT`  
+  What it does: app port for `next start`.
+- `APP_ENV`  
+  What it does: environment label for your workflow (`development` / `production`).
+- `SAASKIT_DISABLE_VERCEL_BUILD_MIGRATIONS`  
+  What it does: if `true`, skips automatic Prisma migration during Vercel production build.
+
+## Supabase API values (optional)
+
+These are optional in the current codebase. Use them only when you add custom Supabase API usage.
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+Where to get them: Supabase -> Project Settings -> API.
+
+## Clerk (optional auth)
+
+- `CLERK_DISABLED`
+- `NEXT_PUBLIC_CLERK_DISABLED`
+
+What these do: keep both `true` to run without Clerk; set both `false` to enable Clerk.
+
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+- `CLERK_SECRET_KEY`
+
+What these do: Clerk API keys.  
+Where to get them: Clerk Dashboard -> API Keys.
+
+- `NEXT_PUBLIC_CLERK_SIGN_IN_URL`
+- `NEXT_PUBLIC_CLERK_SIGN_UP_URL`
+
+What these do: auth route paths in your app.
+
+## Stripe (optional billing)
+
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- `STRIPE_SECRET_KEY`
+- `STRIPE_WEBHOOK_SECRET`
+
+What these do: Stripe checkout, portal, and webhook verification.  
+Where to get them: Stripe Dashboard -> Developers -> API keys and Webhooks.
+
+- `NEXT_PUBLIC_STRIPE_PRODUCTS_JSON`
+
+What it does: maps your Stripe prices into pricing cards/checkout options.  
+Before you set it: create Products and Prices in Stripe first.
+
+## Resend (optional email/waitlist)
+
+- `RESEND_API_KEY`
+
+What it does: enables waitlist and transactional email sending.  
+Where to get it: Resend Dashboard -> API Keys.
+
+- `NEXT_PUBLIC_EMAIL_FROM`
+- `NEXT_PUBLIC_FORWARD_REPLIES_TO`
+- `NEXT_PUBLIC_THANK_YOU_SUBJECT`
+
+What these do: sender name, reply address, and default waitlist message subject.
+
+## WordPress (optional blog)
+
+- `WP_REST_ENDPOINT`
+
+What it does: enables blog pages from WordPress REST API.  
+Example: `https://yourblog.com/wp-json/wp/v2`
+
+## n8n (optional workflow automation)
+
+- `N8N_API_KEY`
+- `N8N_API_URL`
+- `N8N_WEBHOOK_URL`
+
+What these do: connect n8n API routes and webhook-based actions.  
+Where to get key: n8n -> Settings -> API Keys.
+
+## Visual/SEO settings (optional)
+
+- `NEXT_PUBLIC_APP_DESCRIPTION`
+- `NEXT_PUBLIC_APP_DOMAIN`
+- `NEXT_PUBLIC_TWITTER_CREATOR`
+- `NEXT_PUBLIC_THEME`
+- `NEXT_PUBLIC_BRAND_COLOR`
+
+What these do: metadata, social tags, and theme/color defaults.
+
+## Platform-managed variables (do not set in `.env`)
+
+- `VERCEL`
+- `VERCEL_ENV`
+- `CI`
+
+These are set automatically by hosting/CI providers.

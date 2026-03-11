@@ -1,263 +1,95 @@
-import { promises as fs } from 'fs'
-import path from 'path'
-
 import type { PageMapItem } from 'nextra'
 
 import { getSectionEntries, getSectionEntry } from '@/lib/content'
 import type { ContentEntry } from '@/lib/content/types'
 
-type MetaRecord = Record<string, string | Record<string, unknown>>
-type DocsMetaItem = {
-  data: MetaRecord
-}
 type DocsPageItem = {
   name: string
   route: string
-  frontMatter?: Record<string, unknown>
   title?: string
+  frontMatter?: Record<string, unknown>
 }
+
 type DocsFolderItem = {
   name: string
   route: string
   children: DocsPageMapItem[]
   title?: string
 }
-type DocsPageMapItem = DocsMetaItem | DocsPageItem | DocsFolderItem
-type DocsNavigableItem = DocsPageItem | DocsFolderItem
 
-const PRODUCT_GETTING_STARTED = new Set(['prokit', 'saaskit', 'future', 'waaskit'])
-const GETTING_STARTED_CHILDREN = [
-  { slug: 'try', title: 'Try the boilerplate in 2 minutes' },
-  { slug: 'quick-start', title: 'Quick Start' },
-]
-const PRODUCT_CHILDREN = [
-  { slug: 'what-you-get', title: 'What You Get' },
-  { slug: 'use-cases', title: 'Use Cases' },
-  { slug: 'how-it-works', title: 'How It Works' },
-  { slug: 'launch-checklist', title: 'Launch Checklist' },
-  { slug: 'who-this-is-for', title: 'Who This Is For' },
-  { slug: 'why-a-boilerplate', title: 'Why a Boilerplate?' },
-]
+type DocsPageMapItem = DocsPageItem | DocsFolderItem
+
+const PUBLIC_PRODUCTS = ['prokit', 'saaskit'] as const
+const PUBLIC_PRODUCT_SET = new Set<string>(PUBLIC_PRODUCTS)
 const SHARED_ROUTE_OVERRIDES: Record<string, string> = {
   try: 'try-in-2-minutes',
 }
 
-const PUBLIC_DOCS_ROOT = path.join(process.cwd(), 'src', 'content', 'docs')
-let publicDocsEntryMapPromise: Promise<Map<string, ContentEntry>> | null = null
 let publicDocsPageMapPromise: Promise<PageMapItem[]> | null = null
 
-function toRouteSegments(relativeDir: string, fileName: string) {
-  const directorySegments = relativeDir ? relativeDir.split('/') : []
-  return fileName === 'index'
-    ? directorySegments
-    : [...directorySegments, fileName]
-}
-
-function toRoutePath(routeSegments: string[]) {
-  return routeSegments.length > 0 ? `/docs/${routeSegments.join('/')}` : '/docs'
-}
-
-function humanizeSegment(segment: string) {
-  return segment
-    .split(/[-_]/)
-    .filter(Boolean)
-    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ')
-}
-
-function getMetaTitle(value: string | Record<string, unknown> | undefined) {
-  if (typeof value === 'string') {
-    return value
-  }
-
-  if (value && typeof value.title === 'string' && value.title.trim()) {
-    return value.title.trim()
-  }
-
-  return undefined
-}
-
-function sortByMetaOrder<T extends { name: string }>(items: T[], meta: MetaRecord | null) {
-  const explicitKeys = Object.keys(meta || {}).filter(key => key !== '*')
-  const order = new Map(explicitKeys.map((key, index) => [key, index]))
-
-  return [...items].sort((left, right) => {
-    const leftOrder = order.get(left.name)
-    const rightOrder = order.get(right.name)
-
-    if (leftOrder !== undefined || rightOrder !== undefined) {
-      if (leftOrder === undefined) return 1
-      if (rightOrder === undefined) return -1
-      return leftOrder - rightOrder
-    }
-
-    if (left.name === 'index' && right.name !== 'index') return -1
-    if (right.name === 'index' && left.name !== 'index') return 1
-
-    return left.name.localeCompare(right.name)
-  })
-}
-
-function hasNavigableChildren(items: DocsPageMapItem[]) {
-  return items.some(item => 'name' in item && 'route' in item)
-}
-
-async function loadMeta(relativeDir: string): Promise<MetaRecord | null> {
-  const metaPath = path.join(PUBLIC_DOCS_ROOT, relativeDir, '_meta.js')
-
-  try {
-    const source = await fs.readFile(metaPath, 'utf8')
-    const moduleFactory = new Function(
-      source.replace(/^\s*export\s+default\s+/, 'return '),
-    ) as () => MetaRecord
-
-    return moduleFactory()
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-      return null
-    }
-
-    throw error
+function page(name: string, route: string, title: string): DocsPageItem {
+  return {
+    name,
+    route,
+    title,
+    frontMatter: { title },
   }
 }
 
-async function getPublicDocsEntryMap() {
-  if (!publicDocsEntryMapPromise) {
-    publicDocsEntryMapPromise = getSectionEntries('docs').then(
-      entries => new Map(entries.map(entry => [entry.routeSegments.join('/'), entry])),
-    )
+function folder(
+  name: string,
+  title: string,
+  route: string,
+  children: DocsPageMapItem[],
+): DocsFolderItem {
+  return {
+    name,
+    route,
+    title,
+    children,
   }
-
-  return publicDocsEntryMapPromise
 }
 
-async function buildDirectory(relativeDir = ''): Promise<DocsPageMapItem[]> {
-  const [meta, entryMap, dirents] = await Promise.all([
-    loadMeta(relativeDir),
-    getPublicDocsEntryMap(),
-    fs.readdir(path.join(PUBLIC_DOCS_ROOT, relativeDir), { withFileTypes: true }),
-  ])
-
-  let pageItems: DocsNavigableItem[] = []
-
-  for (const dirent of dirents) {
-    if (dirent.name.startsWith('.')) continue
-
-    if (dirent.isDirectory()) {
-      const childRelativeDir = relativeDir ? `${relativeDir}/${dirent.name}` : dirent.name
-      const children = await buildDirectory(childRelativeDir)
-
-      if (!hasNavigableChildren(children)) {
-        continue
-      }
-
-      pageItems.push({
-        name: dirent.name,
-        route: toRoutePath([...toRouteSegments(relativeDir, 'index'), dirent.name]),
-        title: getMetaTitle(meta?.[dirent.name]) || humanizeSegment(dirent.name),
-        children,
-      })
-
-      continue
-    }
-
-    if (!dirent.isFile() || path.extname(dirent.name) !== '.mdx') {
-      continue
-    }
-
-    const baseName = path.parse(dirent.name).name
-
-    if (baseName === '_meta') {
-      continue
-    }
-
-    const routeSegments = toRouteSegments(relativeDir, baseName)
-    const entry = entryMap.get(routeSegments.join('/'))
-    const title = getMetaTitle(meta?.[baseName]) || entry?.title || humanizeSegment(baseName)
-
-    pageItems.push({
-      name: baseName,
-      route: toRoutePath(routeSegments),
-      title,
-      frontMatter: {
-        ...(entry?.rawFrontmatter || {}),
-        title,
-      },
-    })
-  }
-
-  if (PRODUCT_GETTING_STARTED.has(relativeDir)) {
-    const gettingStartedSlugs = new Set(GETTING_STARTED_CHILDREN.map(child => child.slug))
-    const productChildSlugs = new Set(PRODUCT_CHILDREN.map(child => child.slug))
-    const allSlugs = new Set([...gettingStartedSlugs, ...productChildSlugs])
-    const productIndexRoute = toRoutePath(toRouteSegments(relativeDir, 'index'))
-
-    const gettingStartedChildren = GETTING_STARTED_CHILDREN.map(child => ({
-      name: child.slug,
-      route: toRoutePath([...toRouteSegments(relativeDir, child.slug)]),
-      title: child.title,
-    }))
-
-    const productChildren = PRODUCT_CHILDREN.map(child => ({
-      name: child.slug,
-      route: toRoutePath([...toRouteSegments(relativeDir, child.slug)]),
-      title: child.title,
-    }))
-
-    pageItems = pageItems.filter(
-      item => !('name' in item && allSlugs.has(item.name)),
-    )
-
-    pageItems.unshift({
-      name: 'product',
-      route: productIndexRoute,
-      title: 'Product',
-      children: productChildren,
-    })
-
-    pageItems.unshift({
-      name: 'getting-started',
-      route: productIndexRoute,
-      title: 'Getting Started',
-      children: gettingStartedChildren,
-    })
-  }
-
-  const sortedItems = sortByMetaOrder(pageItems, meta)
-
-  if (relativeDir === '') {
-    const featureIndex = sortedItems.findIndex(
-      item => 'name' in item && item.name === 'features' && 'children' in item,
-    )
-
-    if (featureIndex >= 0) {
-      const [featureFolder] = sortedItems.splice(featureIndex, 1)
-      const featureChildren = (featureFolder as DocsFolderItem).children
-
-      sortedItems.unshift({
-        name: 'core-features',
-        route: '/docs/features',
-        title: 'Core Features',
-        children: featureChildren,
-      })
-    }
-  }
-
-  const validItems = sortedItems.filter(
-    (item): item is DocsNavigableItem => 'name' in item && 'route' in item,
-  )
-
-  if (meta && Object.keys(meta).length > 0) {
-    return [{ data: meta }, ...validItems]
-  }
-
-  return validItems
+function buildPublicSidebarMap(): DocsPageMapItem[] {
+  return [
+    folder('getting-started', 'Getting Started', '/docs/shared/try-in-2-minutes', [
+      page('try-in-2-minutes', '/docs/shared/try-in-2-minutes', 'Try in 2 minutes'),
+      page('quick-start', '/docs/shared/quick-start', 'Quick Start'),
+    ]),
+    folder('products', 'Products', '/docs', [
+      page('prokit', '/docs/prokit', 'ProKit'),
+      page('saaskit', '/docs/saaskit', 'SaaSKit'),
+    ]),
+    folder('prokit-product', 'ProKit', '/docs/prokit', [
+      page('what-you-get', '/docs/prokit/what-you-get', 'What You Get'),
+      page('use-cases', '/docs/prokit/use-cases', 'Use Cases'),
+      page('why-a-boilerplate', '/docs/prokit/why-a-boilerplate', 'Why a Boilerplate?'),
+      page('launch-checklist', '/docs/prokit/launch-checklist', 'Launch Checklist'),
+    ]),
+    folder('saaskit-product', 'SaaSKit', '/docs/saaskit', [
+      page('what-you-get', '/docs/saaskit/what-you-get', 'What You Get'),
+      page('use-cases', '/docs/saaskit/use-cases', 'Use Cases'),
+      page('why-a-boilerplate', '/docs/saaskit/why-a-boilerplate', 'Why a Boilerplate?'),
+      page('launch-checklist', '/docs/saaskit/launch-checklist', 'Launch Checklist'),
+    ]),
+    folder('core-features', 'Core Features', '/docs/features/auth', [
+      page('auth', '/docs/features/auth', 'Auth'),
+      page('billing', '/docs/features/billing', 'Billing'),
+      page('email', '/docs/features/email', 'Email'),
+      page('deployment', '/docs/features/deployment', 'Deployment'),
+    ]),
+    folder('advanced', 'Advanced', '/docs/shared/architecture', [
+      page('architecture', '/docs/shared/architecture', 'Architecture'),
+      page('configuration', '/docs/shared/configuration', 'Configuration'),
+      page('integrations', '/docs/shared/integrations', 'Integrations'),
+    ]),
+  ]
 }
 
 export async function getPublicDocsPageMap() {
   if (!publicDocsPageMapPromise) {
-    publicDocsPageMapPromise = buildDirectory('').then(
-      pageMap => pageMap as unknown as PageMapItem[],
+    publicDocsPageMapPromise = Promise.resolve(
+      buildPublicSidebarMap() as unknown as PageMapItem[],
     )
   }
 
@@ -269,6 +101,7 @@ export async function getPublicDocEntry(routeSegments: string[]): Promise<Conten
   if (primary) return primary
 
   if (routeSegments.length < 2) return null
+  if (!PUBLIC_PRODUCT_SET.has(routeSegments[0])) return null
 
   const sharedSlug = SHARED_ROUTE_OVERRIDES[routeSegments[1]]
   if (sharedSlug) {

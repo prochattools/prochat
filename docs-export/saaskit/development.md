@@ -1,0 +1,40 @@
+# Development
+
+This section mirrors the ProKit **development** page. It summarizes how to prepare your workspace, which commands the runtime expects, and where to look when things go wrong during local work.
+
+## Runtime requirements
+- **Node** 18+ (matching `package.json` engines)  
+- **npm** (you already use it for the provided scripts)  
+- **Supabase** Dev + Prod projects (see the database doc for the split)
+
+When you run locally, the runtime is still Next.js 14 + TypeScript, so `npm run dev` operates inside the same entry points that production uses (`src/app/(marketing)` and `src/app/(app)`).
+
+## Bootstrapping the workspace
+1. `npm install`
+2. `cp .env.example .env` and fill the values listed in `docs-public/env-reference.md`
+3. Run `npm run setup:first-run` or `npm run saaskit:bootstrap` (they are aliases) to ensure the template env file exists and any project scaffolding hooks run.
+
+## Local development loop
+- `npm run predev` runs `scripts/dev/bootstrap-env.js` then `db:init` and `db:migrate:dev`, so it is the canonical preparation step before spinning up the app.  
+- `npm run dev` now reads the prepared `.env`, runs the same migration/verification steps as `predev`, and starts Next.js in development mode.  
+- `npm run db:migrate:dev` applies migrations to the development database referenced in `DATABASE_URL`. Run it after schema changes.
+
+Keep Supabase Dev values in `.env`; production values belong only in Vercel environment variables. The development doc and `env-reference` share the exact variable set from `.env.example`, so double-check there if you encounter missing keys.
+
+## Migration mindset
+- Use `npm run db:init` to verify the connection.
+- Apply schema changes locally before pushing: edit `prisma/system.prisma`, run `npm run db:migrate:dev`, make sure tests pass, then push and let the deployment pipeline run `db:migrate:vercel-build` on Vercel.  
+- Use `npm run db:migrate:reset` only on the Dev database in Supabase to start clean.
+- `npm run db:migrate:prod` is the manual fallback if production deployments do not automatically run migrations (the deployment doc covers why this usually isn't necessary).
+
+## Development checks
+- `npm run lint` (see `package.json`) catches client/server issues.
+- `npm run build` triggers `npm run db:migrate:vercel-build` through `prebuild`, so it's a good smoke test before pushing.  
+- `npm run verify:deploy` shows the current migration status when you need a quick proof of health.
+
+## Related docs
+- Runtime variables: `docs-public/env-reference.md`  
+- Database pattern: `docs-public/database.md`  
+- Deployment path: `docs-public/deployment.md`  
+- Optional tooling (Clerk/Stripe/Resend/etc): `docs-public/integrations.md`  
+- Scripts reference (command details + aliases): `docs-private/scripts.md`

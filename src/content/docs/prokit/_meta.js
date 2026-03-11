@@ -1,6 +1,7 @@
 export default {
   '*': {
     title: 'ProKit',
+    display: 'hidden',
   },
   'addcollaborator': {
     title: 'Addcollaborator',
@@ -18,12 +19,32 @@ export default {
     title: 'Analyticspayloadvalue',
     order: 100,
   },
+  'architecture': {
+    title: 'Architecture',
+    order: 100,
+  },
   'cn': {
     title: 'Cn',
     order: 100,
   },
+  'database': {
+    title: 'Database',
+    order: 100,
+  },
+  'deployment': {
+    title: 'Deployment',
+    order: 100,
+  },
+  'development': {
+    title: 'Development',
+    order: 100,
+  },
   'entitlementstatus': {
     title: 'Entitlementstatus',
+    order: 100,
+  },
+  'features': {
+    title: 'Features',
     order: 100,
   },
   'findlatestpaidunprovisionedsessionbyemail': {
@@ -60,6 +81,10 @@ export default {
   },
   'getstripeclient': {
     title: 'Getstripeclient',
+    order: 100,
+  },
+  'git-workflow': {
+    title: 'Git Workflow',
     order: 100,
   },
   'handlecheckoutprocess': {
@@ -102,6 +127,14 @@ export default {
     title: 'Normalizegithubusernameforcomparison',
     order: 100,
   },
+  'optional-features': {
+    title: 'Optional Features',
+    order: 100,
+  },
+  'overview': {
+    title: 'Overview',
+    order: 100,
+  },
   'parsegithubusername': {
     title: 'Parsegithubusername',
     order: 100,
@@ -114,12 +147,24 @@ export default {
     title: 'Productslug',
     order: 100,
   },
+  'README': {
+    title: 'README',
+    order: 100,
+  },
   'renderactionlabel': {
     title: 'Renderactionlabel',
     order: 100,
   },
   'retrievesessionbyid': {
     title: 'Retrievesessionbyid',
+    order: 100,
+  },
+  'scripts': {
+    title: 'Scripts',
+    order: 100,
+  },
+  'stack': {
+    title: 'Stack',
     order: 100,
   },
   'trackevent': {

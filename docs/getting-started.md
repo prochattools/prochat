@@ -1,6 +1,6 @@
-# ProChat Getting Started
+# Project Getting Started
 
-Follow these steps to run the ProChat system locally and complete the first sign-in/checkout flow.
+Follow these steps to run the application locally and complete the first sign-in/checkout flow.
 
 ## Prerequisites
 - Node.js + npm
@@ -9,8 +9,8 @@ Follow these steps to run the ProChat system locally and complete the first sign
 
 ## 1) Clone & install
 ```bash
-git clone https://github.com/prochattools/prochat.git prochat
-cd prochat
+git clone <your-app-repo> app
+cd app
 npm install
 ```
 

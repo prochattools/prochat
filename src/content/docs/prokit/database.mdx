@@ -1,0 +1,42 @@
+<!-- GENERATED FILE - DO NOT EDIT -->
+---
+title: Database
+description: Documentation for Database.
+category: boilerplate
+slug: database
+order: 100
+sourceRepo: prokit
+generator: ai
+generatedAt: 2026-03-11T19:41:06.081Z
+sourceCommit: null
+keywords:
+  - prokit
+  - ProKit
+  - Database
+  - boilerplate
+---
+# ProKit Studio Database Notes
+
+This ProKit Studio wrapper uses a simple database model:
+
+- One Postgres connection string via `DATABASE_URL`
+- Prisma migrations run directly against that connection
+- No multi-tenant schema/user lifecycle in ProKit Studio
+
+## Local vs production
+
+- Local: Docker Postgres is the default path
+- Production: recommended walkthrough uses Supabase
+- Not required: any Postgres provider is supported
+- On Vercel production builds, ProKit Studio runs `prisma migrate deploy` automatically via `db:migrate:vercel-build`
+
+## Commands
+
+```bash
+npm run db:init
+npm run db:migrate:dev
+npm run db:migrate:prod
+```
+
+`db:init` only verifies that `DATABASE_URL` is reachable.
+

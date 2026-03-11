@@ -1,14 +1,35 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { getPublicDocEntry } from '@/lib/docs/public-docs'
 import { renderDocsMdxContent } from '@/lib/docs/nextra'
-import { getSEOTags } from '@/lib/seo/metadata'
+import { getSiteUrl } from '@/libs/site-url'
 
-export const metadata = getSEOTags({
-  title: 'Docs | ProChat',
-  description: 'Public product and implementation docs rendered from src/content/docs.',
-  canonicalUrlRelative: '/docs',
-})
+const DOCS_DESCRIPTION = 'Public product documentation for ProKit, SaaSKit, and shared features.'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Docs | Product Documentation',
+    description: DOCS_DESCRIPTION,
+    applicationName: 'Product Documentation',
+    keywords: ['documentation', 'prokit', 'saaskit'],
+    metadataBase: new URL(`${getSiteUrl()}/`),
+    alternates: { canonical: '/docs' },
+    openGraph: {
+      title: 'Product Documentation',
+      description: DOCS_DESCRIPTION,
+      url: '/docs',
+      images: ['/og'],
+      type: 'website',
+    },
+    twitter: {
+      title: 'Product Documentation',
+      description: DOCS_DESCRIPTION,
+      images: ['/og'],
+      card: 'summary_large_image',
+    },
+  }
+}
 
 export default async function DocsIndexPage() {
   const entry = await getPublicDocEntry([])

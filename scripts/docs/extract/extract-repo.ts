@@ -58,6 +58,12 @@ type CopyStats = {
   skippedSensitive: number
 }
 
+function normalizeRepoName(repoUrl: string) {
+  const trimmed = repoUrl.trim().replace(/\/+$/, '')
+  const repoName = trimmed.split('/').pop() || ''
+  return repoName.replace(/\.git$/i, '').toLowerCase()
+}
+
 function printUsage() {
   console.log('Usage: npm run docs:extract:repo -- <repo-url> <target>')
   console.log('Example: npm run docs:extract:repo -- https://github.com/stevewesthoek/saaskit saaskit')
@@ -221,6 +227,13 @@ async function syncIntoIngest(target: string, sourceCommit: string) {
 
 async function run() {
   const { repoUrl, target } = parseArgs()
+  const repoName = normalizeRepoName(repoUrl)
+
+  if (repoName === 'prochat' || target.toLowerCase() === 'prochat') {
+    console.warn('Internal repository skipped.')
+    return
+  }
+
   const registry = await loadRegistry()
   const product = registry.find(entry => entry.id === target)
 
@@ -229,7 +242,7 @@ async function run() {
     process.exit(1)
   }
 
-  const tempRoot = await mkdtemp(path.join(os.tmpdir(), `prochat-docs-${target}-`))
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), `product-docs-${target}-`))
   const cloneRoot = path.join(tempRoot, 'repo')
   const exportRoot = path.join(DOCS_EXPORT_ROOT, target)
   const tempExportRoot = path.join(DOCS_EXPORT_TMP_ROOT, target)
