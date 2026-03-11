@@ -31,7 +31,7 @@
     "docs:preview": "npm run docs:generate && npx next dev -p 3100",
     "docs:check:coverage": "node -r ts-node/register/transpile-only scripts/docs/check-doc-coverage.ts",
     "docs:validate": "npm run docs:check:coverage && node -r ts-node/register/transpile-only scripts/docs/validate-docs.ts",
-    "docs:ai-generate": "node scripts/docs/ai/generate-ai-doc.ts",
+    "docs:ai-generate": "tsx scripts/docs/ai/generate-ai-doc.ts",
     "docs:ai-build": "npm run docs:ai-generate && npm run docs:generate && npm run docs:validate",
     "docs:ingest": "node -r ts-node/register/transpile-only scripts/docs/ingest/external-sync.ts",
     "docs:extract:typescript": "node -r ts-node/register/transpile-only scripts/docs/extract/extract-typescript.ts",
