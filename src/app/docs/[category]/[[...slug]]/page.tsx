@@ -9,21 +9,22 @@ import { articleSchema } from '@/lib/seo/schema'
 
 export const dynamic = 'force-static'
 
-type PageParams = { params: { category: string; section: string; slug: string } }
+type PageParams = { params: { category: string; slug?: string[] } }
+
+function getRouteSegments(params: PageParams['params']) {
+  return [params.category, ...(params.slug ?? [])]
+}
 
 export async function generateStaticParams() {
   const entries = await getSectionEntries('docs')
-  return entries
-    .filter(entry => entry.routeSegments.length === 3)
-    .map(entry => ({
-      category: entry.routeSegments[0],
-      section: entry.routeSegments[1],
-      slug: entry.routeSegments[2],
-    }))
+  return entries.map(entry => ({
+    category: entry.routeSegments[0],
+    slug: entry.routeSegments.slice(1),
+  }))
 }
 
 export async function generateMetadata({ params }: PageParams) {
-  const entry = await getSectionEntry('docs', [params.category, params.section, params.slug])
+  const entry = await getSectionEntry('docs', getRouteSegments(params))
   if (!entry) {
     return getSEOTags({
       title: 'Doc Not Found',
@@ -46,8 +47,8 @@ export async function generateMetadata({ params }: PageParams) {
   })
 }
 
-export default async function NestedDocsPage({ params }: PageParams) {
-  const routeSegments = [params.category, params.section, params.slug]
+export default async function DocsPage({ params }: PageParams) {
+  const routeSegments = getRouteSegments(params)
   const entry = await getSectionEntry('docs', routeSegments)
   if (!entry) notFound()
 
@@ -63,7 +64,7 @@ export default async function NestedDocsPage({ params }: PageParams) {
   return (
     <>
       <StructuredData
-        id={`schema-docs-${entry.slug}-${params.section}`}
+        id={`schema-docs-${routeSegments.join('-')}`}
         data={articleSchema({
           title: entry.title,
           description: entry.description,
