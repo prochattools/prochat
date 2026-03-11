@@ -7,7 +7,7 @@ slug: getactionlabelhtml
 order: 100
 sourceRepo: prokit
 generator: auto
-generatedAt: 2026-03-11T08:19:44.128Z
+generatedAt: 2026-03-11T16:40:32.427Z
 sourceCommit: null
 keywords:
   - Boilerplate
