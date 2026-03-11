@@ -160,18 +160,40 @@ The content system is not isolated from conversion. It is designed to move users
 1. Discover via blog, glossary, guides, docs, prompts, or snippets
 2. Understand the system through related content and structured layouts
 3. Move into a CTA that routes to kits, contact, or the next execution asset
-4. Convert into SaaSKit, ProKit, or a conversation with ProChat
+4. Convert into SaaSKit, ProChat, or a conversation with the team
 
 Each content layout injects a CTA section automatically so discovery traffic does not dead-end.
 
-## Documentation Map
+## System domains
 
-Use these docs as the canonical references for the production architecture:
+- **App/runtime** — tenant provisioning, database wiring, infrastructure deploy flow, and production runtime. See `docs/overview.md`, `docs/database.md`, `docs/environment.md`, `docs/deployment.md`, `docs/production-lifecycle.md`, `docs/development.md`, `docs/integrations.md`, `docs/github-entitlements.md`, `docs/automation-routes.md`, `docs/getting-started.md`, `docs/tenant-cleanup.md`, `docs/builder-reference.md`, and `docs/ai-guidelines.md` for the operator-facing contracts.
+- **Content + SEO platform** — the MDX-driven clusters, OG generation, sitemap/RSS output, analytics, and design system. The canonical entries are `docs/content-platform.md`, `docs/blog-system.md`, `docs/open-graph-system.md`, `docs/design-system.md`, `docs/design-rules.md`, `docs/allowed-section-types.md`, `docs/page-blueprint-template.md`, and `docs/analytics-audit.md`.
+- **Docs automation** — generated docs are defined in `docs/docs-automation.md` and `scripts/docs/README.md`; use the internal doc for the operator overview and the script guide for implementation details.
 
-- `docs/ARCHITECTURE.md` — URL model, taxonomy, deployment assumptions, zero-manual workflow
-- `docs/blog-system.md` — MDX blog rules, publishing schedule, internal linking, taxonomy enforcement
-- `docs/open-graph-system.md` — global and blog OG generation architecture
-- `docs/design-system.md` — brand tokens, hero system, button system, type scale, motion rules
+## Internal documentation map
+
+- `/docs` is strictly internal. These markdown files describe the environment, deployment, content plane, and docs automation that the ProChat team operates directly.
+- `scripts/docs/README.md` is the low-level reference for the docs pipeline; it is not part of the generated public docs map but links to `docs-ingest`, `docs-export`, and `src/content/docs`.
+- Use the content docs (blog, docs, prompts, etc.) inside `src/content/docs/*` when you need the public-facing output; they are produced from the internal `/docs` plus the AI pipeline, so editing `/docs` (or adding new templates here) flows into the generated site via `npm run docs:ai-build`.
+AI coding agents should consult `AGENTS.md` for repository context before editing the docs or code.
+Operational commands and validation paths are documented in `REPO_OPERATIONS.md`.
+
+## Documentation Integrity
+
+CI enforces that the internal docs stay aligned with the codebase. Every push runs the environment-variable documentation check, verifies `/docs/*.md` links, and executes `npm run docs:validate`, so drift is caught before a merge.
+
+## Public docs vs internal docs
+
+- Internal: `/docs` contains team-facing references, policies, and templates. Link here only from internal guides and keep sensitive deployment details inside the repo.
+- Public: the generated docs live under `src/content/docs/{prokit,saaskit,waaskit,future}` and follow the manifest in `.generated-manifest.json`. The AI/regeneration pipeline runs `npm run docs:ingest`, `npm run docs:ai-generate`, `npm run docs:generate`, and `npm run docs:validate`, so you never edit the published tree directly.
+
+## Notes on current infra truth
+
+- This is the ProChat repo; it inherits SaaSKit conventions but is not the same as the older ProKit brand. Keep the naming aligned with ProChat going forward.
+- The marketing/content site is MDX-first and no longer relies on WordPress, so do not document the WordPress stack as the active content system.
+- Dokploy is reserved for the main branch; there is no active branch-level preview deployment pipeline.
+- The SaaSKit runtime deploy gate (runtime scripts performing backups/smoke checks before `next start`) is not part of the current ProChat build. Production starts with `npm run start` after the `prebuild` run in `npm run build`.
+- Both Docker and GitHub workflows now target Node 20 (`Dockerfile` uses `node:20-bullseye`; CI installs Node 20), and `package.json` enforces `node >=20`.
 
 ## Development Notes
 
@@ -219,16 +241,6 @@ The publishing system is designed to remove repetitive operational work:
 - Future-dated posts become visible on the next redeploy after `publishedAt`
 - Taxonomy validation is enforced in the blog loader
 - Internal linking follows a controlled editorial rule set for semantic consistency
-
-## Existing ProKit / Infra Docs
-
-Operational and infrastructure details remain in the existing docs set:
-
-- `docs/PROKIT_AI_GUIDELINES.md`
-- `docs/PROKIT_DEV_GUIDE.md`
-- `docs/PROKIT_INFRASTRUCTURE.md`
-- `docs/PROKIT_DATABASE.md`
-- `docs/PROKIT_TENANT_CLEANUP.md`
 
 ## Next Step for Content Expansion
 
