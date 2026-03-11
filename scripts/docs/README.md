@@ -58,9 +58,29 @@ Drop `v1`, `v2`, etc., directories under `docs-ingest/<product>/` to signal vers
 
 External repositories export their current documentation into a `docs-export/` directory containing `.md`/`.mdx` files. `npm run docs:ingest` shells out to `scripts/docs/ingest/external-sync.ts`, validates the product against `scripts/docs/products-registry.json`, and syncs the export into `docs-ingest/<product>`. The `.github/workflows/docs-sync.yml` workflow acts as the webhook/dispatch endpoint: it reads the `product` and `docsPath` payload, runs `docs:ingest`, then `docs:ai-build`, keeping each automation run strictly validated because that workflow already enables `DOCS_STRICT=true`.
 
+For repos that do not push exports into this repository directly, run `npm run docs:extract:repo -- <repo-url> <target>`. That helper clones the remote repository into a temporary directory and only accepts Markdown from `docs-public/<target>` or `docs-public`. If neither path exists, the run aborts with an explicit warning so no private documentation is ingested. Before staging files into `docs-export/<target>`, the extractor also scans for secret-like patterns (private key assignments, token/password/api-key assignments, and `.env` style credential lines). Files that match are warned about and skipped so private material is not published accidentally. Heavy build folders such as `node_modules`, `.next`, `dist`, and `build` are ignored during the scan.
+
+Recommended external repo layout:
+
+```text
+saaskit/
+  docs-public/
+    getting-started.md
+    architecture/
+  docs-private/
+    operator-notes.md
+    internal-roadmap.md
+```
+
+Only `docs-public/` is eligible for extraction into ProChat.
+
 ### Atomic ingestion
 
 `npm run docs:ingest` now copies exports into `docs-ingest/.tmp/<product>`, ensures only `.md/.mdx` files go through, and atomically swaps the staged directory into `docs-ingest/<product>` only after the copy succeeds. On success the script reports how many docs were imported vs skipped and logs `Sync success`; failures leave the existing ingest folder untouched and log `Sync failed`.
+
+### Restructured product docs
+
+After the AI pipeline pushes generated docs into `src/content/docs/<product>`, run `npm run docs:restructure` to enforce the buyer-friendly layout (overview, what-you-get, architecture, etc.). The script keeps the original technical pages untouched; it simply generates summary landing pages and `integrations` / `advanced` indexes that reference the existing docs, giving each product a consistent top-level navigation without deleting any technical content.
 
 ### Source commit tracking
 
@@ -71,6 +91,8 @@ When a dispatch includes a `commit`, the ingestion script forwards it into `DOCS
 Local runs default to warning mode. `npm run docs:validate` records structural concerns (missing manifest entries, registry mismatches, invalid version folders, etc.) but exits successfully so developers can inspect the log without blocking.
 
 CI and automation should set `DOCS_STRICT=true` so the same script enforces the contract: invalid categories, manifest sourceRepo mismatches, missing manifest entries, missing files, and malformed version folders now fail the job and emit `✖` diagnostics. The workflow defined in `.github/workflows/docs-pipeline.yml` already enables strict mode before running `npm run docs:ai-build`.
+
+`npm run docs:validate` now begins with `scripts/docs/check-doc-coverage.ts`. In repositories that define `docs-public/`, that guard warns locally and fails in strict mode when `src/` or `packages/` changed but `docs-public/` did not, surfacing likely documentation coverage gaps before ingestion/publishing.
 
 ### Preview documentation environments
 
