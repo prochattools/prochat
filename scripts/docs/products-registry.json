@@ -7,7 +7,9 @@
       "docsPath": "src/content/docs/prokit",
       "template": "boilerplate",
       "apiSource": "typescript",
-      "apiSourcePaths": ["src/lib/analytics", "src/lib/store", "src/helpers"]
+      "apiSourcePaths": ["src/lib/analytics", "src/lib/store", "src/helpers"],
+      "repoUrl": "https://github.com/stevewesthoek/prokit",
+      "description": "ProKit is the runtime SaaS starter that ships with production-ready automation."
     },
     {
       "id": "saaskit",
@@ -16,7 +18,9 @@
       "docsPath": "src/content/docs/saaskit",
       "template": "platform",
       "apiSource": "none",
-      "apiSourcePaths": []
+      "apiSourcePaths": [],
+      "repoUrl": "https://github.com/stevewesthoek/saaskit",
+      "description": "SaaSKit defines the platform patterns that power ProChat’s automations."
     },
     {
       "id": "waaskit",
@@ -25,7 +29,9 @@
       "docsPath": "src/content/docs/waaskit",
       "template": "platform",
       "apiSource": "none",
-      "apiSourcePaths": []
+      "apiSourcePaths": [],
+      "repoUrl": "https://github.com/stevewesthoek/waaskit",
+      "description": "WaaSKit extends the platform with white-label automation modules."
     },
     {
       "id": "future",
@@ -34,7 +40,9 @@
       "docsPath": "src/content/docs/future",
       "template": "api",
       "apiSource": "none",
-      "apiSourcePaths": []
+      "apiSourcePaths": [],
+      "repoUrl": "https://github.com/prochattools/future",
+      "description": "Future docs capture upcoming experiments and prototypes."
     }
   ]
 }

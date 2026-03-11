@@ -2,6 +2,8 @@
 import { mkdir, readdir, readFile, writeFile } from 'fs/promises'
 import path from 'path'
 
+import { loadRegistry } from './extract/shared.ts'
+
 const DOCS_ROOT = path.resolve('src', 'content', 'docs')
 const ORDERED_SECTIONS = [
   {
@@ -58,6 +60,46 @@ const INTEGRATIONS_DIR = 'integrations'
 const ADVANCED_DIR = 'advanced'
 const INTEGRATION_KEYWORDS = ['integration', 'stripe', 'auth', 'mailerlite', 'github']
 
+type ManifestEntry = {
+  outputPath: string
+  sourceRepo: string
+  sourceCommit?: string | null
+  generatedAt?: string
+}
+
+async function loadManifestEntries(): Promise<ManifestEntry[]> {
+  try {
+    const manifestPath = path.join(DOCS_ROOT, '.generated-manifest.json')
+    const raw = await readFile(manifestPath, 'utf-8')
+    return JSON.parse(raw) as ManifestEntry[]
+  } catch {
+    return []
+  }
+}
+
+async function buildManifestMap(entries: ManifestEntry[]) {
+  const map = new Map<string, ManifestEntry[]>()
+  for (const entry of entries) {
+    const relative = path.relative(DOCS_ROOT, entry.outputPath)
+    if (relative.startsWith('..')) continue
+    const [product] = relative.split(path.sep)
+    if (!product) continue
+    const list = map.get(product) ?? []
+    list.push(entry)
+    map.set(product, list)
+  }
+  return map
+}
+
+function isoFromEntries(entries: ManifestEntry[]) {
+  const timestamps = entries
+    .map(entry => entry.generatedAt)
+    .filter(Boolean)
+    .map(value => Date.parse(value!))
+    .filter(value => !Number.isNaN(value))
+  if (!timestamps.length) return null
+  return new Date(Math.max(...timestamps)).toISOString()
+}
 type DocRecord = {
   absolutePath: string
   relativePath: string
@@ -177,7 +219,65 @@ ${entries.join('\n')}
   await writeFile(indexPath, content, 'utf-8')
 }
 
+async function writeLandingPage(
+  productPath: string,
+  productId: string,
+  productInfo: { title?: string; description?: string; repoUrl?: string } | undefined,
+  manifestEntries: ManifestEntry[],
+) {
+  const targetPath = path.join(productPath, 'index.mdx')
+  const title = productInfo?.title ?? productId
+  const description = productInfo?.description ?? `${title} documentation`
+  const repoUrl = productInfo?.repoUrl
+  const lastSync = isoFromEntries(manifestEntries) ?? new Date().toISOString()
+  const lastCommit = manifestEntries.find(entry => entry.sourceCommit)?.sourceCommit ?? 'unknown'
+  const sectionLinks = ORDERED_SECTIONS.map(section => `- [${section.title}](./${section.slug}.mdx)`).join('\n')
+  const quickLinks = [
+    '- [Quick Start](./quick-start.mdx)',
+    '- [Installation](./installation.mdx)',
+    '- [Integrations](./integrations/index.mdx)',
+    '- [Advanced](./advanced/index.mdx)',
+  ].join('\n')
+  const repoLine = repoUrl ? `- GitHub: [${repoUrl}](${repoUrl})` : '- Repository information not available.'
+
+  const content = `---
+title: ${title}
+description: ${description}
+slug: index
+order: 0
+keywords: ${[productId, 'landing', ...(productInfo?.title ? [productInfo.title] : [])].join(', ')}
+---
+
+## Product overview
+
+${description}
+
+## Repository
+
+${repoLine}
+
+## Generated documentation sections
+
+${sectionLinks}
+
+## Quick links
+
+${quickLinks}
+
+## Last sync
+
+- Commit: \`${lastCommit}\`
+- Generated: ${lastSync}
+
+`
+
+  await writeFile(targetPath, content, 'utf-8')
+}
+
 async function run() {
+  const registry = await loadRegistry()
+  const manifestEntries = await loadManifestEntries()
+  const manifestMap = await buildManifestMap(manifestEntries)
   const products = await readdir(DOCS_ROOT, { withFileTypes: true })
   for (const product of products) {
     if (!product.isDirectory()) continue
@@ -198,6 +298,8 @@ async function run() {
     const advancedDocs = docs.filter(doc => !assigned.has(doc.absolutePath))
     advancedDocs.forEach(doc => assigned.add(doc.absolutePath))
     await writeIndexPage(productPath, ADVANCED_DIR, advancedDocs)
+    const productInfo = registry.find(entry => entry.id === product.name)
+    await writeLandingPage(productPath, product.name, productInfo, manifestMap.get(product.name) ?? [])
   }
 }
 

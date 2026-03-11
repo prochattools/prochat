@@ -82,6 +82,8 @@ Only `docs-public/` is eligible for extraction into ProChat.
 
 After the AI pipeline pushes generated docs into `src/content/docs/<product>`, run `npm run docs:restructure` to enforce the buyer-friendly layout (overview, what-you-get, architecture, etc.). The script keeps the original technical pages untouched; it simply generates summary landing pages and `integrations` / `advanced` indexes that reference the existing docs, giving each product a consistent top-level navigation without deleting any technical content.
 
+The restructuring step also writes `/docs/<product>/index.mdx`, summarizing the product description, GitHub repo, generated sections, and the last extraction commit/timestamp so each published bucket exposes a buyer-facing landing page.
+
 ### Source commit tracking
 
 When a dispatch includes a `commit`, the ingestion script forwards it into `DOCS_SOURCE_COMMIT`. Every page that lands in `src/content/docs` along with `.generated-manifest.json` now records `sourceCommit`, enabling traceability back to the originating commit. `scripts/docs/validate-docs.ts` warns if a `sourceCommit` is present but doesn’t match a Git SHA.
