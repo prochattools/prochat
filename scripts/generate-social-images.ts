@@ -12,7 +12,7 @@ async function main() {
 
   await Promise.all(
     posts.map(async post => {
-      const png = await renderSocialImage(post.title)
+      const png = await renderSocialImage({ line1: post.title })
       const outputPath = path.join(outputDir, `${post.slug}.png`)
       await fs.writeFile(outputPath, png)
     }),

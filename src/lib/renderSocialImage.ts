@@ -6,19 +6,26 @@ import { ogFonts } from '@/lib/ogFonts'
 import { ogImageSize } from '@/lib/og-utils'
 import {
   getSocialHeadlineFontSize,
+  getSocialDefaultTitle,
   sanitizeSocialSubtitle,
+  sanitizeSocialHeadlineLine,
   getSocialWordmarkDataUri,
-  sanitizeSocialTitle,
-  splitSocialTitle,
 } from '@/lib/social-image'
 
 const h = React.createElement
 
-function createSocialImageResponse(title: string, subtitle?: string) {
-  const normalizedTitle = sanitizeSocialTitle(title)
+type SocialImageContent = {
+  line1: string
+  line2?: string
+  subtitle?: string
+}
+
+function createSocialImageResponse({ line1, line2, subtitle }: SocialImageContent) {
+  const normalizedLine1 = sanitizeSocialHeadlineLine(line1) || getSocialDefaultTitle()
+  const normalizedLine2 = sanitizeSocialHeadlineLine(line2)
   const normalizedSubtitle = sanitizeSocialSubtitle(subtitle)
-  const titleLines = splitSocialTitle(normalizedTitle)
-  const titleFontSize = getSocialHeadlineFontSize(titleLines)
+  const headlineLines = [normalizedLine1, normalizedLine2].filter(Boolean)
+  const titleFontSize = getSocialHeadlineFontSize(headlineLines)
   const wordmark = getSocialWordmarkDataUri()
 
   return new ImageResponse(
@@ -119,25 +126,40 @@ function createSocialImageResponse(title: string, subtitle?: string) {
                 gap: '12px',
               },
             },
-            ...titleLines.map((line, index) =>
-              h(
-                'h1',
-                {
-                  key: `${line}-${index}`,
-                  style: {
-                    margin: 0,
-                    fontFamily: brand.typography.ogTitle.family,
-                    fontWeight: 700,
-                    fontSize: titleFontSize,
-                    lineHeight: 1.04,
-                    letterSpacing: '-0.055em',
-                    color: brand.colors.white,
-                    textShadow: '0 0 32px rgba(59, 130, 246, 0.12)',
-                  },
+            h(
+              'h1',
+              {
+                style: {
+                  margin: 0,
+                  fontFamily: brand.typography.ogTitle.family,
+                  fontWeight: 700,
+                  fontSize: titleFontSize,
+                  lineHeight: 1.04,
+                  letterSpacing: '-0.055em',
+                  color: brand.colors.white,
+                  textShadow: '0 0 32px rgba(59, 130, 246, 0.12)',
                 },
-                line,
-              ),
+              },
+              normalizedLine1,
             ),
+            normalizedLine2
+              ? h(
+                  'h1',
+                  {
+                    style: {
+                      margin: 0,
+                      fontFamily: brand.typography.ogTitle.family,
+                      fontWeight: 700,
+                      fontSize: titleFontSize,
+                      lineHeight: 1.04,
+                      letterSpacing: '-0.055em',
+                      color: brand.colors.primary,
+                      textShadow: '0 0 32px rgba(59, 130, 246, 0.22)',
+                    },
+                  },
+                  normalizedLine2,
+                )
+              : null,
           ),
         ),
         h(
@@ -200,8 +222,8 @@ function createSocialImageResponse(title: string, subtitle?: string) {
   )
 }
 
-export async function renderSocialImage(title: string, subtitle?: string): Promise<Buffer> {
-  const response = createSocialImageResponse(title, subtitle)
+export async function renderSocialImage(content: SocialImageContent): Promise<Buffer> {
+  const response = createSocialImageResponse(content)
   const arrayBuffer = await response.arrayBuffer()
   return Buffer.from(arrayBuffer)
 }

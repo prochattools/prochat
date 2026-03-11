@@ -6,6 +6,7 @@ import { applyWordmarkGradient, svgToDataUri } from '@/lib/og-utils'
 
 const DEFAULT_SOCIAL_TITLE = 'The Operating System for SaaS Builders'
 const SOCIAL_TITLE_MAX_LENGTH = 90
+const SOCIAL_HEADLINE_LINE_MAX_LENGTH = 56
 const SOCIAL_SUBTITLE_MAX_LENGTH = 48
 
 const logoWordmarkSvg = fs.readFileSync(
@@ -22,6 +23,13 @@ export function sanitizeSocialSubtitle(input?: string | null) {
   if (!cleaned) return ''
 
   return clampTitleLength(cleaned, SOCIAL_SUBTITLE_MAX_LENGTH)
+}
+
+export function sanitizeSocialHeadlineLine(input?: string | null) {
+  const cleaned = collapseWhitespace(normalizeLineBreaks(stripHtml(input ?? '')).replace(/\n/g, ' '))
+  if (!cleaned) return ''
+
+  return clampTitleLength(cleaned, SOCIAL_HEADLINE_LINE_MAX_LENGTH)
 }
 
 function stripHtml(input: string) {
