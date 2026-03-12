@@ -23,7 +23,16 @@ export default function HowToFindSaaSIdeasGuide() {
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">Guide</p>
           <h1 className="mt-4 text-4xl font-bold leading-tight text-foreground md:text-5xl">How to Find SaaS Ideas</h1>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            A practical method for discovering software ideas from real business problems.
+            Many founders struggle with the same question:
+          </p>
+          <p className="mt-2 text-lg leading-relaxed text-muted-foreground">
+            How do you find a SaaS idea that actually works?
+          </p>
+          <p className="mt-2 text-lg leading-relaxed text-muted-foreground">
+            Most people try brainstorming. They write lists of startup ideas. They watch trends. They try to invent something clever.
+          </p>
+          <p className="mt-2 text-lg leading-relaxed text-muted-foreground">
+            But the best SaaS ideas rarely appear during brainstorming. They appear when you start solving real problems for real businesses.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
@@ -40,8 +49,12 @@ export default function HowToFindSaaSIdeasGuide() {
         <div className={sectionClass}>
           <h2 className="text-3xl font-bold text-foreground">Why most founders struggle to find SaaS ideas</h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            They build features without understanding recurring customer pain, then wonder why adoption is slow.
+            The biggest mistake founders make is trying to invent a product before they understand a market.
           </p>
+          <p className="mt-2 text-lg text-muted-foreground">They focus on technology instead of problems.</p>
+          <p className="mt-2 text-lg text-muted-foreground">They build features before they talk to users.</p>
+          <p className="mt-2 text-lg text-muted-foreground">This often leads to a product nobody asked for.</p>
+          <p className="mt-4 text-lg text-muted-foreground">The result is months of development with no customers.</p>
         </div>
       </section>
 
@@ -49,7 +62,13 @@ export default function HowToFindSaaSIdeasGuide() {
         <div className={sectionClass}>
           <h2 className="text-3xl font-bold text-foreground">Why brainstorming fails</h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Brainstorming often produces nice-to-have ideas without validating whether anyone pays for them.
+            Brainstorming is conceptual. Real problems are practical.
+          </p>
+          <p className="mt-2 text-lg text-muted-foreground">
+            When founders sit alone trying to invent ideas, they often imagine problems that businesses do not actually care about.
+          </p>
+          <p className="mt-2 text-lg text-muted-foreground">
+            Real SaaS ideas usually come from observing how businesses work and where their workflows break.
           </p>
         </div>
       </section>
@@ -58,19 +77,33 @@ export default function HowToFindSaaSIdeasGuide() {
         <div className={sectionClass}>
           <h2 className="text-3xl font-bold text-foreground">The best way to find SaaS ideas</h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Start with services (Website-as-a-Service or consulting), talk to clients, and capture repeated requests before automating.
+            The simplest way to discover SaaS ideas is to work closely with a niche.
           </p>
+          <p className="mt-2 text-lg text-muted-foreground">
+            Instead of inventing software immediately, start by helping businesses solve problems manually.
+          </p>
+          <p className="mt-2 text-lg text-muted-foreground">Website-as-a-Service is one way to do this.</p>
+          <p className="mt-2 text-lg text-muted-foreground">
+            By building and maintaining websites for businesses, founders build relationships and hear real frustrations from their clients.
+          </p>
+          <p className="mt-2 text-lg text-muted-foreground">Over time patterns appear.</p>
+          <p className="mt-2 text-lg text-muted-foreground">Those patterns often lead directly to SaaS ideas.</p>
         </div>
       </section>
 
       <section className="py-16 bg-[rgb(var(--section-alt-bg-rgb))]" id="signals">
         <div className={sectionClass}>
           <h2 className="text-3xl font-bold text-foreground">The three signals of a SaaS opportunity</h2>
-          <ul className="mt-6 space-y-3 text-lg text-muted-foreground">
-            <li>• The same problem comes up repeatedly</li>
-            <li>• Clients keep asking for the same feature</li>
-            <li>• A manual workaround resurfaces over and over</li>
+          <p className="mt-4 text-lg text-muted-foreground">
+            A problem is often ready to become software when three signals appear:
+          </p>
+          <ul className="mt-3 space-y-3 text-lg text-muted-foreground">
+            <li>• the same problem repeats across multiple clients</li>
+            <li>• the same feature is requested repeatedly</li>
+            <li>• the same manual workaround keeps happening</li>
           </ul>
+          <p className="mt-3 text-lg text-muted-foreground">When these patterns appear, you are no longer guessing.</p>
+          <p className="mt-2 text-lg text-muted-foreground">You are observing real demand.</p>
         </div>
       </section>
 
@@ -78,7 +111,13 @@ export default function HowToFindSaaSIdeasGuide() {
         <div className={sectionClass}>
           <h2 className="text-3xl font-bold text-foreground">Building the SaaS after validation</h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Once those signals appear, automate the workflows using the ProChat stack and transition customers to the new product.
+            Once those signals appear, the next step is building a solution.
+          </p>
+          <p className="mt-2 text-lg text-muted-foreground">
+            At this point founders need infrastructure for authentication, billing, and dashboards.
+          </p>
+          <p className="mt-2 text-lg text-muted-foreground">
+            Instead of building everything from scratch, tools like ProKit, SaaSKit, and UXKit provide a foundation for launching SaaS products quickly.
           </p>
         </div>
       </section>
