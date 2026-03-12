@@ -16,7 +16,7 @@ const PRODUCT_CORE_LINK = {
 } as const
 
 const ROADMAP_LINKS = [
-  { href: '/kits/uxkit-waitlist', label: 'UXKit' },
+  { href: '/waitlist', label: 'UXKit' },
   { href: '/kits#comparison', label: 'WaaSKit' },
   { href: '/kits#comparison', label: 'ProChat OS' },
 ] as const
@@ -137,7 +137,28 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="mb-4 flex justify-center text-center lg:justify-end">
+        <div className="mb-4 flex flex-col items-center justify-between gap-3 text-center lg:flex-row lg:text-left">
+          <a
+            href="https://aws.amazon.com/activate/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65 transition-colors hover:text-primary"
+          >
+            <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65">Member of the</span>
+            <img
+              src="/logo/aws-activate-logo-light.svg"
+              alt="AWS Activate"
+              className="h-[1.1em] w-auto dark:hidden ml-[4px] mr-[4px]"
+              style={{ transform: 'translateY(-1.4px)' }}
+            />
+            <img
+              src="/logo/aws-activate-logo-dark.svg"
+              alt="AWS Activate"
+              className="hidden h-[1.1em] w-auto dark:block ml-[4px] mr-[4px]"
+              style={{ transform: 'translateY(-1.4px)' }}
+            />
+            <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65">Program</span>
+          </a>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65 lg:justify-end">
             {LEGAL_LINKS.map(link =>
               'external' in link ? (
