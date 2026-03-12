@@ -35,11 +35,46 @@ export default function WaaSToSaaSGuide() {
     mainEntityOfPage: 'https://prochat.tools/guides/waas-to-saas',
   }
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'What is the WaaS to SaaS strategy?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'The WaaS to SaaS strategy starts by selling services to a niche market. By working with real clients and solving their problems manually, founders discover patterns that can eventually become software products.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Why start with services before building SaaS?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Starting with services allows founders to generate revenue, build relationships, and understand customer problems before investing time into building software.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'When should services evolve into SaaS?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Services can evolve into SaaS when the same problem appears repeatedly across clients and the solution can be standardized into software.',
+        },
+      },
+    ],
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="space-y-12 bg-[rgb(var(--section-bg-rgb))] pb-20 text-foreground">
       <section className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">

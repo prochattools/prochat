@@ -31,12 +31,49 @@ export default function HowToFindSaaSIdeasGuide() {
     mainEntityOfPage: 'https://prochat.tools/guides/how-to-find-saas-ideas',
   }
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'What makes a good SaaS idea?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'A good SaaS idea usually appears when the same problem keeps repeating across multiple businesses. When clients repeatedly ask for the same feature or workaround, the problem is often ready to become software.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Should founders brainstorm SaaS ideas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Brainstorming can help generate ideas, but the strongest SaaS products usually come from solving real problems for real businesses rather than inventing ideas in isolation.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How do founders validate SaaS ideas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Validation happens when businesses are willing to pay for a solution. If multiple clients experience the same problem and confirm they would pay for a solution, the idea has real market demand.',
+        },
+      },
+    ],
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(articleSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqSchema),
         }}
       />
       <div className="space-y-12 bg-[rgb(var(--section-bg-rgb))] pb-20 text-foreground">

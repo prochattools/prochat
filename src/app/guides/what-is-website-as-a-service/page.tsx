@@ -30,12 +30,49 @@ export default function WhatIsWaaSGuide() {
     },
   }
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'What does Website-as-a-Service mean?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Website-as-a-Service is a business model where websites are provided as an ongoing service instead of a one-time project. Clients pay monthly for hosting, updates, maintenance, and support.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How is WaaS different from traditional web development?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Traditional web development delivers a website as a finished project. Website-as-a-Service creates an ongoing relationship where the provider continuously improves and maintains the website.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can Website-as-a-Service lead to SaaS ideas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. When founders work closely with clients through WaaS, they start noticing repeated problems and workflows. Those patterns often reveal opportunities for building SaaS products.',
+        },
+      },
+    ],
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(articleSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqSchema),
         }}
       />
       <div className="space-y-12 bg-[rgb(var(--section-bg-rgb))] pb-20 text-foreground">
