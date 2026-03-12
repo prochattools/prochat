@@ -127,7 +127,7 @@ export default async function PreferencesPage({ searchParams }: PreferencesPageP
                 your preferences.
               </p>
               <Link
-                href="/kits/uxkit-waitlist"
+                href="/waitlist"
                 className="inline-flex h-12 items-center justify-center rounded-xl bg-primary px-6 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
               >
                 Open waitlist

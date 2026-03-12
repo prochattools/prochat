@@ -9,21 +9,21 @@ const DOCS_DESCRIPTION = 'Public product documentation for ProKit, SaaSKit, and 
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Docs | Product Documentation',
+    title: 'Docs | ProChat',
     description: DOCS_DESCRIPTION,
-    applicationName: 'Product Documentation',
-    keywords: ['documentation', 'prokit', 'saaskit'],
+    applicationName: 'ProChat',
+    keywords: ['prochat', 'documentation', 'prokit', 'saaskit'],
     metadataBase: new URL(`${getSiteUrl()}/`),
     alternates: { canonical: '/docs' },
     openGraph: {
-      title: 'Product Documentation',
+      title: 'ProChat Documentation',
       description: DOCS_DESCRIPTION,
       url: '/docs',
       images: ['/og'],
       type: 'website',
     },
     twitter: {
-      title: 'Product Documentation',
+      title: 'ProChat Documentation',
       description: DOCS_DESCRIPTION,
       images: ['/og'],
       card: 'summary_large_image',

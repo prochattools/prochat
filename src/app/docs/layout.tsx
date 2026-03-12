@@ -5,6 +5,7 @@ import { Layout, Navbar } from 'nextra-theme-docs'
 import { getPublicDocsPageMap } from '@/lib/docs/public-docs'
 
 import 'nextra-theme-docs/style-prefixed.css'
+import '../../../styles/docs.css'
 
 export default async function DocsLayout({
   children,
@@ -18,8 +19,12 @@ export default async function DocsLayout({
       <div className="docs-shell-inner flex flex-1 flex-col">
         <Layout
           pageMap={pageMap}
-          editLink={null}
-          feedback={{ content: null }}
+          docsRepositoryBase="https://github.com/prochattools/prochat/tree/main/src/content/docs"
+          editLink="Edit this page on GitHub →"
+          feedback={{
+            content: 'Question? Give us feedback →',
+            labels: 'docs',
+          }}
           nextThemes={{
             storageKey: 'theme',
             attribute: 'class',
@@ -32,23 +37,32 @@ export default async function DocsLayout({
           }}
           navbar={
             <Navbar
-              logoLink="/docs"
+              logoLink="https://prochat.tools"
               logo={
-                <span className="x:text-sm x:font-semibold x:tracking-tight">
-                  Product Documentation
+                <span
+                  className="docs-logo-wordmark"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    gap: '8px',
+                    color: 'inherit',
+                  }}
+                >
+                  <img
+                    src="/logo/logo-wordmark.svg"
+                    height="24"
+                    width="120"
+                    alt="ProChat"
+                    style={{
+                      transform: 'translateY(2px)',
+                    }}
+                  />
                 </span>
               }
+              projectLink="https://github.com/prochattools"
             />
           }
-          footer={
-            <div
-              className="mx-auto flex w-full max-w-[var(--nextra-content-width)] items-center justify-center px-6 py-4 text-xs text-foreground/60"
-            >
-              Public product documentation for ProKit and SaaSKit.
-            </div>
-          }
           darkMode
-          search={null}
         >
           <div className="flex-1">{children}</div>
         </Layout>

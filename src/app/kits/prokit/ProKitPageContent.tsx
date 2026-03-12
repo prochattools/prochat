@@ -670,6 +670,35 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
+      <section id="faq" className="scroll-mt-24 border-t border-border bg-[rgb(var(--section-bg-rgb))] py-24">
+        <div className="mx-auto max-w-5xl px-page">
+          <div className="mb-12 text-center">
+            <p className="text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground/90">FAQ</p>
+            <h2 className="mt-4 text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
+          </div>
+          <div className="grid gap-10 md:grid-cols-3">
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-foreground">What is ProKit?</h3>
+              <p className="mt-3 text-sm text-muted-foreground">
+                ProKit provides the core infrastructure for building SaaS products with modern web stacks. It includes authentication, billing, database integration, and deployment tooling so founders can focus on building product features.
+              </p>
+            </article>
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-foreground">Who should use ProKit?</h3>
+              <p className="mt-3 text-sm text-muted-foreground">
+                ProKit is designed for developers and technical founders who want to launch SaaS products quickly without rebuilding the same infrastructure for every project.
+              </p>
+            </article>
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-foreground">How is ProKit different from SaaSKit?</h3>
+              <p className="mt-3 text-sm text-muted-foreground">
+                ProKit provides the developer infrastructure layer, while SaaSKit builds on top of it to provide a full SaaS application foundation including product structure and SaaS architecture.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
@@ -691,7 +720,17 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
               onClick={handleComparisonCtaClick}
               className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
             >
-              See SaaSKit
+              Explore SaaSKit
+              <FeatureIcon
+                name="arrow-forward"
+                className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              />
+            </a>
+            <a
+              href="/kits/waaskit"
+              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
+            >
+              Explore WaaSKit
               <FeatureIcon
                 name="arrow-forward"
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"

@@ -57,20 +57,18 @@ function buildPublicSidebarMap(): DocsPageMapItem[] {
       page('quick-start', '/docs/shared/quick-start', 'Quick Start'),
     ]),
     folder('products', 'Products', '/docs', [
-      page('prokit', '/docs/prokit', 'ProKit'),
-      page('saaskit', '/docs/saaskit', 'SaaSKit'),
-    ]),
-    folder('prokit-product', 'ProKit', '/docs/prokit', [
-      page('what-you-get', '/docs/prokit/what-you-get', 'What You Get'),
-      page('use-cases', '/docs/prokit/use-cases', 'Use Cases'),
-      page('why-a-boilerplate', '/docs/prokit/why-a-boilerplate', 'Why a Boilerplate?'),
-      page('launch-checklist', '/docs/prokit/launch-checklist', 'Launch Checklist'),
-    ]),
-    folder('saaskit-product', 'SaaSKit', '/docs/saaskit', [
-      page('what-you-get', '/docs/saaskit/what-you-get', 'What You Get'),
-      page('use-cases', '/docs/saaskit/use-cases', 'Use Cases'),
-      page('why-a-boilerplate', '/docs/saaskit/why-a-boilerplate', 'Why a Boilerplate?'),
-      page('launch-checklist', '/docs/saaskit/launch-checklist', 'Launch Checklist'),
+      folder('prokit', 'ProKit', '/docs/prokit', [
+        page('what-you-get', '/docs/prokit/what-you-get', 'What You Get'),
+        page('use-cases', '/docs/prokit/use-cases', 'Use Cases'),
+        page('why-a-boilerplate', '/docs/prokit/why-a-boilerplate', 'Why a Boilerplate?'),
+        page('launch-checklist', '/docs/prokit/launch-checklist', 'Launch Checklist'),
+      ]),
+      folder('saaskit', 'SaaSKit', '/docs/saaskit', [
+        page('what-you-get', '/docs/saaskit/what-you-get', 'What You Get'),
+        page('use-cases', '/docs/saaskit/use-cases', 'Use Cases'),
+        page('why-a-boilerplate', '/docs/saaskit/why-a-boilerplate', 'Why a Boilerplate?'),
+        page('launch-checklist', '/docs/saaskit/launch-checklist', 'Launch Checklist'),
+      ]),
     ]),
     folder('core-features', 'Core Features', '/docs/features/auth', [
       page('auth', '/docs/features/auth', 'Auth'),

@@ -11,8 +11,13 @@ import { useUser } from '@/libs/safeClerkHooks'
 import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
 import { FeatureIcon } from './_components/FeatureIcon'
 
-interface SaaSkitPageContentProps {
-  priceId: string | null
+type SaaSkitPageContentProps = {
+  priceId?: string | null
+  heroTitle?: string
+  heroSubtitle?: string
+  heroDescription?: string
+  heroButtonText?: string
+  heroFullViewport?: boolean
 }
 
 const SAASKIT_PRICE = 247
@@ -96,11 +101,28 @@ const comparisonData = [
   },
 ]
 
-const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
+const SaaSkitPageContent = ({
+  priceId,
+  heroTitle,
+  heroSubtitle,
+  heroDescription,
+  heroButtonText,
+  heroFullViewport,
+}: SaaSkitPageContentProps) => {
   const { isLoaded, isSignedIn, user } = useUser()
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const [, setCheckoutError] = useState<string | null>(null)
   const hasTrackedPricingView = useRef(false)
+
+  const title =
+    heroTitle ??
+    'Launch your SaaS — without building the foundation from scratch.'
+  const subtitle = heroSubtitle ?? 'Production-ready Next.js SaaS infrastructure.'
+  const description =
+    heroDescription ??
+    'SaaSKit gives you authentication, billing, database integration, and deployment patterns so you can focus on building your product.'
+  const buttonText = heroButtonText ?? 'Start with SaaSKit'
+  const [heroBase, heroAccent] = title.split(' — ')
 
   useEffect(() => {
     const pricingSection = document.getElementById('pricing')
@@ -192,12 +214,14 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
   // - Real Problem uses filled red warning triangle and frustrated-face risk icon.
   // - Blue solution card uses darker outer blue + contrasted inner panel with green checks/dots.
   // - Pricing lock icon + all breakdown icons use filled glyphs.
+  const heroHeightClasses = heroFullViewport ? 'min-h-screen h-screen' : 'min-h-screen'
+
   return (
     <KitsShell>
       <div className="[--section-bg-rgb:255_255_255] [--section-alt-bg-rgb:241_245_249] dark:[--section-bg-rgb:15_17_21] dark:[--section-alt-bg-rgb:29_37_49]">
       <section
         id="top"
-        className="relative isolate flex min-h-screen scroll-mt-24 items-center overflow-hidden bg-[rgb(var(--section-bg-rgb))] px-0 pb-16 pt-28 sm:pb-20 sm:pt-32"
+        className={`relative isolate flex ${heroHeightClasses} scroll-mt-24 items-center overflow-hidden bg-[rgb(var(--section-bg-rgb))] px-0 pb-16 pt-28 sm:pb-20 sm:pt-32`}
       >
         <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
         <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
@@ -209,16 +233,16 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           <HeroBadge text="SaaSKit Structured Launch System" className="mb-8" />
 
           <h1 className="pc-hero-title mb-8 text-foreground">
-            Launch your SaaS —
+            {heroBase}
             <br />
-            <span className="hero-accent">without building the foundation from scratch.</span>
+            {heroAccent ? <span className="hero-accent">{heroAccent}</span> : null}
           </h1>
+          <p className="text-lg font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+            {subtitle}
+          </p>
 
           <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
-            <p>
-              SaaSKit gives you a production-ready SaaS engine and integrated marketing layer —
-              authentication, billing, database, deployment, and growth structure already wired.
-            </p>
+            <p>{description}</p>
             <div className="flex flex-col items-center justify-center py-2">
               <HeroCheckRow
                 items={[
@@ -233,7 +257,7 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
           <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
             <Button asChild variant="primary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
               <a href="#pricing" onClick={handleHeroCtaClick}>
-                Buy SaaSKit
+                {buttonText}
               </a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
@@ -706,13 +730,45 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
         </div>
       </section>
 
+      <section id="faq" className="scroll-mt-24 border-t border-border bg-[rgb(var(--section-bg-rgb))] py-24">
+        <div className="mx-auto max-w-5xl px-page">
+          <div className="mb-12 text-center">
+            <p className="text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground/90">FAQ</p>
+            <h2 className="mt-4 text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
+          </div>
+          <div className="grid gap-10 md:grid-cols-3">
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-foreground">What is SaaSKit?</h3>
+              <p className="mt-3 text-sm text-muted-foreground">
+                SaaSKit is a production-ready foundation for building SaaS applications with modern architecture and infrastructure.
+              </p>
+            </article>
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-foreground">What can you build with SaaSKit?</h3>
+              <p className="mt-3 text-sm text-muted-foreground">
+                You can build subscription SaaS platforms, B2B tools, automation services, and niche SaaS products.
+              </p>
+            </article>
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-foreground">How does SaaSKit relate to ProKit?</h3>
+              <p className="mt-3 text-sm text-muted-foreground">
+                SaaSKit builds on top of ProKit. ProKit provides the infrastructure layer while SaaSKit provides the SaaS application architecture.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">
           <ContextualLinkCta
             className="mb-10 text-left"
             title="Need more control over brand and funnel?"
-            description="ProKit keeps the same production safeguards without the integrated marketing layer."
-            links={[{ href: '/kits/prokit', label: 'Compare with ProKit' }]}
+            description="Explore other ProChat kits for different starting points or to adapt infrastructure around SaaSKit's launch-ready system."
+            links={[
+              { href: '/kits/prokit', label: 'Explore ProKit' },
+              { href: '/kits/uxkit', label: 'Explore UXKit' },
+            ]}
           />
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
             You already have the idea.
@@ -733,7 +789,17 @@ const SaaSkitPageContent = ({ priceId }: SaaSkitPageContentProps) => {
               onClick={handleComparisonCtaClick}
               className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
             >
-              Compare with ProKit
+              Explore ProKit
+              <FeatureIcon
+                name="arrow-forward"
+                className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              />
+            </a>
+            <a
+              href="/kits/uxkit"
+              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
+            >
+              Explore UXKit
               <FeatureIcon
                 name="arrow-forward"
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"

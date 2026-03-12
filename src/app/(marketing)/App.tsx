@@ -77,7 +77,7 @@ const systemCards: readonly SystemCard[] = [
     status: 'Roadmap',
     description:
       'Verified UI component systems. Designed for rapid, error-free dashboard assembly and clarity.',
-    href: '/kits/uxkit-waitlist',
+    href: '/waitlist',
     primary: false,
     icon: CircleDot,
   },

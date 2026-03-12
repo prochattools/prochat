@@ -6,7 +6,7 @@ export const metadata = getSEOTags({
   title: `${config.appName} UXKit Waiting List`,
   description:
     'Legacy waitlist route. Visit the canonical UXKit waitlist page.',
-  canonicalUrlRelative: '/kits/uxkit-waitlist',
+  canonicalUrlRelative: '/waitlist',
   robots: {
     index: false,
     follow: false,

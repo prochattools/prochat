@@ -33,7 +33,7 @@ export default async function UnsubscribePage({ searchParams }: UnsubscribePageP
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
-              href="/kits/uxkit-waitlist"
+              href="/waitlist"
               className="inline-flex h-12 items-center justify-center rounded-xl bg-primary px-6 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
               Open waitlist

@@ -18,6 +18,17 @@ const VERSION_PATTERN = /^v\d+$/i
 const INGEST_ROOT = path.resolve('docs-ingest')
 const COMMIT_PATTERN = /^[0-9a-f]{7,40}$/i
 const STRICT_MODE = process.env.DOCS_STRICT === 'true'
+const TECHNICAL_DOC_ROOTS = [
+  'src/content/docs/prokit/',
+  'src/content/docs/saaskit/',
+  'src/content/docs/features/',
+]
+const MARKETING_DOC_SLUGS = new Set([
+  'what-you-get',
+  'use-cases',
+  'who-this-is-for',
+  'why-a-boilerplate',
+])
 
 function splitFrontmatter(raw: string) {
   let trimmed = raw.trimStart()
@@ -188,6 +199,21 @@ async function gatherDocs(dir: string): Promise<string[]> {
   return files
 }
 
+function toRepoRelativePath(filePath: string) {
+  return path.relative(process.cwd(), filePath).replace(/\\/g, '/')
+}
+
+function shouldApplyTechnicalValidation(filePath: string) {
+  const relativePath = toRepoRelativePath(filePath)
+  const baseSlug = path.basename(relativePath).replace(/\.mdx?$/i, '')
+
+  if (!TECHNICAL_DOC_ROOTS.some(root => relativePath.startsWith(root))) {
+    return false
+  }
+
+  return !MARKETING_DOC_SLUGS.has(baseSlug)
+}
+
 async function run() {
   const registry = await loadRegistry()
   if (!registry.length) {
@@ -242,20 +268,31 @@ async function run() {
 
       const templateId = product.template || DEFAULT_TEMPLATE.id
       const template = templates[templateId] ?? DEFAULT_TEMPLATE
-      const sections = parseSections(content)
-      const { errors: markerErrors, warnings: markerWarnings } = validateMarkers(content, template.sections.map(section => section.name), {
-        strict: STRICT_MODE,
-      })
-      markerWarnings.forEach(message => handler.warn(`${filePath} ${message}`))
-      markerErrors.forEach(message => handler.strict(`${filePath} ${message}`))
+      const applyTechnicalValidation = shouldApplyTechnicalValidation(filePath)
 
-      const missingSections = ensureTemplateSections(template, sections)
-      const severity = STRICT_MODE ? handler.strict : handler.warn
-      missingSections.forEach(section => severity(`${filePath} missing template section ${section}`))
+      if (applyTechnicalValidation) {
+        const sections = parseSections(content)
+        const { errors: markerErrors, warnings: markerWarnings } = validateMarkers(content, template.sections.map(section => section.name), {
+          strict: STRICT_MODE,
+        })
+        markerWarnings.forEach(message => handler.warn(`${filePath} ${message}`))
+        markerErrors.forEach(message => handler.strict(`${filePath} ${message}`))
 
-      const missing = ['title', 'description', 'category', 'slug', 'order', 'keywords'].filter(key => !meta[key])
+        const missingSections = ensureTemplateSections(template, sections)
+        const severity = STRICT_MODE ? handler.strict : handler.warn
+        missingSections.forEach(section => severity(`${filePath} missing template section ${section}`))
+      }
+
+      const requiredFields = applyTechnicalValidation
+        ? ['title', 'description', 'category', 'slug', 'order', 'keywords']
+        : ['title', 'description']
+      const missing = requiredFields.filter(key => !meta[key])
       if (missing.length) {
         handler.warn(`${filePath} missing fields: ${missing.join(', ')}`)
+        continue
+      }
+
+      if (!applyTechnicalValidation) {
         continue
       }
 
@@ -280,17 +317,17 @@ async function run() {
       const relativeProductPath = path.relative(path.join(OUTPUT_ROOT, product.id), filePath)
       const reservedDir = detectReservedDirectory(relativeProductPath)
       if (reservedDir) {
-      const severity = STRICT_MODE ? handler.strict : handler.warn
-      const generatorValue = typeof meta.generator === 'string' ? meta.generator : undefined
-      if (generatorValue !== 'auto') {
-        severity(`${filePath} in reserved directory ${reservedDir} must set generator: auto`)
-      }
-      if (!hasGeneratedMarker(raw)) {
-        severity(`${filePath} in reserved directory ${reservedDir} must start with ${GENERATED_FILE_MARKER}`)
-      }
-      if (!hasFrontmatterField(meta, 'sourceRepo')) {
-        severity(`${filePath} in reserved directory ${reservedDir} must define sourceRepo`)
-      }
+        const severity = STRICT_MODE ? handler.strict : handler.warn
+        const generatorValue = typeof meta.generator === 'string' ? meta.generator : undefined
+        if (generatorValue !== 'auto') {
+          severity(`${filePath} in reserved directory ${reservedDir} must set generator: auto`)
+        }
+        if (!hasGeneratedMarker(raw)) {
+          severity(`${filePath} in reserved directory ${reservedDir} must start with ${GENERATED_FILE_MARKER}`)
+        }
+        if (!hasFrontmatterField(meta, 'sourceRepo')) {
+          severity(`${filePath} in reserved directory ${reservedDir} must define sourceRepo`)
+        }
         if (!hasFrontmatterField(meta, 'sourceCommit')) {
           severity(`${filePath} in reserved directory ${reservedDir} must define sourceCommit`)
         }

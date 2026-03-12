@@ -2,8 +2,8 @@
 // ProChat marketing site – powered by the ProKit engine
 // (c) 2025 Steve Westhoek / ProChat
 
-const fs = require('fs')
-const path = require('path')
+import fs from 'node:fs'
+import path from 'node:path'
 
 const envPath = path.join(process.cwd(), '.env')
 

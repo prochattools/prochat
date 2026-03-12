@@ -7,7 +7,7 @@ export const metadata = getSEOTags({
   title: 'ProChat Waitlist — Early Access for Upcoming Products',
   description:
     'Join the ProChat waitlist for UXKit, WaaSKit, and ProChat OS. Get early access, roadmap updates, and launch pricing.',
-  canonicalUrlRelative: '/kits/uxkit-waitlist',
+  canonicalUrlRelative: '/waitlist',
   openGraph: {
     title: 'ProChat Waitlist — Early Access for Upcoming Products',
     description:
@@ -34,7 +34,7 @@ export default function UXKitWaitlistPage() {
           name: 'ProChat Waitlist',
           description:
             'Early access waitlist for upcoming ProChat products including UXKit, WaaSKit, and ProChat OS.',
-          urlPath: '/kits/uxkit-waitlist',
+          urlPath: '/waitlist',
         })}
       />
       <WaitingListBody />

@@ -113,7 +113,7 @@ export default async function BlogPage() {
           analytics={{ eventName: 'blog_cta_click', location: 'blog_index_footer' }}
           links={[
             { href: '/kits/saaskit', label: 'Explore SaaSKit' },
-            { href: '/kits/uxkit-waitlist', label: 'Join UXKit Waitlist' },
+            { href: '/waitlist', label: 'Join UXKit Waitlist' },
           ]}
         />
       </div>

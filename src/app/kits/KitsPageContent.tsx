@@ -33,7 +33,7 @@ const PRODUCT_CARDS = [
     description:
       'Interface system and structured design patterns for SaaS products built with clarity and conversion in mind.',
     status: 'Coming Soon',
-    href: '/kits/uxkit-waitlist',
+    href: '/waitlist',
     cta: 'View UX Kit',
     live: false,
   },

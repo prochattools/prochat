@@ -16,9 +16,11 @@
  *   SYSTEM_DATABASE_URL admin connection for provisioning (required in prod)
  */
 
-const { Client } = require('pg')
-const fs = require('fs')
-const path = require('path')
+import pg from 'pg'
+import fs from 'node:fs'
+import path from 'node:path'
+
+const { Client } = pg
 
 function fail(msg) {
   console.error(`❌ ${msg}`)

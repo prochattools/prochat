@@ -7,7 +7,9 @@
 //   node scripts/db/cleanup-tenant.js --slug pr_42
 //   node scripts/db/cleanup-tenant.js --slug myapp --force   # dangerous
 
-const { Client } = require('pg')
+import pg from 'pg'
+
+const { Client } = pg
 
 function parseArgs() {
   const args = process.argv.slice(2)

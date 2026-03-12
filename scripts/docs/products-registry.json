@@ -31,7 +31,7 @@
       "apiSource": "none",
       "apiSourcePaths": [],
       "repoUrl": "https://github.com/stevewesthoek/waaskit",
-      "description": "WaaSKit extends the platform with white-label automation modules."
+      "description": "WaaSKit is a Website-as-a-Service starter kit for launching a niche website business and evolving it into SaaS."
     },
     {
       "id": "future",

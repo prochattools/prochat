@@ -6,32 +6,46 @@ import { getStripePriceSaaskit } from '@/libs/stripe-env'
 import { getSoftwareApplicationSchema } from '@/libs/structured-data'
 import SaaSkitPageContent from './SaaSkitPageContent'
 
-const saaskitTitle = 'SaaSKit — Production-Ready Next.js SaaS Boilerplate'
+const saaskitTitle = 'SaaSKit – Complete SaaS Application Foundation'
 const saaskitDescription =
-	'SaaSKit is a production-ready Next.js SaaS boilerplate with authentication, Stripe billing, Supabase integration and deployment patterns — built for non-technical founders using AI.'
+	'Production-ready foundation for building scalable SaaS products.'
+const saaskitCanonical = 'https://prochat.tools/kits/saaskit'
 
-export const metadata = getSEOTags({
-	title: saaskitTitle,
-	description: saaskitDescription,
-	keywords: [
-		'build SaaS with AI',
-		'launch SaaS fast',
-		'non-technical founder SaaS',
-		'SaaS starter with Stripe and Supabase',
-		'Next.js SaaS boilerplate',
-	],
+export const metadata = {
+	...getSEOTags({
+		title: saaskitTitle,
+		description: saaskitDescription,
+		keywords: [
+			'build SaaS with AI',
+			'launch SaaS fast',
+			'non-technical founder SaaS',
+			'SaaS starter with Stripe and Supabase',
+			'Next.js SaaS boilerplate',
+		],
+		openGraph: {
+			title: saaskitTitle,
+			description: saaskitDescription,
+			images: ['/og/saaskit-product.png'],
+			type: 'website',
+		},
+		twitter: {
+			card: 'summary_large_image',
+			images: ['/og/saaskit-product.png'],
+		},
+		canonicalUrlRelative: '/kits/saaskit',
+	}),
+	alternates: {
+		canonical: saaskitCanonical,
+	},
 	openGraph: {
 		title: saaskitTitle,
 		description: saaskitDescription,
-		images: ['/og/saaskit-product.png'],
+		url: saaskitCanonical,
+		siteName: 'ProChat',
 		type: 'website',
-	},
-	twitter: {
-		card: 'summary_large_image',
 		images: ['/og/saaskit-product.png'],
 	},
-	canonicalUrlRelative: '/kits/saaskit',
-})
+}
 
 export default function SaaSkitPage() {
 	const siteUrl = getSiteUrl()
@@ -41,6 +55,64 @@ export default function SaaSkitPage() {
 		) ?? null
 	const envPriceId = getStripePriceSaaskit() || null
 	const priceId = saaskitProduct?.priceId || envPriceId
+
+
+	const schema = {
+		'@context': 'https://schema.org',
+		'@type': 'SoftwareApplication',
+		name: 'SaaSKit',
+		applicationCategory: 'DeveloperApplication',
+		operatingSystem: 'Web',
+		url: 'https://prochat.tools/kits/saaskit',
+		description: 'Complete foundation for building production SaaS applications.',
+		brand: {
+			'@type': 'Brand',
+			name: 'ProChat',
+		},
+		publisher: {
+			'@type': 'Organization',
+			name: 'ProChat',
+			url: 'https://prochat.tools',
+		},
+		softwareVersion: '1.0',
+		offers: {
+			'@type': 'Offer',
+			price: '0',
+			priceCurrency: 'EUR',
+			availability: 'https://schema.org/PreOrder',
+		},
+	}
+
+	const faqSchema = {
+		'@context': 'https://schema.org',
+		'@type': 'FAQPage',
+		mainEntity: [
+			{
+				'@type': 'Question',
+				name: 'What is SaaSKit?',
+				acceptedAnswer: {
+					'@type': 'Answer',
+					text: 'SaaSKit is a production-ready foundation for building SaaS applications with modern architecture and infrastructure.',
+				},
+			},
+			{
+				'@type': 'Question',
+				name: 'What can you build with SaaSKit?',
+				acceptedAnswer: {
+					'@type': 'Answer',
+					text: 'You can build subscription SaaS platforms, B2B tools, automation services, and niche SaaS products.',
+				},
+			},
+			{
+				'@type': 'Question',
+				name: 'How does SaaSKit relate to ProKit?',
+				acceptedAnswer: {
+					'@type': 'Answer',
+					text: 'SaaSKit builds on top of ProKit. ProKit provides the infrastructure layer while SaaSKit provides the SaaS application architecture.',
+				},
+			},
+		],
+	}
 
 	return (
 		<>
@@ -60,6 +132,14 @@ export default function SaaSkitPage() {
 						},
 					],
 				})}
+			/>
+			<script
+				type='application/ld+json'
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+			/>
+			<script
+				type='application/ld+json'
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
 			/>
 			<SaaSkitPageContent priceId={priceId} />
 		</>
