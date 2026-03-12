@@ -152,6 +152,30 @@ export default function WhatIsWaaSGuide() {
         </div>
       </section>
 
+      <section className="py-16 border-t border-border bg-[rgb(var(--section-alt-bg-rgb))]" id="faq">
+        <div className={sectionClass}>
+          <h2 className="text-3xl font-bold text-foreground">FAQ</h2>
+          <article className="mt-6">
+            <h3 className="text-lg font-semibold text-foreground">What does Website-as-a-Service mean?</h3>
+            <p className="mt-2 text-lg text-muted-foreground">
+              Website-as-a-Service is a business model where websites are provided as an ongoing service instead of a one-time project. Clients pay monthly for hosting, updates, maintenance, and support.
+            </p>
+          </article>
+          <article className="mt-6">
+            <h3 className="text-lg font-semibold text-foreground">How is WaaS different from traditional web development?</h3>
+            <p className="mt-2 text-lg text-muted-foreground">
+              Traditional web development delivers a website as a finished project. Website-as-a-Service creates an ongoing relationship where the provider continuously improves and maintains the website.
+            </p>
+          </article>
+          <article className="mt-6">
+            <h3 className="text-lg font-semibold text-foreground">Can Website-as-a-Service lead to SaaS ideas?</h3>
+            <p className="mt-2 text-lg text-muted-foreground">
+              Yes. When founders work closely with clients through WaaS, they start noticing repeated problems and workflows. Those patterns often reveal opportunities for building SaaS products.
+            </p>
+          </article>
+        </div>
+      </section>
+
       <section className="py-24" id="cta">
         <div className={sectionClass}>
           <h2 className="text-3xl font-bold text-foreground">Start with WaaS to build SaaS with confidence</h2>

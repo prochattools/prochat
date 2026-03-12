@@ -144,6 +144,30 @@ export default function WaaSToSaaSGuide() {
         </div>
       </section>
 
+      <section className="py-16 border-t border-border bg-[rgb(var(--section-alt-bg-rgb))]" id="faq">
+        <div className={sectionClass}>
+          <h2 className="text-3xl font-bold text-foreground">FAQ</h2>
+          <article className="mt-6">
+            <h3 className="text-lg font-semibold text-foreground">What is the WaaS to SaaS strategy?</h3>
+            <p className="mt-2 text-lg text-muted-foreground">
+              The WaaS to SaaS strategy starts by selling services to a niche market. By working with real clients and solving their problems manually, founders discover patterns that can eventually become software products.
+            </p>
+          </article>
+          <article className="mt-6">
+            <h3 className="text-lg font-semibold text-foreground">Why start with services before building SaaS?</h3>
+            <p className="mt-2 text-lg text-muted-foreground">
+              Starting with services allows founders to generate revenue, build relationships, and understand customer problems before investing time into building software.
+            </p>
+          </article>
+          <article className="mt-6">
+            <h3 className="text-lg font-semibold text-foreground">When should services evolve into SaaS?</h3>
+            <p className="mt-2 text-lg text-muted-foreground">
+              Services can evolve into SaaS when the same problem appears repeatedly across clients and the solution can be standardized into software.
+            </p>
+          </article>
+        </div>
+      </section>
+
       <section className="py-24" id="cta">
         <div className={sectionClass}>
           <h2 className="text-3xl font-bold text-foreground">Start where demand already exists</h2>

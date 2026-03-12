@@ -147,6 +147,30 @@ export default function HowToFindSaaSIdeasGuide() {
         </div>
       </section>
 
+      <section className="py-16 border-t border-border bg-[rgb(var(--section-alt-bg-rgb))]" id="faq">
+        <div className={sectionClass}>
+          <h2 className="text-3xl font-bold text-foreground">FAQ</h2>
+          <article className="mt-6">
+            <h3 className="text-lg font-semibold text-foreground">What makes a good SaaS idea?</h3>
+            <p className="mt-2 text-lg text-muted-foreground">
+              A good SaaS idea usually appears when the same problem keeps repeating across multiple businesses. When clients repeatedly ask for the same feature or workaround, the problem is often ready to become software.
+            </p>
+          </article>
+          <article className="mt-6">
+            <h3 className="text-lg font-semibold text-foreground">Should founders brainstorm SaaS ideas?</h3>
+            <p className="mt-2 text-lg text-muted-foreground">
+              Brainstorming can help generate ideas, but the strongest SaaS products usually come from solving real problems for real businesses rather than inventing ideas in isolation.
+            </p>
+          </article>
+          <article className="mt-6">
+            <h3 className="text-lg font-semibold text-foreground">How do founders validate SaaS ideas?</h3>
+            <p className="mt-2 text-lg text-muted-foreground">
+              Validation happens when businesses are willing to pay for a solution. If multiple clients experience the same problem and confirm they would pay for a solution, the idea has real market demand.
+            </p>
+          </article>
+        </div>
+      </section>
+
       <section className="py-24" id="cta">
         <div className={sectionClass}>
           <h2 className="text-3xl font-bold text-foreground">Seal the idea with customer validation</h2>
