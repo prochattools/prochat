@@ -2,8 +2,8 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import { parse as parseYaml } from 'yaml'
 
-import { getContentConfig } from './config'
-import { ContentEntry, ContentSection } from './types'
+import { getContentConfig } from './config.ts'
+import type { ContentEntry, ContentSection } from './types.ts'
 
 const cache = new Map<ContentSection, Promise<ContentEntry[]>>()
 const GENERATED_FILE_MARKER = '<!-- GENERATED FILE - DO NOT EDIT -->'

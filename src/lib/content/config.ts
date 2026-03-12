@@ -1,5 +1,5 @@
 import path from 'path'
-import { ContentRouteMode, ContentSchemaType, ContentSection } from './types'
+import type { ContentRouteMode, ContentSchemaType, ContentSection } from './types.ts'
 
 export type ContentSectionConfig = {
   section: ContentSection

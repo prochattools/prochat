@@ -1,5 +1,6 @@
-import { getSectionEntries } from '@/lib/content'
-import { BLOG_PILLARS, BLOG_TAGS, BlogPillarId, BlogTag } from '@/lib/blogStructure'
+import { getSectionEntries } from '../lib/content/index.ts'
+import { BLOG_PILLARS, BLOG_TAGS } from '../lib/blogStructure.ts'
+import type { BlogPillarId, BlogTag } from '../lib/blogStructure.ts'
 
 export type BlogCluster =
   | 'Build SaaS with AI'

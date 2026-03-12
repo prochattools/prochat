@@ -32,6 +32,9 @@
       ],
       "@/lib/*": [
         "src/lib/*"
+      ],
+      "@/libs/*": [
+        "src/libs/*"
       ]
     },
     "plugins": [
