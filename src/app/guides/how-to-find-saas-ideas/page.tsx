@@ -110,6 +110,9 @@ export default function HowToFindSaaSIdeasGuide() {
           </p>
           <p className="mt-2 text-lg text-muted-foreground">Over time patterns appear.</p>
           <p className="mt-2 text-lg text-muted-foreground">Those patterns often lead directly to SaaS ideas.</p>
+          <p className="mt-3 text-lg text-muted-foreground">
+            To understand the Website-as-a-Service model in more detail, read our primer <Link href="/guides/what-is-website-as-a-service" className="text-primary font-semibold">What is Website-as-a-Service?</Link>
+          </p>
         </div>
       </section>
 

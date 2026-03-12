@@ -6,7 +6,6 @@ export const metadata = {
   alternates: { canonical: 'https://prochat.tools/guides/what-is-website-as-a-service' },
   openGraph: {
     title: 'What is Website-as-a-Service? | ProChat',
-    description: 'Learn how Website-as-a-Service works and how founders use it to discover SaaS opportunities.',
     url: 'https://prochat.tools/guides/what-is-website-as-a-service',
     siteName: 'ProChat',
     type: 'article',
@@ -16,29 +15,31 @@ export const metadata = {
 const sectionClass = 'max-w-5xl px-page mx-auto'
 
 export default function WhatIsWaaSGuide() {
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'What is Website-as-a-Service?',
+    author: {
+      '@type': 'Organization',
+      name: 'ProChat',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'ProChat',
+      url: 'https://prochat.tools',
+    },
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Article',
-            headline: 'What is Website-as-a-Service?',
-            author: {
-              '@type': 'Organization',
-              name: 'ProChat',
-            },
-            publisher: {
-              '@type': 'Organization',
-              name: 'ProChat',
-              url: 'https://prochat.tools',
-            },
-          }),
+          __html: JSON.stringify(articleSchema),
         }}
       />
       <div className="space-y-12 bg-[rgb(var(--section-bg-rgb))] pb-20 text-foreground">
-      <section className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">
+        <section className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">
         <div className="mx-auto max-w-4xl px-page">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">Guide</p>
           <h1 className="mt-4 text-4xl font-bold leading-tight text-foreground md:text-5xl">What is Website-as-a-Service?</h1>
@@ -67,6 +68,9 @@ export default function WhatIsWaaSGuide() {
           <h2 className="text-3xl font-bold text-foreground">What Website-as-a-Service means</h2>
           <p className="mt-4 text-lg text-muted-foreground">
             Website-as-a-Service packages a niche website offering into a repeatable subscription business, where you deliver value and learn customer pain points before building software to automate the solution.
+          </p>
+          <p className="mt-3 text-lg text-muted-foreground">
+            Website-as-a-Service is often the opening chapter of a longer path. Read <Link href="/guides/waas-to-saas" className="font-semibold text-primary">From Website-as-a-Service to SaaS</Link> to explore the full strategy.
           </p>
         </div>
       </section>
@@ -163,5 +167,6 @@ export default function WhatIsWaaSGuide() {
         </div>
       </section>
     </div>
+  </>
   )
 }

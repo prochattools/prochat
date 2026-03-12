@@ -49,6 +49,9 @@ export default function WaaSToSaaSGuide() {
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
             The practical path to building a SaaS business from real customer demand.
           </p>
+          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+            If you want to discover SaaS ideas faster, read <Link href="/guides/how-to-find-saas-ideas" className="font-semibold text-primary">How to Find SaaS Ideas</Link> and revisit the model in <Link href="/guides/what-is-website-as-a-service" className="font-semibold text-primary">What is Website-as-a-Service?</Link>.
+          </p>
           <p className="mt-6 text-base text-muted-foreground">
             Most founders try to build SaaS first and then struggle to find customers. A better path is to launch a niche Website-as-a-Service with <Link href="/kits/waaskit" className="font-semibold text-primary">WaaSKit</Link>, work with real clients, learn their pain points, and evolve those solutions into SaaS.
           </p>
