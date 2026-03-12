@@ -6,7 +6,6 @@ export const metadata = {
   alternates: { canonical: 'https://prochat.tools/guides/how-to-find-saas-ideas' },
   openGraph: {
     title: 'How to Find SaaS Ideas | ProChat',
-    description: 'Learn practical methods for discovering SaaS ideas by solving real business problems and working with niche clients.',
     url: 'https://prochat.tools/guides/how-to-find-saas-ideas',
     siteName: 'ProChat',
     type: 'article',
@@ -41,7 +40,7 @@ export default function HowToFindSaaSIdeasGuide() {
         }}
       />
       <div className="space-y-12 bg-[rgb(var(--section-bg-rgb))] pb-20 text-foreground">
-      <section className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">
+        <section className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">
         <div className="mx-auto max-w-4xl px-page">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">Guide</p>
           <h1 className="mt-4 text-4xl font-bold leading-tight text-foreground md:text-5xl">How to Find SaaS Ideas</h1>
@@ -160,5 +159,6 @@ export default function HowToFindSaaSIdeasGuide() {
         </div>
       </section>
     </div>
+  </>
   )
 }
