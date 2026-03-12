@@ -2,11 +2,11 @@ import Link from 'next/link'
 
 export const metadata = {
   title: 'How to Find SaaS Ideas | ProChat',
-  description: 'A practical method for discovering software ideas from real business problems.',
+  description: 'Learn practical methods for discovering SaaS ideas by solving real business problems and working with niche clients.',
   alternates: { canonical: 'https://prochat.tools/guides/how-to-find-saas-ideas' },
   openGraph: {
     title: 'How to Find SaaS Ideas | ProChat',
-    description: 'A practical method for discovering software ideas from real business problems.',
+    description: 'Learn practical methods for discovering SaaS ideas by solving real business problems and working with niche clients.',
     url: 'https://prochat.tools/guides/how-to-find-saas-ideas',
     siteName: 'ProChat',
     type: 'article',
@@ -16,8 +16,31 @@ export const metadata = {
 const sectionClass = 'max-w-5xl px-page mx-auto'
 
 export default function HowToFindSaaSIdeasGuide() {
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'How to Find SaaS Ideas',
+    author: {
+      '@type': 'Organization',
+      name: 'ProChat',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'ProChat',
+      url: 'https://prochat.tools',
+    },
+    mainEntityOfPage: 'https://prochat.tools/guides/how-to-find-saas-ideas',
+  }
+
   return (
-    <div className="space-y-12 bg-[rgb(var(--section-bg-rgb))] pb-20 text-foreground">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleSchema),
+        }}
+      />
+      <div className="space-y-12 bg-[rgb(var(--section-bg-rgb))] pb-20 text-foreground">
       <section className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">
         <div className="mx-auto max-w-4xl px-page">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">Guide</p>
