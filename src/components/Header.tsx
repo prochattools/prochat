@@ -22,10 +22,10 @@ import { SocialIcon, type SocialIconName } from '@/components/ui/social-icons'
 import { useScrollDirection } from '@/hooks/useScrollDirection'
 
 const NAV_ITEMS = [
-	{ label: 'System', href: '/' },
-	{ label: 'Kits', href: '/kits' },
-	{ label: 'Blog', href: '/blog' },
-	{ label: 'Contact', href: '/contact' },
+  { label: 'System', href: '/' },
+  { label: 'Kits', href: '/kits' },
+  { label: 'Learn', href: '/learn' },
+  { label: 'Contact', href: '/contact' },
 ] as const
 
 const MOBILE_SECONDARY_ITEMS = [

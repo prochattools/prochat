@@ -66,6 +66,25 @@ export default function WhatIsWaaSGuide() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Learn', item: 'https://prochat.tools/learn' },
+              { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://prochat.tools/guides' },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: 'What is Website-as-a-Service?',
+                item: 'https://prochat.tools/guides/what-is-website-as-a-service',
+              },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
           __html: JSON.stringify(articleSchema),
         }}
       />
@@ -76,7 +95,16 @@ export default function WhatIsWaaSGuide() {
         }}
       />
       <div className="space-y-12 bg-[rgb(var(--section-bg-rgb))] pb-20 text-foreground">
-        <section className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">
+        <div className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-6 text-center">
+          <nav className="mx-auto flex max-w-4xl items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
+            <Link href="/learn" className="text-muted-foreground/80 hover:text-primary">Learn</Link>
+            <span className="text-muted-foreground/40">/</span>
+            <Link href="/guides" className="text-muted-foreground/80 hover:text-primary">Guides</Link>
+            <span className="text-muted-foreground/40">/</span>
+            <span className="text-muted-foreground">What is Website-as-a-Service?</span>
+          </nav>
+        </div>
+        <section className="bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">
         <div className="mx-auto max-w-4xl px-page">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">Guide</p>
           <h1 className="mt-4 text-4xl font-bold leading-tight text-foreground md:text-5xl">What is Website-as-a-Service?</h1>
@@ -210,6 +238,29 @@ export default function WhatIsWaaSGuide() {
               Yes. When founders work closely with clients through WaaS, they start noticing repeated problems and workflows. Those patterns often reveal opportunities for building SaaS products.
             </p>
           </article>
+        </div>
+      </section>
+
+      <section className="py-16">
+        <div className={sectionClass}>
+          <h2 className="text-3xl font-bold text-foreground">Key SaaS concepts</h2>
+          <ul className="mt-4 space-y-3 text-lg text-muted-foreground">
+            <li>
+              <Link href="/glossary/recurring-revenue" className="font-semibold text-primary">
+                Recurring revenue
+              </Link>
+            </li>
+            <li>
+              <Link href="/glossary/customer-acquisition" className="font-semibold text-primary">
+                Customer acquisition
+              </Link>
+            </li>
+            <li>
+              <Link href="/glossary/productized-service" className="font-semibold text-primary">
+                Productized service
+              </Link>
+            </li>
+          </ul>
         </div>
       </section>
 

@@ -4,7 +4,7 @@ import ContentLayout from '@/components/content/ContentLayout'
 import { renderMdxContent } from '@/components/content/MDXRenderer'
 import StructuredData from '@/components/StructuredData'
 import { getSectionEntry, getSectionStaticParams, getRelatedEntries } from '@/lib/content'
-import { getSEOTags } from '@/lib/seo/metadata'
+import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { howToSchema } from '@/lib/seo/schema'
 
 export const dynamic = 'force-static'
@@ -21,7 +21,19 @@ export async function generateMetadata({ params }: PageParams) {
     return getSEOTags({ title: 'Playbook Not Found', description: 'The requested playbook could not be found.', canonicalUrlRelative: '/playbooks' })
   }
 
-  return getSEOTags({ title: entry.metaTitle || entry.title, description: entry.metaDescription || entry.description, keywords: entry.keywords, canonicalUrlRelative: entry.urlPath })
+  const socialImage = createSocialImageParams({
+    line1: entry.ogLine1,
+    line2: entry.ogLine2,
+    subtitle: entry.ogSubtitle,
+  })
+
+  return getSEOTags({
+    title: entry.metaTitle || entry.title,
+    description: entry.metaDescription || entry.description,
+    keywords: entry.keywords,
+    canonicalUrlRelative: entry.urlPath,
+    socialImage,
+  })
 }
 
 export default async function PlaybookPage({ params }: PageParams) {

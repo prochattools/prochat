@@ -201,7 +201,10 @@ async function readEntry(section: ContentSection, filePath: string, root: string
     metaTitle: asOptionalString(parsed.metaTitle) || asOptionalString(seo.title),
     metaDescription:
       asOptionalString(parsed.metaDescription) || asOptionalString(seo.description),
-    ogImage: asOptionalString(parsed.ogImage) || '/og',
+    ogImage: asOptionalString(parsed.ogImage),
+    ogLine1: asOptionalString(parsed.ogLine1),
+    ogLine2: asOptionalString(parsed.ogLine2),
+    ogSubtitle: asOptionalString(parsed.ogSubtitle),
     primaryKeyword: asOptionalString(parsed.primaryKeyword),
     content,
     readingTimeMinutes: readingTimeMinutes(content),

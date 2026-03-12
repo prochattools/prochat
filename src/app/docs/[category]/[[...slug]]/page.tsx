@@ -5,6 +5,7 @@ import StructuredData from '@/components/StructuredData'
 import { getPublicDocEntry, getPublicDocsStaticParams } from '@/lib/docs/public-docs'
 import { renderDocsMdxContent } from '@/lib/docs/nextra'
 import { articleSchema } from '@/lib/seo/schema'
+import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { getSiteUrl } from '@/libs/site-url'
 
 export const dynamic = 'force-static'
@@ -42,27 +43,32 @@ export async function generateMetadata({ params }: PageParams) {
     } satisfies Metadata
   }
 
-  return {
+  const socialImage = createSocialImageParams({
+    line1: entry.ogLine1,
+    line2: entry.ogLine2,
+    subtitle: entry.ogSubtitle,
+  })
+
+  const seo = getSEOTags({
     title: entry.metaTitle || entry.title,
     description: entry.metaDescription || entry.description,
-    applicationName: 'Product Documentation',
     keywords: getDocKeywords(entry, routeSegments),
-    metadataBase,
-    alternates: { canonical: entry.urlPath },
+    canonicalUrlRelative: entry.urlPath,
     openGraph: {
       title: entry.metaTitle || entry.title,
       description: entry.metaDescription || entry.description,
       url: entry.urlPath,
-      images: [entry.ogImage],
       type: 'article',
     },
-    twitter: {
-      title: entry.metaTitle || entry.title,
-      description: entry.metaDescription || entry.description,
-      images: [entry.ogImage],
-      card: 'summary_large_image',
-    },
-  } satisfies Metadata
+    socialImage,
+  })
+
+  return {
+    ...seo,
+    applicationName: 'Product Documentation',
+    metadataBase,
+    alternates: { canonical: entry.urlPath },
+  }
 }
 
 export default async function DocsPage({ params }: PageParams) {

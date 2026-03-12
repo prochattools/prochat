@@ -67,6 +67,25 @@ export default function HowToFindSaaSIdeasGuide() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Learn', item: 'https://prochat.tools/learn' },
+              { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://prochat.tools/guides' },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: 'How to Find SaaS Ideas',
+                item: 'https://prochat.tools/guides/how-to-find-saas-ideas',
+              },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
           __html: JSON.stringify(articleSchema),
         }}
       />
@@ -77,7 +96,16 @@ export default function HowToFindSaaSIdeasGuide() {
         }}
       />
       <div className="space-y-12 bg-[rgb(var(--section-bg-rgb))] pb-20 text-foreground">
-        <section className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">
+        <div className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-6 text-center">
+          <nav className="mx-auto flex max-w-4xl items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
+            <Link href="/learn" className="text-muted-foreground/80 hover:text-primary">Learn</Link>
+            <span className="text-muted-foreground/40">/</span>
+            <Link href="/guides" className="text-muted-foreground/80 hover:text-primary">Guides</Link>
+            <span className="text-muted-foreground/40">/</span>
+            <span className="text-muted-foreground">How to Find SaaS Ideas</span>
+          </nav>
+        </div>
+        <section className="bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">
         <div className="mx-auto max-w-4xl px-page">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">Guide</p>
           <h1 className="mt-4 text-4xl font-bold leading-tight text-foreground md:text-5xl">How to Find SaaS Ideas</h1>
@@ -205,6 +233,29 @@ export default function HowToFindSaaSIdeasGuide() {
               Validation happens when businesses are willing to pay for a solution. If multiple clients experience the same problem and confirm they would pay for a solution, the idea has real market demand.
             </p>
           </article>
+        </div>
+      </section>
+
+      <section className="py-16">
+        <div className={sectionClass}>
+          <h2 className="text-3xl font-bold text-foreground">Key SaaS concepts</h2>
+          <ul className="mt-4 space-y-3 text-lg text-muted-foreground">
+            <li>
+              <Link href="/glossary/product-market-fit" className="font-semibold text-primary">
+                Product-market fit
+              </Link>
+            </li>
+            <li>
+              <Link href="/glossary/distribution" className="font-semibold text-primary">
+                Distribution
+              </Link>
+            </li>
+            <li>
+              <Link href="/glossary/authority-stacking" className="font-semibold text-primary">
+                Authority stacking
+              </Link>
+            </li>
+          </ul>
         </div>
       </section>
 

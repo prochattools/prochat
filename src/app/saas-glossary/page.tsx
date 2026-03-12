@@ -2,6 +2,7 @@ import { getSEOTags } from '@/libs/seo'
 import { getAllGlossaryTerms } from '@/libs/glossary'
 import HeroStandard from '@/components/HeroStandard'
 import GlossaryExplorer from './GlossaryExplorer'
+import StructuredData from '@/components/StructuredData'
 
 export const metadata = getSEOTags({
   title: 'SaaS Founder Glossary | ProChat',
@@ -28,6 +29,14 @@ export const metadata = getSEOTags({
   canonicalUrlRelative: '/saas-glossary',
 })
 
+const glossarySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  name: 'SaaS Founder Glossary',
+  description: 'A glossary of key SaaS and startup concepts for founders building and launching software products.',
+  url: 'https://prochat.tools/saas-glossary',
+}
+
 export default async function SaaSGlossaryPage() {
   const terms = await getAllGlossaryTerms()
   const explorerTerms = terms.map(term => ({
@@ -45,8 +54,10 @@ export default async function SaaSGlossaryPage() {
   }))
 
   return (
-    <section className="w-full pb-16 md:pb-20 lg:pb-24">
-      <HeroStandard
+    <>
+      <StructuredData id="schema-glossary-set" data={glossarySchema} />
+      <section className="w-full pb-16 md:pb-20 lg:pb-24">
+        <HeroStandard
         fullBleed
         showDivider={false}
         label="Glossary"
@@ -59,5 +70,6 @@ export default async function SaaSGlossaryPage() {
         <GlossaryExplorer terms={explorerTerms} />
       </div>
     </section>
+    </>
   )
 }

@@ -70,6 +70,25 @@ export default function WaaSToSaaSGuide() {
     <>
       <script
         type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Learn', item: 'https://prochat.tools/learn' },
+              { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://prochat.tools/guides' },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: 'From Website-as-a-Service to SaaS',
+                item: 'https://prochat.tools/guides/waas-to-saas',
+              },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <script
@@ -77,7 +96,16 @@ export default function WaaSToSaaSGuide() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="space-y-12 bg-[rgb(var(--section-bg-rgb))] pb-20 text-foreground">
-      <section className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">
+        <div className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-6 text-center">
+          <nav className="mx-auto flex max-w-4xl items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
+            <Link href="/learn" className="text-muted-foreground/80 hover:text-primary">Learn</Link>
+            <span className="text-muted-foreground/40">/</span>
+            <Link href="/guides" className="text-muted-foreground/80 hover:text-primary">Guides</Link>
+            <span className="text-muted-foreground/40">/</span>
+            <span className="text-muted-foreground">From Website-as-a-Service to SaaS</span>
+          </nav>
+        </div>
+        <section className="bg-[rgb(var(--section-alt-bg-rgb))] py-24 text-center">
         <div className="mx-auto max-w-4xl px-page">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">Guide</p>
           <h1 className="mt-4 text-4xl font-bold leading-tight text-foreground md:text-5xl">From Website-as-a-Service to SaaS</h1>
@@ -200,6 +228,29 @@ export default function WaaSToSaaSGuide() {
               Services can evolve into SaaS when the same problem appears repeatedly across clients and the solution can be standardized into software.
             </p>
           </article>
+        </div>
+      </section>
+
+      <section className="py-16">
+        <div className={sectionClass}>
+          <h2 className="text-3xl font-bold text-foreground">Key SaaS concepts</h2>
+          <ul className="mt-4 space-y-3 text-lg text-muted-foreground">
+            <li>
+              <Link href="/glossary/product-market-fit" className="font-semibold text-primary">
+                Product-market fit
+              </Link>
+            </li>
+            <li>
+              <Link href="/glossary/scalable-software" className="font-semibold text-primary">
+                Scalable software
+              </Link>
+            </li>
+            <li>
+              <Link href="/glossary/startup-traction" className="font-semibold text-primary">
+                Startup traction
+              </Link>
+            </li>
+          </ul>
         </div>
       </section>
 

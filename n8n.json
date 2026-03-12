@@ -1,0 +1,158 @@
+{
+    "name": "ProChat Twitter Autoposter",
+    "nodes": [
+        {
+            "parameters": {
+                "triggerTimes": {
+                    "item": [
+                        {
+                            "mode": "custom",
+                            "cronExpression": "0 16 * * 2,4"
+                        }
+                    ]
+                }
+            },
+            "id": "cron",
+            "name": "Schedule",
+            "type": "n8n-nodes-base.cron",
+            "typeVersion": 1,
+            "position": [
+                200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://prochat.tools/api/social/next?platform=twitter",
+                "options": {},
+                "headerParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "x-social-secret",
+                            "value": "YOUR_SECRET"
+                        }
+                    ]
+                }
+            },
+            "id": "getPost",
+            "name": "Get Next Post",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4,
+            "position": [
+                420,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "number": [
+                        {
+                            "value1": "={{$json.id}}",
+                            "operation": "larger",
+                            "value2": 0
+                        }
+                    ]
+                }
+            },
+            "id": "hasPost",
+            "name": "Post Available?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2,
+            "position": [
+                620,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "text": "={{$json.text + '\\n\\n' + 'https://prochat.tools' + $json.link}}"
+            },
+            "id": "tweet",
+            "name": "Send Tweet",
+            "type": "n8n-nodes-base.twitter",
+            "typeVersion": 2,
+            "position": [
+                820,
+                200
+            ],
+            "credentials": {
+                "twitterOAuth2Api": {
+                    "id": "YOUR_TWITTER_CREDENTIAL_ID",
+                    "name": "Twitter API"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "url": "https://prochat.tools/api/social/mark-posted",
+                "method": "POST",
+                "jsonParameters": true,
+                "options": {},
+                "headerParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "x-social-secret",
+                            "value": "YOUR_SECRET"
+                        }
+                    ]
+                },
+                "bodyParametersJson": "={\"platform\":\"twitter\",\"id\":$json.id}"
+            },
+            "id": "markPosted",
+            "name": "Mark Posted",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4,
+            "position": [
+                1040,
+                200
+            ]
+        }
+    ],
+    "connections": {
+        "Schedule": {
+            "main": [
+                [
+                    {
+                        "node": "Get Next Post",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Next Post": {
+            "main": [
+                [
+                    {
+                        "node": "Post Available?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Post Available?": {
+            "main": [
+                [
+                    {
+                        "node": "Send Tweet",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Send Tweet": {
+            "main": [
+                [
+                    {
+                        "node": "Mark Posted",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

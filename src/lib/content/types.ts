@@ -28,7 +28,10 @@ export type ContentEntry = {
   author: string
   metaTitle?: string
   metaDescription?: string
-  ogImage: string
+  ogImage?: string
+  ogLine1?: string
+  ogLine2?: string
+  ogSubtitle?: string
   primaryKeyword?: string
   content: string
   readingTimeMinutes: number

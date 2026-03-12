@@ -1,0 +1,41 @@
+---
+title: Social Image Guidance
+---
+
+## Automatic social cards
+
+ProChat automatically generates Open Graph graphics for any page that doesn’t provide a dedicated image asset. The `/social` route consumes three query parameters (`line1`, `line2`, `subtitle`) to render the branded card used across marketing, guides, docs, prompts, and the glossary.
+
+When no image is supplied through frontmatter or custom metadata, `getSEOTags` splits the resolved title into two lines, sanitizes them, trims the subtitle (description) to 120 characters, and builds a URL such as `/social?line1=How%20to%20Build&line2=ProChat&subtitle=Practical%20guides` that is injected into every Open Graph/Twitter card.
+
+## Title splitting logic
+
+The helper looks for the first separator in this order: `:`, ` - `, ` – `, `—`, and `|`. If it finds one, the text before the separator becomes `line1` and the text after becomes `line2`. Titles without separators fall back to `line1=Full Title` and `line2=ProChat`. Both lines pass through the same sanitizers used by the `/social` generator to guard against markup and excessive length.
+
+## Frontmatter overrides
+
+Content authors can bypass the automatic title splitting by adding these optional frontmatter fields to any guide, blog, glossary, playbook, prompt, snippet, or docs entry:
+
+- `ogLine1` – the first headline line for `/social`
+- `ogLine2` – the second headline line for `/social`
+- `ogSubtitle` – the subtitle that appears under the headline
+- `ogImage` – a static image (PNG/SVG) that skips `/social` entirely
+
+The helper `createSocialImageParams` aggregates the override fields and feeds them into `getSEOTags`. When any `ogLine*` or `ogSubtitle` is present, `getSEOTags` uses those values verbatim (after sanitization) instead of splitting the title.
+
+### Example frontmatter
+
+```
+---
+title: Building Resilient SaaS Systems
+description: How we design observability, deployments, and alerting that keep founders confident in every release.
+ogLine1: Resilient SaaS Systems
+ogLine2: Release with Confidence
+ogSubtitle: Observability, deployments, and alerts for non-technical founders.
+ogImage: /og/saas-resilience.png
+tags:
+  - infrastructure
+---
+```
+
+With the snippet above, `/social` will still use the specified lines/subtitle (and sanitize them automatically), but the metadata ultimately winds up pointing at `/og/saas-resilience.png` because `ogImage` wins if present.

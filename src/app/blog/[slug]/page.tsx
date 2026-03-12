@@ -10,7 +10,7 @@ import {
   generateSocialImageUrl,
   generateStaticSocialImageUrl,
 } from '@/lib/generateSocialImageUrl'
-import { getSEOTags } from '@/lib/seo/metadata'
+import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { articleSchema } from '@/lib/seo/schema'
 
 export const dynamic = 'force-static'
@@ -43,6 +43,12 @@ export async function generateMetadata({ params }: PageParams) {
       : generateSocialImageUrl(entry.title)
     : '/og'
 
+  const socialImage = createSocialImageParams({
+    line1: entry.ogLine1,
+    line2: entry.ogLine2,
+    subtitle: entry.ogSubtitle,
+  })
+
   return getSEOTags({
     title: entry.metaTitle || entry.title,
     description: entry.metaDescription || entry.description,
@@ -67,6 +73,7 @@ export async function generateMetadata({ params }: PageParams) {
       description: entry.metaDescription || entry.description,
       images: [socialImageUrl],
     },
+    socialImage,
   })
 }
 
