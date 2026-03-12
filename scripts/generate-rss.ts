@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { getAllBlogPosts } from '@/libs/blog'
+import { getAllBlogPosts } from '../src/libs/blog.ts'
 
 function getSiteUrl() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim()
