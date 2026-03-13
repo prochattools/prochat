@@ -3,7 +3,7 @@ set -eu
 
 NODE_ENV=production
 
-node ./standalone/server.js &
+node .next/standalone/server.js &
 APP_PID=$!
 
 (
