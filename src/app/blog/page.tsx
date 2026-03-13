@@ -32,6 +32,8 @@ export const metadata = getSEOTags({
   canonicalUrlRelative: '/blog',
 })
 
+export const revalidate = 86400
+
 const canonicalStartHereSlug = 'how-to-build-saas-with-ai-non-developer'
 
 function formatDate(dateIso: string) {

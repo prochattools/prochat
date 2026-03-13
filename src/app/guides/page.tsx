@@ -8,6 +8,8 @@ export const metadata = getSEOTags({
   canonicalUrlRelative: '/guides',
 })
 
+export const revalidate = 3600
+
 export default async function GuidesIndexPage() {
   const entries = await getSectionEntries('guides')
 

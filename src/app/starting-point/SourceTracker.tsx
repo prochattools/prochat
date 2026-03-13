@@ -25,7 +25,7 @@ export default function SourceTracker() {
     if (trackedRef.current) return
     const tracker = getTracker()
     const payload = { source: cookieSource, entry: 'go', campaign: 'lead-magnet' }
-    tracker?.track?.('visit_source', payload)
+    tracker?.track?.('visit', { source: cookieSource })
     tracker?.track?.('lead_magnet_view', payload)
     trackedRef.current = true
   }, [])

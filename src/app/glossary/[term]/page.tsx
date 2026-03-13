@@ -8,8 +8,6 @@ import { getSectionEntry, getSectionStaticParams, getRelatedEntries } from '@/li
 import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { glossarySchema } from '@/lib/seo/schema'
 
-export const dynamic = 'force-static'
-
 type PageParams = { params: { term: string } }
 
 export async function generateStaticParams() {
@@ -55,6 +53,8 @@ export async function generateMetadata({ params }: PageParams) {
     socialImage,
   })
 }
+
+export const revalidate = 3600
 
 const guideLinks: Record<string, { href: string; label: string }[]> = {
   'product-market-fit': [{ href: '/guides/how-to-find-saas-ideas', label: 'How to Find SaaS Ideas' }],

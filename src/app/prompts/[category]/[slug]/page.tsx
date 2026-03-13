@@ -7,8 +7,6 @@ import { getSectionEntry, getSectionStaticParams, getRelatedEntries } from '@/li
 import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { howToSchema } from '@/lib/seo/schema'
 
-export const dynamic = 'force-static'
-
 type PageParams = { params: { category: string; slug: string } }
 
 export async function generateStaticParams() {
@@ -35,6 +33,8 @@ export async function generateMetadata({ params }: PageParams) {
     socialImage,
   })
 }
+
+export const revalidate = 3600
 
 export default async function PromptPage({ params }: PageParams) {
   const entry = await getSectionEntry('prompts', [params.category, params.slug])

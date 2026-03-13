@@ -13,8 +13,6 @@ import {
 import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { articleSchema } from '@/lib/seo/schema'
 
-export const dynamic = 'force-static'
-
 type PageParams = {
   params: {
     slug: string
@@ -76,6 +74,8 @@ export async function generateMetadata({ params }: PageParams) {
     socialImage,
   })
 }
+
+export const revalidate = 86400
 
 export default async function BlogArticlePage({ params }: PageParams) {
   const entry = await getSectionEntry('blog', [params.slug])

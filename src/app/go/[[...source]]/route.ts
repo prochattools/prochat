@@ -19,10 +19,12 @@ function setTrackingCookies(response: NextResponse, source: SourceSlug, secure: 
     sameSite: 'lax' as const,
     secure,
   }
-  // Overwrite the attribution cookie on every /go visit to avoid stale sources.
-  response.cookies.set('pc_source', source, cookieOptions)
-  response.cookies.set('pc_entry', 'go', cookieOptions)
-  response.cookies.set('pc_campaign', 'lead-magnet', cookieOptions)
+  // Only add attribution cookies when missing so the first-touch source sticks.
+  if (!response.cookies.has('pc_source')) {
+    response.cookies.set('pc_source', source, cookieOptions)
+    response.cookies.set('pc_entry', 'go', cookieOptions)
+    response.cookies.set('pc_campaign', 'lead-magnet', cookieOptions)
+  }
 }
 
 export function GET(
