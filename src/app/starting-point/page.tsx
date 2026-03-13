@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import StartSignupForm from './_components/StartSignupForm'
 import { AlertCircle, BookOpen } from 'lucide-react'
 import SourceTracker from './SourceTracker'
@@ -66,7 +67,9 @@ const CARD_ELEVATED = 'rounded-2xl border border-border bg-card shadow-[0_24px_6
 export default function StartHerePage() {
   return (
     <main className="min-h-screen bg-background text-foreground font-brand selection:bg-primary/20 selection:text-foreground">
-      <SourceTracker />
+      <Suspense fallback={null}>
+        <SourceTracker />
+      </Suspense>
       <section className="relative isolate flex min-h-[100svh] items-center border-b border-border bg-background py-12 lg:py-0">
         <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
         <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
@@ -111,7 +114,9 @@ export default function StartHerePage() {
                   </h3>
                 </div>
                 <div className="mb-6 [&_input]:!h-12 [&_input]:!bg-background [&_input]:!border-border [&_input]:!text-foreground [&_input]:!text-base [&_button]:!h-12 [&_button]:!text-base [&_button]:!font-semibold [&_button]:!whitespace-nowrap [&_button]:!px-6">
-                  <StartSignupForm buttonLabel="Download the Starting Point" />
+                  <Suspense fallback={null}>
+                    <StartSignupForm buttonLabel="Download the Starting Point" />
+                  </Suspense>
                 </div>
               </div>
             </div>
