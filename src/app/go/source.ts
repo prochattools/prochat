@@ -13,7 +13,7 @@ export function normalizeSource(value: string | null | undefined): SourceSlug | 
 
 export function deriveSourceFromReferer(request: NextRequest): SourceSlug {
   const referer = request.headers.get('referer')?.toLowerCase() || ''
-  if (referer.includes('twitter.com') || referer.includes('x.com')) return 'twitter'
+  if (referer.includes('twitter.com') || referer.includes('x.com') || referer.includes('t.co')) return 'twitter'
   if (referer.includes('linkedin.com')) return 'linkedin'
   if (referer.includes('reddit.com')) return 'reddit'
   if (referer.includes('youtube.com')) return 'youtube'
