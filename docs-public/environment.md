@@ -100,6 +100,9 @@ The entitlement flow (`src/lib/store/github.ts`, `src/app/api/store/_lib/handle-
 - `N8N_API_KEY`
 - `N8N_API_URL`
 - `N8N_WEBHOOK_URL`
+ - `SOCIAL_AUTOMATION_SECRET`
+
+`SOCIAL_AUTOMATION_SECRET` is a private token used by internal automation scripts when publishing or managing evergreen social posts.
 
 Make and n8n routes clone workflows, create webhooks, and persist `Project` records. Only the API key, team ID, and base URL are required in code; `MAKE_ORGANIZATION_ID` is present in `.env.example` but unused in the current routes.
 
