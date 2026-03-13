@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { deriveSourceFromReferer, normalizeSource, SourceSlug } from '../source'
+import { normalizeSource, SourceSlug } from '../source'
 
-const MAX_AGE = 60 * 30
+const MAX_AGE = 60 * 60 * 24 * 30
 
 function buildRedirectUrl(request: NextRequest) {
   const host =
@@ -30,7 +30,7 @@ export function GET(
   { params }: { params: { source?: string[] } },
 ) {
   const pathSource = normalizeSource(params.source?.[0])
-  const source: SourceSlug = pathSource ?? deriveSourceFromReferer(request)
+  const source: SourceSlug = pathSource ?? 'direct'
 
   const redirectUrl = buildRedirectUrl(request)
   const response = NextResponse.redirect(redirectUrl, 302)
