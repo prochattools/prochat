@@ -5,6 +5,7 @@ const SOURCE_SET = new Set<SourceSlug>(['twitter', 'linkedin', 'reddit', 'youtub
 const REFERRER_MAP: Record<string, SourceSlug> = {
   'twitter.com': 'twitter',
   't.co': 'twitter',
+  'x.com': 'twitter',
   'linkedin.com': 'linkedin',
   'reddit.com': 'reddit',
   'youtube.com': 'youtube',
@@ -45,8 +46,5 @@ export function resolveStartingPointSource({
     return explicit
   }
   const referrerSource = sourceFromReferrerString(referrer)
-  if (referrerSource) {
-    return referrerSource
-  }
-  return 'direct'
+  return referrerSource
 }
