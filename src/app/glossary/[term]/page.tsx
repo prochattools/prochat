@@ -8,8 +8,6 @@ import { getSectionEntry, getFeaturedSectionStaticParams, getRelatedEntries } fr
 import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { glossarySchema } from '@/lib/seo/schema'
 
-export const dynamic = 'force-dynamic'
-
 type PageParams = { params: { term: string } }
 
 export async function generateStaticParams() {
