@@ -6,11 +6,7 @@ const MAX_AGE = 60 * 60 * 24 * 30
 const HOST = 'prochat.tools'
 
 function buildRedirectUrl(request: NextRequest) {
-  const host =
-    request.headers.get('x-forwarded-host') || request.headers.get('host') || HOST
-  const protocol = request.nextUrl.protocol || 'https'
-  // Keep the redirect clean; the source travels via cookie only.
-  return `${protocol}://${host}/starting-point`
+  return new URL('/starting-point', request.url)
 }
 
 function setTrackingCookies(response: NextResponse, source: SourceSlug, secure: boolean) {
@@ -37,7 +33,7 @@ export function GET(
 
   const redirectUrl = buildRedirectUrl(request)
   const response = NextResponse.redirect(redirectUrl, 307)
-  setTrackingCookies(response, source, request.nextUrl.protocol === 'https')
+  setTrackingCookies(response, source, process.env.NODE_ENV === 'production')
 
   return response
 }
