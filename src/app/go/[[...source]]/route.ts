@@ -31,11 +31,12 @@ export function GET(
   { params }: { params: { source?: string[] } },
 ) {
   const explicitSource = normalizeSource(params.source?.[0])
-  const referrerSource = sourceFromReferer(request.headers.get('referer'))
+  const referrerHeader = request.headers.get('referer') || request.headers.get('referrer')
+  const referrerSource = sourceFromReferer(referrerHeader)
   const source: SourceSlug = explicitSource ?? referrerSource ?? 'direct'
 
   const redirectUrl = buildRedirectUrl(request)
-  const response = NextResponse.redirect(redirectUrl, 302)
+  const response = NextResponse.redirect(redirectUrl, 307)
   setTrackingCookies(response, source, request.nextUrl.protocol === 'https')
 
   return response

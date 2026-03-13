@@ -21,7 +21,12 @@ const REFERER_MAP: Record<string, SourceSlug> = {
 
 export function sourceFromReferer(referrer: string | null | undefined): SourceSlug | null {
   if (!referrer) return null
-  const normalized = referrer.toLowerCase()
-  const match = Object.keys(REFERER_MAP).find(host => normalized.includes(host))
-  return match ? REFERER_MAP[match] : null
+  try {
+    const url = new URL(referrer)
+    const normalizedHost = url.hostname.toLowerCase()
+    const match = Object.keys(REFERER_MAP).find(host => normalizedHost === host || normalizedHost.endsWith(`.${host}`))
+    return match ? REFERER_MAP[match] : null
+  } catch {
+    return null
+  }
 }
