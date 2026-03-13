@@ -29,7 +29,12 @@ export default function StartSignupForm({
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const referrer = typeof document !== 'undefined' ? document.referrer : ''
-  const resolvedSource = resolveStartingPointSource({ cookieSource: sourceCookie, referrer })
+  const searchParamSource = typeof window !== 'undefined' ? new URL(window.location.href).searchParams.get('source') : null
+  const resolvedSource = resolveStartingPointSource({
+    searchParamSource,
+    cookieSource: sourceCookie,
+    referrer,
+  })
 
   useEffect(() => {
     trackEventOncePerSession('lead_magnet_view', 'lead_magnet_view:/starting-point', {

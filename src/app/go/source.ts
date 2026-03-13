@@ -35,16 +35,21 @@ export function sourceFromReferrerString(referrer: string | null | undefined): S
 }
 
 export function resolveStartingPointSource({
+  searchParamSource,
   cookieSource,
   referrer,
 }: {
+  searchParamSource?: string | null
   cookieSource: string | null
   referrer: string
 }): SourceSlug {
-  const explicit = normalizeSource(cookieSource)
-  if (explicit) {
-    return explicit
+  const normalizedSearchParam = normalizeSource(searchParamSource)
+  if (normalizedSearchParam) {
+    return normalizedSearchParam
   }
-  const referrerSource = sourceFromReferrerString(referrer)
-  return referrerSource
+  const explicitCookie = normalizeSource(cookieSource)
+  if (explicitCookie) {
+    return explicitCookie
+  }
+  return sourceFromReferrerString(referrer)
 }
