@@ -1,21 +1,36 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
+
+const COOKIE_SOURCE = 'pc_source'
 
 function getTracker() {
   if (typeof window === 'undefined') return null
   return (window as typeof window & { umami?: { track?: (name: string, data?: Record<string, unknown>) => void } }).umami
 }
 
+function readCookie(name: string) {
+  if (typeof document === 'undefined') return null
+  const match = document.cookie.split('; ').find(cookie => cookie.startsWith(`${name}=`))
+  if (!match) return null
+  return decodeURIComponent(match.split('=')[1] || '')
+}
+
 export default function SourceTracker() {
-  const searchParams = useSearchParams()
-  const src = searchParams?.get('src') || 'direct'
+  const [source, setSource] = useState(() => readCookie(COOKIE_SOURCE) || 'direct')
+  const trackedRef = useRef(false)
 
   useEffect(() => {
+    const cookieSource = readCookie(COOKIE_SOURCE) || 'direct'
+    setSource(cookieSource)
+
+    if (trackedRef.current) return
     const tracker = getTracker()
-    tracker?.track?.('visit_source', { source: src })
-  }, [src])
+    const payload = { source: cookieSource, entry: 'go', campaign: 'lead-magnet' }
+    tracker?.track?.('visit_source', payload)
+    tracker?.track?.('lead_magnet_view', payload)
+    trackedRef.current = true
+  }, [])
 
   return null
 }

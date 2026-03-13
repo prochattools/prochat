@@ -1,7 +1,6 @@
 'use client'
 
 import { FormEvent, useEffect, useId, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
@@ -12,12 +11,18 @@ interface StartSignupFormProps {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+function getCookieValue(name: string) {
+  if (typeof document === 'undefined') return null
+  const match = document.cookie.split('; ').find(cookie => cookie.startsWith(`${name}=`))
+  if (!match) return null
+  return decodeURIComponent(match.split('=')[1] || '')
+}
+
 export default function StartSignupForm({
   buttonLabel = 'Get the PDF',
 }: StartSignupFormProps) {
   const inputId = useId()
-  const searchParams = useSearchParams()
-  const sourceParam = searchParams?.get('src') || 'direct'
+  const sourceCookie = getCookieValue('pc_source') || 'direct'
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -60,7 +65,12 @@ export default function StartSignupForm({
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-      body: JSON.stringify({ email: normalizedEmail, source: sourceParam }),
+        body: JSON.stringify({
+          email: normalizedEmail,
+          source: sourceCookie,
+          entry: 'go',
+          campaign: 'lead-magnet',
+        }),
       })
 
       const payload = (await response.json().catch(() => ({}))) as {
@@ -91,7 +101,9 @@ export default function StartSignupForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5 text-left">
-      <input type="hidden" name="source" value={sourceParam} />
+      <input type="hidden" name="source" value={sourceCookie} />
+      <input type="hidden" name="entry" value="go" />
+      <input type="hidden" name="campaign" value="lead-magnet" />
       <label
         htmlFor={inputId}
         className="block text-sm font-semibold uppercase tracking-[0.16em] text-slate-600"
