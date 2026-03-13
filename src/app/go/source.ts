@@ -10,3 +10,18 @@ export function normalizeSource(value: string | null | undefined): SourceSlug | 
   }
   return null
 }
+
+const REFERER_MAP: Record<string, SourceSlug> = {
+  'twitter.com': 'twitter',
+  't.co': 'twitter',
+  'linkedin.com': 'linkedin',
+  'reddit.com': 'reddit',
+  'youtube.com': 'youtube',
+}
+
+export function sourceFromReferer(referrer: string | null | undefined): SourceSlug | null {
+  if (!referrer) return null
+  const normalized = referrer.toLowerCase()
+  const match = Object.keys(REFERER_MAP).find(host => normalized.includes(host))
+  return match ? REFERER_MAP[match] : null
+}

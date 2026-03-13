@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { normalizeSource, SourceSlug } from '../source'
+import { normalizeSource, SourceSlug, sourceFromReferer } from '../source'
 
 const MAX_AGE = 60 * 60 * 24 * 30
 
+const HOST = 'prochat.tools'
+
 function buildRedirectUrl(request: NextRequest) {
   const host =
-    request.headers.get('x-forwarded-host') || request.headers.get('host') || 'prochat.tools'
-  const protocol = 'https'
-  // Keep the redirect clean; the source is preserved via cookies, not query params.
+    request.headers.get('x-forwarded-host') || request.headers.get('host') || HOST
+  const protocol = request.nextUrl.protocol || 'https'
+  // Keep the redirect clean; the source travels via cookie only.
   return `${protocol}://${host}/starting-point`
 }
 
@@ -19,20 +21,18 @@ function setTrackingCookies(response: NextResponse, source: SourceSlug, secure: 
     sameSite: 'lax' as const,
     secure,
   }
-  // Only add attribution cookies when missing so the first-touch source sticks.
-  if (!response.cookies.has('pc_source')) {
-    response.cookies.set('pc_source', source, cookieOptions)
-    response.cookies.set('pc_entry', 'go', cookieOptions)
-    response.cookies.set('pc_campaign', 'lead-magnet', cookieOptions)
-  }
+  response.cookies.set('pc_source', source, cookieOptions)
+  response.cookies.set('pc_entry', 'go', cookieOptions)
+  response.cookies.set('pc_campaign', 'lead-magnet', cookieOptions)
 }
 
 export function GET(
   request: NextRequest,
   { params }: { params: { source?: string[] } },
 ) {
-  const pathSource = normalizeSource(params.source?.[0])
-  const source: SourceSlug = pathSource ?? 'direct'
+  const explicitSource = normalizeSource(params.source?.[0])
+  const referrerSource = sourceFromReferer(request.headers.get('referer'))
+  const source: SourceSlug = explicitSource ?? referrerSource ?? 'direct'
 
   const redirectUrl = buildRedirectUrl(request)
   const response = NextResponse.redirect(redirectUrl, 302)
