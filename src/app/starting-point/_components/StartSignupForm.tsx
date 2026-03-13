@@ -1,9 +1,10 @@
-'use client'
+ 'use client'
 
 import { FormEvent, useEffect, useId, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
+import { resolveStartingPointSource } from '@/app/go/source'
 
 interface StartSignupFormProps {
   buttonLabel?: string
@@ -22,11 +23,13 @@ export default function StartSignupForm({
   buttonLabel = 'Get the PDF',
 }: StartSignupFormProps) {
   const inputId = useId()
-  const sourceCookie = getCookieValue('pc_source') || 'direct'
+  const sourceCookie = getCookieValue('pc_source')
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const referrer = typeof document !== 'undefined' ? document.referrer : ''
+  const resolvedSource = resolveStartingPointSource({ cookieSource: sourceCookie, referrer })
 
   useEffect(() => {
     trackEventOncePerSession('lead_magnet_view', 'lead_magnet_view:/starting-point', {
@@ -67,7 +70,7 @@ export default function StartSignupForm({
         },
         body: JSON.stringify({
           email: normalizedEmail,
-          source: sourceCookie,
+          source: resolvedSource,
           entry: 'go',
           campaign: 'lead-magnet',
         }),
@@ -101,7 +104,7 @@ export default function StartSignupForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5 text-left">
-      <input type="hidden" name="source" value={sourceCookie} />
+      <input type="hidden" name="source" value={resolvedSource} />
       <input type="hidden" name="entry" value="go" />
       <input type="hidden" name="campaign" value="lead-magnet" />
       <label

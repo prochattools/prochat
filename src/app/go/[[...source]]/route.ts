@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { normalizeSource, SourceSlug, sourceFromReferer } from '../source'
+import { normalizeSource, SourceSlug } from '../source'
 
 const MAX_AGE = 60 * 60 * 24 * 30
 
@@ -12,7 +12,7 @@ function buildRedirectUrl(request: NextRequest) {
   return `${proto}://${host}/starting-point`
 }
 
-function setTrackingCookies(response: NextResponse, source: SourceSlug, secure: boolean) {
+function setTrackingCookies(response: NextResponse, source: SourceSlug | null, secure: boolean) {
   const cookieOptions = {
     path: '/',
     maxAge: MAX_AGE,
@@ -20,7 +20,9 @@ function setTrackingCookies(response: NextResponse, source: SourceSlug, secure: 
     sameSite: 'lax' as const,
     secure,
   }
-  response.cookies.set('pc_source', source, cookieOptions)
+  if (source) {
+    response.cookies.set('pc_source', source, cookieOptions)
+  }
   response.cookies.set('pc_entry', 'go', cookieOptions)
   response.cookies.set('pc_campaign', 'lead-magnet', cookieOptions)
 }
@@ -30,9 +32,7 @@ export function GET(
   { params }: { params: { source?: string[] } },
 ) {
   const explicitSource = normalizeSource(params.source?.[0])
-  const referrerHeader = request.headers.get('referer') || request.headers.get('referrer')
-  const referrerSource = sourceFromReferer(referrerHeader)
-  const source: SourceSlug = explicitSource ?? referrerSource ?? 'direct'
+  const source: SourceSlug | null = explicitSource ?? null
 
   const redirectUrl = buildRedirectUrl(request)
   const response = NextResponse.redirect(redirectUrl, 307)
