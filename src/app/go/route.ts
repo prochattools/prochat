@@ -3,7 +3,6 @@ import { resolveSource } from './source'
 
 export function GET(request: NextRequest) {
   const source = resolveSource(request)
-  const destination = new URL('/starting-point', request.url)
-  destination.searchParams.set('src', source)
-  return NextResponse.redirect(destination, 302)
+  const redirectUrl = new URL(`/starting-point?src=${source}`, request.url)
+  return NextResponse.redirect(redirectUrl, 302)
 }
