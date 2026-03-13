@@ -8,7 +8,7 @@ import { articleSchema } from '@/lib/seo/schema'
 import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { getSiteUrl } from '@/libs/site-url'
 
-export const dynamic = 'force-static'
+export const dynamic = 'force-dynamic'
 
 type PageParams = { params: { category: string; slug?: string[] } }
 

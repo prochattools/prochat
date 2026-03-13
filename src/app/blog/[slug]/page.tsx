@@ -13,6 +13,8 @@ import {
 import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { articleSchema } from '@/lib/seo/schema'
 
+export const dynamic = 'force-dynamic'
+
 type PageParams = {
   params: {
     slug: string
@@ -20,7 +22,7 @@ type PageParams = {
 }
 
 export async function generateStaticParams() {
-  return getFeaturedSectionStaticParams('blog', 12)
+  return getFeaturedSectionStaticParams('blog', 0)
 }
 
 export async function generateMetadata({ params }: PageParams) {

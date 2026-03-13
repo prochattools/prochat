@@ -4,14 +4,16 @@ import { notFound } from 'next/navigation'
 import ContentLayout from '@/components/content/ContentLayout'
 import { renderMdxContent } from '@/components/content/MDXRenderer'
 import StructuredData from '@/components/StructuredData'
-import { getSectionEntry, getSectionStaticParams, getRelatedEntries } from '@/lib/content'
+import { getSectionEntry, getFeaturedSectionStaticParams, getRelatedEntries } from '@/lib/content'
 import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { glossarySchema } from '@/lib/seo/schema'
+
+export const dynamic = 'force-dynamic'
 
 type PageParams = { params: { term: string } }
 
 export async function generateStaticParams() {
-  return getSectionStaticParams('glossary')
+  return getFeaturedSectionStaticParams('glossary', 0)
 }
 
 export async function generateMetadata({ params }: PageParams) {

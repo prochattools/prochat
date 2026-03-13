@@ -7,10 +7,12 @@ import { getSectionEntry, getFeaturedSectionStaticParams, getRelatedEntries } fr
 import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { howToSchema } from '@/lib/seo/schema'
 
+export const dynamic = 'force-dynamic'
+
 type PageParams = { params: { topic: string; slug: string } }
 
 export async function generateStaticParams() {
-  return getFeaturedSectionStaticParams('guides', 10)
+  return getFeaturedSectionStaticParams('guides', 0)
 }
 
 export async function generateMetadata({ params }: PageParams) {

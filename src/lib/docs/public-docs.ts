@@ -128,8 +128,10 @@ export async function getPublicDocEntry(routeSegments: string[]): Promise<Conten
 
 export async function getPublicDocsStaticParams() {
   const entries = await getSectionEntries('docs')
+  const limit = 0
 
   return entries
+    .slice(0, limit)
     .filter(entry => entry.routeSegments.length > 0)
     .map(entry => ({
       category: entry.routeSegments[0],
