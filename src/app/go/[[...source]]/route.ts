@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { deriveSourceFromReferer, normalizeSource, SourceSlug, VALID_SOURCES } from '../source'
+import { deriveSourceFromReferer, normalizeSource, SourceSlug } from '../source'
 
 const MAX_AGE = 60 * 30
 
@@ -7,6 +7,7 @@ function buildRedirectUrl(request: NextRequest) {
   const host =
     request.headers.get('x-forwarded-host') || request.headers.get('host') || 'prochat.tools'
   const protocol = 'https'
+  // Keep the redirect clean; the source is preserved via cookies, not query params.
   return `${protocol}://${host}/starting-point`
 }
 
@@ -18,6 +19,7 @@ function setTrackingCookies(response: NextResponse, source: SourceSlug, secure: 
     sameSite: 'lax' as const,
     secure,
   }
+  // Overwrite the attribution cookie on every /go visit to avoid stale sources.
   response.cookies.set('pc_source', source, cookieOptions)
   response.cookies.set('pc_entry', 'go', cookieOptions)
   response.cookies.set('pc_campaign', 'lead-magnet', cookieOptions)

@@ -9,6 +9,7 @@ function getTracker() {
   return (window as typeof window & { umami?: { track?: (name: string, data?: Record<string, unknown>) => void } }).umami
 }
 
+// Source data is persisted in a short-lived cookie so the landing page can use it without query params.
 function readCookie(name: string) {
   if (typeof document === 'undefined') return null
   const match = document.cookie.split('; ').find(cookie => cookie.startsWith(`${name}=`))
@@ -17,13 +18,10 @@ function readCookie(name: string) {
 }
 
 export default function SourceTracker() {
-  const [source, setSource] = useState(() => readCookie(COOKIE_SOURCE) || 'direct')
   const trackedRef = useRef(false)
 
   useEffect(() => {
     const cookieSource = readCookie(COOKIE_SOURCE) || 'direct'
-    setSource(cookieSource)
-
     if (trackedRef.current) return
     const tracker = getTracker()
     const payload = { source: cookieSource, entry: 'go', campaign: 'lead-magnet' }
