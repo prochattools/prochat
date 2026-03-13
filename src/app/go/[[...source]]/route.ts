@@ -36,7 +36,7 @@ export function GET(
   const source: SourceSlug = explicitSource ?? 'direct'
 
   const redirectUrl = new URL(buildPublicUrl(request, '/starting-point'))
-  redirectUrl.searchParams.set('source', source)
+  redirectUrl.searchParams.set('src', source)
   const response = NextResponse.redirect(redirectUrl, 307)
   setTrackingCookies(response, source, process.env.NODE_ENV === 'production')
 

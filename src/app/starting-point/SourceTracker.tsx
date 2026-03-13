@@ -30,9 +30,9 @@ export default function SourceTracker() {
     if (trackedRef.current) return
     const cookieSource = readCookie(COOKIE_SOURCE)
     const referrer = typeof document !== 'undefined' ? document.referrer : ''
-    const searchParamSource = typeof window !== 'undefined' ? new URL(window.location.href).searchParams.get('source') : null
+    const queryParamSource = typeof window !== 'undefined' ? new URL(window.location.href).searchParams.get('src') : null
     const resolvedSource = resolveStartingPointSource({
-      searchParamSource,
+      queryParamSource,
       cookieSource,
       referrer,
     })
@@ -43,7 +43,7 @@ export default function SourceTracker() {
 
     console.debug('[source-tracker] mounted', {
       currentUrl,
-      searchParamSource,
+      queryParamSource,
       cookieSource,
       referrer,
       resolvedSource,

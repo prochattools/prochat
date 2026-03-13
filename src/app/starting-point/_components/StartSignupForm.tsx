@@ -29,9 +29,9 @@ export default function StartSignupForm({
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const referrer = typeof document !== 'undefined' ? document.referrer : ''
-  const searchParamSource = typeof window !== 'undefined' ? new URL(window.location.href).searchParams.get('source') : null
+  const queryParamSource = typeof window !== 'undefined' ? new URL(window.location.href).searchParams.get('src') : null
   const resolvedSource = resolveStartingPointSource({
-    searchParamSource,
+    queryParamSource,
     cookieSource: sourceCookie,
     referrer,
   })
