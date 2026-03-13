@@ -5,35 +5,34 @@ WORKDIR /app
 # ---- Deps ----
 FROM base AS deps
 COPY package.json package-lock.json* ./
-RUN --mount=type=cache,target=/root/.npm \
+RUN --mount=type=cache,target=/root/.npm \ 
     npm ci
 
 # ---- Builder ----
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN --mount=type=cache,target=/app/.next/cache \
+RUN --mount=type=cache,target=/app/.next/cache \ 
     npx prisma generate && npm run build
 
 # ---- Runner ----
-FROM node:20-bullseye AS runner
+FROM node:20-bullseye-slim AS runner
 WORKDIR /app
-
 ENV NODE_ENV=production
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/package-lock.json ./package-lock.json
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/scripts/start-production.sh ./scripts/start-production.sh
-
-RUN npm prune --omit=dev
 
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-  CMD curl -f http://localhost:3000/api/health || exit 1
+  CMD node -e "const http = require('http'); const req = http.get('http://localhost:3000/api/health', res => process.exit(res.statusCode === 200 ? 0 : 1)); req.on('error', () => process.exit(1)); req.end()"
 
-CMD ["npm", "run", "start"]
+CMD ["sh", "scripts/start-production.sh"]
