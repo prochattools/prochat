@@ -272,6 +272,17 @@ export async function getSectionStaticParams(section: ContentSection) {
   )
 }
 
+export async function getFeaturedSectionStaticParams(section: ContentSection, limit = 10) {
+  const config = getContentConfig(section)
+  const entries = await getSectionEntries(section)
+
+  return entries.slice(0, limit).map(entry =>
+    Object.fromEntries(
+      config.paramNames.map((paramName, index) => [paramName, entry.routeSegments[index]]),
+    ),
+  )
+}
+
 export async function getRelatedEntries(
   section: ContentSection,
   currentPath: string,

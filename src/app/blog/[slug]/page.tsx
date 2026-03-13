@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import ContentLayout from '@/components/content/ContentLayout'
 import { renderMdxContent } from '@/components/content/MDXRenderer'
 import StructuredData from '@/components/StructuredData'
-import { getSectionEntry, getSectionStaticParams, getRelatedEntries } from '@/lib/content'
+import { getSectionEntry, getFeaturedSectionStaticParams, getRelatedEntries } from '@/lib/content'
 import {
   generateSocialImageUrl,
   generateStaticSocialImageUrl,
@@ -20,7 +20,7 @@ type PageParams = {
 }
 
 export async function generateStaticParams() {
-  return getSectionStaticParams('blog')
+  return getFeaturedSectionStaticParams('blog', 12)
 }
 
 export async function generateMetadata({ params }: PageParams) {

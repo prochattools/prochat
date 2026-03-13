@@ -3,14 +3,14 @@ import { notFound } from 'next/navigation'
 import ContentLayout from '@/components/content/ContentLayout'
 import { renderMdxContent } from '@/components/content/MDXRenderer'
 import StructuredData from '@/components/StructuredData'
-import { getSectionEntry, getSectionStaticParams, getRelatedEntries } from '@/lib/content'
+import { getSectionEntry, getFeaturedSectionStaticParams, getRelatedEntries } from '@/lib/content'
 import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { articleSchema } from '@/lib/seo/schema'
 
 type PageParams = { params: { stack: string; slug: string } }
 
 export async function generateStaticParams() {
-  return getSectionStaticParams('snippets')
+  return getFeaturedSectionStaticParams('snippets', 8)
 }
 
 export async function generateMetadata({ params }: PageParams) {
