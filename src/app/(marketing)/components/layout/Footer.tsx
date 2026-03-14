@@ -16,9 +16,9 @@ const PRODUCT_CORE_LINK = {
 } as const
 
 const ROADMAP_LINKS = [
-  { href: '/waitlist', label: 'UXKit' },
-  { href: '/kits#comparison', label: 'WaaSKit' },
-  { href: '/kits#comparison', label: 'ProChat OS' },
+  { href: 'https://prochat.tools/kits/uxkit', label: 'UXKit' },
+  { href: 'https://prochat.tools/kits/waaskit', label: 'WaaSKit' },
+  { href: 'https://prochat.tools/systems/prochat-os', label: 'ProChat OS' },
 ] as const
 
 const RESOURCE_LINKS = [
