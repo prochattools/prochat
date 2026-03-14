@@ -77,7 +77,7 @@ export default function StartHerePage() {
   )
 
   return (
-    <main className="min-h-screen bg-background text-foreground font-brand selection:bg-primary/20 selection:text-foreground">
+    <main id="starting-point-top" className="min-h-screen bg-background text-foreground font-brand selection:bg-primary/20 selection:text-foreground">
       <Suspense fallback={null}>
         <SourceTracker />
       </Suspense>
@@ -95,9 +95,9 @@ export default function StartHerePage() {
             </Suspense>
           </div>
           <div className="mx-auto grid max-w-3xl grid-cols-1 gap-2.5 text-sm font-semibold text-foreground sm:grid-cols-3 sm:gap-3">
-            <span className="inline-flex min-h-[42px] w-full items-center justify-center rounded-2xl bg-foreground/5 px-4 py-2 text-center">Clarify the buyer</span>
-            <span className="inline-flex min-h-[42px] w-full items-center justify-center rounded-2xl bg-foreground/5 px-4 py-2 text-center">Sharpen the outcome</span>
-            <span className="inline-flex min-h-[42px] w-full items-center justify-center rounded-2xl bg-foreground/5 px-4 py-2 text-center">Test the idea</span>
+            <span className="inline-flex min-h-[42px] w-full items-center justify-center rounded-[var(--pc-button-radius)] bg-foreground/5 px-4 py-2 text-center">Clarify the buyer</span>
+            <span className="inline-flex min-h-[42px] w-full items-center justify-center rounded-[var(--pc-button-radius)] bg-foreground/5 px-4 py-2 text-center">Sharpen the outcome</span>
+            <span className="inline-flex min-h-[42px] w-full items-center justify-center rounded-[var(--pc-button-radius)] bg-foreground/5 px-4 py-2 text-center">Test the idea</span>
           </div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
             AI builds code. Structure ships products.
@@ -138,7 +138,7 @@ export default function StartHerePage() {
           </ul>
           <div className="mt-16 pt-3 text-center">
             <Button asChild variant="primary" size="lg" className="mx-auto">
-              <a href="#starting-point-hero">GET THE FRAMEWORK</a>
+              <a href="/starting-point#starting-point-top">GET THE FRAMEWORK</a>
             </Button>
           </div>
         </div>
@@ -187,7 +187,7 @@ export default function StartHerePage() {
           </ul>
           <div className="mt-16 pt-3 text-center">
             <Button asChild variant="primary" size="lg" className="mx-auto">
-              <a href="#starting-point-hero">GET THE FRAMEWORK</a>
+              <a href="/starting-point#starting-point-top">GET THE FRAMEWORK</a>
             </Button>
           </div>
         </div>

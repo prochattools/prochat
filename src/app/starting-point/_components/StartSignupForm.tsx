@@ -122,7 +122,7 @@ export default function StartSignupForm({
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           disabled={isSubmitting}
-          className="h-12 w-full rounded-full border border-border/60 bg-foreground/5 px-5 text-base text-foreground placeholder:text-foreground/70 outline-none transition-all duration-300 focus:border-primary focus:ring-2 focus:ring-primary/30 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-60"
+          className="h-12 w-full rounded-[var(--pc-button-radius)] border border-border/60 bg-foreground/5 px-5 text-base text-foreground placeholder:text-foreground/70 outline-none transition-all duration-300 focus:border-primary focus:ring-2 focus:ring-primary/30 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-60"
         />
 
         <Button
