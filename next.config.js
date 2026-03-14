@@ -55,6 +55,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/system/prochat-os',
+        destination: '/systems/prochat-os',
+        permanent: true,
+      },
+      {
+        source: '/system/events',
+        destination: '/systems/events',
+        permanent: true,
+      },
+      {
         source: '/waiting-list',
         destination: '/waitlist',
         permanent: true,

@@ -8,7 +8,7 @@ export const metadata = getSEOTags({
 		title: 'Event taxonomy | ProChat',
 		description: 'The analytics events used across ProChat and the kits.',
 	},
-	canonicalUrlRelative: '/system/events',
+	canonicalUrlRelative: '/systems/events',
 })
 
 export default function EventTaxonomyPage() {

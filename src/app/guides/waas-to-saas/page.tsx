@@ -198,7 +198,7 @@ export default function WaaSToSaaSGuide() {
               — provides the UI system when you need faster front-end polish.
             </li>
             <li>
-              <Link href="/system/prochat-os" className="font-semibold text-primary">
+              <Link href="/systems/prochat-os" className="font-semibold text-primary">
                 ProChat OS
               </Link>{' '}
               — command center that keeps every product running once you operate multiple kits.

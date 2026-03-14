@@ -20,7 +20,7 @@
 - `src/app/kits/saaskit/SaaSkitPageContent.tsx`
 - `src/app/kits/_components/KitAccessFinishClient.tsx`
 - `src/app/api/stripe/create-checkout/route.ts`
-- `src/app/system/events/EventTaxonomyContent.tsx`
+- `src/app/systems/events/EventTaxonomyContent.tsx`
 
 ## Umami base integration
 - Global script injection remains centralized in `src/app/layout.tsx` through `src/components/UmamiAnalytics.tsx`.

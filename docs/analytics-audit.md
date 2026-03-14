@@ -147,7 +147,7 @@
 - `src/components/UmamiAnalytics.tsx`
 - `src/app/layout.tsx`
 - `src/utils/analytics.ts`
-- `src/app/system/events/EventTaxonomyContent.tsx`
+- `src/app/systems/events/EventTaxonomyContent.tsx`
 - `src/app/starting-point/_components/StartSignupForm.tsx`
 - `src/app/waiting-list/WaitingListBody.tsx`
 - `src/app/(marketing)/contact/page.tsx`

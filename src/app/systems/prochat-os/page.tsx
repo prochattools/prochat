@@ -9,7 +9,7 @@ import ProChatOSPageContent from './ProChatOSPageContent'
 const pageTitle = 'ProChat OS – Operating System for SaaS Companies'
 const pageDescription =
   'Command center for managing SaaS applications, clients, and subscriptions.'
-const pageCanonical = 'https://prochat.tools/system/prochat-os'
+const pageCanonical = 'https://prochat.tools/systems/prochat-os'
 
 export const metadata = {
   ...getSEOTags({
@@ -26,7 +26,7 @@ export const metadata = {
       card: 'summary_large_image',
       images: ['/og/saaskit-product.png'],
     },
-    canonicalUrlRelative: '/system/prochat-os',
+    canonicalUrlRelative: '/systems/prochat-os',
   }),
   alternates: {
     canonical: pageCanonical,
@@ -56,7 +56,7 @@ export default function SaaSkitPage() {
 		name: 'ProChat OS',
 		applicationCategory: 'BusinessApplication',
 		operatingSystem: 'Web',
-		url: 'https://prochat.tools/system/prochat-os',
+	url: 'https://prochat.tools/systems/prochat-os',
 		description:
 			'Operating system for SaaS companies to manage applications, subscriptions, clients, and workflows.',
 		brand: {
@@ -115,14 +115,14 @@ export default function SaaSkitPage() {
         data={getSoftwareApplicationSchema({
           name: 'ProChat OS',
           description: pageDescription,
-          urlPath: '/system/prochat-os',
+          urlPath: '/systems/prochat-os',
           offers: [
             {
               '@type': 'Offer',
               price: String(saaskitProduct?.price ?? 247),
               priceCurrency: 'USD',
               availability: 'https://schema.org/InStock',
-              url: `${siteUrl}/system/prochat-os`,
+              url: `${siteUrl}/systems/prochat-os`,
             },
           ],
         })}

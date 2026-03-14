@@ -454,7 +454,7 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
             links={[
               { href: '/kits/prokit', label: 'Explore ProKit' },
               { href: '/kits/saaskit', label: 'Explore SaaSKit' },
-              { href: '/system/prochat-os', label: 'Explore ProChat OS' },
+              { href: '/systems/prochat-os', label: 'Explore ProChat OS' },
             ]}
           />
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
@@ -488,7 +488,7 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
               />
             </a>
             <a
-              href="/system/prochat-os"
+              href="/systems/prochat-os"
               className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
             >
               Explore ProChat OS
