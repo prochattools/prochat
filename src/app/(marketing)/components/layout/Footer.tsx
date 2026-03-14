@@ -144,18 +144,18 @@ export const Footer: React.FC = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65 transition-colors hover:text-primary"
           >
-            <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65">Member of the</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/65">Member of the</span>
             <img
               src="/logo/aws-activate-logo-light.svg"
               alt="AWS Activate"
-              className="h-[1.1em] w-auto dark:hidden ml-[4px] mr-[4px]"
-              style={{ transform: 'translateY(-1.4px)' }}
+              className="h-[1.2em] w-auto dark:hidden ml-[4px] mr-[4px]"
+              style={{ transform: 'translateY(-1.6px)' }}
             />
             <img
               src="/logo/aws-activate-logo-dark.svg"
               alt="AWS Activate"
-              className="hidden h-[1.1em] w-auto dark:block ml-[4px] mr-[4px]"
-              style={{ transform: 'translateY(-1.4px)' }}
+              className="hidden h-[1.2em] w-auto dark:block ml-[4px] mr-[4px]"
+              style={{ transform: 'translateY(-1.6px)' }}
             />
             <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65">Program</span>
           </a>

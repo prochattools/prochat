@@ -85,19 +85,19 @@ const systemCards: readonly SystemCard[] = [
 
 const authorityBlocks: readonly AuthorityBlock[] = [
   {
-    title: 'Features ship before boundaries',
+    title: 'Founders build before boundaries',
     description:
-      'AI can generate output. It does not assign ownership, state boundaries, or failure paths.',
+      'Ideas flow straight into code without defined ownership, scope, or failure paths, so every release feels improvised.',
   },
   {
-    title: 'Billing and data drift quietly',
+    title: 'Scope before proof',
     description:
-      'Without billing lifecycle rules and migration discipline, releases look complete while core state stays unstable.',
+      'Without validation milestones, teams start shipping to scale instead of proving demand, which amplifies future rework.',
   },
   {
-    title: 'No observability means no control',
+    title: 'Infrastructure too late',
     description:
-      'If nobody can trace failures across boundaries, regressions, access bugs, and deployment mistakes compound.',
+      'Billing, auth, and data policies are bolted on after launch, leaving the system fragile when traffic climbs.',
   },
 ] as const
 
@@ -164,7 +164,7 @@ export default function App() {
             <span className="hero-accent block">Structure ships it.</span>
           </>
         }
-        subtitle="ProChat gives SaaS builders production-ready infrastructure — auth, billing, deployment, and boundaries defined before launch."
+        subtitle="ProChat gives founders a clear path from idea to launch with clarity, validation, infrastructure, and execution boundaries built in."
         primaryCTA={{
           href: '/kits/saaskit',
           label: 'Start with SaaSKit',
@@ -174,7 +174,7 @@ export default function App() {
           label: 'Explore the system',
           variant: 'secondary',
         }}
-        eyebrow={<HeroBadge text="Operating System for SaaS Builders" />}
+        eyebrow={<HeroBadge text="Operating System for SaaS builders" />}
         ambientMotion
         className="border-b border-border"
       >
@@ -184,32 +184,32 @@ export default function App() {
         />
       </HeroSection>
 
-      <Section
-        id="why-most-ai-built-saas-apps-fail"
-        tone="muted"
-        spacing="default"
-        className="scroll-mt-28 md:scroll-mt-32"
-      >
-        <div className="mx-auto max-w-6xl px-page">
-          <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">Why most AI-built SaaS apps fail.</h2>
-            <p className="pc-body-copy pc-body-muted">
-              AI shortens implementation. It does not define boundaries, ownership, or release criteria.
+        <Section
+          id="why-most-ai-built-saas-apps-fail"
+          tone="muted"
+          spacing="default"
+          className="scroll-mt-28 md:scroll-mt-32"
+        >
+          <div className="mx-auto max-w-6xl px-page">
+            <div className="mx-auto mb-12 max-w-3xl text-center">
+              <h2 className="pc-section-title mb-4 text-foreground">Why AI-built SaaS fails without structure.</h2>
+              <p className="pc-body-copy pc-body-muted">
+                Founders build before defining boundaries, ship without proof, and postpone infrastructure, so the systems they tack together stay fragile.
+              </p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {authorityBlocks.map(block => (
+                <Panel key={block.title} tone="default" padding="default" className="h-full">
+                  <h3 className="pc-card-title mb-3 text-foreground">{block.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{block.description}</p>
+                </Panel>
+              ))}
+            </div>
+            <p className="mt-10 text-center font-brand text-xl font-semibold tracking-[-0.02em] text-foreground">
+              Execution without structure leaves every release exposed.
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {authorityBlocks.map(block => (
-              <Panel key={block.title} tone="default" padding="default" className="h-full">
-                <h3 className="pc-card-title mb-3 text-foreground">{block.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{block.description}</p>
-              </Panel>
-            ))}
-          </div>
-          <p className="mt-10 text-center font-brand text-xl font-semibold tracking-[-0.02em] text-foreground">
-            A launch is only as stable as its boundaries.
-          </p>
-        </div>
-      </Section>
+        </Section>
 
       <Section tone="transparent" spacing="default">
         <div className="mx-auto max-w-7xl px-page">
@@ -347,15 +347,15 @@ export default function App() {
         </div>
       </Section>
 
-      <Section tone="muted" spacing="default">
-        <div className="mx-auto max-w-5xl px-page text-center">
-          <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <ShieldCheck className="h-5 w-5" />
-          </div>
-          <h2 className="pc-section-title mb-6 text-foreground">Built by a professional software tester.</h2>
-          <p className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            ProChat is shaped by production testing experience. Every system is designed around failure modes, boundary conditions, and real-world usage — not demo scenarios.
-          </p>
+        <Section tone="muted" spacing="default">
+          <div className="mx-auto max-w-5xl px-page text-center">
+            <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+            <h2 className="pc-section-title mb-6 text-foreground">Execute with less chaos.</h2>
+            <p className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              ProChat gives founders structure, clarity, and a production-proof path so you can move from idea to SaaSKit launch faster and with fewer unknowns.
+            </p>
           {SHOW_TESTIMONIAL_SCAFFOLD ? (
             <div className="grid gap-6 text-left md:grid-cols-3">
               {socialProofScaffold.map(item => (
