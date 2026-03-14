@@ -170,6 +170,7 @@ export default function App() {
   return (
     <div className="bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
       <HeroSection
+        className="pc-marketing-hero--lines-mobile border-b border-border"
         title={
           <>
             <span className="block text-foreground dark:text-white">AI builds it.</span>
@@ -188,7 +189,6 @@ export default function App() {
         }}
         eyebrow={<HeroBadge text="Operating System for SaaS builders" />}
         ambientMotion
-        className="border-b border-border"
       >
         <HeroCheckRow
           items={['Cut setup weeks', 'Reduce launch risk', 'Ship with confidence']}

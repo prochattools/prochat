@@ -96,7 +96,7 @@ const CONTACT_SUBMIT_IDLE_HTML = `
 export default function ContactPageMarkup() {
   return (
     <>
-      <section className="pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--left min-h-[100svh]">
+      <section className="pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--left pc-marketing-hero--lines-mobile min-h-[100svh]">
         <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
         <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
         <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />

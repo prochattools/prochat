@@ -1,13 +1,13 @@
- 'use client'
+'use client'
 
-import { FormEvent, useEffect, useId, useState } from 'react'
+import { FormEvent, useEffect, useId, useState, type ReactNode } from 'react'
 import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
 import { resolveStartingPointSource } from '@/app/go/source'
 
 interface StartSignupFormProps {
-  buttonLabel?: string
+  buttonLabel?: ReactNode
 }
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -108,18 +108,12 @@ export default function StartSignupForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 text-left">
+    <form onSubmit={handleSubmit} className="space-y-4 text-left">
       <input type="hidden" name="source" value={resolvedSource} />
       <input type="hidden" name="entry" value="go" />
       <input type="hidden" name="campaign" value="lead-magnet" />
-      <label
-        htmlFor={inputId}
-        className="block text-sm font-semibold uppercase tracking-[0.16em] text-slate-600"
-      >
-        Email Address
-      </label>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:gap-2.5">
         <input
           id={inputId}
           type="email"
@@ -128,13 +122,13 @@ export default function StartSignupForm({
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           disabled={isSubmitting}
-          className="h-12 w-full rounded-full border border-slate-300 bg-white px-5 text-base text-slate-900 placeholder:text-slate-500 outline-none transition-all duration-300 focus:border-primary focus:ring-2 focus:ring-primary/30 focus:ring-offset-2 focus:ring-offset-white disabled:cursor-not-allowed disabled:opacity-60"
+          className="h-12 w-full rounded-full border border-border/60 bg-foreground/5 px-5 text-base text-foreground placeholder:text-foreground/70 outline-none transition-all duration-300 focus:border-primary focus:ring-2 focus:ring-primary/30 focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-60"
         />
 
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="h-12 w-full whitespace-nowrap px-6 text-base sm:w-auto sm:min-w-[170px] sm:px-7 bg-primary hover:bg-secondary shadow-[0_0_26px_-12px_rgb(var(--pc-blue-600-rgb)/0.45)] hover:shadow-[0_0_34px_-10px_rgb(var(--pc-blue-600-rgb)/0.55)]"
+          className="h-12 w-full whitespace-nowrap px-8 text-sm font-semibold sm:w-auto sm:min-w-[232px] sm:px-10"
         >
           {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
           {isSubmitting ? 'Submitting...' : buttonLabel}

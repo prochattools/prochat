@@ -59,7 +59,7 @@ export default function LearnIndexPage() {
   return (
     <div className="bg-background text-foreground">
       <HeroSection
-        className="min-h-[100svh] border-b border-border"
+        className="pc-marketing-hero--lines-mobile min-h-[100svh] border-b border-border"
         eyebrow={<HeroBadge text="Resources for SaaS builders" />}
         title={
           <>
