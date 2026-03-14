@@ -62,7 +62,7 @@ const FAST_LINKS: Array<{
   icon: LucideIcon
 }> = [
     {
-      href: '/starting-point',
+      href: '/docs',
       label: 'Documentation',
       description: 'Setup, deployment, and troubleshooting.',
       icon: FileText,

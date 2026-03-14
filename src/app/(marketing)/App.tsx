@@ -71,7 +71,7 @@ const systemCards: readonly SystemCard[] = [
     status: 'Coming Soon',
     description:
       'For founders who want to start with clients, cash flow, and validated demand before turning that into SaaS.',
-    href: '/kits',
+    href: 'https://prochat.tools/kits/waaskit',
     primary: false,
     icon: Cloud,
     ctaLabel: 'VIEW — WAASKIT',
@@ -81,7 +81,7 @@ const systemCards: readonly SystemCard[] = [
     status: 'Roadmap',
     description:
       'A complete visual SaaS system for founders who want polished screens, clear states, and a more credible product experience.',
-    href: '/waitlist',
+    href: 'https://prochat.tools/kits/uxkit',
     primary: false,
     icon: CircleDot,
     ctaLabel: 'VIEW — UXKIT',
