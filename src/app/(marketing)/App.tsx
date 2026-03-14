@@ -23,6 +23,7 @@ type SystemCard = {
   href: string
   primary: boolean
   icon: LucideIcon
+  ctaLabel: string
 }
 
 type AuthorityBlock = {
@@ -49,77 +50,85 @@ const systemCards: readonly SystemCard[] = [
     title: 'ProKit',
     status: 'Available',
     description:
-      'Verified wiring for team management, audit logs, and API keys operating in controlled environments.',
+      'A clean SaaS core for founders who already know what they want to build and need a stable foundation to build on.',
     href: '/kits/prokit',
     primary: false,
     icon: ShieldCheck,
+    ctaLabel: 'VIEW — PROKIT',
   },
   {
     title: 'SaaSKit',
     status: 'Available',
     description:
-      'Production-readiness is standard. Authentication, billing, and database structure pre-configured and verified.',
+      'The best starting point for most founders. A production-ready SaaS foundation with the launch layer already built in.',
     href: '/kits/saaskit',
     primary: true,
     icon: Rocket,
+    ctaLabel: 'VIEW — SAASKIT',
   },
   {
     title: 'WaaSKit',
     status: 'Coming Soon',
     description:
-      'Predictable deployment wrapper-as-a-service infrastructure. Built to enforce structural integrity.',
+      'For founders who want to start with clients, cash flow, and validated demand before turning that into SaaS.',
     href: '/kits',
     primary: false,
     icon: Cloud,
+    ctaLabel: 'VIEW — WAASKIT',
   },
   {
     title: 'UXKit',
     status: 'Roadmap',
     description:
-      'Verified UI component systems. Designed for rapid, error-free dashboard assembly and clarity.',
+      'A complete visual SaaS system for founders who want polished screens, clear states, and a more credible product experience.',
     href: '/waitlist',
     primary: false,
     icon: CircleDot,
+    ctaLabel: 'VIEW — UXKIT',
   },
 ] as const
 
 const authorityBlocks: readonly AuthorityBlock[] = [
   {
-    title: 'Founders build before boundaries',
+    title: 'Too much built too soon',
     description:
-      'Ideas flow straight into code without defined ownership, scope, or failure paths, so every release feels improvised.',
+      'Founders generate features fast, but without a clear first outcome. The result is more screens, more code, and more confusion—but no proof that the product solves the right problem.',
   },
   {
-    title: 'Scope before proof',
+    title: 'No proof, just momentum',
     description:
-      'Without validation milestones, teams start shipping to scale instead of proving demand, which amplifies future rework.',
+      'Many founders keep building because progress feels real. But without validation, customer proof, or a clear buyer problem, they end up polishing something nobody urgently needs.',
   },
   {
-    title: 'Infrastructure too late',
+    title: 'The launch falls apart later',
     description:
-      'Billing, auth, and data policies are bolted on after launch, leaving the system fragile when traffic climbs.',
+      'Billing, auth, data, and deployment decisions get pushed aside until they become painful. What looked fast in the beginning becomes unstable, expensive, and hard to maintain.',
   },
 ] as const
 
 const operatingSystemCards: readonly OperatingSystemCard[] = [
   {
-    title: 'Education',
-    description: 'Clear explanations of production concepts for non-technical founders.',
+    title: 'Frameworks',
+    description:
+      'Clear systems that help you define the right outcome, reduce scope, and avoid building the wrong product first.',
     icon: BookOpen,
   },
   {
     title: 'Validation',
-    description: 'A disciplined path from idea to paying users without wasted build cycles.',
+    description:
+      'A practical way to test demand, sharpen the buyer problem, and know what deserves to be built before you sink weeks into code.',
     icon: Check,
   },
   {
     title: 'Infrastructure',
-    description: 'A hardened Next.js foundation with billing, auth, and data safety already structured.',
+    description:
+      'Production-ready patterns for auth, billing, data, and deployment, so your product is structured to survive real users.',
     icon: Database,
   },
   {
-    title: 'Tooling',
-    description: 'A production-ready SaaS foundation designed for controlled execution.',
+    title: 'Kits',
+    description:
+      'Ready-made foundations like SaaSKit that let you start faster without stitching tools together from scratch.',
     icon: Rocket,
     primary: true,
   },
@@ -127,22 +136,25 @@ const operatingSystemCards: readonly OperatingSystemCard[] = [
 
 const journeyPaths: readonly JourneyPath[] = [
   {
-    title: 'Idea phase',
-    description: 'Validate demand before writing production code.',
+    title: 'You need a clearer idea',
+    description:
+      'You know you want to build something, but the buyer, pain, and smallest useful outcome are still fuzzy. Start by validating the problem before you write production code.',
     href: '/blog/how-to-validate-a-saas-idea-without-coding',
-    action: 'Read the validation guide',
+    action: 'READ — THE VALIDATION GUIDE',
   },
   {
-    title: 'MVP phase',
-    description: 'Ship a controlled first version without building infrastructure from scratch.',
+    title: 'You need a first version',
+    description:
+      'You already know what you want to build. Now you need a controlled MVP path that helps you launch faster without stitching the whole stack together yourself.',
     href: '/blog/how-to-build-a-saas-mvp-without-coding',
-    action: 'Read the MVP guide',
+    action: 'READ — THE MVP GUIDE',
   },
   {
-    title: 'Production phase',
-    description: 'Ensure billing, auth, and data boundaries are correct before scaling.',
+    title: 'You need a stable foundation',
+    description:
+      'You are ready to sell or scale, but billing, auth, data, and deployment need to be structured properly so the product does not become fragile later.',
     href: '/blog/nextjs-saas-infrastructure-checklist-for-non-technical-founders',
-    action: 'Read the infra checklist',
+    action: 'READ — THE INFRA CHECKLIST',
   },
 ] as const
 
@@ -164,14 +176,14 @@ export default function App() {
             <span className="hero-accent block">Structure ships it.</span>
           </>
         }
-        subtitle="ProChat gives founders a clear path from idea to launch with clarity, validation, infrastructure, and execution boundaries built in."
+        subtitle="ProChat gives non-technical founders a structured system to launch production-ready micro SaaS faster—without tool overwhelm, fragile setups, or guesswork."
         primaryCTA={{
           href: '/kits/saaskit',
           label: 'Start with SaaSKit',
         }}
         secondaryCTA={{
           href: '#why-most-ai-built-saas-apps-fail',
-          label: 'Explore the system',
+          label: 'Why - Launches Fail',
           variant: 'secondary',
         }}
         eyebrow={<HeroBadge text="Operating System for SaaS builders" />}
@@ -179,7 +191,7 @@ export default function App() {
         className="border-b border-border"
       >
         <HeroCheckRow
-          items={['Save setup weeks', 'Reduce launch risk', 'Ship confidently']}
+          items={['Cut setup weeks', 'Reduce launch risk', 'Ship with confidence']}
           className="mx-auto"
         />
       </HeroSection>
@@ -191,12 +203,12 @@ export default function App() {
           className="scroll-mt-28 md:scroll-mt-32"
         >
           <div className="mx-auto max-w-6xl px-page">
-            <div className="mx-auto mb-12 max-w-3xl text-center">
-              <h2 className="pc-section-title mb-4 text-foreground">Why AI-built SaaS fails without structure.</h2>
-              <p className="pc-body-copy pc-body-muted">
-                Founders build before defining boundaries, ship without proof, and postpone infrastructure, so the systems they tack together stay fragile.
-              </p>
-            </div>
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="pc-section-title mb-4 text-foreground">Why most AI-built SaaS still breaks</h2>
+            <p className="pc-body-copy pc-body-muted">
+              AI can generate code fast. It does not tell you what to build first, what to validate, or how to launch something stable.
+            </p>
+          </div>
             <div className="grid gap-6 md:grid-cols-3">
               {authorityBlocks.map(block => (
                 <Panel key={block.title} tone="default" padding="default" className="h-full">
@@ -206,7 +218,7 @@ export default function App() {
               ))}
             </div>
             <p className="mt-10 text-center font-brand text-xl font-semibold tracking-[-0.02em] text-foreground">
-              Execution without structure leaves every release exposed.
+              That is why so many AI-built SaaS products look finished but fail under real use.
             </p>
           </div>
         </Section>
@@ -214,9 +226,9 @@ export default function App() {
       <Section tone="transparent" spacing="default">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">The Operating System for SaaS Builders</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">The system that helps you launch SaaS properly</h2>
             <p className="pc-body-copy pc-body-muted">
-              ProChat connects education, validation, infrastructure, and tooling into one controlled path from idea to launch.
+              ProChat gives non-technical founders the frameworks, kits, and infrastructure patterns to validate faster, build on a stable foundation, and launch with less guesswork.
             </p>
           </div>
           <div className="grid gap-6 lg:grid-cols-4">
@@ -247,9 +259,9 @@ export default function App() {
             })}
           </div>
           <div className="mt-10 text-center">
-            <Button asChild variant="tertiary" size="sm">
-              <Link href="/blog/structured-ai-saas-launch-framework">Read the framework</Link>
-            </Button>
+            <p className="text-lg font-semibold tracking-[-0.02em] text-foreground">
+              Built to reduce guesswork, rework, and fragile launches.
+            </p>
           </div>
         </div>
       </Section>
@@ -257,19 +269,18 @@ export default function App() {
       <Section tone="muted" spacing="default">
         <div className="mx-auto max-w-6xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">Where do you start?</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">Where should you start?</h2>
             <p className="pc-body-copy pc-body-muted">
-              If you&apos;re new, start with the production-ready SaaS guide. Then follow the structured path that matches your current constraint.
+              Most founders do not need everything at once. Start with the system that solves your biggest bottleneck right now.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {journeyPaths.map(path => (
-              <Panel key={path.title} tone="default" padding="default" className="h-full">
-                <h3 className="pc-card-title mb-3 text-foreground">{path.title}</h3>
-                <p className="mb-6 text-sm leading-relaxed text-muted-foreground">{path.description}</p>
-                <Button asChild variant="tertiary" size="sm">
-                  <Link href={path.href}>{path.action}</Link>
-                </Button>
+              <Panel key={path.title} tone="default" padding="default" className="h-full flex flex-col justify-between gap-4">
+                <div>
+                  <h3 className="pc-card-title mb-3 text-foreground">{path.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{path.description}</p>
+                </div>
               </Panel>
             ))}
           </div>
@@ -279,9 +290,9 @@ export default function App() {
       <Section id="systems" tone="transparent" spacing="loose">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mb-20 text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">Choose the verified starting point.</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">Choose the right product to start with</h2>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Each system removes a different layer of structural risk so you can move without guessing.
+              Each ProChat product solves a different part of the build. Pick the one that matches what you need right now.
             </p>
           </div>
 
@@ -336,9 +347,9 @@ export default function App() {
                     {card.description}
                   </p>
                   <div className={['mt-auto border-t pt-4', card.primary ? 'border-primary/20' : 'border-border'].join(' ')}>
-                    <Button asChild variant={card.primary ? 'secondary' : 'tertiary'} size="sm">
-                      <Link href={card.href}>View system</Link>
-                    </Button>
+                  <Button asChild variant={card.primary ? 'secondary' : 'tertiary'} size="sm">
+                    <Link href={card.href}>{card.ctaLabel}</Link>
+                  </Button>
                   </div>
                 </Panel>
               )
@@ -352,9 +363,9 @@ export default function App() {
             <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
               <ShieldCheck className="h-5 w-5" />
             </div>
-            <h2 className="pc-section-title mb-6 text-foreground">Execute with less chaos.</h2>
+            <h2 className="pc-section-title mb-6 text-foreground">Move faster with a structured system</h2>
             <p className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              ProChat gives founders structure, clarity, and a production-proof path so you can move from idea to SaaSKit launch faster and with fewer unknowns.
+              ProChat gives non-technical founders a calmer way to build: clear validation, stable foundations, and launch-ready systems that reduce rework, setup confusion, and fragile decisions.
             </p>
           {SHOW_TESTIMONIAL_SCAFFOLD ? (
             <div className="grid gap-6 text-left md:grid-cols-3">
@@ -371,22 +382,19 @@ export default function App() {
         </div>
       </Section>
 
-      <Section id="cta" tone="surface" spacing="loose" className="mt-6">
+      <Section id="cta" tone="surface" spacing="loose" className="mt-0 border-t-0">
         <div className="relative z-10 mx-auto max-w-3xl px-page text-center">
-          <h2 className="pc-section-title mb-8 text-foreground">Build your SaaS on structure — not improvisation.</h2>
+          <h2 className="pc-section-title mb-8 text-foreground">Start with the kit built for real launches</h2>
           <p className="mb-12 text-xl leading-relaxed text-muted-foreground">
-            Start with the production-ready foundation. Then add features from a controlled system instead of rebuilding architecture by hand.
+            SaaSKit gives founders a production-ready SaaS foundation with the launch layer already included—so you can stop piecing systems together and start shipping a real product faster.
           </p>
           <div className="flex flex-col items-center justify-center gap-4">
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <div className="flex flex-col items-center justify-center gap-4">
               <Button asChild variant="primary" size="lg">
-                <Link href="/kits/saaskit">Start with SaaSKit</Link>
-              </Button>
-              <Button asChild variant="secondary" size="lg">
-                <Link href="/kits">Explore the framework</Link>
+                <Link href="/kits/saaskit">START — WITH SAASKIT</Link>
               </Button>
             </div>
-            <p className="pc-cta-note">Includes auth, billing, and infrastructure patterns.</p>
+            <p className="pc-cta-note">Includes auth, billing, database structure, and launch-ready pages.</p>
           </div>
         </div>
       </Section>

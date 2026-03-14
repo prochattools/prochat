@@ -4,6 +4,8 @@ import Link from 'next/link'
 
 import KitsShell from './_components/KitsShell'
 import HeroSection from '@/components/marketing/HeroSection'
+import HeroBadge from '@/components/ui/hero-badge'
+import HeroCheckRow from '@/components/ui/hero-check-row'
 import ScrollHintWrapper from '@/components/ui/ScrollHintWrapper'
 import { Button } from '@/components/ui/button'
 import { Panel, Section } from '@/components/ui/surface'
@@ -13,37 +15,37 @@ const PRODUCT_CARDS = [
   {
     name: 'ProKit',
     description:
-      'Production-ready authentication, billing, database, and deployment structure for founders who want full control over brand, funnel, and design.',
+      'A clean SaaS core for founders who already know what they want to build and just need a stable engineering foundation to ship from.',
     status: 'Live',
     href: '/kits/prokit',
-    cta: 'View ProKit',
+    cta: 'VIEW — PROKIT',
     live: true,
   },
   {
     name: 'SaaSKit',
     description:
-      'The same production foundation plus a structured marketing layer for founders who want a faster, opinionated path to launch.',
+      'The best starting point for most founders—production-ready infrastructure plus the launch layer that lets you ship faster.',
     status: 'Live',
     href: '/kits/saaskit',
-    cta: 'View SaaSKit',
+    cta: 'VIEW — SAASKIT',
     live: true,
   },
   {
     name: 'UX Kit',
     description:
-      'Interface system and structured design patterns for SaaS products built with clarity and conversion in mind.',
+      'A visual SaaS system with polished screens, dependable states, and conversion-focused components.',
     status: 'Coming Soon',
     href: '/waitlist',
-    cta: 'View UX Kit',
+    cta: 'VIEW — UXKIT',
     live: false,
   },
   {
     name: 'WaaSKit',
     description:
-      'A roadmap monetization layer for founders building service-backed SaaS offers and client-first recurring revenue paths.',
+      'For founders who start with clients, cash flow, and validation before turning that experience into SaaS.',
     status: 'Coming Soon',
     href: null,
-    cta: 'Coming Soon',
+    cta: 'VIEW — WAASKIT',
     live: false,
   },
   {
@@ -125,12 +127,12 @@ function StatusBadge({
       className={cn(
         'inline-flex items-center rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em]',
         live
-          ? 'border-border bg-surface text-foreground'
+          ? 'kit-live-badge'
           : 'border-border-subtle bg-surface-soft text-muted-foreground',
       )}
     >
       {status}
-    </span>
+      </span>
   )
 }
 
@@ -175,14 +177,22 @@ const KitsPageContent = () => {
   return (
     <KitsShell>
       <HeroSection
-        density="compact"
-        showDivider={false}
-        className="pb-20 pt-24 lg:pb-24 lg:pt-32"
-        title="Kits, not guesses."
-        subtitle="Different builders need different starting points."
-        primaryCTA={{ href: '/kits/saaskit', label: 'Explore SaaSKit' }}
-        secondaryCTA={{ href: '#comparison', label: 'Compare Kits', variant: 'secondary' }}
-      />
+        className="min-h-[100svh] border-b border-border"
+        eyebrow={<HeroBadge text="Kits for SaaS builders" />}
+        title={
+          <>
+            <span className="block text-foreground dark:text-white">Choose the right kit to launch faster.</span>
+          </>
+        }
+        subtitle="ProChat Kits give non-technical founders structured starting points for validation, product foundations, and launch-ready SaaS—without stitching systems together from scratch."
+        primaryCTA={{ href: '/kits/saaskit', label: 'Start with SaaSKit' }}
+        secondaryCTA={{ href: '#comparison', label: 'Compare kits', variant: 'secondary' }}
+      >
+        <HeroCheckRow
+          items={['Compare kits fast', 'Avoid wrong starts', 'Launch with clarity']}
+          className="mx-auto"
+        />
+      </HeroSection>
 
       <Section className="py-16 md:py-20 lg:py-[120px]">
         <div className="mx-auto w-full max-w-7xl px-page">
@@ -190,13 +200,32 @@ const KitsPageContent = () => {
             <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
               One system. Multiple ways in.
             </div>
-            <h2 className="pc-section-title mt-4 text-foreground">Choose the product that matches your entry point.</h2>
+            <h2 className="pc-section-title mt-4 text-foreground">Choose the right kit to start with</h2>
+            <p className="pc-body-copy pc-body-muted mt-3">
+              Each kit solves a different part of the build. Start with the one that matches what you need right now.
+            </p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {PRODUCT_CARDS.map((card) => (
               <ProductCard key={card.name} {...card} />
             ))}
+            <Panel tone="soft" padding="default" className="flex h-full flex-col gap-4 border border-border">
+              <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
+                Not sure where to start?
+              </div>
+              <div>
+                <h3 className="pc-card-title text-foreground">Start with SaaSKit</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Start with SaaSKit if you want the clearest path to a production-ready SaaS launch.
+                </p>
+              </div>
+              <div className="mt-auto pt-2">
+                <Button asChild variant="secondary" size="sm">
+                  <Link href="/kits/saaskit">VIEW — SAASKIT</Link>
+                </Button>
+              </div>
+            </Panel>
           </div>
         </div>
       </Section>
@@ -207,7 +236,10 @@ const KitsPageContent = () => {
             <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
               How the products differ
             </div>
-            <h2 className="pc-section-title mt-4 text-foreground">Independent layers for distinct needs.</h2>
+            <h2 className="pc-section-title mt-4 text-foreground">What each kit adds</h2>
+            <p className="pc-body-copy pc-body-muted mt-3">
+              Each product adds a different layer to the system, so you can choose based on what you need now and what you plan to grow into later.
+            </p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -226,13 +258,16 @@ const KitsPageContent = () => {
         </div>
       </Section>
 
-      <Section id="comparison" className="pb-16 pt-16 md:pb-20 md:pt-20 lg:pb-[120px] lg:pt-[120px]">
+      <Section id="comparison" className="pb-32 pt-16 md:pb-36 md:pt-20 lg:pb-[160px] lg:pt-[120px]">
         <div className="mx-auto w-full max-w-7xl px-page">
           <div className="mx-auto mb-10 max-w-3xl text-center">
             <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
               Compare the kits
             </div>
-            <h2 className="pc-section-title mt-4 text-foreground">See where each product stands on its own.</h2>
+            <h2 className="pc-section-title mt-4 text-foreground">Compare the kits at a glance</h2>
+            <p className="pc-body-copy pc-body-muted mt-3">
+              See what each kit includes so you can choose the right starting point faster.
+            </p>
           </div>
 
           <Panel tone="default" padding="none" className="overflow-hidden">
