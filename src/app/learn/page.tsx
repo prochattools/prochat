@@ -19,37 +19,37 @@ const resourceCards = [
     title: 'Guides',
     description: 'Foundational guides for understanding how SaaS businesses are built.',
     href: '/guides',
-    cta: 'View guides',
+    cta: 'VIEW — GUIDES',
   },
   {
     title: 'SaaS Glossary',
     description: 'Clear definitions of SaaS terms, concepts, and founder language.',
     href: '/saas-glossary',
-    cta: 'View glossary',
+    cta: 'VIEW — GLOSSARY',
   },
   {
     title: 'Articles',
     description: 'Ideas and insights on building, launching, and growing SaaS products.',
     href: '/blog',
-    cta: 'Read articles',
+    cta: 'VIEW — ARTICLES',
   },
   {
     title: 'Playbooks',
     description: 'Structured operational systems for moving from idea to execution.',
     href: '/playbooks',
-    cta: 'View playbooks',
+    cta: 'VIEW — PLAYBOOKS',
   },
   {
     title: 'Prompts',
     description: 'Practical AI prompts and workflows for founders building with ProChat.',
     href: '/prompts',
-    cta: 'View prompts',
+    cta: 'VIEW — PROMPTS',
   },
   {
     title: 'Snippets',
     description: 'Reusable code and automation examples for faster execution.',
     href: '/snippets',
-    cta: 'View snippets',
+    cta: 'VIEW — SNIPPETS',
   },
 ]
 
@@ -60,29 +60,29 @@ export default function LearnIndexPage() {
     <div className="bg-background text-foreground">
       <HeroSection
         className="min-h-[100svh] border-b border-border"
-        eyebrow={<HeroBadge text="Learn for SaaS builders" />}
+        eyebrow={<HeroBadge text="Resources for SaaS builders" />}
         title={
           <>
             <span className="block text-foreground dark:text-white">Learn the system behind SaaS</span>
           </>
         }
         subtitle="Guides, playbooks, prompts, and resources for non-technical founders building software businesses with more clarity."
-        primaryCTA={{ href: '#resources', label: 'Explore resources' }}
-        secondaryCTA={{ href: '#guides', label: 'Start with guides', variant: 'secondary' }}
+        subtitleClassName="text-center mx-auto"
+        primaryCTA={{ href: '#resources', label: 'BROWSE — RESOURCES' }}
       >
         <HeroCheckRow
-          items={['Learn the fundamentals', 'Find the right resources', 'Build with more clarity']}
+          items={['Learn SaaS faster', 'Find the right resource', 'Build with clarity']}
           className="mx-auto"
         />
       </HeroSection>
 
-      <Section id="resources" tone="transparent" spacing="default">
+      <Section id="resources" tone="transparent" spacing="default" className="pb-36">
         <div className="mx-auto max-w-6xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title text-foreground">Resource hub</h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              One place to scan every kit, glossary, playbook, prompt, and snippet that helps you learn how SaaS works with ProChat.
-            </p>
+          <h2 className="pc-section-title text-foreground">Resource hub</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            One place to find the guides, definitions, playbooks, prompts, and examples that help you build with more clarity.
+          </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {resourceCards.map(card => (
@@ -94,7 +94,7 @@ export default function LearnIndexPage() {
                   <h3 className="text-lg font-semibold text-foreground">{card.title}</h3>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">{card.description}</p>
-                <div>
+                <div className="mt-4">
                   <Button asChild variant="secondary" size="sm">
                     <Link href={card.href}>{card.cta}</Link>
                   </Button>
