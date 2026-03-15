@@ -122,7 +122,7 @@ export default function StartHerePage() {
         </div>
       </HeroSection>
 
-      <section className="border-b border-border bg-background/60 py-24">
+      <section className="border-b border-border bg-background/70 py-28">
         <div className="mx-auto max-w-5xl px-page">
           <h2 className="font-sans text-3xl font-bold tracking-[-0.02em] text-foreground">Why founders fail before the first launch</h2>
           <p className="mt-3 max-w-3xl text-lg font-semibold text-muted-foreground">
@@ -139,7 +139,7 @@ export default function StartHerePage() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-muted/60 py-24">
+      <section className="border-b border-border bg-muted/60 py-28">
         <div className="mx-auto max-w-5xl px-page">
           <h2 className="font-sans text-3xl font-bold tracking-[-0.02em] text-foreground">Who should grab it</h2>
           <p className="mt-2 text-lg text-muted-foreground">
@@ -153,7 +153,7 @@ export default function StartHerePage() {
               </li>
             ))}
           </ul>
-          <div className="mt-16 pt-3 text-center">
+          <div className="mt-16 pt-6 text-center">
             <Button asChild variant="primary" size="lg" className="mx-auto">
               <a href="/starting-point#starting-point-top">GET THE FRAMEWORK</a>
             </Button>
@@ -161,7 +161,7 @@ export default function StartHerePage() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-background/70 py-24">
+      <section className="border-b border-border bg-background/70 py-28">
         <div className="mx-auto max-w-5xl px-page">
           <h2 className="font-sans text-3xl font-bold tracking-[-0.02em] text-foreground">What the framework helps you decide</h2>
           <p className="mt-2 text-lg text-muted-foreground">Skip rework by locking focus before writing code.</p>
@@ -176,7 +176,7 @@ export default function StartHerePage() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-muted/60 py-24">
+      <section className="border-b border-border bg-muted/60 py-28">
         <div className="mx-auto max-w-5xl px-page">
           <h2 className="font-sans text-3xl font-bold tracking-[-0.02em] text-foreground">Inside the PDF</h2>
           <p className="mt-2 text-lg text-muted-foreground">Step-by-step prompts that keep your scope honest.</p>
@@ -191,14 +191,14 @@ export default function StartHerePage() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-background px-page py-24">
-        <div className="mx-auto max-w-5xl">
+      <section className="border-b border-border bg-background/80 py-28">
+        <div className="mx-auto max-w-5xl px-page">
           <h2 className="font-sans text-3xl font-bold tracking-[-0.02em] text-foreground">Quick FAQ</h2>
           <p className="mt-2 text-lg text-muted-foreground">Final doubts cleared.</p>
           <div className="mt-8">
             <QuickFaqAccordion items={FAQ_ITEMS} />
           </div>
-          <div className="mt-16 pt-3 text-center">
+          <div className="mt-16 pt-6 text-center">
             <Button asChild variant="primary" size="lg" className="mx-auto">
               <a href="/starting-point#starting-point-top">GET THE FRAMEWORK</a>
             </Button>
