@@ -66,8 +66,8 @@ export default function SaaSStartingPointPage() {
         subtitleClassName="mx-auto max-w-3xl text-center"
       >
         <div className="mx-auto mt-3 w-full max-w-3xl space-y-5 text-center px-4">
-          <p className="text-lg font-semibold text-muted-foreground">
-            This page is the public, searchable summary of the Starting Point framework. It exists to explain the system, not replace the conversion funnel.
+          <p className="text-lg font-semibold leading-relaxed text-muted-foreground">
+            See how the Starting Point framework helps founders define the buyer, pain, outcome, proof, and boundary before they write code, then grab the full PDF to work through those same decisions with AI.
           </p>
           <Button asChild variant="primary" size="lg" className="mx-auto">
             <Link href={ctaLink}>GET THE FULL FRAMEWORK</Link>
@@ -101,6 +101,25 @@ export default function SaaSStartingPointPage() {
         </div>
       </Section>
 
+      <Section tone="surface" spacing="loose" className="bg-background/95">
+        <div className="mx-auto max-w-5xl px-page">
+          <div className="grid gap-4 text-sm text-muted-foreground md:grid-cols-5">
+            {[
+              { label: 'Buyer', detail: 'Who pays for the solution and what outcome they truly need.' },
+              { label: 'Pain', detail: 'The recurring frustration or constraint the buyer is living with today.' },
+              { label: 'Outcome', detail: 'The measurable change that proves the new solution worked.' },
+              { label: 'Proof', detail: 'The evidence that shows the buyer will care—demo reactions, demand signals, or pilot interest.' },
+              { label: 'Boundary', detail: 'What stays in and what stays out for the first version so the scope stays solvable.' },
+            ].map(item => (
+              <Panel key={item.label} tone="default" padding="compact" className="h-full bg-surface border border-border/50">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{item.label}</p>
+                <p className="mt-3 text-base font-semibold text-foreground">{item.detail}</p>
+              </Panel>
+            ))}
+          </div>
+        </div>
+      </Section>
+
       <Section tone="surface" spacing="loose" className="bg-background/90">
         <div className="mx-auto max-w-5xl px-page">
           <div className="grid gap-6 md:grid-cols-3">
@@ -121,7 +140,7 @@ export default function SaaSStartingPointPage() {
         <div className="mx-auto max-w-5xl px-page">
           <h2 className="font-brand text-3xl font-bold text-foreground">What the framework helps you decide</h2>
           <p className="mt-2 text-lg text-muted-foreground">
-            Every part of the Starting Point guides you toward a single decision: what deserves software, and what can wait.
+            The framework leads you to the decisive question: what deserves software today, and what still needs proof or refinement?
           </p>
           <ul className="mt-6 space-y-4 text-sm text-muted-foreground">
             {highlights.map(item => (
@@ -141,7 +160,7 @@ export default function SaaSStartingPointPage() {
         <div className="mx-auto max-w-5xl px-page text-center">
           <h2 className="font-brand text-3xl font-bold text-foreground">Where SaaSKit fits in</h2>
           <p className="mt-2 text-lg text-muted-foreground">
-            Once clarity is locked, SaaSKit provides the production-ready foundation to execute. It is the launch system for the decisions you make on this page.
+            Once clarity is locked and you know what deserves software, SaaSKit removes the setup burden so you can execute with production-ready auth, billing, and launch paths. The framework shows you what to build, SaaSKit builds it safely.
           </p>
           <div className="mt-4 inline-flex rounded-full border border-primary/30 px-4 py-1 text-xs uppercase tracking-[0.35em] text-primary">
             SaaSKit → execution layer
