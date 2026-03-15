@@ -12,6 +12,8 @@ type HeroStandardProps = {
   showDivider?: boolean
   fullBleed?: boolean
   showBackgrounds?: boolean
+  heroClassName?: string
+  innerClassName?: string
 }
 
 export default function HeroStandard({
@@ -24,12 +26,15 @@ export default function HeroStandard({
   showDivider = true,
   fullBleed = false,
   showBackgrounds = true,
+  heroClassName,
+  innerClassName,
 }: HeroStandardProps) {
   const hero = (
     <section
       className={cn(
         'pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--left w-full shrink-0 pb-4 pt-[calc(var(--pc-header-height)+1rem)] md:pb-5',
         !showDivider && 'pc-marketing-hero--no-divider',
+        heroClassName,
       )}
     >
       {showBackgrounds ? (
@@ -42,7 +47,7 @@ export default function HeroStandard({
         </>
       ) : null}
 
-      <div className="pc-marketing-hero__inner">
+      <div className={cn('pc-marketing-hero__inner', innerClassName)}>
         <div
           className={cn(
             'pc-marketing-hero__layout',

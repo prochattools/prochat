@@ -25,9 +25,8 @@ const resourceLinks: ResourceLink[] = [
     title: 'SaaS Validation Guide',
   },
   {
+    href: '/learn/saas-starting-point',
     title: 'SaaS Starting Point',
-    disabled: true,
-    comingSoon: true,
   },
   {
     title: 'Playbooks',
