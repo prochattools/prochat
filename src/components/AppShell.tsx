@@ -16,6 +16,7 @@ function hasIntrinsicHeaderSpacing(pathname: string) {
 		pathname === '/proof' ||
 		pathname === '/studio' ||
 		pathname === '/systems/events' ||
+		pathname === '/waitlist' ||
 		pathname === '/waiting-list' ||
 		pathname === '/waas/accountants' ||
 		pathname === '/docs' ||

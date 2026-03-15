@@ -1,11 +1,11 @@
-import { Check, Rocket, TimerReset, Wallet } from 'lucide-react'
+import { BellRing, Check, Rocket, TimerReset } from 'lucide-react'
 import RotatingText from '@/components/RotatingText'
 import { WAITLIST_PRODUCT_OPTIONS } from '@/lib/waitlist/products'
 
 export default function WaitlistPageMarkup() {
   return (
     <>
-<section className="pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--center">
+<section className="pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--center pc-marketing-hero--lines-mobile min-h-[100svh] border-b border-border">
   <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
   <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
   <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
@@ -31,7 +31,7 @@ export default function WaitlistPageMarkup() {
       </span>
     </h1>
         <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed mb-10">
-      ProChat products evolve in public. Join the waitlist to get early access, roadmap updates, and launch pricing for the tools you care about.
+      ProChat products evolve in public. Join the waitlist for roadmap updates, early previews, and access notices for the products you want to follow.
     </p>
         <div className="w-full max-w-lg mb-4">
       <p
@@ -149,10 +149,10 @@ export default function WaitlistPageMarkup() {
         </div>
                 <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary/30 transition-colors">
           <div className="size-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-4">
-            <Wallet className="h-5 w-5" />
+            <BellRing className="h-5 w-5" />
           </div>
-          <h4 className="font-bold text-lg mb-2">Founding pricing</h4>
-          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Lock in early launch pricing before general availability.</p>
+          <h4 className="font-bold text-lg mb-2">Access notice</h4>
+          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Know when invite windows open, previews ship, and access becomes available.</p>
         </div>
       </div>
     </div>

@@ -37,6 +37,19 @@ export default function WaitingListBody() {
       return
     }
 
+    const requestedProduct = new URLSearchParams(window.location.search)
+      .get('product')
+      ?.trim()
+      .toLowerCase()
+
+    const matchedProductInput = requestedProduct
+      ? productInputs.find(input => input.value.trim().toLowerCase() === requestedProduct)
+      : undefined
+
+    productInputs.forEach(input => {
+      input.checked = matchedProductInput ? input === matchedProductInput : false
+    })
+
     const sourcePage = window.location.pathname
     trackEventOncePerSession('waitlist_view', `waitlist_view:${sourcePage}`, {
       source_page: sourcePage,
