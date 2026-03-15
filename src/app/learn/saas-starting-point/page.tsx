@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { BookOpen, Check, Shield, CircleDot } from 'lucide-react'
@@ -61,11 +60,10 @@ export default function SaaSStartingPointPage() {
     <main className="min-h-screen bg-background text-foreground">
       <HeroSection
         className="pc-marketing-hero--lines-mobile border-b border-border"
-        eyebrow={<HeroBadge text="Framework" />}
+        eyebrow={<HeroBadge text="Starting Point Framework" />}
         title="SaaS Starting Point"
         subtitle="The framework that helps founders define the buyer, proof, outcome, and boundary before building."
         subtitleClassName="mx-auto max-w-3xl text-center"
-        style={{ ['--pc-header-height' as string]: '-2.5rem' } as React.CSSProperties}
       >
         <div className="mx-auto mt-3 w-full max-w-3xl space-y-5 text-center px-4">
           <p className="text-lg font-semibold leading-relaxed text-muted-foreground">
@@ -113,9 +111,15 @@ export default function SaaSStartingPointPage() {
               { label: 'Proof', detail: 'The evidence that shows the buyer will care—demo reactions, demand signals, or pilot interest.' },
               { label: 'Boundary', detail: 'What stays in and what stays out for the first version so the scope stays solvable.' },
             ].map(item => (
-              <Panel key={item.label} tone="default" padding="compact" className="h-full bg-surface border border-border/50">
+              <Panel
+                key={item.label}
+                tone="default"
+                padding="compact"
+                className="flex h-full flex-col gap-3 bg-surface border border-border/50 p-4"
+              >
                 <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{item.label}</p>
-                <p className="mt-3 text-base font-semibold text-foreground">{item.detail}</p>
+                <p className="text-base font-semibold text-foreground">{item.label}</p>
+                <p className="text-sm leading-relaxed text-muted-foreground/80">{item.detail}</p>
               </Panel>
             ))}
           </div>
@@ -175,13 +179,6 @@ export default function SaaSStartingPointPage() {
         </div>
       </Section>
 
-      <Section tone="muted" spacing="loose">
-        <div className="mx-auto max-w-5xl px-page text-center">
-          <p className="text-sm text-muted-foreground">
-            This page explains the public Facing version of the SaaS Starting Point framework. The full PDF and AI-ready workbook is delivered via the Starting Point email capture funnel.
-          </p>
-        </div>
-      </Section>
     </main>
   )
 }
