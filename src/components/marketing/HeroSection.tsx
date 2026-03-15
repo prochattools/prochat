@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
@@ -38,6 +38,7 @@ export interface HeroSectionProps {
   titleClassName?: string
   subtitleClassName?: string
   children?: ReactNode
+  style?: CSSProperties
 }
 
 export function HeroSection({
@@ -59,11 +60,13 @@ export function HeroSection({
   titleClassName,
   subtitleClassName,
   children,
+  style,
 }: HeroSectionProps) {
   const hasActions = Boolean(primaryCTA || secondaryCTA)
 
   return (
     <section
+      style={style}
       className={cn(
         'pc-marketing-hero',
         density === 'full' ? 'pc-marketing-hero--full' : 'pc-marketing-hero--compact',

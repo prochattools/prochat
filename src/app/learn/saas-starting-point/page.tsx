@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { BookOpen, Check, Shield, CircleDot } from 'lucide-react'
@@ -64,6 +65,7 @@ export default function SaaSStartingPointPage() {
         title="SaaS Starting Point"
         subtitle="The framework that helps founders define the buyer, proof, outcome, and boundary before building."
         subtitleClassName="mx-auto max-w-3xl text-center"
+        style={{ ['--pc-header-height' as string]: '-2.5rem' } as React.CSSProperties}
       >
         <div className="mx-auto mt-3 w-full max-w-3xl space-y-5 text-center px-4">
           <p className="text-lg font-semibold leading-relaxed text-muted-foreground">
