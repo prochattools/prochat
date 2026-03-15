@@ -111,10 +111,18 @@ export default function StartHerePage() {
               <StartSignupForm buttonLabel={heroButtonLabel} />
             </Suspense>
           </div>
-          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-2.5 text-sm font-semibold text-foreground sm:grid-cols-3 sm:gap-3">
-            <span className="inline-flex min-h-[42px] w-full items-center justify-center rounded-[var(--pc-button-radius)] bg-foreground/5 px-4 py-2 text-center">Clarify the buyer</span>
-            <span className="inline-flex min-h-[42px] w-full items-center justify-center rounded-[var(--pc-button-radius)] bg-foreground/5 px-4 py-2 text-center">Sharpen the outcome</span>
-            <span className="inline-flex min-h-[42px] w-full items-center justify-center rounded-[var(--pc-button-radius)] bg-foreground/5 px-4 py-2 text-center">Test the idea</span>
+          <div className="mx-auto w-full max-w-2xl">
+            <div className="grid grid-cols-1 gap-3 text-sm font-semibold text-foreground sm:grid-cols-3 sm:gap-3">
+              <span className="inline-flex min-h-[40px] w-full items-center justify-center rounded-[var(--pc-button-radius)] bg-foreground/5 px-3 py-2 text-center">
+                Clarify the buyer
+              </span>
+              <span className="inline-flex min-h-[40px] w-full items-center justify-center rounded-[var(--pc-button-radius)] bg-foreground/5 px-3 py-2 text-center">
+                Sharpen the outcome
+              </span>
+              <span className="inline-flex min-h-[40px] w-full items-center justify-center rounded-[var(--pc-button-radius)] bg-foreground/5 px-3 py-2 text-center">
+                Test the idea
+              </span>
+            </div>
           </div>
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
             AI builds code. Structure ships products.
