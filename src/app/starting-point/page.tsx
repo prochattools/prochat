@@ -6,6 +6,7 @@ import HeroSection from '@/components/marketing/HeroSection'
 import { Button } from '@/components/ui/button'
 import StartSignupForm from './_components/StartSignupForm'
 import SourceTracker from './SourceTracker'
+import QuickFaqAccordion from './QuickFaqAccordion'
 
 export const metadata: Metadata = {
   title: 'The SaaS Starting Point | ProChat',
@@ -42,11 +43,27 @@ const PDF_ITEMS = [
   'Scope reduction discipline',
 ]
 
-const FAQ_BULLETS = [
-  'AI builders: this flow focuses on structure, not the tooling.',
-  'No coding required; but you must clarify scope, risk, and sequence.',
-  'Preparation reveals what deserves validation now and what can wait.',
-  'Skip prep and you end up rewiring infrastructure mid-build.',
+const FAQ_ITEMS = [
+  {
+    question: 'Do I need to know how to code before using this framework?',
+    answer:
+      'No. This framework is for non-technical founders. Its job is to help you define the buyer, pain, outcome, proof, and boundary before you build. You can use AI to work through the framework even if you are not a developer.',
+  },
+  {
+    question: 'What will this framework actually help me do?',
+    answer:
+      'It helps you decide what deserves software. By the end, you should have a clearer buyer, a sharper outcome, a smaller first version, and a better sense of whether the idea is worth building at all.',
+  },
+  {
+    question: 'Is this only useful if I already have a SaaS idea?',
+    answer:
+      'No. It is useful both if you already have an idea and if you only have niche knowledge, audience insight, or a repeated problem you keep noticing. The framework helps turn that into a structured product decision.',
+  },
+  {
+    question: 'What happens after I finish this framework?',
+    answer:
+      'Once the decision is clear, the next step is execution. That is where SaaSKit fits. The framework helps you decide what to build; SaaSKit helps you build it on a production-ready foundation.',
+  },
 ]
 
 function BrandCheckIcon() {
@@ -178,13 +195,9 @@ export default function StartHerePage() {
         <div className="mx-auto max-w-5xl">
           <h2 className="font-sans text-3xl font-bold tracking-[-0.02em] text-foreground">Quick FAQ</h2>
           <p className="mt-2 text-lg text-muted-foreground">Final doubts cleared.</p>
-          <ul className="mt-8 space-y-4 text-sm text-muted-foreground">
-            {FAQ_BULLETS.map(item => (
-              <li key={item} className="rounded-2xl border border-border bg-card px-6 py-6 text-base">
-                {item}
-              </li>
-            ))}
-          </ul>
+          <div className="mt-8">
+            <QuickFaqAccordion items={FAQ_ITEMS} />
+          </div>
           <div className="mt-16 pt-3 text-center">
             <Button asChild variant="primary" size="lg" className="mx-auto">
               <a href="/starting-point#starting-point-top">GET THE FRAMEWORK</a>
