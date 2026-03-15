@@ -59,6 +59,7 @@ export default function SaaSStartingPointPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <HeroSection
+        style={{ marginTop: 'calc(var(--pc-header-height) * -1)' }}
         className="pc-marketing-hero--lines-mobile border-b border-border"
         eyebrow={<HeroBadge text="Starting Point Framework" />}
         title="SaaS Starting Point"
@@ -118,7 +119,6 @@ export default function SaaSStartingPointPage() {
                 className="flex h-full flex-col gap-3 bg-surface border border-border/50 p-4"
               >
                 <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{item.label}</p>
-                <p className="text-base font-semibold text-foreground">{item.label}</p>
                 <p className="text-sm leading-relaxed text-muted-foreground/80">{item.detail}</p>
               </Panel>
             ))}
