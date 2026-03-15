@@ -9,6 +9,9 @@ function hasIntrinsicHeaderSpacing(pathname: string) {
 	return (
 		pathname === '/' ||
 		pathname === '/contact' ||
+		pathname === '/learn' ||
+		pathname.startsWith('/learn/') ||
+		pathname === '/systems/prochat-os' ||
 		pathname === '/starting-point' ||
 		pathname === '/proof' ||
 		pathname === '/studio' ||

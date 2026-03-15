@@ -14,31 +14,31 @@ const comparisonData = [
   {
     metric: 'Workflow orchestration',
     manual: 'Build yourself',
-    saasKit: 'Included',
+    saasKit: 'Planned direction',
     iconName: 'check-blue',
   },
   {
     metric: 'Job scheduling',
     manual: 'Design + implement',
-    saasKit: 'Included',
+    saasKit: 'Planned direction',
     iconName: 'check-blue',
   },
   {
     metric: 'Integration framework',
     manual: 'Assemble patterns',
-    saasKit: 'Included',
+    saasKit: 'Planned direction',
     iconName: 'check-blue',
   },
   {
     metric: 'Monitoring dashboard',
     manual: 'DIY tooling',
-    saasKit: 'Included',
+    saasKit: 'Planned direction',
     iconName: 'check-blue',
   },
   {
     metric: 'Billing support',
     manual: 'Wire it yourself',
-    saasKit: 'Included',
+    saasKit: 'Planned direction',
     iconName: 'check-blue',
   },
 ]
@@ -47,7 +47,7 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
   const heroTitle = 'Launch a niche Website-as-a-Service business.'
   const heroSubtitle = 'Sell websites first. Turn it into SaaS later.'
   const heroDescription =
-    'WaaSKit gives you a ready-to-launch Website-as-a-Service business. Choose a niche, customize the marketing page and example website, and start selling immediately. Once you understand your clients’ problems, you can evolve the product into SaaS.'
+    'WaaSKit previews a Website-as-a-Service direction built around validating niche demand first and spotting the recurring problems that can become SaaS later.'
   const heroBase = heroTitle
   const heroAccent = ''
   const heroBadgeText = 'COMING SOON'
@@ -74,18 +74,14 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
             <br />
             {heroAccent ? <span className="hero-accent">{heroAccent}</span> : null}
           </h1>
-          <p className="text-lg font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-            {heroSubtitle}
-          </p>
-
-          <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
+          <div className="mx-auto mt-6 max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
             <p>{heroDescription}</p>
             <div className="flex flex-col items-center justify-center py-2">
               <HeroCheckRow
                 items={[
-                  'Core infrastructure included.',
-                  'Marketing system included.',
-                  'Production-ready from day one.',
+                  'Launch niche sites',
+                  'Learn from clients',
+                  'Evolve into SaaS',
                 ]}
               />
             </div>
@@ -93,16 +89,16 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
 
           <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
             <Button asChild variant="primary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href={heroButtonHref}>{heroButtonText}</a>
+              <a href={heroButtonHref}>JOIN — WAITLIST</a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="#manual">Compare with ProKit</a>
+              <a href="#problem">SEE — WHAT’S PLANNED</a>
             </Button>
           </div>
 
-          <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
-            One-time payment · Unlimited reuse · Instant GitHub access
-          </p>
+          <div className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
+            One-time payment · Instant GitHub access · Early access Summer 2026
+          </div>
         </div>
       </section>
 
@@ -123,31 +119,9 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
                 <p className="mb-4 font-medium text-foreground">
                   Each client project starts bespoke, so recurring revenue feels elusive.
                 </p>
-                <p className="mb-6 leading-relaxed text-muted-foreground">
-                  WaaSKit provides the marketing page and example client site so you can sell niche websites now and evolve the solution into SaaS once recurring problems emerge.
-                </p>
-                <div className="space-y-4 rounded-lg border border-destructive/30 bg-destructive/10 p-6 shadow-sm text-sm text-destructive/90">
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Analytics dashboards</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Automation systems</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Billing platforms</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>AI workflows</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Multiple SaaS products</p>
-                  </div>
-                </div>
+              <p className="mb-6 leading-relaxed text-muted-foreground">
+                WaaSKit provides the marketing page and starter client site so you can validate niche websites quickly and learn where recurring challenges may become future SaaS bets.
+              </p>
               </div>
             </div>
 
@@ -165,33 +139,32 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
                     </h3>
                   </div>
                   <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                    Website-as-a-Service infrastructure.
+                    Website-as-a-Service direction.
                   </h2>
                   <p className="mb-8 leading-relaxed text-muted-foreground">
-                    Workflow orchestration paired with job scheduling and monitoring makes it easy to run
-                    recurring website products.
+                    WaaSKit outlines workflow templates, scheduling ideas, and monitoring direction so recurring website services feel manageable.
                   </p>
 
                   <div className="space-y-4 rounded-lg border border-primary/20 bg-background/60 p-6 shadow-inner backdrop-blur-sm">
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Workflow orchestration</p>
+                      <p className="text-sm font-medium">Workflow guidance templates</p>
                     </div>
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Job scheduling</p>
+                      <p className="text-sm font-medium">Client scheduling ideas</p>
                     </div>
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Automation infrastructure</p>
+                      <p className="text-sm font-medium">Automation direction</p>
                     </div>
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">SaaS billing support</p>
+                      <p className="text-sm font-medium">Billing support concepts</p>
                     </div>
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Monitoring dashboard</p>
+                      <p className="text-sm font-medium">Monitoring direction ideas</p>
                     </div>
                   </div>
 
@@ -202,19 +175,19 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
                     <ul className="space-y-2 font-mono text-sm text-muted-foreground">
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Infrastructure is pre-structured.
+                        Direction for repeatable websites is being defined.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Billing lifecycle is predefined.
+                        Billing/account workflows are being envisioned.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        SEO system is integrated.
+                        Messaging and positioning are being tuned.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Deployment patterns are production-safe.
+                        Thematic work is being groomed for launch.
                       </li>
                     </ul>
                   </div>
@@ -232,10 +205,10 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
               What it will include
             </h2>
             <p className="text-muted-foreground">
-              The infrastructure layer that turns workflows into a product.
+              A direction for shaping Website-as-a-Service workflows and repeatable client delivery.
             </p>
             <p className="mt-4 text-sm text-muted-foreground">
-              These are the systems you normally have to design and maintain from scratch.
+              These are the templates and patterns we are prototyping so founders stop overbuilding from scratch.
             </p>
           </div>
 
@@ -300,7 +273,7 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
 
           <div className="mt-8 text-center">
             <p className="font-mono text-sm text-muted-foreground">
-              Productize workflows faster and keep operations stable.
+              Productize workflows faster with a launch-first direction.
             </p>
           </div>
         </div>
@@ -313,8 +286,8 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
               <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] leading-tight text-foreground">
                 What it is NOT.
               </h2>
-              <p className="mb-8 text-lg text-muted-foreground">
-                WaaSKit is NOT automation infrastructure. It is a Website-as-a-Service starter kit designed to help founders launch a niche website business, work with real customers, and evolve those services into SaaS products over time.
+                <p className="mb-8 text-lg text-muted-foreground">
+                WaaSKit is NOT a generic automation platform, CRM, agency, or universal drag-and-drop builder. It is a Website-as-a-Service starter kit that helps founders launch niche websites, learn from clients, and spot future SaaS opportunities.
               </p>
               <div className="h-1 w-20 rounded-full bg-primary" />
             </div>
@@ -327,30 +300,30 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
                       <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="text-muted-foreground">
-                      A generic Zapier clone.
+                      A generic automation platform.
                     </span>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                       <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
-                    <span className="text-muted-foreground">
-                      A managed services agency.
+                      <span className="text-muted-foreground">
+                      A done-for-you agency.
                     </span>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                       <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
-                    <span className="text-muted-foreground">
-                      An all-in-one CRM.
+                      <span className="text-muted-foreground">
+                      A full CRM.
                     </span>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                       <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
-                    <span className="text-muted-foreground">
+                      <span className="text-muted-foreground">
                       A drag-and-drop builder for every use case.
                     </span>
                   </li>
@@ -395,10 +368,6 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
                   <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
                   <span className="text-muted-foreground">Launch notes and migration guidance</span>
                 </li>
-                <li className="flex items-center gap-3">
-                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="font-bold text-foreground">Founding pricing when it ships</span>
-                </li>
               </ul>
 
               <Button asChild variant="primary" size="lg" className="w-full">
@@ -426,19 +395,19 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">What is WaaSKit?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                WaaSKit is a Website-as-a-Service starter kit that helps founders launch a niche website business and evolve it into SaaS.
+                WaaSKit is a Website-as-a-Service direction that helps founders launch niche websites, standardize delivery, and identify recurring problems that may turn into SaaS opportunities.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">What is Website-as-a-Service?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                Website-as-a-Service is a model where websites are sold as subscription services instead of one-time projects.
+                Website-as-a-Service is a launch-first model where niche websites are sold as ongoing services, making it easier to learn customer demand and fund future product work.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">How does WaaSKit help discover SaaS ideas?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                By working with real clients and solving their problems, founders discover recurring needs that can evolve into SaaS products.
+                By delivering real client work, capturing repeatable needs, and watching which services keep returning, founders uncover the SaaS opportunities worth productizing.
               </p>
             </article>
           </div>
@@ -447,56 +416,16 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
 
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">
-          <ContextualLinkCta
-            className="mb-10 text-left"
-            title="Launch now, evolve into SaaS later"
-            description="WaaSKit ships with a ready-to-launch website and marketing page so you can start selling immediately, then explore other ProChat kits as you specialize."
-            links={[
-              { href: '/kits/prokit', label: 'Explore ProKit' },
-              { href: '/kits/saaskit', label: 'Explore SaaSKit' },
-              { href: '/systems/prochat-os', label: 'Explore ProChat OS' },
-            ]}
-          />
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
             Turn websites into scalable subscription products.
           </h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            Join the waitlist to capture momentum and ship recurring SaaS services.
+            Join the waitlist to capture momentum and ship recurring WaaS services.
           </p>
-          <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
+          <div className="flex flex-col items-center justify-center">
             <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
-              <a href="/waitlist?product=waaskit">Join waitlist</a>
+              <a href="/waitlist?product=waaskit">JOIN — WAITLIST</a>
             </Button>
-            <a
-              href="/kits/prokit"
-              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
-            >
-              Explore ProKit
-              <FeatureIcon
-                name="arrow-forward"
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              />
-            </a>
-            <a
-              href="/kits/saaskit"
-              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
-            >
-              Explore SaaSKit
-              <FeatureIcon
-                name="arrow-forward"
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              />
-            </a>
-            <a
-              href="/systems/prochat-os"
-              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
-            >
-              Explore ProChat OS
-              <FeatureIcon
-                name="arrow-forward"
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              />
-            </a>
           </div>
         </div>
       </section>

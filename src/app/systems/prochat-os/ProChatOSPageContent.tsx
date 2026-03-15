@@ -15,40 +15,40 @@ const comparisonData = [
   {
     metric: 'Unified command dashboard',
     manual: 'Build yourself',
-    saasKit: 'Included',
+    saasKit: 'Planned direction',
     iconName: 'check-blue',
   },
   {
     metric: 'Automation orchestration',
     manual: 'Design + implement',
-    saasKit: 'Included',
+    saasKit: 'Planned direction',
     iconName: 'check-blue',
   },
   {
     metric: 'System-level analytics',
     manual: 'Assemble tooling',
-    saasKit: 'Included',
+    saasKit: 'Planned direction',
     iconName: 'check-blue',
   },
   {
     metric: 'Kit integrations',
     manual: 'DIY wiring',
-    saasKit: 'Included',
+    saasKit: 'Planned direction',
     iconName: 'check-blue',
   },
   {
     metric: 'Operational control center',
     manual: 'Roll your own',
-    saasKit: 'Included',
+    saasKit: 'Planned direction',
     iconName: 'check-blue',
   },
 ]
 
 const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) => {
   const heroTitle = 'Run your internet business from one command center.'
-  const heroSubtitle = 'The operating system for AI-driven companies.'
+  const heroSubtitle = ''
   const heroDescription =
-    'ProChat OS is the operating system for SaaS businesses. It provides a command center for managing applications, subscriptions, clients, and automations.'
+    'ProChat OS previews an operating layer built around unified visibility and workflow coordination so leaders can see where automations and kits converge.'
   const heroBase = heroTitle
   const heroAccent = ''
   const heroBadgeText = 'COMING SOON'
@@ -75,18 +75,14 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
             <br />
             {heroAccent ? <span className="hero-accent">{heroAccent}</span> : null}
           </h1>
-          <p className="text-lg font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-            {heroSubtitle}
-          </p>
-
           <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
             <p>{heroDescription}</p>
             <div className="flex flex-col items-center justify-center py-2">
               <HeroCheckRow
                 items={[
-                  'Core infrastructure included.',
-                  'Marketing system included.',
-                  'Production-ready from day one.',
+                  'Unified visibility',
+                  'Workflow oversight',
+                  'Early previews',
                 ]}
               />
             </div>
@@ -94,16 +90,12 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
 
           <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
             <Button asChild variant="primary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href={heroButtonHref}>{heroButtonText}</a>
+              <a href={heroButtonHref}>JOIN — WAITLIST</a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="#manual">Compare with ProKit</a>
+              <a href="#problem">SEE — WHAT’S PLANNED</a>
             </Button>
           </div>
-
-          <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
-            One-time payment · Unlimited reuse · Instant GitHub access
-          </p>
         </div>
       </section>
 
@@ -125,28 +117,28 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
                   Analytics dashboards, automation systems, billing platforms, AI workflows, and SaaS apps all live separately.
                 </p>
                 <p className="mb-6 leading-relaxed text-muted-foreground">
-                  Everything lives in different dashboards, making it hard to manage a cohesive product.
+                  Everything lives in different dashboards, making it hard to keep track of workflows, clients, and automations in one place.
                 </p>
                 <div className="space-y-4 rounded-lg border border-destructive/30 bg-destructive/10 p-6 shadow-sm text-sm text-destructive/90">
                   <div className="flex items-start gap-3">
                     <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Analytics dashboards</p>
+                    <p>Analytics views</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Automation systems</p>
+                    <p>Automation fragments</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Billing platforms</p>
+                    <p>Billing systems</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>AI workflows</p>
+                    <p>AI helpers</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Multiple SaaS products</p>
+                    <p>Kit-level tools</p>
                   </div>
                 </div>
               </div>
@@ -166,33 +158,32 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
                     </h3>
                   </div>
                   <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                    Unified control for fragmented stacks.
+                    A future operating layer.
                   </h2>
                   <p className="mb-8 leading-relaxed text-muted-foreground">
-                    ProChat OS stitches together command dashboards, AI workflow control, kit integrations,
-                    automation orchestration, and system-level analytics.
+                    ProChat OS sketches how visibility, kit coordination, and workflow oversight can converge so founders keep every launch under control.
                   </p>
 
                   <div className="space-y-4 rounded-lg border border-primary/20 bg-background/60 p-6 shadow-inner backdrop-blur-sm">
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Unified command dashboard</p>
+                      <p className="text-sm font-medium">Visibility across kits</p>
                     </div>
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">AI workflow control</p>
+                      <p className="text-sm font-medium">Workflow oversight direction</p>
                     </div>
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">ProChat kit integrations</p>
+                      <p className="text-sm font-medium">Kit coordination plans</p>
                     </div>
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Automation orchestration</p>
+                      <p className="text-sm font-medium">Early automation direction</p>
                     </div>
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">System-level analytics</p>
+                      <p className="text-sm font-medium">Operational visibility concepts</p>
                     </div>
                   </div>
 
@@ -203,19 +194,19 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
                     <ul className="space-y-2 font-mono text-sm text-muted-foreground">
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Infrastructure is pre-structured.
+                        Visibility patterns are being shaped.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Billing lifecycle is predefined.
+                        Workflow direction is being defined.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        SEO system is integrated.
+                        Kit coordination is being planned.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Deployment patterns are production-safe.
+                        Operational oversight is in development.
                       </li>
                     </ul>
                   </div>
@@ -352,7 +343,7 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
                       <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="text-muted-foreground">
-                      A replacement for your unique product logic.
+                      A CRM or product-logic replacement.
                     </span>
                   </li>
                 </ul>
@@ -383,24 +374,20 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
 
           <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border-subtle bg-surface text-foreground shadow-elevated transition-transform duration-300 hover:-translate-y-1">
             <div className="bg-muted p-8">
-              <ul className="mb-8 space-y-3 text-left">
-                <li className="flex items-center gap-3">
-                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Early builds and previews</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Roadmap updates</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Launch notes and migration guidance</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="font-bold text-foreground">Founding pricing when it ships</span>
-                </li>
-              </ul>
+                <ul className="mb-8 space-y-3 text-left">
+                  <li className="flex items-center gap-3">
+                    <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
+                    <span className="text-muted-foreground">Early builds and previews</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
+                    <span className="text-muted-foreground">Roadmap updates</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
+                    <span className="text-muted-foreground">Launch notes and migration guidance</span>
+                  </li>
+                </ul>
 
               <Button asChild variant="primary" size="lg" className="w-full">
                 <a href="/waitlist?product=prochat-os">Join waitlist</a>
@@ -427,19 +414,19 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">What is ProChat OS?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                ProChat OS is the operating system for SaaS companies providing a central dashboard to manage SaaS products, clients, and subscriptions.
+                ProChat OS is designed to help founders centralize visibility and coordination so they can align workflows, automations, and kits in one future operating layer.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">Who should use ProChat OS?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                ProChat OS is designed for founders managing multiple SaaS products who need a unified command center.
+                Founders managing multiple ProChat kits who need centralized oversight, insight into workflows, and a consistent way to align launches.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">How does ProChat OS work with the ProChat kits?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                ProChat OS connects and manages products built with ProKit, SaaSKit, UXKit, and WaaSKit.
+                ProChat OS is being designed to coordinate the ProChat kit stack so you can see how ProKit, SaaSKit, UXKit, and WaaSKit fit together.
               </p>
             </article>
           </div>
@@ -448,55 +435,16 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
 
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">
-          <ContextualLinkCta
-            className="mb-10 text-left"
-            title="Prefer a full SaaS foundation?"
-            description="Explore ProKit or SaaSKit while ProChat OS is in development."
-            links={[
-              { href: '/kits/prokit', label: 'Explore ProKit' },
-              { href: '/kits/saaskit', label: 'Explore SaaSKit' },
-            ]}
-          />
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
-            Run your entire SaaS business from one dashboard.
+            Run your SaaS business with early operating layer insights.
           </h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            Join the waitlist to capture momentum and manage everything from one control center.
+            Join the waitlist to shape the operating layer and keep every workflow in view.
           </p>
-          <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
+          <div className="flex flex-col items-center justify-center">
             <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
-              <a href="/waitlist?product=prochat-os">Join waitlist</a>
+              <a href="/waitlist?product=prochat-os">JOIN — WAITLIST</a>
             </Button>
-            <a
-              href="/kits/prokit"
-              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
-            >
-              Explore ProKit
-              <FeatureIcon
-                name="arrow-forward"
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              />
-            </a>
-            <a
-              href="/kits/saaskit"
-              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
-            >
-              Explore SaaSKit
-              <FeatureIcon
-                name="arrow-forward"
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              />
-            </a>
-            <a
-              href="/kits/waaskit"
-              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
-            >
-              Explore WaaSKit
-              <FeatureIcon
-                name="arrow-forward"
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              />
-            </a>
           </div>
         </div>
       </section>

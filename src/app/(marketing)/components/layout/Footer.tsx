@@ -23,7 +23,7 @@ const ROADMAP_LINKS = [
 
 const RESOURCE_LINKS = [
   { href: '/saas-glossary', label: 'SaaS Glossary' },
-  { href: '/starting-point', label: 'Starting Point' },
+  { href: '/learn/saas-starting-point', label: 'Starting Point' },
   { href: '/blog/how-to-build-saas-with-ai-non-developer', label: 'Production Guide' },
 ] as const
 

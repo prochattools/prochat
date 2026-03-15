@@ -6,9 +6,9 @@ import { getStripePriceSaaskit } from '@/libs/stripe-env'
 import { getSoftwareApplicationSchema } from '@/libs/structured-data'
 import UXKitPageContent from './UXKitPageContent'
 
-const pageTitle = 'UXKit – SaaS Interface Infrastructure'
+const pageTitle = 'UXKit – SaaS Interface Layer'
 const pageDescription =
-  'Production-ready dashboards, onboarding flows, and SaaS UI patterns.'
+  'Preview dashboards, onboarding flows, and SaaS UI patterns that are still in progress.'
 const pageCanonical = 'https://prochat.tools/kits/uxkit'
 
 export const metadata = {
@@ -55,15 +55,15 @@ export default function UXKitPage() {
   const envPriceId = getStripePriceSaaskit() || null
 	const priceId = saaskitProduct?.priceId || envPriceId
 
-	const schema = {
-		'@context': 'https://schema.org',
-		'@type': 'SoftwareApplication',
-		name: 'UXKit',
-		applicationCategory: 'DeveloperApplication',
-		operatingSystem: 'Web',
-		url: 'https://prochat.tools/kits/uxkit',
-		description:
-			'Production-ready SaaS interface layer including dashboards, onboarding flows, and billing UI.',
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'UXKit',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Web',
+  url: 'https://prochat.tools/kits/uxkit',
+  description:
+    'Early-access SaaS interface layer preview including dashboards, onboarding flows, and billing UI patterns.',
 		brand: {
 			'@type': 'Brand',
 			name: 'ProChat',
@@ -86,30 +86,30 @@ export default function UXKitPage() {
 		'@context': 'https://schema.org',
 		'@type': 'FAQPage',
 		mainEntity: [
-			{
-				'@type': 'Question',
-				name: 'What is UXKit?',
-				acceptedAnswer: {
-					'@type': 'Answer',
-					text: 'UXKit is a SaaS interface framework providing dashboards, onboarding flows, and SaaS UI patterns.',
-				},
-			},
+      {
+        '@type': 'Question',
+        name: 'What is UXKit?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'UXKit is a planned interface layer for reusable SaaS screens and patterns that is currently in development.',
+        },
+      },
 			{
 				'@type': 'Question',
 				name: 'Why use UXKit?',
 				acceptedAnswer: {
 					'@type': 'Answer',
-					text: 'UXKit accelerates SaaS development by providing proven UI patterns instead of designing interfaces from scratch.',
+          text: 'UXKit is designed to accelerate SaaS development by planning proven UI patterns instead of designing interfaces from scratch.',
 				},
 			},
-			{
-				'@type': 'Question',
-				name: 'Can UXKit be used with SaaSKit?',
-				acceptedAnswer: {
-					'@type': 'Answer',
-					text: 'Yes. UXKit integrates with SaaSKit and ProKit to provide the interface layer for SaaS applications.',
-				},
-			},
+      {
+        '@type': 'Question',
+        name: 'Can UXKit be used with SaaSKit?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. UXKit is being designed to complement SaaSKit and ProKit so it can provide the interface layer for SaaS applications.',
+        },
+      },
 		],
 	}
 

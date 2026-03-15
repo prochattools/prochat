@@ -59,10 +59,6 @@ export default function SaaSStartingPointPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <HeroSection
-        style={{
-          marginTop: 'calc(var(--pc-header-height) * -1)',
-          paddingTop: 'calc(var(--pc-header-height) + 1rem)',
-        }}
         className="pc-marketing-hero--lines-mobile border-b border-border"
         eyebrow={<HeroBadge text="Starting Point Framework" />}
         title="SaaS Starting Point"
