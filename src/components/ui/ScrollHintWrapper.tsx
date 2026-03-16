@@ -38,6 +38,8 @@ function HandIcon({ className }: { className?: string }) {
       aria-hidden="true"
       viewBox="0 0 24 24"
       className={className}
+      width={18}
+      height={18}
       fill="none"
       stroke="currentColor"
       strokeWidth="1.8"
@@ -173,20 +175,13 @@ export default function ScrollHintWrapper({
         <div
           aria-hidden="true"
           className={cn(
-            'scroll-hint-overlay',
-            shouldShow ? 'scroll-hint-overlay--visible' : 'scroll-hint-overlay--hidden',
-            axis === 'horizontal' ? 'scroll-hint-overlay--horizontal' : '',
-            axis === 'vertical' ? 'scroll-hint-overlay--vertical' : '',
+            'pointer-events-none absolute inset-y-0 right-2 flex items-center transition-all duration-200',
+            shouldShow ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2',
           )}
         >
-          <div className="scroll-hint-overlay__gradient" />
-          <div className="scroll-hint-overlay__indicator">
-            {axis === 'vertical' ? (
-              <ChevronDown className="scroll-hint-overlay__arrow" size={18} strokeWidth={2} />
-            ) : (
-              <ChevronRight className="scroll-hint-overlay__arrow" size={18} strokeWidth={2} />
-            )}
-            <HandIcon className="scroll-hint-overlay__hand" />
+          <div className="flex items-center gap-1 rounded-full bg-[rgb(var(--pc-surface-elevated-rgb,255_255_255))] px-2 py-1 shadow-[0_4px_12px_rgb(0_0_0_/0.15)] ring-1 ring-[rgb(var(--pc-border-rgb,226_232_240))]">
+            <ChevronRight size={16} strokeWidth={2.2} className="text-muted-foreground" />
+            <HandIcon className="text-muted-foreground" />
           </div>
         </div>
       ) : null}
