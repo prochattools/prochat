@@ -44,6 +44,7 @@ enum LicenseEventType {
   github_username_linked
   collaborator_invited
   access_revoked
+  revocation_email_sent
   access_restored
   license_reactivated
 }

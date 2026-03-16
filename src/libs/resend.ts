@@ -1,4 +1,5 @@
 import InvoiceTemplate from '@/components/email-templates/Invoice'
+import LicenseRevokedEmail from '@/components/email-templates/LicenseRevokedEmail'
 import ThankYouTemplate from '@/components/email-templates/ThanksYouTemplate'
 import config from '@/config'
 import prisma from '@/libs/prisma'
@@ -21,7 +22,7 @@ class ResendService {
 		return new Resend(apiKey)
 	}
 
-	public async sendThanksYouEmail(toMail: string) {
+ public async sendThanksYouEmail(toMail: string) {
 		const resend = this.getResendClient()
 		const { data, error } = await resend.emails.send({
 			from: normalizeEmailAddress(config.resend.fromAdmin),
@@ -38,7 +39,7 @@ class ResendService {
 		return data
 	}
 
-	public async sendInvoice(toMail: string, renderData: any) {
+  public async sendInvoice(toMail: string, renderData: any) {
 		const resend = this.getResendClient()
 		const { data, error } = await resend.emails.send({
 			from: normalizeEmailAddress(config.resend.fromAdmin),
@@ -52,8 +53,30 @@ class ResendService {
 			throw error
 		}
 
-		return data
-	}
+    return data
+  }
+
+  public async sendLicenseRevokedEmail(toMail: string, data: { productName: string; repoName: string }) {
+    const supportEmail = normalizeEmailAddress(config.resend.supportEmail)
+    const resend = this.getResendClient()
+    const { data: responseData, error } = await resend.emails.send({
+      from: normalizeEmailAddress(config.resend.fromAdmin),
+      to: [toMail],
+      replyTo: [normalizeEmailAddress(config.resend.forwardRepliesTo)],
+      subject: `Access revoked for ${data.productName}`,
+      react: LicenseRevokedEmail({
+        productName: data.productName,
+        repoName: data.repoName,
+        supportEmail: supportEmail || 'info@prochat.tools',
+      }),
+    })
+
+    if (error) {
+      throw error
+    }
+
+    return responseData
+  }
 
 	public async addNewEmailAddress(email: string) {
 		const audience = await this.upsertAudience()

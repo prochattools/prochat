@@ -1,8 +1,10 @@
+import config from '@/config'
 import { currentUser } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import prisma from '@/libs/prisma'
+import { resendService } from '@/libs/resend'
 import { isAdminUser } from '@/lib/admin'
-import { removeCollaborator } from '@/lib/store/github'
+import { getGithubConfig, removeCollaborator } from '@/lib/store/github'
 import type { LicenseEventType } from '@prisma/client'
 import type { ProductSlug } from '@/lib/store/types'
 
@@ -71,6 +73,36 @@ export async function POST(request: Request) {
       },
     }),
   ])
+
+  const PRODUCT_LABELS: Record<ProductSlug, string> = {
+    saaskit: 'SaaSKit',
+    prokit: 'ProKit',
+  }
+  const productLabel = PRODUCT_LABELS[productSlug]
+  const { repoOwner, repoName } = getGithubConfig(productSlug)
+  try {
+    await resendService.sendLicenseRevokedEmail(license.purchaser_email, {
+      productName: productLabel,
+      repoName: `${repoOwner}/${repoName}`,
+    })
+  } catch (error) {
+    console.error('[admin/licenses] Failed to send revocation email', { error, licenseId })
+    return NextResponse.json(
+      { error: 'Revocation email failed to send' },
+      { status: 500 },
+    )
+  }
+
+  await prisma.licenseEvent.create({
+    data: {
+      license_id: licenseId,
+      type: 'revocation_email_sent' as LicenseEventType,
+      metadata: {
+        performedBy: user?.id ?? 'system',
+        supportEmail: config.resend.supportEmail,
+      },
+    },
+  })
 
   return NextResponse.json({ success: true })
 }
