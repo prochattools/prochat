@@ -308,7 +308,7 @@ export default function KitAccessFinishClient({
 						</div>
 					)}
 					{successState && (
-						<div className='mt-6 flex flex-col gap-4 rounded-xl border border-emerald-400/30 bg-emerald-500/10 p-5 text-emerald-50'>
+						<div className='mt-6 flex flex-col gap-4 rounded-xl border border-emerald-400/30 bg-emerald-500/10 p-5 text-emerald-900 dark:text-emerald-50'>
 							<p>
 								{successState.alreadyProvisioned
 									? `Your purchase is already linked to @${successState.githubUsername}. Check your GitHub account for access.`
@@ -321,7 +321,7 @@ export default function KitAccessFinishClient({
 							<div>
 								<Link
 									href='https://prochat.tools/docs'
-									className='inline-flex items-center justify-center rounded-lg border border-emerald-300/35 bg-emerald-500/15 px-4 py-2 text-sm font-semibold text-emerald-50 transition hover:bg-emerald-500/25'
+									className='inline-flex items-center justify-center rounded-lg border border-emerald-300/35 bg-emerald-500/15 px-4 py-2 text-sm font-semibold text-emerald-900 dark:text-emerald-50 transition hover:bg-emerald-500/25 dark:hover:bg-emerald-500/35'
 								>
 									Start Building
 								</Link>
