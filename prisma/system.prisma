@@ -13,6 +13,41 @@ enum SubscriptionStatus {
   inactive
 }
 
+enum ProductType {
+  saaskit
+  prokit
+  uxkit
+}
+
+enum PaymentStatus {
+  pending
+  completed
+  failed
+}
+
+enum ProvisioningStatus {
+  pending
+  in_progress
+  completed
+  failed
+}
+
+enum AccessStatus {
+  pending
+  invited
+  active
+  revoked
+}
+
+enum LicenseEventType {
+  purchase_completed
+  github_username_linked
+  collaborator_invited
+  access_revoked
+  access_restored
+  license_reactivated
+}
+
 model Subscription {
   id                String              @id
   user_email        String              @unique
@@ -57,4 +92,34 @@ model WaitlistSignup {
   created_at            DateTime  @default(now())
 
   @@index([source, created_at])
+}
+
+model License {
+  id                 String             @id @default(cuid())
+  purchaser_email    String
+  product            ProductType
+  payment_reference  String             @unique
+  payment_status     PaymentStatus      @default(pending)
+  provisioning_status ProvisioningStatus @default(pending)
+  access_status      AccessStatus       @default(pending)
+  github_username    String?
+  revoked_at         DateTime?
+  revoked_reason     String?
+  created_at         DateTime           @default(now())
+  updated_at         DateTime           @updatedAt
+
+  events LicenseEvent[]
+
+  @@index([product, access_status])
+}
+
+model LicenseEvent {
+  id          String           @id @default(cuid())
+  license     License          @relation(fields: [license_id], references: [id])
+  license_id  String
+  type        LicenseEventType
+  metadata    Json?
+  created_at  DateTime         @default(now())
+
+  @@index([license_id, type])
 }
