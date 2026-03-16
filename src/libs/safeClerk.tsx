@@ -100,8 +100,8 @@ const MockClerkProvider = ({ children }: { children: React.ReactNode }) => (
 )
 
 export const SafeClerkProvider = ({ children }: { children: React.ReactNode }) => {
-	const pathname = usePathname() || ''
-	const needsClerk = routeNeedsClerk(pathname)
+	const pathname = usePathname()
+	const needsClerk = pathname ? routeNeedsClerk(pathname) : true
 
 	if (!needsClerk) {
 		return <>{children}</>
