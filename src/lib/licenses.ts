@@ -1,4 +1,6 @@
+import type { Prisma } from '@prisma/client'
 import prisma from '@/libs/prisma'
+import { backfillLicenseRecordsFromStripe } from '@/lib/store/stripe'
 
 export interface LicenseListItem {
   id: string
@@ -13,11 +15,28 @@ export interface LicenseListItem {
   revokedReason: string | null
   createdAt: Date
   updatedAt: Date
+  events: Array<{
+    id: string
+    type: string
+    metadata: Prisma.JsonValue | null
+    createdAt: Date
+  }>
 }
 
 export async function listAdminLicenses(): Promise<LicenseListItem[]> {
+  const existingCount = await prisma.license.count()
+  if (existingCount === 0) {
+    await backfillLicenseRecordsFromStripe()
+  }
+
   const licenses = await prisma.license.findMany({
     orderBy: { created_at: 'desc' },
+    include: {
+      events: {
+        orderBy: { created_at: 'desc' },
+        take: 4,
+      },
+    },
   })
 
   return licenses.map(license => ({
@@ -33,5 +52,11 @@ export async function listAdminLicenses(): Promise<LicenseListItem[]> {
     revokedReason: license.revoked_reason,
     createdAt: license.created_at,
     updatedAt: license.updated_at,
+    events: license.events.map(event => ({
+      id: event.id,
+      type: event.type,
+      metadata: event.metadata,
+      createdAt: event.created_at,
+    })),
   }))
 }

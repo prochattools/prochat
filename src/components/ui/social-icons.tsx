@@ -2,7 +2,7 @@ type SocialIconProps = {
   className?: string
 }
 
-export type SocialIconName = 'linkedin' | 'github' | 'discord'
+export type SocialIconName = 'linkedin' | 'github' | 'discord' | 'x'
 
 export function LinkedinIcon({ className = 'h-4 w-4 shrink-0 fill-current' }: SocialIconProps) {
   return (
@@ -43,6 +43,19 @@ export function GithubIcon({ className = 'h-4 w-4 shrink-0 fill-current' }: Soci
   )
 }
 
+export function XIcon({ className = 'h-4 w-4 shrink-0 fill-current' }: SocialIconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M23.643 4.937c-.835.371-1.732.62-2.675.733a4.712 4.712 0 0 0 2.075-2.606 9.5 9.5 0 0 1-2.986 1.174 4.713 4.713 0 0 0-8.032 4.296A13.389 13.389 0 0 1 1.64 3.16a4.713 4.713 0 0 0 1.459 6.29 4.611 4.611 0 0 1-2.137-.59v.058a4.716 4.716 0 0 0 3.78 4.623 4.73 4.73 0 0 1-2.13.082 4.72 4.72 0 0 0 4.404 3.278A9.436 9.436 0 0 1 1.13 19.54 13.3 13.3 0 0 0 7.29 21c8.745 0 13.533-7.312 13.533-13.66 0-.208-.005-.415-.014-.621a9.743 9.743 0 0 0 2.824-2.58l.001-.002z" />
+    </svg>
+  )
+}
+
 export function SocialIcon({
   icon,
   className = 'h-4 w-4 shrink-0 fill-current',
@@ -56,6 +69,10 @@ export function SocialIcon({
 
   if (icon === 'discord') {
     return <DiscordIcon className={className} />
+  }
+
+  if (icon === 'x') {
+    return <XIcon className={className} />
   }
 
   return <GithubIcon className={className} />

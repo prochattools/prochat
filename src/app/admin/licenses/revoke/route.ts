@@ -1,15 +1,14 @@
 import config from '@/config'
-import { currentUser } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import prisma from '@/libs/prisma'
 import { resendService } from '@/libs/resend'
-import { isAdminUser } from '@/lib/admin'
+import { getCurrentAdminUser, isAdminUser } from '@/lib/admin'
 import { getGithubConfig, removeCollaborator } from '@/lib/store/github'
 import type { LicenseEventType } from '@prisma/client'
 import type { ProductSlug } from '@/lib/store/types'
 
 export async function POST(request: Request) {
-  const user = await currentUser()
+  const user = await getCurrentAdminUser()
   if (!isAdminUser(user)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
   }

@@ -1,3 +1,4 @@
+import { clerkMiddleware } from '@clerk/nextjs/server'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
@@ -6,7 +7,9 @@ const isCiBuild =
   process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true'
 const isClerkDisabled =
   process.env.CLERK_DISABLED === 'true' ||
-  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true' ||
+  process.env.DISABLE_CLERK_IN_DEV === 'true' ||
+  process.env.NEXT_PUBLIC_DISABLE_CLERK_IN_DEV === 'true'
 const hasClerkKeys =
   !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
   !!process.env.CLERK_SECRET_KEY
@@ -17,6 +20,10 @@ if (isProduction && !isCiBuild && !isClerkDisabled && !hasClerkKeys) {
   )
 }
 
+const clerkMiddlewareHandler = clerkMiddleware(() => {
+  return NextResponse.next()
+})
+
 const mockMiddleware = (_req: NextRequest) => {
   if (!isProduction) {
     console.warn('⚠️ Clerk middleware disabled — running in mock mode.')
@@ -24,40 +31,9 @@ const mockMiddleware = (_req: NextRequest) => {
   return NextResponse.next()
 }
 
-const getClerkMiddleware = () => {
-  if (isClerkDisabled || !hasClerkKeys) {
-    return null
-  }
-
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const clerk = require('@clerk/nextjs/server')
-    const middlewareFactory =
-      clerk.clerkMiddleware || clerk.authMiddleware || clerk.default
-    if (!middlewareFactory) {
-      if (!isProduction) {
-        console.warn('⚠️ Clerk middleware factory not found — running in mock mode.')
-      }
-      return null
-    }
-    return middlewareFactory()
-  } catch (err) {
-    if (isProduction) {
-      throw err
-    }
-    console.warn('⚠️ Clerk middleware not available, falling back to mock.', err)
-    return null
-  }
-}
-
-const clerkMiddlewareHandler = getClerkMiddleware()
-
-export const middleware = (req: NextRequest) => {
-  if (clerkMiddlewareHandler) {
-    return clerkMiddlewareHandler(req)
-  }
-  return mockMiddleware(req)
-}
+export const middleware = hasClerkKeys && !isClerkDisabled
+  ? clerkMiddlewareHandler
+  : mockMiddleware
 
 export const config = {
   matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],

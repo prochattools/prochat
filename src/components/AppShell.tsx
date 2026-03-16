@@ -3,7 +3,7 @@
 import { ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import { Footer } from '@/app/(marketing)/components/layout/Footer'
-import { isChromelessPath, isFooterlessPath, isFullscreenPath } from '@/helpers/chrome-routes'
+import { isChromelessPath, isFooterlessPath, isFullscreenPath, isMarketingSurfacePath } from '@/helpers/chrome-routes'
 
 function hasIntrinsicHeaderSpacing(pathname: string) {
 	return (
@@ -33,6 +33,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
 	const isChromeless = isChromelessPath(pathname)
 	const isFullscreenRoute = isFullscreenPath(pathname)
 	const isFooterlessRoute = isFooterlessPath(pathname)
+	const hasMarketingSurface = !isChromeless && isMarketingSurfacePath(pathname)
 	const needsGlobalHeaderOffset = !isFullscreenRoute && !hasIntrinsicHeaderSpacing(pathname)
 
 	if (isChromeless) {
@@ -46,7 +47,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
 	return (
 		<>
 			<main
-				className={`font-marketing bg-background text-foreground selection:bg-primary selection:text-primary-foreground ${
+				className={`font-marketing ${hasMarketingSurface ? 'bg-transparent' : 'bg-background'} text-foreground selection:bg-primary selection:text-primary-foreground ${
 					isFullscreenRoute
 						? 'box-border h-dvh overflow-hidden pt-[var(--pc-header-height)]'
 						: `min-h-screen ${needsGlobalHeaderOffset ? 'pt-14 md:pt-16 lg:pt-[72px]' : ''}`

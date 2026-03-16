@@ -7,7 +7,9 @@ const isCiBuild =
   process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true'
 const isClerkDisabled =
   process.env.CLERK_DISABLED === 'true' ||
-  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+  process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true' ||
+  process.env.DISABLE_CLERK_IN_DEV === 'true' ||
+  process.env.NEXT_PUBLIC_DISABLE_CLERK_IN_DEV === 'true'
 const hasServerKeys =
   !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
   !!process.env.CLERK_SECRET_KEY

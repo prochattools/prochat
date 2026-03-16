@@ -169,7 +169,12 @@ export async function handleKitClaim(req: Request, productSlug: ProductSlug) {
 		const provisionResult = await addCollaborator(productSlug, githubUsername)
 
 		if ('ok' in provisionResult) {
-			await markSessionProvisioned(targetSession, productSlug, githubUsername)
+			await markSessionProvisioned(
+				targetSession,
+				productSlug,
+				githubUsername,
+				provisionResult.accessState
+			)
 
 			return NextResponse.json({
 				success: true,

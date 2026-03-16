@@ -1,5 +1,8 @@
 import Stripe from 'stripe'
+import type { Prisma } from '@prisma/client'
 import { getStripePriceProkit, getStripePriceSaaskit, getStripeSecretKey } from '@/libs/stripe-env'
+import type { AccessStatus, LicenseEventType, PaymentStatus, ProvisioningStatus } from '@prisma/client'
+import prisma from '@/libs/prisma'
 
 import { getGithubConfig } from './github'
 import { EntitlementStatus, ProductConfig, ProductSlug } from './types'
@@ -72,6 +75,145 @@ function isProvisioned(
 	provisionedKey: string
 ): boolean {
 	return getMetadataValue(session, provisionedKey) === 'true'
+}
+
+function mapProvisionedAccessStatus(
+	accessState?: 'invited' | 'pending_invitation' | 'already_has_access'
+): AccessStatus {
+	if (accessState === 'already_has_access') {
+		return 'active'
+	}
+	if (accessState === 'invited' || accessState === 'pending_invitation') {
+		return 'invited'
+	}
+	return 'pending'
+}
+
+async function createLicenseEventOnce(
+	licenseId: string,
+	type: LicenseEventType,
+	metadata?: Record<string, unknown>
+) {
+	const existingEvent = await prisma.licenseEvent.findFirst({
+		where: { license_id: licenseId, type },
+		select: { id: true },
+	})
+
+	if (existingEvent) {
+		return
+	}
+
+	await prisma.licenseEvent.create({
+		data: {
+			license_id: licenseId,
+			type,
+			metadata: metadata as Prisma.InputJsonValue | undefined,
+		},
+	})
+}
+
+async function syncLicenseRecord(
+	session: Stripe.Checkout.Session,
+	productSlug: ProductSlug,
+	options?: {
+		githubUsername?: string | null
+		provisioningStatus?: ProvisioningStatus
+		accessStatus?: AccessStatus
+	}
+) {
+	const purchaserEmail = getSessionEmail(session)?.trim().toLowerCase()
+	if (!purchaserEmail) {
+		return
+	}
+
+	const config = getProductConfig(productSlug)
+	const githubUsername =
+		options?.githubUsername ??
+		getMetadataValue(session, config.usernameKey) ??
+		null
+	const provisioned = isProvisioned(session, config.provisionedKey)
+	const paymentStatus: PaymentStatus =
+		session.payment_status === 'paid' || getMetadataValue(session, config.paidKey) === 'true'
+			? 'completed'
+			: 'pending'
+	const provisioningStatus: ProvisioningStatus =
+		options?.provisioningStatus ?? (provisioned ? 'completed' : 'pending')
+	const accessStatus: AccessStatus =
+		options?.accessStatus ??
+		(provisioned ? (githubUsername ? 'invited' : 'pending') : 'pending')
+
+	const license = await prisma.license.upsert({
+		where: { payment_reference: session.id },
+		create: {
+			purchaser_email: purchaserEmail,
+			product: productSlug,
+			payment_reference: session.id,
+			payment_status: paymentStatus,
+			provisioning_status: provisioningStatus,
+			access_status: accessStatus,
+			github_username: githubUsername,
+		},
+		update: {
+			purchaser_email: purchaserEmail,
+			product: productSlug,
+			payment_status: paymentStatus,
+			provisioning_status: provisioningStatus,
+			access_status: accessStatus,
+			github_username: githubUsername,
+			revoked_at: null,
+			revoked_reason: null,
+		},
+		select: { id: true },
+	})
+
+	if (paymentStatus === 'completed') {
+		await createLicenseEventOnce(license.id, 'purchase_completed', {
+			sessionId: session.id,
+			email: purchaserEmail,
+			productSlug,
+		})
+	}
+
+	if (githubUsername) {
+		await createLicenseEventOnce(license.id, 'github_username_linked', {
+			sessionId: session.id,
+			githubUsername,
+		})
+	}
+
+	if (provisioningStatus === 'completed' && githubUsername) {
+		await createLicenseEventOnce(license.id, 'collaborator_invited', {
+			sessionId: session.id,
+			githubUsername,
+			accessStatus,
+		})
+	}
+}
+
+export async function backfillLicenseRecordsFromStripe(limit = 25): Promise<void> {
+	try {
+		const stripe = getStripeClient()
+		const sessionList = await stripe.checkout.sessions.list({ limit })
+
+		for (const listedSession of sessionList.data) {
+			const productSlug = listedSession.metadata?.product_slug
+			if (productSlug !== 'prokit' && productSlug !== 'saaskit') {
+				continue
+			}
+			if (listedSession.payment_status !== 'paid') {
+				continue
+			}
+
+			const session = await retrieveSessionById(listedSession.id)
+			if (!session) {
+				continue
+			}
+
+			await syncLicenseRecord(session, productSlug)
+		}
+	} catch (error) {
+		console.error('[store] Failed to backfill license records from Stripe', error)
+	}
 }
 
 export function getStripeClient(): Stripe {
@@ -176,6 +318,8 @@ export async function getSessionStatusById(
 		const githubUsername =
 			getMetadataValue(effectiveSession, productConfig.usernameKey) || null
 
+		await syncLicenseRecord(effectiveSession, expectedProduct)
+
 		if (isProvisioned(effectiveSession, productConfig.provisionedKey)) {
 			return {
 				state: 'provisioned',
@@ -275,7 +419,8 @@ export async function findLatestPaidUnprovisionedSessionByEmail(
 export async function markSessionProvisioned(
 	session: Stripe.Checkout.Session,
 	productSlug: ProductSlug,
-	githubUsername: string
+	githubUsername: string,
+	accessState?: 'invited' | 'pending_invitation' | 'already_has_access'
 ): Promise<void> {
 	const stripe = getStripeClient()
 	const config = getProductConfig(productSlug)
@@ -318,6 +463,12 @@ export async function markSessionProvisioned(
 			})
 		}
 	}
+
+	await syncLicenseRecord(session, productSlug, {
+		githubUsername,
+		provisioningStatus: 'completed',
+		accessStatus: mapProvisionedAccessStatus(accessState),
+	})
 }
 
 export async function markSessionPaid(
@@ -361,4 +512,8 @@ export async function markSessionPaid(
 			})
 		}
 	}
+
+	await syncLicenseRecord(session, slug, {
+		provisioningStatus: isProvisioned(session, config.provisionedKey) ? 'completed' : 'pending',
+	})
 }

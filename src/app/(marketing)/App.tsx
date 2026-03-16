@@ -10,6 +10,7 @@ import {
   ShieldCheck,
 } from 'lucide-react'
 
+import FAQSection from '@/components/FAQSection'
 import HeroSection from '@/components/marketing/HeroSection'
 import HeroBadge from '@/components/ui/hero-badge'
 import HeroCheckRow from '@/components/ui/hero-check-row'
@@ -136,25 +137,25 @@ const operatingSystemCards: readonly OperatingSystemCard[] = [
 
 const journeyPaths: readonly JourneyPath[] = [
   {
-    title: 'You need a clearer idea',
+    title: 'Clarify the idea',
     description:
-      'You know you want to build something, but the buyer, pain, and smallest useful outcome are still fuzzy. Start by validating the problem before you write production code.',
-    href: '/blog/how-to-validate-a-saas-idea-without-coding',
-    action: 'READ — THE VALIDATION GUIDE',
+      'Use the Starting Point framework to name the buyer, pain, outcome, and proof before any code is written.',
+    href: '/learn/saas-starting-point',
+    action: 'OPEN — STARTING POINT',
   },
   {
-    title: 'You need a first version',
+    title: 'Run the prompt lab',
     description:
-      'You already know what you want to build. Now you need a controlled MVP path that helps you launch faster without stitching the whole stack together yourself.',
-    href: '/blog/how-to-build-a-saas-mvp-without-coding',
-    action: 'READ — THE MVP GUIDE',
+      'Pair your decision framework with curated AI prompts to prototype interfaces, flows, and validation experiments faster.',
+    href: '/prompts',
+    action: 'OPEN — PROMPTS',
   },
   {
-    title: 'You need a stable foundation',
+    title: 'Read the docs',
     description:
-      'You are ready to sell or scale, but billing, auth, data, and deployment need to be structured properly so the product does not become fragile later.',
-    href: '/blog/nextjs-saas-infrastructure-checklist-for-non-technical-founders',
-    action: 'READ — THE INFRA CHECKLIST',
+      'Lean documentation keeps the operating system, kit choices, and workflow rules clearly organized in one place.',
+    href: '/docs',
+    action: 'OPEN — DOCS',
   },
 ] as const
 
@@ -168,9 +169,10 @@ const SHOW_TESTIMONIAL_SCAFFOLD = false
 
 export default function App() {
   return (
-    <div className="bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
+    <div className="pc-homepage bg-transparent text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
       <HeroSection
-        className="pc-marketing-hero--lines-mobile border-b border-border"
+        className="pc-marketing-hero--lines-mobile pc-home-hero--lower-lines"
+        showBackgrounds={false}
         title={
           <>
             <span className="block text-foreground dark:text-white">AI builds it.</span>
@@ -198,7 +200,7 @@ export default function App() {
 
         <Section
           id="why-most-ai-built-saas-apps-fail"
-          tone="muted"
+          tone="transparent"
           spacing="default"
           className="scroll-mt-28 md:scroll-mt-32"
         >
@@ -266,7 +268,7 @@ export default function App() {
         </div>
       </Section>
 
-      <Section tone="muted" spacing="default">
+      <Section tone="transparent" spacing="default">
         <div className="mx-auto max-w-6xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <h2 className="pc-section-title mb-4 text-foreground">Where should you start?</h2>
@@ -281,6 +283,9 @@ export default function App() {
                   <h3 className="pc-card-title mb-3 text-foreground">{path.title}</h3>
                   <p className="text-sm leading-relaxed text-muted-foreground">{path.description}</p>
                 </div>
+                <Button asChild variant="secondary" size="sm">
+                  <Link href={path.href}>{path.action}</Link>
+                </Button>
               </Panel>
             ))}
           </div>
@@ -358,7 +363,7 @@ export default function App() {
         </div>
       </Section>
 
-        <Section tone="muted" spacing="default">
+        <Section tone="transparent" spacing="default">
           <div className="mx-auto max-w-5xl px-page text-center">
             <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
               <ShieldCheck className="h-5 w-5" />
@@ -382,7 +387,7 @@ export default function App() {
         </div>
       </Section>
 
-      <Section id="cta" tone="surface" spacing="loose" className="mt-0 border-t-0">
+      <Section id="cta" tone="transparent" spacing="loose" className="mt-0">
         <div className="relative z-10 mx-auto max-w-3xl px-page text-center">
           <h2 className="pc-section-title mb-8 text-foreground">Start with the kit built for real launches</h2>
           <p className="mb-12 text-xl leading-relaxed text-muted-foreground">
@@ -398,6 +403,7 @@ export default function App() {
           </div>
         </div>
       </Section>
+      <FAQSection tone="transparent" />
     </div>
   )
 }

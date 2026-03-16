@@ -24,8 +24,6 @@ import { useScrollDirection } from '@/hooks/useScrollDirection'
 const NAV_ITEMS = [
   { label: 'System', href: '/' },
   { label: 'Kits', href: '/kits' },
-  { label: 'Learn', href: '/learn' },
-  { label: 'Contact', href: '/contact' },
 ] as const
 
 const MOBILE_SECONDARY_ITEMS = [
@@ -62,11 +60,11 @@ function HeaderThemeToggle({
 }
 
 function DesktopNavigation({ pathname }: { pathname: string }) {
-	return (
-		<nav
-			className="pc-nav-capsule grid min-w-[62rem] grid-cols-[repeat(4,minmax(0,1fr))_auto] items-center xl:min-w-[68rem]"
-			aria-label="Primary"
-		>
+  return (
+    <nav
+      className="pc-nav-capsule grid min-w-[48rem] grid-cols-[repeat(3,minmax(0,1fr))_auto] items-center justify-center xl:min-w-[52rem]"
+      aria-label="Primary"
+    >
 			<ul className="contents">
 				{NAV_ITEMS.map(item => (
 					<li key={item.href} className="justify-self-center">

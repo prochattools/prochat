@@ -16,15 +16,15 @@ const PRODUCT_CORE_LINK = {
 } as const
 
 const ROADMAP_LINKS = [
-  { href: 'https://prochat.tools/kits/uxkit', label: 'UXKit' },
-  { href: 'https://prochat.tools/kits/waaskit', label: 'WaaSKit' },
-  { href: 'https://prochat.tools/systems/prochat-os', label: 'ProChat OS' },
+  { href: '/kits/uxkit', label: 'UXKit' },
+  { href: '/kits/waaskit', label: 'WaaSKit' },
+  { href: '/systems/prochat-os', label: 'ProChat OS' },
 ] as const
 
 const RESOURCE_LINKS = [
-  { href: '/saas-glossary', label: 'SaaS Glossary' },
   { href: '/learn/saas-starting-point', label: 'Starting Point' },
-  { href: '/blog/how-to-build-saas-with-ai-non-developer', label: 'Production Guide' },
+  { href: '/prompts', label: 'AI Prompts' },
+  { href: '/docs', label: 'Documentation' },
 ] as const
 
 const LEGAL_LINKS = [
@@ -34,14 +34,14 @@ const LEGAL_LINKS = [
 ] as const
 
 const CONTACT_ACTIONS = [
-  { href: 'https://www.linkedin.com/', label: 'Connect on LinkedIn', icon: 'linkedin', external: true },
+  { href: 'https://x.com/stevewesthoek', label: 'Follow me on X', icon: 'x', external: true },
   { href: 'https://github.com/prochattools', label: 'Follow me on GitHub', icon: 'github', external: true },
-  { href: 'https://discord.gg/U75p2BQuAH', label: 'Join My Community', icon: 'discord', external: true },
+  { href: 'https://www.linkedin.com/', label: 'Connect on LinkedIn', icon: 'linkedin', external: true },
 ] as const
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="relative z-[1] isolate border-t border-border bg-background pt-20 pb-10 font-mono [&_*]:font-mono">
+    <footer className="relative z-[1] isolate bg-transparent pt-20 pb-10 font-mono [&_*]:font-mono">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 lg:px-page">
         <div className="mb-14 lg:grid lg:gap-x-10 lg:gap-y-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.7fr)_minmax(0,0.7fr)_minmax(0,0.9fr)_minmax(0,0.85fr)]">
           <div className="flex flex-col items-center space-y-6 pt-16 pb-16 text-center md:pt-12 md:pb-8 md:space-y-4 lg:block lg:space-y-5 lg:pt-0 lg:pb-0 lg:text-left">
@@ -127,7 +127,9 @@ export const Footer: React.FC = () => {
                           ? 'LinkedIn'
                           : action.icon === 'github'
                             ? 'GitHub'
-                            : 'Community'}
+                            : action.icon === 'x'
+                              ? 'X'
+                              : 'Community'}
                       </span>
                     </a>
                   </div>
@@ -182,7 +184,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-t border-border pt-8">
+        <div className="pt-8">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="mt-10 flex w-full justify-center text-center lg:mt-0 lg:w-auto lg:justify-start">
               <div className="flex min-h-[32px] w-full justify-center md:block md:min-h-0">

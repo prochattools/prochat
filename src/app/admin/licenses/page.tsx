@@ -1,7 +1,9 @@
-import { currentUser } from '@clerk/nextjs/server'
+import { Fragment } from 'react'
+import type { Prisma } from '@prisma/client'
 import { notFound, redirect } from 'next/navigation'
 import { listAdminLicenses } from '@/lib/licenses'
-import { isAdminUser } from '@/lib/admin'
+import { getCurrentAdminUser, isAdminUser } from '@/lib/admin'
+import { isClerkEnabled } from '@/libs/safeClerkServer'
 import { RevokeLicenseAction } from './RevokeLicenseAction'
 
 type SearchParams = {
@@ -14,10 +16,38 @@ export const metadata = {
   title: 'Licenses',
 }
 
+const statusBadges: Record<string, string> = {
+  pending: 'bg-amber-500/10 text-amber-500',
+  invited: 'bg-blue-500/10 text-blue-500',
+  active: 'bg-emerald-500/10 text-emerald-500',
+  revoked: 'bg-red-500/10 text-red-500',
+  completed: 'bg-emerald-500/10 text-emerald-500',
+  failed: 'bg-red-500/10 text-red-500',
+  in_progress: 'bg-blue-500/10 text-blue-500',
+}
+
+function formatTimestamp(date: Date) {
+  return new Date(date).toLocaleString()
+}
+
+function extractReason(metadata: Prisma.JsonValue | null) {
+  if (!metadata || typeof metadata !== 'object') {
+    return undefined
+  }
+  const record = metadata as Record<string, unknown>
+  if ('reason' in record && record.reason) {
+    return String(record.reason)
+  }
+  return undefined
+}
+
 export default async function AdminLicensesPage({ searchParams }: { searchParams: SearchParams }) {
-  const user = await currentUser()
+  const user = await getCurrentAdminUser()
 
   if (!user) {
+    if (!isClerkEnabled()) {
+      notFound()
+    }
     redirect(`/sign-in?redirect_url=/admin/licenses`)
   }
 
@@ -125,26 +155,6 @@ export default async function AdminLicensesPage({ searchParams }: { searchParams
                 </tr>
               </thead>
               <tbody>
-                {filtered.map(license => (
-                  <tr
-                    key={license.id}
-                    className="divide-y divide-border border-t border-border text-muted-foreground"
-                  >
-                    <td className="px-3 py-3 text-foreground font-medium">{license.purchaserEmail}</td>
-                    <td className="px-3 py-3 uppercase tracking-[0.2em]">{license.product}</td>
-                    <td className="px-3 py-3">{license.githubUsername ?? '—'}</td>
-                    <td className="px-3 py-3">{license.paymentStatus}</td>
-                    <td className="px-3 py-3">{license.provisioningStatus}</td>
-                    <td className="px-3 py-3">{license.accessStatus}</td>
-                    <td className="px-3 py-3">{new Date(license.updatedAt).toLocaleString()}</td>
-                    <td className="px-3 py-3">
-                      <RevokeLicenseAction
-                        licenseId={license.id}
-                        disabled={license.accessStatus === 'revoked' || !license.githubUsername}
-                      />
-                    </td>
-                  </tr>
-                ))}
                 {filtered.length === 0 && (
                   <tr>
                     <td colSpan={8} className="px-3 py-6 text-center text-sm text-muted-foreground">
@@ -152,6 +162,124 @@ export default async function AdminLicensesPage({ searchParams }: { searchParams
                     </td>
                   </tr>
                 )}
+                {filtered.map(license => (
+                  <Fragment key={license.id}>
+                    <tr
+                      className="divide-y divide-border border-t border-border text-muted-foreground"
+                    >
+                      <td className="px-3 py-3 text-foreground font-medium">
+                        {license.purchaserEmail}
+                      </td>
+                      <td className="px-3 py-3 uppercase tracking-[0.3em] text-muted-foreground">
+                        {license.product}
+                      </td>
+                      <td className="px-3 py-3 text-muted-foreground">
+                        {license.githubUsername ?? '—'}
+                      </td>
+                      <td className="px-3 py-3">
+                        <span
+                          className={`rounded-full px-3 py-1 text-[0.65rem] font-semibold tracking-[0.3em] ${
+                            statusBadges[license.paymentStatus] ?? 'bg-border/40 text-muted-foreground'
+                          }`}
+                        >
+                          {license.paymentStatus}
+                        </span>
+                      </td>
+                      <td className="px-3 py-3">
+                        <span
+                          className={`rounded-full px-3 py-1 text-[0.65rem] font-semibold tracking-[0.3em] ${
+                            statusBadges[license.provisioningStatus] ?? 'bg-border/40 text-muted-foreground'
+                          }`}
+                        >
+                          {license.provisioningStatus}
+                        </span>
+                      </td>
+                      <td className="px-3 py-3">
+                        <span
+                          className={`rounded-full px-3 py-1 text-[0.65rem] font-semibold tracking-[0.3em] ${
+                            statusBadges[license.accessStatus]
+                          }`}
+                        >
+                          {license.accessStatus}
+                        </span>
+                      </td>
+                      <td className="px-3 py-3 text-muted-foreground text-[0.8rem]">
+                        {formatTimestamp(license.updatedAt)}
+                      </td>
+                      <td className="px-3 py-3">
+                        <RevokeLicenseAction
+                          licenseId={license.id}
+                          disabled={license.accessStatus === 'revoked' || !license.githubUsername}
+                        />
+                      </td>
+                    </tr>
+                    <tr className="bg-background/40">
+                      <td colSpan={8} className="px-3 py-4">
+                        <details className="group rounded-2xl border border-border bg-surface/70 p-4 shadow-sm">
+                          <summary className="flex items-center justify-between text-sm font-semibold text-foreground">
+                            Details
+                            <span className="text-xs font-normal text-muted-foreground group-open:-rotate-45 transition-transform">
+                              ▼
+                            </span>
+                          </summary>
+                          <div className="mt-3 grid gap-4 text-sm text-muted-foreground md:grid-cols-3">
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground/80">
+                                License state
+                              </p>
+                              <p className="text-foreground font-semibold">{license.accessStatus}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground/80">
+                                GitHub username
+                              </p>
+                              <p className="text-foreground font-semibold">{license.githubUsername ?? '—'}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground/80">Created</p>
+                              <p className="text-foreground font-semibold">{formatTimestamp(license.createdAt)}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground/80">Updated</p>
+                              <p className="text-foreground font-semibold">{formatTimestamp(license.updatedAt)}</p>
+                            </div>
+                            <div className="md:col-span-2">
+                              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground/80">
+                                Recent events
+                              </p>
+                              {license.events.length === 0 ? (
+                                <p className="text-foreground">No events yet</p>
+                              ) : (
+                                <ul className="space-y-2">
+                                  {license.events.map(event => {
+                                    const reason = extractReason(event.metadata)
+
+                                    return (
+                                      <li
+                                        key={event.id}
+                                        className="rounded-xl border border-border bg-background/70 p-3 text-[0.75rem]"
+                                      >
+                                        <p className="text-foreground font-semibold">
+                                          {event.type.replace(/_/g, ' ')}
+                                        </p>
+                                        <p className="text-muted-foreground">
+                                          {formatTimestamp(event.createdAt)}
+                                        </p>
+                                        {reason && (
+                                          <p className="text-muted-foreground">Reason: {reason}</p>
+                                        )}
+                                      </li>
+                                    )
+                                  })}
+                                </ul>
+                              )}
+                            </div>
+                          </div>
+                        </details>
+                      </td>
+                    </tr>
+                  </Fragment>
+                ))}
               </tbody>
             </table>
           </div>
