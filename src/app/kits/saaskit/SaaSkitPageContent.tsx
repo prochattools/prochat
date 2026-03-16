@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
-import ContextualLinkCta from '@/components/ContextualLinkCta'
 import HeroBadge from '@/components/ui/hero-badge'
 import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
@@ -82,22 +81,28 @@ const techSpecs = [
 
 const comparisonData = [
   {
-    metric: 'Time Cost',
+    metric: 'Time to start building',
     manual: 'Weeks / Months',
-    saasKit: 'Immediate',
+    saasKit: 'Same day',
     iconName: 'schedule',
   },
   {
-    metric: 'Error Cost',
-    manual: 'High (Unknowns)',
-    saasKit: 'Minimal (Verified)',
+    metric: 'Setup errors',
+    manual: 'Common',
+    saasKit: 'Minimal',
     iconName: 'bug-report',
   },
   {
-    metric: 'Confidence Cost',
-    manual: 'Fragile / Anxious',
-    saasKit: 'Stable / Focused',
+    metric: 'Momentum',
+    manual: 'Fragile',
+    saasKit: 'Focused',
     iconName: 'psychology',
+  },
+  {
+    metric: 'Launch speed',
+    manual: 'Slow',
+    saasKit: 'Fast',
+    iconName: 'arrow-forward',
   },
 ]
 
@@ -116,12 +121,12 @@ const SaaSkitPageContent = ({
 
   const title =
     heroTitle ??
-    'Launch your SaaS — without building the foundation from scratch.'
-  const subtitle = heroSubtitle ?? 'Production-ready Next.js SaaS infrastructure.'
+    'Launch your SaaS this week. Skip the months of setup.'
+  const subtitle = heroSubtitle ?? 'SaaSKit removes the setup work that slows founders down.'
   const description =
     heroDescription ??
-    'SaaSKit gives you authentication, billing, database integration, and deployment patterns so you can focus on building your product.'
-  const buttonText = heroButtonText ?? 'Start with SaaSKit'
+    'Start building your product immediately instead of wiring authentication, payments, and infrastructure from scratch.'
+  const buttonText = heroButtonText ?? 'Start with SaaSKit — $247'
   const [heroBase, heroAccent] = title.split(' — ')
 
   useEffect(() => {
@@ -175,11 +180,11 @@ const SaaSkitPageContent = ({
     })
   }, [])
 
-  const handleComparisonCtaClick = useCallback(() => {
+  const handleHeroSecondaryClick = useCallback(() => {
     trackEvent('product_cta_click', {
-      product: 'prokit',
-      location: 'comparison_cta',
-      cta: 'compare_with_prokit',
+      product: 'saaskit',
+      location: 'hero_secondary_cta',
+      cta: 'see_how_it_works',
       source_page: '/kits/saaskit',
     })
   }, [])
@@ -244,13 +249,13 @@ const SaaSkitPageContent = ({
           <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
             <p>{description}</p>
             <div className="flex flex-col items-center justify-center py-2">
-              <HeroCheckRow
-                items={[
-                  'Core infrastructure included.',
-                  'Marketing system included.',
-                  'Production-ready from day one.',
-                ]}
-              />
+                <HeroCheckRow
+                  items={[
+                    'Start building immediately',
+                    'Skip weeks of setup work',
+                    'Launch faster with AI',
+                  ]}
+                />
             </div>
           </div>
 
@@ -261,12 +266,12 @@ const SaaSkitPageContent = ({
               </a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="#manual" onClick={handleComparisonCtaClick}>Compare with ProKit</a>
+              <a href="#tester-mindset" onClick={handleHeroSecondaryClick}>See how it works</a>
             </Button>
           </div>
 
           <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
-            One-time payment · Unlimited reuse · Instant GitHub access
+            One-time payment · Unlimited projects · Instant access
           </p>
         </div>
       </section>
@@ -282,23 +287,19 @@ const SaaSkitPageContent = ({
             </div>
             <div className="space-y-6">
               <h2 className="text-3xl font-bold tracking-[-0.02em] text-foreground">
-                Designed around failure prevention.
+                Built so your launch doesn’t stall.
               </h2>
               <div className="space-y-3 text-lg leading-[1.6] text-muted-foreground">
+                <p>Most SaaS ideas do not fail because the idea is bad.</p>
+                <p>They fail because founders lose momentum while assembling infrastructure.</p>
                 <p>
-                  Structured by a professional software tester.
-                </p>
-                <p>
-                  Built to reduce production mistakes before they happen.
-                </p>
-                <p>
-                  The same production safeguards used in SaaSKit are there to keep billing, access,
-                  and deployment boundaries stable from the start.
+                  SaaSKit gives you a working starting point so you can focus on building the product
+                  that actually matters.
                 </p>
                 <div className="mt-6 flex items-center gap-3 border-t border-border pt-6">
                   <span className="font-mono text-sm text-muted-foreground">STATUS:</span>
                   <span className="font-brand font-extrabold uppercase tracking-[0.02em] text-primary">
-                    Calm Systems. Fewer Failures.
+                    Result: faster launches, fewer delays.
                   </span>
                 </div>
               </div>
@@ -315,21 +316,24 @@ const SaaSkitPageContent = ({
                 <div className="mb-6 flex items-center gap-3">
                   <FeatureIcon name="warning-triangle-filled" className="h-5 w-5 text-destructive" />
                   <h3 className="text-xl font-bold uppercase tracking-wider text-foreground">
-                    The Real Problem
+                    Most SaaS ideas never reach launch.
                   </h3>
                 </div>
                 <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                  Invisible complexity.
+                  Before you can build your product you must figure out:
                 </h2>
                 <p className="mb-4 font-medium text-foreground">
-                  You don&apos;t know what you don&apos;t know. And that uncertainty slows momentum.
+                  authentication<br />
+                  payments<br />
+                  database structure<br />
+                  deployment<br />
+                  landing pages
                 </p>
                 <p className="mb-6 leading-relaxed text-muted-foreground">
-                  Infrastructure failures are quiet, not loud: payments half-working, emails
-                  inconsistently delivering, database structure slowly breaking, confidence eroding.
+                  For many founders this takes weeks or months. Momentum disappears before the product even exists.
                 </p>
                 <p className="mb-8 font-medium leading-relaxed text-muted-foreground">
-                  Silent failures are worse than obvious ones.
+                  The hardest part is keeping momentum while you assemble the foundation.
                 </p>
 
                 <div className="space-y-4 rounded-lg border border-destructive/30 bg-destructive/10 p-6 shadow-sm">
@@ -368,59 +372,39 @@ const SaaSkitPageContent = ({
                   <div className="mb-6 flex items-center gap-3">
                     <FeatureIcon name="verified" className="h-5 w-5 text-primary" />
                     <h3 className="text-xl font-bold uppercase tracking-wider text-muted-foreground">
-                      What SaaSKit Gives You
+                      Start with the foundation already done.
                     </h3>
                   </div>
                   <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                    Reduced uncertainty.
+                    SaaSKit gives you a ready-to-use starting point so you can begin building your product immediately.
                   </h2>
                   <p className="mb-8 leading-relaxed text-muted-foreground">
-                    SaaSKit gives you the structured launch layer: production-ready infrastructure
-                    underneath, plus the marketing system that keeps momentum from stalling once the
-                    product is ready.
+                    Instead of assembling infrastructure, you start with a system where the essential parts already work together.
                   </p>
 
                   <div className="space-y-4 rounded-lg border border-primary/20 bg-background/60 p-6 shadow-inner backdrop-blur-sm">
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Authentication wired and secure</p>
+                      <p className="text-sm font-medium">Authentication already wired</p>
                     </div>
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Database structured and verified</p>
+                      <p className="text-sm font-medium">Database structure prepared</p>
                     </div>
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Stripe payments connected</p>
+                      <p className="text-sm font-medium">Payments already connected</p>
                     </div>
                     <div className="flex items-center gap-3 text-foreground">
                       <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Email systems ready</p>
+                      <p className="text-sm font-medium">Email system ready</p>
                     </div>
                   </div>
 
                   <div className="mt-8 border-t border-border-subtle pt-8">
-                    <h4 className="mb-4 font-bold text-foreground">
-                      From idea to live SaaS faster because:
-                    </h4>
-                    <ul className="space-y-2 font-mono text-sm text-muted-foreground">
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Infrastructure is pre-structured.
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Billing lifecycle is predefined.
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        SEO system is integrated.
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Deployment patterns are production-safe.
-                      </li>
-                    </ul>
+                    <p className="font-mono text-sm text-muted-foreground">
+                      Go from idea to working SaaS faster.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -433,18 +417,12 @@ const SaaSkitPageContent = ({
         <div className="mx-auto max-w-4xl px-page">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground">
-              Manual Setup vs SaaSKit
+              The difference is time.
             </h2>
-            <p className="text-muted-foreground">
-              Manual setup looks cheaper until you calculate the cost of confidence.
-            </p>
+            <p className="text-muted-foreground">You can assemble everything manually.</p>
             <p className="mt-4 text-sm text-muted-foreground">
-              If you want full control over branding and marketing systems,{' '}
-              <a href="/kits/prokit" className="font-medium text-foreground underline-offset-4 hover:underline">
-                ProKit
-              </a>{' '}
-              may be the better fit. If you want structured speed and a launch-ready foundation,
-              SaaSKit is the path.
+              But most founders lose weeks configuring systems instead of building their product.
+              SaaSKit removes that delay.
             </p>
           </div>
 
@@ -511,8 +489,7 @@ const SaaSkitPageContent = ({
 
           <div className="mt-8 text-center">
             <p className="font-mono text-sm text-muted-foreground">
-              One production billing mistake or authentication failure can cost more than this
-              entire foundation.
+              One payment bug or authentication failure can cost more time than this entire foundation.
             </p>
           </div>
         </div>
@@ -523,11 +500,11 @@ const SaaSkitPageContent = ({
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
               <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] leading-tight text-foreground">
-                Who this is for.
+                Who SaaSKit is for
               </h2>
               <p className="mb-8 text-lg text-muted-foreground">
-                This is for non-technical founders who want to move quickly without improvising the
-                systems underneath the launch.
+                SaaSKit is designed for founders who want to launch quickly.
+                Not for teams rebuilding infrastructure from scratch.
               </p>
               <div className="h-1 w-20 rounded-full bg-primary" />
             </div>
@@ -540,7 +517,7 @@ const SaaSkitPageContent = ({
                       <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="text-muted-foreground">
-                      You want to build with AI without piecing infrastructure together from zero.
+                      You want to build SaaS with AI without assembling infrastructure.
                     </span>
                   </li>
                   <li className="flex items-start gap-4">
@@ -548,7 +525,7 @@ const SaaSkitPageContent = ({
                       <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="text-muted-foreground">
-                      You want a launch-ready foundation before you spend time on custom growth work.
+                      You want a launch-ready starting point before writing custom features.
                     </span>
                   </li>
                   <li className="flex items-start gap-4">
@@ -556,8 +533,7 @@ const SaaSkitPageContent = ({
                       <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="text-muted-foreground">
-                      You want structure around billing, access, deployment, and content from day
-                      one.
+                      You want to focus on your product instead of configuring systems.
                     </span>
                   </li>
                   <li className="flex items-start gap-4">
@@ -565,7 +541,7 @@ const SaaSkitPageContent = ({
                       <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                     </div>
                     <span className="font-medium text-foreground">
-                      You want speed because the structure is already in place.
+                      You want to launch faster.
                     </span>
                   </li>
                 </ul>
@@ -582,21 +558,19 @@ const SaaSkitPageContent = ({
         />
         <div className="relative z-10 mx-auto max-w-4xl px-page text-center">
           <p className="mx-auto mb-4 max-w-2xl text-sm font-medium text-muted-foreground">
-            This is for founders who want to launch — not assemble infrastructure.
+            This is for founders who want to launch fast, not rebuild every system.
           </p>
           <div className="mb-8 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1 font-mono text-sm text-primary backdrop-blur-sm">
             Documentation & Reuse Included
           </div>
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground md:text-5xl">
-            One payment. Unlimited reuse.
+            One payment. Launch as many SaaS products as you want.
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
-            AI made this era possible. Structure makes it sustainable. You are not buying code;
-            you are buying a stable launch foundation.
+            Start building immediately instead of wiring infrastructure for weeks.
           </p>
           <p className="mx-auto mb-6 max-w-xl text-sm text-muted-foreground">
-            One production billing mistake or authentication failure can cost more than this entire
-            foundation.
+            SaaSKit gives you a working SaaS foundation so you can focus on building your product.
           </p>
 
           <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border-subtle bg-surface text-foreground shadow-elevated transition-transform duration-300 hover:-translate-y-1">
@@ -617,15 +591,17 @@ const SaaSkitPageContent = ({
               <ul className="mb-8 space-y-3 text-left">
                 <li className="flex items-center gap-3">
                   <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Production-ready structure</span>
+                  <span className="text-muted-foreground">Ready-to-build SaaS foundation</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Verified auth, payment, and DB wiring</span>
+                  <span className="text-muted-foreground">
+                    Authentication, payments, and database already wired
+                  </span>
                 </li>
                 <li className="flex items-center gap-3">
                   <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Months of hesitation removed</span>
+                  <span className="text-muted-foreground">Built for fast launches</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
@@ -641,14 +617,10 @@ const SaaSkitPageContent = ({
                 size="lg"
                 className="w-full"
               >
-                {isCheckingOut ? 'Processing' : 'Buy SaaSKit'}
+                {isCheckingOut ? 'Processing' : 'Get SaaSKit'}
               </Button>
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
-                <span>Lifetime updates</span>
-                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border-strong/80" />
-                <span>No recurring fees</span>
-                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border-strong/80" />
-                <span>Production-ready foundation</span>
+                <span>Lifetime updates · No recurring fees</span>
               </div>
             </div>
           </div>
@@ -740,19 +712,37 @@ const SaaSkitPageContent = ({
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">What is SaaSKit?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                SaaSKit is a production-ready foundation for building SaaS applications with modern architecture and infrastructure.
+                A ready-to-use SaaS starting point that already includes authentication, payments, and database structure.
+                <br />
+                It removes the setup work so you can start building your product immediately.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">What can you build with SaaSKit?</h3>
+              <h3 className="text-lg font-bold text-foreground">Do I need to be a developer?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                You can build subscription SaaS platforms, B2B tools, automation services, and niche SaaS products.
+                No.
+                <br />
+                Many founders use SaaSKit together with AI tools to build features and modify the product.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">How does SaaSKit relate to ProKit?</h3>
+              <h3 className="text-lg font-bold text-foreground">How long does setup take?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                SaaSKit builds on top of ProKit. ProKit provides the infrastructure layer while SaaSKit provides the SaaS application architecture.
+                Most founders can install the project and begin building their SaaS the same day.
+              </p>
+            </article>
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-foreground">Can I use it for multiple projects?</h3>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Yes.
+                <br />
+                Your license allows unlimited use.
+              </p>
+            </article>
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-foreground">What kind of SaaS can I build?</h3>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Examples include micro SaaS tools, automation apps, dashboards, niche SaaS products, and internal tools.
               </p>
             </article>
           </div>
@@ -761,50 +751,22 @@ const SaaSkitPageContent = ({
 
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">
-          <ContextualLinkCta
-            className="mb-10 text-left"
-            title="Need more control over brand and funnel?"
-            description="Explore other ProChat kits for different starting points or to adapt infrastructure around SaaSKit's launch-ready system."
-            links={[
-              { href: '/kits/prokit', label: 'Explore ProKit' },
-              { href: '/kits/uxkit', label: 'Explore UXKit' },
-            ]}
-          />
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
             You already have the idea.
           </h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            AI removed the coding barrier. Now remove the structural risk.
+            AI removed the coding barrier.
+            <br />
+            SaaSKit removes the setup barrier.
             <br />
             <span className="font-medium text-foreground">
-              Start building on structure instead of improvising the foundation.
+              Start building your SaaS today.
             </span>
           </p>
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
             <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
-              <a href="#pricing" onClick={handleHeroCtaClick}>Buy SaaSKit</a>
+              <a href="#pricing" onClick={handleHeroCtaClick}>Get SaaSKit</a>
             </Button>
-            <a
-              href="/kits/prokit"
-              onClick={handleComparisonCtaClick}
-              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
-            >
-              Explore ProKit
-              <FeatureIcon
-                name="arrow-forward"
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              />
-            </a>
-            <a
-              href="/kits/uxkit"
-              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
-            >
-              Explore UXKit
-              <FeatureIcon
-                name="arrow-forward"
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              />
-            </a>
           </div>
         </div>
       </section>
