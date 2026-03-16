@@ -12,6 +12,10 @@ type AddCollaboratorResult =
 	| { ok: true; accessState: 'invited' | 'pending_invitation' | 'already_has_access' }
 	| { error: 'not_found' | 'forbidden' | 'unknown'; message?: string }
 
+type RemoveCollaboratorResult =
+	| { ok: true }
+	| { error: 'not_found' | 'forbidden' | 'unknown'; message?: string }
+
 type GithubInstallationTokenResponse = {
 	token?: string
 	expires_at?: string
@@ -529,6 +533,86 @@ export async function addCollaborator(
 		return { error: 'unknown', message: `GitHub API status ${response.status}` }
 	} catch (error) {
 		console.error('[store] Failed to add GitHub collaborator', {
+			requestId,
+			productSlug,
+			repo: repo || null,
+			username: normalizedUsername || githubUsername.trim(),
+			statusCode: 0,
+			error: error instanceof Error ? error.message : 'Unknown error',
+		})
+		return { error: 'unknown', message: 'Request failed' }
+	}
+}
+
+export async function removeCollaborator(
+	productSlug: ProductSlug,
+	githubUsername: string,
+): Promise<RemoveCollaboratorResult> {
+	const requestId = randomUUID()
+	const normalizedUsername = parseGithubUsername(githubUsername)
+	let repo = ''
+
+	try {
+		const { repoOwner, repoName } = getGithubConfig(productSlug)
+		repo = `${repoOwner}/${repoName}`
+		if (!normalizedUsername) {
+			console.error('[store] GitHub collaborator remove input error', {
+				requestId,
+				productSlug,
+				repo,
+				username: githubUsername.trim(),
+				statusCode: 0,
+			})
+			return { ok: true }
+		}
+
+		const installationToken = await getGithubInstallationTokenForRepo(
+			repoOwner,
+			repoName,
+			requestId,
+			productSlug,
+		)
+		const endpoint = `https://api.github.com/repos/${repoOwner}/${repoName}/collaborators/${normalizedUsername}`
+
+		const response = await fetch(endpoint, {
+			method: 'DELETE',
+			headers: buildGithubApiHeaders(installationToken),
+		})
+
+		const statusCode = response.status
+		const githubRequestId = response.headers.get('x-github-request-id') || null
+		console.info('[store] GitHub collaborator removal response', {
+			requestId,
+			productSlug,
+			repo,
+			username: normalizedUsername,
+			statusCode,
+			githubRequestId,
+		})
+
+		if (response.status === 204 || response.status === 404) {
+			return { ok: true }
+		}
+		if (response.status === 403) {
+			return {
+				error: 'forbidden',
+				message: 'GitHub App is not allowed to remove this collaborator.',
+			}
+		}
+
+		const bodyText = await response.text()
+		console.error('[store] GitHub collaborator removal error', {
+			requestId,
+			productSlug,
+			repo,
+			username: normalizedUsername,
+			statusCode,
+			githubRequestId,
+			body: bodyText.slice(0, 500),
+		})
+		return { error: 'unknown', message: `GitHub API status ${statusCode}` }
+	} catch (error) {
+		console.error('[store] Failed to remove GitHub collaborator', {
 			requestId,
 			productSlug,
 			repo: repo || null,
