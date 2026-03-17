@@ -37,12 +37,10 @@ export default function ContentLayout({
               Back to {config.label}
             </Link>
             <div className="flex flex-wrap items-center gap-3 text-xs font-medium uppercase tracking-[0.16em] text-tertiary">
-              {entry.section !== 'blog' ? (
-                <span className="inline-flex items-center gap-2 rounded-full border border-border-subtle/80 bg-surface-soft/70 px-2.5 py-1">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary/80" />
-                  {config.label}
-                </span>
-              ) : null}
+              <span className="inline-flex items-center gap-2 rounded-full border border-border-subtle/80 bg-surface-soft/70 px-2.5 py-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary/80" />
+                {config.label}
+              </span>
               {entry.category ? (
                 <span className="inline-flex items-center rounded-full border border-border-subtle/70 bg-surface/75 px-2.5 py-1 text-[11px] text-muted-foreground">
                   {entry.category}
@@ -67,7 +65,7 @@ export default function ContentLayout({
               </>
             ) : null}
           </div>
-          {entry.section !== 'blog' && entry.tags.length > 0 ? (
+          {entry.tags.length > 0 ? (
             <div className="mt-5 flex flex-wrap items-center gap-3 text-sm">
               {entry.tags.slice(0, 4).map(tag => (
                 <span

@@ -97,7 +97,6 @@ export async function GET() {
             flexDirection: 'column',
             justifyContent: 'space-between',
             position: 'relative',
-            zIndex: 1,
             height: '100%',
           },
         },

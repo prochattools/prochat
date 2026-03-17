@@ -18,8 +18,6 @@ type AnalyticsContext = {
 
 function getCtaType(href: string) {
   if (href === '/contact') return 'contact'
-  if (href.startsWith('/blog/')) return 'related_article'
-  if (href === '/blog') return 'blog'
   if (href.startsWith('/kits')) return 'explore_kits'
   return 'link'
 }

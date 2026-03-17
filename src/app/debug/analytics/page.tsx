@@ -3,17 +3,6 @@
 import { useCallback } from 'react'
 import { trackEvent } from '@/utils/analytics'
 
-type DirectTracker =
-  | ((event: string, payload?: Record<string, unknown>) => void)
-  | {
-      track?: (event: string, payload?: Record<string, unknown>) => void
-    }
-
-function getTracker() {
-  if (typeof window === 'undefined') return null
-  return (window as typeof window & { umami?: DirectTracker }).umami ?? null
-}
-
 const basePayload = {
   source: 'debug',
   entry: 'debug',
@@ -21,9 +10,9 @@ const basePayload = {
   location: 'analytics-debug',
 }
 
-const directEvents = ['visit_source', 'lead_magnet_view'] as const
-
 const helperEvents = [
+  'visit_source',
+  'lead_magnet_view',
   'lead_magnet_submit',
   'lead_magnet_success',
   'nav_cta_click',
@@ -45,34 +34,17 @@ const eventPayloadExtras: Record<string, Record<string, unknown>> = {
   waitlist_success: { waitlist: 'debug' },
 }
 
-function fireDirect(eventName: (typeof directEvents)[number]) {
-  const tracker = getTracker() as DirectTracker | null
-  if (!tracker) {
-    console.warn('[analytics-debug] umami unavailable for', eventName)
-    return
-  }
-  if (typeof tracker === 'function') {
-    tracker(eventName, { ...basePayload })
-  } else {
-    tracker.track?.(eventName, { ...basePayload })
-  }
-}
-
 function fireHelper(eventName: (typeof helperEvents)[number]) {
   trackEvent(eventName, { ...basePayload, ...eventPayloadExtras[eventName] })
 }
 
-const allEventNames = [...directEvents, ...helperEvents]
+const allEventNames = [...helperEvents]
 
 export default function AnalyticsDebugPage() {
   const fireAll = useCallback(async () => {
     for (const eventName of allEventNames) {
       console.log('[analytics-debug] firing', eventName)
-      if (directEvents.includes(eventName as any)) {
-        fireDirect(eventName as typeof directEvents[number])
-      } else {
-        fireHelper(eventName as typeof helperEvents[number])
-      }
+      fireHelper(eventName as typeof helperEvents[number])
       await new Promise(resolve => setTimeout(resolve, 150))
     }
   }, [])
@@ -87,11 +59,7 @@ export default function AnalyticsDebugPage() {
             key={eventName}
             className="rounded-md border border-border bg-white/70 px-4 py-3 text-left text-base font-mono text-sm uppercase tracking-wide text-foreground shadow-sm hover:bg-primary/10"
             type="button"
-            onClick={() =>
-              directEvents.includes(eventName as any)
-                ? fireDirect(eventName as typeof directEvents[number])
-                : fireHelper(eventName as typeof helperEvents[number])
-            }
+            onClick={() => fireHelper(eventName as typeof helperEvents[number])}
           >
             Fire {eventName}
           </button>

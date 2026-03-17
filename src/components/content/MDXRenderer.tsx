@@ -4,7 +4,7 @@ import { ComponentType } from 'react'
 import * as devRuntime from 'react/jsx-dev-runtime'
 import * as runtime from 'react/jsx-runtime'
 
-import { blogMdxComponents } from '@/components/blog/mdx-components'
+import { contentMdxComponents } from '@/components/content/mdx-components'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 
@@ -47,7 +47,7 @@ async function getMdxComponent(source: string, title?: string) {
   const module = (await evaluate(normalizeMdxSource(source, title), {
     ...(isDevelopment ? { ...runtime, ...devRuntime } : runtime),
     development: isDevelopment,
-    useMDXComponents: () => blogMdxComponents,
+    useMDXComponents: () => contentMdxComponents,
   })) as EvaluatedMdxModule
 
   return module.default
@@ -55,7 +55,7 @@ async function getMdxComponent(source: string, title?: string) {
 
 export async function renderMdxContent(source: string, title?: string) {
   const Content = await getMdxComponent(source, title)
-  return <Content components={blogMdxComponents} />
+  return <Content components={contentMdxComponents} />
 }
 
 export default async function MDXRenderer({ source, title }: { source: string; title?: string }) {

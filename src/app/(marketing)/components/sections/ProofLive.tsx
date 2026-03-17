@@ -26,11 +26,11 @@ const ProofLive: React.FC = () => {
                             </span>
                         </div>
                         <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight leading-[1.1] dark:text-white">
-                            A real niche. A real offer. Live.
+                            A live implementation, not a placeholder.
                         </h2>
                         <div className="text-slate-500 max-w-2xl mx-auto font-light text-xl leading-relaxed mb-8 dark:text-slate-300">
-                            The ProChat system is currently being applied to a real niche. The offer exists. The funnel is
-                            live. Anyone can inspect it.
+                            The point is not vanity metrics. It is showing that ProChat can turn a narrow problem into a
+                            real offer, a working funnel, and a visible path toward a SaaSKit build.
                         </div>
                         <Link
                             href="https://accountant.prochat.tools"
@@ -43,7 +43,7 @@ const ProofLive: React.FC = () => {
                                 className="h-12 px-8 shadow-xl shadow-primary/20 hover:shadow-primary/40"
                                 withArrow
                             >
-                                View the live accountant funnel
+                                Inspect the live implementation
                             </Button>
                         </Link>
                     </Reveal>

@@ -96,7 +96,7 @@
    - `checkout_success` on `/kits/<product>/finish?session_id=...`
    - `checkout_cancel` by cancelling from Stripe and returning to a kit page
    - `contact_submit` on successful `/contact` submission
-   - `blog_cta_click` from blog footer CTAs
+   - `blog_cta_click` from retained content footer CTAs
 
 ## Recommended follow-up
 - If the Starting Point delivery flow later becomes a direct browser download, add `lead_magnet_download` at the final download click only.

@@ -5,7 +5,8 @@ import { getPublicDocEntry } from '@/lib/docs/public-docs'
 import { renderDocsMdxContent } from '@/lib/docs/nextra'
 import { getSiteUrl } from '@/libs/site-url'
 
-const DOCS_DESCRIPTION = 'Public product documentation for ProKit, SaaSKit, and shared features.'
+const DOCS_DESCRIPTION =
+  'Public implementation docs for SaaSKit, ProKit, and shared features. Most founders should start with SaaSKit.'
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

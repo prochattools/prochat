@@ -4,7 +4,7 @@ title: Social Image Guidance
 
 ## Automatic social cards
 
-ProChat automatically generates Open Graph graphics for any page that doesn’t provide a dedicated image asset. The `/social` route consumes three query parameters (`line1`, `line2`, `subtitle`) to render the branded card used across marketing, guides, docs, prompts, and the glossary.
+ProChat automatically generates Open Graph graphics for any page that doesn’t provide a dedicated image asset. The `/social` route consumes three query parameters (`line1`, `line2`, `subtitle`) to render the branded card used across marketing, Learn, docs, prompts, and the retained Production Guide.
 
 When no image is supplied through frontmatter or custom metadata, `getSEOTags` splits the resolved title into two lines, sanitizes them, trims the subtitle (description) to 120 characters, and builds a URL such as `/social?line1=How%20to%20Build&line2=ProChat&subtitle=Practical%20guides` that is injected into every Open Graph/Twitter card.
 
@@ -14,7 +14,7 @@ The helper looks for the first separator in this order: `:`, ` - `, ` – `, `�
 
 ## Frontmatter overrides
 
-Content authors can bypass the automatic title splitting by adding these optional frontmatter fields to any guide, blog, glossary, playbook, prompt, snippet, or docs entry:
+Content authors can bypass the automatic title splitting by adding these optional frontmatter fields to the retained MDX-driven surfaces, such as the Production Guide, prompts, or docs entries:
 
 - `ogLine1` – the first headline line for `/social`
 - `ogLine2` – the second headline line for `/social`

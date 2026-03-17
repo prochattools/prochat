@@ -51,7 +51,7 @@ const systemCards: readonly SystemCard[] = [
     title: 'ProKit',
     status: 'Available',
     description:
-      'A clean SaaS core for founders who already know what they want to build and need a stable foundation to build on.',
+      'A lighter boilerplate for founders who already know their scope and want a smaller base than SaaSKit.',
     href: '/kits/prokit',
     primary: false,
     icon: ShieldCheck,
@@ -61,7 +61,7 @@ const systemCards: readonly SystemCard[] = [
     title: 'SaaSKit',
     status: 'Available',
     description:
-      'The best starting point for most founders. A production-ready SaaS foundation with the launch layer already built in.',
+      'The default starting point for most non-technical founders. A production-ready boilerplate with the launch layer already built in.',
     href: '/kits/saaskit',
     primary: true,
     icon: Rocket,
@@ -71,7 +71,7 @@ const systemCards: readonly SystemCard[] = [
     title: 'WaaSKit',
     status: 'Coming Soon',
     description:
-      'For founders who want to start with clients, cash flow, and validated demand before turning that into SaaS.',
+      'A future kit for founders who want to begin with client work before productizing. Not the primary starting point today.',
     href: 'https://prochat.tools/kits/waaskit',
     primary: false,
     icon: Cloud,
@@ -81,7 +81,7 @@ const systemCards: readonly SystemCard[] = [
     title: 'UXKit',
     status: 'Roadmap',
     description:
-      'A complete visual SaaS system for founders who want polished screens, clear states, and a more credible product experience.',
+      'A future visual layer for teams that already have the SaaS foundation in place and want a stronger product surface.',
     href: 'https://prochat.tools/kits/uxkit',
     primary: false,
     icon: CircleDot,
@@ -146,14 +146,14 @@ const journeyPaths: readonly JourneyPath[] = [
   {
     title: 'Run the prompt lab',
     description:
-      'Pair your decision framework with curated AI prompts to prototype interfaces, flows, and validation experiments faster.',
+      'Use execution prompts to move faster once the Starting Point is clear and the build is moving through SaaSKit.',
     href: '/prompts',
     action: 'OPEN — PROMPTS',
   },
   {
     title: 'Read the docs',
     description:
-      'Lean documentation keeps the operating system, kit choices, and workflow rules clearly organized in one place.',
+      'Use the docs to implement SaaSKit and the shared ProChat systems without guessing through setup decisions.',
     href: '/docs',
     action: 'OPEN — DOCS',
   },
@@ -179,7 +179,7 @@ export default function App() {
             <span className="hero-accent block">Structure ships it.</span>
           </>
         }
-        subtitle="ProChat gives non-technical founders a structured system to launch production-ready micro SaaS faster—without tool overwhelm, fragile setups, or guesswork."
+        subtitle="ProChat helps non-technical founders move from preparation to a production-ready SaaS build, with SaaSKit as the fastest path once the decision is clear."
         primaryCTA={{
           href: '/kits/saaskit',
           label: 'Start with SaaSKit',
@@ -230,7 +230,7 @@ export default function App() {
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <h2 className="pc-section-title mb-4 text-foreground">The system that helps you launch SaaS properly</h2>
             <p className="pc-body-copy pc-body-muted">
-              ProChat gives non-technical founders the frameworks, kits, and infrastructure patterns to validate faster, build on a stable foundation, and launch with less guesswork.
+              ProChat gives non-technical founders the preparation layer, the implementation sequence, and the boilerplate foundation needed to move from idea to live product without fragile setup work.
             </p>
           </div>
           <div className="grid gap-6 lg:grid-cols-4">
@@ -262,7 +262,7 @@ export default function App() {
           </div>
           <div className="mt-10 text-center">
             <p className="text-lg font-semibold tracking-[-0.02em] text-foreground">
-              Built to reduce guesswork, rework, and fragile launches.
+              Clarify the decision first. Then build on SaaSKit.
             </p>
           </div>
         </div>
@@ -273,7 +273,7 @@ export default function App() {
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <h2 className="pc-section-title mb-4 text-foreground">Where should you start?</h2>
             <p className="pc-body-copy pc-body-muted">
-              Most founders do not need everything at once. Start with the system that solves your biggest bottleneck right now.
+              Preparation comes first. Then execution. Then implementation. Use these pages in order so the build naturally points toward SaaSKit instead of guesswork.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
@@ -295,9 +295,9 @@ export default function App() {
       <Section id="systems" tone="transparent" spacing="loose">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mb-20 text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">Choose the right product to start with</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">Choose the product that gets you shipping</h2>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Each ProChat product solves a different part of the build. Pick the one that matches what you need right now.
+              Most founders should start with SaaSKit. ProKit is the lighter option if you already know your scope. WaaSKit and UXKit stay on the roadmap.
             </p>
           </div>
 
@@ -370,7 +370,7 @@ export default function App() {
             </div>
             <h2 className="pc-section-title mb-6 text-foreground">Move faster with a structured system</h2>
             <p className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              ProChat gives non-technical founders a calmer way to build: clear validation, stable foundations, and launch-ready systems that reduce rework, setup confusion, and fragile decisions.
+              ProChat gives non-technical founders a calmer way to build: clear preparation, a practical implementation path, and a launch-ready boilerplate that reduces rework and setup confusion.
             </p>
           {SHOW_TESTIMONIAL_SCAFFOLD ? (
             <div className="grid gap-6 text-left md:grid-cols-3">
@@ -391,7 +391,7 @@ export default function App() {
         <div className="relative z-10 mx-auto max-w-3xl px-page text-center">
           <h2 className="pc-section-title mb-8 text-foreground">Start with the kit built for real launches</h2>
           <p className="mb-12 text-xl leading-relaxed text-muted-foreground">
-            SaaSKit gives founders a production-ready SaaS foundation with the launch layer already included—so you can stop piecing systems together and start shipping a real product faster.
+            SaaSKit gives non-technical founders a production-ready boilerplate once the idea is clear, so you can stop piecing systems together and start shipping a real product faster.
           </p>
           <div className="flex flex-col items-center justify-center gap-4">
             <div className="flex flex-col items-center justify-center gap-4">

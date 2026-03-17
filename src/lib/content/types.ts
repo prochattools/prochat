@@ -1,15 +1,10 @@
 export type ContentSection =
-  | 'blog'
   | 'docs'
-  | 'glossary'
-  | 'playbooks'
   | 'prompts'
-  | 'snippets'
-  | 'guides'
 
-export type ContentSchemaType = 'article' | 'glossary' | 'howTo'
+export type ContentSchemaType = 'article' | 'howTo'
 
-export type ContentRouteMode = 'single' | 'nested'
+export type ContentRouteMode = 'nested'
 
 export type ContentEntry = {
   section: ContentSection

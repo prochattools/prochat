@@ -136,19 +136,15 @@ function buildRoute(section: ContentSection, filePath: string, root: string) {
   const config = getContentConfig(section)
   const relativePath = path.relative(root, filePath).replace(/\\/g, '/')
   const rawRouteSegments = relativePath.replace(/\.mdx$/, '').split('/')
-  const isIndexPage =
-    config.routeMode === 'nested' &&
-    rawRouteSegments[rawRouteSegments.length - 1] === 'index'
+  const isIndexPage = rawRouteSegments[rawRouteSegments.length - 1] === 'index'
   const routeSegments = isIndexPage
     ? rawRouteSegments.slice(0, -1)
     : rawRouteSegments
   const slug = routeSegments[routeSegments.length - 1] || 'index'
   const urlPath =
-    config.routeMode === 'single'
-      ? `/${section}/${slug}`
-      : routeSegments.length > 0
-        ? `/${section}/${routeSegments.join('/')}`
-        : `/${section}`
+    routeSegments.length > 0
+      ? `/${section}/${routeSegments.join('/')}`
+      : `/${section}`
 
   return { slug, routeSegments, urlPath }
 }

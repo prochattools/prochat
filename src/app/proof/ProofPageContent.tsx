@@ -11,10 +11,10 @@ import ProofLive from '@/app/(marketing)/components/sections/ProofLive'
 import ProofOperational from '@/app/(marketing)/components/sections/ProofOperational'
 import ProofTimeline from '@/app/(marketing)/components/sections/ProofTimeline'
 
-const HERO_PRIMARY_CTA = 'Explore kits'
-const HERO_SECONDARY_CTA = 'See the system'
-const FINAL_PRIMARY_CTA = 'Start with clients → WaaSKit'
-const FINAL_SECONDARY_CTA = 'Start with SaaS → SaaSKit'
+const HERO_PRIMARY_CTA = 'Start with SaaSKit'
+const HERO_SECONDARY_CTA = 'Inspect the live implementation'
+const FINAL_PRIMARY_CTA = 'Start with SaaSKit'
+const FINAL_SECONDARY_CTA = 'Start with the framework'
 
 type SectionProps = {
 	id?: string
@@ -57,12 +57,12 @@ export default function ProofPageContent() {
 			<div className="relative z-10 min-h-screen">
 				<Hero
 					headline="Proof, without pretending."
-					subhead="No inflated metrics. Just inspectable evidence that the system exists and is being followed."
-					microProof="System-first • Client-first • Proof-before-product"
+					subhead="Inspectable evidence that the ProChat workflow produces real implementation outputs, not just boilerplate promises."
+					microProof="Preparation • Implementation • Shipping proof"
 					primaryCta={HERO_PRIMARY_CTA}
-					primaryCtaLink="/kits"
+					primaryCtaLink="/kits/saaskit"
 					secondaryCta={HERO_SECONDARY_CTA}
-					secondaryCtaLink="/#system"
+					secondaryCtaLink="#live"
 					onPrimaryCtaClick={handleCtaClick(HERO_PRIMARY_CTA)}
 					onSecondaryCtaClick={handleCtaClick(HERO_SECONDARY_CTA)}
 				/>
@@ -82,17 +82,17 @@ export default function ProofPageContent() {
 											What &quot;proof&quot; means here.
 										</h2>
 										<p className="text-muted-foreground text-lg leading-relaxed max-w-[45ch]">
-											Most SaaS websites show outcomes without showing the process that
-											produced them.
+											Most boilerplate sites promise speed. This page shows the kind of
+											inspectable implementation evidence that should exist before you
+											trust the pitch.
 										</p>
 									</div>
 								</Reveal>
 
 								<Reveal delay={0.1}>
 									<div className="pl-6 border-l-2 border-primary italic text-foreground/90 text-lg font-medium leading-relaxed">
-										&quot;This page does not show a highlight reel. It shows evidence
-										that a real system exists, is being followed, and constrains
-										decisions.&quot;
+										&quot;This page is here to show that the ProChat path leads to real
+										assets, real operations, and a clear handoff into SaaSKit.&quot;
 									</div>
 								</Reveal>
 
@@ -103,10 +103,10 @@ export default function ProofPageContent() {
 										</p>
 										<ul className="space-y-3">
 											{[
+												'Real live surface',
 												'Real infrastructure',
-												'Real workflows',
-												'Real sequence',
-												'Real limits',
+												'Real workflow discipline',
+												'Real shipping path',
 											].map((item, i) => (
 												<li
 													key={i}
@@ -189,12 +189,12 @@ export default function ProofPageContent() {
 				<ProofTimeline />
 
 				<FinalCTA
-					heading="Start with proof. Choose your entry point."
+					heading="Move from proof into the right starting point."
 					subhead=""
 					primaryCtaLabel={FINAL_PRIMARY_CTA}
-					primaryCtaLink="/kits#waaskit"
+					primaryCtaLink="/kits/saaskit"
 					secondaryCtaLabel={FINAL_SECONDARY_CTA}
-					secondaryCtaLink="/kits/saaskit"
+					secondaryCtaLink="/starting-point"
 					onPrimaryCtaClick={handleCtaClick(FINAL_PRIMARY_CTA)}
 					onSecondaryCtaClick={handleCtaClick(FINAL_SECONDARY_CTA)}
 				/>

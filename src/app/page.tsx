@@ -4,7 +4,7 @@ import MarketingApp from './(marketing)/App'
 export const metadata = getSEOTags({
   title: 'ProChat',
   description:
-    'ProChat is the operating system for SaaS builders. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.',
+    'ProChat helps non-technical founders move from preparation to implementation, with SaaSKit as the production-ready boilerplate for real launches.',
   keywords: [
     'SaaS boilerplate',
     'Next.js SaaS starter',
@@ -16,7 +16,7 @@ export const metadata = getSEOTags({
   openGraph: {
     title: 'ProChat',
     description:
-      'ProChat is the operating system for SaaS builders. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.',
+      'ProChat helps non-technical founders move from preparation to implementation, with SaaSKit as the production-ready boilerplate for real launches.',
     images: ['/og'],
     type: 'website',
   },

@@ -16,7 +16,6 @@ export { default as Auth } from "./auth";
 export { default as Email } from "./email";
 export { default as Payment } from "./payment";
 export { default as Seo } from "./seo";
-export { default as Blog } from "./blog";
 export { default as Database } from "./database";
 export { default as Ui } from "./ui";
 export { default as Licence } from "./licence";

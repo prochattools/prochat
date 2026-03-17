@@ -11,7 +11,7 @@ const ROUTING_TILES = [
   {
     label: 'Just the code',
     title: 'ProKit',
-    body: 'The Developer Core Boilerplate. Pure execution layer for builders. No strategy, no monetization guides—just the raw Next.js engine.',
+    body: 'The Developer Core Boilerplate. Pure execution layer for builders. No strategy layer or learning surface-just the raw Next.js engine.',
     cta: 'Inspect the engine',
     href: '/kits/prokit',
     anchorId: 'prokit',

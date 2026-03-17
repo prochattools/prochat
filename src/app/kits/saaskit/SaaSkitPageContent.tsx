@@ -9,6 +9,7 @@ import { handleCheckoutProcess } from '@/helpers/checkout'
 import { useUser } from '@/libs/safeClerkHooks'
 import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
 import { FeatureIcon } from './_components/FeatureIcon'
+import SaaSkitSourceTracker from './SaaSkitSourceTracker'
 
 type SaaSkitPageContentProps = {
   priceId?: string | null
@@ -223,6 +224,7 @@ const SaaSkitPageContent = ({
 
   return (
     <KitsShell>
+      <SaaSkitSourceTracker />
       <div className="[--section-bg-rgb:255_255_255] [--section-alt-bg-rgb:241_245_249] dark:[--section-bg-rgb:15_17_21] dark:[--section-alt-bg-rgb:29_37_49]">
       <section
         id="top"

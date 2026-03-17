@@ -25,7 +25,7 @@ These values are used by the tenant provisioning scripts, CLI helpers, and runti
 - `NEXT_PUBLIC_UMAMI_SCRIPT_URL`
 - `NEXT_PUBLIC_UMAMI_WEBSITE_ID`
 
-`NEXT_PUBLIC_SITE_URL` is the canonical URL used for sitemap/RSS generation and status pings (`scripts/generate-sitemap.ts`, `scripts/generate-rss.ts`, `scripts/start-production.sh`). `NEXT_PUBLIC_APP_URL` is consumed by metadata and social image helpers (`src/lib/generateSocialImageUrl.ts` and other UI helpers). The Strapi helper (`src/utils/fetch.ts`) references the Strapi host and token. The YouTube URL is only used in marketing sections that expose an external video host.
+`NEXT_PUBLIC_SITE_URL` is the canonical URL used for sitemap generation and canonical metadata (`scripts/generate-sitemap.ts`, `src/lib/seo/metadata.ts`). `NEXT_PUBLIC_APP_URL` is consumed by metadata and social image helpers (`src/lib/generateSocialImageUrl.ts` and other UI helpers). The Strapi helper (`src/utils/fetch.ts`) references the Strapi host and token. The YouTube URL is only used in marketing sections that expose an external video host.
 
 ## Auth (Clerk)
 

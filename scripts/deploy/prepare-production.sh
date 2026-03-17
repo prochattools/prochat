@@ -5,4 +5,3 @@ set -euo pipefail
 : "${SYSTEM_DATABASE_URL:?SYSTEM_DATABASE_URL is required in production.}"
 
 NODE_ENV=production npm run provision:auto
-npm run db:migrate:prod

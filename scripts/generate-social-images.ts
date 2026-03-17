@@ -1,24 +1,53 @@
 import fs from 'fs/promises'
 import path from 'path'
 
-import { getSectionEntries } from '@/lib/content'
-import { renderSocialImage } from '@/lib/renderSocialImage'
+import {
+  getProductionGuideEntry,
+  getProductionGuideSocialImage,
+} from '../src/lib/learning/production-guide.ts'
+import { renderSocialImage } from '../src/lib/renderSocialImage.ts'
+
+const RESERVED_SOCIAL_FILES = new Set([
+  'fb.png',
+  'insta.png',
+  'linkedin.png',
+  'x.png',
+])
+
+async function pruneLegacySocialImages(outputDir: string, keepFiles: Set<string>) {
+  const files = await fs.readdir(outputDir)
+
+  await Promise.all(
+    files
+      .filter(file => file.endsWith('.png') && !keepFiles.has(file))
+      .map(file => fs.unlink(path.join(outputDir, file))),
+  )
+}
 
 async function main() {
   const outputDir = path.join(process.cwd(), 'public', 'social')
   await fs.mkdir(outputDir, { recursive: true })
 
-  const posts = await getSectionEntries('blog')
+  const entry = await getProductionGuideEntry()
+  const staticImage = entry ? getProductionGuideSocialImage(entry) : null
+  const keepFiles = new Set(RESERVED_SOCIAL_FILES)
 
-  await Promise.all(
-    posts.map(async post => {
-      const png = await renderSocialImage({ line1: post.title })
-      const outputPath = path.join(outputDir, `${post.slug}.png`)
-      await fs.writeFile(outputPath, png)
-    }),
-  )
+  if (staticImage) {
+    keepFiles.add(`${staticImage.slug}.png`)
+  }
 
-  console.info(`[social] Generated ${posts.length} static social images in public/social`)
+  await pruneLegacySocialImages(outputDir, keepFiles)
+
+  if (!staticImage) {
+    console.info('[social] No production guide source found; removed stale generated social images.')
+    return
+  }
+
+  const png = await renderSocialImage(staticImage)
+  const outputPath = path.join(outputDir, `${staticImage.slug}.png`)
+  await fs.writeFile(outputPath, png)
+
+  console.info(`[social] Generated 1 static social image in ${path.relative(process.cwd(), outputDir)}`)
 }
 
 main().catch(error => {

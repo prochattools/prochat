@@ -1,11 +1,11 @@
 import { MetadataRoute } from 'next'
 
-import { getSectionEntries } from '@/lib/content'
+import { getPublicDocsEntries } from '@/lib/docs/public-docs'
 import { getSiteUrl } from '@/libs/site-url'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getSiteUrl()
-  const entries = (await getSectionEntries('docs')).filter(entry => entry.urlPath !== '/docs')
+  const entries = (await getPublicDocsEntries()).filter(entry => entry.urlPath !== '/docs')
   const indexLastModified =
     entries.length > 0
       ? new Date(

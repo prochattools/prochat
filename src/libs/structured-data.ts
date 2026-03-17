@@ -1,5 +1,5 @@
 import config from '@/config'
-import { articleSchema, glossarySchema, howToSchema, productSchema } from '@/lib/seo/schema'
+import { articleSchema, howToSchema, productSchema } from '@/lib/seo/schema'
 import { getSiteUrl } from '@/libs/site-url'
 
 type Offer = {
@@ -39,11 +39,6 @@ export function getWebsiteSchema() {
     name: config.appName,
     description: config.appDescription,
     url: `${siteUrl}/`,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${siteUrl}/blog?query={search_term_string}`,
-      'query-input': 'required name=search_term_string',
-    },
   }
 }
 
@@ -101,42 +96,4 @@ export function getEventSchema({
   }
 }
 
-export function getBlogPostingSchema({
-  title,
-  description,
-  slug,
-  datePublished,
-  dateModified,
-}: {
-  title: string
-  description: string
-  slug: string
-  datePublished: string
-  dateModified?: string
-}) {
-  return articleSchema({
-    title,
-    description,
-    urlPath: `/blog/${slug}`,
-    datePublished,
-    dateModified,
-  })
-}
-
-export function getDefinedTermSchema({
-  name,
-  description,
-  slug,
-}: {
-  name: string
-  description: string
-  slug: string
-}) {
-  return glossarySchema({
-    name,
-    description,
-    urlPath: `/glossary/${slug}`,
-  })
-}
-
-export { articleSchema, glossarySchema, howToSchema, productSchema }
+export { articleSchema, howToSchema, productSchema }

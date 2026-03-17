@@ -27,7 +27,7 @@ const NAV_ITEMS = [
 ] as const
 
 const MOBILE_SECONDARY_ITEMS = [
-	{ label: 'LinkedIn', href: 'https://www.linkedin.com/', icon: 'linkedin' },
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/company/prochattools', icon: 'linkedin' },
 	{ label: 'GitHub', href: 'https://github.com/prochattools', icon: 'github' },
 	{ label: 'Discord', href: 'https://discord.gg/U75p2BQuAH', icon: 'discord' },
 ] as const

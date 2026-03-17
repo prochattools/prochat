@@ -40,26 +40,24 @@ The root domain is an MDX-driven authority system, not a separate marketing site
 
 Implemented content surfaces:
 
-- `/blog`
+- `/learn`
+- `/learn/saas-starting-point`
+- `/learn/production-guide`
 - `/docs`
-- `/guides`
-- `/glossary/[term]`
-- `/saas-glossary` as the glossary hub
-- `/snippets`
 - `/prompts`
-- `/playbooks`
+- main marketing and product pages exposed through the root sitemap
+
+The prompt library remains live but `noindex` while it is still thin. The removed blog corpus, glossary, snippets, playbooks, guides, and `/saas-glossary` are not exposed through sitemap generation.
 
 The content platform also owns:
 
 - generated Open Graph assets
 - build-time sitemap generation
-- build-time RSS generation
 - taxonomy and metadata helpers
 
 Reference docs:
 
 - [content-platform.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/content-platform.md)
-- [blog-system.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/blog-system.md)
 - [open-graph-system.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/open-graph-system.md)
 - [design-system.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/design-system.md)
 - [mailerlite-funnel.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/mailerlite-funnel.md)

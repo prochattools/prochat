@@ -1,22 +1,20 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
-import { BookOpen, Check, Shield, CircleDot } from 'lucide-react'
+import { Check, Shield, CircleDot } from 'lucide-react'
 import HeroSection from '@/components/marketing/HeroSection'
 import HeroBadge from '@/components/ui/hero-badge'
 import { Button } from '@/components/ui/button'
 import { Panel, Section } from '@/components/ui/surface'
+import { getSEOTags } from '@/lib/seo/metadata'
 
 const pageTitle = 'SaaS Starting Point | ProChat'
 const pageDescription =
   'A structured framework for founders who want to turn an idea or insight into a production-ready SaaS decision before writing any code.'
 
-export const metadata: Metadata = {
+export const metadata = getSEOTags({
   title: pageTitle,
   description: pageDescription,
-  metadataBase: new URL('https://prochat.tools'),
-  alternates: {
-    canonical: '/learn/saas-starting-point',
-  },
+  canonicalUrlRelative: '/learn/saas-starting-point',
+  robots: { index: true, follow: true },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
@@ -24,7 +22,7 @@ export const metadata: Metadata = {
     type: 'article',
     images: ['/og'],
   },
-}
+})
 
 const steps = [
   {

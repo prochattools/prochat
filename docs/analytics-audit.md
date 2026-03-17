@@ -83,14 +83,14 @@
   - This is a strong high-intent lead event and should remain.
 
 ### Content intent
-- Blog CTA component:
+- Content CTA component:
   - `src/components/ContextualLinkCta.tsx`
-- Blog pages:
-  - `src/app/blog/page.tsx`
-  - `src/components/blog/ArticleLayout.tsx`
+- Retained content pages:
+  - `src/app/learn/production-guide/page.tsx`
+  - `src/components/content/CTASection.tsx`
 - Notes:
   - Existing `blog_cta_click` is useful and already high-signal.
-  - No need to track low-signal article interactions.
+  - No need to track low-signal content interactions.
 
 ## Current problems
 - One script injection point exists, which is good.

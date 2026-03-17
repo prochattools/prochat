@@ -4,7 +4,7 @@ import { getSEOTags } from '@/lib/seo/metadata'
 
 export const metadata = getSEOTags({
   title: 'Prompts | ProChat',
-  description: 'AI prompts designed to work inside the ProChat operating system for SaaS builders.',
+  description: 'Execution prompts for non-technical founders using Starting Point, the Production Guide, and SaaSKit to ship a real product.',
   canonicalUrlRelative: '/prompts',
 })
 
@@ -14,8 +14,8 @@ export default async function PromptsIndexPage() {
   return (
     <SectionIndex
       section="prompts"
-      title="Prompt Assets for SaaS Builders"
-      description="Reusable AI prompts that connect to playbooks, guides, and production-safe execution patterns."
+      title="Execution Prompts for SaaSKit Builders"
+      description="Use these prompts after Starting Point and the Production Guide when you need help moving the real build forward inside SaaSKit and the implementation docs."
       entries={entries}
     />
   )

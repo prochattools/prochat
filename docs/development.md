@@ -90,7 +90,6 @@ The exact predev chain is defined in [package.json](/Users/Office/Repos/Organisa
 
 - `npm run generate:social`
 - `npm run sitemap`
-- `npm run rss`
 
 ## Local auth behavior
 

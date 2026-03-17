@@ -1,10 +1,10 @@
 import type { MDXComponents } from 'mdx/types'
 
-import { blogMdxComponents } from '@/components/blog/mdx-components'
+import { contentMdxComponents } from '@/components/content/mdx-components'
 
 export function useMDXComponents(components: MDXComponents = {}): MDXComponents {
   return {
-    ...blogMdxComponents,
+    ...contentMdxComponents,
     ...components,
   }
 }

@@ -1,92 +1,161 @@
-# Open Graph System
+# Open Graph and Share System
 
-## Global OG
+This document describes the single Open Graph and share-link system that currently exists in ProChat.
 
-Global Open Graph image generation lives at:
+## Route surface
 
-- `src/app/og/route.ts`
+The OG/share system is implemented through these routes:
 
-Implementation:
+- `src/app/og/route.ts` - default site-wide Open Graph image
+- `src/app/social/route.ts` - parameterized social image renderer used by page metadata and the admin helper
+- `src/app/blog/[slug]/og/route.ts` - legacy blog OG route retained for compatibility with historical blog/share URLs
 
-- uses `next/og` `ImageResponse`
-- runs on the Node runtime
-- uses centralized tokens from `src/lib/brand.ts`
-- uses centralized font loading from `src/lib/ogFonts.ts`
-- uses shared SVG helpers from `src/lib/og-utils.ts`
+The route tree is intentionally single-system:
 
-Properties:
+- `/og` is the default fallback image for marketing and root metadata
+- `/social?...` renders a share card from query-string inputs
+- `/blog/[slug]/og` is compatibility-only after the blog cleanup; it only renders the retained legacy Production Guide slug and reads from `src/content/learn/production-guide.mdx`
 
-- dark-mode-first visual language
-- deterministic token-driven layout
-- no manual image export workflow
-- no per-page design duplication
+## Core implementation
 
-The route produces the default root-domain social image used by marketing and site-wide metadata.
+Shared implementation lives in:
 
-## Blog OG
-
-Dynamic blog OG generation lives at:
-
-- `src/app/blog/[slug]/og/route.ts`
-
-It loads the blog entry through the existing blog loader and renders:
-
-- category or pillar badge
-- article title
-- description
-- footer metadata
-
-This means every valid blog post receives a generated OG image automatically. No separate design file, screenshot, or PNG asset is required per post.
-
-## Metadata Wiring
-
-Global metadata is normalized through:
-
-- `src/app/layout.tsx`
 - `src/lib/seo/metadata.ts`
-
-Blog metadata overrides the image route per slug through:
-
-- `src/app/blog/[slug]/page.tsx`
-
-The pattern is:
-
-- site default uses `/og`
-- blog post pages use `/blog/[slug]/og`
-
-No manual absolute OG URL management is required beyond setting `NEXT_PUBLIC_SITE_URL`.
-
-## Font + Token Sources
-
-Central token source:
-
-- `src/lib/brand.ts`
-
-Central OG font loader:
-
+- `src/lib/social-image.ts`
+- `src/lib/renderSocialImage.ts`
+- `src/lib/generateSocialImageUrl.ts`
 - `src/lib/ogFonts.ts`
+- `src/lib/og-utils.ts`
 
-Loaded fonts:
+Responsibilities:
 
-- `public/fonts/GolosText-Regular.ttf`
-- `public/fonts/GolosText-Bold.ttf`
-- `public/fonts/JetBrainsMono-Regular.ttf`
+- `src/lib/seo/metadata.ts` builds metadata objects and falls back to `/social` when no explicit OG image is supplied
+- `src/lib/social-image.ts` sanitizes headline/subtitle input, clamps lengths, and provides defaults
+- `src/lib/renderSocialImage.ts` renders the shared `/social` card using `next/og`
+- `src/lib/generateSocialImageUrl.ts` generates the shareable `/social` or `/social/<slug>.png` URLs
+- `src/lib/ogFonts.ts` and `src/lib/og-utils.ts` provide the shared fonts, sizing, and token helpers
 
-These are loaded directly at generation time so OG rendering stays visually aligned with the rest of the system.
+## Supported inputs
 
-## Philosophy
+The parameterized social image route at `/social` supports:
 
-The OG system is intentionally:
+- `title` - single-string headline input; the renderer splits it into display lines when possible
+- `line1` - explicit first headline line
+- `line2` - explicit second headline line
+- `subtitle` - supporting copy shown under the headline
 
-- token-driven
-- deterministic
-- centralized
-- cache-friendly
-- build-safe for Dokploy
+The helpers sanitize all of those inputs before rendering.
 
-It avoids:
+Helper usage:
 
-- manual image creation
-- runtime API handlers for image assets outside the App Router OG routes
-- duplicated colors or layout constants
-- route-specific styling drift
+- `generateSocialImageUrl(title, subtitle?)`
+- `generateSocialImageUrl({ line1, line2?, subtitle? })`
+- `generateStaticSocialImageUrl(slug)`
+
+## Metadata wiring
+
+The current metadata flow is:
+
+- root metadata uses `/og` from `src/app/layout.tsx`
+- `getSEOTags` in `src/lib/seo/metadata.ts` automatically falls back to `/social?...` if a page does not provide its own image
+- docs and prompts rely on that shared fallback path
+- the retained Production Guide page (`src/app/learn/production-guide/page.tsx`) prefers a generated static asset from `public/social/<slug>.png`, and falls back to a `/social` URL with title/subtitle parameters if the static image is missing
+
+The legacy blog OG route still works independently of the current public blog surface because it reads from the dedicated Production Guide helper instead of the removed blog loader.
+
+## Static OG generation
+
+Build-time static social images are generated by:
+
+- `scripts/generate-social-images.ts`
+
+That script renders images into:
+
+- `public/social/*.png`
+
+The current build keeps those images available for the retained Production Guide and for legacy share compatibility.
+
+## Helper UI
+
+There is already an internal helper UI:
+
+- route: `/admin/og`
+- page: `src/app/admin/og/page.tsx`
+- client UI: `src/app/admin/og/AdminOgGenerator.tsx`
+
+What it does:
+
+- reuses `generateSocialImageUrl`
+- builds a shareable `/social?...` URL from line one, line two, and subtitle inputs
+- lets an admin copy the generated URL or open the image directly
+
+It does not create a second rendering system. It is only a URL builder on top of the existing `/social` route.
+
+## Twitter and LinkedIn automation
+
+The repo already contains lightweight social-post automation support:
+
+- generator: `scripts/content-engine/generate-social-posts.ts`
+- feed files: `content/social/twitter.json` and `content/social/linkedin.json`
+- state file: `content/social/state.json`
+- fetch-next API: `src/app/api/social/next/route.ts`
+- mark-posted API: `src/app/api/social/mark-posted/route.ts`
+
+Behavior:
+
+- the generator builds a curated evergreen feed from the retained live surfaces only
+- each generated link is tagged with `ref`, `campaign`, and `pillar`
+- `/api/social/next?platform=twitter|linkedin` returns the next unposted feed item
+- `/api/social/mark-posted` records the posted id in `content/social/state.json`
+- both APIs require the `x-social-secret` header to match `SOCIAL_AUTOMATION_SECRET`
+
+Current feed scope after the repo cleanup:
+
+- `/learn`
+- `/learn/saas-starting-point`
+- `/learn/production-guide`
+- `/prompts`
+- `/docs`
+- `/kits`
+- `/kits/saaskit`
+- `/kits/prokit`
+
+The generator no longer points to removed guides or glossary routes.
+
+## Using the system
+
+### Generate or inspect an OG image
+
+1. Open `/admin/og` if you want a UI
+2. Enter `line1`, optional `line2`, and optional `subtitle`
+3. Copy the generated `/social?...` URL or open it directly
+
+Code path alternative:
+
+1. call `generateSocialImageUrl(...)`
+2. use the returned URL in metadata, automation, or internal tooling
+
+### Generate Twitter/LinkedIn feed items
+
+1. Run `npx tsx scripts/content-engine/generate-social-posts.ts`
+2. Read the feed from `content/social/twitter.json` or `content/social/linkedin.json`
+3. Fetch the next item through `/api/social/next?platform=twitter` or `/api/social/next?platform=linkedin`
+4. After a post is published, call `/api/social/mark-posted`
+
+Notes:
+
+- the feed stores site-relative links
+- downstream automation should prepend the site origin when it needs an absolute URL for posting
+- the same OG/share renderer is used for both Twitter and LinkedIn; there is no second platform-specific card system
+
+## Audit status
+
+After the content cleanup:
+
+- `/og` still works as the global fallback
+- `/social` still works as the parameterized renderer
+- `/admin/og` still works as the helper UI
+- the retained Production Guide still has a working OG path
+- the social-post generator and existing feed files now point only at retained live routes
+
+This is the only OG/share system that should be extended.

@@ -20,10 +20,7 @@ function hasIntrinsicHeaderSpacing(pathname: string) {
 		pathname === '/waiting-list' ||
 		pathname === '/waas/accountants' ||
 		pathname === '/docs' ||
-		pathname === '/guides' ||
-		pathname === '/playbooks' ||
 		pathname === '/prompts' ||
-		pathname === '/snippets' ||
 		pathname.startsWith('/kits')
 	)
 }

@@ -10,11 +10,11 @@ const FAQS = [
     },
     {
         q: "Do I need to be technical?",
-        a: "For WaaSKit, no—you can start with no-code service. For SaaSKit and ProKit, basic familiarity with React/Next.js is recommended, though we provide detailed guides."
+        a: "For WaaSKit, no. You can start with no-code service. For SaaSKit and ProKit, basic familiarity with React/Next.js is recommended, though we provide structured docs and walkthroughs."
     },
     {
         q: "Is ProChat a course?",
-        a: "It’s a hybrid. You get the strategy (Playbook) and the code (Kits). We don't just teach you 'how'—we give you the standardized asset to do it."
+        a: "It’s a hybrid. You get the system and the code. We do not just explain the workflow - we give you the standardized asset to do it."
     },
     {
         q: "Do you sell services?",

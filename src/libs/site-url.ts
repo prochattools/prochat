@@ -9,7 +9,8 @@ export function getSiteUrl() {
   }
 
   if (process.env.NODE_ENV === 'development') {
-    return 'http://localhost:3000'
+    const port = process.env.PORT?.trim() || '3000'
+    return `http://localhost:${port}`
   }
 
   return `https://${config.domainName}`

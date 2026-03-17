@@ -25,6 +25,7 @@ export default async function DocsLayout({
             content: 'Question? Give us feedback →',
             labels: 'docs',
           }}
+          search={null}
           nextThemes={{
             storageKey: 'theme',
             attribute: 'class',
@@ -36,8 +37,8 @@ export default async function DocsLayout({
             defaultMenuCollapseLevel: 1,
           }}
           navbar={
-            <Navbar
-              logoLink="https://prochat.tools"
+          <Navbar
+            logoLink="/"
               logo={
                 <span
                   className="docs-logo-wordmark"

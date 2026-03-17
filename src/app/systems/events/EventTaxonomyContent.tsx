@@ -6,19 +6,24 @@ import { Panel, Section } from '@/components/ui/surface'
 
 const EVENTS = [
 	{
+		name: 'visit_source',
+		description: 'Attributed landing captured on key funnel pages such as Starting Point and SaaSKit.',
+		payload: '{ source: "twitter|linkedin|reddit|youtube|direct", entry?: "go", campaign?: "saaskit", source_page: "string" }',
+	},
+	{
 		name: 'lead_magnet_view',
 		description: 'First viewed state for the SaaS Starting Point lead magnet flow.',
-		payload: '{ source_page: "/starting-point", asset: "preparation_framework" }',
+		payload: '{ source_page: "/starting-point", asset: "preparation_framework", source: "string", entry: "go", campaign: "lead-magnet" }',
 	},
 	{
 		name: 'lead_magnet_submit',
 		description: 'Email submission attempt for the Starting Point lead magnet.',
-		payload: '{ source_page: "/starting-point", asset: "preparation_framework" }',
+		payload: '{ source_page: "/starting-point", asset: "preparation_framework", source: "string", entry: "go", campaign: "lead-magnet" }',
 	},
 	{
 		name: 'lead_magnet_success',
 		description: 'Successful lead magnet signup after provider acceptance.',
-		payload: '{ source_page: "/starting-point", asset: "preparation_framework" }',
+		payload: '{ source_page: "/starting-point", asset: "preparation_framework", source: "string", entry: "go", campaign: "lead-magnet" }',
 	},
 	{
 		name: 'waitlist_view',
@@ -72,8 +77,8 @@ const EVENTS = [
 	},
 	{
 		name: 'blog_cta_click',
-		description: 'Key conversion CTA click from blog index and blog article footers.',
-		payload: '{ cta_type: "explore_kits|contact|related_article|blog|link", location: "blog_index_footer|blog_post_footer", href: "string" }',
+		description: 'Key conversion CTA click from the production guide and other content footers.',
+		payload: '{ cta_type: "explore_kits|contact|link", location: "production_guide_footer|prompts_content_footer|docs_content_footer|mdx_inline_cta", href: "string" }',
 	},
 	{
 		name: 'outbound_funnel_click',

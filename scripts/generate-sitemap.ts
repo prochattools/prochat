@@ -63,21 +63,22 @@ function writeXmlFile(outputPath: string, xml: string) {
 async function main() {
   const baseUrl = getSiteUrl()
   const generatedAt = new Date().toISOString()
+  const pagePaths = [
+    { path: '/', priority: '1.0' },
+    { path: '/contact', priority: '0.7' },
+    { path: '/proof', priority: '0.7' },
+    { path: '/kits', priority: '0.8' },
+    { path: '/kits/prokit', priority: '0.8' },
+    { path: '/kits/saaskit', priority: '0.9' },
+    { path: '/starting-point', priority: '0.9' },
+  ] as const
 
-  const pageEntries: UrlSitemapEntry[] = [
-    {
-      loc: `${baseUrl}/`,
-      lastmod: generatedAt,
-      changefreq: 'weekly',
-      priority: '0.7',
-    },
-    {
-      loc: `${baseUrl}/blog`,
-      lastmod: generatedAt,
-      changefreq: 'weekly',
-      priority: '0.7',
-    },
-  ]
+  const pageEntries: UrlSitemapEntry[] = pagePaths.map(entry => ({
+    loc: `${baseUrl}${entry.path}`,
+    lastmod: generatedAt,
+    changefreq: 'weekly',
+    priority: entry.priority,
+  }))
 
   const pagesXml = [
     '<?xml version="1.0" encoding="UTF-8"?>',
@@ -89,13 +90,8 @@ async function main() {
 
   const sitemapEntries: SitemapIndexEntry[] = [
     { loc: `${baseUrl}/sitemap-pages.xml`, lastmod: generatedAt },
-    { loc: `${baseUrl}/blog/sitemap.xml`, lastmod: generatedAt },
+    { loc: `${baseUrl}/learn/sitemap.xml`, lastmod: generatedAt },
     { loc: `${baseUrl}/docs/sitemap.xml`, lastmod: generatedAt },
-    { loc: `${baseUrl}/glossary/sitemap.xml`, lastmod: generatedAt },
-    { loc: `${baseUrl}/guides/sitemap.xml`, lastmod: generatedAt },
-    { loc: `${baseUrl}/playbooks/sitemap.xml`, lastmod: generatedAt },
-    { loc: `${baseUrl}/prompts/sitemap.xml`, lastmod: generatedAt },
-    { loc: `${baseUrl}/snippets/sitemap.xml`, lastmod: generatedAt },
   ]
 
   const sitemapIndexXml = [

@@ -13,11 +13,11 @@ const ProofTimeline: React.FC = () => {
                     <Reveal width="100%">
                         <div>
                             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                                Proof accumulates. It doesn’t get invented.
+                                Proof should lead cleanly into the product build.
                             </h2>
                             <div className="text-muted-foreground max-w-xl mx-auto mb-16 font-light text-xl">
-                                This page will evolve only as the system progresses. Each stage appears only after it is
-                                reached.
+                                Start with real-world proof, move through implementation, and only then expand into the
+                                SaaS build on a production-ready foundation like SaaSKit.
                             </div>
                         </div>
                     </Reveal>

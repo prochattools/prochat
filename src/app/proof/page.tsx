@@ -4,11 +4,11 @@ import ProofPageContent from './ProofPageContent'
 export const metadata = getSEOTags({
 	title: 'Proof | ProChat',
 	description:
-		'No inflated metrics. Just inspectable evidence that the system exists and is being followed.',
+		'Inspectable evidence that the ProChat workflow produces real implementation outputs and points founders toward SaaSKit.',
 	openGraph: {
 		title: 'Proof | ProChat',
 		description:
-			'No inflated metrics. Just inspectable evidence that the system exists and is being followed.',
+			'Inspectable evidence that the ProChat workflow produces real implementation outputs and points founders toward SaaSKit.',
 	},
 	canonicalUrlRelative: '/proof',
 })

@@ -55,27 +55,6 @@ export function productSchema({
   }
 }
 
-export function glossarySchema({
-  name,
-  description,
-  urlPath,
-}: {
-  name: string
-  description: string
-  urlPath: string
-}) {
-  const siteUrl = getSiteUrl()
-
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'DefinedTerm',
-    name,
-    description,
-    url: `${siteUrl}${urlPath}`,
-    inDefinedTermSet: `${siteUrl}/saas-glossary`,
-  }
-}
-
 export function howToSchema({
   name,
   description,

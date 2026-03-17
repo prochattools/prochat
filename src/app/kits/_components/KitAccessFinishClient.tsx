@@ -320,7 +320,7 @@ export default function KitAccessFinishClient({
 							</p>
 							<div>
 								<Link
-									href='https://prochat.tools/docs'
+									href='/docs'
 									className='inline-flex items-center justify-center rounded-lg border border-emerald-300/35 bg-emerald-500/15 px-4 py-2 text-sm font-semibold text-emerald-900 dark:text-emerald-50 transition hover:bg-emerald-500/25 dark:hover:bg-emerald-500/35'
 								>
 									Start Building

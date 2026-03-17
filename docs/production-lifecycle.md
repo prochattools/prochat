@@ -9,16 +9,14 @@ It complements [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/proc
 Production follows a build-first lifecycle:
 
 1. Dokploy runs `npm run build`
-2. npm triggers `prebuild`
-3. `prebuild` runs provisioning and production migrations
-4. the Next.js build completes
-5. Dokploy starts the container with `npm run start`
-6. the startup script launches `next start`
-7. the startup script pings sitemap endpoints for search engines
+2. `next build` compiles the standalone app output
+3. Dokploy starts the container with `npm run start`
+4. the startup script launches `next start`
+5. operators handle any Search Console follow-up manually after deploy
 
-## Prebuild phase
+## Optional database prep
 
-The prebuild hook is defined in [package.json](/Users/Office/Repos/Organisation/ProChat/Web/prochat/package.json).
+Database preparation is explicit. When a deploy needs tenant provisioning or production migrations, operators can run [prepare-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/deploy/prepare-production.sh).
 
 Current command:
 
@@ -35,23 +33,20 @@ That hands off to [scripts/provision-auto.js](/Users/Office/Repos/Organisation/P
 3. run `npm run db:init -- --slug <slug>`
 4. run `npm run db:migrate:prod`
 
-That means tenant provisioning and Prisma production migrations are part of the build lifecycle rather than a separate runtime lifecycle.
+That means tenant provisioning and Prisma production migrations are handled as an explicit operational step rather than hidden inside the build.
 
 ## Build continuation
 
-After the prebuild sequence finishes, `npm run build` continues with:
+`npm run build` currently does one thing:
 
-1. `npm run generate:social`
-2. `next build`
-3. `npm run sitemap`
-4. `npm run rss`
+1. `next build`
 
-This makes build output responsible for:
+Optional generators remain outside the hot build path:
 
-- compiled app output
-- generated Open Graph assets
-- sitemap output
-- RSS output
+- `npm run generate:social`
+- `npm run sitemap`
+
+Docs also avoid pre-rendering the full public corpus at build time. The docs router prebuilds only the core landing and onboarding pages, and less-frequent public doc pages are generated on demand and cached.
 
 ## Startup phase
 
@@ -60,11 +55,31 @@ Runtime startup is handled by [scripts/start-production.sh](/Users/Office/Repos/
 Current behavior:
 
 - start `next start -p ${PORT:-3000}`
-- wait briefly in the background
-- derive `SITE_URL` from `NEXT_PUBLIC_SITE_URL`, falling back to `https://prochat.tools`
-- ping Google and Bing with `${SITE_URL}/sitemap.xml`
+- sync `.next/static` and `.next/standalone/.next/static` so both supported runtime layouts can serve assets
+- wait on the Next.js process
 
 The script then waits on the Next.js process.
+
+## Manual search-console step
+
+Search-engine follow-up is manual, not automatic.
+
+After deploy:
+
+1. resubmit `${NEXT_PUBLIC_SITE_URL}/sitemap.xml` in Google Search Console
+2. request indexing manually for the retained primary surfaces when needed:
+   - `/`
+   - `/learn`
+   - `/learn/saas-starting-point`
+   - `/learn/production-guide`
+   - `/starting-point`
+   - `/docs`
+   - `/kits/saaskit`
+   - `/kits/prokit`
+   - `/proof`
+   - `/contact`
+
+The runtime does not ping Google or Bing on startup.
 
 ## What is not part of the lifecycle
 
@@ -87,13 +102,13 @@ In practical terms, Dokploy is where the build-driven provisioning and startup l
 
 ## Operational implication
 
-Because provisioning and migrations happen during `npm run build`, a production build is not just a static compile step. It assumes:
+`npm run build` is now a pure application compile step. If operators also run the explicit database prep helper, that prep step assumes:
 
 - valid production env values
 - reachable production database connections
 - correct app slug and tenant credentials
 
-That distinction matters when reproducing production behavior locally or in CI.
+That separation keeps the default build faster and easier to reproduce locally and in CI.
 
 ## Related references
 

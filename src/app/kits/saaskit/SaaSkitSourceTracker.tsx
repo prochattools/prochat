@@ -19,7 +19,7 @@ function readCookie(name: string) {
   return decodeURIComponent(match.split('=')[1] || '')
 }
 
-export default function SourceTracker() {
+export default function SaaSkitSourceTracker() {
   useEffect(() => {
     const cookieSource = readCookie(COOKIE_SOURCE)
     const cookieEntry = readCookie(COOKIE_ENTRY)
@@ -49,12 +49,12 @@ export default function SourceTracker() {
 
     trackEventOncePerSession(
       'visit_source',
-      `visit_source:/starting-point:${resolvedSource}:${cookieEntry || cookieCampaign || 'none'}`,
+      `visit_source:/kits/saaskit:${resolvedSource}:${cookieEntry || cookieCampaign || 'none'}`,
       {
         source: resolvedSource,
         entry: cookieEntry || undefined,
         campaign: cookieCampaign || undefined,
-        source_page: '/starting-point',
+        source_page: '/kits/saaskit',
       },
     )
   }, [])

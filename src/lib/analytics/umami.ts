@@ -8,6 +8,7 @@ export type AnalyticsPayloadValue =
 export type AnalyticsPayload = Record<string, AnalyticsPayloadValue>
 
 export type AnalyticsEventName =
+  | 'visit_source'
   | 'lead_magnet_view'
   | 'lead_magnet_submit'
   | 'lead_magnet_success'

@@ -1,17 +1,19 @@
-import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { BookOpen } from 'lucide-react'
 import HeroBadge from '@/components/ui/hero-badge'
 import HeroSection from '@/components/marketing/HeroSection'
 import { Button } from '@/components/ui/button'
+import { getSEOTags } from '@/lib/seo/metadata'
 import StartSignupForm from './_components/StartSignupForm'
 import SourceTracker from './SourceTracker'
 import QuickFaqAccordion from './QuickFaqAccordion'
 
-export const metadata: Metadata = {
+export const metadata = getSEOTags({
   title: 'The SaaS Starting Point | ProChat',
   description: 'The Operating System for SaaS Builders. A preparation framework to reduce risk before you build.',
-}
+  canonicalUrlRelative: '/starting-point',
+  robots: { index: true, follow: true },
+})
 
 const AUDIENCE_CARDS = [
   {

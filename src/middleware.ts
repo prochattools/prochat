@@ -36,5 +36,6 @@ export const middleware = hasClerkKeys && !isClerkDisabled
   : mockMiddleware
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  // Skip static assets and public docs; reduces latency for public navigation
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|docs|docs/.*).*)'],
 }

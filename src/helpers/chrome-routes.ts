@@ -13,10 +13,7 @@ export const MARKETING_SURFACE_ROUTES = [
   '/waitlist',
   '/waiting-list',
   '/waas/accountants',
-  '/guides',
-  '/playbooks',
   '/prompts',
-  '/snippets',
   '/privacy',
   '/terms',
 ] as const

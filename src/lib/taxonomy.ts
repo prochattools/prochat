@@ -19,9 +19,7 @@ export const tags: TaxonomyItem[] = [
   { slug: 'saas-builders', label: 'SaaS Builders' },
   { slug: 'founder-ops', label: 'Founder Ops' },
   { slug: 'validation', label: 'Validation' },
-  { slug: 'playbooks', label: 'Playbooks' },
   { slug: 'prompts', label: 'Prompts' },
-  { slug: 'glossary', label: 'Glossary' },
 ]
 
 function normalize(value: string) {

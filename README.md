@@ -2,11 +2,11 @@
 
 ProChat is the operating system for SaaS builders.
 
-This repository runs the root-domain marketing, content, glossary, and conversion experience for ProChat. It uses a deterministic build-time content pipeline so articles, docs, guides, prompts, snippets, playbooks, glossary entries, Open Graph assets, sitemap output, and RSS output are generated under one production-safe architecture.
+This repository runs the root-domain marketing, learning, documentation, and conversion experience for ProChat. It uses a deterministic build-time content pipeline so the retained learning surfaces, generated docs, Open Graph assets, and sitemap output are produced under one production-safe architecture.
 
 ## Architecture Overview
 
-The site is built on Next.js App Router and deployed on Dokploy. The system is dark-mode-first, tokenized, and build-driven: content is loaded from MDX, validated, rendered into static routes, then enriched with deterministic Open Graph images, sitemap output, and RSS output during deployment.
+The site is built on Next.js App Router and deployed on Dokploy. The system is dark-mode-first, tokenized, and build-driven: content is loaded from MDX, validated, rendered into static routes, then enriched with deterministic Open Graph images and sitemap output during deployment.
 
 Core architectural properties:
 
@@ -25,7 +25,6 @@ Content (MDX)
   -> Build (Next.js App Router)
   -> Open Graph generation
   -> Sitemap generation
-  -> RSS generation
   -> Dokploy deploy
 ```
 
@@ -33,12 +32,11 @@ Core layers:
 
 - `src/app` — route tree, page templates, OG routes, section sitemap routes
 - `src/components/content` — shared content layout, MDX renderer, CTA, related content
-- `src/lib/content` — placeholder MDX content roots and shared content loader
+- `src/lib/content` — MDX content roots and shared content loader
 - `src/lib/brand.ts` — centralized brand, spacing, type, depth, and motion tokens
 - `src/lib/seo` — metadata and schema helpers
 - `src/lib/taxonomy.ts` — categories, tags, and mapping helpers
-- `src/lib/content/blog` — canonical blog content root
-- `content/glossary` — glossary content retained in place
+- `src/content/learn/production-guide.mdx` — retained curated source for the public Production Guide and legacy share compatibility
 
 ## Folder Structure
 
@@ -48,11 +46,11 @@ src/
     blog/[slug]/page.tsx
     blog/[slug]/og/route.ts
     docs/[category]/[slug]/page.tsx
-    glossary/[term]/page.tsx
-    playbooks/[segment]/[slug]/page.tsx
+    learn/page.tsx
+    learn/production-guide/page.tsx
+    learn/saas-starting-point/page.tsx
     prompts/[category]/[slug]/page.tsx
-    snippets/[stack]/[slug]/page.tsx
-    guides/[topic]/[slug]/page.tsx
+    starting-point/page.tsx
     og/route.ts
     */sitemap.ts
   components/
@@ -63,36 +61,29 @@ src/
       RelatedContent.tsx
   lib/
     content/
-      blog/
       docs/
-      glossary/
-      playbooks/
       prompts/
-      snippets/
-      guides/
+    learning/
     seo/
       metadata.ts
       schema.ts
     taxonomy.ts
 scripts/
   generate-sitemap.ts
-  generate-rss.ts
   start-production.sh
 ```
 
 ## Content Clustering Strategy
 
-ProChat now stacks authority through seven connected clusters:
+ProChat now keeps the public content surface intentionally small:
 
-- `blog` — narrative, positioning, long-form search capture
+- `learn` — the curated onboarding and sequencing layer
+- `starting-point` — the standalone conversion surface for the framework
+- `production-guide` — the retained implementation walkthrough under `/learn/production-guide`
 - `docs` — implementation detail and architecture explanation
-- `glossary` — definition capture for SaaS founder terminology
-- `playbooks` — repeatable execution workflows
-- `prompts` — reusable AI operating assets
-- `snippets` — tactical implementation patterns
-- `guides` — structured walkthroughs that connect strategy to execution
+- `prompts` — live execution assets that remain `noindex` until the library is stronger
 
-The root domain carries all of these because they support one buyer journey and one topical graph.
+The blog corpus, glossary, snippets, playbooks, guides, and `/saas-glossary` are not part of the live indexed surface.
 
 ## Internal Linking Rules
 
@@ -104,11 +95,11 @@ Every content page should link in three directions:
 
 Practical rules:
 
-- Blog posts link to kits, glossary, and deeper implementation assets
-- Glossary entries link back to `/saas-glossary` plus relevant blog articles
-- Playbooks and prompts link to each other where execution sequence matters
-- Snippets and docs link into guides when users need context, not just code
-- CTA blocks should move readers toward either `/kits`, `/contact`, or the next authority asset
+- Learn should move users in order: Starting Point -> Production Guide -> Prompts -> Docs
+- Starting Point should route users toward the framework signup and then back into Learn
+- Production Guide and Docs should route toward prompts, kits, or contact when execution starts
+- Prompts should point back to the Production Guide or Docs instead of acting like an index target
+- CTA blocks should move readers toward `/kits`, `/contact`, or the next retained learning asset
 
 ## Sitemap Structure
 
@@ -116,13 +107,16 @@ The root sitemap lives at `/sitemap.xml` and covers static/site-critical routes.
 
 Section sitemaps live at:
 
-- `/blog/sitemap.xml`
 - `/docs/sitemap.xml`
-- `/glossary/sitemap.xml`
-- `/playbooks/sitemap.xml`
-- `/prompts/sitemap.xml`
-- `/snippets/sitemap.xml`
-- `/guides/sitemap.xml`
+- `/learn/sitemap.xml`
+
+The root sitemap index intentionally exposes only:
+
+- the root marketing sitemap (`/sitemap-pages.xml`)
+- `/docs/sitemap.xml`
+- `/learn/sitemap.xml`
+
+The removed surfaces (`/blog`, `/guides`, `/playbooks`, `/snippets`, `/glossary`, `/saas-glossary`) are not emitted. `/prompts` stays live but remains out of sitemap output and returns `noindex` until the library is production-ready.
 
 This keeps section-level discovery explicit while preserving one root-domain authority graph.
 
@@ -140,24 +134,21 @@ The positioning is consistent across metadata and content:
 
 > ProChat — The Operating System for SaaS Builders
 
-## Blog Architecture
+## Learning Architecture
 
-The blog is organized as a guided learning system rather than a flat reverse-chronological archive.
+The public learning layer is sequence-driven rather than archive-driven.
 
-- `Start Here` features the flagship pillar post for first-time readers.
-- `Core Resources` sits directly below the hero to surface glossary and validation assets before the learning path.
-- The learning path is grouped into ordered pillars: `Start Here`, `Foundation`, `Structure`, `Build`, `Production`, and `Execution`.
-- Posts support `pillarCategory` and `pillarOrder` frontmatter so ordering remains stable as the library grows.
-- Tag filtering is client-side and derived from the current post set, with the default state showing every post.
-- The flagship guide always renders first when a post is marked `pillar: true`.
-
-The detailed mechanics live in `docs/blog-system.md`.
+- `Learn` is the curated entry point
+- `Starting Point` clarifies the idea and scope before build work starts
+- `Production Guide` carries the retained implementation walkthrough
+- `Prompts` stay accessible by direct URL but are withheld from indexing while thin
+- `Docs` remain the implementation reference surface
 
 ## Conversion Flow Logic
 
 The content system is not isolated from conversion. It is designed to move users through a clear ladder:
 
-1. Discover via blog, glossary, guides, docs, prompts, or snippets
+1. Discover via the core marketing pages, Learn, Starting Point, Production Guide, Docs, or direct prompt links
 2. Understand the system through related content and structured layouts
 3. Move into a CTA that routes to kits, contact, or the next execution asset
 4. Convert into SaaSKit, ProChat, or a conversation with the team
@@ -167,14 +158,14 @@ Each content layout injects a CTA section automatically so discovery traffic doe
 ## System domains
 
 - **App/runtime** — tenant provisioning, database wiring, infrastructure deploy flow, and production runtime. See `docs/overview.md`, `docs/database.md`, `docs-public/environment.md`, `docs/deployment.md`, `docs/production-lifecycle.md`, `docs/development.md`, `docs/integrations.md`, `docs/github-entitlements.md`, `docs/automation-routes.md`, `docs/getting-started.md`, `docs/tenant-cleanup.md`, `docs/builder-reference.md`, and `docs/ai-guidelines.md` for the operator-facing contracts.
-- **Content + SEO platform** — the MDX-driven clusters, OG generation, sitemap/RSS output, analytics, and design system. The canonical entries are `docs/content-platform.md`, `docs/blog-system.md`, `docs/open-graph-system.md`, `docs/design-system.md`, `docs/design-rules.md`, `docs/allowed-section-types.md`, `docs/page-blueprint-template.md`, and `docs/analytics-audit.md`.
+- **Content + SEO platform** — the retained learning surfaces, generated docs, OG generation, sitemap output, analytics, and design system. The canonical entries are `docs/content-platform.md`, `docs/open-graph-system.md`, `docs/design-system.md`, `docs/design-rules.md`, `docs/allowed-section-types.md`, `docs/page-blueprint-template.md`, and `docs/analytics-audit.md`.
 - **Docs automation** — generated docs are defined in `docs/docs-automation.md` and `scripts/docs/README.md`; use the internal doc for the operator overview and the script guide for implementation details.
 
 ## Internal documentation map
 
 - `/docs` is strictly internal. These markdown files describe the environment, deployment, content plane, and docs automation that the ProChat team operates directly.
 - `scripts/docs/README.md` is the low-level reference for the docs pipeline; it is not part of the generated public docs map but links to `docs-ingest`, `docs-export`, and `src/content/docs`.
-- Use the content docs (blog, docs, prompts, etc.) inside `src/content/docs/*` when you need the public-facing output; they are produced from the internal `/docs` plus the AI pipeline, so editing `/docs` (or adding new templates here) flows into the generated site via `npm run docs:ai-build`.
+- Use the generated public docs inside `src/content/docs/*` when you need the public-facing output; they are produced from the internal `/docs` plus the AI pipeline, so editing `/docs` (or adding new templates here) flows into the generated site via `npm run docs:ai-build`.
 AI coding agents should consult `AGENTS.md` for repository context before editing the docs or code.
 Operational commands and validation paths are documented in `REPO_OPERATIONS.md`.
 
@@ -218,8 +209,6 @@ Production build order:
 
 1. `next build`
 2. `npm run sitemap`
-3. `npm run rss`
-
 The root build script is deterministic. There is no runtime cron, no ISR publishing toggle, and no background worker that mutates content visibility after deploy.
 
 ## Deployment Model
@@ -227,7 +216,7 @@ The root build script is deterministic. There is no runtime cron, no ISR publish
 - Dokploy is the deployment target
 - OG routes run on the Node runtime, not Edge
 - Publishing visibility is decided at build time using `publishedAt`
-- Search engine pinging happens once on production startup
+- Google Search Console follow-up is manual after deploy; the runtime does not auto-submit sitemaps
 - Weekly scheduled publishing is handled by GitHub Actions triggering a Dokploy redeploy
 
 ## Zero Manual Content Workflow
@@ -236,11 +225,9 @@ The publishing system is designed to remove repetitive operational work:
 
 - No manual OG image creation
 - No manual sitemap updates
-- No manual RSS updates
-- No manual publish toggles for future-dated posts
-- Future-dated posts become visible on the next redeploy after `publishedAt`
-- Taxonomy validation is enforced in the blog loader
-- Internal linking follows a controlled editorial rule set for semantic consistency
+- No manual publish toggles for retained curated assets
+- The Production Guide and prompt/docs surfaces are rendered from controlled sources
+- Internal linking follows the retained learning-path structure
 
 ## Next Step for Content Expansion
 

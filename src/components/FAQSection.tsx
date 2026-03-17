@@ -31,7 +31,7 @@ const FAQ_ITEMS = [
   {
     question: 'Where do I start if I feel stuck?',
     answer:
-      'Start with the documentation if your question is product-specific. Start with the Learn page if you need concepts, terminology, or guidance. Use the contact form if you hit a real blocker or need help choosing the right next step.',
+      'Start with the documentation if your question is product-specific. Start with the Learn page if you need the guided sequence or the right next step. Use the contact form if you hit a real blocker or need help choosing what to do next.',
   },
   {
     question: 'Where can I find setup instructions and documentation?',

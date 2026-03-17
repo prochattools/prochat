@@ -8,7 +8,7 @@ export const SITE_TITLE_SUFFIX = 'ProChat — The Operating System for SaaS Buil
 export const DEFAULT_DESCRIPTION =
   'ProChat is the operating system for SaaS builders. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.'
 
-const brandPattern = /\s*[|—-]\s*ProChat(?:\s+Blog)?$/i
+const brandPattern = /\s*[|—-]\s*ProChat$/i
 
 export function formatMetaTitle(value?: string | null) {
   if (!value) return SITE_TITLE_SUFFIX

@@ -40,8 +40,11 @@ export default function StartSignupForm({
     trackEventOncePerSession('lead_magnet_view', 'lead_magnet_view:/starting-point', {
       source_page: '/starting-point',
       asset: 'preparation_framework',
+      source: resolvedSource,
+      entry: 'go',
+      campaign: 'lead-magnet',
     })
-  }, [])
+  }, [resolvedSource])
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -64,6 +67,9 @@ export default function StartSignupForm({
     trackEvent('lead_magnet_submit', {
       source_page: '/starting-point',
       asset: 'preparation_framework',
+      source: resolvedSource,
+      entry: 'go',
+      campaign: 'lead-magnet',
     })
 
     try {
@@ -97,6 +103,9 @@ export default function StartSignupForm({
       trackEvent('lead_magnet_success', {
         source_page: '/starting-point',
         asset: 'preparation_framework',
+        source: resolvedSource,
+        entry: 'go',
+        campaign: 'lead-magnet',
       })
       setEmail('')
     } catch (submitError) {

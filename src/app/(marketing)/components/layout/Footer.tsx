@@ -36,7 +36,12 @@ const LEGAL_LINKS = [
 const CONTACT_ACTIONS = [
   { href: 'https://x.com/stevewesthoek', label: 'Follow me on X', icon: 'x', external: true },
   { href: 'https://github.com/prochattools', label: 'Follow me on GitHub', icon: 'github', external: true },
-  { href: 'https://www.linkedin.com/', label: 'Connect on LinkedIn', icon: 'linkedin', external: true },
+  {
+    href: 'https://www.linkedin.com/company/prochattools',
+    label: 'Connect on LinkedIn',
+    icon: 'linkedin',
+    external: true,
+  },
 ] as const
 
 export const Footer: React.FC = () => {

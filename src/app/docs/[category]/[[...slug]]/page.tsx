@@ -8,6 +8,9 @@ import { articleSchema } from '@/lib/seo/schema'
 import { getSEOTags, createSocialImageParams } from '@/lib/seo/metadata'
 import { getSiteUrl } from '@/libs/site-url'
 
+export const dynamic = 'force-static'
+export const dynamicParams = true
+export const revalidate = 3600
 
 type PageParams = { params: { category: string; slug?: string[] } }
 
@@ -53,6 +56,7 @@ export async function generateMetadata({ params }: PageParams) {
     description: entry.metaDescription || entry.description,
     keywords: getDocKeywords(entry, routeSegments),
     canonicalUrlRelative: entry.urlPath,
+    robots: { index: true, follow: true },
     openGraph: {
       title: entry.metaTitle || entry.title,
       description: entry.metaDescription || entry.description,

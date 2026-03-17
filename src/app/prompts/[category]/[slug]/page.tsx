@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: PageParams) {
     description: entry.metaDescription || entry.description,
     keywords: entry.keywords,
     canonicalUrlRelative: entry.urlPath,
+    robots: { index: false, follow: true },
     socialImage,
   })
 }

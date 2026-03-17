@@ -2,7 +2,7 @@
 
 This document describes the deployment flow that currently exists in the ProChat repo.
 
-ProChat does **not** use the SaaSKit runtime deploy gate. There is no runtime backup, smoke-check, or restore wrapper around `next start`. Provisioning and migrations happen during the build lifecycle instead.
+ProChat does **not** use the SaaSKit runtime deploy gate. There is no runtime backup, smoke-check, restore wrapper, or automatic search-engine submission step around `next start`.
 
 ## Production target
 
@@ -11,9 +11,7 @@ Production is built for Dokploy.
 Current expectations:
 
 - Dokploy runs `npm run build`
-- `npm run build` triggers `prebuild`
-- `prebuild` runs `NODE_ENV=production npm run provision:auto`
-- `provision:auto` runs tenant provisioning and production migrations
+- if database preparation is needed, operators run `scripts/deploy/prepare-production.sh` explicitly before or alongside deploy orchestration
 - Dokploy starts the app with `npm run start`
 
 ## Actual build flow
@@ -23,22 +21,20 @@ The relevant scripts are defined in [package.json](/Users/Office/Repos/Organisat
 Production build sequence:
 
 1. `npm run build`
-2. npm runs `prebuild`
-3. `prebuild` runs `NODE_ENV=production npm run provision:auto`
-4. `provision:auto` runs:
-   - `npm run db:init -- --slug <APP_SLUG>`
-   - `npm run db:migrate:prod`
-5. the build continues with:
-   - `npm run generate:social`
-   - `next build`
-   - `npm run sitemap`
-   - `npm run rss`
+2. `next build`
 
-This means provisioning and `prisma migrate deploy` happen before the production Next.js build finishes.
+The hot build path does **not** automatically run:
+
+- tenant provisioning
+- Prisma production migrations
+- social image generation
+- sitemap generation
+
+Those remain explicit commands so deploys do not spend time on non-essential work unless operators intentionally invoke them.
 
 ## Provisioning flow
 
-`scripts/provision-auto.js` is the orchestration layer.
+`scripts/provision-auto.js` is the orchestration layer used by the explicit deploy-prep helper.
 
 Behavior:
 
@@ -62,7 +58,7 @@ Development migrations use:
 - command: `npm run db:migrate:dev`
 - implementation: `prisma migrate dev --schema=prisma/system.prisma`
 
-The production contract is build-driven. ProChat does not expect operators to run manual migration commands during a normal Dokploy deploy.
+The production contract is explicit rather than hidden in `npm run build`. When operators need database preparation, they can run [prepare-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/deploy/prepare-production.sh), which calls `provision:auto`. That already runs both `db:init` and `db:migrate:prod`, so the helper no longer runs migrations twice.
 
 ## Startup behavior
 
@@ -71,8 +67,7 @@ The production contract is build-driven. ProChat does not expect operators to ru
 That script:
 
 - starts `next start -p ${PORT:-3000}`
-- waits briefly
-- pings Google and Bing with `${NEXT_PUBLIC_SITE_URL}/sitemap.xml`
+- syncs standalone static assets when needed for the current runtime layout
 
 It does not:
 
@@ -81,6 +76,26 @@ It does not:
 - create backups
 - run smoke tests
 - roll back a failed deploy
+- auto-submit sitemaps to Google or Bing
+
+## Manual search follow-up
+
+After a production deploy, operators should handle search-console follow-up manually:
+
+1. resubmit `${NEXT_PUBLIC_SITE_URL}/sitemap.xml` in Google Search Console
+2. request indexing manually for the retained priority surfaces if they need to be refreshed:
+   - `/`
+   - `/learn`
+   - `/learn/saas-starting-point`
+   - `/learn/production-guide`
+   - `/starting-point`
+   - `/docs`
+   - `/kits/saaskit`
+   - `/kits/prokit`
+   - `/proof`
+   - `/contact`
+
+ProChat does not perform those submissions automatically at runtime.
 
 ## CI behavior
 
@@ -95,7 +110,7 @@ CI flow:
 - runs dev migrations
 - runs `npm run build`
 
-CI therefore validates the same build-driven provisioning pattern, but it does so on Node 20.
+CI therefore validates the application build on Node 20 while keeping provisioning and migration steps explicit in the workflow.
 
 ## Node version constraint
 

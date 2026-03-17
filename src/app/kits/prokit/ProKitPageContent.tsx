@@ -68,7 +68,7 @@ const techSpecs = [
     title: 'What ProKit intentionally does NOT include',
     points: [
       'No predefined marketing frontend',
-      'No blog or SEO system',
+      'No public content layer',
       'No workflow automation layer',
     ],
   },

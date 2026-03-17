@@ -98,7 +98,7 @@ Publish
 	•	“SaaSKit vs Shipfast”
 
 Internal Audit
-	•	Run audit-internal-links script
+	•	Run a retained-surface link audit
 	•	Ensure no orphan articles
 
 YouTube
