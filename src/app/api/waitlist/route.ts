@@ -84,25 +84,70 @@ function maskEmail(email: string) {
   return `${localSafe}@${domain}`
 }
 
+function waitlistError(
+  error: string,
+  status: number,
+  extras: Record<string, unknown> = {},
+) {
+  return NextResponse.json(
+    {
+      success: false,
+      error,
+      ...extras,
+    },
+    { status },
+  )
+}
+
+function waitlistSuccess(
+  message: string,
+  extras: Record<string, unknown> = {},
+) {
+  return NextResponse.json({
+    success: true,
+    message,
+    ...extras,
+  })
+}
+
+function getWaitlistSignupModel() {
+  const waitlistSignup = prisma?.waitlistSignup
+
+  if (!waitlistSignup || typeof waitlistSignup.create !== 'function') {
+    console.error('[waitlist] Prisma waitlistSignup model unavailable', {
+      hasPrismaClient: Boolean(prisma),
+      hasWaitlistSignup: Boolean(waitlistSignup),
+      ci: process.env.CI ?? null,
+      nodeEnv: process.env.NODE_ENV ?? null,
+    })
+    return null
+  }
+
+  return waitlistSignup
+}
+
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
+    const body = await request.json().catch(() => null)
+
+    if (!body || typeof body !== 'object') {
+      return waitlistError('Invalid request payload.', 400)
+    }
+
     const parsed = waitlistSubmissionSchema.safeParse(body)
 
     if (!parsed.success) {
-      return NextResponse.json(
-        {
-          error: 'Validation failed',
-          fieldErrors: parsed.error.flatten().fieldErrors,
-        },
-        { status: 400 },
-      )
+      return waitlistError('Validation failed', 400, {
+        fieldErrors: parsed.error.flatten().fieldErrors,
+      })
     }
 
     const submission = parsed.data
 
     if (submission.honeypot.trim().length > 0) {
-      return NextResponse.json({ success: true, spamFiltered: true })
+      return waitlistSuccess("You're on the ProChat waitlist.", {
+        spamFiltered: true,
+      })
     }
 
     const rateLimitKey = `${getClientIp(request)}::waitlist`
@@ -110,6 +155,7 @@ export async function POST(request: Request) {
     if (rateLimit.limited) {
       return NextResponse.json(
         {
+          success: false,
           error:
             'Too many requests. Please wait a minute and try again.',
           retryAfterSeconds: rateLimit.retryAfterSeconds,
@@ -137,34 +183,12 @@ export async function POST(request: Request) {
     const from = normalizeEmailAddress(fromRaw)
     const adminInbox = normalizeEmailAddress(adminInboxRaw)
 
-    if (!from) {
-      return NextResponse.json(
-        {
-          error:
-            'Missing sender configuration. Set WAITLIST_FROM_EMAIL or CONTACT_FROM_EMAIL.',
-        },
-        { status: 500 },
-      )
-    }
-
-    if (!adminInbox) {
-      return NextResponse.json(
-        {
-          error:
-            'Missing admin inbox configuration. Set WAITLIST_ADMIN_EMAIL or SUPPORT_EMAIL.',
-        },
-        { status: 500 },
-      )
-    }
-
     const resendApiKey = process.env.RESEND_API_KEY
-    if (!resendApiKey) {
-      return NextResponse.json(
-        {
-          error:
-            'RESEND_API_KEY is missing. Configure it before using waitlist emails.',
-        },
-        { status: 500 },
+    const waitlistSignupModel = getWaitlistSignupModel()
+    if (!waitlistSignupModel) {
+      return waitlistError(
+        'Unable to join the waitlist right now. Please try again shortly.',
+        500,
       )
     }
 
@@ -172,7 +196,7 @@ export async function POST(request: Request) {
     const formattedProducts = formatWaitlistProducts(submission.products)
     const selectedProductsCsv = formattedProducts.join(', ')
 
-    const signup = await prisma.waitlistSignup.create({
+    const signup = await waitlistSignupModel.create({
       data: {
         email: submission.email,
         selected_products: submission.products,
@@ -183,74 +207,114 @@ export async function POST(request: Request) {
     })
 
     const timestampIso = signup.created_at.toISOString()
-    const { logoUrl, preferencesUrl, unsubscribeUrl } =
+    const { logoUrl, wordmarkUrl, preferencesUrl, unsubscribeUrl } =
       buildWaitlistPreferenceUrls(unsubscribeToken)
 
-    const resend = new Resend(resendApiKey)
+    let emailStatus: 'sent' | 'skipped' | 'failed' = 'skipped'
+    let emailWarning: string | null = null
+    let emailIds = {
+      admin: null as string | null,
+      confirmation: null as string | null,
+    }
 
-    const [adminResult, confirmationResult] = await Promise.all([
-      resend.emails.send({
-        from,
-        to: [adminInbox],
-        replyTo: [submission.email],
-        subject: 'New ProChat Waitlist Signup',
-        react: WaitlistAdminNotificationEmail({
-          email: submission.email,
-          timestampIso,
-          products: formattedProducts,
-          logoUrl,
-        }),
-      }),
-      resend.emails.send({
-        from,
-        to: [submission.email],
-        replyTo: [adminInbox],
-        subject: "You're on the ProChat waitlist",
-        react: WaitlistConfirmationEmail({
-          email: submission.email,
-          products: formattedProducts,
-          logoUrl,
-          preferencesUrl,
-          unsubscribeUrl,
-        }),
-      }),
-    ])
-
-    if (adminResult.error || confirmationResult.error) {
-      console.error('Waitlist email send error', {
-        adminError: adminResult.error,
-        confirmationError: confirmationResult.error,
+    if (!resendApiKey || !from || !adminInbox) {
+      emailWarning =
+        'Waitlist signup saved without sending confirmation emails because email configuration is incomplete.'
+      console.error('[waitlist] email configuration incomplete', {
+        hasResendApiKey: Boolean(resendApiKey),
+        hasFrom: Boolean(from),
+        hasAdminInbox: Boolean(adminInbox),
       })
-      return NextResponse.json(
-        { error: 'Failed to send waitlist emails. Please try again shortly.' },
-        { status: 500 },
-      )
+    } else {
+      try {
+        const resend = new Resend(resendApiKey)
+
+        const [adminResult, confirmationResult] = await Promise.all([
+          resend.emails.send({
+            from,
+            to: [adminInbox],
+            replyTo: [submission.email],
+            subject: 'New ProChat Waitlist Signup',
+            react: WaitlistAdminNotificationEmail({
+              email: submission.email,
+              timestampIso,
+              products: formattedProducts,
+              logoUrl,
+              wordmarkUrl,
+            }),
+          }),
+          resend.emails.send({
+            from,
+            to: [submission.email],
+            replyTo: [adminInbox],
+            subject: "You're on the ProChat waitlist",
+            react: WaitlistConfirmationEmail({
+              email: submission.email,
+              products: formattedProducts,
+              logoUrl,
+              wordmarkUrl,
+              preferencesUrl,
+              unsubscribeUrl,
+            }),
+          }),
+        ])
+
+        if (adminResult?.error || confirmationResult?.error) {
+          emailStatus = 'failed'
+          emailWarning = 'Waitlist signup saved, but confirmation email delivery failed.'
+          console.error('[waitlist] email send error', {
+            adminError: adminResult?.error ?? null,
+            confirmationError: confirmationResult?.error ?? null,
+          })
+        } else {
+          emailStatus = 'sent'
+          emailIds = {
+            admin: adminResult?.data?.id ?? null,
+            confirmation: confirmationResult?.data?.id ?? null,
+          }
+        }
+      } catch (error) {
+        emailStatus = 'failed'
+        emailWarning = 'Waitlist signup saved, but confirmation email delivery failed.'
+        console.error('[waitlist] unexpected email error', error)
+      }
     }
 
     if (process.env.NODE_ENV !== 'production') {
       console.info('[waitlist] signup accepted', {
         email: maskEmail(submission.email),
         selectedProducts: submission.products,
-        confirmationId: confirmationResult.data?.id ?? null,
-        adminId: adminResult.data?.id ?? null,
+        confirmationId: emailIds.confirmation,
+        adminId: emailIds.admin,
+        emailStatus,
       })
     }
 
-    return NextResponse.json({
-      success: true,
-      message: "You're on the ProChat waitlist.",
-      ids: {
-        admin: adminResult.data?.id ?? null,
-        confirmation: confirmationResult.data?.id ?? null,
-      },
+    return waitlistSuccess("You're on the ProChat waitlist.", {
+      ids: emailIds,
       selectedProducts: submission.products,
       selectedProductsCsv,
+      emailStatus,
+      ...(emailWarning
+        ? {
+            warning: emailWarning,
+          }
+        : {}),
     })
   } catch (error) {
-    console.error('Waitlist API Error:', error)
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 },
+    console.error('[waitlist] API error', error)
+    return waitlistError(
+      'Unable to join the waitlist right now. Please try again shortly.',
+      500,
+      {
+        ids: {
+          admin: null,
+          confirmation: null,
+        },
+        selectedProducts: [],
+        selectedProductsCsv: '',
+        emailStatus: 'failed',
+      },
     )
   }
 }

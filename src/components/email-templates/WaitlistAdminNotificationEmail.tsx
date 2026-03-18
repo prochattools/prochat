@@ -10,12 +10,14 @@ import {
 } from '@react-email/components'
 
 import { brand } from '@/lib/brand'
+import ProChatEmailBrand from '@/components/email-templates/ProChatEmailBrand'
 
 interface WaitlistAdminNotificationEmailProps {
   email: string
   timestampIso: string
   products: string[]
   logoUrl: string
+  wordmarkUrl: string
 }
 
 const styles = {
@@ -44,14 +46,6 @@ const styles = {
   },
   header: {
     padding: '28px 28px 12px',
-  },
-  logoName: {
-    color: brand.colors.textLight,
-    fontFamily: 'Host Grotesk, Golos Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif',
-    fontSize: '18px',
-    fontWeight: 600,
-    lineHeight: '1.2',
-    margin: 0,
   },
   eyebrow: {
     color: brand.colors.primary,
@@ -117,6 +111,7 @@ const WaitlistAdminNotificationEmail: React.FC<Readonly<WaitlistAdminNotificatio
   timestampIso,
   products,
   logoUrl,
+  wordmarkUrl,
 }) => (
   <Html>
     <Head />
@@ -127,26 +122,7 @@ const WaitlistAdminNotificationEmail: React.FC<Readonly<WaitlistAdminNotificatio
           <Section style={styles.accentBar} />
 
           <Section style={styles.header}>
-            <table width="100%" cellPadding="0" cellSpacing="0" role="presentation">
-              <tbody>
-                <tr>
-                  <td align="center">
-                    <img
-                      src={logoUrl}
-                      width="40"
-                      height="40"
-                      alt="ProChat"
-                      style={{ display: 'block', height: '40px', width: '40px' }}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td align="center" style={{ paddingTop: '8px' }}>
-                    <span style={styles.logoName}>ProChat</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <ProChatEmailBrand logoUrl={logoUrl} wordmarkUrl={wordmarkUrl} />
             <Text style={styles.eyebrow}>ProChat Waitlist Intake</Text>
             <Text style={styles.title}>New ProChat Waitlist Signup</Text>
           </Section>

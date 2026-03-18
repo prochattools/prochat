@@ -11,11 +11,13 @@ import {
 } from '@react-email/components'
 
 import { brand } from '@/lib/brand'
+import ProChatEmailBrand from '@/components/email-templates/ProChatEmailBrand'
 
 interface WaitlistConfirmationEmailProps {
   email: string
   products: string[]
   logoUrl: string
+  wordmarkUrl: string
   preferencesUrl: string
   unsubscribeUrl: string
 }
@@ -46,24 +48,6 @@ const styles = {
   },
   header: {
     padding: '28px 28px 12px',
-  },
-  logoTable: {
-    margin: '0 auto',
-  },
-  logoCell: {
-    verticalAlign: 'middle' as const,
-  },
-  logoSpacer: {
-    width: '10px',
-  },
-  logoName: {
-    color: brand.colors.textLight,
-    fontFamily: 'Host Grotesk, Golos Text, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif',
-    fontSize: '18px',
-    fontWeight: 600,
-    lineHeight: '1.2',
-    margin: 0,
-    verticalAlign: 'middle' as const,
   },
   eyebrow: {
     color: brand.colors.primary,
@@ -137,6 +121,7 @@ const WaitlistConfirmationEmail: React.FC<Readonly<WaitlistConfirmationEmailProp
   email,
   products,
   logoUrl,
+  wordmarkUrl,
   preferencesUrl,
   unsubscribeUrl,
 }) => {
@@ -153,38 +138,7 @@ const WaitlistConfirmationEmail: React.FC<Readonly<WaitlistConfirmationEmailProp
             <Section style={styles.accentBar} />
 
             <Section style={styles.header}>
-              <table width="100%" cellPadding="0" cellSpacing="0" role="presentation">
-                <tbody>
-                  <tr>
-                    <td align="center">
-                      <table
-                        cellPadding="0"
-                        cellSpacing="0"
-                        role="presentation"
-                        style={styles.logoTable}
-                      >
-                        <tbody>
-                          <tr>
-                            <td style={styles.logoCell}>
-                              <img
-                                src={logoUrl}
-                                width="40"
-                                height="40"
-                                alt="ProChat"
-                                style={{ display: 'block', height: '40px', width: '40px' }}
-                              />
-                            </td>
-                            <td style={styles.logoSpacer} />
-                            <td style={styles.logoCell}>
-                              <span style={styles.logoName}>ProChat</span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <ProChatEmailBrand logoUrl={logoUrl} wordmarkUrl={wordmarkUrl} />
               <Text style={styles.eyebrow}>ProChat Waitlist</Text>
               <Text style={styles.title}>You&apos;re on the ProChat waitlist</Text>
             </Section>

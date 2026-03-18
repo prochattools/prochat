@@ -8,11 +8,27 @@ import './waitlist-page.css'
 import WaitlistPageMarkup from './WaitlistPageMarkup'
 
 type WaitlistApiResponse = {
+  success?: boolean
   error?: string
   message?: string
-  success?: boolean
   fieldErrors?: Record<string, string[] | undefined>
   retryAfterSeconds?: number
+  warning?: string
+  selectedProducts?: string[]
+  selectedProductsCsv?: string
+  ids?: {
+    admin?: string | null
+    confirmation?: string | null
+  }
+  emailStatus?: 'sent' | 'skipped' | 'failed'
+}
+
+function normalizeWaitlistApiResponse(value: unknown): WaitlistApiResponse {
+  if (!value || typeof value !== 'object') {
+    return {}
+  }
+
+  return value as WaitlistApiResponse
 }
 
 export default function WaitingListBody() {
@@ -187,21 +203,23 @@ export default function WaitingListBody() {
           body: JSON.stringify(validation.data),
         })
 
-        const json = (await response.json().catch(() => null)) as WaitlistApiResponse | null
+        const json = normalizeWaitlistApiResponse(
+          await response.json().catch(() => null),
+        )
 
         if (!response.ok) {
-          const emailFieldMessage = json?.fieldErrors?.email?.[0]
+          const emailFieldMessage = json.fieldErrors?.email?.[0]
           if (emailFieldMessage) {
             setEmailError(emailFieldMessage)
             emailInput.focus()
           }
 
           const retrySuffix =
-            response.status === 429 && json?.retryAfterSeconds
+            response.status === 429 && json.retryAfterSeconds
               ? ` Retry in ${json.retryAfterSeconds}s.`
               : ''
 
-          throw new Error((json?.error || 'Unable to join the waitlist right now.') + retrySuffix)
+          throw new Error((json.error || 'Unable to join the waitlist right now.') + retrySuffix)
         }
 
         form.reset()
@@ -210,7 +228,7 @@ export default function WaitingListBody() {
           product: getPrimaryProduct(validation.data.products),
           products: validation.data.products.join(','),
         })
-        setStatus('success', json?.message || "You're on the ProChat waitlist.")
+        setStatus('success', json.message || "You're on the ProChat waitlist.")
       } catch (error) {
         setStatus(
           'error',

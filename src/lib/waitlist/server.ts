@@ -28,7 +28,8 @@ export function buildWaitlistPreferenceUrls(token: string) {
   const siteUrl = getSiteUrl()
 
   return {
-    logoUrl: `${siteUrl}/email/logo-mark.png`,
+    logoUrl: `${siteUrl}/logo/logo-mark.svg`,
+    wordmarkUrl: `${siteUrl}/logo/logo-wordmark.svg`,
     preferencesUrl: `${siteUrl}/preferences?token=${encodeURIComponent(token)}`,
     unsubscribeUrl: `${siteUrl}/unsubscribe?token=${encodeURIComponent(token)}`,
   }
