@@ -29,8 +29,9 @@ const ProofLive: React.FC = () => {
                             A live implementation, not a placeholder.
                         </h2>
                         <div className="text-slate-500 max-w-2xl mx-auto font-light text-xl leading-relaxed mb-8 dark:text-slate-300">
-                            The point is not vanity metrics. It is showing that ProChat can turn a narrow problem into a
-                            real offer, a working funnel, and a visible path toward a SaaSKit build.
+                            The point is not vanity metrics. It is showing the kind of narrow, inspectable product
+                            surface that makes the SaaSKit promise believable: a real offer, a working funnel, and a
+                            launch path that does not rely on hand-waving.
                         </div>
                         <Link
                             href="https://accountant.prochat.tools"

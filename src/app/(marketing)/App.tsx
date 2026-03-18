@@ -51,7 +51,7 @@ const systemCards: readonly SystemCard[] = [
     title: 'ProKit',
     status: 'Available',
     description:
-      'A lighter boilerplate for founders who already know their scope and want a smaller base than SaaSKit.',
+      'The lighter option for founders who already know their scope and want less built-in surface than SaaSKit.',
     href: '/kits/prokit',
     primary: false,
     icon: ShieldCheck,
@@ -61,31 +61,31 @@ const systemCards: readonly SystemCard[] = [
     title: 'SaaSKit',
     status: 'Available',
     description:
-      'The default starting point for most non-technical founders. A production-ready boilerplate with the launch layer already built in.',
+      'The flagship boilerplate for most non-technical founders. Use it once the buyer, outcome, and MVP scope are clear.',
     href: '/kits/saaskit',
     primary: true,
     icon: Rocket,
-    ctaLabel: 'VIEW — SAASKIT',
+    ctaLabel: 'START — SAASKIT',
   },
   {
     title: 'WaaSKit',
     status: 'Coming Soon',
     description:
-      'A future kit for founders who want to begin with client work before productizing. Not the primary starting point today.',
+      'A future client-first path. Keep the focus on SaaSKit if your goal is to launch software now.',
     href: 'https://prochat.tools/kits/waaskit',
     primary: false,
     icon: Cloud,
-    ctaLabel: 'VIEW — WAASKIT',
+    ctaLabel: 'SEE — ROADMAP',
   },
   {
     title: 'UXKit',
     status: 'Roadmap',
     description:
-      'A future visual layer for teams that already have the SaaS foundation in place and want a stronger product surface.',
+      'A future UX layer for teams that already have a live SaaS foundation and want a stronger product surface later.',
     href: 'https://prochat.tools/kits/uxkit',
     primary: false,
     icon: CircleDot,
-    ctaLabel: 'VIEW — UXKIT',
+    ctaLabel: 'SEE — ROADMAP',
   },
 ] as const
 
@@ -144,18 +144,18 @@ const journeyPaths: readonly JourneyPath[] = [
     action: 'OPEN — STARTING POINT',
   },
   {
-    title: 'Run the prompt lab',
+    title: 'Plan the build',
     description:
-      'Use execution prompts to move faster once the Starting Point is clear and the build is moving through SaaSKit.',
-    href: '/prompts',
-    action: 'OPEN — PROMPTS',
+      'Use the Production Guide to turn a clear decision into the right implementation order before you start wiring SaaSKit.',
+    href: '/learn/production-guide',
+    action: 'OPEN — PRODUCTION GUIDE',
   },
   {
-    title: 'Read the docs',
+    title: 'Execute inside SaaSKit',
     description:
-      'Use the docs to implement SaaSKit and the shared ProChat systems without guessing through setup decisions.',
-    href: '/docs',
-    action: 'OPEN — DOCS',
+      'Use the prompts to move faster through positioning, scope, QA, and production prep once the SaaSKit build is underway.',
+    href: '/prompts',
+    action: 'OPEN — PROMPTS',
   },
 ] as const
 
@@ -179,17 +179,17 @@ export default function App() {
             <span className="hero-accent block">Structure ships it.</span>
           </>
         }
-        subtitle="ProChat helps non-technical founders move from preparation to a production-ready SaaS build, with SaaSKit as the fastest path once the decision is clear."
+        subtitle="ProChat helps non-technical founders validate the right product, define the right scope, and launch faster with SaaSKit once the decision is clear."
         primaryCTA={{
           href: '/kits/saaskit',
           label: 'Start with SaaSKit',
         }}
         secondaryCTA={{
-          href: '#why-most-ai-built-saas-apps-fail',
-          label: 'Why - Launches Fail',
+          href: '/learn/saas-starting-point',
+          label: 'Start with Starting Point',
           variant: 'secondary',
         }}
-        eyebrow={<HeroBadge text="Operating System for SaaS builders" />}
+        eyebrow={<HeroBadge text="Structured SaaS building for non-technical founders" />}
         ambientMotion
       >
         <HeroCheckRow
@@ -228,7 +228,7 @@ export default function App() {
       <Section tone="transparent" spacing="default">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">The system that helps you launch SaaS properly</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">What supports a safer SaaSKit build</h2>
             <p className="pc-body-copy pc-body-muted">
               ProChat gives non-technical founders the preparation layer, the implementation sequence, and the boilerplate foundation needed to move from idea to live product without fragile setup work.
             </p>
@@ -295,9 +295,9 @@ export default function App() {
       <Section id="systems" tone="transparent" spacing="loose">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mb-20 text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">Choose the product that gets you shipping</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">Most founders should start with SaaSKit</h2>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Most founders should start with SaaSKit. ProKit is the lighter option if you already know your scope. WaaSKit and UXKit stay on the roadmap.
+              SaaSKit is the default path if you want to launch software. ProKit is the lighter fallback if you already know your scope. UXKit and WaaSKit stay on the roadmap.
             </p>
           </div>
 

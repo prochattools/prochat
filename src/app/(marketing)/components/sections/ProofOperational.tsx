@@ -63,9 +63,9 @@ const ProofOperational: React.FC = () => {
                                 Operational proof matters more than pitch polish.
                             </h2>
                             <div className="text-muted-foreground text-xl font-light leading-relaxed">
-                                A production-ready boilerplate earns trust by what it helps you ship and monitor.
+                                SaaSKit earns trust by what it helps you ship and monitor.
                                 <br className="hidden md:block" />
-                                This page is about readiness, not scale.
+                                This page is about launch readiness, not vanity scale.
                             </div>
                         </div>
                     </Reveal>

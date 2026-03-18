@@ -14,40 +14,40 @@ const comparisonData = [
   {
     metric: 'Dashboard UI system',
     manual: 'Build yourself',
-    saasKit: 'Planned',
+    saasKit: 'Roadmap',
     iconName: 'check-blue',
   },
   {
     metric: 'Onboarding flows',
     manual: 'Design + implement',
-    saasKit: 'Planned',
+    saasKit: 'Roadmap',
     iconName: 'check-blue',
   },
   {
     metric: 'Billing and account screens',
     manual: 'Assemble patterns',
-    saasKit: 'Planned',
+    saasKit: 'Roadmap',
     iconName: 'check-blue',
   },
   {
     metric: 'AI interaction panels',
     manual: 'DIY UI patterns',
-    saasKit: 'Planned',
+    saasKit: 'Roadmap',
     iconName: 'check-blue',
   },
   {
     metric: 'Design tokens + theming',
     manual: 'Roll your own',
-    saasKit: 'Planned',
+    saasKit: 'Roadmap',
     iconName: 'check-blue',
   },
 ]
 
 const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
-  const heroTitle = 'Design SaaS interfaces faster.'
-  const heroSubtitle = 'Interface layer currently in active development for modern SaaS products.'
+  const heroTitle = 'A future UI layer for the ProChat stack.'
+  const heroSubtitle = 'Roadmap preview, not the current live offer.'
   const heroDescription =
-    'UXKit is the interface layer we are building for SaaS applications. It is intended to provide dashboards, onboarding flows, billing UI, and AI interaction patterns so founders can preview a production-aware UI without designing every screen from scratch.'
+    'UXKit is the future interface layer planned to sit on top of SaaSKit and ProKit once the core product foundation is already live. It is not the current starting point for founders building now.'
   const heroBase = heroTitle
   const heroAccent = ''
   const heroBadgeText = 'COMING SOON'
@@ -77,12 +77,15 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
 
           <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
             <p>UXKit is the interface layer we are building for SaaS applications, focused on reusable SaaS screens, onboarding/account surfaces, and interface patterns that aim to help founders preview a premium experience before designing every page from scratch.</p>
+            <p className="text-base text-muted-foreground">
+              If you need the production-ready foundation today, start with SaaSKit. UXKit is the later visual layer on the roadmap.
+            </p>
             <div className="flex flex-col items-center justify-center py-2">
               <HeroCheckRow
                 items={[
-                  'Reusable screens',
-                  'Faster UI start',
-                  'Early previews',
+                  'Roadmap only',
+                  'Future visual layer',
+                  'SaaSKit comes first',
                 ]}
               />
             </div>
@@ -93,12 +96,12 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
               <a href={heroButtonHref}>JOIN — WAITLIST</a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="#problem">SEE — THE PROBLEM</a>
+              <a href="#problem">SEE — THE ROADMAP CONTEXT</a>
             </Button>
           </div>
 
           <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
-            One-time payment · Instant GitHub access · Early access Summer 2026
+            Roadmap preview · Not a live product yet · Start with SaaSKit today
           </p>
         </div>
       </section>
@@ -115,10 +118,10 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
                   </h3>
                 </div>
                 <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                  Founders often spend weeks building interface layers.
+                  Interface polish becomes the next layer after the product works.
                 </h2>
                 <p className="mb-4 font-medium text-foreground">
-                  Dashboards, account settings, billing screens, user onboarding, and admin tools all add months of work.
+                  Dashboards, account settings, billing screens, user onboarding, and admin tools add work after the core SaaS foundation is already in place.
                 </p>
                 <div className="space-y-4 rounded-lg border border-destructive/30 bg-destructive/10 p-6 shadow-sm text-sm text-destructive/90">
                   <div className="flex items-start gap-3">
@@ -143,7 +146,7 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
                   </div>
                 </div>
                 <p className="mt-6 text-sm italic text-muted-foreground">
-                  UXKit is designed to remove this work by framing the UI direction so founders can focus on product logic.
+                  UXKit is meant to reduce later UI rework, not replace the need for a live foundation today.
                 </p>
               </div>
             </div>
@@ -162,10 +165,10 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
                     </h3>
                   </div>
                   <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                    A future interface layer for SaaS.
+                    A future visual layer, not today&apos;s starting point.
                   </h2>
                   <p className="mb-8 leading-relaxed text-muted-foreground">
-                    UXKit is shaping reusable SaaS screens, onboarding/account surfaces, and interface patterns with the goal of keeping future experiences consistent.
+                    UXKit is where the future UI system is heading once a product already exists on top of SaaSKit or ProKit. The current live offer remains SaaSKit.
                   </p>
 
                   <div className="space-y-4 rounded-lg border border-primary/20 bg-background/60 p-6 shadow-inner backdrop-blur-sm">
@@ -193,24 +196,24 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
 
                   <div className="mt-8 border-t border-border-subtle pt-8">
                     <h4 className="mb-4 font-bold text-foreground">
-                      From idea to live SaaS faster because:
+                      This is useful later because:
                     </h4>
                     <ul className="space-y-2 font-mono text-sm text-muted-foreground">
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Interface direction is being plotted.
+                        Interface direction can be added after the core product is live.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Billing/account flows are being envisioned.
+                        Billing and account surfaces can be standardized later.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Messaging and tone are being aligned.
+                        Product UI can become more consistent over time.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Theme work is being tuned for launch.
+                        Visual refinement does not need to delay launch.
                       </li>
                     </ul>
                   </div>
@@ -228,10 +231,10 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
               What it will include
             </h2>
             <p className="text-muted-foreground">
-              The UI layer you can build on once it ships and reuse across products.
+              The future UI layer you could build on if and when it ships.
             </p>
             <p className="mt-4 text-sm text-muted-foreground">
-              These are the pieces we are prototyping to keep consistent without reinventing every surface.
+              These are the surfaces being explored for later, once the core kit stack is already established.
             </p>
           </div>
 
@@ -296,7 +299,7 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
 
           <div className="mt-8 text-center">
             <p className="font-mono text-sm text-muted-foreground">
-              Ship consistent UI faster once UXKit launches, and keep it consistent as you scale.
+              UXKit is for later-stage visual consistency. SaaSKit is the live foundation today.
             </p>
           </div>
         </div>
@@ -310,7 +313,7 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
                 What it is NOT.
               </h2>
               <p className="mb-8 text-lg text-muted-foreground">
-                UXKit is a UI layer. It complements your backend and product logic, it does not replace them.
+                UXKit is a future UI layer. It complements the core kit stack later, and it does not replace the need to start with SaaSKit or ProKit now.
               </p>
               <div className="h-1 w-20 rounded-full bg-primary" />
             </div>
@@ -373,7 +376,7 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
             Get early builds and updates.
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
-            UXKit is in development. Join the waitlist to get early access, roadmap updates, and launch notes.
+            UXKit is still roadmap work. Join the waitlist for updates if the visual layer matters to you later, but start with SaaSKit if you need a live product foundation now.
           </p>
 
           <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border-subtle bg-surface text-foreground shadow-elevated transition-transform duration-300 hover:-translate-y-1">
@@ -418,19 +421,19 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">What is UXKit?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                UXKit is a SaaS interface framework currently under development, aiming to provide dashboards, onboarding flows, and SaaS UI patterns.
+                UXKit is a future SaaS interface layer on the ProChat roadmap. It is not a live standalone offer today.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">Why use UXKit?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                UXKit is designed to accelerate SaaS development by planning proven UI patterns so you do not need to design every surface yourself.
+                The idea is to make later-stage interface work more consistent once the product foundation already exists.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">Can UXKit be used with SaaSKit?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                Yes. UXKit is being built to integrate with SaaSKit and ProKit so it can add the interface layer for SaaS applications.
+                Yes. UXKit is being planned as a future layer on top of SaaSKit and ProKit, not as a substitute for the current live kit path.
               </p>
             </article>
           </div>
@@ -440,10 +443,10 @@ const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
-            Join early for UXKit updates.
+            Track UXKit without losing focus on today&apos;s offer.
           </h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            Join 37 builders on the waitlist to stay ahead with early builds and momentum updates.
+            UXKit is for later. If you need the current production-ready path, start with SaaSKit.
           </p>
           <div className="flex flex-col items-center justify-center">
             <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">

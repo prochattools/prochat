@@ -22,7 +22,7 @@ import { SocialIcon, type SocialIconName } from '@/components/ui/social-icons'
 import { useScrollDirection } from '@/hooks/useScrollDirection'
 
 const NAV_ITEMS = [
-  { label: 'System', href: '/' },
+  { label: 'Start Here', href: '/' },
   { label: 'Kits', href: '/kits' },
 ] as const
 

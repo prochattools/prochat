@@ -184,10 +184,10 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
 
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
-          <HeroBadge text="ProKit Infrastructure Layer" className="mb-8" />
+          <HeroBadge text="ProKit: the lighter engine layer" className="mb-8" />
 
           <h1 className="pc-hero-title mb-8 text-foreground">
-            Core infrastructure.
+            The lighter SaaS engine.
             <br />
             <span className="hero-accent">
               Full control over your brand.
@@ -197,14 +197,16 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
             <p>
               ProKit gives you the production-ready engine — authentication, billing, database,
-              deployment — so you control your design, funnel, and growth strategy from day one.
+              deployment — when you want the narrower infrastructure layer without the fuller launch
+              path bundled into SaaSKit.
             </p>
             <p className="text-base text-muted-foreground">
-              ProKit gives you the wiring — you control the rest.
+              Choose ProKit if you want the wiring and plan to own the rest. Choose SaaSKit if you
+              want the default production-ready foundation for launching faster with more guidance.
             </p>
             <div className="flex flex-col items-center justify-center py-2">
               <HeroCheckRow
-                items={['Core infrastructure.', 'No marketing layer.', 'Design freedom.']}
+                items={['Core engine only.', 'No launch layer.', 'Full brand control.']}
               />
             </div>
           </div>
@@ -216,7 +218,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
               </a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="/kits/saaskit" onClick={handleComparisonCtaClick}>See SaaSKit</a>
+              <a href="/kits/saaskit" onClick={handleComparisonCtaClick}>See the full SaaSKit path</a>
             </Button>
           </div>
         </div>
@@ -233,25 +235,27 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
             </div>
             <div className="space-y-6">
               <h2 className="text-3xl font-bold tracking-[-0.02em] text-foreground">
-                Build on a clean foundation.
+                Build on a lighter foundation.
               </h2>
               <div className="space-y-3 text-lg leading-[1.6] text-muted-foreground">
                 <p className="font-medium text-foreground">
-                  You control the experience. ProKit controls the wiring.
+                  You control the experience. ProKit keeps the engine stable.
                 </p>
                 <p>
                   ProKit handles the infrastructure layer — authentication, subscriptions, database
-                  structure, and deployment safeguards — without imposing a marketing system on top.
+                  structure, and deployment safeguards — without adding the fuller launch structure
+                  bundled into SaaSKit.
                 </p>
                 <p>
                   You keep control over the brand, the funnel, and the way the product is presented.
                 </p>
                 <p>
-                  ProKit gives you a stable base.
+                  Use ProKit when that flexibility matters more than getting the full launch layer
+                  out of the box.
                 </p>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Built with the same production safeguards used in SaaSKit — without the
-                  opinionated growth layer.
+                  Built with the same production safeguards used in SaaSKit — but SaaSKit remains
+                  the default path if you want the productization layer included.
                 </p>
                 <div className="mt-6 flex items-center gap-3 border-t border-border pt-6">
                   <span className="font-mono text-sm text-muted-foreground">POSITIONING:</span>
@@ -277,13 +281,13 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                   </h3>
                 </div>
                 <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                  Production-ready structure
+                  Production-ready core
                 </h2>
                 <p className="mb-4 font-medium text-foreground">
                   Next.js App Router + TypeScript baseline
                 </p>
                 <p className="mb-6 leading-relaxed text-muted-foreground">
-                  Clean route grouping for scalable apps
+                  The engine layer that SaaSKit builds on top of
                 </p>
                 <p className="mb-8 font-medium leading-relaxed text-muted-foreground">
                   Error + not-found boundaries included
@@ -308,7 +312,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                   </div>
                 </div>
 
-                <p className="mt-6 text-sm italic text-muted-foreground">You control the brand. ProKit handles the infrastructure.</p>
+                <p className="mt-6 text-sm italic text-muted-foreground">You control the brand. ProKit handles the engine underneath it.</p>
               </div>
             </div>
 
@@ -377,12 +381,12 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
 
       <section id="manual" className="scroll-mt-24 border-y border-border bg-[rgb(var(--section-alt-bg-rgb))] py-24">
         <div className="mx-auto max-w-4xl px-page">
-              <div className="mb-12 text-center">
+          <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground">
               What ProKit does NOT do
             </h2>
             <p className="text-muted-foreground">
-              ProKit protects infrastructure while leaving design, funnel, and growth decisions in your hands.
+              ProKit protects infrastructure while leaving design, funnel, and growth decisions in your hands. If you want those layers included, SaaSKit is the better default.
             </p>
           </div>
 
@@ -448,10 +452,10 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
               <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] leading-tight text-foreground">
-                When to choose ProKit vs SaaSKit
+                When ProKit makes sense instead of the full SaaSKit layer
               </h2>
               <p className="mb-8 text-lg text-muted-foreground">
-                Both are production-ready foundations. The difference is how much launch structure you want around the infrastructure. <a href="/kits/saaskit" className="font-medium text-foreground underline-offset-4 hover:underline">See SaaSKit</a> if you want the structured launch layer included.
+                SaaSKit is the default recommendation for most founders who want the full production-ready foundation. <a href="/kits/saaskit" className="font-medium text-foreground underline-offset-4 hover:underline">See SaaSKit</a> if you want the structured launch layer included. Choose ProKit only when you specifically want the infrastructure layer without that added launch structure.
               </p>
               <div className="h-1 w-20 rounded-full bg-primary" />
             </div>
@@ -471,48 +475,48 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                         <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                           <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                         </div>
-                        <span className="text-muted-foreground">You plan to design your own marketing system</span>
+                        <span className="text-muted-foreground">You already know how you want to handle marketing and launch</span>
                       </li>
                       <li className="flex items-start gap-4">
                         <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                           <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                         </div>
-                        <span className="text-muted-foreground">You do not want predefined growth layers</span>
+                        <span className="text-muted-foreground">You are comfortable owning more implementation decisions</span>
                       </li>
                       <li className="flex items-start gap-4">
                         <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                           <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                         </div>
-                        <span className="font-medium text-foreground">You want a clean infrastructure base</span>
+                        <span className="font-medium text-foreground">You want the clean engine without the fuller SaaSKit layer</span>
                       </li>
                     </ul>
                   </div>
                   <div>
-                    <h3 className="mb-6 text-lg font-bold text-foreground">SaaSKit is better if:</h3>
+                    <h3 className="mb-6 text-lg font-bold text-foreground">SaaSKit is the better default if:</h3>
                     <ul className="space-y-4">
                       <li className="flex items-start gap-4">
                         <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                           <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                         </div>
-                        <span className="text-muted-foreground">You want a structured launch path</span>
+                        <span className="text-muted-foreground">You want the default recommendation for a real launch</span>
                       </li>
                       <li className="flex items-start gap-4">
                         <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                           <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                         </div>
-                        <span className="text-muted-foreground">You prefer pre-wired marketing systems</span>
+                        <span className="text-muted-foreground">You want the productization and launch layer included</span>
                       </li>
                       <li className="flex items-start gap-4">
                         <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                           <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                         </div>
-                        <span className="text-muted-foreground">You want faster go-to-market</span>
+                        <span className="text-muted-foreground">You want less ambiguity around go-to-market structure</span>
                       </li>
                       <li className="flex items-start gap-4">
                         <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
                           <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
                         </div>
-                        <span className="font-medium text-foreground">You value opinionated guidance</span>
+                        <span className="font-medium text-foreground">You want the fuller production-ready foundation</span>
                       </li>
                     </ul>
                   </div>
@@ -536,10 +540,10 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
             One payment. Unlimited projects.
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
-            Use ProKit as the infrastructure layer for as many products as you want.
+            Use ProKit as the lean infrastructure layer for as many products as you want.
           </p>
           <p className="mx-auto mb-8 max-w-2xl text-sm text-muted-foreground">
-            The infrastructure mistakes most founders discover too late are more expensive than this entire foundation.
+            If you want the fuller production-ready path, SaaSKit is the better fit. Choose ProKit only if you want the engine without the launch layer.
           </p>
 
           <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border-subtle bg-surface text-foreground shadow-elevated transition-transform duration-300 hover:-translate-y-1">
@@ -680,19 +684,19 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">What is ProKit?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                ProKit provides the core infrastructure for building SaaS products with modern web stacks. It includes authentication, billing, database integration, and deployment tooling so founders can focus on building product features.
+                ProKit is the lean infrastructure layer in the ProChat product stack. It includes authentication, billing, database integration, and deployment tooling for builders who want the core engine without the fuller launch layer in SaaSKit.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">Who should use ProKit?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                ProKit is designed for developers and technical founders who want to launch SaaS products quickly without rebuilding the same infrastructure for every project.
+                ProKit is designed for developers and technical founders who already know what they want to build and want maximum control over brand, funnel, and product structure.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">How is ProKit different from SaaSKit?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                ProKit provides the developer infrastructure layer, while SaaSKit builds on top of it to provide a full SaaS application foundation including product structure and SaaS architecture.
+                ProKit is the engine layer. SaaSKit is the flagship productization layer built on top of ProKit for founders who want the fuller production-ready foundation.
               </p>
             </article>
           </div>
@@ -702,12 +706,12 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
-            Build your SaaS on structure — not improvisation.
+            Choose ProKit when the leaner engine is enough.
           </h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            You control the brand, the funnel, and the experience.
+            SaaSKit remains the flagship recommendation when you want the full production-ready path.
             <br />
-            <span className="font-medium text-foreground">ProKit gives you the stable base underneath it.</span>
+            <span className="font-medium text-foreground">Choose ProKit when full control matters more than having the launch layer included.</span>
             <br />
             Build on the wiring once, then shape the product your way.
           </p>
@@ -720,17 +724,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
               onClick={handleComparisonCtaClick}
               className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
             >
-              Explore SaaSKit
-              <FeatureIcon
-                name="arrow-forward"
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              />
-            </a>
-            <a
-              href="/kits/waaskit"
-              className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-primary/80"
-            >
-              Explore WaaSKit
+              See why SaaSKit is the default
               <FeatureIcon
                 name="arrow-forward"
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"

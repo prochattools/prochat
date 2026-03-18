@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import KitsShell from '../_components/KitsShell'
+import FAQSection from '@/components/FAQSection'
 import HeroBadge from '@/components/ui/hero-badge'
 import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
@@ -10,6 +11,7 @@ import { useUser } from '@/libs/safeClerkHooks'
 import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
 import { FeatureIcon } from './_components/FeatureIcon'
 import SaaSkitSourceTracker from './SaaSkitSourceTracker'
+import { SAASKIT_FAQ_ITEMS } from './faq-content'
 
 type SaaSkitPageContentProps = {
   priceId?: string | null
@@ -704,52 +706,14 @@ const SaaSkitPageContent = ({
         </div>
       </section>
 
-      <section id="faq" className="scroll-mt-24 border-t border-border bg-[rgb(var(--section-bg-rgb))] py-24">
-        <div className="mx-auto max-w-5xl px-page">
-          <div className="mb-12 text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground/90">FAQ</p>
-            <h2 className="mt-4 text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
-          </div>
-          <div className="grid gap-10 md:grid-cols-3">
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">What is SaaSKit?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                A ready-to-use SaaS starting point that already includes authentication, payments, and database structure.
-                <br />
-                It removes the setup work so you can start building your product immediately.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">Do I need to be a developer?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                No.
-                <br />
-                Many founders use SaaSKit together with AI tools to build features and modify the product.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">How long does setup take?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Most founders can install the project and begin building their SaaS the same day.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">Can I use it for multiple projects?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Yes.
-                <br />
-                Your license allows unlimited use.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">What kind of SaaS can I build?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Examples include micro SaaS tools, automation apps, dashboards, niche SaaS products, and internal tools.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
+      <FAQSection
+        id="faq"
+        tone="transparent"
+        className="scroll-mt-24 border-t border-border"
+        title="Frequently Asked Questions"
+        description="Practical pre-purchase answers on fit, licensing, setup, documentation, and support."
+        items={SAASKIT_FAQ_ITEMS}
+      />
 
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">

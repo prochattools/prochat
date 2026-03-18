@@ -6,14 +6,14 @@ import { renderDocsMdxContent } from '@/lib/docs/nextra'
 import { getSiteUrl } from '@/libs/site-url'
 
 const DOCS_DESCRIPTION =
-  'Public implementation docs for SaaSKit, ProKit, and shared features. Most founders should start with SaaSKit.'
+  'Implementation docs for SaaSKit, ProKit, and shared features. Most founders should start with SaaSKit, then use these docs to build, configure, and launch correctly.'
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Docs | ProChat',
     description: DOCS_DESCRIPTION,
     applicationName: 'ProChat',
-    keywords: ['prochat', 'documentation', 'prokit', 'saaskit'],
+    keywords: ['prochat docs', 'saaskit docs', 'prokit docs', 'saas implementation'],
     metadataBase: new URL(`${getSiteUrl()}/`),
     alternates: { canonical: '/docs' },
     openGraph: {

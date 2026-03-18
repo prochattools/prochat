@@ -13,11 +13,11 @@ const ProofTimeline: React.FC = () => {
                     <Reveal width="100%">
                         <div>
                             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                                Proof should lead cleanly into the product build.
+                                Proof should collapse into a clean build plan.
                             </h2>
                             <div className="text-muted-foreground max-w-xl mx-auto mb-16 font-light text-xl">
-                                Start with real-world proof, move through implementation, and only then expand into the
-                                SaaS build on a production-ready foundation like SaaSKit.
+                                The useful sequence is simple: validate the buyer problem, define the MVP, build inside
+                                SaaSKit, then launch with the operational basics already in place.
                             </div>
                         </div>
                     </Reveal>
@@ -29,10 +29,10 @@ const ProofTimeline: React.FC = () => {
                                 <div className="hidden md:block absolute top-[28px] left-0 right-0 h-0.5 bg-border-subtle -z-10" />
 
                                 {[
-                                    { step: '01', label: 'Service', status: 'complete', sub: 'Done' },
-                                    { step: '02', label: 'Discovery', status: 'complete', sub: 'Done' },
-                                    { step: '03', label: 'Build', status: 'active', sub: 'In Progress' },
-                                    { step: '04', label: 'SaaS', status: 'locked', sub: 'Locked' },
+                                    { step: '01', label: 'Validate', status: 'complete', sub: 'Done' },
+                                    { step: '02', label: 'Define Scope', status: 'complete', sub: 'Done' },
+                                    { step: '03', label: 'Build In SaaSKit', status: 'active', sub: 'Current' },
+                                    { step: '04', label: 'Launch', status: 'locked', sub: 'Next' },
                                 ].map((s, i) => (
                                     <div key={i} className="flex flex-col items-center group">
                                         <div

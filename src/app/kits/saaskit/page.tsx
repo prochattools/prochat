@@ -4,6 +4,7 @@ import { getSEOTags } from '@/libs/seo'
 import { getSiteUrl } from '@/libs/site-url'
 import { getStripePriceSaaskit } from '@/libs/stripe-env'
 import { getSoftwareApplicationSchema } from '@/libs/structured-data'
+import { SAASKIT_FAQ_ITEMS } from './faq-content'
 import SaaSkitPageContent from './SaaSkitPageContent'
 
 const saaskitTitle = 'SaaSKit – Complete SaaS Application Foundation'
@@ -86,32 +87,14 @@ export default function SaaSkitPage() {
 	const faqSchema = {
 		'@context': 'https://schema.org',
 		'@type': 'FAQPage',
-		mainEntity: [
-			{
-				'@type': 'Question',
-				name: 'What is SaaSKit?',
-				acceptedAnswer: {
-					'@type': 'Answer',
-					text: 'SaaSKit is a production-ready foundation for building SaaS applications with modern architecture and infrastructure.',
-				},
+		mainEntity: SAASKIT_FAQ_ITEMS.map(item => ({
+			'@type': 'Question',
+			name: item.question,
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: item.answer,
 			},
-			{
-				'@type': 'Question',
-				name: 'What can you build with SaaSKit?',
-				acceptedAnswer: {
-					'@type': 'Answer',
-					text: 'You can build subscription SaaS platforms, B2B tools, automation services, and niche SaaS products.',
-				},
-			},
-			{
-				'@type': 'Question',
-				name: 'How does SaaSKit relate to ProKit?',
-				acceptedAnswer: {
-					'@type': 'Answer',
-					text: 'SaaSKit builds on top of ProKit. ProKit provides the infrastructure layer while SaaSKit provides the SaaS application architecture.',
-				},
-			},
-		],
+		})),
 	}
 
 	return (

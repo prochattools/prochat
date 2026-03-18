@@ -1,103 +1,133 @@
+'use client'
+
+import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { ChevronDown } from 'lucide-react'
+
 import { Section } from '@/components/ui/surface'
 import { cn } from '@/helpers/utils'
 
-const FAQ_ITEMS = [
-  {
-    question: 'Which product should I start with?',
-    answer:
-      'Start with SaaSKit if you want the clearest path to a production-ready SaaS launch. Choose ProKit if you already know exactly what you want to build and want more flexibility. Use the Kits page if you need to compare the products first.',
-  },
-  {
-    question: 'Is SaaSKit a one-time purchase?',
-    answer:
-      'Yes. SaaSKit is sold as a one-time purchase with unlimited use and lifetime updates under the current product model.',
-  },
-  {
-    question: 'Is support included?',
-    answer:
-      'Documentation is the primary support layer. The contact form is for real blockers, setup questions, licensing questions, and product-fit questions.',
-  },
-  {
-    question: 'Do I need to be a developer to use ProChat products?',
-    answer:
-      'No. ProChat is built for non-technical founders, but you still need the willingness to follow structured systems, documentation, and setup steps.',
-  },
-  {
-    question: 'Do you offer custom implementation or studio work?',
-    answer:
-      'Sometimes, but only in selected cases. ProChat is primarily a product business, not a done-for-you service business.',
-  },
-  {
-    question: 'Where do I start if I feel stuck?',
-    answer:
-      'Start with the documentation if your question is product-specific. Start with the Learn page if you need the guided sequence or the right next step. Use the contact form if you hit a real blocker or need help choosing what to do next.',
-  },
-  {
-    question: 'Where can I find setup instructions and documentation?',
-    answer:
-      'Use the documentation page for setup steps, deployment notes, and troubleshooting references.',
-  },
-]
-
-type FAQSectionProps = {
-  tone?: 'transparent' | 'muted' | 'surface'
-  className?: string
+export type FAQItem = {
+  question: string
+  answer: string
 }
 
-export default function FAQSection({ tone = 'muted', className }: FAQSectionProps) {
+const DEFAULT_FAQ_ITEMS: readonly FAQItem[] = [
+  {
+    question: 'Where should I start if I am still figuring out the product?',
+    answer:
+      'Start with Starting Point. It helps you clarify the buyer, pain, outcome, and proof before you build. Once the decision is clear, move into the Production Guide and then SaaSKit.',
+  },
+  {
+    question: 'Which product should I choose first?',
+    answer:
+      'Most non-technical founders should start with SaaSKit. It is the default production-ready path. Choose ProKit only if you already know your scope and intentionally want the lighter engine layer without the fuller launch structure.',
+  },
+  {
+    question: 'Is SaaSKit a one-time purchase or a subscription?',
+    answer:
+      'SaaSKit is sold as a one-time purchase under the current product model. The goal is to give founders a production-ready foundation without adding another recurring software bill.',
+  },
+  {
+    question: 'Do I need to be technical to use ProChat products?',
+    answer:
+      'You do not need to be a developer to follow the ProChat path, but you do need to work through the docs, setup steps, and implementation decisions carefully. SaaSKit is the better fit for most non-technical founders. ProKit expects you to own more of the structure yourself.',
+  },
+  {
+    question: 'What support is included?',
+    answer:
+      'Documentation is the primary support layer. Starting Point, the Production Guide, prompts, and the docs are there to keep the implementation path clear. Use the contact form for real blockers, licensing questions, or product-fit questions.',
+  },
+  {
+    question: 'Where are the setup instructions and implementation docs?',
+    answer:
+      'Use the Docs section for auth, billing, email, deployment, configuration, and shared feature setup. If you are following the default path, start with the SaaSKit docs first and use ProKit docs only if you intentionally chose the lighter foundation.',
+  },
+  {
+    question: 'Do you offer custom implementation help?',
+    answer:
+      'Sometimes, in limited cases. ProChat is product-first, not a done-for-you service business. The default path is to use the kits and docs to implement the product yourself, then reach out only when there is a real blocker or a clearly scoped need.',
+  },
+] as const
+
+type FAQSectionProps = {
+  id?: string
+  tone?: 'transparent' | 'muted' | 'surface'
+  className?: string
+  title?: string
+  description?: string
+  items?: readonly FAQItem[]
+}
+
+export default function FAQSection({
+  id,
+  tone = 'muted',
+  className,
+  title = 'Frequently Asked Questions',
+  description = 'Practical answers on where to start, which kit to choose, and what support to expect.',
+  items = DEFAULT_FAQ_ITEMS,
+}: FAQSectionProps) {
   return (
-    <Section tone={tone} spacing="compact" className={cn('pt-12 pb-16 md:pt-20 md:pb-24', className)}>
+    <Section
+      id={id}
+      tone={tone}
+      spacing="compact"
+      className={cn('pt-12 pb-16 md:pt-20 md:pb-24', className)}
+    >
       <div className="mx-auto max-w-7xl px-page">
         <div className="mx-auto max-w-5xl space-y-6">
           <div className="max-w-2xl space-y-3">
             <h2 className="font-brand text-2xl font-bold tracking-[-0.02em] text-foreground md:text-[1.75rem]">
-              Frequently Asked Questions
+              {title}
             </h2>
             <p className="text-[0.96rem] leading-7 text-muted-foreground">
-              Practical answers on support expectations, licensing, and what to do next.
+              {description}
             </p>
           </div>
 
-          <div className="space-y-3" data-faq-accordion="">
-            {FAQ_ITEMS.map((item, index) => (
-              <div
+          <AccordionPrimitive.Root
+            type="single"
+            collapsible
+            className="space-y-3"
+            data-faq-accordion=""
+          >
+            {items.map((item, index) => (
+              <AccordionPrimitive.Item
                 key={item.question}
-                className="contact-faq-item rounded-2xl border border-border-subtle bg-surface p-4 shadow-surface transition-all md:p-5"
+                value={`faq-${index}`}
+                className="group rounded-2xl border border-border-subtle bg-surface p-4 shadow-surface transition-all data-[state=open]:border-primary/25 data-[state=open]:bg-surface-elevated data-[state=open]:shadow-elevated md:p-5"
                 data-faq-item=""
-                data-open="false"
               >
-                <h3>
-                  <button
+                <AccordionPrimitive.Header>
+                  <AccordionPrimitive.Trigger
                     id={`faq-trigger-${index}`}
-                    type="button"
-                    className="contact-faq-trigger group flex w-full items-center justify-between gap-4 rounded-xl text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                    aria-expanded="false"
                     aria-controls={`faq-panel-${index}`}
+                    className="flex w-full items-center justify-between gap-4 rounded-xl text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/55 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    data-faq-trigger=""
                   >
-                    <span className="pr-3 text-[0.98rem] font-semibold leading-6 text-foreground">
+                    <span className="pr-3 text-[0.98rem] font-semibold leading-6 text-foreground transition-colors group-data-[state=open]:text-primary">
                       {item.question}
                     </span>
                     <ChevronDown
-                      className="contact-faq-chevron h-4 w-4 shrink-0 text-tertiary transition-colors duration-200 group-hover:text-foreground"
+                      className="h-4 w-4 shrink-0 text-tertiary transition-all duration-200 group-data-[state=open]:rotate-180 group-data-[state=open]:text-primary"
                       aria-hidden="true"
                     />
-                  </button>
-                </h3>
+                  </AccordionPrimitive.Trigger>
+                </AccordionPrimitive.Header>
 
-                <div
+                <AccordionPrimitive.Content
                   id={`faq-panel-${index}`}
-                  className="mt-3 text-[0.95rem] leading-7 text-muted-foreground"
+                  className="overflow-hidden text-[0.95rem] leading-7 text-muted-foreground data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
                   role="region"
                   aria-labelledby={`faq-trigger-${index}`}
                   data-faq-panel=""
-                  hidden
                 >
-                  <p>{item.answer}</p>
-                </div>
-              </div>
+                  <div className="mt-3 border-t border-border-subtle/80 pt-4">
+                    <p>{item.answer}</p>
+                  </div>
+                </AccordionPrimitive.Content>
+              </AccordionPrimitive.Item>
             ))}
-          </div>
+          </AccordionPrimitive.Root>
         </div>
       </div>
     </Section>

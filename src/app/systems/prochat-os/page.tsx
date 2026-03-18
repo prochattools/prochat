@@ -1,14 +1,12 @@
-import config from '@/config'
 import StructuredData from '@/components/StructuredData'
 import { getSEOTags } from '@/libs/seo'
 import { getSiteUrl } from '@/libs/site-url'
-import { getStripePriceSaaskit } from '@/libs/stripe-env'
 import { getSoftwareApplicationSchema } from '@/libs/structured-data'
 import ProChatOSPageContent from './ProChatOSPageContent'
 
-const pageTitle = 'ProChat OS – Operating System for SaaS Companies'
+const pageTitle = 'ProChat OS – Long-Term ProChat Vision'
 const pageDescription =
-  'Command center for managing SaaS applications, clients, and subscriptions.'
+  'Long-term vision for a future ProChat operating layer that could help founders oversee multiple products later. SaaSKit remains the current live offer.'
 const pageCanonical = 'https://prochat.tools/systems/prochat-os'
 
 export const metadata = {
@@ -43,12 +41,6 @@ export const metadata = {
 
 export default function SaaSkitPage() {
   const siteUrl = getSiteUrl()
-  const saaskitProduct =
-    config.stripe.products.find(product =>
-      product.title.toLowerCase().includes('saaskit')
-    ) ?? null
-  const envPriceId = getStripePriceSaaskit() || null
-	const priceId = saaskitProduct?.priceId || envPriceId
 
 	const schema = {
 		'@context': 'https://schema.org',
@@ -58,7 +50,7 @@ export default function SaaSkitPage() {
 		operatingSystem: 'Web',
 	url: 'https://prochat.tools/systems/prochat-os',
 		description:
-			'Operating system for SaaS companies to manage applications, subscriptions, clients, and workflows.',
+			'Long-term ProChat vision for a simple operating layer that could help founders oversee multiple products and workflows later on.',
 		brand: {
 			'@type': 'Brand',
 			name: 'ProChat',
@@ -86,7 +78,7 @@ export default function SaaSkitPage() {
 				name: 'What is ProChat OS?',
 				acceptedAnswer: {
 					'@type': 'Answer',
-					text: 'ProChat OS is the operating system for SaaS companies providing a central dashboard to manage SaaS products, clients, and subscriptions.',
+					text: 'ProChat OS is a long-term ProChat vision for a future operating dashboard, not a live product today.',
 				},
 			},
 			{
@@ -94,7 +86,7 @@ export default function SaaSkitPage() {
 				name: 'Who should use ProChat OS?',
 				acceptedAnswer: {
 					'@type': 'Answer',
-					text: 'ProChat OS is designed for founders managing multiple SaaS products who need a unified command center.',
+					text: 'ProChat OS is intended for a later stage when founders are managing multiple products and need more operational visibility across the stack.',
 				},
 			},
 			{
@@ -102,7 +94,7 @@ export default function SaaSkitPage() {
 				name: 'How does ProChat OS work with the ProChat kits?',
 				acceptedAnswer: {
 					'@type': 'Answer',
-					text: 'ProChat OS connects and manages products built with ProKit, SaaSKit, UXKit, and WaaSKit.',
+					text: 'The long-term idea is that ProChat OS would sit after the kit layer and help founders oversee products built with the ProChat stack.',
 				},
 			},
 		],
@@ -119,9 +111,9 @@ export default function SaaSkitPage() {
           offers: [
             {
               '@type': 'Offer',
-              price: String(saaskitProduct?.price ?? 247),
+              price: '0',
               priceCurrency: 'USD',
-              availability: 'https://schema.org/InStock',
+              availability: 'https://schema.org/PreOrder',
               url: `${siteUrl}/systems/prochat-os`,
             },
           ],
@@ -131,7 +123,7 @@ export default function SaaSkitPage() {
 			type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
 			/>
-      <ProChatOSPageContent priceId={priceId} />
+      <ProChatOSPageContent />
     </>
   )
 }

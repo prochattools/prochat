@@ -15,40 +15,40 @@ const comparisonData = [
   {
     metric: 'Unified command dashboard',
     manual: 'Build yourself',
-    saasKit: 'Planned direction',
+    saasKit: 'Future vision',
     iconName: 'check-blue',
   },
   {
     metric: 'Automation orchestration',
     manual: 'Design + implement',
-    saasKit: 'Planned direction',
+    saasKit: 'Future vision',
     iconName: 'check-blue',
   },
   {
     metric: 'System-level analytics',
     manual: 'Assemble tooling',
-    saasKit: 'Planned direction',
+    saasKit: 'Future vision',
     iconName: 'check-blue',
   },
   {
     metric: 'Kit integrations',
     manual: 'DIY wiring',
-    saasKit: 'Planned direction',
+    saasKit: 'Future vision',
     iconName: 'check-blue',
   },
   {
     metric: 'Operational control center',
     manual: 'Roll your own',
-    saasKit: 'Planned direction',
+    saasKit: 'Future vision',
     iconName: 'check-blue',
   },
 ]
 
 const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) => {
-  const heroTitle = 'Run your internet business from one command center.'
+  const heroTitle = 'The long-term operating layer for ProChat.'
   const heroSubtitle = ''
   const heroDescription =
-    'ProChat OS previews an operating layer built around unified visibility and workflow coordination so leaders can see where automations and kits converge.'
+    'ProChat OS is not a current offer. It is the long-term idea for a simple operating layer once founders are managing multiple products on top of the ProChat stack.'
   const heroBase = heroTitle
   const heroAccent = ''
   const heroBadgeText = 'COMING SOON'
@@ -77,12 +77,15 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
           </h1>
           <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
             <p>{heroDescription}</p>
+            <p className="text-base text-muted-foreground">
+              Most founders do not need this yet. The live starting point remains SaaSKit.
+            </p>
             <div className="flex flex-col items-center justify-center py-2">
               <HeroCheckRow
                 items={[
-                  'Unified visibility',
-                  'Workflow oversight',
-                  'Early previews',
+                  'Long-term vision',
+                  'Later-stage oversight',
+                  'SaaSKit comes first',
                 ]}
               />
             </div>
@@ -93,9 +96,13 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
               <a href={heroButtonHref}>JOIN — WAITLIST</a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="#problem">SEE — WHAT’S PLANNED</a>
+              <a href="#problem">SEE — THE FUTURE ROLE</a>
             </Button>
           </div>
+
+          <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
+            Future vision · Not a live product yet · Start with SaaSKit today
+          </p>
         </div>
       </section>
 
@@ -111,13 +118,13 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
                   </h3>
                 </div>
                 <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                  Modern SaaS businesses are fragmented across tools.
+                  Operational complexity shows up later, not at day one.
                 </h2>
                 <p className="mb-4 font-medium text-foreground">
-                  Analytics dashboards, automation systems, billing platforms, AI workflows, and SaaS apps all live separately.
+                  Once founders run multiple products, dashboards, automation systems, billing platforms, and workflows can start to fragment.
                 </p>
                 <p className="mb-6 leading-relaxed text-muted-foreground">
-                  Everything lives in different dashboards, making it hard to keep track of workflows, clients, and automations in one place.
+                  That is a later-stage problem. Before it matters, founders usually need a product worth launching on SaaSKit first.
                 </p>
                 <div className="space-y-4 rounded-lg border border-destructive/30 bg-destructive/10 p-6 shadow-sm text-sm text-destructive/90">
                   <div className="flex items-start gap-3">
@@ -158,10 +165,10 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
                     </h3>
                   </div>
                   <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                    A future operating layer.
+                    A restrained long-term operating layer.
                   </h2>
                   <p className="mb-8 leading-relaxed text-muted-foreground">
-                    ProChat OS sketches how visibility, kit coordination, and workflow oversight can converge so founders keep every launch under control.
+                    ProChat OS sketches how visibility, kit coordination, and workflow oversight could converge later. It is the long-term extension of the ProChat ecosystem, not a competing current offer.
                   </p>
 
                   <div className="space-y-4 rounded-lg border border-primary/20 bg-background/60 p-6 shadow-inner backdrop-blur-sm">
@@ -189,24 +196,24 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
 
                   <div className="mt-8 border-t border-border-subtle pt-8">
                     <h4 className="mb-4 font-bold text-foreground">
-                      From idea to live SaaS faster because:
+                      The long-term role would be:
                     </h4>
                     <ul className="space-y-2 font-mono text-sm text-muted-foreground">
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Visibility patterns are being shaped.
+                        Give later-stage founders one place to see the stack.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Workflow direction is being defined.
+                        Reduce the need to jump between dashboards.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Kit coordination is being planned.
+                        Help multiple ProChat products stay legible together.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Operational oversight is in development.
+                        Sit after the kits, not before them.
                       </li>
                     </ul>
                   </div>
@@ -224,10 +231,10 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
               What it will include
             </h2>
             <p className="text-muted-foreground">
-              The operations layer that centralizes tools, kits, and workflows.
+              The future operating layer that could centralize tools, kits, and workflows later on.
             </p>
             <p className="mt-4 text-sm text-muted-foreground">
-              These are the systems that normally end up scattered across tools and dashboards.
+              This is future-state thinking for the ProChat ecosystem, not a live product category today.
             </p>
           </div>
 
@@ -292,7 +299,7 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
 
           <div className="mt-8 text-center">
             <p className="font-mono text-sm text-muted-foreground">
-              Run operations from one control center instead of stitching tools together.
+              ProChat OS belongs after the kit layer. SaaSKit remains the current live offer.
             </p>
           </div>
         </div>
@@ -306,7 +313,7 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
                 What it is NOT.
               </h2>
               <p className="mb-8 text-lg text-muted-foreground">
-                ProChat OS is a control center. It is not a replacement for your product or your unique workflows.
+                ProChat OS is a future operating concept. It is not today&apos;s offer, and it is not a reason to delay building on SaaSKit now.
               </p>
               <div className="h-1 w-20 rounded-full bg-primary" />
             </div>
@@ -369,7 +376,7 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
             Get early builds and updates.
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
-            ProChat OS is in development. Join the waitlist to get early access, roadmap updates, and launch notes.
+            ProChat OS is a long-term vision. Join the waitlist if the future operating layer matters to you, but start with SaaSKit if you need the live product path now.
           </p>
 
           <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border-subtle bg-surface text-foreground shadow-elevated transition-transform duration-300 hover:-translate-y-1">
@@ -414,19 +421,19 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">What is ProChat OS?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                ProChat OS is designed to help founders centralize visibility and coordination so they can align workflows, automations, and kits in one future operating layer.
+                ProChat OS is the long-term ProChat vision for a future operating layer. It is not a live product today.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">Who should use ProChat OS?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                Founders managing multiple ProChat kits who need centralized oversight, insight into workflows, and a consistent way to align launches.
+                It is intended for a later stage when founders are running multiple products and want more operational visibility across the stack.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">How does ProChat OS work with the ProChat kits?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                ProChat OS is being designed to coordinate the ProChat kit stack so you can see how ProKit, SaaSKit, UXKit, and WaaSKit fit together.
+                The long-term idea is that it would sit after the kit layer and help founders oversee how the ProChat products fit together.
               </p>
             </article>
           </div>
@@ -436,10 +443,10 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
-            Run your SaaS business with early operating layer insights.
+            Track the vision, but start with the kits.
           </h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            Join the waitlist to shape the operating layer and keep every workflow in view.
+            ProChat OS is the long-term direction. SaaSKit is still the live product if you need a production-ready starting point now.
           </p>
           <div className="flex flex-col items-center justify-center">
             <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">

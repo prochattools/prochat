@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Check, Users } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { trackEvent } from '@/utils/analytics'
 import { Scaffolding } from '@/app/(marketing)/components/ui/Scaffolding'
 import { Reveal } from '@/app/(marketing)/components/ui/Reveal'
@@ -56,9 +56,9 @@ export default function ProofPageContent() {
 			</div>
 			<div className="relative z-10 min-h-screen">
 				<Hero
-					headline="Proof, without pretending."
-					subhead="Inspectable evidence that the ProChat workflow produces real implementation outputs, not just boilerplate promises."
-					microProof="Preparation • Implementation • Shipping proof"
+					headline="Proof that this path can actually ship."
+					subhead="Inspectable evidence that the ProChat path leads to live implementation work, operational readiness, and a concrete handoff into SaaSKit."
+					microProof="Live implementation • Operational proof • SaaSKit handoff"
 					primaryCta={HERO_PRIMARY_CTA}
 					primaryCtaLink="/kits/saaskit"
 					secondaryCta={HERO_SECONDARY_CTA}
@@ -79,20 +79,20 @@ export default function ProofPageContent() {
 								<Reveal>
 									<div className="space-y-4">
 										<h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-											What &quot;proof&quot; means here.
+											What proof should mean before you trust a boilerplate.
 										</h2>
 										<p className="text-muted-foreground text-lg leading-relaxed max-w-[45ch]">
 											Most boilerplate sites promise speed. This page shows the kind of
 											inspectable implementation evidence that should exist before you
-											trust the pitch.
+											buy into the SaaSKit path.
 										</p>
 									</div>
 								</Reveal>
 
 								<Reveal delay={0.1}>
 									<div className="pl-6 border-l-2 border-primary italic text-foreground/90 text-lg font-medium leading-relaxed">
-										&quot;This page is here to show that the ProChat path leads to real
-										assets, real operations, and a clear handoff into SaaSKit.&quot;
+										&quot;The question is not whether the pitch sounds polished. The
+										question is whether the path into SaaSKit looks concrete.&quot;
 									</div>
 								</Reveal>
 
@@ -103,10 +103,10 @@ export default function ProofPageContent() {
 										</p>
 										<ul className="space-y-3">
 											{[
-												'Real live surface',
-												'Real infrastructure',
-												'Real workflow discipline',
-												'Real shipping path',
+												'Live product surface tied to a narrow offer',
+												'Operational signals that support a real launch',
+												'Clear implementation discipline before scale',
+												'Concrete handoff into SaaSKit',
 											].map((item, i) => (
 												<li
 													key={i}
@@ -134,10 +134,10 @@ export default function ProofPageContent() {
 														01
 													</div>
 													<span className="text-sm font-bold text-muted-foreground">
-														CLIENTS
+														VALIDATE THE PROBLEM
 													</span>
 												</div>
-												<Users size={16} className="text-tertiary" />
+												<Check size={16} className="text-tertiary" />
 											</div>
 
 											{/* P2 - Active */}
@@ -150,12 +150,13 @@ export default function ProofPageContent() {
 														02
 													</div>
 													<span className="text-sm font-bold text-primary">
-														SYSTEM CONSTRUCTION
+														BUILD IN SAASKIT
 													</span>
 												</div>
 												<p className="text-xs text-muted-foreground leading-relaxed pl-11">
-													Building the constraint engine based on service friction.
-													Validating stack choices against real paid requests.
+													Turn the offer, scope, and launch requirements into a usable
+													product foundation with auth, billing, data, and deployment
+													already structured.
 												</p>
 											</div>
 
@@ -166,7 +167,7 @@ export default function ProofPageContent() {
 														03
 													</div>
 													<span className="text-sm font-bold text-tertiary">
-														ASSET SCALE
+														LAUNCH WITH CONTROL
 													</span>
 												</div>
 												<div className="w-4 h-4 rounded-full border border-border-subtle" />

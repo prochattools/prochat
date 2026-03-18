@@ -14,40 +14,40 @@ const comparisonData = [
   {
     metric: 'Workflow orchestration',
     manual: 'Build yourself',
-    saasKit: 'Planned direction',
+    saasKit: 'Roadmap',
     iconName: 'check-blue',
   },
   {
     metric: 'Job scheduling',
     manual: 'Design + implement',
-    saasKit: 'Planned direction',
+    saasKit: 'Roadmap',
     iconName: 'check-blue',
   },
   {
     metric: 'Integration framework',
     manual: 'Assemble patterns',
-    saasKit: 'Planned direction',
+    saasKit: 'Roadmap',
     iconName: 'check-blue',
   },
   {
     metric: 'Monitoring dashboard',
     manual: 'DIY tooling',
-    saasKit: 'Planned direction',
+    saasKit: 'Roadmap',
     iconName: 'check-blue',
   },
   {
     metric: 'Billing support',
     manual: 'Wire it yourself',
-    saasKit: 'Planned direction',
+    saasKit: 'Roadmap',
     iconName: 'check-blue',
   },
 ]
 
 const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
-  const heroTitle = 'Launch a niche Website-as-a-Service business.'
-  const heroSubtitle = 'Sell websites first. Turn it into SaaS later.'
+  const heroTitle = 'A future client-first validation path.'
+  const heroSubtitle = 'Roadmap direction, not the current default offer.'
   const heroDescription =
-    'WaaSKit previews a Website-as-a-Service direction built around validating niche demand first and spotting the recurring problems that can become SaaS later.'
+    'WaaSKit is a future Website-as-a-Service direction for founders who may want to validate through client work first. It is not the current path for founders who want to launch software now.'
   const heroBase = heroTitle
   const heroAccent = ''
   const heroBadgeText = 'COMING SOON'
@@ -76,12 +76,15 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
           </h1>
           <div className="mx-auto mt-6 max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
             <p>{heroDescription}</p>
+            <p className="text-base text-muted-foreground">
+              If you want the live production-ready path today, start with SaaSKit. WaaSKit stays on the roadmap.
+            </p>
             <div className="flex flex-col items-center justify-center py-2">
               <HeroCheckRow
                 items={[
-                  'Launch niche sites',
-                  'Learn from clients',
-                  'Evolve into SaaS',
+                  'Roadmap only',
+                  'Client-first validation',
+                  'SaaSKit comes first',
                 ]}
               />
             </div>
@@ -92,12 +95,12 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
               <a href={heroButtonHref}>JOIN — WAITLIST</a>
             </Button>
             <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="#problem">SEE — WHAT’S PLANNED</a>
+              <a href="#problem">SEE — THE ROADMAP CONTEXT</a>
             </Button>
           </div>
 
           <div className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
-            One-time payment · Instant GitHub access · Early access Summer 2026
+            Roadmap preview · Not a live product yet · Start with SaaSKit today
           </div>
         </div>
       </section>
@@ -114,13 +117,13 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
                   </h3>
                 </div>
                 <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                  Custom websites need a repeatable path to recurring revenue.
+                  Some founders may want client proof before software.
                 </h2>
                 <p className="mb-4 font-medium text-foreground">
-                  Each client project starts bespoke, so recurring revenue feels elusive.
+                  A client-first path can reveal recurring demand before a product exists.
                 </p>
               <p className="mb-6 leading-relaxed text-muted-foreground">
-                WaaSKit provides the marketing page and starter client site so you can validate niche websites quickly and learn where recurring challenges may become future SaaS bets.
+                WaaSKit represents a future direction for that path. It does not replace the current SaaSKit offer for founders who already want to build software.
               </p>
               </div>
             </div>
@@ -139,10 +142,10 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
                     </h3>
                   </div>
                   <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                    Website-as-a-Service direction.
+                    A future Website-as-a-Service layer.
                   </h2>
                   <p className="mb-8 leading-relaxed text-muted-foreground">
-                    WaaSKit outlines workflow templates, scheduling ideas, and monitoring direction so recurring website services feel manageable.
+                    WaaSKit sketches how a client-first validation path could look later. It is not the present focus of the ProChat offer stack.
                   </p>
 
                   <div className="space-y-4 rounded-lg border border-primary/20 bg-background/60 p-6 shadow-inner backdrop-blur-sm">
@@ -170,24 +173,24 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
 
                   <div className="mt-8 border-t border-border-subtle pt-8">
                     <h4 className="mb-4 font-bold text-foreground">
-                      From idea to live SaaS faster because:
+                      The future use case would be:
                     </h4>
                     <ul className="space-y-2 font-mono text-sm text-muted-foreground">
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Direction for repeatable websites is being defined.
+                        Validate demand through repeatable client work first.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Billing/account workflows are being envisioned.
+                        Learn which delivery and billing patterns repeat.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Messaging and positioning are being tuned.
+                        Spot the recurring problems worth productizing.
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Thematic work is being groomed for launch.
+                        Move into SaaS only after there is stronger proof.
                       </li>
                     </ul>
                   </div>
@@ -205,10 +208,10 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
               What it will include
             </h2>
             <p className="text-muted-foreground">
-              A direction for shaping Website-as-a-Service workflows and repeatable client delivery.
+              A future direction for shaping Website-as-a-Service workflows and repeatable client delivery.
             </p>
             <p className="mt-4 text-sm text-muted-foreground">
-              These are the templates and patterns we are prototyping so founders stop overbuilding from scratch.
+              These are roadmap ideas for a later client-first path, not the current live product stack.
             </p>
           </div>
 
@@ -273,7 +276,7 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
 
           <div className="mt-8 text-center">
             <p className="font-mono text-sm text-muted-foreground">
-              Productize workflows faster with a launch-first direction.
+              WaaSKit is a future validation path. SaaSKit is the live product path today.
             </p>
           </div>
         </div>
@@ -287,7 +290,7 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
                 What it is NOT.
               </h2>
                 <p className="mb-8 text-lg text-muted-foreground">
-                WaaSKit is NOT a generic automation platform, CRM, agency, or universal drag-and-drop builder. It is a Website-as-a-Service starter kit that helps founders launch niche websites, learn from clients, and spot future SaaS opportunities.
+                WaaSKit is not the current default for ProChat buyers. It is a future client-first route for founders who may want to validate through services before moving into software later.
               </p>
               <div className="h-1 w-20 rounded-full bg-primary" />
             </div>
@@ -350,7 +353,7 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
             Get early builds and updates.
           </h2>
           <p className="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
-            WaaSKit is in development. Join the waitlist to get early access, roadmap updates, and launch notes.
+            WaaSKit is still roadmap work. Join the waitlist for updates if the client-first path matters to you later, but start with SaaSKit if you need the live offer now.
           </p>
 
           <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border-subtle bg-surface text-foreground shadow-elevated transition-transform duration-300 hover:-translate-y-1">
@@ -395,19 +398,19 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">What is WaaSKit?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                WaaSKit is a Website-as-a-Service direction that helps founders launch niche websites, standardize delivery, and identify recurring problems that may turn into SaaS opportunities.
+                WaaSKit is a future Website-as-a-Service direction on the ProChat roadmap. It is not a live product today.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">What is Website-as-a-Service?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                Website-as-a-Service is a launch-first model where niche websites are sold as ongoing services, making it easier to learn customer demand and fund future product work.
+                Website-as-a-Service is a client-first model where niche websites are sold as ongoing services, making it easier to learn customer demand before deciding what deserves software.
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
               <h3 className="text-lg font-bold text-foreground">How does WaaSKit help discover SaaS ideas?</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                By delivering real client work, capturing repeatable needs, and watching which services keep returning, founders uncover the SaaS opportunities worth productizing.
+                The planned idea is that recurring client work can reveal the patterns worth productizing into SaaS later.
               </p>
             </article>
           </div>
@@ -417,10 +420,10 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
       <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
-            Turn websites into scalable subscription products.
+            Track the roadmap if the client-first path fits.
           </h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            Join the waitlist to capture momentum and ship recurring WaaS services.
+            WaaSKit is for later. If you want to launch software now, SaaSKit is still the current production-ready offer.
           </p>
           <div className="flex flex-col items-center justify-center">
             <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">

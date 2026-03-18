@@ -15,13 +15,13 @@ const FAST_LINKS: Array<{
     {
       href: '/docs',
       label: 'Documentation',
-      description: 'Setup, deployment, and troubleshooting.',
+      description: 'SaaSKit and ProKit implementation docs, setup, and troubleshooting.',
       icon: FileText,
     },
     {
       href: '/kits/saaskit#pricing',
-      label: 'Pricing',
-      description: 'Plans, licensing, and upgrade paths.',
+      label: 'SaaSKit',
+      description: 'See the default production-ready kit, pricing, and what it includes.',
       icon: CreditCard,
     },
     {
@@ -68,7 +68,7 @@ export default function ContactPageMarkup() {
                     Contact ProChat
                   </h1>
                 <p className="max-w-[42rem] text-[0.92rem] leading-7 text-muted-foreground md:text-[0.98rem]">
-                  Use this form if you need help choosing the right product, hit a real blocker, or have a setup or licensing question. For everything else, start with the documentation first so we can reply quickly.
+                  Use this form if you need help choosing between SaaSKit and ProKit, hit a real implementation blocker, or have a setup or licensing question. For everything else, start with the docs first so replies can stay focused and fast.
                 </p>
                 </div>
 
@@ -94,7 +94,7 @@ export default function ContactPageMarkup() {
                     Send a direct message
                   </h2>
                   <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
-                    Share the blocker or next step you need. Most replies land within 1 business day.
+                    Share the product question, implementation blocker, or licensing issue. Most replies land within 1 business day.
                   </p>
                 </div>
 
@@ -162,13 +162,13 @@ export default function ContactPageMarkup() {
                       id="contact-message"
                       name="message"
                       className="contact-textarea"
-                      placeholder="Describe the goal, timeline, and blocker."
+                      placeholder="Describe the product, current blocker, and the decision or implementation help you need."
                       rows={5}
                       aria-required="true"
                       required
                     ></textarea>
                     <p className="contact-helper-text">
-                      The more specific the brief, the faster the reply.
+                      Include the kit, the step you are on, and what is blocking progress.
                     </p>
                     <p className="contact-field-error hidden" data-error-for="message"></p>
                   </div>
@@ -214,7 +214,7 @@ export default function ContactPageMarkup() {
                   Fast Links
                 </h3>
                 <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                  Go straight to the most useful docs, pricing, and policy answers before sending a message.
+                  Go straight to the most useful implementation, product, and policy answers before sending a message.
                 </p>
               </div>
 

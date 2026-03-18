@@ -3,9 +3,9 @@ import { getSEOTags } from '@/libs/seo'
 import { getStripePriceProkit } from '@/libs/stripe-env'
 import ProKitPageContent from './ProKitPageContent'
 
-const proKitTitle = 'ProKit – Build SaaS Applications Faster'
+const proKitTitle = 'ProKit – Lean SaaS Infrastructure Layer'
 const proKitDescription =
-	'Infrastructure and tooling for building production SaaS applications.'
+	'The lighter secondary option under SaaSKit for founders who want the core engine without the full launch layer.'
 const proKitCanonical = 'https://prochat.tools/kits/prokit'
 
 export const metadata = {
@@ -45,7 +45,7 @@ const schema = {
 	applicationCategory: 'DeveloperApplication',
 	operatingSystem: 'Web',
 	url: 'https://prochat.tools/kits/prokit',
-	description: 'Infrastructure for building SaaS applications with modern web stacks.',
+	description: 'The lighter secondary infrastructure layer under SaaSKit for building SaaS applications with modern web stacks.',
 	brand: {
 		"@type": 'Brand',
 		name: 'ProChat',
@@ -73,7 +73,7 @@ const faqSchema = {
 			name: 'What is ProKit?',
 			acceptedAnswer: {
 				"@type": 'Answer',
-				text: 'ProKit provides the core infrastructure for building SaaS products with modern web stacks. It includes authentication, billing, database integration, and deployment tooling so founders can focus on building product features.',
+				text: 'ProKit is the lighter infrastructure layer in the ProChat product stack. It includes authentication, billing, database integration, and deployment tooling for builders who want the core engine without the fuller launch layer in SaaSKit.',
 			},
 		},
 		{
@@ -81,7 +81,7 @@ const faqSchema = {
 			name: 'Who should use ProKit?',
 			acceptedAnswer: {
 				"@type": 'Answer',
-				text: 'ProKit is designed for developers and technical founders who want to launch SaaS products quickly without rebuilding the same infrastructure for every project.',
+				text: 'ProKit is designed for developers and technical founders who already know what they want to build and want maximum control over brand, funnel, and product structure.',
 			},
 		},
 		{
@@ -89,7 +89,7 @@ const faqSchema = {
 			name: 'How is ProKit different from SaaSKit?',
 			acceptedAnswer: {
 				"@type": 'Answer',
-				text: 'ProKit provides the developer infrastructure layer, while SaaSKit builds on top of it to provide a full SaaS application foundation including product structure and SaaS architecture.',
+				text: 'ProKit is the lighter engine layer. SaaSKit is the flagship productization layer built on top of ProKit for founders who want the fuller production-ready foundation.',
 			},
 		},
 	],

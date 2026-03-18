@@ -34,11 +34,11 @@ const LEGAL_LINKS = [
 ] as const
 
 const CONTACT_ACTIONS = [
-  { href: 'https://x.com/stevewesthoek', label: 'Follow me on X', icon: 'x', external: true },
-  { href: 'https://github.com/prochattools', label: 'Follow me on GitHub', icon: 'github', external: true },
+  { href: 'https://x.com/stevewesthoek', label: 'X', icon: 'x', external: true },
+  { href: 'https://github.com/prochattools', label: 'GitHub', icon: 'github', external: true },
   {
     href: 'https://www.linkedin.com/company/prochattools',
-    label: 'Connect on LinkedIn',
+    label: 'LinkedIn',
     icon: 'linkedin',
     external: true,
   },
@@ -54,8 +54,8 @@ export const Footer: React.FC = () => {
               <Logo scale={1.1} />
             </Link>
             <p className="mx-auto max-w-xs text-sm leading-relaxed text-muted-foreground lg:mx-0">
-              <span className="block">The Operating System</span>
-              <span className="block">for SaaS Builders.</span>
+              <span className="block">Build SaaS with Structure,</span>
+              <span className="block">not Guesswork.</span>
             </p>
             <BuiltWithBadge href="/kits/saaskit" className="mx-auto w-fit lg:mx-0" />
           </div>
@@ -126,16 +126,7 @@ export const Footer: React.FC = () => {
                       className="inline-flex items-center gap-3 break-words leading-relaxed transition-colors hover:text-primary md:break-normal"
                     >
                       <SocialIcon icon={action.icon} className="h-5 w-5 shrink-0 fill-current" />
-                      <span className="hidden md:inline">{action.label}</span>
-                      <span className="md:hidden">
-                        {action.icon === 'linkedin'
-                          ? 'LinkedIn'
-                          : action.icon === 'github'
-                            ? 'GitHub'
-                            : action.icon === 'x'
-                              ? 'X'
-                              : 'Community'}
-                      </span>
+                      <span>{action.label}</span>
                     </a>
                   </div>
                 ))}
@@ -151,20 +142,20 @@ export const Footer: React.FC = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65 transition-colors hover:text-primary"
           >
-            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/65">Member of the</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/65">An</span>
             <img
               src="/logo/aws-activate-logo-light.svg"
               alt="AWS Activate"
-              className="h-[1.2em] w-auto dark:hidden ml-[4px] mr-[4px]"
+              className="h-[1.2em] w-auto dark:hidden ml-[3px] mr-[3px]"
               style={{ transform: 'translateY(-1.6px)' }}
             />
             <img
               src="/logo/aws-activate-logo-dark.svg"
               alt="AWS Activate"
-              className="hidden h-[1.2em] w-auto dark:block ml-[4px] mr-[4px]"
+              className="hidden h-[1.2em] w-auto dark:block ml-[3px] mr-[3px]"
               style={{ transform: 'translateY(-1.6px)' }}
             />
-            <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65">Program</span>
+            <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65">Startup</span>
           </a>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65 lg:justify-end">
             {LEGAL_LINKS.map(link =>

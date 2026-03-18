@@ -1,14 +1,12 @@
-import config from '@/config'
 import StructuredData from '@/components/StructuredData'
 import { getSEOTags } from '@/libs/seo'
 import { getSiteUrl } from '@/libs/site-url'
-import { getStripePriceSaaskit } from '@/libs/stripe-env'
 import { getSoftwareApplicationSchema } from '@/libs/structured-data'
 import WaaSKitPageContent from './WaaSKitPageContent'
 
-const pageTitle = 'WaaSKit – Website as a Service Infrastructure'
+const pageTitle = 'WaaSKit – Future Website-as-a-Service Direction'
 const pageDescription =
-  'WaaSKit is a Website-as-a-Service starter kit for launching a niche website business and evolving it into SaaS.'
+  'Roadmap preview of a future website-as-a-service path for founders who may want to validate through client work before building SaaS. SaaSKit remains the current live offer.'
 const pageCanonical = 'https://prochat.tools/kits/waaskit'
 
 export const metadata = {
@@ -43,12 +41,6 @@ export const metadata = {
 
 export default function SaaSkitPage() {
   const siteUrl = getSiteUrl()
-  const saaskitProduct =
-    config.stripe.products.find(product =>
-      product.title.toLowerCase().includes('saaskit')
-    ) ?? null
-  const envPriceId = getStripePriceSaaskit() || null
-	const priceId = saaskitProduct?.priceId || envPriceId
 
 	const schema = {
 		'@context': 'https://schema.org',
@@ -58,7 +50,7 @@ export default function SaaSkitPage() {
 		operatingSystem: 'Web',
 		url: 'https://prochat.tools/kits/waaskit',
 		description:
-			'WaaSKit is a Website-as-a-Service starter kit for launching a niche website business and evolving it into SaaS.',
+			'Future website-as-a-service direction for founders who may want to validate through client work before productizing recurring problems into SaaS later.',
 		brand: {
 			'@type': 'Brand',
 			name: 'ProChat',
@@ -86,7 +78,7 @@ export default function SaaSkitPage() {
 				name: 'What is WaaSKit?',
 				acceptedAnswer: {
 					'@type': 'Answer',
-					text: 'WaaSKit is a Website-as-a-Service starter kit that helps founders launch a niche website business and evolve it into SaaS.',
+					text: 'WaaSKit is a future Website-as-a-Service direction in the ProChat roadmap. It is not a live product today.',
 				},
 			},
 			{
@@ -94,7 +86,7 @@ export default function SaaSkitPage() {
 				name: 'What is Website-as-a-Service?',
 				acceptedAnswer: {
 					'@type': 'Answer',
-					text: 'Website-as-a-Service is a model where websites are sold as subscription services instead of one-time projects.',
+					text: 'Website-as-a-Service is a model where websites are sold as subscription services instead of one-time projects so founders can learn from recurring customer work.',
 				},
 			},
 			{
@@ -102,7 +94,7 @@ export default function SaaSkitPage() {
 				name: 'How does WaaSKit help discover SaaS ideas?',
 				acceptedAnswer: {
 					'@type': 'Answer',
-					text: 'By working with real clients and solving their problems, founders discover recurring needs that can evolve into SaaS products.',
+					text: 'The planned idea behind WaaSKit is that recurring client problems can reveal the patterns worth productizing into SaaS later.',
 				},
 			},
 		],
@@ -119,9 +111,9 @@ export default function SaaSkitPage() {
           offers: [
             {
               '@type': 'Offer',
-              price: String(saaskitProduct?.price ?? 247),
+              price: '0',
               priceCurrency: 'USD',
-              availability: 'https://schema.org/InStock',
+              availability: 'https://schema.org/PreOrder',
               url: `${siteUrl}/kits/waaskit`,
             },
           ],
@@ -135,7 +127,7 @@ export default function SaaSkitPage() {
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
 			/>
-      <WaaSKitPageContent priceId={priceId} />
+      <WaaSKitPageContent />
     </>
   )
 }

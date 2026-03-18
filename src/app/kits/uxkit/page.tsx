@@ -1,14 +1,12 @@
-import config from '@/config'
 import StructuredData from '@/components/StructuredData'
 import { getSEOTags } from '@/libs/seo'
 import { getSiteUrl } from '@/libs/site-url'
-import { getStripePriceSaaskit } from '@/libs/stripe-env'
 import { getSoftwareApplicationSchema } from '@/libs/structured-data'
 import UXKitPageContent from './UXKitPageContent'
 
-const pageTitle = 'UXKit – SaaS Interface Layer'
+const pageTitle = 'UXKit – Future UI Layer for the ProChat Stack'
 const pageDescription =
-  'Preview dashboards, onboarding flows, and SaaS UI patterns that are still in progress.'
+  'Roadmap preview of the future UI layer planned to sit on top of SaaSKit and ProKit. UXKit is not the current live offer.'
 const pageCanonical = 'https://prochat.tools/kits/uxkit'
 
 export const metadata = {
@@ -48,12 +46,6 @@ export const metadata = {
 
 export default function UXKitPage() {
   const siteUrl = getSiteUrl()
-  const saaskitProduct =
-    config.stripe.products.find(product =>
-      product.title.toLowerCase().includes('saaskit')
-    ) ?? null
-  const envPriceId = getStripePriceSaaskit() || null
-	const priceId = saaskitProduct?.priceId || envPriceId
 
 const schema = {
   '@context': 'https://schema.org',
@@ -63,7 +55,7 @@ const schema = {
   operatingSystem: 'Web',
   url: 'https://prochat.tools/kits/uxkit',
   description:
-    'Early-access SaaS interface layer preview including dashboards, onboarding flows, and billing UI patterns.',
+    'Future UI layer planned for the ProChat stack, intended to complement SaaSKit and ProKit once the core foundation is already live.',
 		brand: {
 			'@type': 'Brand',
 			name: 'ProChat',
@@ -91,7 +83,7 @@ const schema = {
         name: 'What is UXKit?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'UXKit is a planned interface layer for reusable SaaS screens and patterns that is currently in development.',
+          text: 'UXKit is a planned future UI layer for reusable SaaS screens and patterns. It is still roadmap work, not a live offer.',
         },
       },
 			{
@@ -99,7 +91,7 @@ const schema = {
 				name: 'Why use UXKit?',
 				acceptedAnswer: {
 					'@type': 'Answer',
-          text: 'UXKit is designed to accelerate SaaS development by planning proven UI patterns instead of designing interfaces from scratch.',
+          text: 'UXKit is intended to improve the visual quality and consistency of SaaS products later on, after the core product foundation is already in place.',
 				},
 			},
       {
@@ -107,7 +99,7 @@ const schema = {
         name: 'Can UXKit be used with SaaSKit?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. UXKit is being designed to complement SaaSKit and ProKit so it can provide the interface layer for SaaS applications.',
+          text: 'Yes. UXKit is being planned as a future complement to SaaSKit and ProKit, not as a replacement for the current live kit path.',
         },
       },
 		],
@@ -124,9 +116,9 @@ const schema = {
           offers: [
             {
               '@type': 'Offer',
-              price: String(saaskitProduct?.price ?? 247),
+              price: '0',
               priceCurrency: 'USD',
-              availability: 'https://schema.org/InStock',
+              availability: 'https://schema.org/PreOrder',
               url: `${siteUrl}/kits/uxkit`,
             },
           ],
@@ -140,7 +132,7 @@ const schema = {
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
 			/>
-      <UXKitPageContent priceId={priceId} />
+      <UXKitPageContent />
     </>
   )
 }
