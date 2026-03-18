@@ -44,6 +44,19 @@ const PRIORITY_STATIC_DOC_ROUTES = new Set([
 const SHARED_ROUTE_OVERRIDES: Record<string, string> = {
   try: 'try-in-2-minutes',
 }
+const HIDDEN_PAGE_MAP_EXACT_ROUTES = new Set([
+  'prokit/README',
+  'prokit/install',
+  'saaskit/overview',
+  'saaskit/what-you-get',
+  'prokit/overview',
+  'prokit/what-you-get',
+  'shared/overview',
+  'shared/what-you-get',
+  'features/overview',
+  'features/what-you-get',
+])
+const HIDDEN_PAGE_MAP_PREFIXES = ['prokit/api'] as const
 
 let publicDocsDataPromise: Promise<PublicDocsData> | null = null
 
@@ -155,6 +168,20 @@ function isPriorityStaticDocEntry(entry: ContentEntry) {
   return PRIORITY_STATIC_DOC_ROUTES.has(entry.routeSegments.join('/'))
 }
 
+function getPageMapDisplay(routeSegments: string[]) {
+  const routeKey = routeSegments.join('/')
+
+  if (HIDDEN_PAGE_MAP_EXACT_ROUTES.has(routeKey)) {
+    return 'hidden' as const
+  }
+
+  if (HIDDEN_PAGE_MAP_PREFIXES.some(prefix => routeKey === prefix || routeKey.startsWith(`${prefix}/`))) {
+    return 'hidden' as const
+  }
+
+  return undefined
+}
+
 function asHiddenPageMapEntry(entry: ContentEntry, routeSegments = entry.routeSegments): ContentEntry {
   return {
     ...entry,
@@ -253,7 +280,7 @@ function compareNodes(left: DocsTreeNode, right: DocsTreeNode) {
 function asPageMapItem(node: DocsTreeNode): DocsPageMapItem {
   const title = getNodeLabel(node)
   const route = getNodeRoute(node)
-  const display = node.entry?.rawFrontmatter.display
+  const display = node.entry?.rawFrontmatter.display || getPageMapDisplay(node.routeSegments)
   const frontMatter = display ? { title, display } : { title }
 
   if (node.children.size === 0) {

@@ -3,176 +3,99 @@ export default {
     title: 'ProKit',
     display: 'hidden',
   },
-  'addcollaborator': {
-    title: 'Addcollaborator',
+  api: {
+    title: 'API Reference',
+    display: 'hidden',
     order: 100,
   },
-  'analyticseventname': {
-    title: 'Analyticseventname',
-    order: 100,
-  },
-  'analyticspayload': {
-    title: 'Analyticspayload',
-    order: 100,
-  },
-  'analyticspayloadvalue': {
-    title: 'Analyticspayloadvalue',
-    order: 100,
+  advanced: {
+    title: 'Advanced',
+    order: 90,
   },
   'architecture': {
     title: 'Architecture',
-    order: 100,
-  },
-  'cn': {
-    title: 'Cn',
-    order: 100,
+    order: 30,
   },
   'database': {
     title: 'Database',
-    order: 100,
+    order: 40,
   },
   'deployment': {
     title: 'Deployment',
-    order: 100,
+    order: 80,
   },
   'development': {
     title: 'Development',
-    order: 100,
-  },
-  'entitlementstatus': {
-    title: 'Entitlementstatus',
-    order: 100,
+    order: 85,
   },
   'features': {
     title: 'Features',
-    order: 100,
-  },
-  'findlatestpaidunprovisionedsessionbyemail': {
-    title: 'Findlatestpaidunprovisionedsessionbyemail',
-    order: 100,
-  },
-  'formatactionlabel': {
-    title: 'Formatactionlabel',
-    order: 100,
-  },
-  'formatactionlabelnode': {
-    title: 'Formatactionlabelnode',
-    order: 100,
-  },
-  'formatoptionalactionlabel': {
-    title: 'Formatoptionalactionlabel',
-    order: 100,
-  },
-  'getactionlabelhtml': {
-    title: 'Getactionlabelhtml',
-    order: 100,
-  },
-  'getgithubconfig': {
-    title: 'Getgithubconfig',
-    order: 100,
-  },
-  'getproductconfig': {
-    title: 'Getproductconfig',
-    order: 100,
-  },
-  'getsessionstatusbyid': {
-    title: 'Getsessionstatusbyid',
-    order: 100,
-  },
-  'getstripeclient': {
-    title: 'Getstripeclient',
-    order: 100,
+    order: 50,
   },
   'git-workflow': {
     title: 'Git Workflow',
-    order: 100,
-  },
-  'handlecheckoutprocess': {
-    title: 'Handlecheckoutprocess',
-    order: 100,
+    order: 95,
   },
   'install': {
     title: 'Install',
+    display: 'hidden',
     order: 100,
   },
-  'ischromelesspath': {
-    title: 'Ischromelesspath',
-    order: 100,
+  'installation': {
+    title: 'Installation',
+    order: 20,
   },
-  'isfooterlesspath': {
-    title: 'Isfooterlesspath',
-    order: 100,
-  },
-  'isfullscreenpath': {
-    title: 'Isfullscreenpath',
-    order: 100,
-  },
-  'isminimalheaderpath': {
-    title: 'Isminimalheaderpath',
-    order: 100,
-  },
-  'isvalidgithubusernameinput': {
-    title: 'Isvalidgithubusernameinput',
-    order: 100,
-  },
-  'marksessionpaid': {
-    title: 'Marksessionpaid',
-    order: 100,
-  },
-  'marksessionprovisioned': {
-    title: 'Marksessionprovisioned',
-    order: 100,
-  },
-  'normalizegithubusernameforcomparison': {
-    title: 'Normalizegithubusernameforcomparison',
-    order: 100,
+  integrations: {
+    title: 'Integrations',
+    order: 60,
   },
   'optional-features': {
     title: 'Optional Features',
-    order: 100,
+    order: 70,
   },
   'overview': {
     title: 'Overview',
-    order: 100,
-  },
-  'parsegithubusername': {
-    title: 'Parsegithubusername',
-    order: 100,
-  },
-  'productconfig': {
-    title: 'Productconfig',
-    order: 100,
-  },
-  'productslug': {
-    title: 'Productslug',
-    order: 100,
+    order: 10,
   },
   'README': {
     title: 'README',
-    order: 100,
-  },
-  'renderactionlabel': {
-    title: 'Renderactionlabel',
-    order: 100,
-  },
-  'retrievesessionbyid': {
-    title: 'Retrievesessionbyid',
+    display: 'hidden',
     order: 100,
   },
   'scripts': {
     title: 'Scripts',
-    order: 100,
+    order: 96,
   },
   'stack': {
     title: 'Stack',
-    order: 100,
+    order: 97,
   },
-  'trackevent': {
-    title: 'Trackevent',
-    order: 100,
+  'launch-flow': {
+    title: 'Launch Flow',
+    order: 25,
   },
-  'trackeventoncepersession': {
-    title: 'Trackeventoncepersession',
-    order: 100,
+  'launch-checklist': {
+    title: 'Launch Checklist',
+    order: 26,
+  },
+  'how-it-works': {
+    title: 'How It Works',
+    order: 11,
+  },
+  'who-this-is-for': {
+    title: 'Who This Is For',
+    order: 12,
+  },
+  'why-a-boilerplate': {
+    title: 'Why a Boilerplate',
+    order: 13,
+  },
+  'use-cases': {
+    title: 'Use Cases',
+    order: 14,
+  },
+  'what-you-get': {
+    title: 'What You Get',
+    order: 15,
   },
 }
