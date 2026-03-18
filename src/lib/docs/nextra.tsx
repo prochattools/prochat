@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { compileMdx } from 'nextra/compile'
 import { useMDXComponents as getDocsMdxComponents } from 'nextra-theme-docs'
 
+import { getPublicDocHrefResolver } from '@/lib/docs/public-docs'
 import type { ContentEntry } from '@/lib/content/types'
 
 type EvaluatedMdxModule = {
@@ -54,17 +55,21 @@ function stripMdxExtension(value: string) {
   return value.replace(/\/index\.mdx$/i, '').replace(/\.mdx$/i, '')
 }
 
-function resolveDocsHref(href: string, entry: ContentEntry) {
+function getDocsRouteSegments(href: string, entry: ContentEntry) {
   if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
-    return href
+    return null
   }
 
   if (/^[a-z]+:/i.test(href)) {
-    return href
+    return null
   }
 
   if (href.startsWith('/')) {
-    return href.startsWith('/docs/') ? stripMdxExtension(href) : href
+    if (!href.startsWith('/docs/')) {
+      return null
+    }
+
+    return stripMdxExtension(href).replace(/^\/docs\/?/, '').split('/').filter(Boolean)
   }
 
   const baseSegments = entry.sourcePath.endsWith('/index.mdx')
@@ -84,16 +89,50 @@ function resolveDocsHref(href: string, entry: ContentEntry) {
     resolvedSegments.push(part)
   }
 
-  return `/docs/${stripMdxExtension(resolvedSegments.join('/'))}`
+  return stripMdxExtension(resolvedSegments.join('/')).split('/').filter(Boolean)
 }
 
-function createDocsLink(entry: ContentEntry, BaseLink?: ComponentType<ComponentPropsWithoutRef<'a'>>) {
+function resolveDocsHref(
+  href: string,
+  entry: ContentEntry,
+  resolvePublicDocHref: (routeSegments: string[]) => string | null,
+) {
+  if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+    return href
+  }
+
+  if (/^[a-z]+:/i.test(href)) {
+    return href
+  }
+
+  if (href.startsWith('/')) {
+    if (!href.startsWith('/docs/')) {
+      return href
+    }
+
+    const routeSegments = getDocsRouteSegments(href, entry)
+    return routeSegments ? resolvePublicDocHref(routeSegments) : href
+  }
+
+  const routeSegments = getDocsRouteSegments(href, entry)
+  return routeSegments ? resolvePublicDocHref(routeSegments) : href
+}
+
+function createDocsLink(
+  entry: ContentEntry,
+  resolvePublicDocHref: (routeSegments: string[]) => string | null,
+  BaseLink?: ComponentType<ComponentPropsWithoutRef<'a'>>,
+) {
   return function DocsLink({
     href = '',
     children,
     ...props
   }: ComponentPropsWithoutRef<'a'>) {
-    const normalizedHref = resolveDocsHref(href, entry)
+    const normalizedHref = resolveDocsHref(href, entry, resolvePublicDocHref)
+
+    if (!normalizedHref) {
+      return <span>{children}</span>
+    }
 
     if (BaseLink) {
       return (
@@ -140,6 +179,7 @@ async function renderDocsMdxContentInternal(
   routeKey: string,
 ) {
   const filePath = path.join(process.cwd(), sourcePath)
+  const resolvePublicDocHref = await getPublicDocHrefResolver()
   const compiledSource = await compileMdx(source, {
     filePath,
     mdxOptions: {
@@ -162,6 +202,7 @@ async function renderDocsMdxContentInternal(
       routeSegments: routeKey ? routeKey.split('/') : [],
       sourcePath,
     } as ContentEntry,
+    resolvePublicDocHref,
     BaseLink,
   )
   const enhancedContent = <MDXContent components={{ ...pageComponents, a: docsLink }} />

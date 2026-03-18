@@ -25,26 +25,8 @@ const PUBLIC_PRODUCT_SET = new Set<string>(PUBLIC_PRODUCTS)
 const PUBLIC_DOC_TOP_LEVEL_SEGMENTS = ['features', 'prokit', 'saaskit', 'shared'] as const
 const PUBLIC_DOC_TOP_LEVEL_SET = new Set<string>(PUBLIC_DOC_TOP_LEVEL_SEGMENTS)
 const PRIVATE_VISIBILITY_VALUES = new Set(['internal', 'private'])
-const PRIORITY_STATIC_DOC_ROUTES = new Set([
-  'features',
-  'prokit',
-  'prokit/launch-flow',
-  'prokit/quick-start',
-  'prokit/what-you-get',
-  'saaskit',
-  'saaskit/launch-flow',
-  'saaskit/quick-start',
-  'saaskit/what-you-get',
-  'shared',
-  'shared/architecture',
-  'shared/deployment',
-  'shared/quick-start',
-  'shared/try-in-2-minutes',
-])
-const SHARED_ROUTE_OVERRIDES: Record<string, string> = {
-  try: 'try-in-2-minutes',
-}
-const HIDDEN_PAGE_MAP_EXACT_ROUTES = new Set([
+const COLLAPSED_SECTION_PAGES = new Set(['overview', 'what-you-get'])
+const HIDDEN_PUBLIC_DOC_EXACT_ROUTES = new Set([
   'prokit/README',
   'prokit/install',
   'saaskit/overview',
@@ -56,7 +38,24 @@ const HIDDEN_PAGE_MAP_EXACT_ROUTES = new Set([
   'features/overview',
   'features/what-you-get',
 ])
-const HIDDEN_PAGE_MAP_PREFIXES = ['prokit/api'] as const
+const HIDDEN_PUBLIC_DOC_PREFIXES = ['prokit/api'] as const
+const PRIORITY_STATIC_DOC_ROUTES = new Set([
+  'features',
+  'prokit',
+  'prokit/launch-flow',
+  'prokit/quick-start',
+  'saaskit',
+  'saaskit/launch-flow',
+  'saaskit/quick-start',
+  'shared',
+  'shared/architecture',
+  'shared/deployment',
+  'shared/quick-start',
+  'shared/try-in-2-minutes',
+])
+const SHARED_ROUTE_OVERRIDES: Record<string, string> = {
+  try: 'try-in-2-minutes',
+}
 
 let publicDocsDataPromise: Promise<PublicDocsData> | null = null
 
@@ -160,67 +159,28 @@ function hasPrivateVisibility(entry: ContentEntry) {
   )
 }
 
+function isHiddenPublicDocsRoute(routeSegments: string[]) {
+  const routeKey = routeSegments.join('/')
+
+  if (HIDDEN_PUBLIC_DOC_EXACT_ROUTES.has(routeKey)) {
+    return true
+  }
+
+  return HIDDEN_PUBLIC_DOC_PREFIXES.some(
+    prefix => routeKey === prefix || routeKey.startsWith(`${prefix}/`),
+  )
+}
+
 function isPublicDocEntry(entry: ContentEntry) {
-  return isPublicDocsRoute(entry.routeSegments) && !hasPrivateVisibility(entry)
+  return (
+    isPublicDocsRoute(entry.routeSegments) &&
+    !hasPrivateVisibility(entry) &&
+    !isHiddenPublicDocsRoute(entry.routeSegments)
+  )
 }
 
 function isPriorityStaticDocEntry(entry: ContentEntry) {
   return PRIORITY_STATIC_DOC_ROUTES.has(entry.routeSegments.join('/'))
-}
-
-function getPageMapDisplay(routeSegments: string[]) {
-  const routeKey = routeSegments.join('/')
-
-  if (HIDDEN_PAGE_MAP_EXACT_ROUTES.has(routeKey)) {
-    return 'hidden' as const
-  }
-
-  if (HIDDEN_PAGE_MAP_PREFIXES.some(prefix => routeKey === prefix || routeKey.startsWith(`${prefix}/`))) {
-    return 'hidden' as const
-  }
-
-  return undefined
-}
-
-function asHiddenPageMapEntry(entry: ContentEntry, routeSegments = entry.routeSegments): ContentEntry {
-  return {
-    ...entry,
-    routeSegments,
-    category: routeSegments[0] || entry.category,
-    urlPath: routeSegments.length > 0 ? `/docs/${routeSegments.join('/')}` : '/docs',
-    rawFrontmatter: {
-      ...entry.rawFrontmatter,
-      display: 'hidden',
-    },
-  }
-}
-
-function buildHiddenPageMapEntries(entries: ContentEntry[], visibleEntries: ContentEntry[]) {
-  const visibleRouteSet = new Set(visibleEntries.map(entry => entry.routeSegments.join('/')))
-  const hiddenEntries = entries
-    .filter(entry => entry.routeSegments.length > 0)
-    .filter(entry => !visibleRouteSet.has(entry.routeSegments.join('/')))
-    .map(entry => asHiddenPageMapEntry(entry))
-
-  const featureEntries = visibleEntries.filter(entry => entry.routeSegments[0] === 'features')
-
-  for (const product of PUBLIC_PRODUCTS) {
-    for (const featureEntry of featureEntries) {
-      const aliasRouteSegments = [product, ...featureEntry.routeSegments.slice(1)]
-      const aliasRouteKey = aliasRouteSegments.join('/')
-
-      if (visibleRouteSet.has(aliasRouteKey)) {
-        continue
-      }
-
-      hiddenEntries.push(asHiddenPageMapEntry(featureEntry, aliasRouteSegments))
-      visibleRouteSet.add(aliasRouteKey)
-    }
-  }
-
-  return Array.from(
-    new Map(hiddenEntries.map(entry => [entry.routeSegments.join('/'), entry])).values(),
-  )
 }
 
 function toStaticParam(entry: ContentEntry) {
@@ -280,7 +240,7 @@ function compareNodes(left: DocsTreeNode, right: DocsTreeNode) {
 function asPageMapItem(node: DocsTreeNode): DocsPageMapItem {
   const title = getNodeLabel(node)
   const route = getNodeRoute(node)
-  const display = node.entry?.rawFrontmatter.display || getPageMapDisplay(node.routeSegments)
+  const display = node.entry?.rawFrontmatter.display
   const frontMatter = display ? { title, display } : { title }
 
   if (node.children.size === 0) {
@@ -322,11 +282,9 @@ function buildDocsTree(entries: ContentEntry[]) {
 }
 
 async function buildPublicDocsData(): Promise<PublicDocsData> {
-  const allEntries = await getSectionEntries('docs')
-  const entries = allEntries.filter(isPublicDocEntry)
+  const entries = (await getSectionEntries('docs')).filter(isPublicDocEntry)
   const detailEntries = entries.filter(entry => entry.routeSegments.length > 0)
-  const hiddenPageMapEntries = buildHiddenPageMapEntries(allEntries, entries)
-  const tree = buildDocsTree([...detailEntries, ...hiddenPageMapEntries])
+  const tree = buildDocsTree(detailEntries)
 
   return {
     entries,
@@ -334,14 +292,7 @@ async function buildPublicDocsData(): Promise<PublicDocsData> {
     pageMap: Array.from(tree.children.values())
       .sort(compareNodes)
       .map(asPageMapItem) as PageMapItem[],
-    staticParams: Array.from(
-      new Map(
-        [
-          ...detailEntries.filter(isPriorityStaticDocEntry),
-          ...hiddenPageMapEntries,
-        ].map(entry => [entry.routeSegments.join('/'), toStaticParam(entry)]),
-      ).values(),
-    ),
+    staticParams: detailEntries.filter(isPriorityStaticDocEntry).map(toStaticParam),
   }
 }
 
@@ -363,42 +314,110 @@ export async function getPublicDocsPageMap() {
   return data.pageMap
 }
 
-export async function getPublicDocEntry(routeSegments: string[]): Promise<ContentEntry | null> {
+function normalizePublicDocRouteSegments(routeSegments: string[]) {
+  if (routeSegments.length === 0) {
+    return routeSegments
+  }
+
   if (!isPublicDocsRoute(routeSegments)) {
     return null
   }
 
-  const routeKey = routeSegments.join('/')
-  const { entryMap: entriesByRoute } = await getPublicDocsData()
-  const primary = entriesByRoute.get(routeKey) || null
-  if (primary) return primary
+  if (routeSegments[routeSegments.length - 1] === 'index') {
+    return routeSegments.slice(0, -1)
+  }
 
-  if (routeSegments.length < 2) return null
-  if (!PUBLIC_PRODUCT_SET.has(routeSegments[0])) return null
-
-  const sharedSlug = SHARED_ROUTE_OVERRIDES[routeSegments[1]]
-  if (sharedSlug) {
-    const sharedEntry = entriesByRoute.get(`shared/${sharedSlug}`) || null
-    if (sharedEntry) {
-      return {
-        ...sharedEntry,
-        routeSegments,
-        category: routeSegments[0],
-        urlPath: `/docs/${routeSegments.join('/')}`,
-      }
+  if (routeSegments[0] === 'shared' && routeSegments.length === 2) {
+    const sharedSlug = SHARED_ROUTE_OVERRIDES[routeSegments[1]]
+    if (sharedSlug) {
+      return ['shared', sharedSlug]
     }
   }
 
-  const featureSegments = ['features', ...routeSegments.slice(1)]
-  const fallback = entriesByRoute.get(featureSegments.join('/')) || null
-  if (!fallback) return null
-
-  return {
-    ...fallback,
-    routeSegments,
-    category: routeSegments[0],
-    urlPath: `/docs/${routeSegments.join('/')}`,
+  if (routeSegments.length === 2 && routeSegments[1] === 'README') {
+    return [routeSegments[0]]
   }
+
+  if (routeSegments.length === 2 && routeSegments[1] === 'install' && routeSegments[0] === 'prokit') {
+    return ['prokit', 'installation']
+  }
+
+  if (routeSegments.length === 2 && COLLAPSED_SECTION_PAGES.has(routeSegments[1])) {
+    return [routeSegments[0]]
+  }
+
+  if (routeSegments[0] === 'prokit' && routeSegments[1] === 'api') {
+    return null
+  }
+
+  return routeSegments
+}
+
+function resolvePublicDocEntry(
+  routeSegments: string[],
+  entriesByRoute: Map<string, ContentEntry>,
+) {
+  const primary = entriesByRoute.get(routeSegments.join('/'))
+  if (primary) {
+    return primary
+  }
+
+  const normalizedRouteSegments = normalizePublicDocRouteSegments(routeSegments)
+
+  if (!normalizedRouteSegments) {
+    return null
+  }
+
+  const normalized = entriesByRoute.get(normalizedRouteSegments.join('/'))
+  if (normalized) {
+    return normalized
+  }
+
+  if (!PUBLIC_PRODUCT_SET.has(routeSegments[0]) || routeSegments.length < 2) {
+    return null
+  }
+
+  return entriesByRoute.get(['features', ...routeSegments.slice(1)].join('/')) || null
+}
+
+function toDocHref(routeSegments: string[]) {
+  return routeSegments.length > 0 ? `/docs/${routeSegments.join('/')}` : '/docs'
+}
+
+export async function getPublicDocHrefResolver() {
+  const { entryMap: entriesByRoute } = await getPublicDocsData()
+
+  return (routeSegments: string[]) => {
+    const entry = resolvePublicDocEntry(routeSegments, entriesByRoute)
+    if (!entry) {
+      return null
+    }
+
+    const exact = entriesByRoute.get(routeSegments.join('/'))
+    if (exact) {
+      return exact.urlPath
+    }
+
+    const normalizedRouteSegments = normalizePublicDocRouteSegments(routeSegments)
+    if (normalizedRouteSegments) {
+      const normalized = entriesByRoute.get(normalizedRouteSegments.join('/'))
+      if (normalized) {
+        return toDocHref(normalizedRouteSegments)
+      }
+    }
+
+    if (PUBLIC_PRODUCT_SET.has(routeSegments[0]) && routeSegments.length >= 2) {
+      return entry.urlPath
+    }
+
+    return null
+  }
+}
+
+export async function getPublicDocEntry(routeSegments: string[]): Promise<ContentEntry | null> {
+  const { entryMap: entriesByRoute } = await getPublicDocsData()
+  const routeKey = routeSegments.join('/')
+  return entriesByRoute.get(routeKey) || null
 }
 
 export async function getPublicDocsStaticParams() {
