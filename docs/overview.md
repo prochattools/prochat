@@ -20,7 +20,7 @@ Core characteristics:
 - One tenant database user maps to that schema: `tenant_<slug>_user`
 - Provisioning is script-driven through `scripts/provision-auto.js` and `scripts/db/init-tenant.js`
 - Prisma migrations run from `prisma/system.prisma`
-- Production deployment is build-driven: `prebuild` provisions the tenant and applies `prisma migrate deploy`
+- Production startup runs the repo-owned schema-readiness step before Next begins serving traffic
 
 Reference docs:
 

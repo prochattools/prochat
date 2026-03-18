@@ -183,7 +183,7 @@ CI enforces that the internal docs stay aligned with the codebase. Every push ru
 - This is the ProChat repo; it inherits SaaSKit conventions but is not the same as the older ProKit brand. Keep the naming aligned with ProChat going forward.
 - The marketing/content site is MDX-first and no longer relies on WordPress, so do not document the WordPress stack as the active content system.
 - Dokploy is reserved for the main branch; there is no active branch-level preview deployment pipeline.
-- The SaaSKit runtime deploy gate (runtime scripts performing backups/smoke checks before `next start`) is not part of the current ProChat build. Production starts with `npm run start` after the `prebuild` run in `npm run build`.
+- The SaaSKit runtime deploy gate (runtime scripts performing backups/smoke checks before `next start`) is not part of the current ProChat build. Production starts with `npm run start`, and that start path now runs the repo-owned schema-readiness step before Next launches.
 - Both Docker and GitHub workflows now target Node 20 (`Dockerfile` uses `node:20-bullseye`; CI installs Node 20), and `package.json` enforces `node >=20`.
 
 ## Development Notes
@@ -201,7 +201,7 @@ npx next build
 Notes:
 
 - `npm run lint` is not defined in this repository.
-- `npm run build` requires production database env such as `SYSTEM_DATABASE_URL` because of the existing prebuild flow.
+- `npm run build` is a compile step. Production schema provisioning and migrations are enforced by `npm run start`, which runs `sh scripts/deploy/prepare-production.sh` before Next starts.
 
 ## Build-Time Automation
 

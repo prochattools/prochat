@@ -111,7 +111,7 @@ When working on the generated public docs pipeline, use [scripts/docs/README.md]
 
 ## Production-style build caveat
 
-`npm run build` is not a lightweight static build. It triggers `prebuild`, which runs provisioning and production migrations. That means production-like env values may be required when you run a full production build locally.
+`npm run build` is a compile step. Production schema readiness is now enforced by `npm run start`, which runs `sh scripts/deploy/prepare-production.sh` before Next launches. If you want to test that behavior locally, run the helper manually before `npm run start`.
 
 ## Related references
 

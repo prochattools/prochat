@@ -22,7 +22,7 @@ These commands only analyze code/docs or run the docs pipeline; they are safe wi
 - `npm run docs:preview`
 - `npm run db:init` (requires database and tenant context)
 - `npm run db:cleanup` (dangerous for production tenants without `--force`)
-- `npm run build` (runs provisioning/migrations; run only with proper env setup)
+- `npm run build` (compile step; production deploys still require separate schema provisioning/migrations)
 - Any `scripts/provision-*` commands
 
 These depend on real infrastructure or mutate persisted data.

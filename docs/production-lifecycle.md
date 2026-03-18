@@ -11,18 +11,19 @@ Production follows a build-first lifecycle:
 1. Dokploy runs `npm run build`
 2. `next build` compiles the standalone app output
 3. Dokploy starts the container with `npm run start`
-4. the startup script launches `next start`
-5. operators handle any Search Console follow-up manually after deploy
+4. `scripts/start-production.sh` runs `sh scripts/deploy/prepare-production.sh`
+5. the startup script launches `next start`
+6. operators handle any Search Console follow-up manually after deploy
 
-## Optional database prep
+## Startup database prep
 
-Database preparation is explicit. When a deploy needs tenant provisioning or production migrations, operators can run [prepare-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/deploy/prepare-production.sh).
+Database preparation is enforced by the production startup path.
 
 Current command:
 
 - `NODE_ENV=production npm run provision:auto`
 
-That hands off to [scripts/provision-auto.js](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/provision-auto.js).
+[prepare-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/deploy/prepare-production.sh) is invoked by [scripts/start-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/start-production.sh) and hands off to [scripts/provision-auto.js](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/provision-auto.js). Dokploy can still run it as an optional pre-deploy command if operators want earlier failure before the container starts.
 
 ## Provisioning and migration sequence
 
@@ -33,7 +34,7 @@ That hands off to [scripts/provision-auto.js](/Users/Office/Repos/Organisation/P
 3. run `npm run db:init -- --slug <slug>`
 4. run `npm run db:migrate:prod`
 
-That means tenant provisioning and Prisma production migrations are handled as an explicit operational step rather than hidden inside the build.
+That means tenant provisioning and Prisma production migrations run before Next starts serving traffic in production, while remaining outside the generic build command.
 
 ## Build continuation
 
@@ -54,6 +55,7 @@ Runtime startup is handled by [scripts/start-production.sh](/Users/Office/Repos/
 
 Current behavior:
 
+- run `sh scripts/deploy/prepare-production.sh`
 - start `next start -p ${PORT:-3000}`
 - sync `.next/static` and `.next/standalone/.next/static` so both supported runtime layouts can serve assets
 - wait on the Next.js process
@@ -102,13 +104,13 @@ In practical terms, Dokploy is where the build-driven provisioning and startup l
 
 ## Operational implication
 
-`npm run build` is now a pure application compile step. If operators also run the explicit database prep helper, that prep step assumes:
+The startup-enforced schema-readiness step assumes:
 
 - valid production env values
 - reachable production database connections
 - correct app slug and tenant credentials
 
-That separation keeps the default build faster and easier to reproduce locally and in CI.
+Keeping database prep outside `npm run build` means ordinary compile jobs stay free of live production database access, while `npm run start` now guarantees the repo-owned schema-readiness path before the app serves requests.
 
 ## Related references
 

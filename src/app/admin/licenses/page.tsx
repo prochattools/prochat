@@ -68,7 +68,33 @@ export default async function AdminLicensesPage({ searchParams }: { searchParams
     )
   }
 
-  const licenses = await listAdminLicenses()
+  const licenseState = await listAdminLicenses()
+
+  if (licenseState.status === 'missing') {
+    return (
+      <div className="space-y-8">
+        <div className="space-y-3">
+          <p className="text-sm font-mono uppercase tracking-[0.4em] text-muted-foreground/70">Admin</p>
+          <h1 className="text-4xl font-bold tracking-[-0.02em] text-foreground">Licenses</h1>
+          <p className="text-lg text-muted-foreground">
+            Licensing storage has not been initialized for this tenant yet, so the admin license view is in setup mode.
+          </p>
+        </div>
+
+        <div className="rounded-3xl border border-amber-500/30 bg-amber-500/10 p-8 shadow-sm">
+          <p className="text-lg font-semibold text-foreground">Licensing storage incomplete</p>
+          <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
+            {licenseState.message}
+          </p>
+          <p className="mt-4 text-xs uppercase tracking-[0.3em] text-muted-foreground/80">
+            Missing tables: {licenseState.missingTables.join(', ')}
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  const licenses = licenseState.licenses
   const normalizedSearch = searchParams.search?.trim().toLowerCase() || ''
   const filtered = licenses.filter(license => {
     if (searchParams.product && license.product !== searchParams.product) {

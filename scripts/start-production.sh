@@ -3,6 +3,9 @@ set -eu
 
 NODE_ENV=production
 
+echo "Preparing production database schema..."
+sh scripts/deploy/prepare-production.sh
+
 sync_static_dir() {
   src="$1"
   dest="$2"

@@ -109,6 +109,8 @@ Current models include:
 - `Project`
 - `Audiences`
 - `WaitlistSignup`
+- `License`
+- `LicenseEvent`
 
 Prisma commands used by the repo:
 

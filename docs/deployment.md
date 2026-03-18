@@ -11,7 +11,6 @@ Production is built for Dokploy.
 Current expectations:
 
 - Dokploy runs `npm run build`
-- if database preparation is needed, operators run `scripts/deploy/prepare-production.sh` explicitly before or alongside deploy orchestration
 - Dokploy starts the app with `npm run start`
 
 ## Actual build flow
@@ -29,8 +28,6 @@ The hot build path does **not** automatically run:
 - Prisma production migrations
 - social image generation
 - sitemap generation
-
-Those remain explicit commands so deploys do not spend time on non-essential work unless operators intentionally invoke them.
 
 ## Provisioning flow
 
@@ -58,7 +55,7 @@ Development migrations use:
 - command: `npm run db:migrate:dev`
 - implementation: `prisma migrate dev --schema=prisma/system.prisma`
 
-The production contract is explicit rather than hidden in `npm run build`. When operators need database preparation, they can run [prepare-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/deploy/prepare-production.sh), which calls `provision:auto`. That already runs both `db:init` and `db:migrate:prod`, so the helper no longer runs migrations twice.
+The production contract is repo-enforced at startup. [prepare-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/deploy/prepare-production.sh) now runs from `npm run start` before Next starts, so the tenant schema is provisioned and `prisma migrate deploy` creates new tables such as `License` and `LicenseEvent`. Dokploy can still run the same helper as an optional pre-deploy check to fail earlier, but the primary guarantee now lives in the repo-owned start path.
 
 ## Startup behavior
 
@@ -66,12 +63,12 @@ The production contract is explicit rather than hidden in `npm run build`. When 
 
 That script:
 
+- runs `sh scripts/deploy/prepare-production.sh`
 - starts `next start -p ${PORT:-3000}`
 - syncs standalone static assets when needed for the current runtime layout
 
 It does not:
 
-- run migrations
 - perform deploy gating
 - create backups
 - run smoke tests

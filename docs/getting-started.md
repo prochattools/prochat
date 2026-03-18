@@ -65,12 +65,11 @@ npm run dev
 - Migrate (prod): `npm run db:migrate:prod`
 - Cleanup preview: `npm run db:cleanup -- --slug <slug> [--force]`
 
-## 7) Dokploy production deployment (no manual DB step)
+## 7) Dokploy production deployment
 - Build command: `npm run build`
 - Start command: `npm run start`
-- `npm run build` automatically runs npm `prebuild`.
-- `prebuild` runs `NODE_ENV=production npm run provision:auto` (`db:init` + `db:migrate:prod`).
+- The start command runs `sh scripts/deploy/prepare-production.sh`, which runs `NODE_ENV=production npm run provision:auto` (`db:init` + `db:migrate:prod`) before Next starts.
 - Production assumes the existing Supabase Postgres database is already present; only schema/role provisioning is performed.
-- Do not add manual production hooks for `db:init` or `db:migrate:prod`.
+- Dokploy can still run `sh scripts/deploy/prepare-production.sh` as an optional pre-deploy command if you want earlier failure before the container starts.
 
 If you hit issues, see `docs/deployment.md` and `instructions/troubleshooting.md`.
