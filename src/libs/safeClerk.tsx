@@ -9,6 +9,7 @@ import {
   SessionContext,
   UserContext,
 } from '@clerk/shared/react'
+import { useTheme } from 'next-themes'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const isCiBuild =
@@ -22,6 +23,11 @@ const disableClerkInDev =
 const isClerkExplicitlyDisabled =
   process.env.CLERK_DISABLED === 'true' ||
   process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+
+const signInUrl = process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL || '/sign-in'
+const signUpUrl = process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL || '/sign-up'
+const afterSignInUrl = process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL || '/dashboard'
+const afterSignUpUrl = process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL || '/dashboard'
 
 const mockClientContext = {
   sessions: [],
@@ -79,9 +85,63 @@ const MockClerkProvider = ({ children }: { children: React.ReactNode }) => (
   </ClerkInstanceContext.Provider>
 )
 
+function useClerkAppearance() {
+  const { resolvedTheme } = useTheme()
+  const dark = resolvedTheme !== 'light'
+
+  return {
+    variables: {
+      colorPrimary: '#3B82F6',
+      colorBackground: dark ? '#111827' : '#FFFFFF',
+      colorInputBackground: dark ? '#0F172A' : '#F8FAFC',
+      colorInputText: dark ? '#FFFFFF' : '#0F172A',
+      colorText: dark ? '#FFFFFF' : '#0F172A',
+      colorTextSecondary: dark ? '#94A3B8' : '#475569',
+      colorNeutral: dark ? '#1E293B' : '#E2E8F0',
+      colorDanger: '#EF4444',
+      borderRadius: '18px',
+      fontFamily: 'var(--font-sans)',
+    },
+    elements: {
+      rootBox: 'w-full',
+      cardBox: 'w-full',
+      card: dark
+        ? 'w-full rounded-[28px] border border-white/10 bg-[#111827]/95 text-white shadow-[0_24px_80px_rgba(0,0,0,0.45)]'
+        : 'w-full rounded-[28px] border border-slate-200 bg-white text-slate-900 shadow-[0_24px_80px_rgba(15,23,42,0.12)]',
+      headerTitle: dark ? 'text-white tracking-[-0.02em]' : 'text-slate-950 tracking-[-0.02em]',
+      headerSubtitle: dark ? 'text-slate-300' : 'text-slate-600',
+      socialButtonsBlockButton: dark
+        ? 'border border-white/10 bg-slate-900 text-white hover:bg-slate-800'
+        : 'border border-slate-200 bg-white text-slate-900 hover:bg-slate-50',
+      formButtonPrimary: 'bg-blue-500 text-white hover:bg-blue-400 shadow-none',
+      formFieldInput: dark
+        ? 'border border-white/10 bg-slate-950 text-white placeholder:text-slate-500'
+        : 'border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400',
+      footerActionLink: 'text-blue-500 hover:text-blue-400',
+      identityPreviewText: dark ? 'text-slate-300' : 'text-slate-600',
+      formFieldLabel: dark ? 'text-slate-200' : 'text-slate-700',
+      dividerText: dark ? 'text-slate-500' : 'text-slate-400',
+      dividerLine: dark ? 'bg-white/10' : 'bg-slate-200',
+      alertText: dark ? 'text-slate-200' : 'text-slate-700',
+    },
+  }
+}
+
 export const SafeClerkProvider = ({ children }: { children: React.ReactNode }) => {
+  const appearance = useClerkAppearance()
+
   if (isClerkEnabled) {
-    return <ClerkProvider>{children}</ClerkProvider>
+    return (
+      <ClerkProvider
+        signInUrl={signInUrl}
+        signUpUrl={signUpUrl}
+        afterSignInUrl={afterSignInUrl}
+        afterSignUpUrl={afterSignUpUrl}
+        appearance={appearance}
+      >
+        {children}
+      </ClerkProvider>
+    )
   }
 
   if (!isProduction) {

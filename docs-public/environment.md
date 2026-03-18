@@ -42,6 +42,8 @@ These values are used by the tenant provisioning scripts, CLI helpers, and runti
 
 Clerk is required in production unless explicitly disabled. The middleware (`src/middleware.ts`) and UI wrappers read the publishable key and disable toggles. Local development and CI run in mock mode when Clerk is disabled or keys are absent. `/admin/*` routes also require an explicit allowlist: set `ADMIN_EMAILS`, `ADMIN_CLERK_IDS`, or both. If the allowlist is missing, admin pages fail in a diagnosable configuration state instead of silently 404ing.
 
+Production social login is configured in Clerk, not in this repo. For Google sign-in to work, the production Clerk instance behind `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` / `CLERK_SECRET_KEY` must have the Google social connection enabled with a valid OAuth client. If Google returns `Missing required parameter: client_id`, the production Clerk instance is missing Google client configuration or the app is pointed at the wrong Clerk instance. Also verify the production app domain, sign-in URL, and callback/redirect URLs shown in the Clerk dashboard match the live site.
+
 ## Payments (Stripe)
 
 - `STRIPE_MODE`

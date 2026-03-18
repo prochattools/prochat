@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { SignIn } from '@clerk/nextjs'
+import { AuthScreen } from '@/components/AuthScreen'
+import { isClerkEnabled as isServerClerkEnabled } from '@/libs/safeClerkServer'
 
 export const metadata: Metadata = {
   robots: {
@@ -9,19 +11,35 @@ export const metadata: Metadata = {
 }
 
 export default function Page({ searchParams }: { searchParams?: { redirect_url?: string } }) {
-  const clerkDisabled =
-    process.env.CLERK_DISABLED === 'true' ||
-    process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
+  let clerkEnabled = false
 
-  if (clerkDisabled) {
+  try {
+    clerkEnabled = isServerClerkEnabled()
+  } catch {
+    clerkEnabled = false
+  }
+
+  if (!clerkEnabled) {
     return (
-      <div className="mx-auto max-w-md px-page py-20 text-center text-sm text-slate-600 dark:text-slate-300">
-        Authentication is currently disabled.
-      </div>
+      <AuthScreen
+        title="Authentication unavailable"
+        description="Clerk is disabled or not configured correctly for this environment, so account sign-in is not available here."
+      >
+        <div className="rounded-[28px] border border-border bg-surface p-8 text-center text-sm text-muted-foreground shadow-sm">
+          Authentication is currently disabled.
+        </div>
+      </AuthScreen>
     )
   }
 
   const redirectUrl = searchParams?.redirect_url?.startsWith('/') ? searchParams.redirect_url : '/dashboard'
 
-  return <SignIn forceRedirectUrl={redirectUrl} fallbackRedirectUrl={redirectUrl} />
+  return (
+    <AuthScreen
+      title="Sign in to ProChat"
+      description="Use your ProChat account to continue into the product, account dashboard, or protected admin tools."
+    >
+      <SignIn forceRedirectUrl={redirectUrl} fallbackRedirectUrl={redirectUrl} />
+    </AuthScreen>
+  )
 }
