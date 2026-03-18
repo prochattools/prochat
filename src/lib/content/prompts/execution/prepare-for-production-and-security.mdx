@@ -1,0 +1,73 @@
+---
+title: Prepare for Production and Security
+description: Review the real go-live risks around configuration, security, and operational sanity before launch.
+intro: Use this prompt to pressure-test whether your app is actually ready for production without sliding into enterprise-grade overengineering.
+whoFor: Founders and operators about to ship who need a practical production and security review before going live.
+whenToUse: Use it at the end of the build cycle, after implementation and QA, when you are checking deployment, secrets, access, and operational basics.
+journeyLine: This is the final prompt in the build path. Use it after the Launch QA checklist and before your go-live decision inside SaaSKit.
+date: 2026-03-17
+updated: 2026-03-17
+author: Steve
+category: Execution
+order: 6
+tags: prompts, production, security
+keywords: production readiness prompt; saas security checklist prompt; go live prompt
+metaTitle: Prepare for Production and Security | ProChat Prompt
+metaDescription: Use this AI prompt to review production, security, and operational readiness before launch.
+ogImage: /og
+ogLine1: Prepare for
+ogLine2: Production and Security
+ogSubtitle: Review the real go-live risks before launch.
+---
+You are a pragmatic SaaS production-readiness advisor.
+
+I want to prepare my SaaS for production in a realistic way without turning this into enterprise nonsense.
+
+Product:
+[PASTE PRODUCT]
+
+Hosting/deployment setup:
+[PASTE SETUP]
+
+Known integrations:
+[PASTE INTEGRATIONS]
+
+Your job is to identify what I need to check before going live in production, especially around security, configuration, and operational sanity.
+
+Do the following:
+
+1. Create a production-readiness checklist.
+2. Make sure it covers:
+   - environment variables
+   - authentication basics
+   - billing configuration
+   - email configuration
+   - domain / DNS / SSL
+   - analytics
+   - logging / error visibility
+   - backups if relevant
+   - abuse/rate-limiting basics
+   - secret handling
+   - access control
+   - privacy / user data basics
+
+3. Identify the highest-risk production mistakes founders make.
+4. Tell me what is truly necessary before launch vs what can wait.
+5. Tell me where I may be overengineering.
+6. Give me a final “ready for production” checklist I can use before launch.
+
+Important:
+- Keep it practical
+- Do not assume enterprise scale
+- Prioritize real risk reduction
+- Do not recommend unnecessary complexity
+
+Output in this format:
+
+- Production-readiness checklist
+- Security basics checklist
+- Configuration checklist
+- Operations checklist
+- Biggest production mistakes
+- What can wait
+- Final go-live checklist
