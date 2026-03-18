@@ -2,16 +2,27 @@ import config from '@/config'
 import { NextResponse } from 'next/server'
 import prisma from '@/libs/prisma'
 import { resendService } from '@/libs/resend'
-import { getCurrentAdminUser, isAdminUser } from '@/lib/admin'
+import { getAdminAccessState } from '@/lib/admin'
 import { getGithubConfig, removeCollaborator } from '@/lib/store/github'
 import type { LicenseEventType } from '@prisma/client'
 import type { ProductSlug } from '@/lib/store/types'
 
 export async function POST(request: Request) {
-  const user = await getCurrentAdminUser()
-  if (!isAdminUser(user)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+  const access = await getAdminAccessState()
+
+  if (access.status === 'unauthenticated') {
+    return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
   }
+
+  if (access.status === 'misconfigured') {
+    return NextResponse.json({ error: access.message }, { status: 500 })
+  }
+
+  if (access.status === 'unauthorized') {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+
+  const user = access.user
 
   const payload = await request.json().catch(() => ({}))
   const licenseId = String(payload?.licenseId || '')

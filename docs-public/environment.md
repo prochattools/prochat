@@ -37,8 +37,10 @@ These values are used by the tenant provisioning scripts, CLI helpers, and runti
 - `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL`
 - `CLERK_DISABLED`
 - `NEXT_PUBLIC_CLERK_DISABLED`
+- `ADMIN_EMAILS`
+- `ADMIN_CLERK_IDS`
 
-Clerk is required in production unless explicitly disabled. The middleware (`src/middleware.ts`) and UI wrappers read the publishable key and disable toggles. Local development and CI run in mock mode when Clerk is disabled or keys are absent.
+Clerk is required in production unless explicitly disabled. The middleware (`src/middleware.ts`) and UI wrappers read the publishable key and disable toggles. Local development and CI run in mock mode when Clerk is disabled or keys are absent. `/admin/*` routes also require an explicit allowlist: set `ADMIN_EMAILS`, `ADMIN_CLERK_IDS`, or both. If the allowlist is missing, admin pages fail in a diagnosable configuration state instead of silently 404ing.
 
 ## Payments (Stripe)
 

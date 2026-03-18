@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default function Page() {
+export default function Page({ searchParams }: { searchParams?: { redirect_url?: string } }) {
   const clerkDisabled =
     process.env.CLERK_DISABLED === 'true' ||
     process.env.NEXT_PUBLIC_CLERK_DISABLED === 'true'
@@ -21,5 +21,7 @@ export default function Page() {
     )
   }
 
-  return <SignIn forceRedirectUrl="/dashboard" />
+  const redirectUrl = searchParams?.redirect_url?.startsWith('/') ? searchParams.redirect_url : '/dashboard'
+
+  return <SignIn forceRedirectUrl={redirectUrl} fallbackRedirectUrl={redirectUrl} />
 }

@@ -1,9 +1,9 @@
 import { Fragment } from 'react'
 import type { Prisma } from '@prisma/client'
-import { notFound, redirect } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { listAdminLicenses } from '@/lib/licenses'
-import { getCurrentAdminUser, isAdminUser } from '@/lib/admin'
-import { isClerkEnabled } from '@/libs/safeClerkServer'
+import { getAdminAccessState } from '@/lib/admin'
+import { AdminAccessNotice } from '../AdminAccessNotice'
 import { RevokeLicenseAction } from './RevokeLicenseAction'
 
 type SearchParams = {
@@ -42,17 +42,30 @@ function extractReason(metadata: Prisma.JsonValue | null) {
 }
 
 export default async function AdminLicensesPage({ searchParams }: { searchParams: SearchParams }) {
-  const user = await getCurrentAdminUser()
+  const access = await getAdminAccessState()
 
-  if (!user) {
-    if (!isClerkEnabled()) {
-      notFound()
-    }
-    redirect(`/sign-in?redirect_url=/admin/licenses`)
+  if (access.status === 'unauthenticated') {
+    redirect('/sign-in?redirect_url=/admin/licenses')
   }
 
-  if (!isAdminUser(user)) {
-    notFound()
+  if (access.status === 'misconfigured') {
+    return (
+      <AdminAccessNotice
+        title="Admin configuration required"
+        message={access.message}
+        tone="warning"
+      />
+    )
+  }
+
+  if (access.status === 'unauthorized') {
+    return (
+      <AdminAccessNotice
+        title="Access denied"
+        message="Your Clerk account is signed in, but it is not on the admin allowlist for this environment."
+        tone="danger"
+      />
+    )
   }
 
   const licenses = await listAdminLicenses()

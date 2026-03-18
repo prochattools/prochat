@@ -1,6 +1,6 @@
-import { notFound, redirect } from 'next/navigation'
-import { getCurrentAdminUser, isAdminUser } from '@/lib/admin'
-import { isClerkEnabled } from '@/libs/safeClerkServer'
+import { redirect } from 'next/navigation'
+import { getAdminAccessState } from '@/lib/admin'
+import { AdminAccessNotice } from '../AdminAccessNotice'
 import { AdminOgGenerator } from './AdminOgGenerator'
 
 export const metadata = {
@@ -8,17 +8,30 @@ export const metadata = {
 }
 
 export default async function AdminOgPage() {
-  const user = await getCurrentAdminUser()
+  const access = await getAdminAccessState()
 
-  if (!user) {
-    if (!isClerkEnabled()) {
-      notFound()
-    }
+  if (access.status === 'unauthenticated') {
     redirect('/sign-in?redirect_url=/admin/og')
   }
 
-  if (!isAdminUser(user)) {
-    notFound()
+  if (access.status === 'misconfigured') {
+    return (
+      <AdminAccessNotice
+        title="Admin configuration required"
+        message={access.message}
+        tone="warning"
+      />
+    )
+  }
+
+  if (access.status === 'unauthorized') {
+    return (
+      <AdminAccessNotice
+        title="Access denied"
+        message="Your Clerk account is signed in, but it is not on the admin allowlist for this environment."
+        tone="danger"
+      />
+    )
   }
 
   return (
