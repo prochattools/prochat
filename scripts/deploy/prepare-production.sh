@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -euo pipefail
+set -eu
 
 : "${APP_SLUG:?APP_SLUG is required for tenant provisioning.}"
 : "${DATABASE_URL:?DATABASE_URL is required for production migrations.}"
