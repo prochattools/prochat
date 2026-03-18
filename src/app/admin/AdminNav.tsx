@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 
 const adminLinks = [
   { href: '/admin/licenses', label: 'Licenses' },
+  { href: '/admin/waitlist', label: 'Waitlist' },
   { href: '/admin/og', label: 'OG image generator' },
 ]
 
