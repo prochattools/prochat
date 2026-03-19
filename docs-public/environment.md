@@ -12,6 +12,7 @@ Other docs should link here instead of duplicating the contract. The list below 
 - `SHADOW_DATABASE_URL`
 - `TENANT_DB_PASSWORD`
 - `EXTERNAL_ID`
+- `PORT`
 
 These values are used by the tenant provisioning scripts, CLI helpers, and runtime startup. `APP_SLUG` determines the tenant schema (`tenant_<slug>`); the three database URLs keep runtime, provisioning, and Prisma shadow workloads separate. `TENANT_DB_PASSWORD` is required in production.
 
@@ -39,10 +40,20 @@ These values are used by the tenant provisioning scripts, CLI helpers, and runti
 - `NEXT_PUBLIC_CLERK_DISABLED`
 - `ADMIN_EMAILS`
 - `ADMIN_CLERK_IDS`
+- `DISABLE_CLERK_IN_DEV`
+- `NEXT_PUBLIC_DISABLE_CLERK_IN_DEV`
 
 Clerk is required in production unless explicitly disabled. The middleware (`src/middleware.ts`) and UI wrappers read the publishable key and disable toggles. Local development and CI run in mock mode when Clerk is disabled or keys are absent. `/admin/*` routes also require an explicit allowlist: set `ADMIN_EMAILS`, `ADMIN_CLERK_IDS`, or both. If the allowlist is missing, admin pages fail in a diagnosable configuration state instead of silently 404ing.
+`DISABLE_CLERK_IN_DEV` and `NEXT_PUBLIC_DISABLE_CLERK_IN_DEV` are developer/CI toggles that switch Clerk off while still running the app. Set both to `'true'` when testing without a Clerk instance.
 
 Production social login is configured in Clerk, not in this repo. For Google sign-in to work, the production Clerk instance behind `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` / `CLERK_SECRET_KEY` must have the Google social connection enabled with a valid OAuth client. If Google returns `Missing required parameter: client_id`, the production Clerk instance is missing Google client configuration or the app is pointed at the wrong Clerk instance. Also verify the production app domain, sign-in URL, and callback/redirect URLs shown in the Clerk dashboard match the live site.
+
+Production Google sign-in checklist:
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` must point to the same Clerk production instance
+- the Clerk production instance must have Google enabled under social connections
+- if you use your own Google OAuth app, enter the Google client ID and secret in the Clerk dashboard for that production instance
+- in Google Cloud Console, add the exact authorized origins and redirect URIs Clerk shows for that production instance
+- make sure the live production domain and `/sign-in` route match the Clerk instance configuration
 
 ## Payments (Stripe)
 
@@ -119,8 +130,12 @@ Make and n8n routes clone workflows, create webhooks, and persist `Project` reco
 - `DOCS_EXPORT_PATH`
 - `DOCS_EXPORT_COMMIT`
 - `OPENAI_API_KEY`
+- `DOCS_EXPORT_REPO_URL`
+- `DOCS_EXPORT_SOURCE_LAYOUT`
+- `DOCS_EXPORT_SOURCE_PATH`
 
 The docs automation stack uses these values for strict validation, AI generation, and manifest attribution (`scripts/docs/*`). See [docs-automation.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/docs-automation.md) for the pipeline overview.
+`DOCS_EXPORT_REPO_URL`, `DOCS_EXPORT_SOURCE_LAYOUT`, and `DOCS_EXPORT_SOURCE_PATH` describe where the pipeline read its source material. They are supplied by the extraction scripts before `docs:ingest` or `docs:ai-build` runs and remain relevant whenever external docs exports are synchronized.
 
 ## Analytics and helpers
 
