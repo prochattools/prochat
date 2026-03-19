@@ -229,10 +229,9 @@ async function syncIntoIngest(
   repoUrl: string,
 ) {
   await execFileAsync(
-    process.execPath,
+    'npx',
     [
-      '-r',
-      'ts-node/register/transpile-only',
+      'tsx',
       path.resolve('scripts/docs/ingest/external-sync.ts'),
       target,
       DOCS_EXPORT_ROOT,
