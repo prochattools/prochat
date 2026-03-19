@@ -29,7 +29,7 @@
     "docs:clean": "node -e \"const {rm} = require('fs/promises'); const targets = ['src/content/docs/prokit','src/content/docs/saaskit','src/content/docs/waaskit','src/content/docs/future']; Promise.all(targets.map(t => rm(t, { recursive: true, force: true }))).catch(() => {});\"",
     "docs:preview": "npm run docs:generate && npx next dev -p 3100",
     "docs:check:coverage": "tsx scripts/docs/check-doc-coverage.ts",
-    "docs:validate": "npm run docs:check:coverage && tsx scripts/docs/validate-docs.ts",
+    "docs:validate": "npm run docs:check:coverage && tsx scripts/docs/check-public-docs-runtime.ts && tsx scripts/docs/validate-docs.ts",
     "docs:ai-generate": "tsx scripts/docs/ai/generate-ai-doc.ts",
     "docs:ai-build": "npm run docs:ai-generate && npm run docs:generate && npm run docs:validate",
     "docs:ingest": "tsx scripts/docs/ingest/external-sync.ts",

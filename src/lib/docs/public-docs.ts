@@ -39,20 +39,6 @@ const HIDDEN_PUBLIC_DOC_EXACT_ROUTES = new Set([
   'features/what-you-get',
 ])
 const HIDDEN_PUBLIC_DOC_PREFIXES = ['prokit/api'] as const
-const PRIORITY_STATIC_DOC_ROUTES = new Set([
-  'features',
-  'prokit',
-  'prokit/launch-flow',
-  'prokit/quick-start',
-  'saaskit',
-  'saaskit/launch-flow',
-  'saaskit/quick-start',
-  'shared',
-  'shared/architecture',
-  'shared/deployment',
-  'shared/quick-start',
-  'shared/try-in-2-minutes',
-])
 const SHARED_ROUTE_OVERRIDES: Record<string, string> = {
   try: 'try-in-2-minutes',
 }
@@ -101,6 +87,28 @@ function folder(
     children,
     frontMatter,
   }
+}
+
+function sanitizePageMapItems(items: DocsPageMapItem[]): DocsPageMapItem[] {
+  const sanitized = items
+    .map(item => {
+      if (!('children' in item)) {
+        return item
+      }
+
+      const children = sanitizePageMapItems(item.children as DocsPageMapItem[])
+      if (children.length === 0) {
+        return null
+      }
+
+      return {
+        ...item,
+        children,
+      }
+    })
+    .filter((item): item is DocsPageMapItem => item !== null)
+
+  return sanitized
 }
 
 function titleize(segment: string) {
@@ -177,10 +185,6 @@ function isPublicDocEntry(entry: ContentEntry) {
     !hasPrivateVisibility(entry) &&
     !isHiddenPublicDocsRoute(entry.routeSegments)
   )
-}
-
-function isPriorityStaticDocEntry(entry: ContentEntry) {
-  return PRIORITY_STATIC_DOC_ROUTES.has(entry.routeSegments.join('/'))
 }
 
 function toStaticParam(entry: ContentEntry) {
@@ -289,10 +293,14 @@ async function buildPublicDocsData(): Promise<PublicDocsData> {
   return {
     entries,
     entryMap: new Map(entries.map(entry => [entry.routeSegments.join('/'), entry])),
-    pageMap: Array.from(tree.children.values())
-      .sort(compareNodes)
-      .map(asPageMapItem) as PageMapItem[],
-    staticParams: detailEntries.filter(isPriorityStaticDocEntry).map(toStaticParam),
+    pageMap: sanitizePageMapItems(
+      Array.from(tree.children.values())
+        .sort(compareNodes)
+        .map(asPageMapItem),
+    ) as PageMapItem[],
+    // Prebuild every public docs route. The built app's on-demand render path has
+    // been the source of repeated production 500s for otherwise valid doc pages.
+    staticParams: detailEntries.map(toStaticParam),
   }
 }
 
