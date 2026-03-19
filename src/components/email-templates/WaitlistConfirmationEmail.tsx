@@ -16,8 +16,7 @@ import ProChatEmailBrand from '@/components/email-templates/ProChatEmailBrand'
 interface WaitlistConfirmationEmailProps {
   email: string
   products: string[]
-  logoUrl: string
-  wordmarkUrl: string
+  brandLockupUrl: string
   preferencesUrl: string
   unsubscribeUrl: string
 }
@@ -120,8 +119,7 @@ const styles = {
 const WaitlistConfirmationEmail: React.FC<Readonly<WaitlistConfirmationEmailProps>> = ({
   email,
   products,
-  logoUrl,
-  wordmarkUrl,
+  brandLockupUrl,
   preferencesUrl,
   unsubscribeUrl,
 }) => {
@@ -138,7 +136,7 @@ const WaitlistConfirmationEmail: React.FC<Readonly<WaitlistConfirmationEmailProp
             <Section style={styles.accentBar} />
 
             <Section style={styles.header}>
-              <ProChatEmailBrand logoUrl={logoUrl} wordmarkUrl={wordmarkUrl} />
+              <ProChatEmailBrand lockupUrl={brandLockupUrl} />
               <Text style={styles.eyebrow}>ProChat Waitlist</Text>
               <Text style={styles.title}>You&apos;re on the ProChat waitlist</Text>
             </Section>

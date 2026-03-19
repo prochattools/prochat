@@ -16,8 +16,7 @@ interface WaitlistAdminNotificationEmailProps {
   email: string
   timestampIso: string
   products: string[]
-  logoUrl: string
-  wordmarkUrl: string
+  brandLockupUrl: string
 }
 
 const styles = {
@@ -110,8 +109,7 @@ const WaitlistAdminNotificationEmail: React.FC<Readonly<WaitlistAdminNotificatio
   email,
   timestampIso,
   products,
-  logoUrl,
-  wordmarkUrl,
+  brandLockupUrl,
 }) => (
   <Html>
     <Head />
@@ -122,7 +120,7 @@ const WaitlistAdminNotificationEmail: React.FC<Readonly<WaitlistAdminNotificatio
           <Section style={styles.accentBar} />
 
           <Section style={styles.header}>
-            <ProChatEmailBrand logoUrl={logoUrl} wordmarkUrl={wordmarkUrl} />
+            <ProChatEmailBrand lockupUrl={brandLockupUrl} />
             <Text style={styles.eyebrow}>ProChat Waitlist Intake</Text>
             <Text style={styles.title}>New ProChat Waitlist Signup</Text>
           </Section>

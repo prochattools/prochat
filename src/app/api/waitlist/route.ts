@@ -207,7 +207,7 @@ export async function POST(request: Request) {
     })
 
     const timestampIso = signup.created_at.toISOString()
-    const { logoUrl, wordmarkUrl, preferencesUrl, unsubscribeUrl } =
+    const { brandLockupUrl, preferencesUrl, unsubscribeUrl } =
       buildWaitlistPreferenceUrls(unsubscribeToken)
 
     let emailStatus: 'sent' | 'skipped' | 'failed' = 'skipped'
@@ -239,8 +239,7 @@ export async function POST(request: Request) {
               email: submission.email,
               timestampIso,
               products: formattedProducts,
-              logoUrl,
-              wordmarkUrl,
+              brandLockupUrl,
             }),
           }),
           resend.emails.send({
@@ -251,8 +250,7 @@ export async function POST(request: Request) {
             react: WaitlistConfirmationEmail({
               email: submission.email,
               products: formattedProducts,
-              logoUrl,
-              wordmarkUrl,
+              brandLockupUrl,
               preferencesUrl,
               unsubscribeUrl,
             }),

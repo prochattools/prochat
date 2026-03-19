@@ -1,11 +1,8 @@
 import React from 'react'
 import { Img, Section } from '@react-email/components'
 
-import { brand } from '@/lib/brand'
-
 interface ProChatEmailBrandProps {
-  logoUrl: string
-  wordmarkUrl: string
+  lockupUrl: string
 }
 
 const styles = {
@@ -13,35 +10,20 @@ const styles = {
     paddingBottom: '8px',
     textAlign: 'center' as const,
   },
-  mark: {
+  lockup: {
     display: 'block',
-    width: '40px',
-    height: '40px',
+    width: '170px',
+    height: '56px',
     margin: '0 auto',
-  },
-  wordmark: {
-    display: 'block',
-    width: '120px',
-    height: '24px',
-    margin: '10px auto 0',
-    color: brand.colors.textLight,
   },
 } as const
 
 export default function ProChatEmailBrand({
-  logoUrl,
-  wordmarkUrl,
+  lockupUrl,
 }: Readonly<ProChatEmailBrandProps>) {
   return (
     <Section style={styles.wrap}>
-      <Img src={logoUrl} width="40" height="40" alt="ProChat logo mark" style={styles.mark} />
-      <Img
-        src={wordmarkUrl}
-        width="120"
-        height="24"
-        alt="ProChat"
-        style={styles.wordmark}
-      />
+      <Img src={lockupUrl} width="170" height="56" alt="ProChat" style={styles.lockup} />
     </Section>
   )
 }
