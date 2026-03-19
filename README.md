@@ -165,7 +165,7 @@ Each content layout injects a CTA section automatically so discovery traffic doe
 
 - `/docs` is strictly internal. These markdown files describe the environment, deployment, content plane, and docs automation that the ProChat team operates directly.
 - `scripts/docs/README.md` is the low-level reference for the docs pipeline; it is not part of the generated public docs map but links to `docs-ingest`, `docs-export`, and `src/content/docs`.
-- Use the generated public docs inside `src/content/docs/*` when you need the public-facing output; they are produced from the internal `/docs` plus the AI pipeline, so editing `/docs` (or adding new templates here) flows into the generated site via `npm run docs:ai-build`.
+- Use the generated public docs inside `src/content/docs/*` when you need the public-facing output; they are produced from the upstream development repositories (`prochattools/prokit-dev` and `prochattools/saaskit-dev`) plus the AI pipeline. ProChat repo-root `/docs` remains internal operator documentation and is not the product-doc source of truth.
 AI coding agents should consult `AGENTS.md` for repository context before editing the docs or code.
 Operational commands and validation paths are documented in `REPO_OPERATIONS.md`.
 
