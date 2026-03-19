@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-import { mkdir, readdir, readFile, writeFile } from 'fs/promises'
+import { mkdir, readdir, readFile, stat, writeFile } from 'fs/promises'
 import path from 'path'
+import yaml from 'yaml'
 
 import { loadRegistry } from './extract/shared.ts'
+import { GENERATED_FILE_MARKER } from './extract/shared.ts'
 
 const DOCS_ROOT = path.resolve('src', 'content', 'docs')
 const ORDERED_SECTIONS = [
@@ -100,11 +102,37 @@ function isoFromEntries(entries: ManifestEntry[]) {
   if (!timestamps.length) return null
   return new Date(Math.max(...timestamps)).toISOString()
 }
+
+function buildOverlayFrontmatter(
+  fields: Record<string, string | number>,
+  generatedAt: string,
+) {
+  const frontmatter = yaml
+    .stringify({
+      ...fields,
+      sourceRepo: 'prochat',
+      generator: 'overlay',
+      generatedAt,
+    })
+    .trim()
+
+  return [
+    GENERATED_FILE_MARKER,
+    '---',
+    frontmatter,
+    '---',
+    '',
+  ].join('\n')
+}
 type DocRecord = {
   absolutePath: string
   relativePath: string
   label: string
   slug: string
+}
+
+function isOverlayDoc(raw: string) {
+  return /(?:^|\n)sourceRepo:\s*prochat\s*(?:\n|$)/.test(raw) && /(?:^|\n)generator:\s*overlay\s*(?:\n|$)/.test(raw)
 }
 
 function slugify(value: string) {
@@ -124,22 +152,31 @@ async function collectDocs(productPath: string): Promise<DocRecord[]> {
       for (const subEntry of subEntries) {
         if (!subEntry.isFile() || path.extname(subEntry.name) !== '.mdx') continue
         const absolutePath = path.join(productPath, entry.name, subEntry.name)
-        docs.push(await buildDocRecord(productPath, absolutePath))
+        const doc = await buildDocRecord(productPath, absolutePath)
+        if (doc) {
+          docs.push(doc)
+        }
       }
       continue
     }
     if (entry.isFile() && ['.md', '.mdx'].includes(path.extname(entry.name))) {
       const absolutePath = path.join(productPath, entry.name)
-      docs.push(await buildDocRecord(productPath, absolutePath))
+      const doc = await buildDocRecord(productPath, absolutePath)
+      if (doc) {
+        docs.push(doc)
+      }
     }
   }
 
   return docs
 }
 
-async function buildDocRecord(productPath: string, absolutePath: string): Promise<DocRecord> {
+async function buildDocRecord(productPath: string, absolutePath: string): Promise<DocRecord | null> {
   const relativePath = path.relative(productPath, absolutePath)
   const raw = await readFile(absolutePath, 'utf-8')
+  if (isOverlayDoc(raw)) {
+    return null
+  }
   const label = extractTitle(raw) || path.basename(relativePath, path.extname(relativePath))
   return {
     absolutePath,
@@ -166,6 +203,7 @@ async function writeSummaryPage(
   productPath: string,
   section: (typeof ORDERED_SECTIONS)[number],
   matches: DocRecord[],
+  generatedAt: string,
 ) {
   const targetPath = path.join(productPath, `${section.slug}.mdx`)
   const entries =
@@ -176,12 +214,15 @@ async function writeSummaryPage(
             `- [${doc.label}](./${doc.relativePath.replace(/\\/g, '/')})`,
         )
 
-  const content = `---
-title: ${section.title}
-description: ${section.description}
-slug: ${section.slug}
-order: ${ORDERED_SECTIONS.indexOf(section) + 1}
----
+  const content = `${buildOverlayFrontmatter(
+    {
+      title: section.title,
+      description: section.description,
+      slug: section.slug,
+      order: ORDERED_SECTIONS.indexOf(section) + 1,
+    },
+    generatedAt,
+  )}
 
 ## Related technical docs
 
@@ -196,7 +237,16 @@ async function ensureDirectory(productPath: string, dirName: string) {
   await mkdir(path.join(productPath, dirName), { recursive: true })
 }
 
-async function writeIndexPage(productPath: string, dirName: string, docs: DocRecord[]) {
+async function directoryExists(dirPath: string) {
+  try {
+    const info = await stat(dirPath)
+    return info.isDirectory()
+  } catch {
+    return false
+  }
+}
+
+async function writeIndexPage(productPath: string, dirName: string, docs: DocRecord[], generatedAt: string) {
   const dirPath = path.join(productPath, dirName)
   await ensureDirectory(productPath, dirName)
   const indexPath = path.join(dirPath, 'index.mdx')
@@ -205,11 +255,14 @@ async function writeIndexPage(productPath: string, dirName: string, docs: DocRec
       ? ['- No integration docs detected yet.']
       : docs.map(doc => `- [${doc.label}](../${doc.relativePath.replace(/\\/g, '/')})`)
 
-  const content = `---
-title: ${dirName.charAt(0).toUpperCase() + dirName.slice(1)}
-slug: ${dirName}
-order: ${ORDERED_SECTIONS.length + 1}
----
+  const content = `${buildOverlayFrontmatter(
+    {
+      title: dirName.charAt(0).toUpperCase() + dirName.slice(1),
+      slug: dirName,
+      order: ORDERED_SECTIONS.length + 1,
+    },
+    generatedAt,
+  )}
 
 ## Related docs
 
@@ -240,13 +293,16 @@ async function writeLandingPage(
   ].join('\n')
   const repoLine = repoUrl ? `- GitHub: [${repoUrl}](${repoUrl})` : '- Repository information not available.'
 
-  const content = `---
-title: ${title}
-description: ${description}
-slug: index
-order: 0
-keywords: ${[productId, 'landing', ...(productInfo?.title ? [productInfo.title] : [])].join(', ')}
----
+  const content = `${buildOverlayFrontmatter(
+    {
+      title,
+      description,
+      slug: 'index',
+      order: 0,
+      keywords: [productId, 'landing', ...(productInfo?.title ? [productInfo.title] : [])].join(', '),
+    },
+    lastSync,
+  )}
 
 ## Product overview
 
@@ -278,28 +334,41 @@ async function run() {
   const registry = await loadRegistry()
   const manifestEntries = await loadManifestEntries()
   const manifestMap = await buildManifestMap(manifestEntries)
-  const products = await readdir(DOCS_ROOT, { withFileTypes: true })
-  for (const product of products) {
-    if (!product.isDirectory()) continue
-    const productPath = path.join(DOCS_ROOT, product.name)
+  for (const product of registry) {
+    const productPath = path.join(DOCS_ROOT, product.id)
+    if (!(await directoryExists(productPath))) {
+      continue
+    }
+    if ((manifestMap.get(product.id) ?? []).length === 0) {
+      continue
+    }
     const docs = await collectDocs(productPath)
+    const overlayGeneratedAt = isoFromEntries(manifestMap.get(product.id) ?? []) ?? new Date().toISOString()
     const assigned = new Set<string>()
 
     for (const section of ORDERED_SECTIONS) {
+      const canonicalFile = docs.find(
+        doc =>
+          doc.relativePath === `${section.slug}.mdx` ||
+          doc.relativePath === `${section.slug}.md`,
+      )
+      if (canonicalFile) {
+        assigned.add(canonicalFile.absolutePath)
+        continue
+      }
       const matches = docs.filter(doc => !assigned.has(doc.absolutePath) && matchesKeywords(doc, section.keywords))
       matches.forEach(doc => assigned.add(doc.absolutePath))
-      await writeSummaryPage(productPath, section, matches)
+      await writeSummaryPage(productPath, section, matches, overlayGeneratedAt)
     }
 
     const integrationDocs = docs.filter(doc => !assigned.has(doc.absolutePath) && INTEGRATION_KEYWORDS.some(keyword => doc.relativePath.includes(keyword)))
     integrationDocs.forEach(doc => assigned.add(doc.absolutePath))
-    await writeIndexPage(productPath, INTEGRATIONS_DIR, integrationDocs)
+    await writeIndexPage(productPath, INTEGRATIONS_DIR, integrationDocs, overlayGeneratedAt)
 
     const advancedDocs = docs.filter(doc => !assigned.has(doc.absolutePath))
     advancedDocs.forEach(doc => assigned.add(doc.absolutePath))
-    await writeIndexPage(productPath, ADVANCED_DIR, advancedDocs)
-    const productInfo = registry.find(entry => entry.id === product.name)
-    await writeLandingPage(productPath, product.name, productInfo, manifestMap.get(product.name) ?? [])
+    await writeIndexPage(productPath, ADVANCED_DIR, advancedDocs, overlayGeneratedAt)
+    await writeLandingPage(productPath, product.id, product, manifestMap.get(product.id) ?? [])
   }
 }
 

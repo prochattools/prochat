@@ -14,12 +14,12 @@
       "README",
       "boilerplate"
     ],
-    "contentHash": "48469add005ee7d6f5bdf6d7d471e7e535236ac830ac40da7073e02984ae4af0",
+    "contentHash": "b1a609c9dfbdb8cd4b757b8fc5c2e40ef57e46b0ca0024acc5156a76222a74e6",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T19:41:06.080Z",
+    "generatedAt": "2026-03-19T09:02:18.872Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.architecture",
@@ -36,12 +36,12 @@
       "Architecture",
       "boilerplate"
     ],
-    "contentHash": "b1c8b307a258afaa26dec3e6ba0d0ed563d53c6dfce500040cfa2eb86432596d",
+    "contentHash": "294c173141a0ba1786a84efb27f410d13bda96824627e6c8a14a2653b9be4829",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T19:41:06.081Z",
+    "generatedAt": "2026-03-19T09:02:18.873Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.database",
@@ -58,12 +58,12 @@
       "Database",
       "boilerplate"
     ],
-    "contentHash": "edac7cca3a1e935e7cf0551fb4c39c8a0b3343fbff9abd6258bbda580a881671",
+    "contentHash": "69193808732cdb3e635496b6b3d121f9714d7c3150e09fe7d1ff3f26d686e896",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T19:41:06.081Z",
+    "generatedAt": "2026-03-19T09:02:18.873Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.deployment",
@@ -80,12 +80,12 @@
       "Deployment",
       "boilerplate"
     ],
-    "contentHash": "a2e2e75fefc67524fef90529b4cf260f3f4934dac565f8f63d046e16491e0a06",
+    "contentHash": "9d67bb207aea2e50842344d9a17535ff54b2cfe12f4348d4ebb83c4111a81389",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T19:41:06.082Z",
+    "generatedAt": "2026-03-19T09:02:18.873Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.development",
@@ -102,12 +102,12 @@
       "Development",
       "boilerplate"
     ],
-    "contentHash": "2d0d825f49c19b888eb8e030a465e41c95e09e489a6a39e7d29e85b1ae327f95",
+    "contentHash": "5a5e9148ad97a4cef1a3fe9146ad57ab800a54ec25179198f008921b695da0c0",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T19:41:06.082Z",
+    "generatedAt": "2026-03-19T09:02:18.873Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.features",
@@ -119,17 +119,18 @@
     "description": "Documentation for Features.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Features",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "453ed6ff035aef2f214a733260ba1ea7e4beeb5637e89104630796362fc6cdaf",
+    "contentHash": "54464326cd86ef5e33586da2588c9a0a13e32513d88e97ae5b322fd632b9d26e",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T19:41:06.082Z",
+    "generatedAt": "2026-03-19T09:02:18.876Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.git-workflow",
@@ -146,12 +147,12 @@
       "Git Workflow",
       "boilerplate"
     ],
-    "contentHash": "9cca8fc8ba13b7c20f2b239ab8eb58ac85846e96227d57e386e7844ec4250c82",
+    "contentHash": "3e40ae1e701024036af90cae917099e16400c97ad189dd42451bce948392a0de",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T19:41:06.082Z",
+    "generatedAt": "2026-03-19T09:02:18.876Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.install",
@@ -169,12 +170,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "579aabd488e04a534831b0b8de942362ccd3a253be34507e1dd5162ba124a7de",
+    "contentHash": "94e3b35a321fc5d3189b1835b10291556c7fea09b69ab6fdb508748440ea8092",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.441Z",
+    "generatedAt": "2026-03-19T09:02:18.877Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.optional-features",
@@ -186,17 +187,18 @@
     "description": "Documentation for Optional Features.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Optional Features",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "41b2c1e2c8becfb9604a0c273e16e7ca5e607933fe4f1d2c6ca19b7f3c2467a8",
+    "contentHash": "61183bb719d026fae31b6a66c498f48159e11cb2037480fa10d011bdb66f5fb4",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T19:41:06.085Z",
+    "generatedAt": "2026-03-19T09:02:18.877Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.overview",
@@ -208,17 +210,18 @@
     "description": "Documentation for Overview.",
     "order": 100,
     "keywords": [
-      "prokit",
-      "ProKit",
+      "Boilerplate",
       "Overview",
-      "boilerplate"
+      "boilerplate",
+      "prokit",
+      "ProKit"
     ],
-    "contentHash": "63f823e4a01ad916138dfc2d6ab19f91b633d3e5d5ab838f210fa8e8effa7f12",
+    "contentHash": "ee523160fee654e8671d5a430ce1731ef947066b0b834301e96123dc5d227492",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T19:41:06.085Z",
+    "generatedAt": "2026-03-19T09:02:18.878Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.scripts",
@@ -235,12 +238,12 @@
       "Scripts",
       "boilerplate"
     ],
-    "contentHash": "37f70502d794cf7953e29ab2b812759c332675b24c9c6589c917454f90cb2d8e",
+    "contentHash": "c5214a7b4709cdbfe160882a0bab3c92915f6ce1146a66bbcd527ce76a0686f3",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T19:41:06.086Z",
+    "generatedAt": "2026-03-19T09:02:18.878Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.stack",
@@ -257,12 +260,12 @@
       "Stack",
       "boilerplate"
     ],
-    "contentHash": "a32381d3cfc025bcfedb8783a886e5c48371895cb3e97f1d53ee3c8d763f5fbb",
+    "contentHash": "3af5cf2a80f0d9cd32fcd5796b9c63c6d47fbb7cc8d626d3f9306ea18f3e4001",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T19:41:06.086Z",
+    "generatedAt": "2026-03-19T09:02:18.878Z",
     "generator": "ai",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.addcollaborator",
@@ -280,12 +283,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "b7ecf82c208be2b6dd2d4d27b5460ef1f5ad0079f655e40e373c235e4d32acc6",
+    "contentHash": "94a67f190a89b0800915290ee22225850ed96bea7621593bd73944e680dfcbcb",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.443Z",
+    "generatedAt": "2026-03-19T09:02:18.879Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.analyticseventname",
@@ -303,12 +306,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "bb35552084116a38251d1e71171cc773558b3df9113ffd47a94f09259b6d07b8",
+    "contentHash": "8a9627d51283e0f5b9fcd9a1e597b62314510952e4da1b555b0b36c99a4ea760",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.444Z",
+    "generatedAt": "2026-03-19T09:02:18.879Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.analyticspayload",
@@ -326,12 +329,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "dbf0d2866e0c8d5f2fd69c3187da642ca3e190631cdf74f84ecf95e95fcb16c2",
+    "contentHash": "dfdff30b9aa6e036f5cf8b81309731851661b9cff1c2fc848dd0ab972239e025",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.444Z",
+    "generatedAt": "2026-03-19T09:02:18.880Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.analyticspayloadvalue",
@@ -349,12 +352,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "a90b4a309a55c92c451888a9c50262879a25982efec915d276b3c31342f09f17",
+    "contentHash": "e9425a3469cfa329e7c8ea357807346d67e26a9de641c16af04792169436a9a1",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.445Z",
+    "generatedAt": "2026-03-19T09:02:18.880Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.cn",
@@ -372,12 +375,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "7a430e18b876e1bfa582c9376660ebbdb4158cb06ef664069201e8d5de2140fe",
+    "contentHash": "f81c9fd8564163058bff1465766a33bed66aa9bf28908919070b65699ab98ef0",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.445Z",
+    "generatedAt": "2026-03-19T09:02:18.881Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.entitlementstatus",
@@ -395,12 +398,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "859ad5377d9e2b3b402aa15b780f424cc8bf28978ec3d378a40731cba7b10496",
+    "contentHash": "b406dd7690aafbf239b0ced1232147d45e185ed47549be51321eccf559d1f330",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.446Z",
+    "generatedAt": "2026-03-19T09:02:18.881Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.findlatestpaidunprovisionedsessionbyemail",
@@ -418,12 +421,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "a9c8e498ed465705943e1da3fb6b7e8ab93257a30c6359de312144627ddeb746",
+    "contentHash": "f9800eca8e26a1a43cac6c34898864672b0e008d70478be4a95c14b2f8511d7c",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.447Z",
+    "generatedAt": "2026-03-19T09:02:18.881Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.formatactionlabel",
@@ -441,12 +444,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "2a053061164c09ffd45cc15f47bf30e610cf322cf7f9a72b5457d7e303e79ac5",
+    "contentHash": "cd1e09be402561e683e09f8fb7a43115748f846cc1da665100169cb0ef0e1e18",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.447Z",
+    "generatedAt": "2026-03-19T09:02:18.882Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.formatactionlabelnode",
@@ -464,12 +467,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "8639a875ff7084caf509c4831c7667def3375fe26b2359bbad817a5d48922683",
+    "contentHash": "7a2d2abd99272b3810f2b82ed615592f998fe9e0e33fa54f71d100219fe0b49b",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.449Z",
+    "generatedAt": "2026-03-19T09:02:18.882Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.formatoptionalactionlabel",
@@ -487,12 +490,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "06dbdbea2d30fd5cf88efb7858773b95cd4fe8655da8a5013f3a2b74768a1024",
+    "contentHash": "bdc5b6dea2389ac011195fc17294aa94d4930e8cd4bca110c3f06d9a3352c9f8",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.449Z",
+    "generatedAt": "2026-03-19T09:02:18.882Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.getactionlabelhtml",
@@ -510,12 +513,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "61c1d72c56eac4b868756977a8f9bfc2aa2a9028101a56d9f7a1a2ffb0f2c925",
+    "contentHash": "68064726f222891877f998c9f001e57729652f76ca330fd57ccd58d8061b7972",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.450Z",
+    "generatedAt": "2026-03-19T09:02:18.883Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.getgithubconfig",
@@ -533,12 +536,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "4412174461fa16448481e8d61d48f7084a6d7f77d201f3d121da29829bc1d2d3",
+    "contentHash": "f7d64601b5ad2c14dab0a1499f59c8b6126bf67dd9b53fbe497fd6329ca4494d",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.450Z",
+    "generatedAt": "2026-03-19T09:02:18.883Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.getproductconfig",
@@ -556,12 +559,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "a06753a36e5ef87a4e3ee2e762c1546d4bd352ecba8c8600eef28ea8b920b74a",
+    "contentHash": "3c24a23f216cd4582c23b352eeecfdb726d645a8f5ebf9b593f9c2c0b222b12b",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.452Z",
+    "generatedAt": "2026-03-19T09:02:18.883Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.getsessionstatusbyid",
@@ -579,12 +582,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "46e501e90c8242c17c562ed69babed06a07cce6bfcd7f27304eb6e73c61f7436",
+    "contentHash": "9ee0ce083f534b26078fd8cac179135f6e817edadbc7a7aab58637610e4c5b5a",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.452Z",
+    "generatedAt": "2026-03-19T09:02:18.884Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.getstripeclient",
@@ -602,12 +605,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "e41f1a9c92a4318ea754c05ec7a6d5344d3a033872780a436a4872c57092c572",
+    "contentHash": "34e2f560a6f2066893640519a5b08d857ab59b7647db94d40571f1a98d6aa8c7",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.452Z",
+    "generatedAt": "2026-03-19T09:02:18.884Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.handlecheckoutprocess",
@@ -625,12 +628,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "63032d8b93b6db03384ebdedde5afe9c07afff1f67e2b3312870be877d2a193f",
+    "contentHash": "db2ab53d2ce92ea46b07c3217437c85043a8dd4ba574785f3956163ce6a12aac",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.453Z",
+    "generatedAt": "2026-03-19T09:02:18.884Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.ischromelesspath",
@@ -648,12 +651,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "3829aa4802db71cef1457935fc078aa9f7c15c63e569bcd03cfd259bef542c5c",
+    "contentHash": "f76f6841297012daf0fef05c4eaf1c3db677671521961e31f418f1399781e9ce",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.453Z",
+    "generatedAt": "2026-03-19T09:02:18.885Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.isfooterlesspath",
@@ -671,12 +674,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "c60363a7dc261de86416fbf976af5719e3b45f8133ef8213e3d7c3f356ead201",
+    "contentHash": "cc15f56e6fe005f42934ecedd02ed3f9a3884f1ae3ec85a169e7aa4f6d657852",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.454Z",
+    "generatedAt": "2026-03-19T09:02:18.885Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.isfullscreenpath",
@@ -694,12 +697,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "4f742e5b1b47f804f3ce14e56799a6d1f342e4e9e82ee9609f6da85fa38e82b9",
+    "contentHash": "a5f3ef4c60010dd597cc5804d5ca795b4c4b3ea9142d71b6a0cac7ecfa7e6e5b",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.454Z",
+    "generatedAt": "2026-03-19T09:02:18.885Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.isminimalheaderpath",
@@ -717,12 +720,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "9fc82a49ea563f37c980a1d8a33f6742b3fe47ed3c7f4043268ff796ea975846",
+    "contentHash": "500a7cbf1d0d6cfe1953ad45b0490ad4776ac9796319e1a2792ad0e692825f45",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.455Z",
+    "generatedAt": "2026-03-19T09:02:18.886Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.isvalidgithubusernameinput",
@@ -740,12 +743,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "da4cad719847dbfdb4cb45b262c8a470a5af4ead1ddad7f9b42696d62fe43cf1",
+    "contentHash": "acdd3d2c2d768645710bc9d18808147f661b0f97ed02d4717aa114fb250206ed",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.455Z",
+    "generatedAt": "2026-03-19T09:02:18.886Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.marksessionpaid",
@@ -763,12 +766,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "bb44f27fcb2f159b409ed111415d5597a38ecf1fbdf219174db0ec2cf0141205",
+    "contentHash": "4fc83aac476e1724642f9e03b4053399ba258f4a4ab5c715c7e17c6a7b97397a",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.455Z",
+    "generatedAt": "2026-03-19T09:02:18.886Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.marksessionprovisioned",
@@ -786,12 +789,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "cdc333573087ae493eb054f75d9a4059191eb2c67187d0314c2d3c85d59d0eea",
+    "contentHash": "ae0f06fa0b296b3f607a11e23edb7bab8530b852d59f4cb1820bbfaf3fac466d",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.456Z",
+    "generatedAt": "2026-03-19T09:02:18.886Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.normalizegithubusernameforcomparison",
@@ -809,12 +812,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "77b040cdb74504669a972b7cebd03eab759589de5488b19021f5427efbf1d71a",
+    "contentHash": "82190e4d74ca1542896593586ac757720ac1303995d9aa5a66c13850342bb5ee",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.456Z",
+    "generatedAt": "2026-03-19T09:02:18.887Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.parsegithubusername",
@@ -832,12 +835,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "fd8ecbfe61dfd84c3afd7d02a9ababc6eaa7c8b74cd76a3663ac88895346de71",
+    "contentHash": "6dac49b2e499a0a63e3bd3dd3873fb8f422302f604fb4371f938c846845954e4",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.457Z",
+    "generatedAt": "2026-03-19T09:02:18.887Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.productconfig",
@@ -855,12 +858,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "66317b6642d72e93a0aa258990db398f473edda9ed026b20856ef23ed5e480f6",
+    "contentHash": "d7ce5e3c5b3f73d1d19a191f5ba73a37e19c65bd27985116c12373095e4e5df5",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.457Z",
+    "generatedAt": "2026-03-19T09:02:18.888Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.productslug",
@@ -878,12 +881,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "0279f7bb1575739043cc098d54f9b8df15e532ff811ae942004dcf3e32554f24",
+    "contentHash": "7d00f91e210ff319837310ad1bb7d9561a3705901c2c2a05ac7c474fba09ecc0",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.458Z",
+    "generatedAt": "2026-03-19T09:02:18.888Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.renderactionlabel",
@@ -901,12 +904,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "4bc4ae7f82c59141c06aa539ecc01feab7f937d635c5209015bdd2e8fc107b95",
+    "contentHash": "4a39a5b0ceee95e64dcc73af528e25b9b9be7e6ce0158281a97bae7a959f7fb9",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.458Z",
+    "generatedAt": "2026-03-19T09:02:18.888Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.retrievesessionbyid",
@@ -924,12 +927,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "d7751d2f6a86630e8b4e2cfde94a51ca24a6188bfcdbf807398070bf34e5220f",
+    "contentHash": "9a0c08c555e5ede4b7d18a35e575ad9a4507117ddc8adbcdf41129d31d6103b7",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.458Z",
+    "generatedAt": "2026-03-19T09:02:18.888Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.trackevent",
@@ -947,12 +950,12 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "0de9f8e6ebe1a0978ce718b820ca481f731f8da1248444f3f5dbd0ccd2651249",
+    "contentHash": "56711db8b7a6ab2c401288214e66d9f870afd2b65dcdb6a2e6cb272ea5eb1a4a",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.459Z",
+    "generatedAt": "2026-03-19T09:02:18.888Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
   },
   {
     "docId": "prokit.trackeventoncepersession",
@@ -970,11 +973,261 @@
       "prokit",
       "ProKit"
     ],
-    "contentHash": "ee7901bf06e7eda6b9bd4ab9eca9c7a3ddcd580109f1928eeb281bdda53505e0",
+    "contentHash": "1a5cd634824fa81b4ff43d98069ea7ec0cff6a3ba488aac0f7a89003241f698e",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-11T08:19:44.459Z",
+    "generatedAt": "2026-03-19T09:02:18.889Z",
     "generator": "auto",
-    "sourceCommit": null
+    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
+  },
+  {
+    "docId": "saaskit.README",
+    "sourcePath": "docs-ingest/saaskit/README.md",
+    "outputPath": "src/content/docs/saaskit/README.mdx",
+    "category": "boilerplate",
+    "slug": "README",
+    "title": "README",
+    "description": "Documentation for README.",
+    "order": 100,
+    "keywords": [
+      "Boilerplate",
+      "README",
+      "boilerplate",
+      "saaskit",
+      "SaaSKit"
+    ],
+    "contentHash": "5ffa68b9405f0918a618de6af5fccfddc00f93293dae035849eabcb26342d7ee",
+    "sourceRepo": "saaskit",
+    "templateId": "platform",
+    "generatedAt": "2026-03-19T09:02:18.889Z",
+    "generator": "ai",
+    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+  },
+  {
+    "docId": "saaskit.architecture",
+    "sourcePath": "docs-ingest/saaskit/architecture.md",
+    "outputPath": "src/content/docs/saaskit/architecture.mdx",
+    "category": "boilerplate",
+    "slug": "architecture",
+    "title": "Architecture",
+    "description": "Documentation for Architecture.",
+    "order": 100,
+    "keywords": [
+      "Boilerplate",
+      "Architecture",
+      "boilerplate",
+      "saaskit",
+      "SaaSKit"
+    ],
+    "contentHash": "36115f0613788190814c1fa34ce3a1f03fb09f313750f02db53898c9b48d57ff",
+    "sourceRepo": "saaskit",
+    "templateId": "platform",
+    "generatedAt": "2026-03-19T09:02:18.889Z",
+    "generator": "ai",
+    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+  },
+  {
+    "docId": "saaskit.database",
+    "sourcePath": "docs-ingest/saaskit/database.md",
+    "outputPath": "src/content/docs/saaskit/database.mdx",
+    "category": "boilerplate",
+    "slug": "database",
+    "title": "Database",
+    "description": "Documentation for Database.",
+    "order": 100,
+    "keywords": [
+      "saaskit",
+      "SaaSKit",
+      "Database",
+      "boilerplate"
+    ],
+    "contentHash": "169a972ac61045d170ea21dcd8235e5674ff12459c58e569e3074e6062990c72",
+    "sourceRepo": "saaskit",
+    "templateId": "platform",
+    "generatedAt": "2026-03-19T09:02:18.889Z",
+    "generator": "ai",
+    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+  },
+  {
+    "docId": "saaskit.deployment",
+    "sourcePath": "docs-ingest/saaskit/deployment.md",
+    "outputPath": "src/content/docs/saaskit/deployment.mdx",
+    "category": "boilerplate",
+    "slug": "deployment",
+    "title": "Deployment",
+    "description": "Documentation for Deployment.",
+    "order": 100,
+    "keywords": [
+      "saaskit",
+      "SaaSKit",
+      "Deployment",
+      "boilerplate"
+    ],
+    "contentHash": "42d7b5329abab44afe5225e62d7a34202bb93ffe22d3d24125d427bd65c902f7",
+    "sourceRepo": "saaskit",
+    "templateId": "platform",
+    "generatedAt": "2026-03-19T09:02:18.890Z",
+    "generator": "ai",
+    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+  },
+  {
+    "docId": "saaskit.development",
+    "sourcePath": "docs-ingest/saaskit/development.md",
+    "outputPath": "src/content/docs/saaskit/development.mdx",
+    "category": "boilerplate",
+    "slug": "development",
+    "title": "Development",
+    "description": "Documentation for Development.",
+    "order": 100,
+    "keywords": [
+      "Boilerplate",
+      "Development",
+      "boilerplate",
+      "saaskit",
+      "SaaSKit"
+    ],
+    "contentHash": "b83b235ffcfc9097bff73258e49fd49dfeac4c1f66ff37a7c5a8307c87f874bf",
+    "sourceRepo": "saaskit",
+    "templateId": "platform",
+    "generatedAt": "2026-03-19T09:02:18.890Z",
+    "generator": "ai",
+    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+  },
+  {
+    "docId": "saaskit.env-reference",
+    "sourcePath": "docs-ingest/saaskit/env-reference.md",
+    "outputPath": "src/content/docs/saaskit/env-reference.mdx",
+    "category": "boilerplate",
+    "slug": "env-reference",
+    "title": "Env Reference",
+    "description": "Documentation for Env Reference.",
+    "order": 100,
+    "keywords": [
+      "saaskit",
+      "SaaSKit",
+      "Env Reference",
+      "boilerplate"
+    ],
+    "contentHash": "4274bbb93bfbb7dd0e94393116e5f9bc3ae8d77e3bc019a93d615a2fa93585c1",
+    "sourceRepo": "saaskit",
+    "templateId": "platform",
+    "generatedAt": "2026-03-19T09:02:18.890Z",
+    "generator": "ai",
+    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+  },
+  {
+    "docId": "saaskit.features",
+    "sourcePath": "docs-ingest/saaskit/features.md",
+    "outputPath": "src/content/docs/saaskit/features.mdx",
+    "category": "boilerplate",
+    "slug": "features",
+    "title": "Features",
+    "description": "Documentation for Features.",
+    "order": 100,
+    "keywords": [
+      "Boilerplate",
+      "Features",
+      "boilerplate",
+      "saaskit",
+      "SaaSKit"
+    ],
+    "contentHash": "eb3dec7fe94297ef80a049331eb88571af456c716b1ef0dffa322b5673302bd1",
+    "sourceRepo": "saaskit",
+    "templateId": "platform",
+    "generatedAt": "2026-03-19T09:02:18.890Z",
+    "generator": "ai",
+    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+  },
+  {
+    "docId": "saaskit.git-workflow",
+    "sourcePath": "docs-ingest/saaskit/git-workflow.md",
+    "outputPath": "src/content/docs/saaskit/git-workflow.mdx",
+    "category": "boilerplate",
+    "slug": "git-workflow",
+    "title": "Git Workflow",
+    "description": "Documentation for Git Workflow.",
+    "order": 100,
+    "keywords": [
+      "Boilerplate",
+      "Git Workflow",
+      "boilerplate",
+      "saaskit",
+      "SaaSKit"
+    ],
+    "contentHash": "e8a5a1deb5ea007921514dd5b2d19b1f3dc6c5f80af454091e6becd795c28670",
+    "sourceRepo": "saaskit",
+    "templateId": "platform",
+    "generatedAt": "2026-03-19T09:02:18.890Z",
+    "generator": "ai",
+    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+  },
+  {
+    "docId": "saaskit.integrations",
+    "sourcePath": "docs-ingest/saaskit/integrations.md",
+    "outputPath": "src/content/docs/saaskit/integrations.mdx",
+    "category": "boilerplate",
+    "slug": "integrations",
+    "title": "Integrations",
+    "description": "Documentation for Integrations.",
+    "order": 100,
+    "keywords": [
+      "Boilerplate",
+      "Integrations",
+      "boilerplate",
+      "saaskit",
+      "SaaSKit"
+    ],
+    "contentHash": "c7de03858ff4e7d9a71bfb2d0d4a7ec6d1e4e1a3608b4dd92a05906338c67274",
+    "sourceRepo": "saaskit",
+    "templateId": "platform",
+    "generatedAt": "2026-03-19T09:02:18.891Z",
+    "generator": "ai",
+    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+  },
+  {
+    "docId": "saaskit.overview",
+    "sourcePath": "docs-ingest/saaskit/overview.md",
+    "outputPath": "src/content/docs/saaskit/overview.mdx",
+    "category": "boilerplate",
+    "slug": "overview",
+    "title": "Overview",
+    "description": "Documentation for Overview.",
+    "order": 100,
+    "keywords": [
+      "Boilerplate",
+      "Overview",
+      "boilerplate",
+      "saaskit",
+      "SaaSKit"
+    ],
+    "contentHash": "003b44dad588d0d2f34849d10915995491cc795754ca75802e4b4510e2bcab2b",
+    "sourceRepo": "saaskit",
+    "templateId": "platform",
+    "generatedAt": "2026-03-19T09:02:18.891Z",
+    "generator": "ai",
+    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+  },
+  {
+    "docId": "saaskit.stack",
+    "sourcePath": "docs-ingest/saaskit/stack.md",
+    "outputPath": "src/content/docs/saaskit/stack.mdx",
+    "category": "boilerplate",
+    "slug": "stack",
+    "title": "Stack",
+    "description": "Documentation for Stack.",
+    "order": 100,
+    "keywords": [
+      "Boilerplate",
+      "Stack",
+      "boilerplate",
+      "saaskit",
+      "SaaSKit"
+    ],
+    "contentHash": "ae840321ca19c32251b65a01f5ae6fc66e0978b20a6e2d06057834242fd7309e",
+    "sourceRepo": "saaskit",
+    "templateId": "platform",
+    "generatedAt": "2026-03-19T09:02:18.891Z",
+    "generator": "ai",
+    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
   }
 ]

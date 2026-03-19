@@ -6,113 +6,39 @@ category: boilerplate
 slug: features
 order: 100
 sourceRepo: prokit
+generatedAt: 2026-03-19T09:02:18.876Z
+sourceCommit: 0b42f19fce038384e84556ef01a90aff71b7c32f
 generator: ai
-generatedAt: 2026-03-11T19:41:06.082Z
-sourceCommit: null
 keywords:
-  - prokit
-  - ProKit
+  - Boilerplate
   - Features
   - boilerplate
+  - prokit
+  - ProKit
 ---
-# ProKit Studio Feature List
+<!-- AI:overview:start -->
+## Overview
+Documentation for Features.
 
-This is the canonical user-facing list of functional features shipped in this boilerplate.
+Keywords: Boilerplate, Features, boilerplate
+<!-- AI:overview:end -->
 
-## Included Features
+<!-- AI:installation:start -->
+## Installation
+- Step 1: Install dependencies
+- Step 2: Configure features
+- Step 3: Validate the boilerplate environment
+<!-- AI:installation:end -->
 
-1. Next.js App Router + TypeScript runtime foundation.
-   - Code: `package.json`, `src/app/layout.tsx`
-2. Tailwind CSS + SCSS styling pipeline.
-   - Code: `tailwind.config.ts`, `src/assets/styles/globals.scss`, `postcss.config.js`
-3. Tokenized theme system with light/dark support.
-   - Code: `src/assets/styles/globals.scss`, `src/components/providers.tsx`
-4. Global typography system:
-   - Body/UI: Host Grotesk
-   - Brand: Golos Text
-   - Code: JetBrains Mono
-   - Code: `src/styles/fonts.ts`, `src/assets/styles/globals.scss`, `tailwind.config.ts`
-5. Reusable UI primitives and style utilities.
-   - Code: `src/components/ui/button.tsx`, `src/components/ui/input.tsx`, `src/helpers/utils.ts`
-6. Public entry pages: `/` and `/setup`.
-   - Code: `src/app/page.tsx`, `src/app/setup/page.tsx`
-7. App route group with shared application layout.
-   - Code: `src/app/(app)/layout.tsx`
-8. Custom error surfaces (`not-found` and app error boundary).
-   - Code: `src/app/not-found.tsx`, `src/app/error.tsx`
-9. Sticky app header with auth-aware navigation.
-   - Code: `src/components/AppHeader.tsx`
-10. Clerk auth wiring (sign-in/sign-up routes).
-    - Docs: `docs-public/optional-features.md`, `docs-private/instructions/clerk.md`
-    - Code: `src/app/(app)/sign-in/[[...sign-in]]/page.tsx`, `src/app/(app)/sign-up/[[...sign-up]]/page.tsx`
-11. Clerk mock mode for local/dev without live auth.
-    - Docs: `docs-public/optional-features.md`, `docs-private/instructions/clerk.md`
-    - Code: `src/libs/clerkFlags.ts`, `src/libs/safeClerk.tsx`, `src/libs/safeClerkServer.ts`
-12. Safe Clerk wrappers that fail predictably when misconfigured.
-    - Docs: `docs-private/instructions/clerk.md`
-    - Code: `src/libs/safeClerk.tsx`, `src/libs/safeClerkServer.ts`
-13. Middleware route protection for private routes.
-    - Docs: `docs-private/instructions/clerk.md`
-    - Code: `src/middleware.ts`
-14. Billing dashboard flow with plan selection UI.
-    - Code: `src/app/(app)/dashboard/page.tsx`, `src/components/PricingSection.tsx`
-15. Stripe checkout session API.
-    - Docs: `docs-public/optional-features.md`, `docs-private/instructions/stripe.md`
-    - Code: `src/app/api/stripe/create-checkout/route.ts`, `src/helpers/checkout.ts`
-16. Stripe customer portal API + client entrypoint.
-    - Docs: `docs-private/instructions/stripe.md`
-    - Code: `src/app/api/stripe/create-portal/route.ts`, `src/components/BillingPortalButton.tsx`
-17. Stripe webhook handler with signature verification and subscription lifecycle event handling.
-    - Docs: `docs-private/instructions/stripe.md`
-    - Code: `src/app/api/webhook/stripe/route.ts`, `src/app/api/actions.ts`
-18. Subscription persistence in Postgres via Prisma.
-    - Docs: `docs-public/database.md`
-    - Code: `prisma/system.prisma`, `prisma/migrations/20250204091431_init/migration.sql`
-19. Subscription status API endpoint for app/runtime checks.
-    - Code: `src/app/api/subscription/route.ts`
-20. Checkout outcome pages: `/cancel` and `/success`.
-    - Code: `src/app/(app)/cancel/page.tsx`, `src/app/(app)/success/page.tsx`
-21. Optional Resend transactional email wiring (thank-you email flow).
-    - Docs: `docs-public/optional-features.md`
-    - Code: `src/libs/resend.ts`, `src/events/email-events.ts`, `src/components/email-templates/ThanksYouTemplate.tsx`
-22. Healthcheck endpoint.
-    - Code: `src/app/api/health/route.ts`
-23. Prisma migration command surface for dev/prod verification.
-    - Docs: `docs-public/database.md`, `docs-public/scripts.md`
-    - Code: `package.json`, `scripts/db/verify.sh`
-24. Production startup migration guard (`npm start` path runs migrations before app boot).
-    - Docs: `docs-public/deployment.md`, `docs-public/scripts.md`
-    - Code: `scripts/runtime/start-prod.sh`, `scripts/db/deploy-prod.sh`
-25. Vercel production-build migration support with kill switch.
-    - Docs: `docs-public/deployment.md`, `docs-public/scripts.md`
-    - Code: `scripts/db/vercel-build-migrate.sh`
-26. Local Postgres bootstrap via Docker Compose.
-    - Docs: `README.md` (quick start)
-    - Code: `docker-compose.yml`
-27. Database connectivity validation command (`db:init`).
-    - Docs: `docs-public/development.md`, `docs-public/database.md`, `docs-public/scripts.md`
-    - Code: `scripts/db/init-db.js`
-28. Project bootstrap/migration helper scripts.
-    - Docs: `docs-public/scripts.md`
-    - Code: `scripts/project/bootstrap.sh`, `scripts/project/migrate.sh`
-29. Optional multi-repo fan-out sync helper.
-    - Code: `scripts/project/fanout-sync.sh`
-30. Centralized metadata/SEO defaults helper.
-    - Code: `src/libs/seo.ts`, `src/app/layout.tsx`
+<!-- AI:usage:start -->
+## Usage
+Describe how to use features within boilerplate, including any common workflows or edge cases.
+<!-- AI:usage:end -->
 
-## Intentional Non-Goals
-
-ProKit Studio is a core runtime boilerplate and intentionally does not include:
-
-- Marketing/funnel/blog content systems
-- CMS authoring workflows
-- Built-in multi-tenant schema/user lifecycle automation
-
-## Optional Feature Note
-
-Some features are intentionally optional and require valid environment variables to be active:
-
-- Clerk (auth)
-- Stripe (billing)
-- Resend (email)
+<!-- AI:examples:start -->
+## Examples
+```bash
+# Example usage for features
+```
+<!-- AI:examples:end -->
 

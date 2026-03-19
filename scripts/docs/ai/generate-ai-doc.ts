@@ -22,6 +22,7 @@ const VERSION_PATTERN = /^v\d+$/i
 const CACHE_PATH = path.resolve('scripts', 'docs', 'cache', 'doc-hashes.json')
 const SKIP_AI = process.env.DOCS_SKIP_AI === 'true'
 const SOURCE_COMMIT = process.env.DOCS_SOURCE_COMMIT?.trim() || null
+const SOURCE_METADATA_FILE = '.source.json'
 
 type RegistryEntry = {
   id: string
@@ -127,6 +128,16 @@ async function loadCache(): Promise<Record<string, string>> {
   }
 }
 
+async function loadProductSourceCommit(productId: string) {
+  try {
+    const raw = await readFile(path.join(INGEST_ROOT, productId, SOURCE_METADATA_FILE), 'utf-8')
+    const parsed = JSON.parse(raw) as { sourceCommit?: unknown }
+    return typeof parsed.sourceCommit === 'string' && parsed.sourceCommit.trim() ? parsed.sourceCommit.trim() : null
+  } catch {
+    return SOURCE_COMMIT
+  }
+}
+
 function hashContent(content: string) {
   return createHash('sha256').update(content, 'utf-8').digest('hex')
 }
@@ -183,6 +194,7 @@ async function run() {
 
   for (const product of products) {
     console.log(`AI generation for ${product.id}`)
+    const productSourceCommit = await loadProductSourceCommit(product.id)
     const files = await listVersionFiles(path.join(INGEST_ROOT, product.id), product.id)
 
     for (const { filePath } of files) {
@@ -280,7 +292,7 @@ async function run() {
         sourceRepo: product.id,
         generator: reservedDir ? 'auto' : 'ai',
         generatedAt,
-        sourceCommit: SOURCE_COMMIT,
+        sourceCommit: productSourceCommit,
       }, { indent: 2 }).trim()
       const keywordsBlock = ['keywords:', ...keywords.map(keyword => `  - ${keyword}`)].join('\n')
       const frontmatterBlock = `---\n${baseYaml ? `${baseYaml}\n` : ''}${keywordsBlock}\n---\n`

@@ -15,6 +15,7 @@ export type RegistryProduct = {
   title: string
   category: string
   docsPath: string
+  canonicalDocsRoot?: string
   template?: string
   apiSource?: ApiSourceType
   apiSourcePaths?: string[]

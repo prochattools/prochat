@@ -16,4 +16,4 @@ The core runtime stays lean, but you can enable additional integrations as neede
 - Optional helper for thank-you and notification emails tied to subscription events.
 - Activating it requires the `RESEND_API_KEY`.
 
-Detailed configuration steps and environment variable guidance live in the private `docs-private/instructions` folder.
+Detailed configuration steps and environment variable guidance live in the private `docs/private/instructions` folder.

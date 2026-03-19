@@ -1,19 +1,41 @@
-# Optional Features (ProKit Studio)
+<!-- GENERATED FILE - DO NOT EDIT -->
+---
+title: Optional Features
+description: Documentation for Optional Features.
+category: boilerplate
+slug: optional-features
+order: 100
+sourceRepo: prokit
+generator: ai
+generatedAt: 2026-03-19T09:02:18.664Z
+sourceCommit: 0b42f19fce038384e84556ef01a90aff71b7c32f
+keywords:
+  - Boilerplate
+  - Optional Features
+  - boilerplate
+---
+<!-- AI:overview:start -->
+## Overview
+Documentation for Optional Features.
 
-The core runtime stays lean, but you can enable additional integrations as needed.
+Keywords: Boilerplate, Optional Features, boilerplate
+<!-- AI:overview:end -->
 
-## Integrations
+<!-- AI:installation:start -->
+## Installation
+- Step 1: Install dependencies
+- Step 2: Configure optional-features
+- Step 3: Validate the boilerplate environment
+<!-- AI:installation:end -->
 
-### Clerk (authentication)
-- Optional auth provider wiring is ready to plug in Clerk when you have credentials.
-- In dev, mock mode keeps the app usable without live keys.
+<!-- AI:usage:start -->
+## Usage
+Describe how to use optional-features within boilerplate, including any common workflows or edge cases.
+<!-- AI:usage:end -->
 
-### Stripe (billing)
-- Billing endpoints can power checkouts, customer portals, and webhook-based lifecycle handling.
-- Enable it only when you want paid plans backed by Stripe pricing.
-
-### Resend (transactional email)
-- Optional helper for thank-you and notification emails tied to subscription events.
-- Activating it requires the `RESEND_API_KEY`.
-
-Detailed configuration steps and environment variable guidance live in the private `docs-private/instructions` folder.
+<!-- AI:examples:start -->
+## Examples
+```bash
+# Example usage for optional-features
+```
+<!-- AI:examples:end -->

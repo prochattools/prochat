@@ -29,5 +29,5 @@ This **git-workflow** doc aligns with the ProKit release and branching expectati
 
 ## Related documentation
 - Release script details: `scripts/release.sh`  
-- Scripts reference: `docs-private/scripts.md`  
-- Documentation index (for breadcrumbs): `docs-public/README.md`
+- Scripts reference: `docs/private/scripts.md`  
+- Documentation index (for breadcrumbs): `docs/public/README.md`

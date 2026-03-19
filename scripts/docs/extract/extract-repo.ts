@@ -10,6 +10,7 @@ import { loadRegistry } from './shared.ts'
 const execFileAsync = promisify(execFile)
 const DOCS_EXPORT_ROOT = path.resolve('docs-export')
 const DOCS_EXPORT_TMP_ROOT = path.join(DOCS_EXPORT_ROOT, '.tmp')
+const CANONICAL_PUBLIC_DOCS_ROOT = path.join('docs', 'public')
 const IGNORED_DIRS = new Set([
   '.git',
   '.github',
@@ -21,6 +22,7 @@ const IGNORED_DIRS = new Set([
   'build',
   'coverage',
   'out',
+  'private',
   'docs-private',
 ])
 const SENSITIVE_LINE_PATTERNS = [
@@ -41,6 +43,10 @@ const SENSITIVE_LINE_PATTERNS = [
     regex: /(?:^|\n)\s*\.env(?:\.[A-Za-z0-9_-]+)?\s*$/m,
   },
 ]
+
+function stripFencedCodeBlocks(content: string) {
+  return content.replace(/```[\s\S]*?```/g, block => '\n'.repeat(block.split('\n').length - 1))
+}
 
 type ParsedArgs = {
   repoUrl: string
@@ -66,7 +72,7 @@ function normalizeRepoName(repoUrl: string) {
 
 function printUsage() {
   console.log('Usage: npm run docs:extract:repo -- <repo-url> <target>')
-  console.log('Example: npm run docs:extract:repo -- https://github.com/stevewesthoek/saaskit saaskit')
+  console.log('Example: npm run docs:extract:repo -- https://github.com/prochattools/saaskit-dev saaskit')
 }
 
 function parseArgs(): ParsedArgs {
@@ -122,28 +128,42 @@ async function countMarkdownFiles(dirPath: string): Promise<number> {
 }
 
 async function resolveSourceCandidate(repoRoot: string, target: string): Promise<SourceCandidate | null> {
-  const docsPublicCandidates = [`docs-public/${target}`, 'docs-public']
+  const absolutePath = path.join(repoRoot, CANONICAL_PUBLIC_DOCS_ROOT)
+  if (!(await directoryExists(absolutePath))) {
+    return null
+  }
 
-  for (const relativePath of docsPublicCandidates) {
+  const markdownFiles = await countMarkdownFiles(absolutePath)
+  if (markdownFiles === 0) {
+    return null
+  }
+
+  return {
+    relativePath: CANONICAL_PUBLIC_DOCS_ROOT,
+    absolutePath,
+    markdownFiles,
+  }
+}
+
+async function findLegacySourceCandidate(repoRoot: string, target: string) {
+  const candidates = [path.join('docs-public', target), 'docs-public']
+
+  for (const relativePath of candidates) {
     const absolutePath = path.join(repoRoot, relativePath)
     if (!(await directoryExists(absolutePath))) continue
-
     const markdownFiles = await countMarkdownFiles(absolutePath)
     if (markdownFiles === 0) continue
-
-    return {
-      absolutePath,
-      relativePath,
-      markdownFiles,
-    }
+    return { relativePath, absolutePath, markdownFiles }
   }
 
   return null
 }
 
 function detectSensitivePattern(content: string) {
+  const scannableContent = stripFencedCodeBlocks(content)
+
   for (const pattern of SENSITIVE_LINE_PATTERNS) {
-    if (pattern.regex.test(content)) {
+    if (pattern.regex.test(scannableContent)) {
       return pattern.label
     }
   }
@@ -201,7 +221,13 @@ async function cloneRepository(repoUrl: string, cloneRoot: string) {
   return stdout.trim()
 }
 
-async function syncIntoIngest(target: string, sourceCommit: string) {
+async function syncIntoIngest(
+  target: string,
+  sourceCommit: string,
+  sourcePath: string,
+  sourceLayout: 'canonical',
+  repoUrl: string,
+) {
   await execFileAsync(
     process.execPath,
     [
@@ -220,6 +246,9 @@ async function syncIntoIngest(target: string, sourceCommit: string) {
         DOCS_EXPORT_PRODUCT: target,
         DOCS_EXPORT_PATH: DOCS_EXPORT_ROOT,
         DOCS_EXPORT_COMMIT: sourceCommit,
+        DOCS_EXPORT_SOURCE_PATH: sourcePath,
+        DOCS_EXPORT_SOURCE_LAYOUT: sourceLayout,
+        DOCS_EXPORT_REPO_URL: repoUrl,
       },
     },
   )
@@ -254,10 +283,20 @@ async function run() {
 
     const source = await resolveSourceCandidate(cloneRoot, target)
     if (!source) {
-      console.error(`docs-public/ directory not found in ${repoUrl}.`)
-      console.error('External repo must explicitly define docs-public/ for the target.')
+      const legacySource = await findLegacySourceCandidate(cloneRoot, target)
+      if (legacySource) {
+        console.error(
+          `Unsupported legacy public docs source detected at ${legacySource.relativePath} in ${repoUrl}.`,
+        )
+        console.error(`Migrate this repository to ${product.canonicalDocsRoot ?? CANONICAL_PUBLIC_DOCS_ROOT}.`)
+        process.exit(1)
+      }
+      console.error(`Public docs source not found in ${repoUrl}.`)
+      console.error('Expected canonical docs/public/.')
       process.exit(1)
     }
+
+    console.log(`Using canonical docs source: ${source.relativePath}`)
 
     await rm(tempExportRoot, { recursive: true, force: true })
     const copyStats = await copyMarkdownOnly(source.absolutePath, tempExportRoot)
@@ -277,7 +316,7 @@ async function run() {
       console.warn(`Skipped ${copyStats.skippedSensitive} file(s) due to sensitive content patterns.`)
     }
 
-    await syncIntoIngest(target, sourceCommit)
+    await syncIntoIngest(target, sourceCommit, source.relativePath, 'canonical', repoUrl)
     console.log(`Synced external docs into docs-ingest/${target}.`)
     console.log('Next steps: npm run docs:ai-build')
   } finally {

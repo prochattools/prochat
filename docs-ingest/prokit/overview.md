@@ -1,20 +1,41 @@
-# ProKit Studio Overview
+<!-- GENERATED FILE - DO NOT EDIT -->
+---
+title: Overview
+description: Documentation for Overview.
+category: boilerplate
+slug: overview
+order: 100
+sourceRepo: prokit
+generator: ai
+generatedAt: 2026-03-19T09:02:18.664Z
+sourceCommit: 0b42f19fce038384e84556ef01a90aff71b7c32f
+keywords:
+  - Boilerplate
+  - Overview
+  - boilerplate
+---
+<!-- AI:overview:start -->
+## Overview
+Documentation for Overview.
 
-ProKit Studio is ProChat's commercial SaaS core boilerplate.
+Keywords: Boilerplate, Overview, boilerplate
+<!-- AI:overview:end -->
 
-- ProKit Studio provides the runtime foundation.
-- ProKit Studio includes setup docs, branding defaults, and buyer-facing packaging.
+<!-- AI:installation:start -->
+## Installation
+- Step 1: Install dependencies
+- Step 2: Configure overview
+- Step 3: Validate the boilerplate environment
+<!-- AI:installation:end -->
 
-## Included (high level)
+<!-- AI:usage:start -->
+## Usage
+Describe how to use overview within boilerplate, including any common workflows or edge cases.
+<!-- AI:usage:end -->
 
-- Next.js + TypeScript app skeleton
-- Auth wiring (Clerk)
-- Billing wiring (Stripe)
-- Postgres + Prisma migrations
-- Production runtime migration step on process/container hosts
-
-## Database/deploy posture
-
-- Required DB contract: `DATABASE_URL`
-- Reference stack in docs: Supabase + Vercel
-- Not required: any Postgres + any host that can run this app
+<!-- AI:examples:start -->
+## Examples
+```bash
+# Example usage for overview
+```
+<!-- AI:examples:end -->

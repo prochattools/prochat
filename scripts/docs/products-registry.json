@@ -5,10 +5,11 @@
       "title": "ProKit",
       "category": "boilerplate",
       "docsPath": "src/content/docs/prokit",
+      "canonicalDocsRoot": "docs/public",
       "template": "boilerplate",
       "apiSource": "typescript",
       "apiSourcePaths": ["src/lib/analytics", "src/lib/store", "src/helpers"],
-      "repoUrl": "https://github.com/stevewesthoek/prokit",
+      "repoUrl": "https://github.com/prochattools/prokit-dev",
       "description": "ProKit is the runtime SaaS starter that ships with production-ready automation."
     },
     {
@@ -16,10 +17,11 @@
       "title": "SaaSKit",
       "category": "boilerplate",
       "docsPath": "src/content/docs/saaskit",
+      "canonicalDocsRoot": "docs/public",
       "template": "platform",
       "apiSource": "none",
       "apiSourcePaths": [],
-      "repoUrl": "https://github.com/stevewesthoek/saaskit",
+      "repoUrl": "https://github.com/prochattools/saaskit-dev",
       "description": "SaaSKit defines the platform patterns that power ProChat’s automations."
     },
     {

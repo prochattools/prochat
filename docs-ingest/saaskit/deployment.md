@@ -1,0 +1,99 @@
+# Deployment
+
+SaaSKit is documented for this launch path:
+- Supabase Cloud (Dev + Prod projects)
+- Vercel (hosting)
+
+## Minimum requirements
+
+- Node 18+
+- Supabase Dev project and Supabase Prod project
+- correct environment variables (`DATABASE_URL` required)
+
+## Step 1: Create two Supabase projects
+
+At `https://supabase.com`, create:
+1. `SaaSKit - Dev`
+2. `SaaSKit - Prod`
+
+Keep them separate.
+
+## Step 2: Prepare local development (Dev database only)
+
+```bash
+npm install
+cp .env.example .env
+```
+
+Set in `.env`:
+- `DATABASE_URL` = Dev Supabase database URL
+- `APP_ENV=development`
+- `NEXT_PUBLIC_APP_URL=http://localhost:3000`
+
+Then run:
+
+```bash
+npm run db:init
+npm run db:migrate:dev
+npm run dev
+```
+
+## Step 3: Set production variables in Vercel (Prod database only)
+
+In Vercel Project Settings -> Environment Variables, add:
+- `DATABASE_URL` = Prod Supabase database URL
+- `APP_ENV=production`
+- `NEXT_PUBLIC_APP_URL` = your production domain
+
+Add optional integration keys only for features you enable.
+
+## Step 4: Optional preflight before first deploy
+
+```bash
+npm run prepare:vercel
+```
+
+## Step 5: Deploy
+
+- push to your deploy branch (usually `main`)
+- trigger deployment
+
+## Step 6: Verify
+
+- `/api/health` returns `{"status":"ok"}`
+- your branding is visible
+- legal pages are updated
+- enabled integrations are working
+
+## How migrations run
+
+### On Vercel production builds
+
+- `db:migrate:vercel-build` runs during build
+- it runs only for production Vercel builds
+- you do not set `VERCEL_ENV` manually
+
+Emergency bypass:
+- `SAASKIT_DISABLE_VERCEL_BUILD_MIGRATIONS=true`
+
+### Manual fallback
+
+If needed, run production migrations manually:
+
+```bash
+npm run db:migrate:prod
+```
+
+## Safety rules
+
+1. Never use production keys in local `.env`.
+2. Never use Dev database credentials in Vercel production env.
+3. Apply/test migrations in Dev first, then deploy/migrate Prod.
+
+## Final release checklist
+
+- auth flow works (if Clerk enabled)
+- checkout + portal + webhooks work (if Stripe enabled)
+- waitlist works (if Resend enabled)
+- blog routes work (if WordPress enabled)
+- n8n routes work (if n8n enabled)

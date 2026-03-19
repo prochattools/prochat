@@ -34,6 +34,15 @@ Future Phase 5B (AI generation + GH Action) will read `.generated-manifest.json`
 
 `npm run docs:ai-build` chains AI generation, docs generation, and validation so every commit runs the same deterministic flow.
 
+## Source Of Truth
+
+For active development and documentation ingestion, ProChat treats these repositories as the upstream sources:
+
+- `https://github.com/prochattools/prokit-dev.git`
+- `https://github.com/prochattools/saaskit-dev.git`
+
+The personal Steve Westhoek release repositories are downstream release artifacts for customers. They are not the active authoring or ingestion source for ProChat docs automation.
+
 ### Product registry
 
 `scripts/docs/products-registry.json` is the single source of truth for every published documentation bucket (ProKit, SaaSKit, WaaSKit, and future additions). `scripts/docs/generate-docs.ts` consults this registry to decide which folders to process and what category/tag info to apply.
@@ -58,31 +67,44 @@ Drop `v1`, `v2`, etc., directories under `docs-ingest/<product>/` to signal vers
 
 External repositories export their current documentation into a `docs-export/` directory containing `.md`/`.mdx` files. `npm run docs:ingest` shells out to `scripts/docs/ingest/external-sync.ts`, validates the product against `scripts/docs/products-registry.json`, and syncs the export into `docs-ingest/<product>`. The `.github/workflows/docs-sync.yml` workflow acts as the webhook/dispatch endpoint: it reads the `product` and `docsPath` payload, runs `docs:ingest`, then `docs:ai-build`, keeping each automation run strictly validated because that workflow already enables `DOCS_STRICT=true`.
 
-For repos that do not push exports into this repository directly, run `npm run docs:extract:repo -- <repo-url> <target>`. That helper clones the remote repository into a temporary directory and only accepts Markdown from `docs-public/<target>` or `docs-public`. If neither path exists, the run aborts with an explicit warning so no private documentation is ingested. Before staging files into `docs-export/<target>`, the extractor also scans for secret-like patterns (private key assignments, token/password/api-key assignments, and `.env` style credential lines). Files that match are warned about and skipped so private material is not published accidentally. Heavy build folders such as `node_modules`, `.next`, `dist`, and `build` are ignored during the scan.
+For repos that do not push exports into this repository directly, run `npm run docs:extract:repo -- <repo-url> <target>`. That helper clones the remote development repository into a temporary directory and accepts Markdown from:
+
+1. canonical: `docs/public/`
+
+If that path does not exist, the run aborts explicitly. If a legacy `docs-public/` tree is detected, extraction fails with a migration message rather than silently falling back. `docs/private/` is never ingested. Before staging files into `docs-export/<target>`, the extractor scans for secret-like patterns (private key assignments, token/password/api-key assignments, and `.env` style credential lines). Files that match are warned about and skipped so private material is not published accidentally. Heavy build folders such as `node_modules`, `.next`, `dist`, and `build` are ignored during the scan.
+
+The product registry declares `canonicalDocsRoot`, and each ingest writes `docs-ingest/<product>/.source.json`. Validation now treats non-canonical `sourcePath` or `sourceLayout` values as contract violations in strict mode, so products cannot drift back onto legacy docs roots silently.
 
 Recommended external repo layout:
 
 ```text
 saaskit/
-  docs-public/
-    getting-started.md
-    architecture/
-  docs-private/
-    operator-notes.md
-    internal-roadmap.md
+  docs/
+    public/
+      getting-started.md
+      architecture/
+    private/
+      operator-notes.md
+      internal-roadmap.md
 ```
 
-Only `docs-public/` is eligible for extraction into ProChat.
+Only `docs/public/` is eligible for extraction into ProChat.
+
+For ProKit and SaaSKit, apply this contract to the `prokit-dev` and `saaskit-dev` repositories. Release repositories are downstream outputs and should not be treated as the active source of truth.
 
 ### Atomic ingestion
 
 `npm run docs:ingest` now copies exports into `docs-ingest/.tmp/<product>`, ensures only `.md/.mdx` files go through, and atomically swaps the staged directory into `docs-ingest/<product>` only after the copy succeeds. On success the script reports how many docs were imported vs skipped and logs `Sync success`; failures leave the existing ingest folder untouched and log `Sync failed`.
+
+Each successful ingest also writes `docs-ingest/<product>/.source.json`, which records the upstream commit used for that product sync. The AI and publish stages read that per-product metadata so `.generated-manifest.json` and generated frontmatter can track the correct upstream commit for ProKit and SaaSKit independently.
 
 ### Restructured product docs
 
 After the AI pipeline pushes generated docs into `src/content/docs/<product>`, run `npm run docs:restructure` to enforce the buyer-friendly layout (overview, what-you-get, architecture, etc.). The script keeps the original technical pages untouched; it simply generates summary landing pages and `integrations` / `advanced` indexes that reference the existing docs, giving each product a consistent top-level navigation without deleting any technical content.
 
 The restructuring step also writes `/docs/<product>/index.mdx`, summarizing the product description, GitHub repo, generated sections, and the last extraction commit/timestamp so each published bucket exposes a buyer-facing landing page.
+
+Generated technical docs keep `sourceRepo: <product>` in frontmatter and the manifest. ProChat-owned landing/index overlays are emitted separately with `sourceRepo: prochat` and `generator: overlay`, so overlay pages do not masquerade as upstream-generated technical docs.
 
 ### Source commit tracking
 

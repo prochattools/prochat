@@ -1,11 +1,47 @@
+<!-- GENERATED FILE - DO NOT EDIT -->
 ---
 title: Architecture
-description: Technical architecture story
+description: Documentation for Architecture.
+category: boilerplate
 slug: architecture
-order: 3
+order: 100
+sourceRepo: prokit
+generator: ai
+generatedAt: 2026-03-19T09:02:18.873Z
+sourceCommit: 0b42f19fce038384e84556ef01a90aff71b7c32f
+keywords:
+  - prokit
+  - ProKit
+  - Architecture
+  - boilerplate
 ---
+# Architecture
 
-## Related technical docs
+ProKit Studio is a lean SaaS core boilerplate.
 
-- [Architecture](./architecture.mdx)
+## Core Stack
+
+- Next.js App Router + TypeScript
+- Prisma + Postgres
+- Clerk integration hooks (optional)
+- Stripe integration hooks (optional)
+- Resend integration hooks (optional)
+
+## Database Runtime Model
+
+- App runtime uses one connection string: `DATABASE_URL`
+- Prisma migrations run against that URL
+- No tenant schema/user lifecycle
+
+## Route Groups
+
+- Public entry: `/` and `/setup`
+- App routes: `src/app/(app)/**`
+
+## Production Start Path
+
+- `npm start` -> `scripts/runtime/start-prod.sh`
+- `start-prod.sh` -> `scripts/db/deploy-prod.sh`
+- `deploy-prod.sh` -> `npm run db:migrate:prod`
+- App process starts after migration deploy succeeds
 

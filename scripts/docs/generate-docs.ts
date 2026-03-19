@@ -19,6 +19,7 @@ const CACHE_MANIFEST_PATH = path.join(CACHE_ROOT, 'manifest.json')
 const REGISTRY_PATH = path.resolve('scripts', 'docs', 'products-registry.json')
 const VERSION_PATTERN = /^v\\d+$/i
 const SOURCE_COMMIT = process.env.DOCS_SOURCE_COMMIT?.trim() || null
+const SOURCE_METADATA_FILE = '.source.json'
 
 type ProductId = string
 
@@ -216,11 +217,22 @@ async function loadCacheManifest(): Promise<ManifestEntry[]> {
   }
 }
 
+async function loadProductSourceCommit(productId: string) {
+  try {
+    const raw = await readFile(path.join(INGEST_ROOT, productId, SOURCE_METADATA_FILE), 'utf-8')
+    const parsed = JSON.parse(raw) as { sourceCommit?: unknown }
+    return typeof parsed.sourceCommit === 'string' && parsed.sourceCommit.trim() ? parsed.sourceCommit.trim() : null
+  } catch {
+    return SOURCE_COMMIT
+  }
+}
+
 async function prepareDocTask(
   product: RegistryProduct,
   version: string,
   versionRoot: string,
   filePath: string,
+  productSourceCommit: string | null,
   stats: { generated: number; skipped: number },
   prevManifestMap: Map<string, ManifestEntry>,
 ) {
@@ -290,13 +302,13 @@ async function prepareDocTask(
   const prevEntry = prevManifestMap.get(relativeOutput)
 
   const buildPayload = (timestamp: string) => {
-    const frontmatterPayload = {
-      ...base,
-      sourceRepo: product.id,
-      generator: generatorValue,
-      generatedAt: timestamp,
-      sourceCommit: SOURCE_COMMIT,
-    }
+      const frontmatterPayload = {
+        ...base,
+        sourceRepo: product.id,
+        generator: generatorValue,
+        generatedAt: timestamp,
+        sourceCommit: productSourceCommit,
+      }
     const baseYaml = yaml.stringify(frontmatterPayload, { indent: 2 }).trim()
     const keywordsBlock = ['keywords:', ...keywords.map(keyword => `  - ${keyword}`)].join('\n')
     const frontmatterBlock = `---\n${baseYaml ? `${baseYaml}\n` : ''}${keywordsBlock}\n---\n`
@@ -308,6 +320,13 @@ async function prepareDocTask(
   let generatedAt = prevEntry?.generatedAt ?? new Date().toISOString()
   let { payload, contentHash } = buildPayload(generatedAt)
   let unchanged = Boolean(prevEntry && prevEntry.contentHash === contentHash)
+
+  if (unchanged) {
+    const currentOutput = await readFile(targetPath, 'utf-8').catch(() => null)
+    if (currentOutput !== payload) {
+      unchanged = false
+    }
+  }
 
   if (prevEntry && !unchanged) {
     const next = buildPayload(new Date().toISOString())
@@ -332,7 +351,7 @@ async function prepareDocTask(
     templateId,
     generatedAt,
     generator: generatorValue,
-    sourceCommit: SOURCE_COMMIT,
+    sourceCommit: productSourceCommit,
   }
 
   return {
@@ -368,6 +387,7 @@ async function run() {
 
   for (const product of registry) {
     const productRoot = path.join(INGEST_ROOT, product.id)
+    const productSourceCommit = await loadProductSourceCommit(product.id)
     let versionRoots: Array<{ version: string; root: string }> = []
     try {
       versionRoots = await collectVersionRoots(productRoot, product.id)
@@ -381,7 +401,7 @@ async function run() {
 
       for (const { version, root } of versionRoots) {
         for (const file of await gatherMarkdownFiles(root)) {
-          const task = await prepareDocTask(product, version, root, file, stats, prevManifestMap)
+          const task = await prepareDocTask(product, version, root, file, productSourceCommit, stats, prevManifestMap)
           if (!task) {
             continue
           }

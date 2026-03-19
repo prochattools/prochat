@@ -11,7 +11,7 @@ When you run locally, the runtime is still Next.js 14 + TypeScript, so `npm run 
 
 ## Bootstrapping the workspace
 1. `npm install`
-2. `cp .env.example .env` and fill the values listed in `docs-public/env-reference.md`
+2. `cp .env.example .env` and fill the values listed in `docs/public/env-reference.md`
 3. Run `npm run setup:first-run` or `npm run saaskit:bootstrap` (they are aliases) to ensure the template env file exists and any project scaffolding hooks run.
 
 ## Local development loop
@@ -33,8 +33,8 @@ Keep Supabase Dev values in `.env`; production values belong only in Vercel envi
 - `npm run verify:deploy` shows the current migration status when you need a quick proof of health.
 
 ## Related docs
-- Runtime variables: `docs-public/env-reference.md`  
-- Database pattern: `docs-public/database.md`  
-- Deployment path: `docs-public/deployment.md`  
-- Optional tooling (Clerk/Stripe/Resend/etc): `docs-public/integrations.md`  
-- Scripts reference (command details + aliases): `docs-private/scripts.md`
+- Runtime variables: `docs/public/env-reference.md`  
+- Database pattern: `docs/public/database.md`  
+- Deployment path: `docs/public/deployment.md`  
+- Optional tooling (Clerk/Stripe/Resend/etc): `docs/public/integrations.md`  
+- Scripts reference (command details + aliases): `docs/private/scripts.md`

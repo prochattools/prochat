@@ -13,6 +13,15 @@ There are two separate documentation surfaces in this repository:
 
 The internal `/docs` directory is not part of the generated public docs tree. The docs automation system publishes public documentation by generating files into `src/content/docs`.
 
+## Source Of Truth
+
+For active product development and docs ingestion, ProChat treats these as the upstream repositories:
+
+- `https://github.com/prochattools/prokit-dev.git`
+- `https://github.com/prochattools/saaskit-dev.git`
+
+The personal Steve Westhoek release repositories are downstream release artifacts and must not be treated as the active development or ingestion source.
+
 ## Main pipeline surfaces
 
 ### `docs-export`
@@ -25,6 +34,12 @@ Current uses include:
 - TypeScript extraction output
 - OpenAPI extraction output
 
+Canonical upstream contract:
+
+- ingest only `docs/public/`
+- never ingest `docs/private/`
+- treat legacy `docs-public/` as transitional only
+
 ### `docs-ingest`
 
 `docs-ingest/` is the normalized intake area used by the publish pipeline.
@@ -35,7 +50,9 @@ The ingest step is atomic:
 
 - files are copied into `docs-ingest/.tmp/<product>`
 - only `.md` and `.mdx` inputs are accepted
+- `private/` and legacy `docs-private/` directories are skipped if they appear in exported content
 - the staged directory is swapped into place only after a successful copy
+- each product ingest writes `docs-ingest/<product>/.source.json` so publish provenance can track upstream commits per product
 
 ## Generation stages
 
@@ -104,6 +121,8 @@ The manifest records metadata such as:
 - `generatedAt`
 - `sourceCommit`
 
+Both `prokit-dev` and `saaskit-dev` now feed this same manifest-backed path. ProChat-owned overlay pages such as product landings and `integrations` / `advanced` indexes remain separate and are emitted with `sourceRepo: prochat` plus `generator: overlay`, rather than pretending to be upstream-generated technical docs.
+
 ## Validation
 
 Validation is handled by `scripts/docs/validate-docs.ts`.
@@ -161,6 +180,33 @@ Supported behavior:
 - TypeScript extraction emits one markdown file per exported interface, type, or function
 - OpenAPI extraction emits one markdown file per endpoint operation
 - generated output is then ingested and published into the public docs tree
+
+## Upstream source contract
+
+Product repositories such as ProKit and SaaSKit are expected to expose public-ingestable docs under:
+
+```text
+docs/public/
+```
+
+and non-public material under:
+
+```text
+docs/private/
+```
+
+Current extraction behavior in ProChat:
+
+1. requires `docs/public/`
+2. ignores `docs/private/`
+3. fails if only legacy `docs-public/` is present
+4. never ingests ProChat repo-root `docs/`, which remains internal-only
+
+This contract is now active for the development repositories.
+
+Apply this contract to the development repositories (`prokit-dev`, `saaskit-dev`). Release repositories remain downstream published outputs and are outside the active docs authoring flow.
+
+Each ingest records `sourcePath` and `sourceLayout` in `docs-ingest/<product>/.source.json`, and validation treats any non-canonical source as a contract violation in strict mode.
 
 ## Preview and CI workflows
 

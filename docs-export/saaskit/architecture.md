@@ -40,12 +40,12 @@ Includes:
 
 ## Recommended deployment path
 
-- Supabase Cloud (Dev + Prod) + Vercel (preview + production) as the primary deployment model. This path keeps your database migrations, Supabase credentials, and Vercel builds on the same contract described in `docs-public/deployment.md`.
+- Supabase Cloud (Dev + Prod) + Vercel (preview + production) as the primary deployment model. This path keeps your database migrations, Supabase credentials, and Vercel builds on the same contract described in `docs/public/deployment.md`.
 
 ## Related docs
 
-- `docs-public/database.md`
-- `docs-public/env-reference.md`
-- `docs-public/integrations.md`
-- `docs-public/deployment.md`
-- `docs-public/stack.md`
+- `docs/public/database.md`
+- `docs/public/env-reference.md`
+- `docs/public/integrations.md`
+- `docs/public/deployment.md`
+- `docs/public/stack.md`

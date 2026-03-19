@@ -1,6 +1,6 @@
 # Features
 
-Use this file as a reference list of what ships in SaaSKit. Follow `docs-public/README.md` for the ProKit navigation path before diving into these details.
+Use this file as a reference list of what ships in SaaSKit. Follow `docs/public/README.md` for the documentation navigation path before diving into these details.
 
 ## Core product foundation
 
@@ -62,9 +62,9 @@ Use this file as a reference list of what ships in SaaSKit. Follow `docs-public/
 
 ## Where to find setup instructions
 
-- Main setup flow: `docs-public/README.md`
-- Environment variables: `docs-public/env-reference.md`
-- Database setup: `docs-public/database.md`
-- Integrations / optional features: `docs-public/integrations.md`
-- Deployment: `docs-public/deployment.md`
-- Commands: `docs-private/scripts.md`
+- Main setup flow: `docs/public/README.md`
+- Environment variables: `docs/public/env-reference.md`
+- Database setup: `docs/public/database.md`
+- Integrations / optional features: `docs/public/integrations.md`
+- Deployment: `docs/public/deployment.md`
+- Commands: `docs/private/scripts.md`

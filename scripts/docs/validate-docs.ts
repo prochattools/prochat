@@ -18,6 +18,7 @@ const VERSION_PATTERN = /^v\d+$/i
 const INGEST_ROOT = path.resolve('docs-ingest')
 const COMMIT_PATTERN = /^[0-9a-f]{7,40}$/i
 const STRICT_MODE = process.env.DOCS_STRICT === 'true'
+const SOURCE_METADATA_FILE = '.source.json'
 const TECHNICAL_DOC_ROOTS = [
   'src/content/docs/prokit/',
   'src/content/docs/saaskit/',
@@ -55,9 +56,14 @@ function hasFrontmatterField(meta: Record<string, unknown>, key: string) {
   return Object.prototype.hasOwnProperty.call(meta, key)
 }
 
+function isOverlayDoc(meta: Record<string, unknown>) {
+  return meta.sourceRepo === 'prochat' && meta.generator === 'overlay'
+}
+
 type RegistryProduct = {
   id: string
   category: string
+  canonicalDocsRoot?: string
   template?: string
   apiSource?: 'typescript' | 'openapi' | 'none'
   apiSourcePaths?: string[]
@@ -72,14 +78,23 @@ type ManifestEntry = {
   sourceCommit?: string | null
 }
 
+type SourceMetadata = {
+  sourceCommit?: string | null
+  sourcePath?: string | null
+  sourceLayout?: 'canonical' | 'legacy' | null
+  repoUrl?: string | null
+  syncedAt?: string
+}
+
 async function loadRegistry() {
   try {
     const raw = await readFile(REGISTRY_PATH, 'utf-8')
     const parsed = JSON.parse(raw)
     if (Array.isArray(parsed.products)) {
-      return parsed.products.map((product: { id: string; category: string; template?: string; apiSource?: 'typescript' | 'openapi' | 'none'; apiSourcePaths?: string[] }) => ({
+      return parsed.products.map((product: { id: string; category: string; canonicalDocsRoot?: string; template?: string; apiSource?: 'typescript' | 'openapi' | 'none'; apiSourcePaths?: string[] }) => ({
         id: product.id,
         category: product.category,
+        canonicalDocsRoot: product.canonicalDocsRoot,
         template: product.template,
         apiSource: product.apiSource,
         apiSourcePaths: product.apiSourcePaths,
@@ -89,6 +104,15 @@ async function loadRegistry() {
     console.warn(`Unable to read registry: ${(error as Error).message}`)
   }
   return [] as Array<{ id: string; category: string }>
+}
+
+async function loadSourceMetadata(productId: string): Promise<SourceMetadata | null> {
+  try {
+    const raw = await readFile(path.join(INGEST_ROOT, productId, SOURCE_METADATA_FILE), 'utf-8')
+    return JSON.parse(raw) as SourceMetadata
+  } catch {
+    return null
+  }
 }
 
 type IssueHandler = {
@@ -235,6 +259,33 @@ async function run() {
     await checkManualReservedFiles(product.id, handler)
     await validateIngestReservedFiles(product, handler)
 
+    const sourceMetadata = await loadSourceMetadata(product.id)
+    const ingestDocs = await gatherDocs(path.join(INGEST_ROOT, product.id)).catch(() => [])
+    const manifestEntriesForProduct = manifest.filter(entry => entry.sourceRepo === product.id)
+
+    if (ingestDocs.length > 0 && !sourceMetadata) {
+      handler.strict(`docs-ingest/${product.id} is missing ${SOURCE_METADATA_FILE}; re-run extraction/ingest`)
+    }
+
+    if (sourceMetadata) {
+      const expectedRoot = product.canonicalDocsRoot ?? 'docs/public'
+      if (sourceMetadata.sourceLayout !== 'canonical') {
+        handler.strict(
+          `docs-ingest/${product.id} was extracted from non-canonical ${sourceMetadata.sourcePath ?? 'unknown'}; expected ${expectedRoot}`,
+        )
+      }
+
+      if (sourceMetadata.sourcePath !== expectedRoot) {
+        handler.strict(
+          `docs-ingest/${product.id} reports canonical source ${sourceMetadata.sourcePath}; expected ${expectedRoot}`,
+        )
+      }
+    }
+
+    if (ingestDocs.length > 0 && manifestEntriesForProduct.length === 0) {
+      handler.strict(`docs-ingest/${product.id} has source docs but no manifest-backed generated output`)
+    }
+
     if (product.apiSource && product.apiSource !== 'none') {
       const apiFiles = await gatherDocs(path.join(INGEST_ROOT, product.id, 'api')).catch(() => [])
       if (apiFiles.length === 0) {
@@ -268,7 +319,25 @@ async function run() {
 
       const templateId = product.template || DEFAULT_TEMPLATE.id
       const template = templates[templateId] ?? DEFAULT_TEMPLATE
+      const overlayDoc = isOverlayDoc(meta)
       const applyTechnicalValidation = shouldApplyTechnicalValidation(filePath)
+
+      if (overlayDoc) {
+        const relativeOutput = path.relative(process.cwd(), filePath)
+        if (manifestMap.has(relativeOutput)) {
+          handler.strict(`${filePath} is a ProChat overlay and must not be listed in manifest`)
+        }
+        if (!hasGeneratedMarker(raw)) {
+          handler.warn(`${filePath} overlay doc should start with ${GENERATED_FILE_MARKER}`)
+        }
+        const missingOverlayFields = ['title', 'slug', 'sourceRepo', 'generator', 'generatedAt'].filter(
+          key => !meta[key],
+        )
+        if (missingOverlayFields.length) {
+          handler.warn(`${filePath} overlay missing fields: ${missingOverlayFields.join(', ')}`)
+        }
+        continue
+      }
 
       if (applyTechnicalValidation) {
         const sections = parseSections(content)

@@ -13,21 +13,21 @@ SaaSKit is a turnkey SaaS boilerplate that pairs marketing/public routes with a 
 
 ## Architecture
 
-The repo separates public marketing routes from the product app while sharing the same runtime environment. Runtime contracts rely on `DATABASE_URL`, optional labels (`APP_ENV`, `NODE_ENV`), and version flags. Supabase hosts Dev + Prod Postgres projects, Prisma migrations run locally (`db:migrate:dev`), automatically on Vercel (`db:migrate:vercel-build`), and manually when needed (`db:migrate:prod`). `docs-public/architecture.md` and `docs-public/stack.md` explain how the layers map to code.
+The repo separates public marketing routes from the product app while sharing the same runtime environment. Runtime contracts rely on `DATABASE_URL`, optional labels (`APP_ENV`, `NODE_ENV`), and version flags. Supabase hosts Dev + Prod Postgres projects, Prisma migrations run locally (`db:migrate:dev`), automatically on Vercel (`db:migrate:vercel-build`), and manually when needed (`db:migrate:prod`). `docs/public/architecture.md` and `docs/public/stack.md` explain how the layers map to code.
 
 ## Typical launch flow
 
 1. Bootstrap locally (`npm install`, `npm run setup:first-run`, `cp .env.example .env`) and set Supabase Dev values for `DATABASE_URL`.  
 2. Run migrations (`npm run db:init`, `npm run db:migrate:dev`, `npm run predev`) and `npm run dev` to verify marketing and app routes.  
 3. Configure prod Supabase + Vercel env vars, add optional integration keys if needed, then depend on `npm run prepare:vercel`/`npm run build` to run migrations before deploy.  
-4. Use `docs-public/deployment.md`, `docs-public/database.md`, and `docs-public/env-reference.md` to validate production config and safety rules.
+4. Use `docs/public/deployment.md`, `docs/public/database.md`, and `docs/public/env-reference.md` to validate production config and safety rules.
 
 ## Documentation map
 
-- `docs-public/development.md` – onboarding steps, bootstraps, and dev/smoke-check commands.  
-- `docs-public/architecture.md` – marketing vs. app layer layout and runtime boundaries.  
-- `docs-public/stack.md` – runtime contract, deployment model, and multi-tenant/migrations story.  
-- `docs-public/database.md` – Supabase Dev/Prod projects, migration rules, and safety reminders.  
-- `docs-public/deployment.md` – Supabase + Vercel launch path, migration execution, and verification checklist.  
-- `docs-public/features.md` – feature inventory and intentional exclusions.  
-- `docs-public/integrations.md` – optional features/integrations with graceful fallbacks.  
+- `docs/public/development.md` – onboarding steps, bootstraps, and dev/smoke-check commands.  
+- `docs/public/architecture.md` – marketing vs. app layer layout and runtime boundaries.  
+- `docs/public/stack.md` – runtime contract, deployment model, and multi-tenant/migrations story.  
+- `docs/public/database.md` – Supabase Dev/Prod projects, migration rules, and safety reminders.  
+- `docs/public/deployment.md` – Supabase + Vercel launch path, migration execution, and verification checklist.  
+- `docs/public/features.md` – feature inventory and intentional exclusions.  
+- `docs/public/integrations.md` – optional features/integrations with graceful fallbacks.  
