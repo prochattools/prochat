@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { mkdir, readdir, readFile, writeFile } from 'fs/promises'
+import { mkdir, readdir, readFile, rm, writeFile } from 'fs/promises'
 import path from 'path'
 
 import yaml from 'yaml'
@@ -39,6 +39,64 @@ type ManifestEntry = {
   generatedAt: string
   sourceCommit: string | null
   templateId: string
+}
+
+async function isOverlayFile(filePath: string) {
+  try {
+    const content = await readFile(filePath, 'utf-8')
+    return /(?:^|\n)sourceRepo:\s*prochat\s*(?:\n|$)/.test(content) && /(?:^|\n)generator:\s*overlay\s*(?:\n|$)/.test(content)
+  } catch {
+    return false
+  }
+}
+
+async function pruneRemovedDocs(manifestEntries: ManifestEntry[]) {
+  const keepPaths = new Set(manifestEntries.map(entry => entry.outputPath))
+  const entries = await readdir(OUTPUT_ROOT, { withFileTypes: true }).catch(() => [])
+
+  async function visit(dir: string) {
+    const dirEntries = await readdir(dir, { withFileTypes: true })
+    for (const entry of dirEntries) {
+      const absolutePath = path.join(dir, entry.name)
+      const relative = path.relative(OUTPUT_ROOT, absolutePath)
+
+      if (entry.isDirectory()) {
+        if (entry.name === '.cache') {
+          continue
+        }
+        await visit(absolutePath)
+        const nested = await readdir(absolutePath, { withFileTypes: true }).catch(() => [])
+        if (!nested.length) {
+          await rm(absolutePath, { recursive: true, force: true }).catch(() => {})
+        }
+        continue
+      }
+
+      if (!entry.name.endsWith('.mdx') && !entry.name.endsWith('.md')) {
+        continue
+      }
+
+      if (keepPaths.has(relative)) {
+        continue
+      }
+
+      if (await isOverlayFile(absolutePath)) {
+        continue
+      }
+
+      await rm(absolutePath).catch(() => {})
+    }
+  }
+
+  for (const entry of entries) {
+    if (!entry.isDirectory()) {
+      continue
+    }
+    if (entry.name === '.cache') {
+      continue
+    }
+    await visit(path.join(OUTPUT_ROOT, entry.name))
+  }
 }
 
 type RegistryProduct = {
@@ -433,6 +491,7 @@ async function run() {
   )
 
   if (allMatch && hashStats.analyzed > 0) {
+    await pruneRemovedDocs(prevManifest)
     console.log('Docs unchanged, skipping build')
     return
   }
@@ -445,6 +504,7 @@ async function run() {
 
   const manifestEntries = tasks.map(task => task.manifestEntry)
   await writeManifest(manifestEntries)
+  await pruneRemovedDocs(manifestEntries)
 
   for (const product of registry) {
     const entries = perProductMeta.get(product.id) ?? []

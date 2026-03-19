@@ -95,18 +95,6 @@ async function copyMarkdown(dir: string, dest: string, counter: { copied: number
   )
 }
 
-async function seedExistingDocs(sourceRoot: string, tempRoot: string) {
-  const silentCounter = { copied: 0, skipped: 0 }
-  try {
-    await copyMarkdown(sourceRoot, tempRoot, silentCounter)
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-      return
-    }
-    throw error
-  }
-}
-
 async function writeSourceMetadata(
   targetRoot: string,
   commit: string | null,
@@ -179,7 +167,6 @@ async function run() {
 
     try {
       const targetRoot = path.join(INGEST_ROOT, target.id)
-      await seedExistingDocs(targetRoot, tempRoot)
       await copyMarkdown(sourceRoot, tempRoot, counter)
       await rm(targetRoot, { recursive: true, force: true })
       await mkdir(path.dirname(targetRoot), { recursive: true })
