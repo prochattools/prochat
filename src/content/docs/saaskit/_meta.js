@@ -27,16 +27,8 @@ export default {
     title: 'Features',
     order: 100,
   },
-  'git-workflow': {
-    title: 'Git Workflow',
-    order: 100,
-  },
   'integrations': {
     title: 'Integrations',
-    order: 100,
-  },
-  'overview': {
-    title: 'Overview',
     order: 100,
   },
   'README': {

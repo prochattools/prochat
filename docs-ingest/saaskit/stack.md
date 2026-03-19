@@ -1,46 +1,27 @@
-<!-- GENERATED FILE - DO NOT EDIT -->
----
-title: Stack
-description: Documentation for Stack.
-category: boilerplate
-slug: stack
-order: 100
-sourceRepo: saaskit
-generator: ai
-generatedAt: 2026-03-19T09:02:18.669Z
-sourceCommit: 52a76e11b60698d42e57b1a151f0c389f5398ac4
-keywords:
-  - Boilerplate
-  - Stack
-  - boilerplate
----
-<!-- AI:overview:start -->
-## Overview
-Documentation for Stack.
+# Stack
 
-Keywords: Boilerplate, Stack, boilerplate
-<!-- AI:overview:end -->
+This page explains the main technology layers behind SaaSKit: runtime, database contract, deployment model, and optional integrations.
 
-<!-- AI:installation:start -->
-## Installation
-- Step 1: Install dependencies
-- Step 2: Configure stack
-- Step 3: Validate the boilerplate environment
-<!-- AI:installation:end -->
+## Application runtime
+- **Next.js 14 App Router** brings server components and edge-ready routing for both marketing and app areas (`src/app/(marketing)` + `src/app/(app)`).
+- **Node 18+** hosts the Next runtime, and `npm start` launches the production entrypoint via `./scripts/runtime/start-prod.sh`.
+- **Runtime contracts**: `DATABASE_URL` (required) and `APP_ENV`/`NODE_ENV` (optional) keep the app connected to the right environment; `SAASKIT_VERSION` and `PROCHAT_VERSION` supply UI version flags.
+- **Deployment model**: local development relies on Supabase Dev + Vercel preview branches, while production is Supabase Prod + Vercel builds (see `docs/public/deployment.md` for the full path).
 
-<!-- AI:usage:start -->
-## Usage
-Describe how to use stack within boilerplate, including any common workflows or edge cases.
-<!-- AI:usage:end -->
+## Data layer & multi-tenant model
+- **Prisma** is configured via `prisma/system.prisma`; migrations run through `npm run db:migrate:*` scripts.
+- **Supabase Cloud** hosts both Dev and Prod Postgres projects—there is **no tenant schema** automation, so SaaSKit operates with a single schema and relies on row-level tenant checks in the application logic. Keep the two projects separate (Dev for experimentation, Prod for live users).
+- Database migrations run locally (`db:migrate:dev`), automatically on Vercel builds (`db:migrate:vercel-build`), and manually via `db:migrate:prod` when needed. `docs/public/database.md` explains the exact workflow.
 
-<!-- AI:api:start -->
-## API Reference
-List any exposed schema, props, or API endpoints with short descriptions.
-<!-- AI:api:end -->
+## Optional integration layer
+- Clerk (authentication), Stripe (billing), Resend (email), WordPress (blog), and n8n (automation) are all optional features that plug into the stack when you opt in. Each integration keeps SaaSKit’s router and API handlers running safely when keys are missing. See `docs/public/integrations.md` for the configuration checks and graceful fallbacks.
+- When integrations are disabled, the stack preserves the runtime contract: marketing routes stay public, app routes keep their guards, and middleware continues to enforce the multi-tenant behavior described in `docs/public/architecture.md`.
 
-<!-- AI:examples:start -->
-## Examples
-```bash
-# Example usage for stack
-```
-<!-- AI:examples:end -->
+## Supporting tech
+- **Design system**: tokenized colors/typography, marketing layout utilities, and app UI primitives.
+- **Scripts**: the `scripts` directory contains bootstraps, migrations, and runtime helpers referenced by `package.json` (`predev`, `saaskit:bootstrap`, `prepare:production-db`, etc.). The command reference is stored in `docs/private/scripts.md`.
+
+## Related docs
+- Development checklist: `docs/public/development.md`  
+- Deployment path: `docs/public/deployment.md`  
+- Features inventory: `docs/public/features.md`

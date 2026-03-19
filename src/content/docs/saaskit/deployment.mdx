@@ -7,8 +7,8 @@ slug: deployment
 order: 100
 sourceRepo: saaskit
 generator: ai
-generatedAt: 2026-03-19T09:02:18.890Z
-sourceCommit: 52a76e11b60698d42e57b1a151f0c389f5398ac4
+generatedAt: 2026-03-19T17:29:47.838Z
+sourceCommit: 187e01573042d87c5747684b05956767694846bf
 keywords:
   - saaskit
   - SaaSKit
@@ -67,8 +67,11 @@ Add optional integration keys only for features you enable.
 ## Step 4: Optional preflight before first deploy
 
 ```bash
-npm run prepare:vercel
+npm run prepare:production-db
 ```
+
+This command uses the current `DATABASE_URL`, verifies the connection, and runs production migrations.
+Only run it when `DATABASE_URL` points to the production database you intend to prepare.
 
 ## Step 5: Deploy
 

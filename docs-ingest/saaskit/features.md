@@ -1,46 +1,70 @@
-<!-- GENERATED FILE - DO NOT EDIT -->
----
-title: Features
-description: Documentation for Features.
-category: boilerplate
-slug: features
-order: 100
-sourceRepo: saaskit
-generator: ai
-generatedAt: 2026-03-19T09:02:18.668Z
-sourceCommit: 52a76e11b60698d42e57b1a151f0c389f5398ac4
-keywords:
-  - Boilerplate
-  - Features
-  - boilerplate
----
-<!-- AI:overview:start -->
-## Overview
-Documentation for Features.
+# Features
 
-Keywords: Boilerplate, Features, boilerplate
-<!-- AI:overview:end -->
+Use this file as a reference list of what ships in SaaSKit. Follow `docs/public/README.md` for the documentation navigation path before diving into these details.
 
-<!-- AI:installation:start -->
-## Installation
-- Step 1: Install dependencies
-- Step 2: Configure features
-- Step 3: Validate the boilerplate environment
-<!-- AI:installation:end -->
+## Core product foundation
 
-<!-- AI:usage:start -->
-## Usage
-Describe how to use features within boilerplate, including any common workflows or edge cases.
-<!-- AI:usage:end -->
+- Next.js App Router + TypeScript app structure
+- Public marketing routes + app routes in one repository
+- Health endpoint (`/api/health`)
+- Global providers, theming, and shared UI utilities
 
-<!-- AI:api:start -->
-## API Reference
-List any exposed schema, props, or API endpoints with short descriptions.
-<!-- AI:api:end -->
+## Database and runtime
 
-<!-- AI:examples:start -->
-## Examples
-```bash
-# Example usage for features
-```
-<!-- AI:examples:end -->
+- Prisma schema and migration folders
+- Single database contract via `DATABASE_URL`
+- Supabase Cloud Dev/Prod separation model in documentation
+- Scripts for init/dev/prod/reset/verify migration flows
+- Production start flow that runs migration deploy before app startup
+
+## Authentication and billing
+
+- Clerk sign-in/sign-up routes
+- Safe Clerk wrappers and middleware protection flow
+- Stripe checkout API
+- Stripe billing portal API
+- Stripe webhook handling for subscription lifecycle
+- Subscription status API
+
+## Marketing and conversion
+
+- Placeholder-first marketing homepage
+- Legal pages (`/tos`, `/privacy-policy`)
+- Pricing section driven by config/env
+- Optional processing checkout funnel route
+- Success/cancel routes
+
+## Content and growth modules
+
+- Optional waitlist flow with Resend
+- Optional WordPress blog routes and graceful fallback when unconfigured
+- Sitemap generation (`/sitemap.xml`)
+- SEO helper + JSON-LD utilities
+
+## Workflow automation modules
+
+- Optional n8n workflow clone endpoint
+- Project activation/list/link APIs
+- Scenario/project workspace route pieces
+- Chat-by-project route
+
+## Design system
+
+- Tokenized color/typography setup
+- Marketing layout and section component library
+- App UI primitives and helpers
+
+## What is intentionally not included by default
+
+- tenant-schema lifecycle automation
+- turnkey analytics warehouse pipelines
+- built-in proprietary CMS backend
+
+## Where to find setup instructions
+
+- Main setup flow: `docs/public/README.md`
+- Environment variables: `docs/public/env-reference.md`
+- Database setup: `docs/public/database.md`
+- Integrations / optional features: `docs/public/integrations.md`
+- Deployment: `docs/public/deployment.md`
+- Commands: `docs/private/scripts.md`

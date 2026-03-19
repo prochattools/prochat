@@ -2,6 +2,16 @@
 
 This wrapper exposes a simplified script contract.
 
+For the recommended reading order, start with `docs/public/README.md`.
+
+## Everyday commands
+
+- `npm run dev` -> runs `predev`, then starts the local app
+- `npm run predev` -> `scripts/dev/bootstrap-env.js`, `npm run db:init`, `npm run db:migrate:dev`
+- `npm run build` -> runs `prebuild`, then builds the app
+- `npm run prebuild` -> `npm run db:migrate:vercel-build`, then Prisma generate
+- `npm start` -> starts the production runtime path
+
 ## Core runtime/deploy scripts
 
 - `npm start` -> `scripts/runtime/start-prod.sh`

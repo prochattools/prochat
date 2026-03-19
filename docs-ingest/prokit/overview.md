@@ -1,41 +1,35 @@
-<!-- GENERATED FILE - DO NOT EDIT -->
----
-title: Overview
-description: Documentation for Overview.
-category: boilerplate
-slug: overview
-order: 100
-sourceRepo: prokit
-generator: ai
-generatedAt: 2026-03-19T09:02:18.664Z
-sourceCommit: 0b42f19fce038384e84556ef01a90aff71b7c32f
-keywords:
-  - Boilerplate
-  - Overview
-  - boilerplate
----
-<!-- AI:overview:start -->
-## Overview
-Documentation for Overview.
+# ProKit Studio Overview
 
-Keywords: Boilerplate, Overview, boilerplate
-<!-- AI:overview:end -->
+ProKit Studio is ProChat's commercial SaaS core boilerplate.
 
-<!-- AI:installation:start -->
-## Installation
-- Step 1: Install dependencies
-- Step 2: Configure overview
-- Step 3: Validate the boilerplate environment
-<!-- AI:installation:end -->
+- ProKit Studio provides the runtime foundation.
+- ProKit Studio includes setup docs and starter UI surfaces.
+- ProKit Studio intentionally excludes marketing, funnel, and blog layers.
 
-<!-- AI:usage:start -->
-## Usage
-Describe how to use overview within boilerplate, including any common workflows or edge cases.
-<!-- AI:usage:end -->
+Start with `docs/public/README.md` for the recommended docs order.
 
-<!-- AI:examples:start -->
-## Examples
-```bash
-# Example usage for overview
-```
-<!-- AI:examples:end -->
+## Included (high level)
+
+- Next.js + TypeScript app skeleton
+- Auth wiring (Clerk)
+- Billing wiring (Stripe)
+- Postgres + Prisma migrations
+- Production runtime migration step on process/container hosts
+
+## Database/deploy posture
+
+- Required DB contract: `DATABASE_URL`
+- Reference stack in docs: Supabase + Vercel
+- Not required: any Postgres + any host that can run this app
+
+## Public docs map
+
+- `README.md` – public docs entrypoint and reading order
+- `architecture.md` – runtime boundaries and start path
+- `development.md` – setup and local development flow
+- `features.md` – shipped feature inventory
+- `database.md` – database contract and migration notes
+- `scripts.md` – supported scripts and deploy hooks
+- `deployment.md` – deployment behavior and platform notes
+- `optional-features.md` – high-level optional integrations
+- `stack.md` – concise stack summary

@@ -3,7 +3,10 @@
 ProKit Studio is ProChat's commercial SaaS core boilerplate.
 
 - ProKit Studio provides the runtime foundation.
-- ProKit Studio includes setup docs, branding defaults, and buyer-facing packaging.
+- ProKit Studio includes setup docs and starter UI surfaces.
+- ProKit Studio intentionally excludes marketing, funnel, and blog layers.
+
+Start with `docs/public/README.md` for the recommended docs order.
 
 ## Included (high level)
 
@@ -21,6 +24,7 @@ ProKit Studio is ProChat's commercial SaaS core boilerplate.
 
 ## Public docs map
 
+- `README.md` – public docs entrypoint and reading order
 - `architecture.md` – runtime boundaries and start path
 - `development.md` – setup and local development flow
 - `features.md` – shipped feature inventory
@@ -29,4 +33,3 @@ ProKit Studio is ProChat's commercial SaaS core boilerplate.
 - `deployment.md` – deployment behavior and platform notes
 - `optional-features.md` – high-level optional integrations
 - `stack.md` – concise stack summary
-- `git-workflow.md` – release and rollback flow

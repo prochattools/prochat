@@ -199,6 +199,15 @@ function matchesKeywords(doc: DocRecord, keywords: string[]) {
   return keywords.some(keyword => haystack.includes(keyword))
 }
 
+async function isNonOverlayDoc(filePath: string) {
+  try {
+    const raw = await readFile(filePath, 'utf-8')
+    return !isOverlayDoc(raw)
+  } catch {
+    return false
+  }
+}
+
 async function writeSummaryPage(
   productPath: string,
   section: (typeof ORDERED_SECTIONS)[number],
@@ -206,6 +215,9 @@ async function writeSummaryPage(
   generatedAt: string,
 ) {
   const targetPath = path.join(productPath, `${section.slug}.mdx`)
+  if (await isNonOverlayDoc(targetPath)) {
+    return
+  }
   const entries =
     matches.length === 0
       ? ['No matching technical docs were detected yet.']
@@ -281,9 +293,7 @@ async function writeLandingPage(
   const targetPath = path.join(productPath, 'index.mdx')
   const title = productInfo?.title ?? productId
   const description = productInfo?.description ?? `${title} documentation`
-  const repoUrl = productInfo?.repoUrl
   const lastSync = isoFromEntries(manifestEntries) ?? new Date().toISOString()
-  const lastCommit = manifestEntries.find(entry => entry.sourceCommit)?.sourceCommit ?? 'unknown'
   const sectionLinks = ORDERED_SECTIONS.map(section => `- [${section.title}](./${section.slug}.mdx)`).join('\n')
   const quickLinks = [
     '- [Quick Start](./quick-start.mdx)',
@@ -291,7 +301,6 @@ async function writeLandingPage(
     '- [Integrations](./integrations/index.mdx)',
     '- [Advanced](./advanced/index.mdx)',
   ].join('\n')
-  const repoLine = repoUrl ? `- GitHub: [${repoUrl}](${repoUrl})` : '- Repository information not available.'
 
   const content = `${buildOverlayFrontmatter(
     {
@@ -308,10 +317,6 @@ async function writeLandingPage(
 
 ${description}
 
-## Repository
-
-${repoLine}
-
 ## Generated documentation sections
 
 ${sectionLinks}
@@ -319,11 +324,6 @@ ${sectionLinks}
 ## Quick links
 
 ${quickLinks}
-
-## Last sync
-
-- Commit: \`${lastCommit}\`
-- Generated: ${lastSync}
 
 `
 

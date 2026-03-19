@@ -1,6 +1,6 @@
 # Optional features (integrations)
 
-Most of the feature toggles below are optional integrations. They map to the optional features stage of the ProKit taxonomy and treat SaaSKit’s runtime and deployment model (Supabase + Vercel) as the foundation.
+Use this guide when you want to enable optional services on top of the default SaaSKit setup.
 
 All integrations in SaaSKit are optional.
 
@@ -137,10 +137,3 @@ Run production migrations manually:
 ```bash
 npm run db:migrate:prod
 ```
-# Optional features (integrations)
-
-Most of the feature toggles below are optional integrations. They map to the optional features stage of the ProKit taxonomy and treat SaaSKit’s runtime and deployment model (Supabase + Vercel) as the foundation.
-
-All integrations in SaaSKit are optional.
-
-These optional integration routes ride on the stack described in `docs/public/stack.md`.

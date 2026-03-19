@@ -2,6 +2,8 @@
 
 The core runtime stays lean, but you can enable additional integrations as needed.
 
+This page explains what is optional in the public product contract. Detailed maintainer setup steps live separately in private docs.
+
 ## Integrations
 
 ### Clerk (authentication)
@@ -15,5 +17,3 @@ The core runtime stays lean, but you can enable additional integrations as neede
 ### Resend (transactional email)
 - Optional helper for thank-you and notification emails tied to subscription events.
 - Activating it requires the `RESEND_API_KEY`.
-
-Detailed configuration steps and environment variable guidance live in the private `docs/private/instructions` folder.

@@ -7,8 +7,8 @@
       "docsPath": "src/content/docs/prokit",
       "canonicalDocsRoot": "docs/public",
       "template": "boilerplate",
-      "apiSource": "typescript",
-      "apiSourcePaths": ["src/lib/analytics", "src/lib/store", "src/helpers"],
+      "apiSource": "none",
+      "apiSourcePaths": [],
       "repoUrl": "https://github.com/prochattools/prokit-dev",
       "description": "ProKit is the runtime SaaS starter that ships with production-ready automation."
     },

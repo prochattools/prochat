@@ -7,44 +7,32 @@ slug: README
 order: 100
 sourceRepo: prokit
 generator: ai
-generatedAt: 2026-03-19T09:02:18.872Z
-sourceCommit: 0b42f19fce038384e84556ef01a90aff71b7c32f
+generatedAt: 2026-03-19T17:29:47.833Z
+sourceCommit: 311313b3c6683c31214671504ed44dfdd356f32b
 keywords:
   - prokit
   - ProKit
   - README
   - boilerplate
 ---
-# ProKit Studio Docs
+# ProKit Studio Public Docs
 
-ProKit Studio is the core runtime layer in this repository. These docs define runtime and infrastructure contracts, the recommended stack, and the optional integrations you can enable on top of the engine.
+Use this folder for the buyer/operator-facing documentation path.
 
-## Public docs (buyer-facing)
+Read in this order:
 
-- `docs-public/overview.md` – product positioning and stack highlights; Supabase + Vercel remain the reference example layer, but any Postgres-compatible provider and host that supports Node 18+ is supported.
-- `docs-public/development.md` – canonical getting-started guide with prerequisites, quick start, and local workflow.
-- `docs-public/features.md` – complete functional feature census with direct code callouts.
-- `docs-public/database.md` – database contract and Prisma migration checklist.
-- `docs-public/scripts.md` – public script surface that outlines runtime, deploy, and migration commands.
-- `docs-public/deployment.md` – deployment stance with production startup guardrail, including Vercel-specific build behavior.
-- `docs-public/optional-features.md` – high-level summary of optional Clerk, Stripe, and Resend integrations.
-- `docs-public/architecture.md` – runtime boundaries, route structure, and migration flow.
-- `docs-public/git-workflow.md` – branch-based release and rollback guidance.
+1. `docs/public/overview.md`
+2. `docs/public/development.md`
+3. `docs/public/database.md`
+4. `docs/public/scripts.md`
+5. `docs/public/deployment.md`
+6. `docs/public/optional-features.md` if you enable optional services
+7. `docs/public/features.md` to confirm what ships by default
 
-## Public reference stack
+Reference docs:
 
-- Supabase for managed Postgres (default example)
-- Vercel for deploy-on-push hosting
+- `docs/public/architecture.md`
+- `docs/public/stack.md`
 
-These are recommendations, not lock-in instructions.
-
-## Private docs
-
-- `docs-private/ENGINE_SYNC_NOTES.md` – engine contract policies for runtime/database/deploy behavior.
-- `docs-private/ai-prompts-dev.md` – AI prompt block for Codex/AI helpers.
-- `docs-private/feature-diff-saaskit-vs-prokit.md` – internal comparison with SaaSKit.
-- `docs-private/roadmap.md` – lightweight backlog and experiments.
-- `docs-private/optional-features.md` – internal operational view before public sanitization.
-- `docs-private/instructions/` – Clerk, Stripe, and troubleshooting instructions (private).
-- `docs-private/modules/` – module templates and optional module patterns (private).
+Maintainer-only notes and internal setup instructions are intentionally separate from this public docs contract.
 

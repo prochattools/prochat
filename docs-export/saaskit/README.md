@@ -1,25 +1,26 @@
-# Documentation Index
+# Public Docs
 
-SaaSKit follows the same ProKit taxonomy for its core documentation, so every engineering, runtime, and deployment topic has a predictable home. Use this index to jump straight to the section you need.
+These docs are for buyers and operators setting up, customizing, and launching SaaSKit.
 
-## ProKit-aligned sections
-- **README** – this file. Use it to orient yourself, understand what lives in `docs/public/` vs `docs/private/`, and see the navigation order before you start clicking.  
-- **overview** – `docs/public/overview.md` (high-level product summary, architecture context, and launch flow).  
-- **development** – `docs/public/development.md` (local workflow, bootstrap scripts, verification steps, and how runtime variables map to stages).  
-- **architecture** – `docs/public/architecture.md` (public/app layer boundaries, runtime contracts, and deployment model callouts).  
-- **stack** – `docs/public/stack.md` (technology layers, runtimes, and how the multi-tenant/db story is implemented).  
-- **database** – `docs/public/database.md` (Supabase Dev/Prod split, migration flow, and safety rules).  
-- **deployment** – `docs/public/deployment.md` (recommended Supabase + Vercel path, migration behavior, and launch checklist).  
-- **features** – `docs/public/features.md` (what ships in the boilerplate and which parts intentionally stay out).  
-- **scripts** – `docs/private/scripts.md` (command reference and aliases).  
-- **optional-features** – `docs/public/integrations.md` (Clerk, Stripe, Resend, WordPress, and n8n, plus graceful fallbacks).  
-- **git-workflow** – `docs/public/git-workflow.md` (branch expectations, release script, and tagging guidance).
+Start with the root `README.md` first. Then use this folder for detail when you need it.
 
-## Supplemental (marketing / productivity)
-- `docs/private/ai-prompts.md`: ready-to-use AI prompts for onboarding, branding swaps, and integration checks. Treat this as a marketing/messaging helper and keep it outside the public ingest contract.
+## Recommended Order
 
-## How to use this index
-1. Start with **overview** to understand the taxonomy above.
-2. Follow **development** → **stack** → **database** → **deployment** when you set up a workspace for the first time.
-3. Use **features**, **optional-features**, and **scripts** whenever you need to verify what functionality ships out of the box or how to run a command safely.
-4. Reference **git-workflow** before cutting releases, and keep the AI prompt library handy when you need to accelerate routine writing tasks.
+1. `docs/public/env-reference.md`
+2. `docs/public/database.md`
+3. `docs/public/deployment.md`
+4. `docs/public/integrations.md` if you enable optional services
+5. `docs/public/features.md` to confirm what ships by default
+
+## Additional Reference
+
+- `docs/public/development.md` for local workflow details
+- `docs/public/architecture.md` for route/runtime layout
+- `docs/public/stack.md` for technical implementation details
+
+## Private Docs
+
+Private docs are maintainer/helper material and are not part of the default buyer setup path:
+
+- `docs/private/scripts.md`
+- `docs/private/ai-prompts.md`

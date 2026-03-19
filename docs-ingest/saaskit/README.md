@@ -1,46 +1,26 @@
-<!-- GENERATED FILE - DO NOT EDIT -->
----
-title: README
-description: Documentation for README.
-category: boilerplate
-slug: README
-order: 100
-sourceRepo: saaskit
-generator: ai
-generatedAt: 2026-03-19T09:02:18.667Z
-sourceCommit: 52a76e11b60698d42e57b1a151f0c389f5398ac4
-keywords:
-  - Boilerplate
-  - README
-  - boilerplate
----
-<!-- AI:overview:start -->
-## Overview
-Documentation for README.
+# Public Docs
 
-Keywords: Boilerplate, README, boilerplate
-<!-- AI:overview:end -->
+These docs are for buyers and operators setting up, customizing, and launching SaaSKit.
 
-<!-- AI:installation:start -->
-## Installation
-- Step 1: Install dependencies
-- Step 2: Configure README
-- Step 3: Validate the boilerplate environment
-<!-- AI:installation:end -->
+Start with the root `README.md` first. Then use this folder for detail when you need it.
 
-<!-- AI:usage:start -->
-## Usage
-Describe how to use README within boilerplate, including any common workflows or edge cases.
-<!-- AI:usage:end -->
+## Recommended Order
 
-<!-- AI:api:start -->
-## API Reference
-List any exposed schema, props, or API endpoints with short descriptions.
-<!-- AI:api:end -->
+1. `docs/public/env-reference.md`
+2. `docs/public/database.md`
+3. `docs/public/deployment.md`
+4. `docs/public/integrations.md` if you enable optional services
+5. `docs/public/features.md` to confirm what ships by default
 
-<!-- AI:examples:start -->
-## Examples
-```bash
-# Example usage for README
-```
-<!-- AI:examples:end -->
+## Additional Reference
+
+- `docs/public/development.md` for local workflow details
+- `docs/public/architecture.md` for route/runtime layout
+- `docs/public/stack.md` for technical implementation details
+
+## Private Docs
+
+Private docs are maintainer/helper material and are not part of the default buyer setup path:
+
+- `docs/private/scripts.md`
+- `docs/private/ai-prompts.md`

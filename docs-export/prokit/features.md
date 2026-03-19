@@ -2,6 +2,8 @@
 
 This is the canonical user-facing list of functional features shipped in this boilerplate.
 
+Use `docs/public/README.md` for the recommended documentation path before diving into this feature inventory.
+
 ## Included Features
 
 1. Next.js App Router + TypeScript runtime foundation.
@@ -26,27 +28,23 @@ This is the canonical user-facing list of functional features shipped in this bo
 9. Sticky app header with auth-aware navigation.
    - Code: `src/components/AppHeader.tsx`
 10. Clerk auth wiring (sign-in/sign-up routes).
-    - Docs: `docs/public/optional-features.md`, `docs/private/instructions/clerk.md`
+    - Docs: `docs/public/optional-features.md`
     - Code: `src/app/(app)/sign-in/[[...sign-in]]/page.tsx`, `src/app/(app)/sign-up/[[...sign-up]]/page.tsx`
 11. Clerk mock mode for local/dev without live auth.
-    - Docs: `docs/public/optional-features.md`, `docs/private/instructions/clerk.md`
+    - Docs: `docs/public/optional-features.md`
     - Code: `src/libs/clerkFlags.ts`, `src/libs/safeClerk.tsx`, `src/libs/safeClerkServer.ts`
 12. Safe Clerk wrappers that fail predictably when misconfigured.
-    - Docs: `docs/private/instructions/clerk.md`
     - Code: `src/libs/safeClerk.tsx`, `src/libs/safeClerkServer.ts`
 13. Middleware route protection for private routes.
-    - Docs: `docs/private/instructions/clerk.md`
     - Code: `src/middleware.ts`
 14. Billing dashboard flow with plan selection UI.
     - Code: `src/app/(app)/dashboard/page.tsx`, `src/components/PricingSection.tsx`
 15. Stripe checkout session API.
-    - Docs: `docs/public/optional-features.md`, `docs/private/instructions/stripe.md`
+    - Docs: `docs/public/optional-features.md`
     - Code: `src/app/api/stripe/create-checkout/route.ts`, `src/helpers/checkout.ts`
 16. Stripe customer portal API + client entrypoint.
-    - Docs: `docs/private/instructions/stripe.md`
     - Code: `src/app/api/stripe/create-portal/route.ts`, `src/components/BillingPortalButton.tsx`
 17. Stripe webhook handler with signature verification and subscription lifecycle event handling.
-    - Docs: `docs/private/instructions/stripe.md`
     - Code: `src/app/api/webhook/stripe/route.ts`, `src/app/api/actions.ts`
 18. Subscription persistence in Postgres via Prisma.
     - Docs: `docs/public/database.md`

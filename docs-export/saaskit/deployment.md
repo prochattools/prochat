@@ -50,8 +50,11 @@ Add optional integration keys only for features you enable.
 ## Step 4: Optional preflight before first deploy
 
 ```bash
-npm run prepare:vercel
+npm run prepare:production-db
 ```
+
+This command uses the current `DATABASE_URL`, verifies the connection, and runs production migrations.
+Only run it when `DATABASE_URL` points to the production database you intend to prepare.
 
 ## Step 5: Deploy
 

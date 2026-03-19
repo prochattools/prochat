@@ -50,15 +50,18 @@ async function isOverlayFile(filePath: string) {
   }
 }
 
+function toRepoRelativePath(filePath: string) {
+  return path.relative(process.cwd(), filePath).replace(/\\/g, '/')
+}
+
 async function pruneRemovedDocs(manifestEntries: ManifestEntry[]) {
-  const keepPaths = new Set(manifestEntries.map(entry => entry.outputPath))
+  const keepPaths = new Set(manifestEntries.map(entry => entry.outputPath.replace(/\\/g, '/')))
   const entries = await readdir(OUTPUT_ROOT, { withFileTypes: true }).catch(() => [])
 
   async function visit(dir: string) {
     const dirEntries = await readdir(dir, { withFileTypes: true })
     for (const entry of dirEntries) {
       const absolutePath = path.join(dir, entry.name)
-      const relative = path.relative(OUTPUT_ROOT, absolutePath)
 
       if (entry.isDirectory()) {
         if (entry.name === '.cache') {
@@ -76,7 +79,7 @@ async function pruneRemovedDocs(manifestEntries: ManifestEntry[]) {
         continue
       }
 
-      if (keepPaths.has(relative)) {
+      if (keepPaths.has(toRepoRelativePath(absolutePath))) {
         continue
       }
 

@@ -102,7 +102,7 @@ Each successful ingest also writes `docs-ingest/<product>/.source.json`, which r
 
 After the AI pipeline pushes generated docs into `src/content/docs/<product>`, run `npm run docs:restructure` to enforce the buyer-friendly layout (overview, what-you-get, architecture, etc.). The script keeps the original technical pages untouched; it simply generates summary landing pages and `integrations` / `advanced` indexes that reference the existing docs, giving each product a consistent top-level navigation without deleting any technical content.
 
-The restructuring step also writes `/docs/<product>/index.mdx`, summarizing the product description, GitHub repo, generated sections, and the last extraction commit/timestamp so each published bucket exposes a buyer-facing landing page.
+The restructuring step also writes `src/content/docs/<product>/index.mdx`, summarizing the product description plus generated sections and quick links so each published bucket exposes a buyer-facing landing page without leaking internal source-repo details.
 
 Generated technical docs keep `sourceRepo: <product>` in frontmatter and the manifest. ProChat-owned landing/index overlays are emitted separately with `sourceRepo: prochat` and `generator: overlay`, so overlay pages do not masquerade as upstream-generated technical docs.
 

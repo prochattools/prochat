@@ -1,46 +1,51 @@
-<!-- GENERATED FILE - DO NOT EDIT -->
----
-title: Architecture
-description: Documentation for Architecture.
-category: boilerplate
-slug: architecture
-order: 100
-sourceRepo: saaskit
-generator: ai
-generatedAt: 2026-03-19T09:02:18.667Z
-sourceCommit: 52a76e11b60698d42e57b1a151f0c389f5398ac4
-keywords:
-  - Boilerplate
-  - Architecture
-  - boilerplate
----
-<!-- AI:overview:start -->
-## Overview
-Documentation for Architecture.
+# Architecture
 
-Keywords: Boilerplate, Architecture, boilerplate
-<!-- AI:overview:end -->
+Think of SaaSKit as two parts in one repository.
 
-<!-- AI:installation:start -->
-## Installation
-- Step 1: Install dependencies
-- Step 2: Configure architecture
-- Step 3: Validate the boilerplate environment
-<!-- AI:installation:end -->
+## 1) Public website layer
 
-<!-- AI:usage:start -->
-## Usage
-Describe how to use architecture within boilerplate, including any common workflows or edge cases.
-<!-- AI:usage:end -->
+This is what visitors see before signing in.
 
-<!-- AI:api:start -->
-## API Reference
-List any exposed schema, props, or API endpoints with short descriptions.
-<!-- AI:api:end -->
+Main paths:
+- `src/app/(marketing)/**`
+- `src/marketing/**`
 
-<!-- AI:examples:start -->
-## Examples
-```bash
-# Example usage for architecture
-```
-<!-- AI:examples:end -->
+Includes:
+- homepage
+- legal pages
+- optional blog/waitlist pages
+
+## 2) Product app layer
+
+This is what signed-in users use.
+
+Main paths:
+- `src/app/(app)/**`
+- `src/app/api/**`
+- `src/libs/**`
+- `prisma/**`
+- `scripts/**`
+
+Includes:
+- auth and route protection
+- billing routes
+- database access and migrations
+- runtime startup scripts
+
+## Runtime basics
+
+- The runtime contract relies on `DATABASE_URL` (Prisma + server), optional labels (`APP_ENV`, `NODE_ENV`), and optional version flags (`SAASKIT_VERSION`, `PROCHAT_VERSION`).  
+- Local development points `DATABASE_URL` at Supabase Dev, while production builds run against Supabase Prod and automatically execute `npm run db:migrate:vercel-build` before `npm start`.  
+- Marketing and app layers share the same Node 18 runtime, so the only difference between `npm run dev` and `npm start` is the route protection that kicks in for `src/app/(app)` routes.
+
+## Recommended deployment path
+
+- Supabase Cloud (Dev + Prod) + Vercel (preview + production) as the primary deployment model. This path keeps your database migrations, Supabase credentials, and Vercel builds on the same contract described in `docs/public/deployment.md`.
+
+## Related docs
+
+- `docs/public/database.md`
+- `docs/public/env-reference.md`
+- `docs/public/integrations.md`
+- `docs/public/deployment.md`
+- `docs/public/stack.md`

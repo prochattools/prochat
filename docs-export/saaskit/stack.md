@@ -1,6 +1,6 @@
 # Stack
 
-The **stack** page shows the technology layers that power SaaSKit, using the same naming conventions as ProKit: runtime, database contract, deployment model, optional integrations, and how the multi-tenant model fits into the Prisma schema.
+This page explains the main technology layers behind SaaSKit: runtime, database contract, deployment model, and optional integrations.
 
 ## Application runtime
 - **Next.js 14 App Router** brings server components and edge-ready routing for both marketing and app areas (`src/app/(marketing)` + `src/app/(app)`).
@@ -19,8 +19,7 @@ The **stack** page shows the technology layers that power SaaSKit, using the sam
 
 ## Supporting tech
 - **Design system**: tokenized colors/typography, marketing layout utilities, and app UI primitives.
-- **Scripts**: the `scripts` directory contains bootstraps, migrations, and runtime helpers referenced by `package.json` (`predev`, `saaskit:bootstrap`, `prepare:vercel`, etc.). The command reference is stored in `docs/private/scripts.md`.
-- **Deployment automation**: `scripts/release.sh` (the release script) wraps the Git workflow, ensures license coverage, bumps versions, and tags releases (see `docs/public/git-workflow.md`).
+- **Scripts**: the `scripts` directory contains bootstraps, migrations, and runtime helpers referenced by `package.json` (`predev`, `saaskit:bootstrap`, `prepare:production-db`, etc.). The command reference is stored in `docs/private/scripts.md`.
 
 ## Related docs
 - Development checklist: `docs/public/development.md`  

@@ -14,12 +14,12 @@
       "README",
       "boilerplate"
     ],
-    "contentHash": "b1a609c9dfbdb8cd4b757b8fc5c2e40ef57e46b0ca0024acc5156a76222a74e6",
+    "contentHash": "3e90f23cee6cda4f966ea7719535c17430f2e69e140a58eeaea88c8bdb148374",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.872Z",
+    "generatedAt": "2026-03-19T17:29:47.833Z",
     "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
+    "sourceCommit": "311313b3c6683c31214671504ed44dfdd356f32b"
   },
   {
     "docId": "prokit.architecture",
@@ -36,12 +36,12 @@
       "Architecture",
       "boilerplate"
     ],
-    "contentHash": "294c173141a0ba1786a84efb27f410d13bda96824627e6c8a14a2653b9be4829",
+    "contentHash": "9fbce1ba0c1c33808025e2ede042e07d4f2a6c83b82549a33efe032f3893b0da",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.873Z",
+    "generatedAt": "2026-03-19T17:29:47.834Z",
     "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
+    "sourceCommit": "311313b3c6683c31214671504ed44dfdd356f32b"
   },
   {
     "docId": "prokit.database",
@@ -58,12 +58,12 @@
       "Database",
       "boilerplate"
     ],
-    "contentHash": "69193808732cdb3e635496b6b3d121f9714d7c3150e09fe7d1ff3f26d686e896",
+    "contentHash": "647098259579bf4b6bb846dea1df8f1a6dc421ab0c695ac52f4ae1a8c08e937b",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.873Z",
+    "generatedAt": "2026-03-19T17:29:47.835Z",
     "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
+    "sourceCommit": "311313b3c6683c31214671504ed44dfdd356f32b"
   },
   {
     "docId": "prokit.deployment",
@@ -80,12 +80,12 @@
       "Deployment",
       "boilerplate"
     ],
-    "contentHash": "9d67bb207aea2e50842344d9a17535ff54b2cfe12f4348d4ebb83c4111a81389",
+    "contentHash": "18ad82f3cc5bfb7d135a3ca528e3fc226b76cb777c60d6e890bfa1d188bae2b5",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.873Z",
+    "generatedAt": "2026-03-19T17:29:47.835Z",
     "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
+    "sourceCommit": "311313b3c6683c31214671504ed44dfdd356f32b"
   },
   {
     "docId": "prokit.development",
@@ -102,12 +102,12 @@
       "Development",
       "boilerplate"
     ],
-    "contentHash": "5a5e9148ad97a4cef1a3fe9146ad57ab800a54ec25179198f008921b695da0c0",
+    "contentHash": "f4bd2cae7f7882ea8f5ad271e48863eb4cdf1a0368380da371be1dff54956475",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.873Z",
+    "generatedAt": "2026-03-19T17:29:47.835Z",
     "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
+    "sourceCommit": "311313b3c6683c31214671504ed44dfdd356f32b"
   },
   {
     "docId": "prokit.features",
@@ -119,63 +119,17 @@
     "description": "Documentation for Features.",
     "order": 100,
     "keywords": [
-      "Boilerplate",
-      "Features",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "54464326cd86ef5e33586da2588c9a0a13e32513d88e97ae5b322fd632b9d26e",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.876Z",
-    "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.git-workflow",
-    "sourcePath": "docs-ingest/prokit/git-workflow.md",
-    "outputPath": "src/content/docs/prokit/git-workflow.mdx",
-    "category": "boilerplate",
-    "slug": "git-workflow",
-    "title": "Git Workflow",
-    "description": "Documentation for Git Workflow.",
-    "order": 100,
-    "keywords": [
       "prokit",
       "ProKit",
-      "Git Workflow",
+      "Features",
       "boilerplate"
     ],
-    "contentHash": "3e40ae1e701024036af90cae917099e16400c97ad189dd42451bce948392a0de",
+    "contentHash": "b8595bcf4408b9c8746d64a305910562d7363c2630490d37e162543a23835a1d",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.876Z",
+    "generatedAt": "2026-03-19T17:29:47.836Z",
     "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.install",
-    "sourcePath": "docs-ingest/prokit/install.md",
-    "outputPath": "src/content/docs/prokit/install.mdx",
-    "category": "boilerplate",
-    "slug": "install",
-    "title": "Install",
-    "description": "Documentation for Install.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Install",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "94e3b35a321fc5d3189b1835b10291556c7fea09b69ab6fdb508748440ea8092",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.877Z",
-    "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
+    "sourceCommit": "311313b3c6683c31214671504ed44dfdd356f32b"
   },
   {
     "docId": "prokit.optional-features",
@@ -187,18 +141,17 @@
     "description": "Documentation for Optional Features.",
     "order": 100,
     "keywords": [
-      "Boilerplate",
-      "Optional Features",
-      "boilerplate",
       "prokit",
-      "ProKit"
+      "ProKit",
+      "Optional Features",
+      "boilerplate"
     ],
-    "contentHash": "61183bb719d026fae31b6a66c498f48159e11cb2037480fa10d011bdb66f5fb4",
+    "contentHash": "8a0c5e59be27c401d9b54893cffd562ec1e0eb6c4446e4575024af197c97806d",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.877Z",
+    "generatedAt": "2026-03-19T17:29:47.836Z",
     "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
+    "sourceCommit": "311313b3c6683c31214671504ed44dfdd356f32b"
   },
   {
     "docId": "prokit.overview",
@@ -210,18 +163,17 @@
     "description": "Documentation for Overview.",
     "order": 100,
     "keywords": [
-      "Boilerplate",
-      "Overview",
-      "boilerplate",
       "prokit",
-      "ProKit"
+      "ProKit",
+      "Overview",
+      "boilerplate"
     ],
-    "contentHash": "ee523160fee654e8671d5a430ce1731ef947066b0b834301e96123dc5d227492",
+    "contentHash": "a0fc68d11b271bb1d52d3864afd068c7f3a6f4b75106c62221983500a3a55d2c",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.878Z",
+    "generatedAt": "2026-03-19T17:29:47.836Z",
     "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
+    "sourceCommit": "311313b3c6683c31214671504ed44dfdd356f32b"
   },
   {
     "docId": "prokit.scripts",
@@ -238,12 +190,12 @@
       "Scripts",
       "boilerplate"
     ],
-    "contentHash": "c5214a7b4709cdbfe160882a0bab3c92915f6ce1146a66bbcd527ce76a0686f3",
+    "contentHash": "beeda555ffe6e8b2ed1e29752550187d9d034e5f8e84cd024df249a5cf385751",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.878Z",
+    "generatedAt": "2026-03-19T17:29:47.836Z",
     "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
+    "sourceCommit": "311313b3c6683c31214671504ed44dfdd356f32b"
   },
   {
     "docId": "prokit.stack",
@@ -260,725 +212,12 @@
       "Stack",
       "boilerplate"
     ],
-    "contentHash": "3af5cf2a80f0d9cd32fcd5796b9c63c6d47fbb7cc8d626d3f9306ea18f3e4001",
+    "contentHash": "bd4b8b8de4eec6d703286f9d57b75bbe63f44b6e3cdceee0d10bccb7bf67f38c",
     "sourceRepo": "prokit",
     "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.878Z",
+    "generatedAt": "2026-03-19T17:29:47.837Z",
     "generator": "ai",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.addcollaborator",
-    "sourcePath": "docs-ingest/prokit/api/addcollaborator.md",
-    "outputPath": "src/content/docs/prokit/api/addcollaborator.mdx",
-    "category": "boilerplate",
-    "slug": "addcollaborator",
-    "title": "Addcollaborator",
-    "description": "Documentation for Addcollaborator.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Addcollaborator",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "94a67f190a89b0800915290ee22225850ed96bea7621593bd73944e680dfcbcb",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.879Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.analyticseventname",
-    "sourcePath": "docs-ingest/prokit/api/analyticseventname.md",
-    "outputPath": "src/content/docs/prokit/api/analyticseventname.mdx",
-    "category": "boilerplate",
-    "slug": "analyticseventname",
-    "title": "Analyticseventname",
-    "description": "Documentation for Analyticseventname.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Analyticseventname",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "8a9627d51283e0f5b9fcd9a1e597b62314510952e4da1b555b0b36c99a4ea760",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.879Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.analyticspayload",
-    "sourcePath": "docs-ingest/prokit/api/analyticspayload.md",
-    "outputPath": "src/content/docs/prokit/api/analyticspayload.mdx",
-    "category": "boilerplate",
-    "slug": "analyticspayload",
-    "title": "Analyticspayload",
-    "description": "Documentation for Analyticspayload.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Analyticspayload",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "dfdff30b9aa6e036f5cf8b81309731851661b9cff1c2fc848dd0ab972239e025",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.880Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.analyticspayloadvalue",
-    "sourcePath": "docs-ingest/prokit/api/analyticspayloadvalue.md",
-    "outputPath": "src/content/docs/prokit/api/analyticspayloadvalue.mdx",
-    "category": "boilerplate",
-    "slug": "analyticspayloadvalue",
-    "title": "Analyticspayloadvalue",
-    "description": "Documentation for Analyticspayloadvalue.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Analyticspayloadvalue",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "e9425a3469cfa329e7c8ea357807346d67e26a9de641c16af04792169436a9a1",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.880Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.cn",
-    "sourcePath": "docs-ingest/prokit/api/cn.md",
-    "outputPath": "src/content/docs/prokit/api/cn.mdx",
-    "category": "boilerplate",
-    "slug": "cn",
-    "title": "Cn",
-    "description": "Documentation for Cn.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Cn",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "f81c9fd8564163058bff1465766a33bed66aa9bf28908919070b65699ab98ef0",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.881Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.entitlementstatus",
-    "sourcePath": "docs-ingest/prokit/api/entitlementstatus.md",
-    "outputPath": "src/content/docs/prokit/api/entitlementstatus.mdx",
-    "category": "boilerplate",
-    "slug": "entitlementstatus",
-    "title": "Entitlementstatus",
-    "description": "Documentation for Entitlementstatus.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Entitlementstatus",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "b406dd7690aafbf239b0ced1232147d45e185ed47549be51321eccf559d1f330",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.881Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.findlatestpaidunprovisionedsessionbyemail",
-    "sourcePath": "docs-ingest/prokit/api/findlatestpaidunprovisionedsessionbyemail.md",
-    "outputPath": "src/content/docs/prokit/api/findlatestpaidunprovisionedsessionbyemail.mdx",
-    "category": "boilerplate",
-    "slug": "findlatestpaidunprovisionedsessionbyemail",
-    "title": "Findlatestpaidunprovisionedsessionbyemail",
-    "description": "Documentation for Findlatestpaidunprovisionedsessionbyemail.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Findlatestpaidunprovisionedsessionbyemail",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "f9800eca8e26a1a43cac6c34898864672b0e008d70478be4a95c14b2f8511d7c",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.881Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.formatactionlabel",
-    "sourcePath": "docs-ingest/prokit/api/formatactionlabel.md",
-    "outputPath": "src/content/docs/prokit/api/formatactionlabel.mdx",
-    "category": "boilerplate",
-    "slug": "formatactionlabel",
-    "title": "Formatactionlabel",
-    "description": "Documentation for Formatactionlabel.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Formatactionlabel",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "cd1e09be402561e683e09f8fb7a43115748f846cc1da665100169cb0ef0e1e18",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.882Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.formatactionlabelnode",
-    "sourcePath": "docs-ingest/prokit/api/formatactionlabelnode.md",
-    "outputPath": "src/content/docs/prokit/api/formatactionlabelnode.mdx",
-    "category": "boilerplate",
-    "slug": "formatactionlabelnode",
-    "title": "Formatactionlabelnode",
-    "description": "Documentation for Formatactionlabelnode.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Formatactionlabelnode",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "7a2d2abd99272b3810f2b82ed615592f998fe9e0e33fa54f71d100219fe0b49b",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.882Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.formatoptionalactionlabel",
-    "sourcePath": "docs-ingest/prokit/api/formatoptionalactionlabel.md",
-    "outputPath": "src/content/docs/prokit/api/formatoptionalactionlabel.mdx",
-    "category": "boilerplate",
-    "slug": "formatoptionalactionlabel",
-    "title": "Formatoptionalactionlabel",
-    "description": "Documentation for Formatoptionalactionlabel.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Formatoptionalactionlabel",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "bdc5b6dea2389ac011195fc17294aa94d4930e8cd4bca110c3f06d9a3352c9f8",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.882Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.getactionlabelhtml",
-    "sourcePath": "docs-ingest/prokit/api/getactionlabelhtml.md",
-    "outputPath": "src/content/docs/prokit/api/getactionlabelhtml.mdx",
-    "category": "boilerplate",
-    "slug": "getactionlabelhtml",
-    "title": "Getactionlabelhtml",
-    "description": "Documentation for Getactionlabelhtml.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Getactionlabelhtml",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "68064726f222891877f998c9f001e57729652f76ca330fd57ccd58d8061b7972",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.883Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.getgithubconfig",
-    "sourcePath": "docs-ingest/prokit/api/getgithubconfig.md",
-    "outputPath": "src/content/docs/prokit/api/getgithubconfig.mdx",
-    "category": "boilerplate",
-    "slug": "getgithubconfig",
-    "title": "Getgithubconfig",
-    "description": "Documentation for Getgithubconfig.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Getgithubconfig",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "f7d64601b5ad2c14dab0a1499f59c8b6126bf67dd9b53fbe497fd6329ca4494d",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.883Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.getproductconfig",
-    "sourcePath": "docs-ingest/prokit/api/getproductconfig.md",
-    "outputPath": "src/content/docs/prokit/api/getproductconfig.mdx",
-    "category": "boilerplate",
-    "slug": "getproductconfig",
-    "title": "Getproductconfig",
-    "description": "Documentation for Getproductconfig.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Getproductconfig",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "3c24a23f216cd4582c23b352eeecfdb726d645a8f5ebf9b593f9c2c0b222b12b",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.883Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.getsessionstatusbyid",
-    "sourcePath": "docs-ingest/prokit/api/getsessionstatusbyid.md",
-    "outputPath": "src/content/docs/prokit/api/getsessionstatusbyid.mdx",
-    "category": "boilerplate",
-    "slug": "getsessionstatusbyid",
-    "title": "Getsessionstatusbyid",
-    "description": "Documentation for Getsessionstatusbyid.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Getsessionstatusbyid",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "9ee0ce083f534b26078fd8cac179135f6e817edadbc7a7aab58637610e4c5b5a",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.884Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.getstripeclient",
-    "sourcePath": "docs-ingest/prokit/api/getstripeclient.md",
-    "outputPath": "src/content/docs/prokit/api/getstripeclient.mdx",
-    "category": "boilerplate",
-    "slug": "getstripeclient",
-    "title": "Getstripeclient",
-    "description": "Documentation for Getstripeclient.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Getstripeclient",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "34e2f560a6f2066893640519a5b08d857ab59b7647db94d40571f1a98d6aa8c7",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.884Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.handlecheckoutprocess",
-    "sourcePath": "docs-ingest/prokit/api/handlecheckoutprocess.md",
-    "outputPath": "src/content/docs/prokit/api/handlecheckoutprocess.mdx",
-    "category": "boilerplate",
-    "slug": "handlecheckoutprocess",
-    "title": "Handlecheckoutprocess",
-    "description": "Documentation for Handlecheckoutprocess.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Handlecheckoutprocess",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "db2ab53d2ce92ea46b07c3217437c85043a8dd4ba574785f3956163ce6a12aac",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.884Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.ischromelesspath",
-    "sourcePath": "docs-ingest/prokit/api/ischromelesspath.md",
-    "outputPath": "src/content/docs/prokit/api/ischromelesspath.mdx",
-    "category": "boilerplate",
-    "slug": "ischromelesspath",
-    "title": "Ischromelesspath",
-    "description": "Documentation for Ischromelesspath.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Ischromelesspath",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "f76f6841297012daf0fef05c4eaf1c3db677671521961e31f418f1399781e9ce",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.885Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.isfooterlesspath",
-    "sourcePath": "docs-ingest/prokit/api/isfooterlesspath.md",
-    "outputPath": "src/content/docs/prokit/api/isfooterlesspath.mdx",
-    "category": "boilerplate",
-    "slug": "isfooterlesspath",
-    "title": "Isfooterlesspath",
-    "description": "Documentation for Isfooterlesspath.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Isfooterlesspath",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "cc15f56e6fe005f42934ecedd02ed3f9a3884f1ae3ec85a169e7aa4f6d657852",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.885Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.isfullscreenpath",
-    "sourcePath": "docs-ingest/prokit/api/isfullscreenpath.md",
-    "outputPath": "src/content/docs/prokit/api/isfullscreenpath.mdx",
-    "category": "boilerplate",
-    "slug": "isfullscreenpath",
-    "title": "Isfullscreenpath",
-    "description": "Documentation for Isfullscreenpath.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Isfullscreenpath",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "a5f3ef4c60010dd597cc5804d5ca795b4c4b3ea9142d71b6a0cac7ecfa7e6e5b",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.885Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.isminimalheaderpath",
-    "sourcePath": "docs-ingest/prokit/api/isminimalheaderpath.md",
-    "outputPath": "src/content/docs/prokit/api/isminimalheaderpath.mdx",
-    "category": "boilerplate",
-    "slug": "isminimalheaderpath",
-    "title": "Isminimalheaderpath",
-    "description": "Documentation for Isminimalheaderpath.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Isminimalheaderpath",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "500a7cbf1d0d6cfe1953ad45b0490ad4776ac9796319e1a2792ad0e692825f45",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.886Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.isvalidgithubusernameinput",
-    "sourcePath": "docs-ingest/prokit/api/isvalidgithubusernameinput.md",
-    "outputPath": "src/content/docs/prokit/api/isvalidgithubusernameinput.mdx",
-    "category": "boilerplate",
-    "slug": "isvalidgithubusernameinput",
-    "title": "Isvalidgithubusernameinput",
-    "description": "Documentation for Isvalidgithubusernameinput.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Isvalidgithubusernameinput",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "acdd3d2c2d768645710bc9d18808147f661b0f97ed02d4717aa114fb250206ed",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.886Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.marksessionpaid",
-    "sourcePath": "docs-ingest/prokit/api/marksessionpaid.md",
-    "outputPath": "src/content/docs/prokit/api/marksessionpaid.mdx",
-    "category": "boilerplate",
-    "slug": "marksessionpaid",
-    "title": "Marksessionpaid",
-    "description": "Documentation for Marksessionpaid.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Marksessionpaid",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "4fc83aac476e1724642f9e03b4053399ba258f4a4ab5c715c7e17c6a7b97397a",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.886Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.marksessionprovisioned",
-    "sourcePath": "docs-ingest/prokit/api/marksessionprovisioned.md",
-    "outputPath": "src/content/docs/prokit/api/marksessionprovisioned.mdx",
-    "category": "boilerplate",
-    "slug": "marksessionprovisioned",
-    "title": "Marksessionprovisioned",
-    "description": "Documentation for Marksessionprovisioned.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Marksessionprovisioned",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "ae0f06fa0b296b3f607a11e23edb7bab8530b852d59f4cb1820bbfaf3fac466d",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.886Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.normalizegithubusernameforcomparison",
-    "sourcePath": "docs-ingest/prokit/api/normalizegithubusernameforcomparison.md",
-    "outputPath": "src/content/docs/prokit/api/normalizegithubusernameforcomparison.mdx",
-    "category": "boilerplate",
-    "slug": "normalizegithubusernameforcomparison",
-    "title": "Normalizegithubusernameforcomparison",
-    "description": "Documentation for Normalizegithubusernameforcomparison.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Normalizegithubusernameforcomparison",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "82190e4d74ca1542896593586ac757720ac1303995d9aa5a66c13850342bb5ee",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.887Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.parsegithubusername",
-    "sourcePath": "docs-ingest/prokit/api/parsegithubusername.md",
-    "outputPath": "src/content/docs/prokit/api/parsegithubusername.mdx",
-    "category": "boilerplate",
-    "slug": "parsegithubusername",
-    "title": "Parsegithubusername",
-    "description": "Documentation for Parsegithubusername.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Parsegithubusername",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "6dac49b2e499a0a63e3bd3dd3873fb8f422302f604fb4371f938c846845954e4",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.887Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.productconfig",
-    "sourcePath": "docs-ingest/prokit/api/productconfig.md",
-    "outputPath": "src/content/docs/prokit/api/productconfig.mdx",
-    "category": "boilerplate",
-    "slug": "productconfig",
-    "title": "Productconfig",
-    "description": "Documentation for Productconfig.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Productconfig",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "d7ce5e3c5b3f73d1d19a191f5ba73a37e19c65bd27985116c12373095e4e5df5",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.888Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.productslug",
-    "sourcePath": "docs-ingest/prokit/api/productslug.md",
-    "outputPath": "src/content/docs/prokit/api/productslug.mdx",
-    "category": "boilerplate",
-    "slug": "productslug",
-    "title": "Productslug",
-    "description": "Documentation for Productslug.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Productslug",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "7d00f91e210ff319837310ad1bb7d9561a3705901c2c2a05ac7c474fba09ecc0",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.888Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.renderactionlabel",
-    "sourcePath": "docs-ingest/prokit/api/renderactionlabel.md",
-    "outputPath": "src/content/docs/prokit/api/renderactionlabel.mdx",
-    "category": "boilerplate",
-    "slug": "renderactionlabel",
-    "title": "Renderactionlabel",
-    "description": "Documentation for Renderactionlabel.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Renderactionlabel",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "4a39a5b0ceee95e64dcc73af528e25b9b9be7e6ce0158281a97bae7a959f7fb9",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.888Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.retrievesessionbyid",
-    "sourcePath": "docs-ingest/prokit/api/retrievesessionbyid.md",
-    "outputPath": "src/content/docs/prokit/api/retrievesessionbyid.mdx",
-    "category": "boilerplate",
-    "slug": "retrievesessionbyid",
-    "title": "Retrievesessionbyid",
-    "description": "Documentation for Retrievesessionbyid.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Retrievesessionbyid",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "9a0c08c555e5ede4b7d18a35e575ad9a4507117ddc8adbcdf41129d31d6103b7",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.888Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.trackevent",
-    "sourcePath": "docs-ingest/prokit/api/trackevent.md",
-    "outputPath": "src/content/docs/prokit/api/trackevent.mdx",
-    "category": "boilerplate",
-    "slug": "trackevent",
-    "title": "Trackevent",
-    "description": "Documentation for Trackevent.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Trackevent",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "56711db8b7a6ab2c401288214e66d9f870afd2b65dcdb6a2e6cb272ea5eb1a4a",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.888Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
-  },
-  {
-    "docId": "prokit.trackeventoncepersession",
-    "sourcePath": "docs-ingest/prokit/api/trackeventoncepersession.md",
-    "outputPath": "src/content/docs/prokit/api/trackeventoncepersession.mdx",
-    "category": "boilerplate",
-    "slug": "trackeventoncepersession",
-    "title": "Trackeventoncepersession",
-    "description": "Documentation for Trackeventoncepersession.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Trackeventoncepersession",
-      "boilerplate",
-      "prokit",
-      "ProKit"
-    ],
-    "contentHash": "1a5cd634824fa81b4ff43d98069ea7ec0cff6a3ba488aac0f7a89003241f698e",
-    "sourceRepo": "prokit",
-    "templateId": "boilerplate",
-    "generatedAt": "2026-03-19T09:02:18.889Z",
-    "generator": "auto",
-    "sourceCommit": "0b42f19fce038384e84556ef01a90aff71b7c32f"
+    "sourceCommit": "311313b3c6683c31214671504ed44dfdd356f32b"
   },
   {
     "docId": "saaskit.README",
@@ -990,18 +229,17 @@
     "description": "Documentation for README.",
     "order": 100,
     "keywords": [
-      "Boilerplate",
-      "README",
-      "boilerplate",
       "saaskit",
-      "SaaSKit"
+      "SaaSKit",
+      "README",
+      "boilerplate"
     ],
-    "contentHash": "5ffa68b9405f0918a618de6af5fccfddc00f93293dae035849eabcb26342d7ee",
+    "contentHash": "203c0097e302de5fe90a8915eb5c052ae65a99974afaf7247309b19e5b53d3a2",
     "sourceRepo": "saaskit",
     "templateId": "platform",
-    "generatedAt": "2026-03-19T09:02:18.889Z",
+    "generatedAt": "2026-03-19T17:29:47.837Z",
     "generator": "ai",
-    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+    "sourceCommit": "187e01573042d87c5747684b05956767694846bf"
   },
   {
     "docId": "saaskit.architecture",
@@ -1013,18 +251,17 @@
     "description": "Documentation for Architecture.",
     "order": 100,
     "keywords": [
-      "Boilerplate",
-      "Architecture",
-      "boilerplate",
       "saaskit",
-      "SaaSKit"
+      "SaaSKit",
+      "Architecture",
+      "boilerplate"
     ],
-    "contentHash": "36115f0613788190814c1fa34ce3a1f03fb09f313750f02db53898c9b48d57ff",
+    "contentHash": "bbd406d7f68dd23e56d45188f3d554f5ae99b50296aa3c49905cfcc57b89f03a",
     "sourceRepo": "saaskit",
     "templateId": "platform",
-    "generatedAt": "2026-03-19T09:02:18.889Z",
+    "generatedAt": "2026-03-19T17:29:47.837Z",
     "generator": "ai",
-    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+    "sourceCommit": "187e01573042d87c5747684b05956767694846bf"
   },
   {
     "docId": "saaskit.database",
@@ -1041,12 +278,12 @@
       "Database",
       "boilerplate"
     ],
-    "contentHash": "169a972ac61045d170ea21dcd8235e5674ff12459c58e569e3074e6062990c72",
+    "contentHash": "72b777df991b83c3817513bda0466b038aa9ef7708456c89133620067adf567e",
     "sourceRepo": "saaskit",
     "templateId": "platform",
-    "generatedAt": "2026-03-19T09:02:18.889Z",
+    "generatedAt": "2026-03-19T17:29:47.838Z",
     "generator": "ai",
-    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+    "sourceCommit": "187e01573042d87c5747684b05956767694846bf"
   },
   {
     "docId": "saaskit.deployment",
@@ -1063,12 +300,12 @@
       "Deployment",
       "boilerplate"
     ],
-    "contentHash": "42d7b5329abab44afe5225e62d7a34202bb93ffe22d3d24125d427bd65c902f7",
+    "contentHash": "63afa20ed32cf1a0e2f9d56d612780e680da814dd8a36ca134520a29e7854cec",
     "sourceRepo": "saaskit",
     "templateId": "platform",
-    "generatedAt": "2026-03-19T09:02:18.890Z",
+    "generatedAt": "2026-03-19T17:29:47.838Z",
     "generator": "ai",
-    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+    "sourceCommit": "187e01573042d87c5747684b05956767694846bf"
   },
   {
     "docId": "saaskit.development",
@@ -1080,18 +317,17 @@
     "description": "Documentation for Development.",
     "order": 100,
     "keywords": [
-      "Boilerplate",
-      "Development",
-      "boilerplate",
       "saaskit",
-      "SaaSKit"
+      "SaaSKit",
+      "Development",
+      "boilerplate"
     ],
-    "contentHash": "b83b235ffcfc9097bff73258e49fd49dfeac4c1f66ff37a7c5a8307c87f874bf",
+    "contentHash": "6ca8d8c83356dda10cd55da30192e11fd1735c5e22d702ebf1d6db93d79021ca",
     "sourceRepo": "saaskit",
     "templateId": "platform",
-    "generatedAt": "2026-03-19T09:02:18.890Z",
+    "generatedAt": "2026-03-19T17:29:47.838Z",
     "generator": "ai",
-    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+    "sourceCommit": "187e01573042d87c5747684b05956767694846bf"
   },
   {
     "docId": "saaskit.env-reference",
@@ -1108,12 +344,12 @@
       "Env Reference",
       "boilerplate"
     ],
-    "contentHash": "4274bbb93bfbb7dd0e94393116e5f9bc3ae8d77e3bc019a93d615a2fa93585c1",
+    "contentHash": "d21f8a40144e12852488b65f43e3fa9873dab669e81855f76cbf95d08d8a1d42",
     "sourceRepo": "saaskit",
     "templateId": "platform",
-    "generatedAt": "2026-03-19T09:02:18.890Z",
+    "generatedAt": "2026-03-19T17:29:47.838Z",
     "generator": "ai",
-    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+    "sourceCommit": "187e01573042d87c5747684b05956767694846bf"
   },
   {
     "docId": "saaskit.features",
@@ -1125,41 +361,17 @@
     "description": "Documentation for Features.",
     "order": 100,
     "keywords": [
-      "Boilerplate",
+      "saaskit",
+      "SaaSKit",
       "Features",
-      "boilerplate",
-      "saaskit",
-      "SaaSKit"
+      "boilerplate"
     ],
-    "contentHash": "eb3dec7fe94297ef80a049331eb88571af456c716b1ef0dffa322b5673302bd1",
+    "contentHash": "416135d4d9819b2f3d3e83e84512d889f7a78bf9a6465849ab124cd079ee30dd",
     "sourceRepo": "saaskit",
     "templateId": "platform",
-    "generatedAt": "2026-03-19T09:02:18.890Z",
+    "generatedAt": "2026-03-19T17:29:47.839Z",
     "generator": "ai",
-    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
-  },
-  {
-    "docId": "saaskit.git-workflow",
-    "sourcePath": "docs-ingest/saaskit/git-workflow.md",
-    "outputPath": "src/content/docs/saaskit/git-workflow.mdx",
-    "category": "boilerplate",
-    "slug": "git-workflow",
-    "title": "Git Workflow",
-    "description": "Documentation for Git Workflow.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Git Workflow",
-      "boilerplate",
-      "saaskit",
-      "SaaSKit"
-    ],
-    "contentHash": "e8a5a1deb5ea007921514dd5b2d19b1f3dc6c5f80af454091e6becd795c28670",
-    "sourceRepo": "saaskit",
-    "templateId": "platform",
-    "generatedAt": "2026-03-19T09:02:18.890Z",
-    "generator": "ai",
-    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+    "sourceCommit": "187e01573042d87c5747684b05956767694846bf"
   },
   {
     "docId": "saaskit.integrations",
@@ -1171,41 +383,17 @@
     "description": "Documentation for Integrations.",
     "order": 100,
     "keywords": [
-      "Boilerplate",
+      "saaskit",
+      "SaaSKit",
       "Integrations",
-      "boilerplate",
-      "saaskit",
-      "SaaSKit"
+      "boilerplate"
     ],
-    "contentHash": "c7de03858ff4e7d9a71bfb2d0d4a7ec6d1e4e1a3608b4dd92a05906338c67274",
+    "contentHash": "062fa6358aa110f60efef18dcfd250239319c9e5781ac1bd018a3b0e9c042283",
     "sourceRepo": "saaskit",
     "templateId": "platform",
-    "generatedAt": "2026-03-19T09:02:18.891Z",
+    "generatedAt": "2026-03-19T17:29:47.839Z",
     "generator": "ai",
-    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
-  },
-  {
-    "docId": "saaskit.overview",
-    "sourcePath": "docs-ingest/saaskit/overview.md",
-    "outputPath": "src/content/docs/saaskit/overview.mdx",
-    "category": "boilerplate",
-    "slug": "overview",
-    "title": "Overview",
-    "description": "Documentation for Overview.",
-    "order": 100,
-    "keywords": [
-      "Boilerplate",
-      "Overview",
-      "boilerplate",
-      "saaskit",
-      "SaaSKit"
-    ],
-    "contentHash": "003b44dad588d0d2f34849d10915995491cc795754ca75802e4b4510e2bcab2b",
-    "sourceRepo": "saaskit",
-    "templateId": "platform",
-    "generatedAt": "2026-03-19T09:02:18.891Z",
-    "generator": "ai",
-    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+    "sourceCommit": "187e01573042d87c5747684b05956767694846bf"
   },
   {
     "docId": "saaskit.stack",
@@ -1217,17 +405,16 @@
     "description": "Documentation for Stack.",
     "order": 100,
     "keywords": [
-      "Boilerplate",
-      "Stack",
-      "boilerplate",
       "saaskit",
-      "SaaSKit"
+      "SaaSKit",
+      "Stack",
+      "boilerplate"
     ],
-    "contentHash": "ae840321ca19c32251b65a01f5ae6fc66e0978b20a6e2d06057834242fd7309e",
+    "contentHash": "a5815e4e2cfa95c6b20b75cacb5689cbff62f8a5a765f3b5ded211af2717cd61",
     "sourceRepo": "saaskit",
     "templateId": "platform",
-    "generatedAt": "2026-03-19T09:02:18.891Z",
+    "generatedAt": "2026-03-19T17:29:47.839Z",
     "generator": "ai",
-    "sourceCommit": "52a76e11b60698d42e57b1a151f0c389f5398ac4"
+    "sourceCommit": "187e01573042d87c5747684b05956767694846bf"
   }
 ]

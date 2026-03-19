@@ -7,8 +7,8 @@ slug: development
 order: 100
 sourceRepo: prokit
 generator: ai
-generatedAt: 2026-03-19T09:02:18.873Z
-sourceCommit: 0b42f19fce038384e84556ef01a90aff71b7c32f
+generatedAt: 2026-03-19T17:29:47.835Z
+sourceCommit: 311313b3c6683c31214671504ed44dfdd356f32b
 keywords:
   - prokit
   - ProKit
@@ -18,6 +18,8 @@ keywords:
 # ProKit Studio Development
 
 ProKit Studio development follows a lean Postgres contract with Prisma migrations and a few helper scripts.
+
+Use `docs/public/README.md` as the public docs entrypoint if you are starting from scratch.
 
 ## Prerequisites
 
@@ -40,6 +42,8 @@ npm run dev
 ```
 
 `db:init` only validates that the configured `DATABASE_URL` is reachable, while `db:migrate:dev` runs Prisma migrations against the same connection string.
+
+`npm run dev` automatically triggers the `predev` hook first, which runs env bootstrap, `db:init`, and `db:migrate:dev`.
 
 ## Recommended starter stack
 

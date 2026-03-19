@@ -2,6 +2,8 @@
 
 ProKit Studio development follows a lean Postgres contract with Prisma migrations and a few helper scripts.
 
+Use `docs/public/README.md` as the public docs entrypoint if you are starting from scratch.
+
 ## Prerequisites
 
 - Node.js 18+ (20+ recommended)
@@ -23,6 +25,8 @@ npm run dev
 ```
 
 `db:init` only validates that the configured `DATABASE_URL` is reachable, while `db:migrate:dev` runs Prisma migrations against the same connection string.
+
+`npm run dev` automatically triggers the `predev` hook first, which runs env bootstrap, `db:init`, and `db:migrate:dev`.
 
 ## Recommended starter stack
 
