@@ -219,7 +219,7 @@ The root build script is deterministic. There is no runtime cron, no ISR publish
 - Google Search Console follow-up is manual after deploy; the runtime does not auto-submit sitemaps
 - Weekly scheduled publishing is handled by GitHub Actions triggering a Dokploy redeploy
 
-## Zero Manual Content Workflow 
+## Zero Manual Content Workflow
 
 The publishing system is designed to remove repetitive operational work:
 
