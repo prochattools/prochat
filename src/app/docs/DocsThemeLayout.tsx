@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { headers } from 'next/headers'
 import { Layout, Navbar } from 'nextra-theme-docs'
 
 import { getPublicDocsPageMap } from '@/lib/docs/public-docs'
@@ -13,16 +14,33 @@ export default async function DocsThemeLayout({
   children: ReactNode
 }) {
   const pageMap = await getPublicDocsPageMap()
+  const pathname = headers().get('x-nextjs-pathname') ?? ''
+  const segments = pathname.split('/').filter(Boolean)
+  const productSegment = segments[1]
+  const PRODUCT_LINKS: Record<'prokit' | 'saaskit', { repo: string; discussions: string }> = {
+    prokit: {
+      repo: 'https://github.com/stevewesthoek/prokit/blob/main/src/content/docs',
+      discussions: 'https://github.com/stevewesthoek/prokit/discussions',
+    },
+    saaskit: {
+      repo: 'https://github.com/stevewesthoek/saaskit/blob/main/src/content/docs',
+      discussions: 'https://github.com/stevewesthoek/saaskit/discussions',
+    },
+  }
+  const productLinks = PRODUCT_LINKS[productSegment as 'prokit' | 'saaskit']
+  const docsRepositoryBase = productLinks?.repo ?? 'https://github.com/prochattools/prochat/tree/main/src/content/docs'
+  const feedbackLink = productLinks?.discussions ?? 'https://github.com/stevewesthoek/prochat/discussions'
 
   return (
     <div className="docs-shell flex min-h-screen flex-col">
       <div className="docs-shell-inner flex flex-1 flex-col">
         <Layout
           pageMap={pageMap}
-          docsRepositoryBase="https://github.com/prochattools/prochat/tree/main/src/content/docs"
-          editLink="Edit this page on GitHub →"
+          docsRepositoryBase={docsRepositoryBase}
+          editLink="View source on GitHub"
           feedback={{
             content: 'Question? Give us feedback →',
+            link: feedbackLink,
             labels: 'docs',
           }}
           search={null}
