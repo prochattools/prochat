@@ -1,40 +1,61 @@
 # Development
 
-This section mirrors the ProKit **development** page. It summarizes how to prepare your workspace, which commands the runtime expects, and where to look when things go wrong during local work.
+## Overview
 
-## Runtime requirements
-- **Node** 18+ (matching `package.json` engines)  
-- **npm** (you already use it for the provided scripts)  
-- **Supabase** Dev + Prod projects (see the database doc for the split)
+This page is for operators or developers who are working locally. It helps you bootstrap the workspace, run the expected commands, and troubleshoot setup issues. Skip it if you only want the founder launch path.
 
-When you run locally, the runtime is still Next.js 14 + TypeScript, so `npm run dev` operates inside the same entry points that production uses (`src/app/(marketing)` and `src/app/(app)`).
+## Why this page exists
 
-## Bootstrapping the workspace
-1. `npm install`
-2. `cp .env.example .env` and fill the values listed in `docs/public/env-reference.md`
-3. Run `npm run setup:first-run` or `npm run saaskit:bootstrap` (they are aliases) to ensure the template env file exists and any project scaffolding hooks run.
+- It explains the local workflow.
+- It lists the commands you use before pushing changes.
+- It shows the safe reset and verification steps for Dev only.
 
-## Local development loop
-- `npm run predev` runs `scripts/dev/bootstrap-env.js` then `db:init` and `db:migrate:dev`, so it is the canonical preparation step before spinning up the app.  
-- `npm run dev` now reads the prepared `.env`, runs the same migration/verification steps as `predev`, and starts Next.js in development mode.  
-- `npm run db:migrate:dev` applies migrations to the development database referenced in `DATABASE_URL`. Run it after schema changes.
+## Read this when
 
-Keep Supabase Dev values in `.env`; production values belong only in Vercel environment variables. The development doc and `env-reference` share the exact variable set from `.env.example`, so double-check there if you encounter missing keys.
+- You are setting up your local copy of SaaSKit.
+- You need to change schema, routes, or scripts.
+- You want to verify migrations before deployment.
 
-## Migration mindset
-- Use `npm run db:init` to verify the connection.
-- Apply schema changes locally before pushing: edit `prisma/system.prisma`, run `npm run db:migrate:dev`, make sure tests pass, then push and let the deployment pipeline run `db:migrate:vercel-build` on Vercel.  
-- Use `npm run db:migrate:reset` only on the Dev database in Supabase to start clean.
-- `npm run db:migrate:prod` is the manual fallback if production deployments do not automatically run migrations (the deployment doc covers why this usually isn't necessary).
+## Skip this when
 
-## Development checks
-- `npm run lint` (see `package.json`) catches client/server issues.
-- `npm run build` triggers `npm run db:migrate:vercel-build` through `prebuild`, so it's a good smoke test before pushing.  
-- `npm run verify:deploy` shows the current migration status when you need a quick proof of health.
+- You only need the launch overview.
+- You are not working in the codebase.
+- You do not need to touch Dev database workflows.
+
+## Setup
+
+- Runtime requirements: Node 18+, npm, Supabase Dev + Prod projects (see `docs/public/database.md`).
+- Run:
+  ```bash
+  npm install
+  cp .env.example .env
+  ```
+- Fill `.env` with Dev values (see `docs/public/env-reference.md`).
+- Run `npm run setup:first-run` or `npm run saaskit:bootstrap` to ensure env files and scaffold hooks are ready.
+
+## Usage
+
+- `npm run predev` runs `scripts/dev/bootstrap-env.js`, then `db:init` and `db:migrate:dev`; use it before starting the app.
+- `npm run dev` reads the prepared `.env`, applies migrations (via `predev` steps), and launches Next.js in development mode.
+- After schema edits, run `npm run db:migrate:dev` so Prisma and Supabase stay aligned before pushing.
+- Use `npm run db:migrate:reset` only against the Dev database to start clean; production should never be reset this way.
+- `npm run db:migrate:prod` is available as a manual fallback when Vercel migrations need to be rerun.
+
+### Development checks
+
+- `npm run lint` catches client/server issues in the repo.
+- `npm run build` triggers `npm run db:migrate:vercel-build` via `prebuild`, so it serves as a smoke test before pushing.
+- `npm run verify:deploy` shows current migration status for quick health verification.
+
+## Examples
+
+- Example 1: Schema change workflow—edit `prisma/system.prisma`, run `npm run db:migrate:dev`, then use `npm run dev` to preview the protected routes.
+- Example 2: When onboarding a new teammate, have them copy `.env.example`, install deps, run `npm run predev`, and confirm `npm run lint` passes before they commit.
 
 ## Related docs
-- Runtime variables: `docs/public/env-reference.md`  
-- Database pattern: `docs/public/database.md`  
-- Deployment path: `docs/public/deployment.md`  
-- Optional tooling (Clerk/Stripe/Resend/etc): `docs/public/integrations.md`  
-- Scripts reference (command details + aliases): `docs/private/scripts.md`
+
+- Runtime variables: `docs/public/env-reference.md`
+- Database setup: `docs/public/database.md`
+- Deployment path: `docs/public/deployment.md`
+- Optional integrations: `docs/public/integrations.md`
+- Scripts reference: `docs/private/scripts.md`

@@ -1,126 +1,126 @@
 # Environment Variables
 
-This guide matches `.env.example` exactly.
+## Overview
 
-## What these files are for
+This guide matches `.env.example`. Use it to decide what you must set now, what can wait, and what only matters if you enable an optional service. Local development uses `.env`; production uses Vercel environment variables.
 
-- `.env.example`: safe template with placeholders
-- `.env`: local development values (use Supabase Dev values here)
-- Vercel Environment Variables: production values (use Supabase Prod values here)
+## Setup
 
-Never commit real secrets to git.
+1. Copy the template: `cp .env.example .env`.
+2. Set `DATABASE_URL` to your Supabase Dev project.
+3. Run `npm run db:init && npm run db:migrate:dev`.
+4. Keep Dev values in `.env` and Prod values in Vercel.
 
-## Setup order
+## Required
 
-1. Copy template: `cp .env.example .env`
-2. Set `DATABASE_URL` to your Supabase Dev project
-3. Run: `npm run db:init && npm run db:migrate:dev && npm run dev`
-4. Set Supabase Prod values only in Vercel for production
+### `DATABASE_URL`
 
-## Required to run
+- What it controls: the main database connection for the app and Prisma.
+- When you need it: always.
+- Where to get it: Supabase Project Settings -> Database -> Connection string.
 
-- `DATABASE_URL`  
-  What it does: connects the app and Prisma to your Supabase Postgres database.  
-  Where to get it: Supabase -> Project Settings -> Database -> Connection string.
+**Warning:** use your Dev Supabase connection locally and your Prod connection in Vercel. Do not mix them.
 
 ## Recommended before launch
 
-- `NEXT_PUBLIC_APP_URL`  
-  What it does: used for links, SEO, and callback URLs.
-- `NEXT_PUBLIC_APP_NAME`  
-  What it does: your product name in UI and metadata.
-- `NEXT_PUBLIC_COMPANY_NAME`  
-  What it does: used in legal/footer/email defaults.
-- `NEXT_PUBLIC_SUPPORT_EMAIL`  
-  What it does: support contact shown in UI/legal pages.
+These are not hard requirements, but they make the app feel complete before you go live.
 
-## Core runtime (optional)
+- `NEXT_PUBLIC_APP_URL`: your site URL for links and redirects.
+- `NEXT_PUBLIC_APP_NAME`: the product name shown in the UI.
+- `NEXT_PUBLIC_COMPANY_NAME`: the company name shown in legal/footer text.
+- `NEXT_PUBLIC_SUPPORT_EMAIL`: the email customers use for help.
 
-- `SAASKIT_VERSION`  
-  What it does: version shown in parts of the UI.
-- `PROCHAT_VERSION`  
-  What it does: legacy compatibility fallback for older setups.
-- `NODE_ENV`  
-  What it does: runtime mode (`development` or `production`).
-- `PORT`  
-  What it does: app port for `next start`.
-- `APP_ENV`  
-  What it does: environment label for your workflow (`development` / `production`).
-- `SAASKIT_DISABLE_VERCEL_BUILD_MIGRATIONS`  
-  What it does: if `true`, skips automatic Prisma migration during Vercel production build.
+## Optional runtime settings
 
-## Supabase API values (optional)
+- `SAASKIT_VERSION` and `PROCHAT_VERSION`: version labels shown in parts of the UI.
+- `APP_ENV` and `NODE_ENV`: environment labels such as development or production.
+- `PORT`: the port used by `next start`.
+- `SAASKIT_DISABLE_VERCEL_BUILD_MIGRATIONS`: set this to `true` only if you need to skip automatic migrations during a Vercel production build.
 
-These are optional in the current codebase. Use them only when you add custom Supabase API usage.
+## Only needed if you add custom Supabase API usage
 
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
+These are only needed if your own code talks to Supabase directly, beyond the default database connection.
 
-Where to get them: Supabase -> Project Settings -> API.
+- `NEXT_PUBLIC_SUPABASE_URL`: the Supabase project URL.
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: the public client key.
+- `SUPABASE_SERVICE_ROLE_KEY`: the private server key.
 
-## Clerk (optional auth)
+## Optional integrations
 
-- `CLERK_DISABLED`
-- `NEXT_PUBLIC_CLERK_DISABLED`
+### Clerk
 
-What these do: keep both `true` to run without Clerk; set both `false` to enable Clerk.
+Use Clerk if you want sign-in and sign-up.
 
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
-- `CLERK_SECRET_KEY`
+- `CLERK_DISABLED` and `NEXT_PUBLIC_CLERK_DISABLED`: keep both `true` to stay in mock-safe mode; set both to `false` when enabling Clerk.
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`: the public Clerk key used in the browser.
+- `CLERK_SECRET_KEY`: the private Clerk key used on the server.
+- `NEXT_PUBLIC_CLERK_SIGN_IN_URL` and `NEXT_PUBLIC_CLERK_SIGN_UP_URL`: the sign-in and sign-up routes.
 
-What these do: Clerk API keys.  
-Where to get them: Clerk Dashboard -> API Keys.
+### Stripe
 
-- `NEXT_PUBLIC_CLERK_SIGN_IN_URL`
-- `NEXT_PUBLIC_CLERK_SIGN_UP_URL`
+Use Stripe if you want paid plans.
 
-What these do: auth route paths in your app.
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`: the public browser key.
+- `STRIPE_SECRET_KEY`: the private server key.
+- `STRIPE_WEBHOOK_SECRET`: the secret Stripe uses to prove webhook calls are real.
+- `NEXT_PUBLIC_STRIPE_PRODUCTS_JSON`: the list of plans shown in your pricing UI.
 
-## Stripe (optional billing)
+**Example**
 
-- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
-- `STRIPE_SECRET_KEY`
-- `STRIPE_WEBHOOK_SECRET`
+```json
+[
+  {
+    "title": "Starter",
+    "price": 19,
+    "priceId": "price_123",
+    "type": "subscription",
+    "period": "month",
+    "features": [
+      { "title": "1 workspace" },
+      { "title": "Email support" }
+    ]
+  },
+  {
+    "title": "Lifetime",
+    "price": 199,
+    "priceId": "price_456",
+    "type": "one-time",
+    "features": [
+      { "title": "Lifetime access" },
+      { "title": "Priority onboarding" }
+    ]
+  }
+]
+```
 
-What these do: Stripe checkout, portal, and webhook verification.  
-Where to get them: Stripe Dashboard -> Developers -> API keys and Webhooks.
+This should be a JSON array of plan objects. Each plan needs a title, price, and Stripe price ID. Subscription plans also need a billing period such as `month` or `year`.
 
-- `NEXT_PUBLIC_STRIPE_PRODUCTS_JSON`
+### Resend
 
-What it does: maps your Stripe prices into pricing cards/checkout options.  
-Before you set it: create Products and Prices in Stripe first.
+Use Resend if you want waitlists or transactional email.
 
-## Resend (optional email/waitlist)
+- `RESEND_API_KEY`: enables email sending.
+- `NEXT_PUBLIC_EMAIL_FROM`: the sender name and email address.
+- `NEXT_PUBLIC_FORWARD_REPLIES_TO`: where replies should go.
+- `NEXT_PUBLIC_THANK_YOU_SUBJECT`: the default thank-you email subject.
 
-- `RESEND_API_KEY`
+### WordPress
 
-What it does: enables waitlist and transactional email sending.  
-Where to get it: Resend Dashboard -> API Keys.
+Use WordPress if you want the blog to pull posts from an existing site.
 
-- `NEXT_PUBLIC_EMAIL_FROM`
-- `NEXT_PUBLIC_FORWARD_REPLIES_TO`
-- `NEXT_PUBLIC_THANK_YOU_SUBJECT`
+- `WP_REST_ENDPOINT`: the WordPress REST API URL, for example `https://yourblog.com/wp-json/wp/v2`.
 
-What these do: sender name, reply address, and default waitlist message subject.
+### n8n
 
-## WordPress (optional blog)
+Use n8n if you want workflow automation routes.
 
-- `WP_REST_ENDPOINT`
+- `N8N_API_KEY`: the private API key for n8n.
+- `N8N_API_URL`: the n8n API URL.
+- `N8N_WEBHOOK_URL`: the webhook URL used by workflow routes.
 
-What it does: enables blog pages from WordPress REST API.  
-Example: `https://yourblog.com/wp-json/wp/v2`
+## Visual and SEO settings
 
-## n8n (optional workflow automation)
-
-- `N8N_API_KEY`
-- `N8N_API_URL`
-- `N8N_WEBHOOK_URL`
-
-What these do: connect n8n API routes and webhook-based actions.  
-Where to get key: n8n -> Settings -> API Keys.
-
-## Visual/SEO settings (optional)
+These change branding and metadata.
 
 - `NEXT_PUBLIC_APP_DESCRIPTION`
 - `NEXT_PUBLIC_APP_DOMAIN`
@@ -128,12 +128,15 @@ Where to get key: n8n -> Settings -> API Keys.
 - `NEXT_PUBLIC_THEME`
 - `NEXT_PUBLIC_BRAND_COLOR`
 
-What these do: metadata, social tags, and theme/color defaults.
+## Platform-managed
 
-## Platform-managed variables (do not set in `.env`)
+Do not set these locally.
 
 - `VERCEL`
 - `VERCEL_ENV`
 - `CI`
 
-These are set automatically by hosting/CI providers.
+## Examples
+
+- Example 1: To enable Clerk, set both Clerk disable flags to `false`, add the Clerk keys, then visit `/sign-in` and `/sign-up`.
+- Example 2: To enable Stripe, add the public and secret keys, set `NEXT_PUBLIC_STRIPE_PRODUCTS_JSON`, and test checkout plus webhook handling.

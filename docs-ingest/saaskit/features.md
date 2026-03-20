@@ -1,70 +1,58 @@
 # Features
 
-Use this file as a reference list of what ships in SaaSKit. Follow `docs/public/README.md` for the documentation navigation path before diving into these details.
+## Overview
 
-## Core product foundation
+This page helps you decide what matters before launch, what can wait, and what depends on outside services. It is not a full product catalog.
 
-- Next.js App Router + TypeScript app structure
-- Public marketing routes + app routes in one repository
-- Health endpoint (`/api/health`)
-- Global providers, theming, and shared UI utilities
+## Required before launch
 
-## Database and runtime
+- Next.js app structure for both the public site and the signed-in app.
+- Database setup with Prisma and one `DATABASE_URL`.
+- Separate Supabase Dev and Prod projects.
+- Basic branding and legal pages.
 
-- Prisma schema and migration folders
-- Single database contract via `DATABASE_URL`
-- Supabase Cloud Dev/Prod separation model in documentation
-- Scripts for init/dev/prod/reset/verify migration flows
-- Production start flow that runs migration deploy before app startup
+These are the parts you usually need to touch first if you want the product to feel like your own.
 
-## Authentication and billing
+## Optional later
 
-- Clerk sign-in/sign-up routes
-- Safe Clerk wrappers and middleware protection flow
-- Stripe checkout API
-- Stripe billing portal API
-- Stripe webhook handling for subscription lifecycle
-- Subscription status API
+- Clerk for sign-in and sign-up.
+- Stripe for paid plans.
+- Resend for email and waitlists.
+- WordPress for a blog.
+- n8n for workflow automation.
 
-## Marketing and conversion
+You can launch without these if you are still validating the business.
 
-- Placeholder-first marketing homepage
-- Legal pages (`/tos`, `/privacy-policy`)
-- Pricing section driven by config/env
-- Optional processing checkout funnel route
-- Success/cancel routes
+## Depends on external service
 
-## Content and growth modules
+- Stripe checkout, billing portal, and webhooks only work when Stripe keys and products are configured.
+- Clerk routes only enforce login when Clerk is enabled and keys are present.
+- Resend powers the waitlist and transactional email flow.
+- WordPress powers the blog pages.
+- n8n powers the workflow automation routes.
 
-- Optional waitlist flow with Resend
-- Optional WordPress blog routes and graceful fallback when unconfigured
-- Sitemap generation (`/sitemap.xml`)
-- SEO helper + JSON-LD utilities
+If the service is not configured, the related feature should show setup guidance instead of breaking the app.
 
-## Workflow automation modules
+## Safe to ignore for now
 
-- Optional n8n workflow clone endpoint
-- Project activation/list/link APIs
-- Scenario/project workspace route pieces
-- Chat-by-project route
+- The marketing app structure details.
+- The migration script names.
+- The internal route layout under `src/app`.
+- The optional automation endpoints.
 
-## Design system
+These matter later if you are customizing the product, but they are not launch blockers.
 
-- Tokenized color/typography setup
-- Marketing layout and section component library
-- App UI primitives and helpers
+## What ships in the base product
 
-## What is intentionally not included by default
+- Public marketing pages and protected app pages in one repo.
+- A health endpoint at `/api/health`.
+- Pricing and checkout hooks.
+- Waitlist, blog, and workflow routes that stay optional until enabled.
+- Shared UI and theming utilities.
 
-- tenant-schema lifecycle automation
-- turnkey analytics warehouse pipelines
-- built-in proprietary CMS backend
+## What to read next
 
-## Where to find setup instructions
-
-- Main setup flow: `docs/public/README.md`
-- Environment variables: `docs/public/env-reference.md`
-- Database setup: `docs/public/database.md`
-- Integrations / optional features: `docs/public/integrations.md`
-- Deployment: `docs/public/deployment.md`
-- Commands: `docs/private/scripts.md`
+- [docs/public/env-reference.md](./env-reference.md)
+- [docs/public/database.md](./database.md)
+- [docs/public/deployment.md](./deployment.md)
+- [docs/public/integrations.md](./integrations.md)

@@ -1,46 +1,38 @@
 # Architecture
 
-Think of SaaSKit as two parts in one repository.
+## Overview
 
-## 1) Public website layer
+This page is for founders or operators who want a quick picture of how the public site and app fit together. Read it after the main onboarding docs if you want to understand what lives where. Skip it for launch day if you only need setup steps.
 
-This is what visitors see before signing in.
+## Why this page exists
 
-Main paths:
-- `src/app/(marketing)/**`
-- `src/marketing/**`
+- It shows the split between the public site and the signed-in app.
+- It explains where the main routes and database code live.
+- It helps you avoid mixing Dev and Prod when you deploy.
 
-Includes:
-- homepage
-- legal pages
-- optional blog/waitlist pages
+## Read this when
 
-## 2) Product app layer
+- You want to understand how the marketing site and app are separated.
+- You are checking where a route, script, or database change belongs.
+- You are reviewing deployment behavior before launch.
 
-This is what signed-in users use.
+## Skip this when
 
-Main paths:
-- `src/app/(app)/**`
-- `src/app/api/**`
-- `src/libs/**`
-- `prisma/**`
-- `scripts/**`
+- You only need the setup steps.
+- You are still wiring `DATABASE_URL`, Supabase, or Vercel.
+- You do not need to change app structure.
 
-Includes:
-- auth and route protection
-- billing routes
-- database access and migrations
-- runtime startup scripts
+## Runtime basics & usage
 
-## Runtime basics
+- Public routes live under `src/app/(marketing)` and `src/marketing`.
+- App routes and APIs live under `src/app/(app)`, `src/app/api`, `src/libs`, `prisma`, and `scripts`.
+- `DATABASE_URL` is the required runtime connection. The other labels are for environment context and version display.
+- Local development points at Supabase Dev. Production points at Supabase Prod and runs migrations before start.
 
-- The runtime contract relies on `DATABASE_URL` (Prisma + server), optional labels (`APP_ENV`, `NODE_ENV`), and optional version flags (`SAASKIT_VERSION`, `PROCHAT_VERSION`).  
-- Local development points `DATABASE_URL` at Supabase Dev, while production builds run against Supabase Prod and automatically execute `npm run db:migrate:vercel-build` before `npm start`.  
-- Marketing and app layers share the same Node 18 runtime, so the only difference between `npm run dev` and `npm start` is the route protection that kicks in for `src/app/(app)` routes.
+## Examples
 
-## Recommended deployment path
-
-- Supabase Cloud (Dev + Prod) + Vercel (preview + production) as the primary deployment model. This path keeps your database migrations, Supabase credentials, and Vercel builds on the same contract described in `docs/public/deployment.md`.
+- Visitor flow: someone lands on the marketing site, signs in, and then reaches the protected app area.
+- Deployment flow: you configure Dev and Prod separately, deploy to Vercel, and let the migration step run before the app starts.
 
 ## Related docs
 

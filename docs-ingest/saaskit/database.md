@@ -1,101 +1,46 @@
 # Database
 
-SaaSKit uses Supabase Cloud for both development and production.
+## Overview
 
-## Core model in this repo
+SaaSKit relies on Supabase Cloud for both development and production, and the runtime connects through one variable: `DATABASE_URL`. The repo ships as a single schema (no tenant-schema automation), so keeping Dev and Prod separated is critical for avoiding accidental data overlap.
 
-- The app connects through one variable: `DATABASE_URL`
-- Prisma migrations run against the database in that `DATABASE_URL`
-- There is no tenant-schema setup in this boilerplate
+## Setup
 
-## Required setup: two Supabase projects
+1. Create two projects at https://supabase.com: `SaaSKit - Dev` (for testing) and `SaaSKit - Prod` (for live users).
+2. In each project, copy values from:
+   - `Settings -> Database` (for `DATABASE_URL`)
+   - `Settings -> API` (optional `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`)
+3. Only assign Dev values to your local `.env` file and Prod values to Vercel environment variables.
 
-Create two separate projects at `https://supabase.com`:
-1. `SaaSKit - Dev`
-2. `SaaSKit - Prod`
+## Usage
 
-Use them for different purposes:
-- Dev project: testing and safe experimentation
-- Prod project: real users and real data
+### Local development
 
-Do not use one database for both.
+- In `.env`, set `DATABASE_URL` to the Dev connection string and `APP_ENV=development`.
+- Optional Supabase API keys go in `.env` only if you add custom Supabase API calls.
+- Run `npm run db:init && npm run db:migrate:dev` before `npm run dev` to ensure Prisma schema matches the Dev database.
 
-## Values to copy from each Supabase project
+### Production deployment
 
-In each project go to:
-- `Settings -> Database` (for `DATABASE_URL`)
-- `Settings -> API` (for project URL and keys, only if needed)
+- In Vercel Project Settings, set `DATABASE_URL` to the Prod connection string and `APP_ENV=production`.
+- Deploying triggers `npm run db:migrate:vercel-build`, which applies migrations before the Next.js runtime launches.
+- Optional keys belong in Vercel only when the corresponding feature (e.g., Supabase API) is actually used.
 
-You may copy:
-- `DATABASE_URL` (required)
-- `NEXT_PUBLIC_SUPABASE_URL` (optional)
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` (optional)
-- `SUPABASE_SERVICE_ROLE_KEY` (optional)
+### Vercel migration controls
 
-Important:
-- SaaSKit core runtime requires only `DATABASE_URL`
-- Supabase API keys are only needed if you add Supabase API usage in custom code
-
-## Local development setup
-
-In local `.env`, use your Dev Supabase values:
-
-```bash
-DATABASE_URL=your_dev_database_url
-APP_ENV=development
-
-# optional for custom Supabase API usage
-NEXT_PUBLIC_SUPABASE_URL=your_dev_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_dev_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_dev_service_role_key
-```
-
-Now when you run `npm run dev`, local work uses your Dev database.
-
-## Production setup (Vercel)
-
-In Vercel Project Settings -> Environment Variables, use your Prod Supabase values:
-
-```bash
-DATABASE_URL=your_prod_database_url
-APP_ENV=production
-
-# optional for custom Supabase API usage
-NEXT_PUBLIC_SUPABASE_URL=your_prod_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_prod_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_prod_service_role_key
-```
-
-Now production deployment uses your Prod database.
+- Automatic Vercel builds run `db:migrate:vercel-build` before `npm start`.
+- If you need to skip that step, use `SAASKIT_DISABLE_VERCEL_BUILD_MIGRATIONS=true`.
+- For manual control, run `npm run db:migrate:prod` from a shell that points `DATABASE_URL` at the production database.
 
 ## Safety rules
 
 1. Never reuse production keys locally.
-2. Never deploy with Dev database values in Vercel production env.
-3. Treat Prisma migrations as source of truth:
-   - change schema locally
-   - run migrations on Dev
-   - test
-   - then deploy and migrate Prod
-4. Do not manually edit production tables in Supabase unless absolutely necessary.
+2. Never drop production migrations into Dev or vice versa.
+3. Treat Prisma migrations as the source of truth: edit `prisma/system.prisma`, `npm run db:migrate:dev`, test, then deploy.
+4. Only reset or recreate Supabase Dev; leave Prod untouched unless absolutely necessary.
 
-## If Dev gets messy
+## Examples
 
-Reset only the Dev Supabase project from Supabase dashboard, or recreate the Dev project.
-
-Production stays untouched when your environments are separated correctly.
-
-## Vercel build migration behavior
-
-On Vercel production builds:
-- `db:migrate:vercel-build` runs migration deploy automatically
-
-Emergency bypass:
-- `SAASKIT_DISABLE_VERCEL_BUILD_MIGRATIONS=true`
-
-## Mental model
-
-- Dev = playground
-- Prod = real world
-
-Never mix them.
+- Example 1: Local prep for a schema change—set Dev `DATABASE_URL`, run `npm run db:init`, edit `prisma/system.prisma`, then `npm run db:migrate:dev`.
+- Example 2: If `npm run dev` fails with a migration error, rerun `npm run db:migrate:dev` locally and verify the connection string matches your Dev project.
+- Example 3: When Dev gets messy, run `npm run db:migrate:reset` (Dev project only) to start clean without touching Prod.
