@@ -58,6 +58,22 @@ const ORDERED_SECTIONS = [
   },
 ]
 
+const SECTION_FALLBACK_LINKS: Record<string, Array<{ label: string; path: string }>> = {
+  'launch-flow': [
+    { label: 'Deployment guide', path: './deployment.mdx' },
+    { label: 'Development workspace reference', path: './development.mdx' },
+    { label: 'Architecture story', path: './architecture.mdx' },
+  ],
+  'quick-start': [
+    { label: 'Development flow', path: './development.mdx' },
+    { label: 'Getting started overview', path: './overview.mdx' },
+  ],
+  installation: [
+    { label: 'Deployment checklist', path: './deployment.mdx' },
+    { label: 'Development environment setup', path: './development.mdx' },
+  ],
+}
+
 const INTEGRATIONS_DIR = 'integrations'
 const ADVANCED_DIR = 'advanced'
 const INTEGRATION_KEYWORDS = ['integration', 'stripe', 'auth', 'mailerlite', 'github']
@@ -218,13 +234,16 @@ async function writeSummaryPage(
   if (await isNonOverlayDoc(targetPath)) {
     return
   }
+  const fallbackLinks = SECTION_FALLBACK_LINKS[section.slug] ?? []
   const entries =
-    matches.length === 0
-      ? ['No matching technical docs were detected yet.']
-      : matches.map(
+    matches.length > 0
+      ? matches.map(
           doc =>
             `- [${doc.label}](./${doc.relativePath.replace(/\\/g, '/')})`,
         )
+      : fallbackLinks.length > 0
+        ? fallbackLinks.map(link => `- [${link.label}](${link.path})`)
+        : ['- No matching technical docs were detected yet.']
 
   const content = `${buildOverlayFrontmatter(
     {
