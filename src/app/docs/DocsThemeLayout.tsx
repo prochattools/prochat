@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
-import { headers } from 'next/headers'
 import { Layout, Navbar } from 'nextra-theme-docs'
+import { headers } from 'next/headers'
 
 import { getPublicDocsPageMap } from '@/lib/docs/public-docs'
 
@@ -14,7 +14,12 @@ export default async function DocsThemeLayout({
   children: ReactNode
 }) {
   const pageMap = await getPublicDocsPageMap()
-  const pathname = headers().get('x-nextjs-pathname') ?? ''
+  let pathname = ''
+  try {
+    pathname = headers().get('x-nextjs-pathname') ?? ''
+  } catch {
+    pathname = ''
+  }
   const segments = pathname.split('/').filter(Boolean)
   const productSegment = segments[1]
   const PRODUCT_LINKS: Record<'prokit' | 'saaskit', { repo: string; discussions: string }> = {
@@ -27,7 +32,13 @@ export default async function DocsThemeLayout({
       discussions: 'https://github.com/stevewesthoek/saaskit/discussions',
     },
   }
-  const productLinks = PRODUCT_LINKS[productSegment as 'prokit' | 'saaskit']
+  const productKey =
+    productSegment === 'prokit'
+      ? 'prokit'
+      : productSegment === 'saaskit'
+        ? 'saaskit'
+        : undefined
+  const productLinks = productKey ? PRODUCT_LINKS[productKey] : undefined
   const docsRepositoryBase = productLinks?.repo ?? 'https://github.com/prochattools/prochat/tree/main/src/content/docs'
   const feedbackLink = productLinks?.discussions ?? 'https://github.com/stevewesthoek/prochat/discussions'
 
