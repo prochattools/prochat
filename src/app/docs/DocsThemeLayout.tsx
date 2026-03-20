@@ -8,6 +8,37 @@ import { getPublicDocsPageMap } from '@/lib/docs/public-docs'
 import 'nextra-theme-docs/style-prefixed.css'
 import '../../../styles/docs.css'
 
+type DocsUtilityLinks = {
+  docsRepositoryBase: string
+  feedbackLink: string
+}
+
+const DEFAULT_DOCS_UTILITY_LINKS: DocsUtilityLinks = {
+  docsRepositoryBase: 'https://github.com/prochattools/prochat/tree/main/src/content/docs',
+  feedbackLink: 'https://github.com/stevewesthoek/prochat/discussions',
+}
+
+function resolveDocsUtilityLinks(pathname: string): DocsUtilityLinks {
+  const segments = pathname.split('/').filter(Boolean)
+  const productSegment = segments[1]
+
+  if (productSegment === 'prokit') {
+    return {
+      docsRepositoryBase: 'https://github.com/stevewesthoek/prokit/blob/main/src/content/docs',
+      feedbackLink: 'https://github.com/stevewesthoek/prokit/discussions',
+    }
+  }
+
+  if (productSegment === 'saaskit') {
+    return {
+      docsRepositoryBase: 'https://github.com/stevewesthoek/saaskit/blob/main/src/content/docs',
+      feedbackLink: 'https://github.com/stevewesthoek/saaskit/discussions',
+    }
+  }
+
+  return DEFAULT_DOCS_UTILITY_LINKS
+}
+
 export default async function DocsThemeLayout({
   children,
 }: {
@@ -20,27 +51,7 @@ export default async function DocsThemeLayout({
   } catch {
     pathname = ''
   }
-  const segments = pathname.split('/').filter(Boolean)
-  const productSegment = segments[1]
-  const PRODUCT_LINKS: Record<'prokit' | 'saaskit', { repo: string; discussions: string }> = {
-    prokit: {
-      repo: 'https://github.com/stevewesthoek/prokit/blob/main/src/content/docs',
-      discussions: 'https://github.com/stevewesthoek/prokit/discussions',
-    },
-    saaskit: {
-      repo: 'https://github.com/stevewesthoek/saaskit/blob/main/src/content/docs',
-      discussions: 'https://github.com/stevewesthoek/saaskit/discussions',
-    },
-  }
-  const productKey =
-    productSegment === 'prokit'
-      ? 'prokit'
-      : productSegment === 'saaskit'
-        ? 'saaskit'
-        : undefined
-  const productLinks = productKey ? PRODUCT_LINKS[productKey] : undefined
-  const docsRepositoryBase = productLinks?.repo ?? 'https://github.com/prochattools/prochat/tree/main/src/content/docs'
-  const feedbackLink = productLinks?.discussions ?? 'https://github.com/stevewesthoek/prochat/discussions'
+  const { docsRepositoryBase, feedbackLink } = resolveDocsUtilityLinks(pathname)
 
   return (
     <div className="docs-shell flex min-h-screen flex-col">
