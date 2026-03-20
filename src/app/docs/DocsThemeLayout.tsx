@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 
 import { Layout, Navbar } from 'nextra-theme-docs'
-import { headers } from 'next/headers'
 
 import { getPublicDocsPageMap } from '@/lib/docs/public-docs'
 
@@ -14,24 +13,23 @@ type DocsUtilityLinks = {
 }
 
 const DEFAULT_DOCS_UTILITY_LINKS: DocsUtilityLinks = {
-  docsRepositoryBase: 'https://github.com/prochattools/prochat/tree/main/src/content/docs',
+  docsRepositoryBase: 'https://github.com/prochattools/prochat/blob/main',
   feedbackLink: 'https://github.com/stevewesthoek/prochat/discussions',
 }
 
-function resolveDocsUtilityLinks(pathname: string): DocsUtilityLinks {
-  const segments = pathname.split('/').filter(Boolean)
-  const productSegment = segments[1]
+function resolveDocsUtilityLinks(docsCategory?: string): DocsUtilityLinks {
+  const productSegment = docsCategory?.toLowerCase() ?? ''
 
   if (productSegment === 'prokit') {
     return {
-      docsRepositoryBase: 'https://github.com/stevewesthoek/prokit/blob/main/src/content/docs',
+      docsRepositoryBase: 'https://github.com/stevewesthoek/prokit/blob/main',
       feedbackLink: 'https://github.com/stevewesthoek/prokit/discussions',
     }
   }
 
   if (productSegment === 'saaskit') {
     return {
-      docsRepositoryBase: 'https://github.com/stevewesthoek/saaskit/blob/main/src/content/docs',
+      docsRepositoryBase: 'https://github.com/stevewesthoek/saaskit/blob/main',
       feedbackLink: 'https://github.com/stevewesthoek/saaskit/discussions',
     }
   }
@@ -41,17 +39,13 @@ function resolveDocsUtilityLinks(pathname: string): DocsUtilityLinks {
 
 export default async function DocsThemeLayout({
   children,
+  docsCategory,
 }: {
   children: ReactNode
+  docsCategory?: string
 }) {
   const pageMap = await getPublicDocsPageMap()
-  let pathname = ''
-  try {
-    pathname = headers().get('x-nextjs-pathname') ?? ''
-  } catch {
-    pathname = ''
-  }
-  const { docsRepositoryBase, feedbackLink } = resolveDocsUtilityLinks(pathname)
+  const { docsRepositoryBase, feedbackLink } = resolveDocsUtilityLinks(docsCategory)
 
   return (
     <div className="docs-shell flex min-h-screen flex-col">

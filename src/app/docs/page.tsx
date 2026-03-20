@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
+import DocsThemeLayout from './DocsThemeLayout'
 import { getPublicDocEntry } from '@/lib/docs/public-docs'
 import { renderDocsMdxContent } from '@/lib/docs/nextra'
 import { getSiteUrl } from '@/libs/site-url'
@@ -38,5 +39,8 @@ export default async function DocsIndexPage() {
   if (!entry) notFound()
 
   const content = await renderDocsMdxContent(entry)
-  return content
+  return DocsThemeLayout({
+    docsCategory: 'docs',
+    children: content,
+  })
 }
