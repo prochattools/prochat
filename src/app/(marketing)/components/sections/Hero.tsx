@@ -17,7 +17,7 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({
-  headline = 'The Operating System for SaaS Builders.',
+  headline = 'Build SaaS with Structure, not Guesswork.',
   subhead = 'ProChat is a system for turning paid client pain into SaaS—start with service, find the friction, then ship the software.',
   primaryCta = 'See the system',
   primaryCtaLink = '#system',

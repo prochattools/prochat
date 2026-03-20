@@ -10,7 +10,7 @@ import QuickFaqAccordion from './QuickFaqAccordion'
 
 export const metadata = getSEOTags({
   title: 'The SaaS Starting Point | ProChat',
-  description: 'The Operating System for SaaS Builders. A preparation framework to reduce risk before you build.',
+  description: 'Build SaaS with Structure, not Guesswork. A preparation framework to reduce risk before you build.',
   canonicalUrlRelative: '/starting-point',
   robots: { index: true, follow: true },
 })

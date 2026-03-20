@@ -4,7 +4,7 @@ import path from 'path'
 import { brand } from '@/lib/brand'
 import { applyWordmarkGradient, svgToDataUri } from '@/lib/og-utils'
 
-const DEFAULT_SOCIAL_TITLE = 'The Operating System for SaaS Builders'
+const DEFAULT_SOCIAL_TITLE = 'Build SaaS with Structure, not Guesswork.'
 const SOCIAL_TITLE_MAX_LENGTH = 90
 const SOCIAL_HEADLINE_LINE_MAX_LENGTH = 56
 const SOCIAL_SUBTITLE_MAX_LENGTH = 48

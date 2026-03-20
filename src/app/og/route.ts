@@ -153,7 +153,7 @@ export async function GET() {
                 color: brand.colors.white,
               },
             },
-            'The Operating System',
+            'Build SaaS',
           ),
           h(
             'p',
@@ -169,7 +169,7 @@ export async function GET() {
                 color: brand.colors.subtleText,
               },
             },
-            'for SaaS Builders',
+            'with Structure, not Guesswork.',
           ),
         ),
         h(

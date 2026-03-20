@@ -1,6 +1,6 @@
 # ProChat
 
-ProChat is the operating system for SaaS builders.
+ProChat helps founders build SaaS with structure, not guesswork.
 
 This repository runs the root-domain marketing, learning, documentation, and conversion experience for ProChat. It uses a deterministic build-time content pipeline so the retained learning surfaces, generated docs, Open Graph assets, and sitemap output are produced under one production-safe architecture.
 
@@ -132,7 +132,7 @@ The SEO system is centralized and route-safe:
 
 The positioning is consistent across metadata and content:
 
-> ProChat — The Operating System for SaaS Builders
+> ProChat — Build SaaS with Structure, not Guesswork.
 
 ## Learning Architecture
 

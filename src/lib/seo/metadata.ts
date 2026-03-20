@@ -4,9 +4,9 @@ import config from '@/config'
 import { getSiteUrl } from '@/libs/site-url'
 import { sanitizeSocialHeadlineLine, sanitizeSocialSubtitle } from '@/lib/social-image'
 
-export const SITE_TITLE_SUFFIX = 'ProChat — The Operating System for SaaS Builders'
+export const SITE_TITLE_SUFFIX = 'ProChat — Build SaaS with Structure, not Guesswork.'
 export const DEFAULT_DESCRIPTION =
-  'ProChat is the operating system for SaaS builders. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.'
+  'ProChat helps founders build SaaS with structure, not guesswork. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.'
 
 const brandPattern = /\s*[|—-]\s*ProChat$/i
 

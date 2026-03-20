@@ -15,9 +15,9 @@ import '@fontsource/jetbrains-mono'
 
 import '@/assets/styles/globals.scss'
 
-const ROOT_TITLE = 'ProChat — The Operating System for SaaS Builders'
+const ROOT_TITLE = 'ProChat — Build SaaS with Structure, not Guesswork.'
 const ROOT_DESCRIPTION =
-  'ProChat is the operating system for SaaS builders. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.'
+  'ProChat helps founders build SaaS with structure, not guesswork. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.'
 
 const fontSans = localFont({
   src: '../assets/fonts/HostGrotesk-latin.woff2',
