@@ -317,6 +317,7 @@ async function run() {
         continue
       }
 
+      const relativeProductPath = path.relative(path.join(OUTPUT_ROOT, product.id), filePath)
       const templateId = product.template || DEFAULT_TEMPLATE.id
       const template = templates[templateId] ?? DEFAULT_TEMPLATE
       const overlayDoc = isOverlayDoc(meta)
@@ -341,15 +342,20 @@ async function run() {
 
       if (applyTechnicalValidation) {
         const sections = parseSections(content)
-        const { errors: markerErrors, warnings: markerWarnings } = validateMarkers(content, template.sections.map(section => section.name), {
-          strict: STRICT_MODE,
-        })
-        markerWarnings.forEach(message => handler.warn(`${filePath} ${message}`))
-        markerErrors.forEach(message => handler.strict(`${filePath} ${message}`))
+        if (sections.length > 0) {
+          const { errors: markerErrors, warnings: markerWarnings } = validateMarkers(content, template.sections.map(section => section.name), {
+            strict: STRICT_MODE,
+          })
+          markerWarnings.forEach(message => handler.warn(`${filePath} ${message}`))
+          markerErrors.forEach(message => handler.strict(`${filePath} ${message}`))
 
-        const missingSections = ensureTemplateSections(template, sections)
-        const severity = STRICT_MODE ? handler.strict : handler.warn
-        missingSections.forEach(section => severity(`${filePath} missing template section ${section}`))
+          const missingSections = ensureTemplateSections(template, sections, content)
+          const severity = STRICT_MODE ? handler.strict : handler.warn
+          const isApiDoc = relativeProductPath.split(path.sep)[0] === 'api'
+          missingSections
+            .filter(section => section !== 'api' || isApiDoc)
+            .forEach(section => severity(`${filePath} missing template section ${section}`))
+        }
       }
 
       const requiredFields = applyTechnicalValidation
@@ -383,7 +389,6 @@ async function run() {
         handler.warn(`${filePath} slug ${meta.slug} must match filename ${baseSlug}`)
       }
 
-      const relativeProductPath = path.relative(path.join(OUTPUT_ROOT, product.id), filePath)
       const reservedDir = detectReservedDirectory(relativeProductPath)
       if (reservedDir) {
         const severity = STRICT_MODE ? handler.strict : handler.warn

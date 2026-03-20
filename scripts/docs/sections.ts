@@ -1,4 +1,4 @@
-import type { TemplateDefinition, TemplateSection } from './templates/types'
+import type { SectionName, TemplateDefinition, TemplateSection } from './templates/types'
 
 const SECTION_REGEX = /<!--\s*AI:([a-z]+):start\s*-->([\s\S]*?)<!--\s*AI:\1:end\s*-->/gi
 const LOOSE_MARKER_REGEX = /<!--\s*AI:([a-z]+)(?::([a-z]+))?\s*-->/gi
@@ -94,8 +94,55 @@ export function validateMarkers(content: string, allowedSections: string[] = [],
 export function ensureTemplateSections(
   template: TemplateDefinition,
   entries: SectionEntry[],
+  content?: string,
 ): string[] {
   const names = template.sections.map(section => section.name)
   const found = new Set(entries.map(entry => entry.name))
-  return names.filter(name => !found.has(name))
+  return names.filter(name => {
+    if (found.has(name)) {
+      return false
+    }
+
+    if (content && hasHeadingVariant(content, name)) {
+      return false
+    }
+
+    return true
+  })
+}
+
+const SECTION_HEADING_ALIASES: Record<SectionName, string[]> = {
+  overview: ['overview', 'summary', 'introduction', 'about', 'what this is'],
+  installation: ['installation', 'setup', 'setup notes', 'install guide', 'installation & setup', 'getting started'],
+  usage: ['usage', 'usage guidance', 'how to use', 'usage notes', 'using the product'],
+  examples: ['examples', 'sample', 'practical examples', 'use cases', 'demo', 'sample project', 'try it yourself'],
+  api: ['api', 'api reference', 'api docs', 'api surface', 'api overview'],
+}
+
+const HEADING_REGEX = /^#{1,6}\s*(.+)$/gim
+
+function normalizeHeading(value: string) {
+  return value.replace(/[^a-z0-9]+/gi, ' ').trim().toLowerCase()
+}
+
+function hasHeadingVariant(content: string, section: SectionName) {
+  const aliasList = SECTION_HEADING_ALIASES[section]
+  if (!aliasList?.length) return false
+
+  let match: RegExpExecArray | null
+  while ((match = HEADING_REGEX.exec(content))) {
+    const heading = normalizeHeading(match[1])
+    if (!heading) {
+      continue
+    }
+
+    for (const alias of aliasList) {
+      const normalizedAlias = normalizeHeading(alias)
+      if (normalizedAlias && heading.includes(normalizedAlias)) {
+        return true
+      }
+    }
+  }
+
+  return false
 }
