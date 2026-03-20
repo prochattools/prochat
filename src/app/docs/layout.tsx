@@ -1,9 +1,7 @@
 import type { ReactNode } from 'react'
 
-export default async function DocsLayout({
-  children,
-}: {
-  children: ReactNode
-}) {
-  return children
+import DocsThemeLayout from './DocsThemeLayout'
+
+export default async function DocsLayout({ children }: { children: ReactNode }) {
+  return DocsThemeLayout({ children })
 }

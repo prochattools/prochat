@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import StructuredData from '@/components/StructuredData'
-import DocsThemeLayout from '@/app/docs/DocsThemeLayout'
 import { getPublicDocEntry, getPublicDocsStaticParams } from '@/lib/docs/public-docs'
 import { renderDocsMdxContent } from '@/lib/docs/nextra'
 import { articleSchema } from '@/lib/seo/schema'
@@ -82,21 +81,19 @@ export default async function DocsPage({ params }: PageParams) {
 
   const content = await renderDocsMdxContent(entry)
 
-  return DocsThemeLayout({
-    children: (
-      <>
-        <StructuredData
-          id={`schema-docs-${routeSegments.join('-')}`}
-          data={articleSchema({
-            title: entry.title,
-            description: entry.description,
-            urlPath: entry.urlPath,
-            datePublished: entry.date,
-            dateModified: entry.updated,
-          })}
-        />
-        {content}
-      </>
-    ),
-  })
+  return (
+    <>
+      <StructuredData
+        id={`schema-docs-${routeSegments.join('-')}`}
+        data={articleSchema({
+          title: entry.title,
+          description: entry.description,
+          urlPath: entry.urlPath,
+          datePublished: entry.date,
+          dateModified: entry.updated,
+        })}
+      />
+      {content}
+    </>
+  )
 }
