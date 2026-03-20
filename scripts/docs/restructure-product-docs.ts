@@ -78,6 +78,13 @@ const INTEGRATIONS_DIR = 'integrations'
 const ADVANCED_DIR = 'advanced'
 const INTEGRATION_KEYWORDS = ['integration', 'stripe', 'auth', 'mailerlite', 'github']
 
+type GeneratedSectionCopy = {
+  intro: string[]
+  guidanceHeading: string
+  guidance: string[]
+  note?: string
+}
+
 type ManifestEntry = {
   outputPath: string
   sourceRepo: string
@@ -158,6 +165,138 @@ function slugify(value: string) {
     .toLowerCase()
 }
 
+function productDisplayName(productId: string) {
+  return productId === 'saaskit' ? 'SaaSKit' : 'ProKit'
+}
+
+function buildSectionCopy(productId: string, sectionSlug: string): GeneratedSectionCopy {
+  const productName = productDisplayName(productId)
+  const isSaaSKit = productId === 'saaskit'
+
+  switch (sectionSlug) {
+    case 'launch-flow':
+      return {
+        intro: [
+          `Use this page when the base setup is working and you are moving from build mode to launch mode.`,
+          isSaaSKit
+            ? 'For SaaSKit, that usually means finishing the product stack, checking the launch path, and making sure the founder-facing experience is ready.'
+            : 'For ProKit, that means keeping the core layer stable, then shipping only the pieces you need for the first real release.',
+        ],
+        guidanceHeading: 'What to do next',
+        guidance: isSaaSKit
+          ? [
+              'Confirm auth, billing, email, and any required integrations are in place.',
+              'Run the local flow once end to end so you know the launch path is not hiding setup gaps.',
+              'Move to deployment only after the product path works without manual fixes.',
+            ]
+          : [
+              'Keep the surface area small and only add product features after the foundation is working.',
+              'Check the main user flow locally so you can catch setup problems before deployment.',
+              'Use this as the transition point from infrastructure setup to a first real release.',
+            ],
+        note: isSaaSKit
+          ? 'SaaSKit should read like a founder launch path with product, launch, and integration checks.'
+          : 'ProKit should stay narrower and focus on the base engine plus the shortest path to a working release.',
+      }
+    case 'quick-start':
+      return {
+        intro: [
+          `Use this page when you want the shortest path from clone to a working local app for ${productName}.`,
+          'Read it before diving into deeper configuration so you do not overbuild the first run.',
+        ],
+        guidanceHeading: 'Fast path',
+        guidance: [
+          'Clone the repo, install dependencies, and make sure the environment file is present.',
+          'Start the app locally and confirm the main routes and auth flow load cleanly.',
+          'Only after the first boot works should you move into configuration and launch planning.',
+        ],
+        note: 'If the first boot fails, fix the basics before reading anything more advanced.',
+      }
+    case 'installation':
+      return {
+        intro: [
+          `Use this page when you are setting up ${productName} for the first time or resetting a local environment.`,
+          'It should answer the practical question: what has to happen before the app can actually run?',
+        ],
+        guidanceHeading: 'Installation order',
+        guidance: isSaaSKit
+          ? [
+              'Install dependencies and confirm the environment values required for the product runtime are present.',
+              'Set up the local database and any optional services you plan to use.',
+              'Start the app and verify the launch path before moving to deeper customization.',
+            ]
+          : [
+              'Install dependencies and confirm the base runtime environment is ready.',
+              'Set up the local database and any shared services you need for the first run.',
+              'Start the app and validate the engine before adding product-specific work.',
+            ],
+        note: isSaaSKit
+          ? 'SaaSKit installation should make it clear where the product stack begins and where optional integrations start.'
+          : 'ProKit installation should stay focused on the essential base setup and avoid product-layer detours.',
+      }
+    case 'configuration':
+      return {
+        intro: [
+          `Use this page when the app is running and you need to decide what to configure now versus later.`,
+          isSaaSKit
+            ? 'For SaaSKit, that usually means the product runtime plus any optional integration keys.'
+            : 'For ProKit, that usually means the small set of values needed for the engine and deployment path.',
+        ],
+        guidanceHeading: 'Configuration sequence',
+        guidance: [
+          'Set the required runtime values first so the app can boot reliably.',
+          'Add optional integrations only after the core flow is stable.',
+          'Keep environment changes small and verify them one group at a time.',
+        ],
+        note: 'If a setting is not required for the first successful run, leave it for later.',
+      }
+    case 'advanced':
+      return {
+        intro: [
+          `Use this page after the basics are working and you want to understand the deeper product mechanics for ${productName}.`,
+          'Do not start here unless the installation and configuration path already makes sense.',
+        ],
+        guidanceHeading: 'Read next',
+        guidance: isSaaSKit
+          ? [
+              'Database, development, deployment, and integration docs are the best next reads.',
+              'Use the advanced section to understand how the product pieces fit together, not to start setup from scratch.',
+              'When something feels unclear, step back to the quick-start or installation pages first.',
+            ]
+          : [
+              'Database, development, deployment, and stack docs are the best next reads.',
+              'Use the advanced section to understand the lighter engine layer and where you own more of the structure.',
+              'When something feels unclear, go back to the quick-start or installation pages first.',
+            ],
+        note: isSaaSKit
+          ? 'SaaSKit advanced pages should help founders reason about launch-level product structure.'
+          : 'ProKit advanced pages should help founders understand the narrower base layer without pulling them into SaaSKit assumptions.',
+      }
+    default:
+      return {
+        intro: [
+          `Use this page to move from overview into the most relevant technical docs for ${productName}.`,
+          'These generated overlays should point you toward the next practical step rather than act like empty placeholders.',
+        ],
+        guidanceHeading: 'Next steps',
+        guidance: ['Read the linked technical docs below and keep the first pass focused on one setup decision at a time.'],
+      }
+  }
+}
+
+function formatGuidance(items: string[]) {
+  return items.map(item => `- ${item}`).join('\n')
+}
+
+function buildRelatedDocsList(matches: DocRecord[], fallbackLinks: Array<{ label: string; path: string }>) {
+  const docs =
+    matches.length > 0
+      ? matches.map(doc => `- [${doc.label}](./${doc.relativePath.replace(/\\/g, '/')})`)
+      : fallbackLinks.map(link => `- [${link.label}](${link.path})`)
+
+  return docs.length > 0 ? docs : ['- Read the related technical docs in this product section.']
+}
+
 async function collectDocs(productPath: string): Promise<DocRecord[]> {
   const entries = await readdir(productPath, { withFileTypes: true })
   const docs: DocRecord[] = []
@@ -226,6 +365,7 @@ async function isNonOverlayDoc(filePath: string) {
 
 async function writeSummaryPage(
   productPath: string,
+  productId: string,
   section: (typeof ORDERED_SECTIONS)[number],
   matches: DocRecord[],
   generatedAt: string,
@@ -235,15 +375,9 @@ async function writeSummaryPage(
     return
   }
   const fallbackLinks = SECTION_FALLBACK_LINKS[section.slug] ?? []
-  const entries =
-    matches.length > 0
-      ? matches.map(
-          doc =>
-            `- [${doc.label}](./${doc.relativePath.replace(/\\/g, '/')})`,
-        )
-      : fallbackLinks.length > 0
-        ? fallbackLinks.map(link => `- [${link.label}](${link.path})`)
-        : ['- No matching technical docs were detected yet.']
+  const sectionCopy = buildSectionCopy(productId, section.slug)
+  const relatedDocs = buildRelatedDocsList(matches, fallbackLinks)
+  const noteBlock = sectionCopy.note ? `\n> **Note:** ${sectionCopy.note}\n` : ''
 
   const content = `${buildOverlayFrontmatter(
     {
@@ -255,9 +389,17 @@ async function writeSummaryPage(
     generatedAt,
   )}
 
+${sectionCopy.intro.map(paragraph => `${paragraph}\n`).join('\n')}
+
+## ${sectionCopy.guidanceHeading}
+
+${formatGuidance(sectionCopy.guidance)}
+
+${noteBlock}
+
 ## Related technical docs
 
-${entries.join('\n')}
+${relatedDocs.join('\n')}
 
 `
 
@@ -281,10 +423,29 @@ async function writeIndexPage(productPath: string, dirName: string, docs: DocRec
   const dirPath = path.join(productPath, dirName)
   await ensureDirectory(productPath, dirName)
   const indexPath = path.join(dirPath, 'index.mdx')
+  const isAdvanced = dirName === ADVANCED_DIR
   const entries =
     docs.length === 0
       ? ['- No integration docs detected yet.']
       : docs.map(doc => `- [${doc.label}](../${doc.relativePath.replace(/\\/g, '/')})`)
+  const intro = isAdvanced
+    ? [
+        'Use this page when you are done with the basics and want the deeper technical reference for this product.',
+        'Advanced pages should help you understand structure, not replace the quick-start or installation flow.',
+      ]
+    : [
+        'Use this page to find the higher-value companion docs that support the product setup and implementation path.',
+        'It should point you toward the most relevant technical references without burying them in a blank shell.',
+      ]
+  const guidance = isAdvanced
+    ? [
+        'Read the technical docs listed here in the order that matches your current problem.',
+        'If you are still setting up the product, go back to quick-start or installation first.',
+      ]
+    : [
+        'Follow the listed docs and keep the first pass focused on one integration at a time.',
+        'If no integration docs exist yet, use the core product docs first and revisit this page later.',
+      ]
 
   const content = `${buildOverlayFrontmatter(
     {
@@ -294,6 +455,12 @@ async function writeIndexPage(productPath: string, dirName: string, docs: DocRec
     },
     generatedAt,
   )}
+
+${intro.map(paragraph => `${paragraph}\n`).join('\n')}
+
+## How to use this section
+
+${formatGuidance(guidance)}
 
 ## Related docs
 
@@ -377,7 +544,7 @@ async function run() {
       }
       const matches = docs.filter(doc => !assigned.has(doc.absolutePath) && matchesKeywords(doc, section.keywords))
       matches.forEach(doc => assigned.add(doc.absolutePath))
-      await writeSummaryPage(productPath, section, matches, overlayGeneratedAt)
+      await writeSummaryPage(productPath, product.id, section, matches, overlayGeneratedAt)
     }
 
     const integrationDocs = docs.filter(doc => !assigned.has(doc.absolutePath) && INTEGRATION_KEYWORDS.some(keyword => doc.relativePath.includes(keyword)))
