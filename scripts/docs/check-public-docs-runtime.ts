@@ -1,32 +1,12 @@
-import { getPublicDocsEntries, getPublicDocsPageMap, getPublicDocsStaticParams } from '@/lib/docs/public-docs'
-
-type PageMapNode = {
-  name?: string
-  route?: string
-  children?: PageMapNode[]
-}
+import {
+  assertValidPublicDocsPageMap,
+  getPublicDocsEntries,
+  getPublicDocsPageMap,
+  getPublicDocsStaticParams,
+} from '@/lib/docs/public-docs'
 
 function toRouteKey(category: string, slug: string[] = []) {
   return [category, ...slug].join('/')
-}
-
-function assertNoEmptyFolders(nodes: PageMapNode[], path: string[] = []) {
-  for (const node of nodes) {
-    if (!node || typeof node !== 'object') {
-      throw new Error(`Public docs page map contains an invalid node at ${path.join('/') || '<root>'}.`)
-    }
-
-    if (!('children' in node) || !Array.isArray(node.children)) {
-      continue
-    }
-
-    const nodePath = [...path, node.name || node.route || '<folder>']
-    if (node.children.length === 0) {
-      throw new Error(`Public docs page map contains an empty folder at ${nodePath.join('/')}.`)
-    }
-
-    assertNoEmptyFolders(node.children, nodePath)
-  }
 }
 
 async function main() {
@@ -58,7 +38,7 @@ async function main() {
     )
   }
 
-  assertNoEmptyFolders(pageMap as PageMapNode[])
+  assertValidPublicDocsPageMap(pageMap)
 
   console.log(
     `Public docs runtime check passed: ${publicRouteKeys.size} public routes, ${staticRouteKeys.size} static params.`,

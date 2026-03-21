@@ -43,7 +43,8 @@ const SHARED_ROUTE_OVERRIDES: Record<string, string> = {
   try: 'try-in-2-minutes',
 }
 
-let publicDocsDataPromise: Promise<PublicDocsData> | null = null
+let publicDocsIndexPromise: Promise<PublicDocsIndexData> | null = null
+let publicDocsPageMapPromise: Promise<PublicDocsPageMapData> | null = null
 
 type DocsTreeNode = {
   segment: string
@@ -52,11 +53,20 @@ type DocsTreeNode = {
   children: Map<string, DocsTreeNode>
 }
 
-type PublicDocsData = {
+type PublicDocsIndexData = {
   entries: ContentEntry[]
   entryMap: Map<string, ContentEntry>
+}
+
+type PublicDocsPageMapData = PublicDocsIndexData & {
   pageMap: PageMapItem[]
   staticParams: Array<{ category: string; slug: string[] }>
+}
+
+type PageMapNode = {
+  name?: string
+  route?: string
+  children?: PageMapNode[]
 }
 
 function page(
@@ -109,6 +119,42 @@ function sanitizePageMapItems(items: DocsPageMapItem[]): DocsPageMapItem[] {
     .filter((item): item is DocsPageMapItem => item !== null)
 
   return sanitized
+}
+
+export function assertValidPublicDocsPageMap(pageMap: PageMapItem[]) {
+  const assertNode = (node: PageMapNode, pathSegments: string[] = []) => {
+    if (!node || typeof node !== 'object') {
+      throw new Error(
+        `Public docs page map contains an invalid node at ${pathSegments.join('/') || '<root>'}.`,
+      )
+    }
+
+    if (!('children' in node) || !Array.isArray(node.children)) {
+      return
+    }
+
+    const nodePath = [...pathSegments, node.name || node.route || '<folder>']
+
+    if (node.children.length === 0) {
+      throw new Error(
+        `Public docs page map contains an empty folder at ${nodePath.join('/')}.`,
+      )
+    }
+
+    for (const child of node.children) {
+      assertNode(child, nodePath)
+    }
+  }
+
+  if (!Array.isArray(pageMap) || pageMap.length === 0) {
+    throw new Error(
+      'Public docs page map is empty after filtering. Nextra requires at least one top-level docs route.',
+    )
+  }
+
+  for (const node of pageMap as PageMapNode[]) {
+    assertNode(node)
+  }
 }
 
 function titleize(segment: string) {
@@ -285,40 +331,66 @@ function buildDocsTree(entries: ContentEntry[]) {
   return root
 }
 
-async function buildPublicDocsData(): Promise<PublicDocsData> {
+async function buildPublicDocsIndexData(): Promise<PublicDocsIndexData> {
   const entries = (await getSectionEntries('docs')).filter(isPublicDocEntry)
-  const detailEntries = entries.filter(entry => entry.routeSegments.length > 0)
-  const tree = buildDocsTree(detailEntries)
 
   return {
     entries,
     entryMap: new Map(entries.map(entry => [entry.routeSegments.join('/'), entry])),
-    pageMap: sanitizePageMapItems(
-      Array.from(tree.children.values())
-        .sort(compareNodes)
-        .map(asPageMapItem),
-    ) as PageMapItem[],
+  }
+}
+
+async function buildPublicDocsPageMapData(): Promise<PublicDocsPageMapData> {
+  const { entries, entryMap } = await buildPublicDocsIndexData()
+  const detailEntries = entries.filter(entry => entry.routeSegments.length > 0)
+  const tree = buildDocsTree(detailEntries)
+  const pageMap = sanitizePageMapItems(
+    Array.from(tree.children.values())
+      .sort(compareNodes)
+      .map(asPageMapItem),
+  ) as PageMapItem[]
+
+  assertValidPublicDocsPageMap(pageMap)
+
+  return {
+    entries,
+    entryMap,
+    pageMap,
     // Prebuild every public docs route. The built app's on-demand render path has
     // been the source of repeated production 500s for otherwise valid doc pages.
     staticParams: detailEntries.map(toStaticParam),
   }
 }
 
-async function getPublicDocsData() {
-  if (!publicDocsDataPromise) {
-    publicDocsDataPromise = buildPublicDocsData()
+async function getPublicDocsIndexData() {
+  if (!publicDocsIndexPromise) {
+    publicDocsIndexPromise = buildPublicDocsIndexData().catch(error => {
+      publicDocsIndexPromise = null
+      throw error
+    })
   }
 
-  return publicDocsDataPromise
+  return publicDocsIndexPromise
+}
+
+async function getPublicDocsPageMapData() {
+  if (!publicDocsPageMapPromise) {
+    publicDocsPageMapPromise = buildPublicDocsPageMapData().catch(error => {
+      publicDocsPageMapPromise = null
+      throw error
+    })
+  }
+
+  return publicDocsPageMapPromise
 }
 
 export async function getPublicDocsEntries() {
-  const data = await getPublicDocsData()
+  const data = await getPublicDocsIndexData()
   return data.entries
 }
 
 export async function getPublicDocsPageMap() {
-  const data = await getPublicDocsData()
+  const data = await getPublicDocsPageMapData()
   return data.pageMap
 }
 
@@ -393,7 +465,7 @@ function toDocHref(routeSegments: string[]) {
 }
 
 export async function getPublicDocHrefResolver() {
-  const { entryMap: entriesByRoute } = await getPublicDocsData()
+  const { entryMap: entriesByRoute } = await getPublicDocsIndexData()
 
   return (routeSegments: string[]) => {
     const entry = resolvePublicDocEntry(routeSegments, entriesByRoute)
@@ -423,12 +495,12 @@ export async function getPublicDocHrefResolver() {
 }
 
 export async function getPublicDocEntry(routeSegments: string[]): Promise<ContentEntry | null> {
-  const { entryMap: entriesByRoute } = await getPublicDocsData()
+  const { entryMap: entriesByRoute } = await getPublicDocsIndexData()
   const routeKey = routeSegments.join('/')
   return entriesByRoute.get(routeKey) || null
 }
 
 export async function getPublicDocsStaticParams() {
-  const data = await getPublicDocsData()
+  const data = await getPublicDocsPageMapData()
   return data.staticParams
 }
