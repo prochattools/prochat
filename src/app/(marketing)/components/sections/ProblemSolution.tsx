@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { AlertTriangle, Check } from 'lucide-react';
-import { BlueprintCard } from '../ui/Scaffolding';
+import { BlueprintCard } from '@/components/ui/Scaffolding';
 import { Reveal } from '../ui/Reveal';
 
 interface ProblemSolutionProps {

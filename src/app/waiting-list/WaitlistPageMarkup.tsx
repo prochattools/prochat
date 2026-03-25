@@ -1,17 +1,12 @@
 import { BellRing, Check, Rocket, TimerReset } from 'lucide-react'
 import RotatingText from '@/components/RotatingText'
 import { WAITLIST_PRODUCT_OPTIONS } from '@/lib/waitlist/products'
+import { HeroSection } from '@/components/marketing/HeroSection'
 
 export default function WaitlistPageMarkup() {
   return (
     <>
-<section className="pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--center pc-marketing-hero--lines-mobile min-h-[100svh] border-b border-border">
-  <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
-  <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
-  <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
-  <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
-  <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
-
+<HeroSection density="compact" align="center" className="min-h-[100svh] border-b border-border">
   <div className="pc-marketing-hero__inner pb-12 lg:pb-24">
   <div className="mx-auto max-w-4xl">
   <div className="flex flex-col items-center text-center">
@@ -127,7 +122,7 @@ export default function WaitlistPageMarkup() {
   </div>
   </div>
   </div>
-</section>
+</HeroSection>
 <section className="max-w-7xl mx-auto px-page py-24 bg-slate-50/50 dark:bg-slate-900/20 rounded-t-[3rem]">
   <div className="max-w-7xl mx-auto">
     <div className="w-full">

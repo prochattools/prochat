@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { BlueprintCard } from '../ui/Scaffolding';
+import { BlueprintCard } from '@/components/ui/Scaffolding';
 import { Users, CreditCard, Search, Database, ArrowRight } from 'lucide-react';
 import { Reveal } from '../ui/Reveal';
 import Link from 'next/link';

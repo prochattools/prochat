@@ -171,7 +171,7 @@ export default function App() {
   return (
     <div className="pc-homepage bg-transparent text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
       <HeroSection
-        className="pc-marketing-hero--lines-mobile pc-home-hero--lower-lines"
+        className=""
         showBackgrounds={false}
         title={
           <>

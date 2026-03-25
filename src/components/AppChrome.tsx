@@ -15,16 +15,19 @@ export default function AppChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname() || ''
   const docsRoute = isDocsPath(pathname)
   const hasMarketingSurface = !docsRoute && isMarketingSurfacePath(pathname)
+  const showBlobs = !docsRoute
 
   return (
     <>
-      <div className={`relative z-10 ${hasMarketingSurface ? 'pc-site-surface' : ''}`}>
-        {hasMarketingSurface ? (
+      <div className={`relative z-10 ${showBlobs ? 'pc-site-surface' : ''}`}>
+        {showBlobs ? (
           <div aria-hidden className="pc-site-surface__backdrop">
-            <div className="pc-site-surface__base" />
+            <div className="pc-site-surface__lines" />
             <div className="pc-site-surface__blob pc-site-surface__blob--hero" />
             <div className="pc-site-surface__blob pc-site-surface__blob--mid" />
             <div className="pc-site-surface__blob pc-site-surface__blob--lower" />
+            <div className="pc-site-surface__blob pc-site-surface__blob--accent" />
+            <div className="pc-site-surface__noise" />
           </div>
         ) : null}
         {docsRoute ? (

@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react'
 import { Check } from 'lucide-react'
 import { trackEvent } from '@/utils/analytics'
-import { Scaffolding } from '@/app/(marketing)/components/ui/Scaffolding'
+import { Scaffolding } from '@/components/ui/Scaffolding'
 import { Reveal } from '@/app/(marketing)/components/ui/Reveal'
 import { Hero } from '@/app/(marketing)/components/sections/Hero'
 import { FinalCTA } from '@/app/(marketing)/components/sections/FinalCTA'
@@ -30,7 +30,7 @@ type ContainerProps = {
 const Section = ({ id, className = '', children }: SectionProps) => (
 	<section
 		id={id}
-		className={`py-24 bg-background border-b border-border-subtle ${className}`}
+		className={`py-24 bg-transparent border-b border-border-subtle ${className}`}
 	>
 		{children}
 	</section>
@@ -50,7 +50,7 @@ export default function ProofPageContent() {
 	}
 
 	return (
-		<main className="min-h-screen bg-background text-foreground font-sans selection:bg-secondary/20 dark:selection:bg-primary/40 overflow-x-hidden relative">
+		<main className="min-h-screen bg-transparent text-foreground font-sans selection:bg-secondary/20 dark:selection:bg-primary/40 overflow-x-hidden relative">
 			<div className="fixed inset-0 pointer-events-none z-0">
 				<Scaffolding opacity={0.6} />
 			</div>

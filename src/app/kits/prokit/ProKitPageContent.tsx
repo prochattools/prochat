@@ -175,14 +175,8 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
       <div className="[--section-bg-rgb:255_255_255] [--section-alt-bg-rgb:241_245_249] dark:[--section-bg-rgb:15_17_21] dark:[--section-alt-bg-rgb:29_37_49]">
       <section
         id="top"
-        className="relative isolate flex min-h-screen scroll-mt-24 items-center overflow-hidden bg-[rgb(var(--section-bg-rgb))] px-0 pb-16 pt-28 sm:pb-20 sm:pt-32"
+        className="relative isolate flex min-h-screen scroll-mt-24 items-center overflow-hidden bg-transparent px-0 pb-16 pt-28 sm:pb-20 sm:pt-32"
       >
-        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
-        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
-
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
           <HeroBadge text="ProKit: the lighter engine layer" className="mb-8" />
 
@@ -224,7 +218,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="tester-mindset" className="border-y border-border bg-[rgb(var(--section-alt-bg-rgb))] py-24">
+      <section id="tester-mindset" className="bg-transparent py-24">
         <div className="mx-auto max-w-3xl px-page">
           <div className="flex items-start gap-6">
             <div className="hidden flex-col items-center pt-2 md:flex">
@@ -269,7 +263,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="problem" className="relative scroll-mt-24 bg-[rgb(var(--section-bg-rgb))] py-24">
+      <section id="problem" className="relative scroll-mt-24 bg-transparent py-24">
         <div className="mx-auto max-w-6xl px-page">
           <div className="grid items-start gap-12 md:grid-cols-2 lg:gap-24">
             <div className="relative">
@@ -379,7 +373,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="manual" className="scroll-mt-24 border-y border-border bg-[rgb(var(--section-alt-bg-rgb))] py-24">
+      <section id="manual" className="scroll-mt-24 bg-transparent py-24">
         <div className="mx-auto max-w-4xl px-page">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground">
@@ -447,7 +441,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="who" className="scroll-mt-24 bg-[rgb(var(--section-bg-rgb))] py-24">
+      <section id="who" className="scroll-mt-24 bg-transparent py-24">
         <div className="mx-auto max-w-5xl px-page">
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
@@ -527,7 +521,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="pricing" className="relative scroll-mt-24 overflow-hidden bg-[rgb(var(--section-alt-bg-rgb))] py-24">
+      <section id="pricing" className="relative scroll-mt-24 overflow-hidden bg-transparent py-24">
         <div
           aria-hidden
           className="pc-section-grid-overlay absolute inset-0 opacity-40 dark:opacity-20"
@@ -599,7 +593,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="breakdown" className="scroll-mt-24 border-t border-border bg-[rgb(var(--section-bg-rgb))] py-24">
+      <section id="breakdown" className="scroll-mt-24 bg-transparent py-24">
         <div className="mx-auto max-w-6xl px-page">
           <details className="group overflow-hidden rounded-2xl border border-border-subtle bg-surface shadow-surface transition-shadow open:shadow-elevated">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-left [&::-webkit-details-marker]:hidden md:px-8">
@@ -674,7 +668,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="faq" className="scroll-mt-24 border-t border-border bg-[rgb(var(--section-bg-rgb))] py-24">
+      <section id="faq" className="scroll-mt-24 bg-transparent py-24">
         <div className="mx-auto max-w-5xl px-page">
           <div className="mb-12 text-center">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground/90">FAQ</p>
@@ -703,7 +697,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="cta" className="scroll-mt-24 bg-[rgb(var(--section-alt-bg-rgb))] py-32 text-center">
+      <section id="cta" className="scroll-mt-24 bg-transparent py-32 text-center">
         <div className="mx-auto max-w-2xl px-page">
           <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
             Choose ProKit when the leaner engine is enough.
