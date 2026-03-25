@@ -140,6 +140,18 @@ html.dark {
 		mix-blend-mode: overlay;
 	}
 
+	.pc-site-surface__lines {
+		position: fixed;
+		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+		background-image: var(--pc-home-hero-lines-asset);
+		background-position: top center;
+		background-repeat: repeat-y;
+		background-size: 125% auto;
+		opacity: var(--pc-home-hero-lines-opacity);
+	}
+
 	// --- Marketing hero background system ---
 
 	.pc-marketing-hero {
@@ -164,25 +176,6 @@ html.dark {
 		border-bottom: 0;
 	}
 
-	.pc-home-hero--lower-lines::after {
-		content: "";
-		position: absolute;
-		left: 50%;
-		bottom: 0%;
-		width: min(132rem, 132%);
-		height: 150%;
-		z-index: 0;
-		pointer-events: none;
-		transform: translateX(-50%);
-		background-image: var(--pc-home-hero-lines-asset);
-		background-position: center bottom;
-		background-repeat: no-repeat;
-		background-size: 100% auto;
-		opacity: var(--pc-home-hero-lines-opacity);
-		mask-image: linear-gradient(180deg, transparent 0%, transparent 26%, rgb(0 0 0 / 0.5) 52%, rgb(0 0 0 / 1) 76%);
-		-webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 26%, rgb(0 0 0 / 0.5) 52%, rgb(0 0 0 / 1) 76%);
-	}
-
 	.pc-marketing-hero__bg,
 	.pc-marketing-hero__wash,
 	.pc-marketing-hero__glow,
@@ -195,19 +188,11 @@ html.dark {
 	}
 
 	.pc-marketing-hero__bg--light {
-		background-color: rgb(var(--background-light-rgb) / 1);
-		background-image: url("/assets/backgrounds/hero-main-lines-light-alternating.svg");
-		background-position: top center;
-		background-repeat: repeat-y;
-		background-size: 125% auto;
+		background-color: transparent;
 	}
 
 	.pc-marketing-hero__bg--dark {
-		background-color: rgb(var(--background-dark-rgb) / 1);
-		background-image: url("/assets/backgrounds/hero-main-lines-dark-alternating.svg");
-		background-position: top center;
-		background-repeat: repeat-y;
-		background-size: 125% auto;
+		background-color: transparent;
 	}
 
 	.pc-marketing-hero__wash {

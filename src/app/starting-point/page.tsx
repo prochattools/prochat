@@ -101,7 +101,7 @@ export default function StartHerePage() {
         <SourceTracker />
       </Suspense>
       <HeroSection
-        className="pc-marketing-hero--lines-mobile border-b border-border"
+        className="border-b border-border"
         eyebrow={<HeroBadge text="Free Framework" />}
         title="Turn your SaaS idea into a buildable system."
         subtitle="A practical framework for non-technical founders who want to define the buyer, pain, outcome, proof, and boundary before building the wrong thing."

@@ -48,7 +48,7 @@ const CONTACT_SUBMIT_IDLE_HTML = `
 export default function ContactPageMarkup() {
   return (
     <>
-      <HeroSection density="compact" align="left" className="pc-marketing-hero--lines-mobile min-h-[100svh]">
+      <HeroSection density="compact" align="left" className="min-h-[100svh]">
         <div className="mx-auto grid w-full max-w-[1120px] items-center gap-6 md:gap-8 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-12">
             <div className="order-1 lg:col-start-2 lg:col-span-5 lg:pt-2">
               <div className="max-w-[32rem] space-y-3.5 md:space-y-5">

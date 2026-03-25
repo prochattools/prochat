@@ -83,10 +83,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <link
           rel="preload"
-          href="/assets/backgrounds/hero-main-lines-dark-alternating.svg"
+          href="/assets/backgrounds/hero-main-lines-dark.svg"
           as="image"
-          media="(min-width: 768px)"
-          fetchPriority="high"
+          media="(prefers-color-scheme: dark)"
+        />
+        <link
+          rel="preload"
+          href="/assets/backgrounds/hero-main-lines-light.svg"
+          as="image"
+          media="(prefers-color-scheme: light)"
         />
         <style dangerouslySetInnerHTML={{ __html: BASE_STYLE_OVERRIDES }} />
         <StructuredData id="schema-organization" data={getOrganizationSchema()} />

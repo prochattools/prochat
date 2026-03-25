@@ -22,6 +22,7 @@ export default function AppChrome({ children }: { children: ReactNode }) {
       <div className={`relative z-10 ${showBlobs ? 'pc-site-surface' : ''}`}>
         {showBlobs ? (
           <div aria-hidden className="pc-site-surface__backdrop">
+            <div className="pc-site-surface__lines" />
             <div className="pc-site-surface__blob pc-site-surface__blob--hero" />
             <div className="pc-site-surface__blob pc-site-surface__blob--mid" />
             <div className="pc-site-surface__blob pc-site-surface__blob--lower" />

@@ -57,7 +57,7 @@ export default function SaaSStartingPointPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <HeroSection
-        className="pc-marketing-hero--lines-mobile border-b border-border"
+        className="border-b border-border"
         eyebrow={<HeroBadge text="Starting Point Framework" />}
         title="SaaS Starting Point"
         subtitle="The framework that helps founders define the buyer, proof, outcome, and boundary before building."

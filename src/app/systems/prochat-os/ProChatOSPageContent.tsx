@@ -59,7 +59,7 @@ const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) 
       <div className="[--section-bg-rgb:255_255_255] [--section-alt-bg-rgb:241_245_249] dark:[--section-bg-rgb:15_17_21] dark:[--section-alt-bg-rgb:29_37_49]">
       <section
         id="top"
-        className="pc-marketing-hero--lines-mobile relative isolate flex min-h-screen scroll-mt-24 items-center overflow-hidden bg-transparent px-0 pb-16 pt-28 sm:pb-20 sm:pt-32"
+        className="relative isolate flex min-h-screen scroll-mt-24 items-center overflow-hidden bg-transparent px-0 pb-16 pt-28 sm:pb-20 sm:pt-32"
       >
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
           <HeroBadge text={heroBadgeText} className="mb-8" />

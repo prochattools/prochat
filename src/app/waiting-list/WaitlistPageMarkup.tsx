@@ -6,7 +6,7 @@ import { HeroSection } from '@/components/marketing/HeroSection'
 export default function WaitlistPageMarkup() {
   return (
     <>
-<HeroSection density="compact" align="center" className="pc-marketing-hero--lines-mobile min-h-[100svh] border-b border-border">
+<HeroSection density="compact" align="center" className="min-h-[100svh] border-b border-border">
   <div className="pc-marketing-hero__inner pb-12 lg:pb-24">
   <div className="mx-auto max-w-4xl">
   <div className="flex flex-col items-center text-center">

@@ -66,7 +66,7 @@ export default async function PromptsIndexPage() {
 
       <div className="bg-transparent text-foreground">
         <HeroSection
-          className="pc-marketing-hero--lines-mobile min-h-[100svh] border-b border-border"
+          className="min-h-[100svh] border-b border-border"
           eyebrow={<HeroBadge text="Execution prompts" />}
           title={
             <>
