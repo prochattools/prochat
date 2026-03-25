@@ -64,7 +64,7 @@ export default async function PromptsIndexPage() {
     <>
       <StructuredData id="schema-prompts-collection" data={collectionSchema} />
 
-      <div className="bg-background text-foreground">
+      <div className="bg-transparent text-foreground">
         <HeroSection
           className="pc-marketing-hero--lines-mobile min-h-[100svh] border-b border-border"
           eyebrow={<HeroBadge text="Execution prompts" />}

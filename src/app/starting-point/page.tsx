@@ -96,7 +96,7 @@ export default function StartHerePage() {
   )
 
   return (
-    <main id="starting-point-top" className="min-h-screen bg-background text-foreground font-brand selection:bg-primary/20 selection:text-foreground">
+    <main id="starting-point-top" className="min-h-screen bg-transparent text-foreground font-brand selection:bg-primary/20 selection:text-foreground">
       <Suspense fallback={null}>
         <SourceTracker />
       </Suspense>
@@ -132,7 +132,7 @@ export default function StartHerePage() {
         </div>
       </HeroSection>
 
-      <section className="border-b border-border bg-background/70 py-28">
+      <section className="border-b border-border bg-transparent py-28">
         <div className="mx-auto max-w-5xl px-page">
           <h2 className="font-sans text-3xl font-bold tracking-[-0.02em] text-foreground">Why founders fail before the first launch</h2>
           <p className="mt-3 max-w-3xl text-lg font-semibold text-muted-foreground">
@@ -171,7 +171,7 @@ export default function StartHerePage() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-background/70 py-28">
+      <section className="border-b border-border bg-transparent py-28">
         <div className="mx-auto max-w-5xl px-page">
           <h2 className="font-sans text-3xl font-bold tracking-[-0.02em] text-foreground">What the framework helps you decide</h2>
           <p className="mt-2 text-lg text-muted-foreground">Skip rework by locking focus before writing code.</p>
@@ -201,7 +201,7 @@ export default function StartHerePage() {
         </div>
       </section>
 
-      <section className="border-b border-border bg-background/80 py-28">
+      <section className="border-b border-border bg-transparent py-28">
         <div className="mx-auto max-w-5xl px-page">
           <h2 className="font-sans text-3xl font-bold tracking-[-0.02em] text-foreground">Quick FAQ</h2>
           <p className="mt-2 text-lg text-muted-foreground">Final doubts cleared.</p>

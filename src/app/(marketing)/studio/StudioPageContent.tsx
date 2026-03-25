@@ -65,7 +65,7 @@ const STUDIO_NOT_FIT = [
 
 export default function StudioPageContent() {
 	return (
-		<main className="relative min-h-screen overflow-x-hidden bg-background font-sans text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
+		<main className="relative min-h-screen overflow-x-hidden bg-transparent font-sans text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
 			<div className="fixed inset-0 pointer-events-none z-0">
 				<Scaffolding opacity={0.6} />
 			</div>
@@ -89,7 +89,7 @@ export default function StudioPageContent() {
 
 				<section
 					id="what-is-studio"
-					className="border-b border-border-subtle bg-surface py-24"
+					className="border-b border-border-subtle bg-transparent py-24"
 				>
 					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<div className="grid md:grid-cols-2 gap-12 items-center">
@@ -131,7 +131,7 @@ export default function StudioPageContent() {
 
 				<section
 					id="how-it-works"
-					className="border-b border-border-subtle bg-surface-soft/70 py-32"
+					className="border-b border-border-subtle bg-transparent py-32"
 				>
 					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<Reveal>
@@ -162,7 +162,7 @@ export default function StudioPageContent() {
 					</div>
 				</section>
 
-				<section className="border-b border-border-subtle bg-surface py-32">
+				<section className="border-b border-border-subtle bg-transparent py-32">
 					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<Reveal>
 							<h2 className="mb-12 text-3xl font-bold text-foreground">
@@ -194,7 +194,7 @@ export default function StudioPageContent() {
 					</div>
 				</section>
 
-				<section className="border-b border-border-subtle bg-surface py-24">
+				<section className="border-b border-border-subtle bg-transparent py-24">
 					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<div className="grid md:grid-cols-2 gap-12">
 							<Reveal width="100%">
@@ -244,7 +244,7 @@ export default function StudioPageContent() {
 					</div>
 				</section>
 
-				<section className="border-b border-border-subtle bg-surface py-24 text-center">
+				<section className="border-b border-border-subtle bg-transparent py-24 text-center">
 					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<div className="max-w-3xl mx-auto">
 							<Reveal>
@@ -276,7 +276,7 @@ export default function StudioPageContent() {
 					</div>
 				</section>
 
-				<section className="bg-surface-elevated py-24 text-foreground">
+				<section className="bg-transparent py-24 text-foreground">
 					<div className="mx-auto w-full max-w-[1120px] px-page text-center">
 						<Reveal>
 							<h2 className="text-3xl font-bold mb-6">
@@ -315,7 +315,7 @@ export default function StudioPageContent() {
 					</div>
 				</section>
 
-				<section className="flex flex-col items-center bg-surface py-32 text-center">
+				<section className="flex flex-col items-center bg-transparent py-32 text-center">
 					<div className="mx-auto w-full max-w-[1120px] px-page">
 						<div className="max-w-3xl mx-auto">
 							<Reveal>

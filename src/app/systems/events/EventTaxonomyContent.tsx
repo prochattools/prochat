@@ -89,7 +89,7 @@ const EVENTS = [
 
 export default function EventTaxonomyContent() {
 	return (
-		<main className="relative min-h-screen overflow-x-hidden bg-background font-sans text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
+		<main className="relative min-h-screen overflow-x-hidden bg-transparent font-sans text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
 			<div className="fixed inset-0 pointer-events-none z-0">
 				<Scaffolding opacity={0.6} />
 			</div>

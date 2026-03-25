@@ -44,7 +44,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
 	return (
 		<>
 			<main
-				className={`font-marketing ${hasMarketingSurface ? 'bg-transparent' : 'bg-background'} text-foreground selection:bg-primary selection:text-primary-foreground ${
+				className={`font-marketing bg-transparent text-foreground selection:bg-primary selection:text-primary-foreground ${
 					isFullscreenRoute
 						? 'box-border h-dvh overflow-hidden pt-[var(--pc-header-height)]'
 						: `min-h-screen ${needsGlobalHeaderOffset ? 'pt-14 md:pt-16 lg:pt-[72px]' : ''}`

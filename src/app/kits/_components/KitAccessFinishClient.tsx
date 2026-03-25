@@ -161,7 +161,7 @@ export default function KitAccessFinishClient({
 	const showFallback = !sessionId || fallbackVisible || errorCode === 'invalid_session'
 
 	return (
-		<section className='relative isolate flex min-h-screen items-center overflow-hidden bg-background px-0 py-24'>
+		<section className='relative isolate flex min-h-screen items-center overflow-hidden bg-transparent px-0 py-24'>
 			<div className='relative z-10 mx-auto flex w-full max-w-4xl flex-col justify-center px-page'>
 				<div className='mx-auto w-full max-w-4xl'>
 					<div className='text-center'>

@@ -10,7 +10,7 @@ import { Scaffolding } from '@/components/ui/Scaffolding'
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-background text-foreground dark:bg-slate-950 dark:text-slate-50 font-sans relative overflow-hidden flex flex-col items-center justify-center selection:bg-primary selection:text-primary-foreground dark:selection:bg-primary/80 dark:selection:text-primary-foreground">
+    <main className="min-h-screen bg-transparent text-foreground dark:text-slate-50 font-sans relative overflow-hidden flex flex-col items-center justify-center selection:bg-primary selection:text-primary-foreground dark:selection:bg-primary/80 dark:selection:text-primary-foreground">
       <div className="absolute inset-0 pointer-events-none z-0">
         <Scaffolding opacity={0.5} />
       </div>

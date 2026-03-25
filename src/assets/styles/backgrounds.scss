@@ -1,11 +1,11 @@
 // Background-related CSS custom properties (light mode defaults)
 :root {
-	--pc-site-blob-blur: 168px;
+	--pc-site-blob-blur: 100px;
 	--pc-site-blob-mix-blend-mode: multiply;
-	--pc-site-blob-hero-opacity: 0.30;
-	--pc-site-blob-mid-opacity: 0.24;
-	--pc-site-blob-lower-opacity: 0.22;
-	--pc-site-blob-accent-opacity: 0.14;
+	--pc-site-blob-hero-opacity: 0.40;
+	--pc-site-blob-mid-opacity: 0.35;
+	--pc-site-blob-lower-opacity: 0.30;
+	--pc-site-blob-accent-opacity: 0.22;
 	--pc-home-hero-lines-asset: url("/assets/backgrounds/hero-main-lines-light.svg");
 	--pc-home-hero-lines-opacity: 0.18;
 	--pc-hero-glow-base: 0.18;
@@ -39,7 +39,7 @@ html.dark {
 	}
 
 	.pc-site-surface__backdrop {
-		position: absolute;
+		position: fixed;
 		inset: 0;
 		z-index: 0;
 		pointer-events: none;
@@ -47,15 +47,9 @@ html.dark {
 		contain: layout style paint;
 	}
 
-	.pc-site-surface__base,
 	.pc-site-surface__blob {
 		position: absolute;
 		pointer-events: none;
-	}
-
-	.pc-site-surface__base {
-		inset: 0;
-		background: rgb(var(--pc-bg-rgb) / 1);
 	}
 
 	.pc-site-surface__blob {
@@ -69,8 +63,8 @@ html.dark {
 	.pc-site-surface__blob--hero {
 		top: clamp(4rem, 9vh, 7rem);
 		left: 50%;
-		width: clamp(30rem, 44vw, 48rem);
-		height: clamp(21rem, 31vw, 32rem);
+		width: clamp(20rem, 30vw, 32rem);
+		height: clamp(14rem, 22vw, 22rem);
 		background:
 			radial-gradient(circle at 42% 42%,
 				rgb(var(--blue-glow-rgb) / 0.68) 0%,
@@ -88,8 +82,8 @@ html.dark {
 	.pc-site-surface__blob--mid {
 		top: 35%;
 		left: 8%;
-		width: clamp(26rem, 32vw, 34rem);
-		height: clamp(22rem, 28vw, 30rem);
+		width: clamp(18rem, 24vw, 26rem);
+		height: clamp(16rem, 20vw, 22rem);
 		background:
 			radial-gradient(circle at 44% 46%,
 				rgb(120 80 220 / 0.48) 0%,
@@ -106,8 +100,8 @@ html.dark {
 	.pc-site-surface__blob--lower {
 		right: 8%;
 		bottom: 6%;
-		width: clamp(28rem, 34vw, 38rem);
-		height: clamp(20rem, 27vw, 29rem);
+		width: clamp(20rem, 26vw, 28rem);
+		height: clamp(14rem, 20vw, 20rem);
 		background:
 			radial-gradient(circle at 56% 44%,
 				rgb(0 180 220 / 0.42) 0%,
