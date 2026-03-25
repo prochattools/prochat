@@ -195,7 +195,7 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="manual" className="scroll-mt-24 border-y border-border bg-transparent py-24">
+      <section id="manual" className="scroll-mt-24 bg-transparent py-24">
         <div className="mx-auto max-w-4xl px-page">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground">
@@ -382,7 +382,7 @@ const WaaSKitPageContent = ({ priceId: _priceId }: WaaSKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="faq" className="scroll-mt-24 border-t border-border bg-transparent py-24">
+      <section id="faq" className="scroll-mt-24 bg-transparent py-24">
         <div className="mx-auto max-w-5xl px-page">
           <div className="mb-12 text-center">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground/90">FAQ</p>

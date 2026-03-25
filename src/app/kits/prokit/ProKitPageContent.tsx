@@ -218,7 +218,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="tester-mindset" className="border-y border-border bg-transparent py-24">
+      <section id="tester-mindset" className="bg-transparent py-24">
         <div className="mx-auto max-w-3xl px-page">
           <div className="flex items-start gap-6">
             <div className="hidden flex-col items-center pt-2 md:flex">
@@ -373,7 +373,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="manual" className="scroll-mt-24 border-y border-border bg-transparent py-24">
+      <section id="manual" className="scroll-mt-24 bg-transparent py-24">
         <div className="mx-auto max-w-4xl px-page">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground">
@@ -593,7 +593,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="breakdown" className="scroll-mt-24 border-t border-border bg-transparent py-24">
+      <section id="breakdown" className="scroll-mt-24 bg-transparent py-24">
         <div className="mx-auto max-w-6xl px-page">
           <details className="group overflow-hidden rounded-2xl border border-border-subtle bg-surface shadow-surface transition-shadow open:shadow-elevated">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-left [&::-webkit-details-marker]:hidden md:px-8">
@@ -668,7 +668,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
         </div>
       </section>
 
-      <section id="faq" className="scroll-mt-24 border-t border-border bg-transparent py-24">
+      <section id="faq" className="scroll-mt-24 bg-transparent py-24">
         <div className="mx-auto max-w-5xl px-page">
           <div className="mb-12 text-center">
             <p className="text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground/90">FAQ</p>

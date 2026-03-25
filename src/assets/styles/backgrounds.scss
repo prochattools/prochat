@@ -7,7 +7,7 @@
 	--pc-site-blob-lower-opacity: 0.30;
 	--pc-site-blob-accent-opacity: 0.22;
 	--pc-home-hero-lines-asset: url("/assets/backgrounds/hero-main-lines-light.svg");
-	--pc-home-hero-lines-opacity: 0.18;
+	--pc-home-hero-lines-opacity: 0.32;
 	--pc-hero-glow-base: 0.18;
 	--pc-hero-glow-shift: 0.06;
 	--pc-hero-glow-duration: 12s;
@@ -146,9 +146,9 @@ html.dark {
 		z-index: 0;
 		pointer-events: none;
 		background-image: var(--pc-home-hero-lines-asset);
-		background-position: top center;
+		background-position: center 100px;
 		background-repeat: repeat-y;
-		background-size: 125% auto;
+		background-size: 125% 950px;
 		opacity: var(--pc-home-hero-lines-opacity);
 	}
 
