@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Activity, Server } from 'lucide-react';
 import { Reveal } from '../ui/Reveal';
-import { BlueprintCard } from '../ui/Scaffolding';
+import { BlueprintCard } from '@/components/ui/Scaffolding';
 
 type ProofSectionProps = {
     id?: string;

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { LucideIcon } from 'lucide-react'
 import { ArrowUpRight, CreditCard, FileText, Mail, Scale, Send, Shield, ShieldCheck } from 'lucide-react'
+import { HeroSection } from '@/components/marketing/HeroSection'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -47,15 +48,8 @@ const CONTACT_SUBMIT_IDLE_HTML = `
 export default function ContactPageMarkup() {
   return (
     <>
-      <section className="pc-marketing-hero pc-marketing-hero--compact pc-marketing-hero--left pc-marketing-hero--lines-mobile min-h-[100svh]">
-        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
-        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
-
-        <div className="pc-marketing-hero__inner flex min-h-[100svh] items-center justify-center py-10 md:py-12">
-          <div className="mx-auto grid w-full max-w-[1120px] items-center gap-6 md:gap-8 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-12">
+      <HeroSection density="compact" align="left" className="pc-marketing-hero--lines-mobile min-h-[100svh]">
+        <div className="mx-auto grid w-full max-w-[1120px] items-center gap-6 md:gap-8 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-12">
             <div className="order-1 lg:col-start-2 lg:col-span-5 lg:pt-2">
               <div className="max-w-[32rem] space-y-3.5 md:space-y-5">
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-primary">
@@ -201,9 +195,8 @@ export default function ContactPageMarkup() {
               </Panel>
             </div>
 
-          </div>
         </div>
-      </section>
+      </HeroSection>
 
       <Section tone="muted" spacing="compact" className="pt-12 pb-16 md:pt-20 md:pb-24">
         <div className="mx-auto max-w-5xl px-page">

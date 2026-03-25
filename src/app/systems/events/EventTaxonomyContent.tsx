@@ -1,6 +1,6 @@
 'use client'
 
-import { Scaffolding, BlueprintCard } from '@/app/(marketing)/components/ui/Scaffolding'
+import { Scaffolding, BlueprintCard } from '@/components/ui/Scaffolding'
 import { Reveal } from '@/app/(marketing)/components/ui/Reveal'
 import { Panel, Section } from '@/components/ui/surface'
 

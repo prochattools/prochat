@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { DashboardMockup, AuthMockup, BillingMockup, EmailMockup } from '../ui/Visuals';
-import { BlueprintCard } from '../ui/Scaffolding';
+import { BlueprintCard } from '@/components/ui/Scaffolding';
 import { Reveal } from '../ui/Reveal';
 import { Button } from '../ui/Button';
 import Link from 'next/link';

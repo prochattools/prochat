@@ -162,12 +162,6 @@ export default function KitAccessFinishClient({
 
 	return (
 		<section className='relative isolate flex min-h-screen items-center overflow-hidden bg-background px-0 py-24'>
-			<div aria-hidden className='pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden' />
-			<div aria-hidden className='pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block' />
-			<div aria-hidden className='pc-marketing-hero__wash hidden dark:block' />
-			<div aria-hidden className='pc-marketing-hero__glow hidden dark:block' />
-			<div aria-hidden className='pc-marketing-hero__vignette hidden dark:block' />
-
 			<div className='relative z-10 mx-auto flex w-full max-w-4xl flex-col justify-center px-page'>
 				<div className='mx-auto w-full max-w-4xl'>
 					<div className='text-center'>

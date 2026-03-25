@@ -14,7 +14,7 @@ import {
 import { Hero } from '@/app/(marketing)/components/sections/Hero'
 import { Button } from '@/app/(marketing)/components/ui/Button'
 import { Reveal } from '@/app/(marketing)/components/ui/Reveal'
-import { BlueprintCard, Scaffolding } from '@/app/(marketing)/components/ui/Scaffolding'
+import { BlueprintCard, Scaffolding } from '@/components/ui/Scaffolding'
 
 const STUDIO_CONSTRAINTS = [
 	'Fixed scope',

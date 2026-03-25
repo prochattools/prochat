@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react'
 import { Check } from 'lucide-react'
 import { trackEvent } from '@/utils/analytics'
-import { Scaffolding } from '@/app/(marketing)/components/ui/Scaffolding'
+import { Scaffolding } from '@/components/ui/Scaffolding'
 import { Reveal } from '@/app/(marketing)/components/ui/Reveal'
 import { Hero } from '@/app/(marketing)/components/sections/Hero'
 import { FinalCTA } from '@/app/(marketing)/components/sections/FinalCTA'

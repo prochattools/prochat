@@ -25,6 +25,8 @@ export default function AppChrome({ children }: { children: ReactNode }) {
             <div className="pc-site-surface__blob pc-site-surface__blob--hero" />
             <div className="pc-site-surface__blob pc-site-surface__blob--mid" />
             <div className="pc-site-surface__blob pc-site-surface__blob--lower" />
+            <div className="pc-site-surface__blob pc-site-surface__blob--accent" />
+            <div className="pc-site-surface__noise" />
           </div>
         ) : null}
         {docsRoute ? (

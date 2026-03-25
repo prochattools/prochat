@@ -232,12 +232,6 @@ const SaaSkitPageContent = ({
         id="top"
         className={`relative isolate flex ${heroHeightClasses} scroll-mt-24 items-center overflow-hidden bg-[rgb(var(--section-bg-rgb))] px-0 pb-16 pt-28 sm:pb-20 sm:pt-32`}
       >
-        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--light dark:hidden" />
-        <div aria-hidden className="pc-marketing-hero__bg pc-marketing-hero__bg--dark hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__wash hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__glow hidden dark:block" />
-        <div aria-hidden className="pc-marketing-hero__vignette hidden dark:block" />
-
         <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
           <HeroBadge text="SaaSKit Structured Launch System" className="mb-8" />
 

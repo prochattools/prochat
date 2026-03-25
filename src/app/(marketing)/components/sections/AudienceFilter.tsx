@@ -1,6 +1,6 @@
 import React from 'react';
 import { Check, X } from 'lucide-react';
-import { BlueprintCard } from '../ui/Scaffolding';
+import { BlueprintCard } from '@/components/ui/Scaffolding';
 
 export const AudienceFilter: React.FC = () => {
   return (

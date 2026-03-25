@@ -20,7 +20,7 @@ type HeroLink = {
 }
 
 export interface HeroSectionProps {
-  title: ReactNode
+  title?: ReactNode
   subtitle?: ReactNode
   primaryCTA?: HeroCTA
   secondaryCTA?: HeroCTA
@@ -99,12 +99,14 @@ export function HeroSection({
           <div className={cn('pc-marketing-hero__content', contentClassName)}>
             {eyebrow ? <div>{eyebrow}</div> : null}
 
-            <div className="pc-marketing-hero__title-wrap">
-              <h1 className={cn('pc-hero-title text-foreground', titleClassName)}>{title}</h1>
-              {subtitle ? (
-                <p className={cn('pc-marketing-hero__subtitle', subtitleClassName)}>{subtitle}</p>
-              ) : null}
-            </div>
+            {(title || subtitle) ? (
+              <div className="pc-marketing-hero__title-wrap">
+                {title ? <h1 className={cn('pc-hero-title text-foreground', titleClassName)}>{title}</h1> : null}
+                {subtitle ? (
+                  <p className={cn('pc-marketing-hero__subtitle', subtitleClassName)}>{subtitle}</p>
+                ) : null}
+              </div>
+            ) : null}
 
             {children ? <div className="pc-marketing-hero__children">{children}</div> : null}
 
