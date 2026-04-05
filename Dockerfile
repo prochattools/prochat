@@ -8,6 +8,8 @@ RUN --mount=type=cache,target=/root/.npm npm ci
 
 FROM deps AS builder
 ENV NEXT_TELEMETRY_DISABLED=1
+# STRIPE_MODE needed at build time — stripe-env validates at module eval during page collection
+ENV STRIPE_MODE=live
 COPY . .
 RUN --mount=type=cache,target=/app/.next/cache npm run build
 
