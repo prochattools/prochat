@@ -8,25 +8,17 @@ RUN --mount=type=cache,target=/root/.npm npm ci
 
 FROM deps AS builder
 ENV NEXT_TELEMETRY_DISABLED=1
+# Build-time Stripe vars: stripe-env.ts and config.ts call getters at module eval during page
+# collection. These are server-only (not baked into client bundle) — placeholder values are safe.
+# Dokploy injects real values at container runtime via env; these only exist to satisfy validation.
 ENV STRIPE_MODE=live
 ENV NEXT_PUBLIC_STRIPE_MODE=live
-
-# Stripe env vars needed at build time — stripe-env validates at module eval during page collection
-# Dokploy passes app env as --build-arg; ARG declarations receive them here (not in deps/npm ci)
-ARG STRIPE_SECRET_KEY_LIVE
-ARG STRIPE_WEBHOOK_SECRET_LIVE
-ARG STRIPE_PRODUCT_PROKIT_LIVE
-ARG STRIPE_PRODUCT_SAASKIT_LIVE
-ARG STRIPE_PRICE_PROKIT_LIVE
-ARG STRIPE_PRICE_SAASKIT_LIVE
-ARG NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE
-ENV STRIPE_SECRET_KEY_LIVE=$STRIPE_SECRET_KEY_LIVE
-ENV STRIPE_WEBHOOK_SECRET_LIVE=$STRIPE_WEBHOOK_SECRET_LIVE
-ENV STRIPE_PRODUCT_PROKIT_LIVE=$STRIPE_PRODUCT_PROKIT_LIVE
-ENV STRIPE_PRODUCT_SAASKIT_LIVE=$STRIPE_PRODUCT_SAASKIT_LIVE
-ENV STRIPE_PRICE_PROKIT_LIVE=$STRIPE_PRICE_PROKIT_LIVE
-ENV STRIPE_PRICE_SAASKIT_LIVE=$STRIPE_PRICE_SAASKIT_LIVE
-ENV NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE=$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE
+ENV STRIPE_SECRET_KEY_LIVE=sk_live_build_placeholder_00000000000000000000
+ENV STRIPE_WEBHOOK_SECRET_LIVE=whsec_build_placeholder
+ENV STRIPE_PRODUCT_PROKIT_LIVE=prod_build_placeholder
+ENV STRIPE_PRICE_PROKIT_LIVE=price_build_placeholder
+ENV STRIPE_PRODUCT_SAASKIT_LIVE=prod_build_placeholder
+ENV STRIPE_PRICE_SAASKIT_LIVE=price_build_placeholder
 
 COPY . .
 RUN --mount=type=cache,target=/app/.next/cache npm run build
