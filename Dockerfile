@@ -28,11 +28,6 @@ FROM node:20-bullseye-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-# Force Next.js to bind to all interfaces (0.0.0.0) not just the container's
-# overlay network IP. Docker sets HOSTNAME to the container ID which resolves
-# to the overlay IP — causing Next.js to bind only to that IP, making the
-# health check (which uses localhost:3000) always fail with connection refused.
-ENV HOSTNAME=0.0.0.0
 RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates gnupg2 && \
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
@@ -47,6 +42,6 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/scripts ./scripts
 EXPOSE 3000
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000/api/health', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1)).end()"
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD node -e "require('http').get('http://' + process.env.HOSTNAME + ':3000/api/health', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1)).end()"
 CMD ["sh", "scripts/start-production.sh"]
