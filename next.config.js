@@ -9,6 +9,7 @@ const withBundleAnalyzer = bundleAnalyzer({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  staticPageGenerationTimeout: 300,
   experimental: {
     optimizePackageImports: ['@/components'],
   },
