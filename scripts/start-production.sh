@@ -33,7 +33,11 @@ else
   exit 1
 fi
 
-node "$SERVER_ENTRY" &
+# Override HOSTNAME so Next.js binds to all interfaces (0.0.0.0), not just
+# the container's overlay IP. Docker sets HOSTNAME to the container ID which
+# DNS-resolves to the overlay IP — Next.js 14 uses HOSTNAME as the bind
+# address, causing health checks via localhost:3000 to fail (connection refused).
+HOSTNAME=0.0.0.0 node "$SERVER_ENTRY" &
 APP_PID=$!
 
 wait "$APP_PID"
