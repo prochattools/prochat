@@ -1,8 +1,4 @@
 'use strict'
-
-// New Relic configuration - disabled for now to debug startup issues
-// Uncomment when New Relic is properly configured and tested
-/*
 exports.config = {
   app_name: [process.env.NEW_RELIC_APP_NAME || 'ProChat'],
   license_key: process.env.NEW_RELIC_LICENSE_KEY || '',
@@ -17,7 +13,3 @@ exports.config = {
     ],
   },
 }
-*/
-
-// Empty config to prevent New Relic initialization issues
-exports.config = {}
