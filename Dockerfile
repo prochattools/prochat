@@ -8,6 +8,7 @@ RUN --mount=type=cache,target=/root/.npm npm ci
 
 FROM deps AS builder
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_OPTIONS=--max-old-space-size=4096
 # Build-time Stripe vars: stripe-env.ts and config.ts call getters at module eval during page
 # collection. These are server-only (not baked into client bundle) — placeholder values are safe.
 # Dokploy injects real values at container runtime via env; these only exist to satisfy validation.
