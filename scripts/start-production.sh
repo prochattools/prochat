@@ -1,5 +1,5 @@
 #!/bin/sh
-set -eu
+set -eux
 
 NODE_ENV=production
 
@@ -33,7 +33,14 @@ else
   exit 1
 fi
 
+echo "Starting server: $SERVER_ENTRY"
 node "$SERVER_ENTRY" &
 APP_PID=$!
+echo "Server PID: $APP_PID"
+
+trap "echo 'Server crashed with exit code: $?'" EXIT
 
 wait "$APP_PID"
+EXIT_CODE=$?
+echo "Server exited with code: $EXIT_CODE"
+exit $EXIT_CODE

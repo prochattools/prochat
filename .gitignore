@@ -28,6 +28,9 @@ yarn-error.log*
 .env*.local
 .env
 
+# AI memory — ephemeral session handoff
+.ai/current.md
+
 # vercel
 .vercel
 
