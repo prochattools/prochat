@@ -34,11 +34,11 @@ else
 fi
 
 echo "Starting server: $SERVER_ENTRY"
-node "$SERVER_ENTRY" &
+node "$SERVER_ENTRY" 2>&1 &
 APP_PID=$!
 echo "Server PID: $APP_PID"
 
-trap "echo 'Server crashed with exit code: $?'" EXIT
+trap "echo 'Server process exited'" EXIT
 
 wait "$APP_PID"
 EXIT_CODE=$?
