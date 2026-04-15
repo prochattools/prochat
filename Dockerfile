@@ -41,6 +41,10 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/scripts ./scripts
+# newrelic is required at runtime via NODE_OPTIONS=--require newrelic
+# but is not traced by the standalone bundler — copy it explicitly
+COPY --from=builder /app/node_modules/newrelic ./node_modules/newrelic
+COPY --from=builder /app/node_modules/@newrelic ./node_modules/@newrelic
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
   CMD node -e "require('http').get('http://' + process.env.HOSTNAME + ':3000/api/health', res => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1)).end()"
