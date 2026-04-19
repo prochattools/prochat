@@ -71,6 +71,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/bb',
+        destination: 'https://github.com/stevewesthoek/brain-bridge',
+        permanent: true,
+      },
+      {
+        source: '/brainbridge',
+        destination: 'https://github.com/stevewesthoek/brain-bridge',
+        permanent: true,
+      },
+      {
         source: '/blog/is-saaskit-worth-it-for-first-time-founders-honest-breakdown',
         destination: '/blog/is-saaskit-worth-it-for-first-time-founders-honest-evaluation',
         permanent: true,
