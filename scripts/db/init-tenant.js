@@ -104,7 +104,7 @@ async function main() {
       fail('SYSTEM_DATABASE_URL is required in production')
     } else {
       systemUrl =
-        'postgresql://postgres:postgres@localhost:5433/postgres?schema=public'
+        'postgresql://postgres:postgres@localhost:5434/postgres?schema=public'
       console.log(
         'ℹ️ SYSTEM_DATABASE_URL not set, using default local Docker Postgres:',
         systemUrl
@@ -343,7 +343,7 @@ async function main() {
     console.log('--------------------------------------------------')
 
     const host = parsedSystemUrl.hostname
-    const port = parsedSystemUrl.port || '5433'
+    const port = parsedSystemUrl.port || '5434'
     const runtimeDbUrl = `postgresql://${encodeURIComponent(
       user
     )}:${encodeURIComponent(password)}@${host}:${port}/${dbName}?schema=${schema}`

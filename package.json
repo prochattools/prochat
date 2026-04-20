@@ -9,7 +9,7 @@
   "description": "ProKit – ProChat’s SaaS starter for micro-SaaS apps.",
   "author": "Steve Westhoek",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3056",
     "build": "next build",
     "analyze": "ANALYZE=true next build",
     "start": "sh scripts/start-production.sh",

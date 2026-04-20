@@ -73,7 +73,7 @@ const ThankYouTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
           </Text>
           <Section style={{ textAlign: 'center' }}>
             <Link
-              href="http://localhost:3000/dashboard"
+              href="http://localhost:3056/dashboard"
               style={styles.button}
             >
               Get Started

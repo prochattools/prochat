@@ -9,7 +9,7 @@ export function getSiteUrl() {
   }
 
   if (process.env.NODE_ENV === 'development') {
-    const port = process.env.PORT?.trim() || '3000'
+    const port = process.env.PORT?.trim() || '3056'
     return `http://localhost:${port}`
   }
 

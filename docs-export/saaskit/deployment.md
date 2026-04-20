@@ -20,7 +20,7 @@ SaaSKit ships with a proven launch path: Supabase Cloud hosts the Dev and Prod P
    npm install
    cp .env.example .env
    ```
-   Set at least `DATABASE_URL`, `APP_ENV=development`, and `NEXT_PUBLIC_APP_URL=http://localhost:3000`.
+   Set at least `DATABASE_URL`, `APP_ENV=development`, and `NEXT_PUBLIC_APP_URL=http://localhost:3056`.
 3. Run bootstrapping commands:
    ```bash
    npm run db:init

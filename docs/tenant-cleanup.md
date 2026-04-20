@@ -16,7 +16,7 @@ For the full database model and lifecycle, see `docs/database.md`.
 2) Type protection: delete only `preview` by default; require `--force` otherwise.  
 3) Idempotent: missing schema/user/row should not crash.  
 4) Environment separation:  
-   - Dev cleanup hits local Docker Postgres via `SYSTEM_DATABASE_URL` on port 5433.  
+   - Dev cleanup hits local Docker Postgres via `SYSTEM_DATABASE_URL` on port 5434.  
    - Prod cleanup runs inside Dokploy against Supabase via `SYSTEM_DATABASE_URL`. Never clean prod from a laptop.
 
 ## Cleanup algorithm
@@ -51,7 +51,7 @@ npm run db:cleanup -- --slug <slug> [--force]
 - Uses `SYSTEM_DATABASE_URL`.  
 - Enforces `type = 'preview'` unless `--force`.  
 - Drops schema → drops user → deletes registry row.  
-- Dev: `localhost:5433`. Prod: Supabase `10.0.2.4:5433` inside Dokploy.
+- Dev: `localhost:5434`. Prod: Supabase `10.0.2.4:5433` inside Dokploy.
 
 ## CI / PR integration
 - PR open/update: `NODE_ENV=production npm run db:init -- --slug pr_42 --preview`

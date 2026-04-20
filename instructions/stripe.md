@@ -54,7 +54,7 @@ stripe login
 
 ```bash
 # Forward webhooks to local development server
-stripe listen --forward-to localhost:3000/api/webhook/stripe
+stripe listen --forward-to localhost:3056/api/webhook/stripe
 
 # This will output a webhook signing secret like:
 # Ready! Your webhook signing secret is whsec_1234567890abcdef...

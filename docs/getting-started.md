@@ -4,7 +4,7 @@ Follow these steps to run the application locally and complete the first sign-in
 
 ## Prerequisites
 - Node.js + npm
-- Docker running Postgres on host port `5433` (maps to container `5432`)
+- Docker running Postgres on host port `5434` (maps to container `5432`)
 - Stripe + Clerk test keys
 
 ## 1) Clone & install
@@ -25,7 +25,7 @@ Create `.env` (or let `npm run dev` generate it) and set:
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE` – client Stripe keys
 - `STRIPE_SECRET_KEY_TEST`, `STRIPE_SECRET_KEY_LIVE` – server Stripe keys
 - `STRIPE_WEBHOOK_SECRET_TEST`, `STRIPE_WEBHOOK_SECRET_LIVE` – Stripe webhook signing secrets
-- `NEXT_PUBLIC_APP_URL` – app base URL (e.g., http://localhost:3000)
+- `NEXT_PUBLIC_APP_URL` – app base URL (e.g., http://localhost:3056)
 - `NEXT_PUBLIC_UMAMI_SCRIPT_URL`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID` – optional public analytics config for Umami
 - Optional: `MAKE_*`, `N8N_*`, `RESEND_API_KEY`, `MAILERLITE_*`, and analytics values as needed
 
@@ -47,7 +47,7 @@ For new projects or when you need `.env.production` updated, run:
 ## 4) Start the app
 ```bash
 npm run dev
-# app: http://localhost:3000
+# app: http://localhost:3056
 ```
 
 ## 5) First login & subscription

@@ -15,6 +15,7 @@ Other docs should link here instead of duplicating the contract. The list below 
 - `PORT`
 
 These values are used by the tenant provisioning scripts, CLI helpers, and runtime startup. `APP_SLUG` determines the tenant schema (`tenant_<slug>`); the three database URLs keep runtime, provisioning, and Prisma shadow workloads separate. `TENANT_DB_PASSWORD` is required in production.
+`PORT` is reserved for the local app server and should be set to `3056` in this workspace to avoid collisions with other applications.
 
 ## Site URLs and public hosts
 
@@ -27,6 +28,7 @@ These values are used by the tenant provisioning scripts, CLI helpers, and runti
 - `NEXT_PUBLIC_UMAMI_WEBSITE_ID`
 
 `NEXT_PUBLIC_SITE_URL` is the canonical URL used for sitemap generation and canonical metadata (`scripts/generate-sitemap.ts`, `src/lib/seo/metadata.ts`). `NEXT_PUBLIC_APP_URL` is consumed by metadata and social image helpers (`src/lib/generateSocialImageUrl.ts` and other UI helpers). The Strapi helper (`src/utils/fetch.ts`) references the Strapi host and token. The YouTube URL is only used in marketing sections that expose an external video host.
+For local development, `NEXT_PUBLIC_APP_URL` should point at `http://localhost:3056`.
 
 ## Auth (Clerk)
 

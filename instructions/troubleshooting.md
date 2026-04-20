@@ -136,7 +136,7 @@ echo $CLERK_SECRET_KEY
 
 ```bash
 # Test webhook forwarding
-stripe listen --forward-to localhost:3000/api/webhook/stripe
+stripe listen --forward-to localhost:3056/api/webhook/stripe
 
 # Trigger test events
 stripe trigger checkout.session.completed
@@ -321,10 +321,10 @@ npx prisma studio
 
 ```bash
 # Test API endpoints
-curl -X GET http://localhost:3000/api/projects
+curl -X GET http://localhost:3056/api/projects
 
 # Test with authentication
-curl -X GET http://localhost:3000/api/projects \
+curl -X GET http://localhost:3056/api/projects \
   -H "Authorization: Bearer [token]"
 ```
 
@@ -460,7 +460,7 @@ brew install stripe/stripe-cli/stripe
 stripe login
 
 # Listen to webhooks
-stripe listen --forward-to localhost:3000/api/webhook/stripe
+stripe listen --forward-to localhost:3056/api/webhook/stripe
 
 # Trigger test events
 stripe trigger checkout.session.completed

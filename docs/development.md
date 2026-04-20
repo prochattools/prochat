@@ -8,7 +8,9 @@ This document describes the actual local development workflow for the ProChat re
 - Postgres available for development
 - project env values present in `.env` or `.env.example` copied into local config
 
-The repo expects local database access for provisioning and migrations. The common local setup uses Postgres exposed on `localhost:5433`.
+The repo expects local database access for provisioning and migrations. The common local setup uses Postgres exposed on `localhost:5434`.
+
+The local app server is reserved on `http://localhost:3056` so it does not collide with other apps on this machine.
 
 ## Install
 
@@ -34,6 +36,7 @@ Important local values:
 - `DATABASE_URL`
 - `SYSTEM_DATABASE_URL`
 - `SHADOW_DATABASE_URL`
+- `PORT`
 - Stripe test values when checkout flows are exercised
 - Clerk disabled or Clerk keys set, depending on the workflow
 

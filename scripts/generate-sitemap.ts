@@ -24,7 +24,7 @@ function getSiteUrl() {
     throw new Error('NEXT_PUBLIC_SITE_URL is required to generate sitemap.xml in production.')
   }
 
-  return 'http://localhost:3000'
+  return 'http://localhost:3056'
 }
 
 function escapeXml(value: string) {

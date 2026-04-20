@@ -64,7 +64,7 @@ The production contract is repo-enforced at startup. [prepare-production.sh](/Us
 That script:
 
 - runs `sh scripts/deploy/prepare-production.sh`
-- starts `next start -p ${PORT:-3000}`
+- starts `next start -p ${PORT:-3056}`
 - syncs standalone static assets when needed for the current runtime layout
 
 It does not:
