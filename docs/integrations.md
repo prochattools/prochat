@@ -4,20 +4,22 @@ This document summarizes the external services that ProChat actively integrates 
 
 Use [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md) for the env contract. This document focuses on behavior and system role.
 
-## Clerk
+## Shared Auth UI + Ory
 
-Clerk is the primary auth layer for production.
+The current auth pattern uses ProChat as the shared auth UI and Ory as the backend identity/session layer.
 
 Current behavior:
 
-- middleware enables Clerk when keys are present
-- production throws if Clerk is required but missing
-- local and CI flows can run with Clerk disabled or in mock mode
+- middleware redirects unauthenticated users to the shared ProChat auth UI
+- ProChat renders app-specific auth screens via the `app` query parameter
+- Ory handles login, registration, sessions, and identity storage
+- local and CI flows can run with auth disabled or in mock mode when required
 
 Key implementation points:
 
 - auth gating lives in [middleware.ts](/Users/Office/Repos/Organisation/ProChat/Web/prochat/src/middleware.ts)
-- helper wrappers exist for safe Clerk usage on client and server
+- shared auth theme selection lives in [src/lib/auth-ui.ts](/Users/Office/Repos/Organisation/ProChat/Web/prochat/src/lib/auth-ui.ts)
+- ProChat sign-in and sign-up pages hand off to Ory browser flows
 
 ## Stripe
 

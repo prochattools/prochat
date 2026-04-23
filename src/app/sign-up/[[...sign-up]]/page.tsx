@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
-import { SignUp } from '@clerk/nextjs'
 import { AuthScreen } from '@/components/AuthScreen'
-import { isClerkEnabled as isServerClerkEnabled } from '@/libs/safeClerkServer'
+import { getAuthTheme } from '@/lib/auth-ui'
+
+const OryPublicUrl = process.env.NEXT_PUBLIC_ORY_PUBLIC_URL || 'https://auth.prochat.tools'
+const AuthUiUrl = process.env.NEXT_PUBLIC_AUTH_UI_URL || 'https://prochat.tools'
 
 export const metadata: Metadata = {
   robots: {
@@ -10,36 +12,29 @@ export const metadata: Metadata = {
   },
 }
 
-export default function Page({ searchParams }: { searchParams?: { redirect_url?: string } }) {
-  let clerkEnabled = false
-
-  try {
-    clerkEnabled = isServerClerkEnabled()
-  } catch {
-    clerkEnabled = false
-  }
-
-  if (!clerkEnabled) {
-    return (
-      <AuthScreen
-        title="Authentication unavailable"
-        description="Clerk is disabled or not configured correctly for this environment, so account sign-up is not available here."
-      >
-        <div className="rounded-[28px] border border-border bg-surface p-8 text-center text-sm text-muted-foreground shadow-sm">
-          Authentication is currently disabled.
-        </div>
-      </AuthScreen>
-    )
-  }
-
+export default function Page({ searchParams }: { searchParams?: { redirect_url?: string; app?: string } }) {
   const redirectUrl = searchParams?.redirect_url?.startsWith('/') ? searchParams.redirect_url : '/dashboard'
+  const theme = getAuthTheme(searchParams?.app)
+  const registrationUrl = new URL('/self-service/registration/browser', OryPublicUrl)
+  registrationUrl.searchParams.set('return_to', `${AuthUiUrl}${redirectUrl}`)
 
   return (
     <AuthScreen
-      title="Create your ProChat account"
-      description="Set up your ProChat account to access checkout flows, product setup, and protected admin tools when your account is allowed."
+      title={`Create your ${theme.productName} account`}
+      description={theme.tagline}
     >
-      <SignUp forceRedirectUrl={redirectUrl} fallbackRedirectUrl={redirectUrl} />
+      <div className="space-y-4 rounded-[28px] border border-border bg-surface/80 p-8 shadow-sm">
+        <p className="text-sm leading-6 text-muted-foreground">
+          {theme.productName} handles the registration experience and hands control to Ory for identity creation.
+        </p>
+        <a
+          href={registrationUrl.toString()}
+          className="inline-flex h-11 items-center justify-center rounded-full px-5 text-sm font-semibold text-white transition-colors hover:opacity-90"
+          style={{ backgroundColor: theme.accent }}
+        >
+          {theme.signupCta}
+        </a>
+      </div>
     </AuthScreen>
   )
 }

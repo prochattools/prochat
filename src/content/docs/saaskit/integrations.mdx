@@ -27,17 +27,17 @@ Important:
 - Enable integrations only when you are ready
 - If an integration is not configured, related routes should fail gracefully with setup guidance
 
-## Clerk (authentication)
+## Shared auth UI + Ory
 
 Use this when you want user sign-up/sign-in.
 
 If not configured:
 - app can still run in mock-safe mode
-- protected routes are not enforced until valid Clerk keys exist
+- protected routes are not enforced until the shared auth UI and Ory backend exist
 
 Environment:
 ```bash
-# Set both flags to false when enabling Clerk.
+# Set the legacy flags to false when enabling the shared auth UI and Ory backend.
 CLERK_DISABLED=false
 NEXT_PUBLIC_CLERK_DISABLED=false
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_...
@@ -48,7 +48,7 @@ NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 
 Quick check:
 1. sign-in and sign-up pages load
-2. protected app routes require login when Clerk is enabled
+2. protected app routes require login when the shared auth UI and Ory backend are enabled
 
 ## Stripe (billing)
 
@@ -127,7 +127,7 @@ Quick check:
 
 ## Routes that depend on integrations
 
-- `/processing-page/*` needs Clerk + Stripe + Stripe products
+- `/processing-page/*` needs shared auth + Ory + Stripe + Stripe products
 - `/waiting-list` needs Resend
 - `/blog*` needs WordPress endpoint
 
@@ -154,4 +154,3 @@ Run production migrations manually:
 ```bash
 npm run db:migrate:prod
 ```
-

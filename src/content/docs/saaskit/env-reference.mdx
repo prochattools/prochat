@@ -76,18 +76,18 @@ These are optional in the current codebase. Use them only when you add custom Su
 
 Where to get them: Supabase -> Project Settings -> API.
 
-## Clerk (optional auth)
+## Shared auth UI + Ory (optional auth)
 
 - `CLERK_DISABLED`
 - `NEXT_PUBLIC_CLERK_DISABLED`
 
-What these do: keep both `true` to run without Clerk; set both `false` to enable Clerk.
+What these do: keep both `true` to run without the shared auth UI; set both `false` to enable the shared auth UI.
 
 - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
 - `CLERK_SECRET_KEY`
 
-What these do: Clerk API keys.  
-Where to get them: Clerk Dashboard -> API Keys.
+What these do: Ory and shared auth UI backend keys.  
+Where to get them: your Ory / ProChat deployment settings.
 
 - `NEXT_PUBLIC_CLERK_SIGN_IN_URL`
 - `NEXT_PUBLIC_CLERK_SIGN_UP_URL`
@@ -154,4 +154,3 @@ What these do: metadata, social tags, and theme/color defaults.
 - `CI`
 
 These are set automatically by hosting/CI providers.
-

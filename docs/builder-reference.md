@@ -10,7 +10,7 @@ Ship small B2B SaaS products fast, cheap, and often. Aim for 80% ideation/valida
 - Framework: Next.js (App + Pages routers)  
 - Language: TypeScript  
 - Styling: TailwindCSS + shadcn/ui  
-- Auth: Clerk  
+- Auth: Shared ProChat auth UI backed by Ory  
 - Database: PostgreSQL (Supabase) + Prisma  
 - Email: Resend  
 - Payments: Stripe  
@@ -83,7 +83,7 @@ README.md
 app
   api
     auth
-      [...clerk].ts
+      [...auth].ts
     webhook
       stripe.ts
   components

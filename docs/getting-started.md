@@ -1,11 +1,11 @@
 # Project Getting Started
 
-Follow these steps to run the application locally and complete the first sign-in/checkout flow.
+Follow these steps to run the application locally and complete the first auth/checkout flow.
 
 ## Prerequisites
 - Node.js + npm
 - Docker running Postgres on host port `5434` (maps to container `5432`)
-- Stripe + Clerk test keys
+- Stripe test keys
 
 ## 1) Clone & install
 ```bash
@@ -21,7 +21,8 @@ Create `.env` (or let `npm run dev` generate it) and set:
 - `SYSTEM_DATABASE_URL` – admin DB URL for scripts
 - `SHADOW_DATABASE_URL` – Prisma shadow DB for `migrate dev`
 - `TENANT_DB_PASSWORD` – tenant DB password (required in prod; defaults to `devpass` locally)
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` – Clerk keys
+- `NEXT_PUBLIC_AUTH_UI_URL` – shared auth UI base URL
+- `NEXT_PUBLIC_ORY_PUBLIC_URL`, `ORY_ADMIN_URL`, `ORY_ADMIN_API_KEY`, `ORY_PROJECT_ID` – Ory auth backend
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE` – client Stripe keys
 - `STRIPE_SECRET_KEY_TEST`, `STRIPE_SECRET_KEY_LIVE` – server Stripe keys
 - `STRIPE_WEBHOOK_SECRET_TEST`, `STRIPE_WEBHOOK_SECRET_LIVE` – Stripe webhook signing secrets
@@ -51,8 +52,8 @@ npm run dev
 ```
 
 ## 5) First login & subscription
-1. Ensure Clerk test keys are set.  
-2. Visit `/sign-up` or click “Get started” → complete Clerk sign-up.  
+1. Ensure the shared auth UI and Ory backend env values are set.  
+2. Visit `/sign-up` or click “Get started” → complete Ory-backed sign-up.  
 3. After auth you’ll hit `/dashboard`; without an active subscription you’ll be redirected to `/processing-page`.  
 4. Choose a plan (Stripe test price IDs in `src/config.ts`) and complete checkout.  
 5. Stripe webhook (`/api/webhook/stripe`) marks your subscription `active` and triggers a thank-you email via Resend.  

@@ -38,7 +38,7 @@ Important local values:
 - `SHADOW_DATABASE_URL`
 - `PORT`
 - Stripe test values when checkout flows are exercised
-- Clerk disabled or Clerk keys set, depending on the workflow
+- Shared auth UI / Ory config set, depending on the workflow
 
 ## Local provisioning flow
 
@@ -98,8 +98,8 @@ The exact predev chain is defined in [package.json](/Users/Office/Repos/Organisa
 
 Auth behavior depends on env configuration.
 
-- if Clerk keys are present, Clerk middleware is used
-- if Clerk is disabled or keys are absent outside production, the repo can run in mock mode
+- if the shared auth UI and Ory backend are configured, the Ory-backed auth UI is used
+- if auth config is disabled or missing outside production, the repo can run in mock mode
 
 Relevant toggles are documented in [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md).
 

@@ -31,7 +31,7 @@ This page explains the main technology layers behind SaaSKit: runtime, database 
 - Database migrations run locally (`db:migrate:dev`), automatically on Vercel builds (`db:migrate:vercel-build`), and manually via `db:migrate:prod` when needed. `docs/public/database.md` explains the exact workflow.
 
 ## Optional integration layer
-- Clerk (authentication), Stripe (billing), Resend (email), WordPress (blog), and n8n (automation) are all optional features that plug into the stack when you opt in. Each integration keeps SaaSKit’s router and API handlers running safely when keys are missing. See `docs/public/integrations.md` for the configuration checks and graceful fallbacks.
+- Shared ProChat auth UI backed by Ory, Stripe (billing), Resend (email), WordPress (blog), and n8n (automation) are all optional features that plug into the stack when you opt in. Each integration keeps SaaSKit’s router and API handlers running safely when keys are missing. See `docs/public/integrations.md` for the configuration checks and graceful fallbacks.
 - When integrations are disabled, the stack preserves the runtime contract: marketing routes stay public, app routes keep their guards, and middleware continues to enforce the multi-tenant behavior described in `docs/public/architecture.md`.
 
 ## Supporting tech
@@ -42,4 +42,3 @@ This page explains the main technology layers behind SaaSKit: runtime, database 
 - Development checklist: `docs/public/development.md`  
 - Deployment path: `docs/public/deployment.md`  
 - Features inventory: `docs/public/features.md`
-

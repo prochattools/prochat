@@ -141,12 +141,12 @@ Required env:
 
 ### Shared
 
-- working Clerk auth context for route access
+- working ProChat auth context for route access
 - working Prisma database connection
 
 ## Operational caveats
 
-- these routes are authenticated and expect a current Clerk user
+- these routes are authenticated and expect a current ProChat/Ory session
 - Make and n8n provisioning both persist project metadata in the same Prisma model
 - Make routes currently call fixed upstream API shapes and expect valid scenario IDs
 - the n8n workflow clone route currently requires caller-supplied API key input for the cloned OpenAI credential

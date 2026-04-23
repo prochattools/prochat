@@ -96,7 +96,7 @@ These patterns are central across the repo:
 - scripted tenant provisioning
 - Prisma-based schema management
 - build-time generation for SEO and docs artifacts
-- integration-heavy API routes for Stripe, Clerk, Resend, GitHub App, Make, n8n, and MailerLite
+- integration-heavy API routes for Stripe, shared Ory auth UI, Resend, GitHub App, Make, n8n, and MailerLite
 
 ## Canonical references
 

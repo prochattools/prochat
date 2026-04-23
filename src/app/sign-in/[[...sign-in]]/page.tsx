@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
-import { SignIn } from '@clerk/nextjs'
 import { AuthScreen } from '@/components/AuthScreen'
-import { isClerkEnabled as isServerClerkEnabled } from '@/libs/safeClerkServer'
+import { getAuthTheme } from '@/lib/auth-ui'
+
+const OryPublicUrl = process.env.NEXT_PUBLIC_ORY_PUBLIC_URL || 'https://auth.prochat.tools'
+const AuthUiUrl = process.env.NEXT_PUBLIC_AUTH_UI_URL || 'https://prochat.tools'
 
 export const metadata: Metadata = {
   robots: {
@@ -10,36 +12,29 @@ export const metadata: Metadata = {
   },
 }
 
-export default function Page({ searchParams }: { searchParams?: { redirect_url?: string } }) {
-  let clerkEnabled = false
-
-  try {
-    clerkEnabled = isServerClerkEnabled()
-  } catch {
-    clerkEnabled = false
-  }
-
-  if (!clerkEnabled) {
-    return (
-      <AuthScreen
-        title="Authentication unavailable"
-        description="Clerk is disabled or not configured correctly for this environment, so account sign-in is not available here."
-      >
-        <div className="rounded-[28px] border border-border bg-surface p-8 text-center text-sm text-muted-foreground shadow-sm">
-          Authentication is currently disabled.
-        </div>
-      </AuthScreen>
-    )
-  }
-
+export default function Page({ searchParams }: { searchParams?: { redirect_url?: string; app?: string } }) {
   const redirectUrl = searchParams?.redirect_url?.startsWith('/') ? searchParams.redirect_url : '/dashboard'
+  const theme = getAuthTheme(searchParams?.app)
+  const loginUrl = new URL('/self-service/login/browser', OryPublicUrl)
+  loginUrl.searchParams.set('return_to', `${AuthUiUrl}${redirectUrl}`)
 
   return (
     <AuthScreen
-      title="Sign in to ProChat"
-      description="Use your ProChat account to continue into the product, account dashboard, or protected admin tools."
+      title={`Sign in to ${theme.productName}`}
+      description={theme.tagline}
     >
-      <SignIn forceRedirectUrl={redirectUrl} fallbackRedirectUrl={redirectUrl} />
+      <div className="space-y-4 rounded-[28px] border border-border bg-surface/80 p-8 shadow-sm">
+        <p className="text-sm leading-6 text-muted-foreground">
+          {theme.productName} handles the login experience and hands control to Ory for session creation.
+        </p>
+        <a
+          href={loginUrl.toString()}
+          className="inline-flex h-11 items-center justify-center rounded-full px-5 text-sm font-semibold text-white transition-colors hover:opacity-90"
+          style={{ backgroundColor: theme.accent }}
+        >
+          {theme.loginCta}
+        </a>
+      </div>
     </AuthScreen>
   )
 }

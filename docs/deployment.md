@@ -130,6 +130,8 @@ File reference: [docker-compose.yml](docker-compose.yml)
 These behaviors should not be documented as active ProChat deployment features:
 
 - SaaSKit runtime deploy gate
+- legacy auth remains only for apps still mid-migration
+- shared auth for new work standardizes on ProChat UI backed by Ory
 
 ## Related references
 

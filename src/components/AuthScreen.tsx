@@ -24,12 +24,12 @@ export function AuthScreen({ title, description, children }: AuthScreenProps) {
                 <Logo scale={0.95} />
               </Link>
               <div className="space-y-4">
-                <p className="font-mono text-xs uppercase tracking-[0.36em] text-primary/80">ProChat account</p>
+                <p className="font-mono text-xs uppercase tracking-[0.36em] text-primary/80">ProChat auth</p>
                 <h1 className="text-4xl font-bold tracking-[-0.04em] text-foreground">{title}</h1>
                 <p className="text-base leading-7 text-muted-foreground">{description}</p>
               </div>
               <div className="rounded-3xl border border-border bg-surface/70 p-5 text-sm leading-6 text-muted-foreground shadow-sm">
-                Use the same Clerk account you expect to access `/admin/licenses` or `/admin/og` with in production.
+                Use the same shared auth account you expect to access ProChat and the connected apps with in production.
               </div>
             </div>
           </div>
