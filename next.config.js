@@ -71,8 +71,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/bb',
-        destination: 'https://github.com/stevewesthoek/brain-bridge',
+        source: '/bf',
+        destination: 'https://github.com/stevewesthoek/buildflow',
         permanent: true,
       },
       {
