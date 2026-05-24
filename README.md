@@ -153,9 +153,9 @@ The SEO system is centralized and route-safe:
 - content routes are statically generated via `generateStaticParams`
 - canonical URLs are always built from the same site-url source
 
-The positioning is consistent across metadata and content:
+The positioning should stay consistent across metadata and content:
 
-> ProChat — Build SaaS with Structure, not Guesswork.
+> ProChat OS — Agentic workflows between your messy inputs and your business tools.
 
 ## Learning Architecture
 
@@ -173,8 +173,8 @@ The content system is not isolated from conversion. It is designed to move users
 
 1. Discover via the core marketing pages, Learn, Starting Point, Production Guide, Docs, or direct prompt links
 2. Understand the system through related content and structured layouts
-3. Move into a CTA that routes to kits, contact, or the next execution asset
-4. Convert into SaaSKit, ProChat, or a conversation with the team
+3. Move into a CTA that routes to ProChat OS, managed setup, contact, or the next execution asset
+4. Convert into a ProChat OS conversation, managed setup request, commercial path, or supporting legacy product where relevant
 
 Each content layout injects a CTA section automatically so discovery traffic does not dead-end.
 
