@@ -2,7 +2,11 @@
 
 ## Repository Overview
 
-This repository hosts **ProChat**, the Next.js SaaS marketing and content platform that sits on top of SaaSKit infrastructure patterns. ProChat adds dedicated systems for the root-domain experience, the generated documentation pipeline, and ProChat-specific automation flows.
+This repository hosts **ProChat**, the Next.js marketing, learning, documentation, and conversion platform for **ProChat OS**.
+
+The current business strategy is ProChat OS-first. ProChat OS is an installable Agentic Workflow OS that sits between messy business inputs and the tools a business already uses. The public website must stay business-agnostic. Law firms and MikeOSS are direct-outreach/demo wedges, not the whole brand.
+
+ProChat still uses SaaSKit infrastructure patterns where they match the implementation, but SaaSKit, ProKit, UXKit, and WaaSKit are legacy/supporting products rather than the flagship strategy.
 
 ProChat’s architecture is composed of three domains:
 
@@ -11,6 +15,14 @@ ProChat’s architecture is composed of three domains:
 - **Documentation automation pipeline** – TypeScript/OpenAPI extraction, AI enrichment, ingest/validation, and publishing into `src/content/docs`.
 
 ## Source of Truth Documentation
+
+The authoritative internal docs for product strategy are:
+
+- `docs/strategy.md`
+- `docs/product-operating-map.md`
+- `docs/roadmap.md`
+- `docs/implementation-plan.md`
+- `docs/product-hierarchy-plan.md`
 
 The authoritative internal docs for architecture are:
 
@@ -24,7 +36,7 @@ The authoritative internal docs for architecture are:
 - `docs/content-platform.md`
 - `docs/docs-automation.md`
 
-Refer to these before making changes; they capture the implementation details and current contracts.
+Refer to the strategy docs before website/product copy changes and to the architecture docs before implementation changes. Mind remains the business source of truth when conflicts appear.
 
 ## Environment Contract
 

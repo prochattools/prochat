@@ -1,3 +1,18 @@
+# Historical 90-Day Execution Plan
+
+Status: historical SaaSKit-era growth plan. Preserve this document for context, but do not treat it as the current product roadmap without rewriting it against `docs/product-operating-map.md`, `docs/strategy.md`, and `docs/roadmap.md`.
+
+Current strategy notes:
+
+- This plan is historical and SaaSKit-era.
+- ProChat OS is now the flagship product and strategic center.
+- ProChat OS is an Agentic Workflow OS, not a SaaSKit growth funnel, BuildFlow page, or fixed kit.
+- SaaSKit, ProKit, UXKit, and WaaSKit remain legacy/supporting products.
+- BuildFlow is supporting/internal or adjacent tooling, not the current public flagship.
+- Future product roadmap work should use `docs/strategy.md`, `docs/product-operating-map.md`, and `docs/roadmap.md` as the canonical source.
+
+---
+
 🎯 90-Day Execution Objective
 
 By Week 12:

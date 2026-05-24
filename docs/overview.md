@@ -8,6 +8,28 @@ ProChat is a Next.js monolith that combines three systems in one repository:
 
 The repo follows SaaSKit infrastructure patterns where they still match the implementation, but this is the ProChat codebase and the operational surface is broader than the SaaSKit baseline.
 
+## Strategy references
+
+Before changing product positioning, homepage copy, product pages, or roadmap language, read:
+
+- [product-operating-map.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/product-operating-map.md)
+- [strategy.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/strategy.md)
+- [roadmap.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/roadmap.md)
+- [implementation-plan.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/implementation-plan.md)
+
+Current strategic boundaries:
+
+- Mind is the business source of truth for ProChat strategy.
+- ProChat OS is the flagship product and public website focus.
+- ProChat OS is an installable Agentic Workflow OS, not a chatbot, dashboard-only product, SaaS kit, or MikeOSS wrapper.
+- The public website should remain business-agnostic.
+- Law firms are the first direct outreach wedge, not the whole ProChat brand.
+- MikeOSS is a law-firm demo/install block, not ProChat OS and not ProChat-owned software.
+- BuildFlow is supporting/internal or adjacent tooling, not the current public flagship.
+- SaaSKit, ProKit, UXKit, and WaaSKit remain legacy/supporting products.
+- ProChat runtime uses Ory only for authentication.
+- Clerk belongs only to sold boilerplate/product context where that code actually uses it.
+
 ## System domains
 
 ### 1. App/runtime platform

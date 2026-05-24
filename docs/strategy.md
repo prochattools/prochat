@@ -1,0 +1,264 @@
+# ProChat Strategy
+
+Status: canonical strategy document for the ProChat website, docs, and product positioning.
+
+Last updated: 2026-05-24
+
+## Source of truth
+
+The business strategy in the `mind` repo is leading over this repository.
+
+Current leading strategy:
+
+```text
+mind/wiki/organisations/prochat/brand/prochat-os-strategy.md
+mind/wiki/organisations/prochat/brand/prochat-os-technical-definition.md
+mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
+mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
+```
+
+This ProChat repo must follow that strategy when updating website copy, product pages, roadmap language, and implementation docs.
+
+## Strategic decision
+
+ProChat OS is the flagship product of ProChat.
+
+ProChat is no longer primarily positioned around SaaSKit, ProKit, fixed kits, WaaSKit, or a narrow non-technical-founder SaaS education path. Those products remain real, but they are legacy or supporting products and no longer define the company direction.
+
+The company direction is now:
+
+```text
+Agentic workflows.
+Modular automation.
+Private workflow runtimes.
+Managed ProChat OS installations.
+```
+
+## Category
+
+ProChat OS operates in the category:
+
+```text
+Agentic Workflow OS
+```
+
+Plain-language explanation:
+
+```text
+ProChat OS is the middle layer between messy business inputs and the tools a business already uses.
+```
+
+## Vision
+
+ProChat helps businesses, solo builders, creators, and workflow-driven operators turn messy information into structured work through private agentic workflows that run inside ProChat OS.
+
+## Mission
+
+ProChat builds and sells ProChat OS: an installable Agentic Workflow OS that connects messy inputs to business tools through memory, connectors, model routing, workflow agents, approvals, logs, and a control console.
+
+## Business definition
+
+ProChat is a product-led software business centered on ProChat OS.
+
+The business sells:
+
+- source-available personal/non-commercial ProChat OS access
+- commercial ProChat OS licenses
+- managed ProChat OS installations
+- support, hosting, updates, and implementation around ProChat OS
+- modular workflow blocks that run inside or around ProChat OS
+
+## What ProChat OS is
+
+ProChat OS is an installable Agentic Workflow OS that gives businesses, solo builders, and workflow-driven operators a private agentic employee for memory, automation, local apps, content, operations, and execution.
+
+It turns messy information from emails, files, forms, notes, APIs, and folders into structured outputs, tasks, reports, drafts, updates, and actions.
+
+## What ProChat OS is not
+
+ProChat OS is not:
+
+- a chatbot
+- a dashboard only
+- a generic AI wrapper
+- a single SaaS tool
+- a fixed SaaS kit
+- MikeOSS
+- the model router alone
+- the memory store alone
+- the Brain Console alone
+
+Those can be components, modules, or wedges. ProChat OS is the runtime system that coordinates them.
+
+## Core product promise
+
+```text
+Agentic workflows that work for you 24/7.
+```
+
+Supporting promise:
+
+```text
+You keep working the way you work. ProChat OS sits in the middle and structures the mess.
+```
+
+## Main problem
+
+Modern AI tools are powerful, but most work still happens manually around them.
+
+Customers still have to:
+
+- copy information into chat windows
+- write prompts repeatedly
+- move outputs to other tools
+- reformat information
+- create tasks manually
+- update CRM or business systems manually
+- remember context manually
+- restart the process for every task
+
+The enemy is:
+
+```text
+manual AI glue work
+```
+
+ProChat OS turns AI from a passive chat tool into a connected agentic workflow system.
+
+## Audience
+
+### Primary public audience
+
+The public ProChat website is business-agnostic.
+
+It should target:
+
+- small businesses
+- local businesses
+- solo builders
+- personal developers
+- workflow-driven operators
+- creators and influencers
+- SaaS builders
+- businesses that want agentic automation without stitching tools together manually
+
+### First direct outreach niche
+
+Law firms are the first direct-sales niche.
+
+This is a go-to-market wedge, not the whole company strategy and not the public website identity.
+
+### Second direct outreach niche
+
+Accountants are the second local comparison niche if law-firm response is weak or if accounting workflows prove easier to sell.
+
+### Organic audience
+
+Creators, SaaS builders, influencers, and personal developers should be reached through organic content channels such as YouTube, Facebook, and build-in-public examples.
+
+## Website strategy
+
+The ProChat website should focus on ProChat OS as a business-agnostic Agentic Workflow OS.
+
+It should not be primarily about law firms, accountants, MikeOSS, SaaSKit, ProKit, WaaSKit, UXKit, or any single niche.
+
+Homepage direction:
+
+```text
+Agentic workflows between your messy inputs and your business tools.
+```
+
+Website framing:
+
+```text
+ProChat OS connects to the way your business already works.
+It takes messy input from many places, understands it, structures it, and sends useful output where it needs to go.
+The dashboard is only the command center.
+```
+
+## Product model
+
+ProChat OS can be offered as:
+
+1. **Free personal/non-commercial GitHub version**
+   - source-available
+   - personal/non-commercial use
+   - lets people inspect, fork, and use the system personally
+
+2. **Commercial license**
+   - required for business/commercial use
+   - required for agencies, resale, managed hosting, or internal business use if defined by license terms
+
+3. **Managed ProChat OS**
+   - installed, configured, updated, and supported by ProChat
+   - can run on customer-owned AWS/VPS
+   - can run on ProChat-managed AWS/VPS
+   - can run on-premise for local/nearby customers
+
+4. **Modular workflow blocks**
+   - customers may start with one workflow outcome
+   - more modules can be added over time
+
+## Supporting products and legacy products
+
+### BuildFlow
+
+BuildFlow remains useful as an internal/supporting capability for repo operations, AI context, and safe file workflows.
+
+It is not the ProChat flagship and should not be the main website strategy while ProChat OS is being positioned.
+
+Useful BuildFlow ideas may inform ProChat OS CLI, workflow runtime, and support tooling.
+
+### SaaSKit and ProKit
+
+SaaSKit and ProKit remain real products but are no longer the strategic center of ProChat.
+
+They should be treated as legacy/supporting products that may later be upgraded or repositioned as ProChat OS-compatible modules, examples, or implementation blocks.
+
+### UXKit and WaaSKit
+
+UXKit and WaaSKit remain legacy concepts/products.
+
+They should not drive the main website or flagship positioning. Useful ideas may later become agentic ProChat OS modules.
+
+### MikeOSS
+
+MikeOSS is not ProChat OS.
+
+MikeOSS is a law-firm outreach wedge and legal document AI workspace block:
+
+```text
+MikeOSS = legal document AI workspace
+ProChat OS = Agentic Workflow OS around and beyond it
+```
+
+MikeOSS should not define the public ProChat website.
+
+## Messaging principles
+
+Use language that is:
+
+- structured
+- practical
+- specific
+- business-agnostic on the main website
+- clear about live versus roadmap
+- honest about what is included now
+- centered on workflows, inputs, outputs, approvals, and managed installation
+
+Avoid language that is:
+
+- hype-driven
+- vague about current product status
+- overpromising autonomy
+- law-firm-only on the main website
+- BuildFlow-led
+- SaaSKit-led
+- kit-led
+- implying MikeOSS is owned by ProChat
+
+## Operating rule
+
+When this repo conflicts with the `mind` ProChat strategy, `mind` wins.
+
+Before changing website positioning, landing pages, product pages, roadmap language, or implementation docs, read the ProChat OS strategy docs in `mind` or their synchronized equivalents in this repo.

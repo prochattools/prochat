@@ -1,8 +1,31 @@
 # ProChat
 
-ProChat helps founders build SaaS with structure, not guesswork.
+ProChat builds **ProChat OS**: an installable Agentic Workflow OS that sits between messy business inputs and the tools a business already uses.
 
-This repository runs the root-domain marketing, learning, documentation, and conversion experience for ProChat. It uses a deterministic build-time content pipeline so the retained learning surfaces, generated docs, Open Graph assets, and sitemap output are produced under one production-safe architecture.
+This repository runs the root-domain marketing, learning, documentation, and conversion experience for ProChat. The public website strategy is now ProChat OS-first and business-agnostic. Law firms are the first direct outreach wedge, but the main website should not become law-firm-specific.
+
+## Strategy and product map
+
+The canonical product and strategy references are:
+
+- `docs/strategy.md` — ProChat OS-first business strategy, audience, positioning, and messaging rules
+- `docs/product-operating-map.md` — ProChat OS, managed offer, legacy products, MikeOSS wedge, and product boundaries
+- `docs/roadmap.md` — phased website, implementation, demo, outreach, and ProChat OS roadmap
+- `docs/implementation-plan.md` — executable, agent-ready task plan for safe documentation and website updates
+- `docs/product-hierarchy-plan.md` — homepage, product hierarchy, navigation, and CTA rules
+
+Important current product boundaries:
+
+- The `mind` repo ProChat strategy is leading over this repo.
+- ProChat OS is the flagship product.
+- ProChat OS is an Agentic Workflow OS, not a chatbot, dashboard, SaaS kit, or MikeOSS.
+- The public website should be business-agnostic.
+- Law firms are the first direct outreach wedge.
+- MikeOSS is a law-firm demo/install block, not ProChat OS and not ProChat-owned software.
+- BuildFlow is supporting/internal or adjacent tooling, not the current public flagship.
+- SaaSKit, ProKit, UXKit, and WaaSKit are legacy/supporting products.
+- ProChat runtime uses Ory as its active authentication platform.
+- Clerk may remain part of sold boilerplate products where the product code uses it, but it is not ProChat runtime auth.
 
 ## Architecture Overview
 
