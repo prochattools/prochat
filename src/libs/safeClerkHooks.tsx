@@ -23,19 +23,13 @@ interface SafeUserResult {
 }
 
 function useUserMock(): SafeUserResult {
-	if (process.env.NODE_ENV !== 'production') {
-		console.warn('⚠️ useUser() called while Clerk is disabled — returning mock user.')
-	}
 	return { isLoaded: true, isSignedIn: false, user: null }
 }
 
 function useClerkMock() {
-	if (process.env.NODE_ENV !== 'production') {
-		console.warn('⚠️ useClerk() called while Clerk is disabled — returning mock client.')
-	}
 	return {
-		openSignIn: () => console.warn('Mock: openSignIn() called'),
-		signOut: () => console.warn('Mock: signOut() called'),
+		openSignIn: () => {},
+		signOut: () => {},
 	}
 }
 
@@ -44,7 +38,6 @@ export const useUser = (): SafeUserResult => {
 		if (!isClerkEnabled) return useUserMock()
 		return useClerkUser() as unknown as SafeUserResult
 	} catch (err) {
-		console.warn('⚠️ useUser() failed, falling back to mock mode:', err)
 		if (process.env.NODE_ENV === 'production') {
 			throw err
 		}
@@ -57,7 +50,6 @@ export const useClerk = () => {
 		if (!isClerkEnabled) return useClerkMock()
 		return useClerkClient()
 	} catch (err) {
-		console.warn('⚠️ useClerk() failed, falling back to mock mode:', err)
 		if (process.env.NODE_ENV === 'production') {
 			throw err
 		}

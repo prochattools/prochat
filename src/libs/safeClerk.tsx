@@ -144,9 +144,5 @@ export const SafeClerkProvider = ({ children }: { children: React.ReactNode }) =
     )
   }
 
-  if (!isProduction) {
-    console.warn('⚠️ Clerk keys missing or invalid — using mock Clerk provider.')
-  }
-
   return <MockClerkProvider>{children}</MockClerkProvider>
 }

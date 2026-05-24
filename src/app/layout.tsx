@@ -6,7 +6,6 @@ import UmamiAnalytics from '@/components/UmamiAnalytics'
 import { brand } from '@/lib/brand'
 import { getSEOTags } from '@/libs/seo'
 import { getOrganizationSchema, getWebsiteSchema } from '@/libs/structured-data'
-import { SafeClerkProvider } from '@/libs/safeClerk'
 import { Golos_Text, JetBrains_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
 import { Viewport } from 'next'
@@ -100,9 +99,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="font-body bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
         <Providers>
-          <SafeClerkProvider>
-            <AppChrome>{children}</AppChrome>
-          </SafeClerkProvider>
+          <AppChrome>{children}</AppChrome>
         </Providers>
       </body>
     </html>
