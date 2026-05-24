@@ -52,6 +52,8 @@ The order is intentional:
 - `docs/product-operating-map.md`
 - `docs/roadmap.md`
 - `docs/product-hierarchy-plan.md`
+- `docs/prochat-os-landing-page-copy.md`
+- `docs/prochat-os-implementation-roadmap.md`
 - `docs/implementation-plan.md`
 
 These docs should be read before website/page changes.
