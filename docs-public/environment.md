@@ -30,32 +30,26 @@ These values are used by the tenant provisioning scripts, CLI helpers, and runti
 `NEXT_PUBLIC_SITE_URL` is the canonical URL used for sitemap generation and canonical metadata (`scripts/generate-sitemap.ts`, `src/lib/seo/metadata.ts`). `NEXT_PUBLIC_APP_URL` is consumed by metadata and social image helpers (`src/lib/generateSocialImageUrl.ts` and other UI helpers). The Strapi helper (`src/utils/fetch.ts`) references the Strapi host and token. The YouTube URL is only used in marketing sections that expose an external video host.
 For local development, `NEXT_PUBLIC_APP_URL` should point at `http://localhost:3056`.
 
-## Auth (Clerk)
+## Auth (Ory)
 
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
-- `CLERK_SECRET_KEY`
-- `NEXT_PUBLIC_CLERK_SIGN_IN_URL`
-- `NEXT_PUBLIC_CLERK_SIGN_UP_URL`
-- `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL`
-- `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL`
-- `CLERK_DISABLED`
-- `NEXT_PUBLIC_CLERK_DISABLED`
+ProChat runtime uses Ory as its active authentication platform. ProChat does not use Clerk for its own website/runtime auth.
+
+Current ProChat auth values:
+
+- `NEXT_PUBLIC_AUTH_UI_URL`
+- `NEXT_PUBLIC_ORY_PUBLIC_URL`
+- `ORY_ADMIN_URL`
+- `ORY_ADMIN_API_KEY`
+- `ORY_PROJECT_ID`
 - `ADMIN_EMAILS`
-- `ADMIN_CLERK_IDS`
-- `DISABLE_CLERK_IN_DEV`
-- `NEXT_PUBLIC_DISABLE_CLERK_IN_DEV`
 
-Clerk is required in production unless explicitly disabled. The middleware (`src/middleware.ts`) and UI wrappers read the publishable key and disable toggles. Local development and CI run in mock mode when Clerk is disabled or keys are absent. `/admin/*` routes also require an explicit allowlist: set `ADMIN_EMAILS`, `ADMIN_CLERK_IDS`, or both. If the allowlist is missing, admin pages fail in a diagnosable configuration state instead of silently 404ing.
-`DISABLE_CLERK_IN_DEV` and `NEXT_PUBLIC_DISABLE_CLERK_IN_DEV` are developer/CI toggles that switch Clerk off while still running the app. Set both to `'true'` when testing without a Clerk instance.
+The shared ProChat auth UI is backed by Ory. Middleware and protected app flows should be documented against the Ory-backed auth model. Local and CI flows may still use documented mock/disabled-auth behavior where the implementation supports it, but that does not make Clerk an active ProChat runtime dependency.
 
-Production social login is configured in Clerk, not in this repo. For Google sign-in to work, the production Clerk instance behind `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` / `CLERK_SECRET_KEY` must have the Google social connection enabled with a valid OAuth client. If Google returns `Missing required parameter: client_id`, the production Clerk instance is missing Google client configuration or the app is pointed at the wrong Clerk instance. Also verify the production app domain, sign-in URL, and callback/redirect URLs shown in the Clerk dashboard match the live site.
+### Sold boilerplate auth boundary
 
-Production Google sign-in checklist:
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` must point to the same Clerk production instance
-- the Clerk production instance must have Google enabled under social connections
-- if you use your own Google OAuth app, enter the Google client ID and secret in the Clerk dashboard for that production instance
-- in Google Cloud Console, add the exact authorized origins and redirect URIs Clerk shows for that production instance
-- make sure the live production domain and `/sign-in` route match the Clerk instance configuration
+Some sold boilerplate products may still include Clerk or other hosted auth options where the product code actually uses them. Document those as product/boilerplate behavior, not as ProChat runtime behavior.
+
+Do not add Clerk variables back to this ProChat environment contract unless the ProChat runtime code starts using them again and the product operating map is updated.
 
 ## Payments (Stripe)
 

@@ -6,6 +6,14 @@ These rules define how AI assistants and automation may interact with the ProCha
 The ProChat platform reuses SaaSKit contracts for provisioning, migrations, and environment setup. These guidelines apply to code, docs, database schema/migrations, and infra scripts inside this repository.
 
 ## 2) Core architectural invariants (do not break)
+### Auth boundary
+- ProChat runtime uses Ory as the active authentication platform.
+- The shared ProChat auth UI is backed by Ory.
+- Clerk is not an active ProChat runtime dependency.
+- Clerk may remain part of sold boilerplate products where that product code actually uses it, but document that separately from ProChat runtime behavior.
+
+Forbidden: reintroducing Clerk as ProChat runtime auth, mixing ProChat runtime auth docs with sold-boilerplate auth docs, or treating implementation tools such as Kiro as ProChat authentication platforms.
+
 ### Single-tenant runtime
 - One schema: `tenant_<APP_SLUG>`  
 - One DB user: `tenant_<APP_SLUG>_user`  

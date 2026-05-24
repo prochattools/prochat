@@ -1,4 +1,4 @@
-# PROKIT Tenant Cleanup
+# ProChat Tenant Cleanup
 
 This is the implementation reference for safely deleting a tenant (schema, DB user, registry row). It backs:
 - `npm run db:cleanup -- --slug <slug> [--force]`

@@ -10,14 +10,16 @@ Ship small B2B SaaS products fast, cheap, and often. Aim for 80% ideation/valida
 - Framework: Next.js (App + Pages routers)  
 - Language: TypeScript  
 - Styling: TailwindCSS + shadcn/ui  
-- Auth: Shared ProChat auth UI backed by Ory  
+- ProChat runtime auth: shared ProChat auth UI backed by Ory  
+- Sold boilerplate/product auth: may include Clerk or another hosted option where the client-facing product code supports it  
+- Build implementation tooling: Kiro or similar tools may be recommended for customers where they reduce cost and setup friction, but they are not ProChat runtime auth platforms  
 - Database: PostgreSQL (Supabase) + Prisma  
 - Email: Resend  
 - Payments: Stripe  
 - Automation: n8n  
 - Included utilities: SEO and MDX content system, dashboard, invoice generator, waiting list, component library/animations, built-in analytics, and deployment workflow
 
-Ideas must adapt to this stack, not vice versa.
+Ideas must adapt to this stack and its product-specific boundaries, not vice versa.
 
 ## 4. Operating philosophy
 1. Speed over perfection: MVP in 1–2 days.  
