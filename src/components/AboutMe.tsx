@@ -72,7 +72,7 @@ const AboutMe = () => {
                   <strong className="text-black1 dark:text-white">
                     Ship fast without decisions
                   </strong>{" "}
-                  — Next.js, TypeScript, Tailwind/shadcn, Clerk, Prisma/Postgres,
+                  — Next.js, TypeScript, Tailwind/shadcn, Prisma/Postgres,
                   Stripe, Resend, and n8n are wired in from day one.
                 </li>
                 <li className="mb-3">

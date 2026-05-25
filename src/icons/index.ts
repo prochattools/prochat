@@ -20,7 +20,6 @@ export { default as Database } from "./database";
 export { default as Ui } from "./ui";
 export { default as Licence } from "./licence";
 export { default as Licence2 } from "./licence2";
-export { default as Clerk } from "./clerk";
 export { default as NextJs } from "./next-js";
 export { default as Prisma } from "./prisma";
 export { default as Resend } from "./resend";

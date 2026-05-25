@@ -1,6 +1,5 @@
 "use server"
 import prisma from "@/libs/prisma";
-import { clerkClient } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import configFile from "@/config";
@@ -70,24 +69,16 @@ return new Response('Product not found', {
 
 const subsType = product.metadata.subscription_type || 'default'
 const customerEmail = customer.email;
-const users = await clerkClient.users.getUserList({emailAddress:[customerEmail]})
-
-if (!users.data.length) {
-  console.error('Clerc user not found');
-  return NextResponse.json({ error: 'No customer email found for subscription' }, { status: 400 });
-}
-
-const user = users.data[0]
 const subsId = body?.data?.object?.subscription as string
 
 await prisma.subscription.upsert({
   where: {
-    user_clerk_id: user.id,
+    user_clerk_id: customerEmail,
   },
   create: {
       id: randomUUID(),
       last_stripe_cs_id: stripeObject.id,
-    user_clerk_id: user.id,
+    user_clerk_id: customerEmail,
     ...(subsId ? {sub_stripe_id: subsId}: {}),
     sub_status: 'active',
     user_email: customerEmail,

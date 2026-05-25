@@ -2,12 +2,10 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 /**
- * ProChat runtime auth is Ory-backed.
+ * ProChat runtime auth is not enforced yet.
  *
- * This middleware intentionally stays pass-through until the Ory runtime
- * protection layer is implemented here. Clerk middleware is not active in
- * ProChat runtime anymore; Clerk may remain only in sold boilerplate/product
- * context where those products still use it.
+ * Ory is the intended auth direction, but middleware intentionally stays
+ * pass-through until Ory session validation is implemented here.
  */
 export function middleware(_req: NextRequest) {
   return NextResponse.next()

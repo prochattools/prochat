@@ -46,7 +46,7 @@ export default async function AdminWaitlistPage({ searchParams }: { searchParams
     return (
       <AdminAccessNotice
         title="Access denied"
-        message="Your Clerk account is signed in, but it is not on the admin allowlist for this environment."
+        message="Ory session validation is not implemented yet, so this route remains informational only."
         tone="danger"
       />
     )

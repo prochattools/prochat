@@ -27,7 +27,9 @@ Current strategic boundaries:
 - MikeOSS is a law-firm demo/install block, not ProChat OS and not ProChat-owned software.
 - BuildFlow is supporting/internal or adjacent tooling, not the current public flagship.
 - SaaSKit, ProKit, UXKit, and WaaSKit remain legacy/supporting products.
-- ProChat runtime uses Ory only for authentication.
+- Clerk has been removed from active ProChat runtime code.
+- Ory is the intended authentication direction, but runtime session validation is still TODO.
+- Protected routes must not assume auth enforcement until Ory middleware or route guards exist.
 - Clerk belongs only to sold boilerplate/product context where that code actually uses it.
 
 ## System domains

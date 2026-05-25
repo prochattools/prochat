@@ -7,7 +7,6 @@ import HeroBadge from '@/components/ui/hero-badge'
 import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
 import { handleCheckoutProcess } from '@/helpers/checkout'
-import { useUser } from '@/libs/safeClerkHooks'
 import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
 import { FeatureIcon } from './_components/FeatureIcon'
 import SaaSkitSourceTracker from './SaaSkitSourceTracker'
@@ -39,9 +38,9 @@ const techSpecs = [
     icon: <FeatureIcon name="auth" className="h-5 w-5 text-primary" />,
     title: 'Authentication & Access',
     points: [
-      'Magic link & social login ready',
-      'Protected route middleware',
-      'User session management',
+      'Legacy auth surface from the boilerplate lineage',
+      'Protected route middleware is now pass-through in ProChat runtime',
+      'Ory session validation remains the ProChat runtime TODO',
     ],
   },
   {
@@ -117,7 +116,6 @@ const SaaSkitPageContent = ({
   heroButtonText,
   heroFullViewport,
 }: SaaSkitPageContentProps) => {
-  const { isLoaded, isSignedIn, user } = useUser()
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const [, setCheckoutError] = useState<string | null>(null)
   const hasTrackedPricingView = useRef(false)
@@ -204,18 +202,8 @@ const SaaSkitPageContent = ({
 
     if (!priceId || isCheckingOut) return
 
-    const userId = isLoaded && isSignedIn ? user?.id || null : null
-    const email =
-      isLoaded && isSignedIn ? user?.primaryEmailAddress?.emailAddress || null : null
-
-    handleCheckoutProcess(
-      priceId,
-      userId,
-      email,
-      setIsCheckingOut,
-      setCheckoutError
-    )
-  }, [priceId, isCheckingOut, isLoaded, isSignedIn, user])
+    handleCheckoutProcess(priceId, null, null, setIsCheckingOut, setCheckoutError)
+  }, [priceId, isCheckingOut])
 
   // Visual sanity checklist:
   // - Hero checklist icons use solid green checks.

@@ -3,15 +3,10 @@
 import PriceItem from '@/components/PriceItem'
 import config from '@/config'
 import { handleCheckoutProcess } from '@/helpers/checkout'
-import { isClerkEnabled } from '@/libs/safeClerk'
-import { useUser } from '@/libs/safeClerkHooks'
-import { SignUp } from '@clerk/nextjs'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo } from 'react'
 
 export default function Home() {
-	const { isSignedIn, user } = useUser()
-	const clerkEnabled = isClerkEnabled
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 	const queryString = searchParams?.toString() ?? ''
@@ -40,52 +35,29 @@ export default function Home() {
 	}, [priceIdFromLocal])
 
 	useEffect(() => {
-		console.log(
-			priceIdFromLocal,
-			isSignedIn,
-			user?.id,
-			user?.primaryEmailAddress?.emailAddress
-		)
-		if (!!priceIdFromLocal && !!user && isSignedIn) {
+		if (!!priceIdFromLocal) {
 			setTimeout(() => {
 				handleCheckoutProcess(
 					priceIdFromLocal as string,
-					user?.id || null,
-					user?.primaryEmailAddress?.emailAddress || null,
+					null,
+					null,
 					() => {},
 					() => {}
 				)
 			}, 4000)
 		}
-	}, [queryString, isSignedIn, user])
+	}, [queryString, priceIdFromLocal])
 
-	const checkoutDisable = !isSignedIn || !!priceIdFromLocal
+	const checkoutDisable = !!priceIdFromLocal
 
 	return (
 		<div className='min-h-screen flex flex-col lg:flex-row'>
 			{/* Create Account Section */}
 			<div className='lg:w-1/2 w-[100%] flex items-center justify-center p-8 bg-white dark:bg-black1'>
 				<div className='w-full max-w-md'>
-					{isSignedIn}
-					{!clerkEnabled ? (
-						<div className='rounded-lg border border-gray-200 bg-gray-50 p-6 text-center text-sm text-gray-600 dark:border-gray-800 dark:bg-black1 dark:text-gray-300'>
-							Authentication is currently disabled.
-						</div>
-					) : !isSignedIn ? (
-						<div>
-							<SignUp forceRedirectUrl={fullPath} />
-						</div>
-					) : (
-						<div className='text-center'>
-							<h2 className='text-2xl font-semibold mb-4'>
-								Account Created Successfully!
-							</h2>
-							<p className='mb-6'>
-								Welcome! You can now proceed with your payment.
-							</p>
-							{/* Optionally, add a button or additional content here */}
-						</div>
-					)}
+					<div className='rounded-lg border border-gray-200 bg-gray-50 p-6 text-center text-sm text-gray-600 dark:border-gray-800 dark:bg-black1 dark:text-gray-300'>
+						Authentication is not enforced yet. Ory session validation is still TODO.
+					</div>
 				</div>
 			</div>
 

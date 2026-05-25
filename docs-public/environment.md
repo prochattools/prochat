@@ -32,7 +32,7 @@ For local development, `NEXT_PUBLIC_APP_URL` should point at `http://localhost:3
 
 ## Auth (Ory)
 
-ProChat runtime uses Ory as its active authentication platform. ProChat does not use Clerk for its own website/runtime auth.
+ProChat runtime does not use Clerk for its own website/runtime auth. Ory is the intended direction, but runtime session validation is still TODO.
 
 Current ProChat auth values:
 
@@ -43,13 +43,20 @@ Current ProChat auth values:
 - `ORY_PROJECT_ID`
 - `ADMIN_EMAILS`
 
-The shared ProChat auth UI is backed by Ory. Middleware and protected app flows should be documented against the Ory-backed auth model. Local and CI flows may still use documented mock/disabled-auth behavior where the implementation supports it, but that does not make Clerk an active ProChat runtime dependency.
+The shared ProChat auth UI should be documented against the Ory-backed auth model once that UI and validation are implemented. Middleware remains pass-through for now, and protected app flows must not assume auth enforcement until Ory session validation exists.
 
 ### Sold boilerplate auth boundary
 
 Some sold boilerplate products may still include Clerk or other hosted auth options where the product code actually uses them. Document those as product/boilerplate behavior, not as ProChat runtime behavior.
 
 Do not add Clerk variables back to this ProChat environment contract unless the ProChat runtime code starts using them again and the product operating map is updated.
+
+## Ory auth TODO
+
+- add the final Ory env vars once the integration is implemented
+- implement middleware or route-level session validation
+- document route protection rules and smoke tests
+- keep middleware pass-through until validation exists
 
 ## Payments (Stripe)
 

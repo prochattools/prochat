@@ -26,8 +26,8 @@ export function AdminAccessNotice({
 
       <div className={`rounded-3xl border p-8 shadow-sm ${toneClasses[tone]}`}>
         <p className="text-sm text-muted-foreground">
-          If this environment should have admin access, verify Clerk production keys and confirm
-          the signed-in user matches `ADMIN_EMAILS` or `ADMIN_CLERK_IDS`.
+          Admin access is still waiting on Ory session validation. Until that is implemented,
+          these routes remain informational and should not be treated as protected.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link

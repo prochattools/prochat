@@ -6,7 +6,6 @@ import HeroBadge from '@/components/ui/hero-badge'
 import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
 import { handleCheckoutProcess } from '@/helpers/checkout'
-import { useUser } from '@/libs/safeClerkHooks'
 import { trackEvent, trackEventOncePerSession } from '@/utils/analytics'
 import { FeatureIcon } from './_components/FeatureIcon'
 
@@ -31,9 +30,9 @@ const techSpecs = [
     icon: <FeatureIcon name="auth" className="h-5 w-5 text-primary" />,
     title: 'Authentication & Access',
     points: [
-      'Clerk auth wiring',
+      'Legacy auth wiring from the boilerplate lineage',
       'Route-grouped app structure ((app))',
-      'Session-ready patterns',
+      'Session-ready patterns; Ory is the ProChat runtime direction',
     ],
   },
   {
@@ -75,7 +74,6 @@ const techSpecs = [
 ]
 
 const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
-  const { isLoaded, isSignedIn, user } = useUser()
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const [, setCheckoutError] = useState<string | null>(null)
   const hasTrackedPricingView = useRef(false)
@@ -152,18 +150,8 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
 
     if (!priceId || isCheckingOut) return
 
-    const userId = isLoaded && isSignedIn ? user?.id || null : null
-    const email =
-      isLoaded && isSignedIn ? user?.primaryEmailAddress?.emailAddress || null : null
-
-    handleCheckoutProcess(
-      priceId,
-      userId,
-      email,
-      setIsCheckingOut,
-      setCheckoutError
-    )
-  }, [priceId, isCheckingOut, isLoaded, isSignedIn, user])
+    handleCheckoutProcess(priceId, null, null, setIsCheckingOut, setCheckoutError)
+  }, [priceId, isCheckingOut])
 
   // Visual sanity checklist:
   // - Hero checklist icons use solid green checks.
@@ -290,7 +278,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 <div className="space-y-4 rounded-lg border border-destructive/30 bg-destructive/10 p-6 shadow-sm">
                   <div className="flex items-start gap-3 text-sm text-destructive/90">
                     <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Clerk auth wiring (configurable)</p>
+                    <p>Legacy auth wiring from the boilerplate lineage</p>
                   </div>
                   <div className="flex items-start gap-3 text-sm text-destructive/90">
                     <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />

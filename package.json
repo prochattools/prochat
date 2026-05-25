@@ -41,7 +41,6 @@
     "docs:watch": "tsx scripts/docs/watch-docs.ts"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.7.1",
     "@fontsource/jetbrains-mono": "^5",
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",

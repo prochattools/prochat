@@ -7,9 +7,9 @@ The ProChat platform reuses SaaSKit contracts for provisioning, migrations, and 
 
 ## 2) Core architectural invariants (do not break)
 ### Auth boundary
-- ProChat runtime uses Ory as the active authentication platform.
-- The shared ProChat auth UI is backed by Ory.
-- Clerk is not an active ProChat runtime dependency.
+- Clerk has been removed from active ProChat runtime code.
+- Ory is the intended authentication direction, but session validation is still TODO.
+- Middleware is pass-through until Ory session validation exists.
 - Clerk may remain part of sold boilerplate products where that product code actually uses it, but document that separately from ProChat runtime behavior.
 
 Forbidden: reintroducing Clerk as ProChat runtime auth, mixing ProChat runtime auth docs with sold-boilerplate auth docs, or treating implementation tools such as Kiro as ProChat authentication platforms.
