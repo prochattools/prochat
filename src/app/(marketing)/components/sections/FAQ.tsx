@@ -5,24 +5,24 @@ import { Reveal } from '../ui/Reveal';
 
 const FAQS = [
     {
-        q: "What is the difference between the kits?",
-        a: "WaaSKit starts with clients (no idea required). SaaSKit starts with your idea (skip the service). All paths use the same underlying system. The difference is where you start."
+        q: "What is ProChat OS?",
+        a: "ProChat OS is an installable Agentic Workflow OS: a private workflow runtime that connects messy inputs to business tools through memory, connectors, model routing, workflow agents, approvals, logs, and a control console."
     },
     {
-        q: "Do I need to be technical?",
-        a: "For WaaSKit, no. You can start with no-code service. For SaaSKit and ProKit, basic familiarity with React/Next.js is recommended, though we provide structured docs and walkthroughs."
+        q: "Is ProChat OS a chatbot or dashboard?",
+        a: "No. The dashboard is only the command center. The product is the workflow runtime that turns messy inputs like emails, files, forms, folders, notes, and APIs into structured outputs and actions."
     },
     {
-        q: "Is ProChat a course?",
-        a: "It’s a hybrid. You get the system and the code. We do not just explain the workflow - we give you the standardized asset to do it."
+        q: "What happened to BuildFlow and the kits?",
+        a: "BuildFlow, SaaSKit, ProKit, UXKit, and WaaSKit remain useful legacy or supporting products, but they are not the flagship strategy. ProChat OS is the company direction."
     },
     {
-        q: "Do you sell services?",
-        a: "We selectively help operators implement the system via Studio, but our core focus is giving you the kits to build it yourself."
+        q: "Do you sell managed setup?",
+        a: "Yes. The intended commercial path is managed ProChat OS: ProChat installs, configures, hosts or supports the system, and starts with one clear workflow and human approval first."
     },
     {
-        q: "Where should I start?",
-        a: "If you don't have paid clients or an idea yet, start with WaaSKit. If you have an idea ready to code, start with SaaSKit."
+        q: "Is the website only for law firms?",
+        a: "No. The public ProChat website is business-agnostic. Law firms are the first direct outreach wedge, using a legal document demo, but ProChat OS is broader than that niche."
     }
 ];
 

@@ -1,457 +1,185 @@
 'use client'
 
-import KitsShell from '@/app/kits/_components/KitsShell'
-import ContextualLinkCta from '@/components/ContextualLinkCta'
-import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { CheckCircle2, Database, GitBranch, ServerCog, ShieldCheck, Workflow } from 'lucide-react'
+
+import HeroSection from '@/components/marketing/HeroSection'
 import HeroBadge from '@/components/ui/hero-badge'
 import HeroCheckRow from '@/components/ui/hero-check-row'
-import { FeatureIcon } from './_components/FeatureIcon'
+import { Button } from '@/components/ui/button'
+import { Panel, Section } from '@/components/ui/surface'
 
 type ProChatOSPageContentProps = {
   priceId?: string | null
 }
 
-const comparisonData = [
-  {
-    metric: 'Unified command dashboard',
-    manual: 'Build yourself',
-    saasKit: 'Future vision',
-    iconName: 'check-blue',
-  },
-  {
-    metric: 'Automation orchestration',
-    manual: 'Design + implement',
-    saasKit: 'Future vision',
-    iconName: 'check-blue',
-  },
-  {
-    metric: 'System-level analytics',
-    manual: 'Assemble tooling',
-    saasKit: 'Future vision',
-    iconName: 'check-blue',
-  },
-  {
-    metric: 'Kit integrations',
-    manual: 'DIY wiring',
-    saasKit: 'Future vision',
-    iconName: 'check-blue',
-  },
-  {
-    metric: 'Operational control center',
-    manual: 'Roll your own',
-    saasKit: 'Future vision',
-    iconName: 'check-blue',
-  },
-]
+const components = [
+  'Workflow runtime / API',
+  'Worker and scheduler',
+  'Memory and context store',
+  'Input and output connectors',
+  'Model router / AI selector',
+  'Approval and event log',
+  'Control console',
+  'CLI and optional modules',
+] as const
 
-const ProChatOSPageContent = ({ priceId: _priceId }: ProChatOSPageContentProps) => {
-  const heroTitle = 'The long-term operating layer for ProChat.'
-  const heroSubtitle = ''
-  const heroDescription =
-    'ProChat OS is not a current offer. It is the long-term idea for a simple operating layer once founders are managing multiple products on top of the ProChat stack.'
-  const heroBase = heroTitle
-  const heroAccent = ''
-  const heroBadgeText = 'COMING SOON'
-  const heroButtonHref = '/waitlist?product=prochat-os'
-  const heroButtonText = 'Join waitlist'
+const principles = [
+  {
+    title: 'Private runtime',
+    description: 'A customer gets their own sanitized ProChat OS instance, not Steve’s private mind or brain repos.',
+    icon: ServerCog,
+  },
+  {
+    title: 'Context-aware agents',
+    description: 'Workflows can use customer memory, documents, people, projects, decisions, and workflow history.',
+    icon: Database,
+  },
+  {
+    title: 'Connector-first',
+    description: 'The system fits into existing inputs and outputs instead of forcing every user into a new dashboard.',
+    icon: GitBranch,
+  },
+  {
+    title: 'Approval first',
+    description: 'Sensitive actions start with human approval and only move toward automation after trust is earned.',
+    icon: ShieldCheck,
+  },
+] as const
+
+export default function ProChatOSPageContent({ priceId: _priceId }: ProChatOSPageContentProps) {
   return (
-    <KitsShell>
-      <div className="[--section-bg-rgb:255_255_255] [--section-alt-bg-rgb:241_245_249] dark:[--section-bg-rgb:15_17_21] dark:[--section-alt-bg-rgb:29_37_49]">
-      <section
-        id="top"
-        className="relative isolate flex min-h-screen scroll-mt-24 items-center overflow-hidden bg-transparent px-0 pb-16 pt-28 sm:pb-20 sm:pt-32"
+    <div className="bg-transparent text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
+      <HeroSection
+        showBackgrounds={false}
+        eyebrow={<HeroBadge text="ProChat OS · Flagship" />}
+        title={
+          <>
+            <span className="block text-foreground dark:text-white">The Agentic Workflow OS</span>
+            <span className="hero-accent block">for messy business work.</span>
+          </>
+        }
+        subtitle="ProChat OS is an installable private workflow runtime that connects messy inputs to business tools through memory, connectors, model routing, workflow agents, approvals, logs, and a control console."
+        primaryCTA={{ href: '/book', label: 'Book a call' }}
+        secondaryCTA={{ href: '#architecture', label: 'See what gets installed', variant: 'secondary' }}
+        ambientMotion
       >
-        <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
-          <HeroBadge text={heroBadgeText} className="mb-8" />
-
-          <h1 className="pc-hero-title mb-8 text-foreground">
-            {heroBase}
-            <br />
-            {heroAccent ? <span className="hero-accent">{heroAccent}</span> : null}
-          </h1>
-          <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
-            <p>{heroDescription}</p>
-            <p className="text-base text-muted-foreground">
-              Most founders do not need this yet. The live starting point remains SaaSKit.
-            </p>
-            <div className="flex flex-col items-center justify-center py-2">
-              <HeroCheckRow
-                items={[
-                  'Long-term vision',
-                  'Later-stage oversight',
-                  'SaaSKit comes first',
-                ]}
-              />
-            </div>
-          </div>
-
-          <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
-            <Button asChild variant="primary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href={heroButtonHref}>JOIN — WAITLIST</a>
-            </Button>
-            <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="#problem">SEE — THE FUTURE ROLE</a>
-            </Button>
-          </div>
-
-          <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
-            Future vision · Not a live product yet · Start with SaaSKit today
-          </p>
-        </div>
-      </section>
-
-      <section id="problem" className="relative scroll-mt-24 bg-transparent py-24">
-        <div className="mx-auto max-w-6xl px-page">
-          <div className="grid items-start gap-12 md:grid-cols-2 lg:gap-24">
-            <div className="relative">
-              <div className="sticky top-24">
-                <div className="mb-6 flex items-center gap-3">
-                  <FeatureIcon name="warning-triangle-filled" className="h-5 w-5 text-destructive" />
-                  <h3 className="text-xl font-bold uppercase tracking-wider text-foreground">
-                    The Problem
-                  </h3>
-                </div>
-                <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                  Operational complexity shows up later, not at day one.
-                </h2>
-                <p className="mb-4 font-medium text-foreground">
-                  Once founders run multiple products, dashboards, automation systems, billing platforms, and workflows can start to fragment.
-                </p>
-                <p className="mb-6 leading-relaxed text-muted-foreground">
-                  That is a later-stage problem. Before it matters, founders usually need a product worth launching on SaaSKit first.
-                </p>
-                <div className="space-y-4 rounded-lg border border-destructive/30 bg-destructive/10 p-6 shadow-sm text-sm text-destructive/90">
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Analytics views</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Automation fragments</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Billing systems</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>AI helpers</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Kit-level tools</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="solution" className="relative mt-12 md:mt-0">
-              <div className="relative overflow-hidden rounded-2xl border border-border-strong bg-surface-elevated p-8 text-foreground shadow-elevated transition-transform duration-500 md:p-12">
-                <div
-                  aria-hidden
-                  className="pc-surface-grid-overlay absolute inset-0 opacity-20 dark:opacity-15"
-                />
-                <div className="relative z-10">
-                  <div className="mb-6 flex items-center gap-3">
-                    <FeatureIcon name="verified" className="h-5 w-5 text-primary" />
-                    <h3 className="text-xl font-bold uppercase tracking-wider text-muted-foreground">
-                      Mechanism
-                    </h3>
-                  </div>
-                  <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                    A restrained long-term operating layer.
-                  </h2>
-                  <p className="mb-8 leading-relaxed text-muted-foreground">
-                    ProChat OS sketches how visibility, kit coordination, and workflow oversight could converge later. It is the long-term extension of the ProChat ecosystem, not a competing current offer.
-                  </p>
-
-                  <div className="space-y-4 rounded-lg border border-primary/20 bg-background/60 p-6 shadow-inner backdrop-blur-sm">
-                    <div className="flex items-center gap-3 text-foreground">
-                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Visibility across kits</p>
-                    </div>
-                    <div className="flex items-center gap-3 text-foreground">
-                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Workflow oversight direction</p>
-                    </div>
-                    <div className="flex items-center gap-3 text-foreground">
-                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Kit coordination plans</p>
-                    </div>
-                    <div className="flex items-center gap-3 text-foreground">
-                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Early automation direction</p>
-                    </div>
-                    <div className="flex items-center gap-3 text-foreground">
-                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Operational visibility concepts</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 border-t border-border-subtle pt-8">
-                    <h4 className="mb-4 font-bold text-foreground">
-                      The long-term role would be:
-                    </h4>
-                    <ul className="space-y-2 font-mono text-sm text-muted-foreground">
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Give later-stage founders one place to see the stack.
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Reduce the need to jump between dashboards.
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Help multiple ProChat products stay legible together.
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Sit after the kits, not before them.
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="manual" className="scroll-mt-24 border-y border-border bg-transparent py-24">
-        <div className="mx-auto max-w-4xl px-page">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground">
-              What it will include
-            </h2>
-            <p className="text-muted-foreground">
-              The future operating layer that could centralize tools, kits, and workflows later on.
-            </p>
-            <p className="mt-4 text-sm text-muted-foreground">
-              This is future-state thinking for the ProChat ecosystem, not a live product category today.
-            </p>
-          </div>
-
-          <div className="md:hidden space-y-6">
-            {comparisonData.map((item) => (
-              <div
-                key={item.metric}
-                className="space-y-4 rounded-xl border border-white/10 bg-white/[0.03] p-5"
-              >
-                <h3 className="text-sm uppercase tracking-wide text-white/60">{item.metric}</h3>
-
-                <div className="space-y-3">
-                  <div className="rounded-lg bg-white/[0.02] p-3">
-                    <div className="text-xs uppercase tracking-wide text-white/50">Without ProChat OS</div>
-                    <div className="mt-1 flex items-center gap-2 text-base font-medium text-white/80">
-                      <FeatureIcon name={item.iconName} className="h-4 w-4 text-white/45" />
-                      <span>{item.manual}</span>
-                    </div>
-                  </div>
-
-                  <div className="rounded-lg border border-primary/30 bg-primary/10 p-3">
-                    <div className="text-xs uppercase tracking-wide text-primary/75">ProChat OS</div>
-                    <div className="mt-1 flex items-center gap-2 text-base font-semibold text-primary">
-                      <FeatureIcon name={item.iconName} className="h-4 w-4 text-primary" />
-                      <span>{item.saasKit}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="hidden overflow-hidden rounded-lg border border-border bg-card shadow-sm md:block">
-            <div className="grid grid-cols-1 border-b border-border bg-muted text-sm font-bold uppercase tracking-wider text-muted-foreground md:grid-cols-3">
-              <div className="p-6">Component</div>
-              <div className="border-t border-border p-6 text-center md:border-l md:border-t-0">Without ProChat OS</div>
-              <div className="border-t border-border bg-primary/10 p-6 text-center text-primary md:border-l md:border-t-0">
-                ProChat OS
-              </div>
-            </div>
-
-            {comparisonData.map((item, index) => (
-              <div
-                key={item.metric}
-                className={`grid grid-cols-1 transition-colors hover:bg-muted/60 md:grid-cols-3 ${
-                  index < comparisonData.length - 1 ? 'border-b border-border' : ''
-                }`}
-              >
-                <div className="flex items-center gap-2 p-6 font-medium text-foreground">
-                  <FeatureIcon name={item.iconName} className="h-4 w-4 text-muted-foreground" />
-                  {item.metric}
-                </div>
-                <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
-                  {item.manual}
-                </div>
-                <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
-                  {item.saasKit}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <p className="font-mono text-sm text-muted-foreground">
-              ProChat OS belongs after the kit layer. SaaSKit remains the current live offer.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="who" className="scroll-mt-24 bg-transparent py-24">
-        <div className="mx-auto max-w-5xl px-page">
-          <div className="grid gap-12 md:grid-cols-12">
-            <div className="md:col-span-5">
-              <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] leading-tight text-foreground">
-                What it is NOT.
-              </h2>
-              <p className="mb-8 text-lg text-muted-foreground">
-                ProChat OS is a future operating concept. It is not today&apos;s offer, and it is not a reason to delay building on SaaSKit now.
-              </p>
-              <div className="h-1 w-20 rounded-full bg-primary" />
-            </div>
-            <div className="md:col-span-7">
-              <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
-                <h3 className="mb-6 text-lg font-bold text-foreground">ProChat OS is not:</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">
-                      A downloadable kit or boilerplate.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">
-                      A one-off automation tool.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">
-                      A single-purpose dashboard.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">
-                      A CRM or product-logic replacement.
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="pricing" className="relative scroll-mt-24 overflow-hidden bg-transparent py-24">
-        <div
-          aria-hidden
-          className="pc-section-grid-overlay absolute inset-0 opacity-40 dark:opacity-20"
+        <HeroCheckRow
+          items={['Private install', 'Memory + connectors', 'Human approval first']}
+          className="mx-auto"
         />
-        <div className="relative z-10 mx-auto max-w-4xl px-page text-center">
-          <p className="mx-auto mb-4 max-w-2xl text-sm font-medium text-muted-foreground">
-            Early access
-          </p>
-          <div className="mb-8 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1 font-mono text-sm text-primary backdrop-blur-sm">
-            Join the waitlist
-          </div>
-          <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground md:text-5xl">
-            Get early builds and updates.
-          </h2>
-          <p className="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
-            ProChat OS is a long-term vision. Join the waitlist if the future operating layer matters to you, but start with SaaSKit if you need the live product path now.
-          </p>
+      </HeroSection>
 
-          <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border-subtle bg-surface text-foreground shadow-elevated transition-transform duration-300 hover:-translate-y-1">
-            <div className="bg-muted p-8">
-                <ul className="mb-8 space-y-3 text-left">
-                  <li className="flex items-center gap-3">
-                    <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                    <span className="text-muted-foreground">Early builds and previews</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                    <span className="text-muted-foreground">Roadmap updates</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                    <span className="text-muted-foreground">Launch notes and migration guidance</span>
-                  </li>
-                </ul>
+      <Section id="what-it-is" tone="transparent" spacing="default">
+        <div className="mx-auto max-w-5xl px-page text-center">
+          <h2 className="pc-section-title mb-5 text-foreground">What ProChat OS is</h2>
+          <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground">
+            ProChat OS is the middle layer between messy business inputs and the tools a business already uses. It turns emails, files, forms, notes, folders, APIs, and other inputs into structured summaries, tasks, drafts, reports, updates, and actions.
+          </p>
+        </div>
+      </Section>
 
-              <Button asChild variant="primary" size="lg" className="w-full">
-                <a href="/waitlist?product=prochat-os">Join waitlist</a>
-              </Button>
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
-                <span>No spam</span>
-                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border-strong/80" />
-                <span>Unsubscribe anytime</span>
-                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border-strong/80" />
-                <span>Early access in Summer 2026</span>
-              </div>
+      <Section id="architecture" tone="muted" spacing="default">
+        <div className="mx-auto max-w-7xl px-page">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
+              Technical definition
             </div>
+            <h2 className="pc-section-title mb-4 text-foreground">What a client installs</h2>
+            <p className="pc-body-copy pc-body-muted">
+              A sanitized ProChat OS instance: customer memory, customer workflows, customer credentials, connectors, logs, approvals, and optional modules.
+            </p>
+          </div>
+          <Panel tone="default" padding="default">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {components.map(component => (
+                <div key={component} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <span>{component}</span>
+                </div>
+              ))}
+            </div>
+          </Panel>
+        </div>
+      </Section>
+
+      <Section id="principles" tone="transparent" spacing="default">
+        <div className="mx-auto max-w-7xl px-page">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="pc-section-title mb-4 text-foreground">Designed for real workflows</h2>
+            <p className="pc-body-copy pc-body-muted">
+              ProChat OS is not a chatbot and not only a dashboard. The dashboard is the command center. The product is the runtime that moves work.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {principles.map(card => {
+              const Icon = card.icon
+              return (
+                <Panel key={card.title} tone="default" padding="default" className="h-full">
+                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="pc-card-title mb-3 text-foreground">{card.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{card.description}</p>
+                </Panel>
+              )
+            })}
           </div>
         </div>
-      </section>
+      </Section>
 
-      <section id="faq" className="scroll-mt-24 border-t border-border bg-transparent py-24">
-        <div className="mx-auto max-w-5xl px-page">
-          <div className="mb-12 text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground/90">FAQ</p>
-            <h2 className="mt-4 text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
+      <Section id="business-model" tone="muted" spacing="default">
+        <div className="mx-auto grid max-w-7xl gap-10 px-page lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+          <div>
+            <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
+              Commercial model
+            </div>
+            <h2 className="pc-section-title mb-5 text-foreground">Free personal use, paid commercial use</h2>
+            <p className="pc-body-copy pc-body-muted">
+              The intended model is a free personal/non-commercial GitHub version, with commercial licenses, managed setup, hosting, support, and implementation sold separately.
+            </p>
           </div>
-          <div className="grid gap-10 md:grid-cols-3">
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">What is ProChat OS?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                ProChat OS is the long-term ProChat vision for a future operating layer. It is not a live product today.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">Who should use ProChat OS?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                It is intended for a later stage when founders are running multiple products and want more operational visibility across the stack.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">How does ProChat OS work with the ProChat kits?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                The long-term idea is that it would sit after the kit layer and help founders oversee how the ProChat products fit together.
-              </p>
-            </article>
-          </div>
+          <Panel tone="default" padding="default">
+            <div className="grid gap-4">
+              {[
+                'Personal/non-commercial GitHub version',
+                'Commercial license for business use',
+                'Managed install on customer-owned or ProChat-managed infrastructure',
+                'Workflow modules and support plans',
+              ].map(item => (
+                <div key={item} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </Panel>
         </div>
-      </section>
+      </Section>
 
-      <section id="cta" className="scroll-mt-24 bg-transparent py-32 text-center">
-        <div className="mx-auto max-w-2xl px-page">
-          <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
-            Track the vision, but start with the kits.
-          </h2>
-          <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            ProChat OS is the long-term direction. SaaSKit is still the live product if you need a production-ready starting point now.
+      <Section id="first-wedge" tone="transparent" spacing="default">
+        <div className="mx-auto max-w-5xl px-page text-center">
+          <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <Workflow className="h-5 w-5" />
+          </div>
+          <h2 className="pc-section-title mb-6 text-foreground">First wedge: law-firm document workflows</h2>
+          <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground">
+            The public ProChat OS website remains business-agnostic. Law firms are the first direct outreach wedge, using a legal document workspace demo and ProChat OS workflow layer as the concrete starting point.
           </p>
-          <div className="flex flex-col items-center justify-center">
-            <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
-              <a href="/waitlist?product=prochat-os">JOIN — WAITLIST</a>
-            </Button>
-          </div>
         </div>
-      </section>
-      </div>
-    </KitsShell>
+      </Section>
+
+      <Section id="cta" tone="muted" spacing="loose">
+        <div className="mx-auto max-w-3xl px-page text-center">
+          <h2 className="pc-section-title mb-6 text-foreground">Start with one workflow</h2>
+          <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
+            The first managed ProChat OS install should start with one painful workflow, human approval first, and clear before/after value.
+          </p>
+          <Button asChild variant="primary" size="lg">
+            <Link href="/book">BOOK — A CALL</Link>
+          </Button>
+        </div>
+      </Section>
+    </div>
   )
 }
-
-export default ProChatOSPageContent

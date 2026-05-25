@@ -2,21 +2,22 @@ import { getSEOTags } from '@/libs/seo'
 import MarketingApp from './(marketing)/App'
 
 export const metadata = getSEOTags({
-  title: 'ProChat',
+  title: 'ProChat OS | Agentic Workflow OS',
   description:
-    'ProChat helps non-technical founders move from preparation to implementation, with SaaSKit as the production-ready boilerplate for real launches.',
+    'ProChat OS is an installable Agentic Workflow OS that connects messy business inputs to structured outputs, approvals, memory, agents, and the tools a business already uses.',
   keywords: [
-    'SaaS boilerplate',
-    'Next.js SaaS starter',
-    'build SaaS without coding',
-    'AI SaaS builder',
-    'production-ready SaaS foundation',
-    'Supabase Stripe Next.js starter',
+    'ProChat OS',
+    'Agentic Workflow OS',
+    'agentic workflows',
+    'AI workflow automation',
+    'business process automation',
+    'private AI workflow runtime',
+    'AI orchestration',
   ],
   openGraph: {
-    title: 'ProChat',
+    title: 'ProChat OS | Agentic Workflow OS',
     description:
-      'ProChat helps non-technical founders move from preparation to implementation, with SaaSKit as the production-ready boilerplate for real launches.',
+      'Agentic workflows between your messy inputs and your business tools. Install a private workflow runtime with memory, connectors, approvals, and agents.',
     images: ['/og'],
     type: 'website',
   },

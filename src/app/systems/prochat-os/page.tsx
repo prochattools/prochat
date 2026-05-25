@@ -4,16 +4,23 @@ import { getSiteUrl } from '@/libs/site-url'
 import { getSoftwareApplicationSchema } from '@/libs/structured-data'
 import ProChatOSPageContent from './ProChatOSPageContent'
 
-const pageTitle = 'ProChat OS – Long-Term ProChat Vision'
+const pageTitle = 'ProChat OS – Agentic Workflow OS'
 const pageDescription =
-  'Long-term vision for a future ProChat operating layer that could help founders oversee multiple products later. SaaSKit remains the current live offer.'
+  'ProChat OS is an installable Agentic Workflow OS: a private workflow runtime that connects messy business inputs to structured outputs, approvals, memory, agents, and business tools.'
 const pageCanonical = 'https://prochat.tools/systems/prochat-os'
 
 export const metadata = {
   ...getSEOTags({
     title: pageTitle,
     description: pageDescription,
-    keywords: ['ProChat OS', 'business control center', 'AI operations'],
+    keywords: [
+      'ProChat OS',
+      'Agentic Workflow OS',
+      'agentic workflows',
+      'AI workflow automation',
+      'private AI runtime',
+      'business process automation',
+    ],
     openGraph: {
       title: pageTitle,
       description: pageDescription,
@@ -39,70 +46,43 @@ export const metadata = {
   },
 }
 
-export default function SaaSkitPage() {
+export default function ProChatOSPage() {
   const siteUrl = getSiteUrl()
 
-	const schema = {
-		'@context': 'https://schema.org',
-		'@type': 'SoftwareApplication',
-		name: 'ProChat OS',
-		applicationCategory: 'BusinessApplication',
-		operatingSystem: 'Web',
-	url: 'https://prochat.tools/systems/prochat-os',
-		description:
-			'Long-term ProChat vision for a simple operating layer that could help founders oversee multiple products and workflows later on.',
-		brand: {
-			'@type': 'Brand',
-			name: 'ProChat',
-		},
-		publisher: {
-			'@type': 'Organization',
-			name: 'ProChat',
-			url: 'https://prochat.tools',
-		},
-		softwareVersion: '1.0',
-		offers: {
-			'@type': 'Offer',
-			price: '0',
-			priceCurrency: 'EUR',
-			availability: 'https://schema.org/PreOrder',
-		},
-	}
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'What is ProChat OS?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'ProChat OS is an installable Agentic Workflow OS: a private workflow runtime that connects messy business inputs to structured outputs, approvals, memory, agents, and the tools a business already uses.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Is ProChat OS a chatbot?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'No. ProChat OS is not only a chatbot or dashboard. It is a workflow runtime with memory, connectors, model routing, approvals, logs, and a control console.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What gets installed?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'A customer installs a private ProChat OS instance with their own memory, workflows, credentials, connectors, logs, approvals, and optional workflow modules.',
+        },
+      },
+    ],
+  }
 
-	const faqSchema = {
-		'@context': 'https://schema.org',
-		'@type': 'FAQPage',
-		mainEntity: [
-			{
-				'@type': 'Question',
-				name: 'What is ProChat OS?',
-				acceptedAnswer: {
-					'@type': 'Answer',
-					text: 'ProChat OS is a long-term ProChat vision for a future operating dashboard, not a live product today.',
-				},
-			},
-			{
-				'@type': 'Question',
-				name: 'Who should use ProChat OS?',
-				acceptedAnswer: {
-					'@type': 'Answer',
-					text: 'ProChat OS is intended for a later stage when founders are managing multiple products and need more operational visibility across the stack.',
-				},
-			},
-			{
-				'@type': 'Question',
-				name: 'How does ProChat OS work with the ProChat kits?',
-				acceptedAnswer: {
-					'@type': 'Answer',
-					text: 'The long-term idea is that ProChat OS would sit after the kit layer and help founders oversee products built with the ProChat stack.',
-				},
-			},
-		],
-	}
-
-	return (
-		<>
-		<StructuredData
+  return (
+    <>
+      <StructuredData
         id="schema-prochat-os"
         data={getSoftwareApplicationSchema({
           name: 'ProChat OS',
@@ -119,10 +99,10 @@ export default function SaaSkitPage() {
           ],
         })}
       />
-		<script
-			type="application/ld+json"
-				dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-			/>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <ProChatOSPageContent />
     </>
   )

@@ -1,457 +1,72 @@
-'use client'
-import KitsShell from '../_components/KitsShell'
-import ContextualLinkCta from '@/components/ContextualLinkCta'
-import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { Archive, CheckCircle2 } from 'lucide-react'
+
+import HeroSection from '@/components/marketing/HeroSection'
 import HeroBadge from '@/components/ui/hero-badge'
 import HeroCheckRow from '@/components/ui/hero-check-row'
-import { FeatureIcon } from './_components/FeatureIcon'
+import { Button } from '@/components/ui/button'
+import { Panel, Section } from '@/components/ui/surface'
 
-type UXKitPageContentProps = {
-  priceId?: string | null
-}
-
-const comparisonData = [
-  {
-    metric: 'Dashboard UI system',
-    manual: 'Build yourself',
-    saasKit: 'Roadmap',
-    iconName: 'check-blue',
-  },
-  {
-    metric: 'Onboarding flows',
-    manual: 'Design + implement',
-    saasKit: 'Roadmap',
-    iconName: 'check-blue',
-  },
-  {
-    metric: 'Billing and account screens',
-    manual: 'Assemble patterns',
-    saasKit: 'Roadmap',
-    iconName: 'check-blue',
-  },
-  {
-    metric: 'AI interaction panels',
-    manual: 'DIY UI patterns',
-    saasKit: 'Roadmap',
-    iconName: 'check-blue',
-  },
-  {
-    metric: 'Design tokens + theming',
-    manual: 'Roll your own',
-    saasKit: 'Roadmap',
-    iconName: 'check-blue',
-  },
-]
-
-const UXKitPageContent = ({ priceId: _priceId }: UXKitPageContentProps) => {
-  const heroTitle = 'A future UI layer for the ProChat stack.'
-  const heroSubtitle = 'Roadmap preview, not the current live offer.'
-  const heroDescription =
-    'UXKit is the future interface layer planned to sit on top of SaaSKit and ProKit once the core product foundation is already live. It is not the current starting point for founders building now.'
-  const heroBase = heroTitle
-  const heroAccent = ''
-  const heroBadgeText = 'COMING SOON'
-  const heroButtonHref = '/waitlist?product=uxkit'
-  const heroButtonText = 'Join waitlist'
+export default function UXKitPageContent() {
   return (
-    <KitsShell>
-      <div className="[--section-bg-rgb:255_255_255] [--section-alt-bg-rgb:241_245_249] dark:[--section-bg-rgb:15_17_21] dark:[--section-alt-bg-rgb:29_37_49]">
-      <section
-        id="top"
-        className="relative isolate flex min-h-screen scroll-mt-24 items-center overflow-hidden bg-transparent px-0 pb-16 pt-28 sm:pb-20 sm:pt-32"
+    <div className="bg-transparent text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
+      <HeroSection
+        showBackgrounds={false}
+        eyebrow={<HeroBadge text="Legacy concept" />}
+        title={
+          <>
+            <span className="block text-foreground dark:text-white">UXKit is preserved as</span>
+            <span className="hero-accent block">a legacy UX concept.</span>
+          </>
+        }
+        subtitle="UXKit is no longer a standalone strategic priority. Its useful interface and product workflow ideas may later become ProChat OS modules or supporting workflow patterns."
+        primaryCTA={{ href: '/systems/prochat-os', label: 'Explore ProChat OS' }}
+        secondaryCTA={{ href: '/kits', label: 'View legacy products', variant: 'secondary' }}
+        ambientMotion
       >
-        <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-page text-center">
-          <HeroBadge text={heroBadgeText} className="mb-8" />
+        <HeroCheckRow items={['Legacy concept', 'Not abandoned', 'Subordinate to ProChat OS']} className="mx-auto" />
+      </HeroSection>
 
-          <h1 className="pc-hero-title mb-8 text-foreground">
-            {heroBase}
-            <br />
-            {heroAccent ? <span className="hero-accent">{heroAccent}</span> : null}
-          </h1>
-
-          <div className="mx-auto max-w-2xl space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
-            <p>UXKit is the interface layer we are building for SaaS applications, focused on reusable SaaS screens, onboarding/account surfaces, and interface patterns that aim to help founders preview a premium experience before designing every page from scratch.</p>
-            <p className="text-base text-muted-foreground">
-              If you need the production-ready foundation today, start with SaaSKit. UXKit is the later visual layer on the roadmap.
-            </p>
-            <div className="flex flex-col items-center justify-center py-2">
-              <HeroCheckRow
-                items={[
-                  'Roadmap only',
-                  'Future visual layer',
-                  'SaaSKit comes first',
-                ]}
-              />
+      <Section tone="transparent" spacing="default">
+        <div className="mx-auto grid max-w-6xl gap-8 px-page lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div>
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <Archive className="h-5 w-5" />
             </div>
-          </div>
-
-          <div className="mt-10 flex w-full flex-col gap-4 md:w-auto md:flex-row">
-            <Button asChild variant="primary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href={heroButtonHref}>JOIN — WAITLIST</a>
-            </Button>
-            <Button asChild variant="secondary" size="lg" className="w-full whitespace-normal text-center md:w-auto">
-              <a href="#problem">SEE — THE ROADMAP CONTEXT</a>
-            </Button>
-          </div>
-
-          <p className="mt-4 text-xs font-medium text-muted-foreground md:text-sm">
-            Roadmap preview · Not a live product yet · Start with SaaSKit today
-          </p>
-        </div>
-      </section>
-
-      <section id="problem" className="relative scroll-mt-24 bg-transparent py-24">
-        <div className="mx-auto max-w-6xl px-page">
-          <div className="grid items-start gap-12 md:grid-cols-2 lg:gap-24">
-            <div className="relative">
-              <div className="sticky top-24">
-                <div className="mb-6 flex items-center gap-3">
-                  <FeatureIcon name="warning-triangle-filled" className="h-5 w-5 text-destructive" />
-                  <h3 className="text-xl font-bold uppercase tracking-wider text-foreground">
-                    The Problem
-                  </h3>
-                </div>
-                <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                  Interface polish becomes the next layer after the product works.
-                </h2>
-                <p className="mb-4 font-medium text-foreground">
-                  Dashboards, account settings, billing screens, user onboarding, and admin tools add work after the core SaaS foundation is already in place.
-                </p>
-                <div className="space-y-4 rounded-lg border border-destructive/30 bg-destructive/10 p-6 shadow-sm text-sm text-destructive/90">
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Dashboards</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Account settings</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Billing screens</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>User onboarding</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FeatureIcon name="close" className="mt-0.5 h-4 w-4" />
-                    <p>Admin tools</p>
-                  </div>
-                </div>
-                <p className="mt-6 text-sm italic text-muted-foreground">
-                  UXKit is meant to reduce later UI rework, not replace the need for a live foundation today.
-                </p>
-              </div>
-            </div>
-
-            <div id="solution" className="relative mt-12 md:mt-0">
-              <div className="relative overflow-hidden rounded-2xl border border-border-strong bg-surface-elevated p-8 text-foreground shadow-elevated transition-transform duration-500 md:p-12">
-                <div
-                  aria-hidden
-                  className="pc-surface-grid-overlay absolute inset-0 opacity-20 dark:opacity-15"
-                />
-                <div className="relative z-10">
-                  <div className="mb-6 flex items-center gap-3">
-                    <FeatureIcon name="verified" className="h-5 w-5 text-primary" />
-                    <h3 className="text-xl font-bold uppercase tracking-wider text-muted-foreground">
-                      Mechanism
-                    </h3>
-                  </div>
-                  <h2 className="mb-6 text-3xl font-bold tracking-[-0.02em] text-foreground md:text-4xl">
-                    A future visual layer, not today&apos;s starting point.
-                  </h2>
-                  <p className="mb-8 leading-relaxed text-muted-foreground">
-                    UXKit is where the future UI system is heading once a product already exists on top of SaaSKit or ProKit. The current live offer remains SaaSKit.
-                  </p>
-
-                  <div className="space-y-4 rounded-lg border border-primary/20 bg-background/60 p-6 shadow-inner backdrop-blur-sm">
-                    <div className="flex items-center gap-3 text-foreground">
-                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Reusable SaaS screens planned</p>
-                    </div>
-                    <div className="flex items-center gap-3 text-foreground">
-                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Onboarding/account journeys sketched</p>
-                    </div>
-                    <div className="flex items-center gap-3 text-foreground">
-                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Interface patterns guiding the work</p>
-                    </div>
-                    <div className="flex items-center gap-3 text-foreground">
-                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Experience flows prototyped early</p>
-                    </div>
-                    <div className="flex items-center gap-3 text-foreground">
-                      <FeatureIcon name="check" className="h-4 w-4 text-green-400" />
-                      <p className="text-sm font-medium">Design tokens guiding surfaces</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 border-t border-border-subtle pt-8">
-                    <h4 className="mb-4 font-bold text-foreground">
-                      This is useful later because:
-                    </h4>
-                    <ul className="space-y-2 font-mono text-sm text-muted-foreground">
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Interface direction can be added after the core product is live.
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Billing and account surfaces can be standardized later.
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Product UI can become more consistent over time.
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                        Visual refinement does not need to delay launch.
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="manual" className="scroll-mt-24 bg-transparent py-24">
-        <div className="mx-auto max-w-4xl px-page">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-[-0.02em] text-foreground">
-              What it will include
-            </h2>
-            <p className="text-muted-foreground">
-              The future UI layer you could build on if and when it ships.
-            </p>
-            <p className="mt-4 text-sm text-muted-foreground">
-              These are the surfaces being explored for later, once the core kit stack is already established.
+            <h2 className="pc-section-title mb-5 text-foreground">How to interpret UXKit now</h2>
+            <p className="pc-body-copy pc-body-muted">
+              UXKit remains useful as historical product thinking, but ProChat OS is the flagship. Any future UXKit ideas should support agentic workflows, approvals, dashboards, and customer-facing modules inside ProChat OS.
             </p>
           </div>
-
-          <div className="md:hidden space-y-6">
-            {comparisonData.map((item) => (
-              <div
-                key={item.metric}
-                className="space-y-4 rounded-xl border border-white/10 bg-white/[0.03] p-5"
-              >
-                <h3 className="text-sm uppercase tracking-wide text-white/60">{item.metric}</h3>
-
-                <div className="space-y-3">
-                  <div className="rounded-lg bg-white/[0.02] p-3">
-                    <div className="text-xs uppercase tracking-wide text-white/50">Without UXKit</div>
-                    <div className="mt-1 flex items-center gap-2 text-base font-medium text-white/80">
-                      <FeatureIcon name={item.iconName} className="h-4 w-4 text-white/45" />
-                      <span>{item.manual}</span>
-                    </div>
-                  </div>
-
-                  <div className="rounded-lg border border-primary/30 bg-primary/10 p-3">
-                    <div className="text-xs uppercase tracking-wide text-primary/75">UXKit</div>
-                    <div className="mt-1 flex items-center gap-2 text-base font-semibold text-primary">
-                      <FeatureIcon name={item.iconName} className="h-4 w-4 text-primary" />
-                      <span>{item.saasKit}</span>
-                    </div>
-                  </div>
+          <Panel tone="default" padding="default">
+            <div className="grid gap-4">
+              {[
+                'Not the flagship product',
+                'Not the main website strategy',
+                'Not a standalone launch track right now',
+                'Useful as future ProChat OS module inspiration',
+              ].map(item => (
+                <div key={item} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                  <span>{item}</span>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="hidden overflow-hidden rounded-lg border border-border bg-card shadow-sm md:block">
-            <div className="grid grid-cols-1 border-b border-border bg-muted text-sm font-bold uppercase tracking-wider text-muted-foreground md:grid-cols-3">
-              <div className="p-6">Component</div>
-              <div className="border-t border-border p-6 text-center md:border-l md:border-t-0">Without UXKit</div>
-              <div className="border-t border-border bg-primary/10 p-6 text-center text-primary md:border-l md:border-t-0">
-                UXKit
-              </div>
+              ))}
             </div>
-
-            {comparisonData.map((item, index) => (
-              <div
-                key={item.metric}
-                className={`grid grid-cols-1 transition-colors hover:bg-muted/60 md:grid-cols-3 ${
-                  index < comparisonData.length - 1 ? 'border-b border-border' : ''
-                }`}
-              >
-                <div className="flex items-center gap-2 p-6 font-medium text-foreground">
-                  <FeatureIcon name={item.iconName} className="h-4 w-4 text-muted-foreground" />
-                  {item.metric}
-                </div>
-                <div className="border-t border-border p-6 text-center text-muted-foreground md:border-l md:border-t-0">
-                  {item.manual}
-                </div>
-                <div className="border-t border-border bg-primary/5 p-6 text-center font-bold text-primary md:border-l md:border-t-0">
-                  {item.saasKit}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <p className="font-mono text-sm text-muted-foreground">
-              UXKit is for later-stage visual consistency. SaaSKit is the live foundation today.
-            </p>
-          </div>
+          </Panel>
         </div>
-      </section>
+      </Section>
 
-      <section id="who" className="scroll-mt-24 bg-transparent py-24">
-        <div className="mx-auto max-w-5xl px-page">
-          <div className="grid gap-12 md:grid-cols-12">
-            <div className="md:col-span-5">
-              <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] leading-tight text-foreground">
-                What it is NOT.
-              </h2>
-              <p className="mb-8 text-lg text-muted-foreground">
-                UXKit is a future UI layer. It complements the core kit stack later, and it does not replace the need to start with SaaSKit or ProKit now.
-              </p>
-              <div className="h-1 w-20 rounded-full bg-primary" />
-            </div>
-            <div className="md:col-span-7">
-              <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
-                <h3 className="mb-6 text-lg font-bold text-foreground">UXKit is not:</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">
-                      A backend framework or database layer.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">
-                      A billing processor or payments provider.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">
-                      A no-code builder.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <FeatureIcon name="check-blue" className="h-3.5 w-3.5 text-primary" />
-                    </div>
-                    <span className="text-muted-foreground">
-                      A design agency replacement.
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="pricing" className="relative scroll-mt-24 overflow-hidden bg-transparent py-24">
-        <div
-          aria-hidden
-          className="pc-section-grid-overlay absolute inset-0 opacity-40 dark:opacity-20"
-        />
-        <div className="relative z-10 mx-auto max-w-4xl px-page text-center">
-          <p className="mx-auto mb-4 max-w-2xl text-sm font-medium text-muted-foreground">
-            Early access
-          </p>
-          <div className="mb-8 inline-block rounded-full border border-primary/30 bg-primary/10 px-4 py-1 font-mono text-sm text-primary backdrop-blur-sm">
-            Join the waitlist
-          </div>
-          <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground md:text-5xl">
-            Get early builds and updates.
-          </h2>
-          <p className="mx-auto mb-12 max-w-2xl text-xl text-muted-foreground">
-            UXKit is still roadmap work. Join the waitlist for updates if the visual layer matters to you later, but start with SaaSKit if you need a live product foundation now.
-          </p>
-
-          <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border-subtle bg-surface text-foreground shadow-elevated transition-transform duration-300 hover:-translate-y-1">
-            <div className="bg-muted p-8">
-              <ul className="mb-8 space-y-3 text-left">
-                <li className="flex items-center gap-3">
-                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Early builds and previews</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Roadmap updates</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <FeatureIcon name="check-blue" className="h-5 w-5 text-primary" />
-                  <span className="text-muted-foreground">Launch notes and migration guidance</span>
-                </li>
-              </ul>
-
-              <Button asChild variant="primary" size="lg" className="w-full">
-                <a href="/waitlist?product=uxkit">Join waitlist</a>
-              </Button>
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
-                <span>No spam</span>
-                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border-strong/80" />
-                <span>Unsubscribe anytime</span>
-                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border-strong/80" />
-                <span>Early access in Summer 2026</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="faq" className="scroll-mt-24 bg-transparent py-24">
-        <div className="mx-auto max-w-5xl px-page">
-          <div className="mb-12 text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-muted-foreground/90">FAQ</p>
-            <h2 className="mt-4 text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
-          </div>
-          <div className="grid gap-10 md:grid-cols-3">
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">What is UXKit?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                UXKit is a future SaaS interface layer on the ProChat roadmap. It is not a live standalone offer today.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">Why use UXKit?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                The idea is to make later-stage interface work more consistent once the product foundation already exists.
-              </p>
-            </article>
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-foreground">Can UXKit be used with SaaSKit?</h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Yes. UXKit is being planned as a future layer on top of SaaSKit and ProKit, not as a substitute for the current live kit path.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="cta" className="scroll-mt-24 bg-transparent py-32 text-center">
-        <div className="mx-auto max-w-2xl px-page">
-          <h2 className="mb-6 text-4xl font-bold tracking-[-0.02em] text-foreground">
-            Track UXKit without losing focus on today&apos;s offer.
-          </h2>
+      <Section id="cta" tone="muted" spacing="loose">
+        <div className="mx-auto max-w-3xl px-page text-center">
+          <h2 className="pc-section-title mb-6 text-foreground">The strategy now leads with ProChat OS</h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            UXKit is for later. If you need the current production-ready path, start with SaaSKit.
+            UX and interface work should now be evaluated by how it helps ProChat OS turn messy inputs into structured workflows and actions.
           </p>
-          <div className="flex flex-col items-center justify-center">
-            <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
-              <a href="/waitlist?product=uxkit">JOIN — WAITLIST</a>
-            </Button>
-          </div>
+          <Button asChild variant="primary" size="lg">
+            <Link href="/systems/prochat-os">EXPLORE — PROCHAT OS</Link>
+          </Button>
         </div>
-      </section>
-      </div>
-    </KitsShell>
+      </Section>
+    </div>
   )
 }
-
-export default UXKitPageContent

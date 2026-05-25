@@ -8,7 +8,7 @@ import Link from 'next/link';
 const SYSTEMS = [
     {
         title: "Identity & Access",
-        description: "Standardized auth flows (Clerk) with protected routes pre-configured.",
+        description: "Legacy auth-flows placeholder from the boilerplate lineage; ProChat runtime auth is Ory TODO.",
         icon: <Users className="text-muted-foreground group-hover:text-primary transition-colors duration-300" />
     },
     {

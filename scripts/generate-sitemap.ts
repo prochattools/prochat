@@ -65,12 +65,15 @@ async function main() {
   const generatedAt = new Date().toISOString()
   const pagePaths = [
     { path: '/', priority: '1.0' },
+    { path: '/systems/prochat-os', priority: '0.95' },
+    { path: '/book', priority: '0.8' },
     { path: '/contact', priority: '0.7' },
     { path: '/proof', priority: '0.7' },
-    { path: '/kits', priority: '0.8' },
-    { path: '/kits/prokit', priority: '0.8' },
-    { path: '/kits/saaskit', priority: '0.9' },
-    { path: '/starting-point', priority: '0.9' },
+    { path: '/kits', priority: '0.55' },
+    { path: '/kits/prokit', priority: '0.45' },
+    { path: '/kits/saaskit', priority: '0.45' },
+    { path: '/buildflow', priority: '0.4' },
+    { path: '/starting-point', priority: '0.4' },
   ] as const
 
   const pageEntries: UrlSitemapEntry[] = pagePaths.map(entry => ({
