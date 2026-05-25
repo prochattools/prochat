@@ -139,10 +139,6 @@ const nextConfig = {
         hostname: 'secure.gravatar.com',
       },
       {
-        protocol: 'https',
-        hostname: 'img.clerk.com',
-      },
-      {
         protocol: 'http',
         hostname: '3.73.130.136',
       },

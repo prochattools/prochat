@@ -30,6 +30,7 @@ Current strategic boundaries:
 - Clerk has been removed from active ProChat runtime code.
 - Ory is the intended authentication direction, but runtime session validation is still TODO.
 - Protected routes must not assume auth enforcement until Ory middleware or route guards exist.
+- See `docs/auth-status.md` for the canonical auth state.
 - Clerk belongs only to sold boilerplate/product context where that code actually uses it.
 
 ## System domains

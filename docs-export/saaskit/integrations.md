@@ -11,22 +11,7 @@ Enable these services only when you need the feature. SaaSKit runs with just `DA
 - Confirm each integration with the quick checks listed so builds and deployments remain stable.
 
 ## Clerk (authentication)
-
-### Environment
-
-```bash
-CLERK_DISABLED=false
-NEXT_PUBLIC_CLERK_DISABLED=false
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_...
-CLERK_SECRET_KEY=sk_...
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-```
-
-### Quick check
-
-1. Sign-in and sign-up pages load with Clerk active.
-2. Protected routes require login.
+Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
 
 ## Stripe (billing)
 
@@ -93,7 +78,7 @@ N8N_WEBHOOK_URL=http://localhost:5678/webhook
 
 ## Routes that depend on integrations
 
-- `/processing-page/*` needs Clerk + Stripe + `NEXT_PUBLIC_STRIPE_PRODUCTS_JSON`.
+- `/processing-page/*` is historical boilerplate guidance only.
 - `/waiting-list` relies on Resend.
 - `/blog*` requires a configured WordPress endpoint.
 
@@ -120,5 +105,5 @@ N8N_WEBHOOK_URL=http://localhost:5678/webhook
 
 ## Examples
 
-- Example 1: Enable Clerk + Stripe to offer paid sign-ups, then verify `/processing-page` sessions and webhook signatures.
+- Example 1: Historical boilerplate guidance only.
 - Example 2: Activate Resend for a waitlist and confirm `/waiting-list` submissions create contacts in Resend.

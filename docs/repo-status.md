@@ -55,30 +55,7 @@ UXKit and WaaSKit remain historical concepts/products whose useful ideas may lat
 
 ## Authentication status
 
-Clerk has been removed from active ProChat runtime code and from the package dependency list.
-
-Current status:
-
-- no active Clerk provider in root layout
-- no active Clerk middleware
-- middleware is pass-through until Ory runtime protection is implemented
-- Ory is the intended authentication direction for ProChat runtime
-
-Important implementation gap:
-
-```text
-Ory auth is not yet fully implemented in this repo.
-```
-
-Until Ory is fully implemented, protected runtime routes must not assume authentication is enforced by middleware.
-
-## Auth implementation TODO
-
-- define which routes need runtime protection
-- implement Ory session validation in middleware or route-level guards
-- document Ory env vars in public environment docs
-- add smoke tests for protected routes once Ory exists
-- update deployment docs once Ory is active
+See [auth-status.md](./auth-status.md).
 
 ## MikeOSS / law-firm wedge status
 

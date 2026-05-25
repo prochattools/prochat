@@ -18,6 +18,8 @@ SaaSKit is a SaaS boilerplate you can rebrand and launch as your own product.
 
 ## What is optional later
 
+# Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
 - Clerk for sign-in
 - Stripe for billing
 - Resend for email and waitlists

@@ -6,6 +6,8 @@ This page explains what is optional in the public product contract. Detailed mai
 
 ## Integrations
 
+> Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
 ### Clerk (authentication)
 - Optional auth provider wiring is ready to plug in Clerk when you have credentials.
 - In dev, mock mode keeps the app usable without live keys.

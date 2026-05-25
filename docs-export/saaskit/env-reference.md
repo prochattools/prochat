@@ -1,3 +1,5 @@
+# Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
 # Environment Variables
 
 ## Overview
@@ -49,12 +51,7 @@ These are only needed if your own code talks to Supabase directly, beyond the de
 
 ### Clerk
 
-Use Clerk if you want sign-in and sign-up.
-
-- `CLERK_DISABLED` and `NEXT_PUBLIC_CLERK_DISABLED`: keep both `true` to stay in mock-safe mode; set both to `false` when enabling Clerk.
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`: the public Clerk key used in the browser.
-- `CLERK_SECRET_KEY`: the private Clerk key used on the server.
-- `NEXT_PUBLIC_CLERK_SIGN_IN_URL` and `NEXT_PUBLIC_CLERK_SIGN_UP_URL`: the sign-in and sign-up routes.
+Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
 
 ### Stripe
 
@@ -94,6 +91,8 @@ Use Stripe if you want paid plans.
 ```
 
 This should be a JSON array of plan objects. Each plan needs a title, price, and Stripe price ID. Subscription plans also need a billing period such as `month` or `year`.
+
+**Important:** do not use the Clerk section above as ProChat runtime guidance. ProChat runtime authentication direction is Ory.
 
 ### Resend
 
@@ -138,5 +137,5 @@ Do not set these locally.
 
 ## Examples
 
-- Example 1: To enable Clerk, set both Clerk disable flags to `false`, add the Clerk keys, then visit `/sign-in` and `/sign-up`.
+- Example 1: Historical boilerplate guidance only. Do not apply it to ProChat runtime authentication.
 - Example 2: To enable Stripe, add the public and secret keys, set `NEXT_PUBLIC_STRIPE_PRODUCTS_JSON`, and test checkout plus webhook handling.

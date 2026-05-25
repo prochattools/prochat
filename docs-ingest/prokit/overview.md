@@ -11,6 +11,8 @@ Start with `docs/public/README.md` for the recommended docs order.
 ## Included (high level)
 
 - Next.js + TypeScript app skeleton
+> Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
 - Auth wiring (Clerk)
 - Billing wiring (Stripe)
 - Postgres + Prisma migrations

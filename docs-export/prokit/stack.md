@@ -5,7 +5,9 @@
 - Next.js (App Router)
 - TypeScript
 - PostgreSQL + Prisma
-- Clerk (auth)
+> Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
+- Clerk (auth) - legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
 - Stripe (billing)
 - Resend (optional email)
 

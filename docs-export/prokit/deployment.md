@@ -47,7 +47,9 @@ DATABASE_URL=postgresql://<user>:<password>@<host>:5432/<db>?schema=public
 NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
 ```
 
-Add Clerk, Stripe, and Resend keys only if you enable those optional integrations.
+> Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
+Add Clerk, Stripe, and Resend keys only if you enable those optional integrations in the legacy boilerplate context. ProChat runtime authentication direction is Ory.
 
 If you ever need to bypass the auto-migration hook, set:
 

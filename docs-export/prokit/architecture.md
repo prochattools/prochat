@@ -6,7 +6,9 @@ ProKit Studio is a lean SaaS core boilerplate.
 
 - Next.js App Router + TypeScript
 - Prisma + Postgres
-- Clerk integration hooks (optional)
+> Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
+Clerk integration hooks (optional) - legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
 - Stripe integration hooks (optional)
 - Resend integration hooks (optional)
 

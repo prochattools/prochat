@@ -44,6 +44,8 @@ This page is for readers who want the technical picture after the basics are set
 
 ## Optional integration layer
 
+# Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
 - Clerk, Stripe, Resend, WordPress, and n8n are optional.
 - They only work when their keys and endpoints are set.
 - If they are disabled, the rest of the app should still work and show setup guidance.

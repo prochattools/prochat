@@ -1,5 +1,4 @@
 const requiredEnvVars = [
-  "CLERK_SECRET_KEY",
   "RESEND_API_KEY",
   "DATABASE_URL",
   "STRIPE_MODE"

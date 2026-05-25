@@ -6,12 +6,14 @@ This doc defines how to evaluate and generate SaaS ideas for the ProChat platfor
 ## 2. Mission
 Ship small B2B SaaS products fast, cheap, and often. Aim for 80% ideation/validation, 20% execution. Success = real users paying, not perfect apps. The boilerplate does the heavy lifting; if it can’t be shipped in two days, it’s not a fit.
 
+> Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
 ## 3. Fixed tech stack
 - Framework: Next.js (App + Pages routers)  
 - Language: TypeScript  
 - Styling: TailwindCSS + shadcn/ui  
 - ProChat runtime auth: shared ProChat auth UI backed by Ory  
-- Sold boilerplate/product auth: may include Clerk or another hosted option where the client-facing product code supports it  
+- Sold boilerplate/product auth: may include Clerk or another hosted option where the client-facing product code supports it, but this is legacy boilerplate context only and not active ProChat runtime auth  
 - Build implementation tooling: Kiro or similar tools may be recommended for customers where they reduce cost and setup friction, but they are not ProChat runtime auth platforms  
 - Database: PostgreSQL (Supabase) + Prisma  
 - Email: Resend  

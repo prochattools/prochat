@@ -45,7 +45,7 @@ The order is intentional:
 - Do not rebrand MikeOSS as proprietary ProChat software.
 - Keep ProChat runtime auth as Ory-only unless implementation docs/code are deliberately changed later.
 - Keep Clerk references only where they clearly refer to sold boilerplate products.
-- Clerk has been removed from active ProChat runtime code; Ory session validation remains the auth TODO.
+- See `docs/auth-status.md` for the canonical auth state and TODO list.
 
 ## Canonical docs for this repo
 
@@ -351,24 +351,4 @@ When generating implementation prompts:
 
 ## Authentication implementation status — 2026-05-25
 
-Clerk has been removed from active ProChat runtime code.
-
-Current middleware is pass-through until Ory session protection is implemented.
-
-Do not assume protected routes are secure until Ory runtime auth is complete.
-
-Required next auth work:
-
-1. Define protected route list.
-2. Implement Ory session validation in middleware or route-level guards.
-3. Document required Ory environment variables.
-4. Add smoke tests or manual checks for protected routes once Ory exists.
-5. Update deployment docs once Ory is active.
-
-Decision:
-
-```text
-Clerk = removed from active runtime.
-Ory = intended runtime authentication direction, not fully implemented yet.
-Protected routes must not assume auth is enforced until Ory session validation is shipped.
-```
+See [auth-status.md](./auth-status.md) for the canonical runtime auth state, warnings, and TODOs.

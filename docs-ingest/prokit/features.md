@@ -27,13 +27,15 @@ Use `docs/public/README.md` for the recommended documentation path before diving
    - Code: `src/app/not-found.tsx`, `src/app/error.tsx`
 9. Sticky app header with auth-aware navigation.
    - Code: `src/components/AppHeader.tsx`
-10. Clerk auth wiring (sign-in/sign-up routes).
+> Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
+10. Clerk auth wiring (sign-in/sign-up routes). Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
     - Docs: `docs/public/optional-features.md`
     - Code: `src/app/(app)/sign-in/[[...sign-in]]/page.tsx`, `src/app/(app)/sign-up/[[...sign-up]]/page.tsx`
-11. Clerk mock mode for local/dev without live auth.
+11. Clerk mock mode for local/dev without live auth. Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
     - Docs: `docs/public/optional-features.md`
     - Code: `src/libs/clerkFlags.ts`, `src/libs/safeClerk.tsx`, `src/libs/safeClerkServer.ts`
-12. Safe Clerk wrappers that fail predictably when misconfigured.
+12. Safe Clerk wrappers that fail predictably when misconfigured. Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
     - Code: `src/libs/safeClerk.tsx`, `src/libs/safeClerkServer.ts`
 13. Middleware route protection for private routes.
     - Code: `src/middleware.ts`
@@ -93,6 +95,6 @@ ProKit Studio is a core runtime boilerplate and intentionally does not include:
 
 Some features are intentionally optional and require valid environment variables to be active:
 
-- Clerk (auth)
+- Clerk (auth) - legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
 - Stripe (billing)
 - Resend (email)

@@ -42,8 +42,6 @@ jobs:
       STRIPE_PRICE_SAASKIT_TEST: price_ci_saaskit
       STRIPE_PRODUCT_SAASKIT_TEST: prod_ci_saaskit
       RESEND_API_KEY: dummy-ci-key
-      CLERK_DISABLED: 'true'
-      NEXT_PUBLIC_CLERK_DISABLED: 'true'
 
     steps:
       - name: Checkout

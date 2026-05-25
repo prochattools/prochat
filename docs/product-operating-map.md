@@ -35,8 +35,9 @@ Use this document before changing homepage copy, product pages, kit comparison t
 - MikeOSS is a law-firm wedge, not ProChat OS and not the main product.
 - SaaSKit, ProKit, UXKit, and WaaSKit are legacy/supporting products, not the flagship direction.
 - BuildFlow is supporting/internal tooling and may inform ProChat OS implementation, but it is not the current public flagship.
-- ProChat runtime auth remains Ory-only unless implementation docs/code prove a later migration.
-- Clerk may remain part of sold boilerplate products where that is true for the client-facing codebase.
+- ProChat runtime auth direction is Ory.
+- See `docs/auth-status.md` for the canonical runtime auth state.
+- Clerk may remain part of sold boilerplate products where that is true for the client-facing codebase, but only with a legacy-only warning.
 
 ## Product ecosystem
 
@@ -167,7 +168,7 @@ ProChat runtime:
 
 Sold boilerplate products:
 
-- Clerk may remain documented as part of client-facing boilerplate products where the product code actually includes it.
+- Clerk may remain documented as part of client-facing boilerplate products where the product code actually includes it, but the doc must warn that it is legacy boilerplate reference only and not active ProChat runtime auth.
 - Product docs must clearly say that this is boilerplate/product behavior, not ProChat website/runtime behavior.
 
 ## Documentation rules

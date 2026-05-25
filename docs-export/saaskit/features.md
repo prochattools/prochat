@@ -15,6 +15,10 @@ These are the parts you usually need to touch first if you want the product to f
 
 ## Optional later
 
+> Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
+# Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
 - Clerk for sign-in and sign-up.
 - Stripe for paid plans.
 - Resend for email and waitlists.

@@ -1,3 +1,5 @@
+# Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
 # Deployment
 
 ## Overview
@@ -41,7 +43,7 @@ SaaSKit ships with a proven launch path: Supabase Cloud hosts the Dev and Prod P
 
 - Hit `/api/health` to confirm `{"status":"ok"}`.
 - Inspect marketing and legal pages to ensure branding is applied.
-- Confirm enabled integrations (Clerk, Stripe, Resend, etc.) are performing as expected.
+- Confirm enabled integrations are performing as expected.
 - Stripe webhooks should show `verify` status before moving to live traffic.
 
 ### Migration behavior

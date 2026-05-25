@@ -1,5 +1,7 @@
 # ProKit — Troubleshooting Guide
 
+> Legacy boilerplate reference only. It does not describe active ProChat runtime authentication. ProChat runtime authentication direction is Ory.
+
 This guide is app-agnostic and applies to all SaaS applications built using ProKit. It provides universal debugging strategies, safe Codex behaviors, and guardrails to ensure that troubleshooting remains consistent, predictable, and non-destructive across future applications.
 
 ## When AI Can't Help: Self-Service Troubleshooting
@@ -70,6 +72,8 @@ node --version
 ```
 
 ### Clerk Authentication Issues
+
+Historical boilerplate guidance only.
 
 #### Common Problems
 
