@@ -34,7 +34,7 @@ For local development, `NEXT_PUBLIC_APP_URL` should point at `http://localhost:3
 
 ProChat runtime does not use Clerk for its own website/runtime auth. Ory is the intended direction, but runtime session validation is still TODO.
 
-See [auth-status.md](./auth-status.md) for the canonical auth state, warnings, and TODO list.
+See [auth-status.md](../docs/auth-status.md) for the canonical auth state, warnings, and TODO list.
 
 Current ProChat auth values:
 
