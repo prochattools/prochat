@@ -44,8 +44,11 @@ Current ProChat auth values:
 - `ORY_ADMIN_API_KEY`
 - `ORY_PROJECT_ID`
 - `ADMIN_EMAILS`
+- `ADMIN_USER_IDS`
 
 The shared ProChat auth UI should be documented against the Ory-backed auth model once that UI and validation are implemented. Middleware remains pass-through for now, and protected app flows must not assume auth enforcement until Ory session validation exists.
+
+`ADMIN_EMAILS` and `ADMIN_USER_IDS` are comma-separated lists used to identify admin users for accessing restricted routes (`src/lib/admin.ts`). At least one must be configured for admin access to be available.
 
 ## Payments (Stripe)
 
