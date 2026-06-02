@@ -1,9 +1,9 @@
 import { getSEOTags } from '@/libs/seo'
 import AIWorkflowsPageContent from './AIWorkflowsPageContent'
 
-const title = 'Managed AI Workflows for Messy Business Processes | ProChat OS'
+const title = 'Managed AI Workflows That Save Admin Time | ProChat OS'
 const description =
-  'ProChat OS helps businesses automate one repetitive workflow first: emails, PDFs, forms, notes, folders, and APIs become summaries, checklists, reports, draft replies, tasks, and status updates with human approval first.'
+  'ProChat OS helps businesses turn messy emails, PDFs, forms, notes, folders, and API data into summaries, checklists, tasks, reports, and draft replies for human review.'
 
 export const metadata = getSEOTags({
   title,
@@ -11,11 +11,11 @@ export const metadata = getSEOTags({
   keywords: [
     'managed AI workflows',
     'AI workflow automation',
-    'ProChat OS',
     'business process automation',
+    'admin automation',
     'client intake automation',
     'document workflow automation',
-    'agentic workflows',
+    'draft replies',
   ],
   openGraph: {
     title,

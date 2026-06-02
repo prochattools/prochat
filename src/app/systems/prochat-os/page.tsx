@@ -4,9 +4,9 @@ import { getSiteUrl } from '@/libs/site-url'
 import { getSoftwareApplicationSchema } from '@/libs/structured-data'
 import ProChatOSPageContent from './ProChatOSPageContent'
 
-const pageTitle = 'ProChat OS – Agentic Workflow OS'
+const pageTitle = 'ProChat OS – Messy Business Information In, Useful Work Out'
 const pageDescription =
-  'ProChat OS is an installable Agentic Workflow OS: a private workflow runtime that connects messy business inputs to structured outputs, approvals, memory, agents, and business tools.'
+  'ProChat OS helps businesses turn messy emails, PDFs, forms, notes, folders, and API data into summaries, checklists, tasks, reports, status updates, and draft replies for human review.'
 const pageCanonical = 'https://prochat.tools/systems/prochat-os'
 
 export const metadata = {
@@ -15,11 +15,12 @@ export const metadata = {
     description: pageDescription,
     keywords: [
       'ProChat OS',
-      'Agentic Workflow OS',
-      'agentic workflows',
       'AI workflow automation',
-      'private AI runtime',
       'business process automation',
+      'admin automation',
+      'document workflow automation',
+      'client intake automation',
+      'managed AI workflows',
     ],
     openGraph: {
       title: pageTitle,
@@ -58,23 +59,23 @@ export default function ProChatOSPage() {
         name: 'What is ProChat OS?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'ProChat OS is an installable Agentic Workflow OS: a private workflow runtime that connects messy business inputs to structured outputs, approvals, memory, agents, and the tools a business already uses.',
+          text: 'ProChat OS helps businesses get repetitive information work done faster by turning messy emails, PDFs, forms, notes, folders, and API data into clear summaries, checklists, tasks, reports, status updates, and draft replies for human review.',
         },
       },
       {
         '@type': 'Question',
-        name: 'Is ProChat OS a chatbot?',
+        name: 'How does a business use ProChat OS?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'No. ProChat OS is not only a chatbot or dashboard. It is a workflow runtime with memory, connectors, model routing, approvals, logs, and a control console.',
+          text: 'A business can send work to ProChat through simple entry points such as email, forms, file drops, or API calls. ProChat prepares structured output that the team can review, edit, approve, or send onward.',
         },
       },
       {
         '@type': 'Question',
-        name: 'What gets installed?',
+        name: 'Does ProChat OS act without approval?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'A customer installs a private ProChat OS instance with their own memory, workflows, credentials, connectors, logs, approvals, and optional workflow modules.',
+          text: 'Important outputs can be reviewed by people before they are sent, changed, or treated as final. The first goal is useful work that remains under human control.',
         },
       },
     ],
@@ -92,7 +93,7 @@ export default function ProChatOSPage() {
             {
               '@type': 'Offer',
               price: '0',
-              priceCurrency: 'USD',
+              priceCurrency: 'EUR',
               availability: 'https://schema.org/PreOrder',
               url: `${siteUrl}/systems/prochat-os`,
             },

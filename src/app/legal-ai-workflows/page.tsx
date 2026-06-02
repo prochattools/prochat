@@ -1,21 +1,21 @@
 import { getSEOTags } from '@/libs/seo'
 import LegalAIWorkflowsPageContent from './LegalAIWorkflowsPageContent'
 
-const title = 'Private Legal AI Workflows for Small Law Firms | ProChat OS'
+const title = 'AI Document Workflow Support for Small Law Firms | ProChat OS'
 const description =
-  'ProChat OS helps small law firms test private AI document and intake workflows: client emails, PDFs, notes, forms, and attachments become structured summaries, missing-information checklists, task lists, and draft follow-ups with lawyer approval first.'
+  'ProChat helps small law firms spend less time sorting client emails, PDFs, notes, and attachments by preparing intake summaries, missing-information checklists, matter tasks, and draft follow-ups for lawyer review.'
 
 export const metadata = getSEOTags({
   title,
   description,
   keywords: [
-    'legal AI workflows',
-    'law firm AI workflow',
-    'legal document workflow',
-    'client intake automation',
-    'law firm admin automation',
+    'legal AI workflow',
+    'law firm document workflow',
+    'legal admin automation',
+    'client intake summary',
+    'law firm follow-up emails',
+    'document review summary',
     'ProChat OS',
-    'private legal AI workspace',
   ],
   openGraph: {
     title,

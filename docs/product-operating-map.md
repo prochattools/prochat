@@ -43,8 +43,8 @@ Use this document before changing homepage copy, product pages, kit comparison t
 
 | Product | Category | Status | Primary audience | Role |
 | --- | --- | --- | --- | --- |
-| ProChat OS | Agentic Workflow OS | Flagship strategy / productization in progress | businesses, solo builders, workflow-driven operators, creators, SaaS builders | Installable private workflow runtime for turning messy inputs into structured outputs and actions. |
-| Managed ProChat OS | Managed productized service | First commercial direction | local businesses, law firms first, later other niches | ProChat installs, configures, hosts or supports ProChat OS and one or more workflows. |
+| ProChat OS | Managed AI workflow system | Flagship strategy / productization in progress | businesses, solo builders, workflow-driven operators, creators, SaaS builders | Turns messy business information into ready-to-review summaries, checklists, reports, tasks, status updates, and draft replies. |
+| Managed ProChat OS | Managed productized service | First commercial direction | local businesses, law firms first, later other niches | ProChat sets up, runs, and supports workflow systems that customers can use through email, forms, file drops, or API calls. |
 | ProChat website/platform | Business, content, commerce, docs platform | Live | buyers, operators, readers | Business-agnostic marketing, education, conversion, docs, and future ProChat OS product surface. |
 | MikeOSS legal demo | Legal document AI workspace wedge | First law-firm demo / install block | law firms | Tangible legal AI workspace used to start law-firm conversations and upsell ProChat OS workflows. |
 | BuildFlow | AI workflow/context tooling | Supporting/internal or adjacent product | AI-native builders and internal operators | Useful tooling/patterns for repo context and safe operations; not the current ProChat flagship. |

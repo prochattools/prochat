@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { CheckCircle2, FileText, LockKeyhole, ShieldCheck, Workflow } from 'lucide-react'
+import { CheckCircle2, Clock, FileText, ShieldCheck, TrendingUp } from 'lucide-react'
 
 import HeroSection from '@/components/marketing/HeroSection'
 import HeroBadge from '@/components/ui/hero-badge'
@@ -7,7 +7,21 @@ import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
 import { Panel, Section } from '@/components/ui/surface'
 
-const workflowOutputs = [
+const beforeItems = [
+  'Client emails with missing context',
+  'PDFs and attachments to review',
+  'Manual intake notes',
+  'Follow-up questions buried in threads',
+] as const
+
+const afterItems = [
+  'Intake summary',
+  'Missing-information checklist',
+  'Matter task list',
+  'Draft follow-up email',
+] as const
+
+const outputs = [
   'Client intake summary',
   'Document review summary',
   'Missing-information checklist',
@@ -16,31 +30,30 @@ const workflowOutputs = [
   'Structured matter notes',
 ] as const
 
-const pilotSteps = [
-  'Choose one repetitive document or intake workflow.',
-  'Use fake or approved sample data for the first demo.',
-  'Install or configure a private document/intake workspace.',
-  'Add one ProChat OS workflow around that process.',
-  'Review every output before anything is sent or changed.',
-  'Decide after 30 days whether to continue managed support.',
-] as const
-
 const pricing = [
   {
-    label: 'Pilot',
+    label: 'First pilot',
     price: '€750–€1,500',
-    description: 'A focused 30-day pilot around one legal admin/document workflow.',
+    description: 'A focused test around one intake, document, or follow-up process using fake or approved sample data first.',
   },
   {
     label: 'Larger firm pilot',
     price: 'from €2,500',
-    description: 'For firms with more people, stricter review, or more complex workflow mapping.',
+    description: 'For firms with more people, more review steps, or a more complex document process.',
   },
   {
-    label: 'Managed support',
+    label: 'Ongoing support',
     price: 'from €250/month',
-    description: 'Hosting, updates, workflow adjustments, support, and managed operations after the pilot.',
+    description: 'Keep the workflow running, improve the outputs, and expand only when it keeps saving time.',
   },
+] as const
+
+const steps = [
+  'You show the document or intake work that currently takes too much time.',
+  'We define what a useful reviewed output should look like.',
+  'ProChat prepares the first summary, checklist, tasks, or draft reply.',
+  'A lawyer reviews, edits, approves, or rejects the output.',
+  'The same type of work becomes faster the next time it arrives.',
 ] as const
 
 export default function LegalAIWorkflowsPageContent() {
@@ -48,60 +61,58 @@ export default function LegalAIWorkflowsPageContent() {
     <div className="bg-transparent text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
       <HeroSection
         showBackgrounds={false}
-        eyebrow={<HeroBadge text="Private legal admin workflow pilot" />}
+        eyebrow={<HeroBadge text="AI document workflow support for law firms" />}
         title={
           <>
-            <span className="block text-foreground dark:text-white">Private AI document workflows</span>
-            <span className="hero-accent block">for small law firms.</span>
+            <span className="block text-foreground dark:text-white">Spend less time sorting legal documents</span>
+            <span className="hero-accent block">and more time reviewing the work that matters.</span>
           </>
         }
-        subtitle="Turn client emails, PDFs, notes, forms, and attachments into structured intake summaries, missing-information checklists, task lists, and draft follow-ups — with lawyer approval before anything is sent or changed."
-        primaryCTA={{ href: '/book', label: 'Book a legal workflow discovery call' }}
-        secondaryCTA={{ href: '#pilot', label: 'See the pilot offer', variant: 'secondary' }}
+        subtitle="Client emails, PDFs, notes, forms, and attachments become intake summaries, missing-information checklists, matter tasks, and draft follow-ups — with lawyer review before anything is used."
+        primaryCTA={{ href: '/book', label: 'Book a legal workflow call' }}
+        secondaryCTA={{ href: '#examples', label: 'See what it prepares', variant: 'secondary' }}
         ambientMotion
       >
         <HeroCheckRow
-          items={['No legal advice claims', 'Human approval first', 'One workflow pilot']}
+          items={['Admin support only', 'Lawyer review first', 'No automatic legal advice']}
           className="mx-auto"
         />
       </HeroSection>
 
       <Section id="positioning" tone="transparent" spacing="default">
         <div className="mx-auto max-w-5xl px-page text-center">
-          <h2 className="pc-section-title mb-5 text-foreground">This is not legal advice automation</h2>
+          <h2 className="pc-section-title mb-5 text-foreground">This helps with legal admin, not legal judgment</h2>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            The offer is legal admin and document workflow support. ProChat OS helps structure information, prepare drafts, surface missing details, and keep work moving. Lawyers stay in control and approve outputs first.
+            ProChat helps prepare the boring but necessary structure around document-heavy work: summaries, checklists, missing details, task lists, and draft follow-ups. Your firm stays in control of the final review.
           </p>
         </div>
       </Section>
 
-      <Section id="workflow" tone="muted" spacing="default">
+      <Section id="before-after" tone="muted" spacing="default">
         <div className="mx-auto grid max-w-7xl gap-8 px-page lg:grid-cols-[1fr_auto_1fr] lg:items-center">
           <Panel tone="default" padding="default">
-            <div className="mb-5 flex items-center gap-3 text-primary">
-              <FileText className="h-5 w-5" />
-              <h3 className="pc-card-title text-foreground">Messy legal/admin input</h3>
+            <h3 className="pc-card-title mb-5 text-foreground">Before</h3>
+            <div className="grid gap-3">
+              {beforeItems.map(item => (
+                <div key={item} className="rounded-lg border border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
+                  {item}
+                </div>
+              ))}
             </div>
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              Client emails, PDFs, notes, attachments, forms, matter documents, and follow-up information that someone currently has to structure manually.
-            </p>
           </Panel>
 
           <div className="flex justify-center">
-            <div className="rounded-full border border-primary/30 bg-primary/10 p-5 text-primary">
-              <Workflow className="h-7 w-7" />
+            <div className="rounded-full border border-primary/30 bg-primary/10 px-5 py-3 font-mono text-sm uppercase tracking-[0.16em] text-primary">
+              Becomes
             </div>
           </div>
 
           <Panel tone="default" padding="default">
-            <div className="mb-5 flex items-center gap-3 text-primary">
-              <ShieldCheck className="h-5 w-5" />
-              <h3 className="pc-card-title text-foreground">Structured output for review</h3>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {workflowOutputs.map(output => (
-                <div key={output} className="rounded-lg border border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
-                  {output}
+            <h3 className="pc-card-title mb-5 text-foreground">After</h3>
+            <div className="grid gap-3">
+              {afterItems.map(item => (
+                <div key={item} className="rounded-lg border border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
+                  {item}
                 </div>
               ))}
             </div>
@@ -109,12 +120,33 @@ export default function LegalAIWorkflowsPageContent() {
         </div>
       </Section>
 
-      <Section id="pilot" tone="transparent" spacing="default">
+      <Section id="examples" tone="transparent" spacing="default">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">Private Legal AI Workflow Pilot</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">What ProChat can prepare for review</h2>
             <p className="pc-body-copy pc-body-muted">
-              We install or configure a private AI document/intake workspace for your firm and build one workflow around your real intake or document process.
+              The goal is not to replace lawyers. The goal is to reduce the admin load before review begins.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {outputs.map(output => (
+              <Panel key={output} tone="default" padding="default" className="h-full">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
+                  <CheckCircle2 className="h-5 w-5" />
+                </div>
+                <h3 className="pc-card-title text-foreground">{output}</h3>
+              </Panel>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <Section id="offer" tone="muted" spacing="default">
+        <div className="mx-auto max-w-7xl px-page">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="pc-section-title mb-4 text-foreground">A low-risk way to test it with your firm</h2>
+            <p className="pc-body-copy pc-body-muted">
+              Start with one document-heavy admin process and prove whether it saves time before expanding anything.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
@@ -131,20 +163,20 @@ export default function LegalAIWorkflowsPageContent() {
         </div>
       </Section>
 
-      <Section id="process" tone="muted" spacing="default">
+      <Section id="process" tone="transparent" spacing="default">
         <div className="mx-auto grid max-w-7xl gap-10 px-page lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
             <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
-              Pilot structure
+              What the pilot looks like
             </div>
-            <h2 className="pc-section-title mb-5 text-foreground">One workflow. Thirty days. Human approval.</h2>
+            <h2 className="pc-section-title mb-5 text-foreground">From messy matter information to reviewed next steps</h2>
             <p className="pc-body-copy pc-body-muted">
-              The goal is not a broad AI rollout. The goal is to find one document or intake workflow that saves real admin time and can be safely reviewed by your firm.
+              Your firm does not need to commit to a broad AI rollout. The first test is about one practical before-and-after result.
             </p>
           </div>
           <Panel tone="default" padding="default">
             <div className="space-y-4">
-              {pilotSteps.map((step, index) => (
+              {steps.map((step, index) => (
                 <div key={step} className="flex gap-4 text-sm leading-relaxed text-muted-foreground">
                   <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-primary/10 font-mono text-xs text-primary">
                     {index + 1}
@@ -157,34 +189,37 @@ export default function LegalAIWorkflowsPageContent() {
         </div>
       </Section>
 
-      <Section id="trust" tone="transparent" spacing="default">
+      <Section id="trust" tone="muted" spacing="default">
         <div className="mx-auto max-w-7xl px-page">
           <div className="grid gap-6 md:grid-cols-3">
             {[
-              ['Private by default', 'The pilot is designed around a private workspace and controlled access, not a public chatbot.'],
-              ['Approval first', 'Nothing is sent or changed without lawyer approval during the pilot.'],
-              ['Workflow, not advice', 'The system supports admin/document structure. It does not replace legal judgment.'],
-            ].map(([title, description]) => (
-              <Panel key={title} tone="default" padding="default" className="h-full">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
-                  {title === 'Private by default' ? <LockKeyhole className="h-5 w-5" /> : <CheckCircle2 className="h-5 w-5" />}
-                </div>
-                <h3 className="pc-card-title mb-3 text-foreground">{title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
-              </Panel>
-            ))}
+              { title: 'No automatic advice', description: 'The system prepares admin and document outputs for review. It does not replace legal judgment.', icon: ShieldCheck },
+              { title: 'Faster intake', description: 'New matter information can be summarized and organized before a lawyer reviews it.', icon: Clock },
+              { title: 'Clearer follow-up', description: 'Missing details and draft questions are prepared so the next email is easier to send.', icon: TrendingUp },
+            ].map(item => {
+              const Icon = item.icon
+              return (
+                <Panel key={item.title} tone="default" padding="default" className="h-full">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="pc-card-title mb-3 text-foreground">{item.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                </Panel>
+              )
+            })}
           </div>
         </div>
       </Section>
 
-      <Section id="cta" tone="muted" spacing="loose">
+      <Section id="cta" tone="transparent" spacing="loose">
         <div className="mx-auto max-w-3xl px-page text-center">
-          <h2 className="pc-section-title mb-6 text-foreground">Which legal admin workflow would you automate first?</h2>
+          <h2 className="pc-section-title mb-6 text-foreground">Which legal admin task should stop taking so much time?</h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            Bring one repetitive intake, document, or follow-up process. We will map the smallest useful pilot and keep human approval first.
+            Show us one document, intake, or follow-up process. We will show what a faster reviewed version could look like.
           </p>
           <Button asChild variant="primary" size="lg">
-            <Link href="/book">BOOK — LEGAL WORKFLOW DISCOVERY</Link>
+            <Link href="/book">BOOK — LEGAL WORKFLOW CALL</Link>
           </Button>
         </div>
       </Section>

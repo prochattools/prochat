@@ -1,536 +1,255 @@
-# ProChat OS Landing Page Copy
+# ProChat OS Marketing Copy Blueprint
 
-Status: draft copy blueprint for the business-agnostic ProChat OS website/landing page.
+Status: buyer-facing copy blueprint for the ProChat website and landing pages.
 
-Last updated: 2026-05-24
+Last updated: 2026-06-02
 
 ## Source of truth
 
-This copy follows the mind-led ProChat OS strategy and the synchronized ProChat repo docs:
+Mind remains canonical for strategy. This document translates that strategy into public marketing copy.
 
-- `docs/strategy.md`
-- `docs/product-operating-map.md`
-- `docs/product-hierarchy-plan.md`
-- `docs/roadmap.md`
-- `docs/implementation-plan.md`
+Public website copy must speak to business outcomes, not internal architecture.
 
-Mind remains leading when conflicts appear.
+## Buyer-facing definition
 
-## Page goal
+Use this definition on the website and in sales conversations:
 
-Make ProChat OS understandable as a business-agnostic Agentic Workflow OS.
+```text
+ProChat OS helps businesses get repetitive admin, document, intake, reporting, and follow-up work done faster by turning messy information into ready-to-review outputs.
+```
 
-The page should explain:
+Short version:
 
-- what ProChat OS is
-- why chatbots and narrow SaaS tools are not enough
-- how messy inputs become structured outputs and actions
-- what a private workflow runtime means
-- how human approval and control work
-- how ProChat can install and manage it
-- how free personal/non-commercial use differs from commercial/managed use
+```text
+Messy business information in. Useful work out.
+```
 
-The page should not lead with law firms, MikeOSS, BuildFlow, SaaSKit, ProKit, UXKit, or WaaSKit.
+## What it does
 
-## Messaging rules
+ProChat OS helps a business turn scattered inputs into useful outputs.
+
+Inputs:
+
+- emails
+- PDFs
+- forms
+- notes
+- folders
+- attachments
+- reports
+- API data
+
+Outputs:
+
+- summaries
+- missing-information checklists
+- task lists
+- status updates
+- reports
+- draft replies
+- review notes
+
+## Benefits
+
+A buyer should immediately understand these benefits:
+
+- less repetitive admin work
+- faster first replies
+- fewer missed follow-ups
+- clearer handoffs
+- more consistent document and intake work
+- less copying, pasting, rewriting, and reformatting
+- human review before important output is used
+
+## For whom
+
+Primary public audience:
+
+- small and local businesses
+- B2B service businesses
+- agencies and consultants
+- law firms and accountants as direct outreach niches
+- teams with repetitive document, email, intake, reporting, or follow-up work
+- builders and operators who want AI to help with real workflow output, not only chat answers
+
+## Public hosting explanation
+
+Do not imply that ProChat is installed into a customer computer or internal network by default.
+
+Preferred wording:
+
+```text
+ProChat sets up and manages the workflow system for you. Your team can send work to it by email, forms, file drops, or API calls, and receive structured outputs back for review.
+```
+
+Avoid:
+
+```text
+installable
+private runtime
+installed in your systems
+workflow runtime
+customer instance
+memory store
+model router
+connector layer
+CLI
+```
+
+Those are internal or technical terms and should not lead marketing pages.
+
+## Homepage goal
+
+The homepage should make the desired before/after obvious.
+
+### Hero
+
+Eyebrow:
+
+```text
+ProChat OS · Managed AI Workflows
+```
+
+Headline:
+
+```text
+Get repetitive business work done without the manual copy-paste.
+```
+
+Subheadline:
+
+```text
+Send messy emails, PDFs, forms, notes, folders, or API data in. Get clear summaries, checklists, tasks, reports, and draft replies back for human review.
+```
+
+CTA:
+
+```text
+See managed workflows
+Book a call
+```
+
+Trust row:
+
+```text
+Less admin work · Faster follow-up · Human approval first
+```
+
+## Homepage sections
+
+Recommended structure:
+
+1. Before/after: messy input becomes useful output.
+2. Problem: AI is useful, but the work around it is still manual.
+3. Benefits: save admin hours, respond faster, miss less information, keep control.
+4. How it feels: send work in, receive structured output, review, approve, repeat.
+5. Examples: client inquiry, document pack, internal notes, support request, report, content workflow.
+6. CTA: ask which repetitive task still costs the team the most time.
+
+## AI workflows page goal
+
+This page should sell one narrow conversion promise:
+
+```text
+Stop losing hours to repetitive admin work.
+```
+
+It should not say “start with one workflow” as the primary message. That is internal strategy. Public copy should focus on the buyer's desired outcome:
+
+- save time
+- respond faster
+- reduce manual admin
+- turn scattered information into a usable output
+- keep humans in control
+
+## Legal workflows page goal
+
+This page should sell legal admin/document support, not legal advice and not technical tooling.
+
+Headline direction:
+
+```text
+Spend less time sorting legal documents and more time reviewing the work that matters.
+```
+
+Subheadline direction:
+
+```text
+Client emails, PDFs, notes, forms, and attachments become intake summaries, missing-information checklists, matter tasks, and draft follow-ups — with lawyer review before anything is used.
+```
+
+Required trust language:
+
+- admin/document support only
+- lawyer review first
+- no automatic legal advice
+- fake or approved sample data for demos
+
+## Language rules
 
 Use:
 
-- Agentic Workflow OS
-- agentic workflows
-- private workflow runtime
-- messy inputs to structured outputs
-- business tools integration
-- 24/7 agentic employee
+- get work done faster
+- save admin time
+- respond faster
+- messy information in, useful work out
+- ready for review
 - human approval first
-- managed ProChat OS
-- modular workflow blocks
-
-Avoid leading with:
-
-- generic AI chatbot
-- legal AI platform
-- SaaS builder kit
-- open source, if commercial use is restricted
-- dashboard as the product
-- fully autonomous claims without approval/safety context
-- lawyer/accountant-only positioning
-
-## Primary page structure
-
-1. Hero
-2. Problem
-3. Solution
-4. How it works
-5. What ProChat OS installs
-6. Workflow examples
-7. Human approval and trust
-8. Managed install
-9. Free vs commercial/managed
-10. CTA
-11. FAQ
-
----
-
-## 1. Hero
-
-### Eyebrow
-
-```text
-Agentic Workflow OS
-```
-
-### Headline
-
-```text
-Agentic workflows between your messy inputs and your business tools.
-```
-
-### Subheadline
-
-```text
-ProChat OS is an installable private workflow runtime that turns emails, files, forms, notes, APIs, and folders into structured outputs, tasks, reports, drafts, updates, and actions — with human approval first.
-```
-
-### Primary CTA
-
-```text
-Request a managed setup
-```
-
-### Secondary CTA
-
-```text
-See how it works
-```
-
-### Trust row
-
-```text
-Private runtime · Customer-controlled credentials · Human approval first
-```
-
-### Optional short version
-
-```text
-Turn messy business information into structured work — automatically, with human approval first.
-```
-
----
-
-## 2. Problem section
-
-### Heading
-
-```text
-AI chat still leaves the work on you.
-```
-
-### Body
-
-```text
-ChatGPT and narrow SaaS tools can help with isolated tasks. But most businesses still do the same manual glue work around them.
-```
-
-### Problem bullets
-
-```text
-You copy information into chat windows.
-You explain the same context again.
-You move outputs into other tools manually.
-You reformat summaries, emails, reports, and tasks.
-You update CRMs, spreadsheets, folders, or documents yourself.
-You restart the process every time something new arrives.
-```
-
-### Closing line
-
-```text
-That is not an operating system. That is manual AI glue work.
-```
-
----
-
-## 3. Solution section
-
-### Heading
-
-```text
-ProChat OS sits in the middle and structures the mess.
-```
-
-### Body
-
-```text
-ProChat OS connects to the way your business already works. It can receive information from inboxes, folders, forms, APIs, files, notes, and other systems, then run configurable agentic workflows that produce structured outputs and actions.
-```
-
-### Diagram copy
-
-```text
-Messy inputs
-emails · PDFs · notes · forms · links · files · APIs
-
-→ ProChat OS
-memory · agents · rules · approvals · connectors · model routing
-
-→ Structured outputs
-summaries · tasks · reports · drafts · checklists · updates · actions
-```
-
-### Closing line
-
-```text
-You keep working the way you work. ProChat OS turns the scattered information into usable work.
-```
-
----
-
-## 4. How it works
-
-### Heading
-
-```text
-From input to action, with control at every step.
-```
-
-### Step 1 — Connect inputs
-
-```text
-Connect the places where work already arrives: email, folders, forms, files, APIs, webhooks, or future CRM integrations.
-```
-
-### Step 2 — Store context
-
-```text
-ProChat OS keeps customer-specific memory: people, projects, documents, instructions, preferences, decisions, and workflow history.
-```
-
-### Step 3 — Run workflows
-
-```text
-Configurable agents classify inputs, retrieve context, call the right model, structure the result, and prepare the next action.
-```
-
-### Step 4 — Approve first
-
-```text
-Sensitive outputs can require human approval before anything is sent, updated, or routed.
-```
-
-### Step 5 — Send output where it belongs
-
-```text
-The result can become a report, task list, email draft, checklist, CRM-ready field set, file, webhook, or dashboard status.
-```
-
----
-
-## 5. What gets installed
-
-### Heading
-
-```text
-A private workflow runtime, not just another dashboard.
-```
-
-### Body
-
-```text
-ProChat OS is installed as a private runtime for your workflows. The dashboard is only the command center. The real product is the runtime that connects inputs, memory, agents, approvals, and outputs.
-```
-
-### Component list
-
-```text
-Workflow runtime / API
-Memory and context store
-Input and output connectors
-Model router / AI selector
-Approval and event log
-Control console
-CLI for install, status, updates, and support
-Optional workflow modules
-```
-
-### Technical trust line
-
-```text
-Customer-owned credentials, least-privilege connectors, redacted support logs, and human approval first.
-```
-
----
-
-## 6. Workflow examples
-
-### Heading
-
-```text
-Start with one workflow. Add more when it works.
-```
-
-### Intro
-
-```text
-ProChat OS is modular. You do not need to automate everything on day one. Start with one painful workflow, prove the value, then expand.
-```
-
-### Cards
-
-#### Admin workflow
-
-```text
-Turn messy emails, notes, files, and forms into structured summaries, tasks, checklists, and follow-up drafts.
-```
-
-#### Document workflow
-
-```text
-Extract key information from document packs and prepare structured review notes, missing-information lists, and reports.
-```
-
-#### Content workflow
-
-```text
-Turn research, links, notes, product updates, and ideas into scripts, posts, outlines, and publishing tasks.
-```
-
-#### Developer workflow
-
-```text
-Turn project notes, repo context, commits, and product decisions into implementation plans, updates, and next actions.
-```
-
-#### Monitoring workflow
-
-```text
-Watch systems, pages, APIs, or reports and prepare structured status updates or escalation tasks.
-```
-
-#### Local app workflow
-
-```text
-Use ProChat OS to help define, build, and maintain small internal tools or local apps around your workflows.
-```
-
----
-
-## 7. Human approval and trust
-
-### Heading
-
-```text
-Automation starts with approval.
-```
-
-### Body
-
-```text
-ProChat OS is designed to earn trust gradually. New workflows can start with human approval before anything is sent or changed. As the workflow proves reliable, low-risk steps can become more automatic.
-```
-
-### Approval ladder
-
-```text
-Human approval first
-→ semi-automatic after trust
-→ full automation only for approved low-risk workflows
-```
-
-### Trust bullets
-
-```text
-You choose what connects.
-You control the credentials.
-You decide what requires approval.
-You can start small and expand later.
-```
-
----
-
-## 8. Managed ProChat OS
-
-### Heading
-
-```text
-Installed and managed for you.
-```
-
-### Body
-
-```text
-You can run ProChat OS yourself for personal/non-commercial use when the public repo is available. For business use, ProChat can install, configure, host, support, and maintain the system for you.
-```
-
-### Managed includes
-
-```text
-Private setup
-Workflow configuration
-Connector setup
-Updates and maintenance
-Support and troubleshooting
-Optional hosting on customer-owned or ProChat-managed infrastructure
-```
-
-### Offer copy
-
-```text
-Start with one workflow. If it saves time after the pilot, continue on a managed monthly plan and add more workflows over time.
-```
-
----
-
-## 9. Free vs commercial / managed
-
-### Heading
-
-```text
-Free for personal use. Licensed and managed for business use.
-```
-
-### Body
-
-```text
-The intended public ProChat OS project is source-available for personal/non-commercial use. Commercial use, managed hosting, client work, internal business operation, and resale require a ProChat commercial license or managed plan.
-```
-
-### Table copy
-
-| Path | Best for | Includes |
-| --- | --- | --- |
-| Personal GitHub version | personal/non-commercial experimentation | source-available code, local learning, personal workflows |
-| Commercial license | businesses and agencies running it themselves | commercial-use rights under ProChat terms |
-| Managed ProChat OS | businesses that want setup and support | install, hosting/support options, updates, workflows, support |
-| Modular workflows | customers starting with one outcome | admin, documents, content, developer, monitoring, or local-app workflows |
-
-### Caution line
-
-```text
-ProChat OS should be described as source-available unless the final license allows open-source commercial use.
-```
-
----
-
-## 10. CTA section
-
-### Heading
-
-```text
-Start with one workflow that wastes time today.
-```
-
-### Body
-
-```text
-ProChat OS does not need to replace your whole business system. It starts by connecting one messy input flow to one useful structured output.
-```
-
-### Primary CTA
-
-```text
-Request a managed setup
-```
-
-### Secondary CTA
-
-```text
-Join early access
-```
-
-### Microcopy
-
-```text
-Tell us what arrives messy, where it should go, and what the finished output should look like.
-```
-
----
-
-## 11. FAQ
+- managed for you
+- send by email, form, file drop, or API
+- summaries, checklists, reports, tasks, draft replies
+
+Avoid on public pages:
+
+- installable
+- runtime
+- memory
+- connectors
+- routing
+- model router
+- CLI
+- agentic employee
+- internal architecture
+- broad AI rollout
+- private customer instance
+- start with one workflow first as a hero promise
+
+## FAQ copy
 
 ### What is ProChat OS?
 
 ```text
-ProChat OS is an installable Agentic Workflow OS. It connects messy business inputs to the tools you already use through memory, connectors, workflow agents, approvals, logs, and a control console.
+ProChat OS helps businesses get repetitive information work done faster by turning messy emails, PDFs, forms, notes, folders, and API data into summaries, checklists, tasks, reports, status updates, and draft replies for human review.
 ```
 
-### Is ProChat OS just another chatbot?
+### Do you install something on our computers?
 
 ```text
-No. Chatbots wait for prompts and return answers. ProChat OS runs workflows between inputs and outputs, so information can be structured, routed, approved, and acted on.
+No. ProChat sets up and manages the workflow system for you. Your team can send work to it through simple entry points such as email, forms, file drops, or API calls.
 ```
 
-### Is the dashboard the product?
+### Does it act automatically?
 
 ```text
-No. The dashboard is the command center. The product is the workflow runtime that connects inputs, memory, agents, approvals, and business tools.
+Important outputs can be reviewed by people before they are sent, changed, or treated as final.
 ```
 
-### Does ProChat OS work for law firms only?
+### What kind of work can it help with?
 
 ```text
-No. Law firms are one outreach wedge. The main ProChat OS product is business-agnostic and can support document, admin, content, developer, monitoring, and local-app workflows.
+Admin work, client intake, document summaries, missing-information checklists, draft replies, internal reports, task lists, status updates, and recurring information work.
 ```
 
-### What is MikeOSS?
+## Metadata direction
+
+Homepage title:
 
 ```text
-MikeOSS is an open-source legal document AI workspace that may be used as a law-firm demo or implementation block. It is not ProChat OS. ProChat OS is the workflow layer around and beyond tools like MikeOSS.
+ProChat OS | Get Repetitive Business Work Done Faster
 ```
 
-### Can ProChat install it for us?
+Homepage description:
 
 ```text
-Yes. Managed ProChat OS is the paid path where ProChat helps install, configure, maintain, and support a private workflow runtime and selected workflow modules.
+ProChat OS helps businesses turn messy emails, PDFs, forms, notes, folders, and API data into clear summaries, checklists, tasks, reports, and draft replies for human review.
 ```
-
-### Can it run on our own infrastructure?
-
-```text
-The intended deployment model supports customer-owned or ProChat-managed infrastructure depending on trust, security, and support needs.
-```
-
-### Does everything run automatically?
-
-```text
-No. New workflows should start with human approval. As trust grows, low-risk steps can become semi-automatic or fully automatic when approved.
-```
-
-## Metadata draft
-
-### Title
-
-```text
-ProChat OS — Agentic Workflow OS for Messy Business Inputs
-```
-
-### Description
-
-```text
-ProChat OS is an installable Agentic Workflow OS that turns emails, files, forms, notes, APIs, and folders into structured outputs, tasks, reports, drafts, updates, and actions.
-```
-
-### Keywords
-
-```text
-Agentic Workflow OS
-agentic workflows
-private workflow runtime
-business automation
-AI workflow automation
-workflow agents
-managed AI workflows
-business process automation
-```
-
-## Implementation notes
-
-When this copy is implemented in code:
-
-- update homepage metadata away from BuildFlow/SaaSKit-led copy
-- make ProChat OS the first and primary product card
-- move BuildFlow, SaaSKit, and ProKit into supporting/legacy areas
-- avoid law-firm-specific hero copy
-- keep MikeOSS out of the main homepage hero
-- explain the dashboard as command center only
-- keep human approval and customer-controlled credentials visible

@@ -54,7 +54,7 @@ ProChat helps businesses, solo builders, creators, and workflow-driven operators
 
 ## Mission
 
-ProChat builds and sells ProChat OS: an installable Agentic Workflow OS that connects messy inputs to business tools through memory, connectors, model routing, workflow agents, approvals, logs, and a control console.
+ProChat builds and sells ProChat OS: a managed AI workflow system that helps businesses turn messy information into summaries, checklists, reports, tasks, status updates, and draft replies for human review.
 
 ## Business definition
 
@@ -70,9 +70,9 @@ The business sells:
 
 ## What ProChat OS is
 
-ProChat OS is an installable Agentic Workflow OS that gives businesses, solo builders, and workflow-driven operators a private agentic employee for memory, automation, local apps, content, operations, and execution.
+ProChat OS helps businesses, solo builders, and workflow-driven operators get repetitive information work done faster.
 
-It turns messy information from emails, files, forms, notes, APIs, and folders into structured outputs, tasks, reports, drafts, updates, and actions.
+It turns messy information from emails, files, forms, notes, APIs, and folders into ready-to-review summaries, checklists, tasks, reports, drafts, updates, and actions.
 
 ## What ProChat OS is not
 
@@ -328,3 +328,111 @@ Do not lead cold prospects with:
 - ProKit/SaaSKit
 
 Lead with one workflow, one outcome, and human approval.
+
+
+
+
+## Buyer-facing definition — 2026-06-02
+
+Internal technical definition and public marketing definition must be separated.
+
+### Internal definition
+
+For product and engineering work, ProChat OS remains the managed agentic workflow system defined by the mind repo.
+
+### Public buyer-facing definition
+
+Use this on the website and in sales conversations:
+
+```text
+ProChat OS helps businesses get repetitive admin, document, intake, reporting, and follow-up work done faster by turning messy information into ready-to-review outputs.
+```
+
+Short version:
+
+```text
+Messy business information in. Useful work out.
+```
+
+What ProChat OS does for a buyer:
+
+- turns scattered emails, PDFs, forms, notes, folders, and API data into usable work
+- prepares summaries, checklists, reports, draft replies, tasks, and status updates
+- keeps humans in control before anything is sent, changed, or approved
+- runs on ProChat-managed infrastructure unless a different setup is agreed
+- connects to the customer's workflow through simple entry points such as email, forms, file drops, and APIs
+
+What buyers care about:
+
+- less manual admin
+- faster response time
+- fewer missed follow-ups
+- clearer information
+- cheaper repetitive work
+- more consistent execution
+- less copying, pasting, reformatting, and chasing missing details
+
+Do not use these technical/internal terms as primary marketing copy:
+
+- installable
+- runtime
+- memory store
+- model router
+- connector layer
+- workflow API
+- CLI
+- customer instance
+- architecture
+- module boundary
+
+Those terms may appear in technical docs only. On marketing pages, use buyer-outcome language.
+
+### Public hosting explanation
+
+Do not imply that ProChat enters the customer's computers or internal network by default.
+
+Public wording:
+
+```text
+ProChat sets up and manages the workflow system for you. Your team can send work to it by email, forms, file drops, or API calls, and receive structured outputs back for review.
+```
+
+Avoid:
+
+```text
+We install ProChat OS into your systems.
+```
+
+Better:
+
+```text
+We run the workflow system for you and connect it to the places where work already arrives.
+```
+
+### Website copy principle
+
+Marketing pages must show the customer's before/after outcome, not ProChat's internal strategy.
+
+Bad marketing copy:
+
+```text
+Start with one painful workflow first.
+```
+
+Better marketing copy:
+
+```text
+Stop losing hours to repetitive admin work.
+```
+
+Bad marketing copy:
+
+```text
+Private workflow runtime with memory and connectors.
+```
+
+Better marketing copy:
+
+```text
+Send messy information in. Get a clear summary, checklist, draft reply, and task list back.
+```

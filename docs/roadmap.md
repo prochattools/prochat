@@ -112,7 +112,7 @@ Status: planned after landing copy.
 
 Goal:
 
-Create an implementation roadmap for building ProChat OS as an installable private workflow runtime.
+Create an implementation roadmap for building ProChat OS as a managed workflow system that turns messy business information into ready-to-review outputs.
 
 Must include the MikeOSS Dokploy checklist as the first demo wedge.
 
