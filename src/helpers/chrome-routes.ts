@@ -9,6 +9,8 @@ export const MARKETING_SURFACE_ROUTES = [
   '/proof',
   '/studio',
   '/systems/prochat-os',
+  '/ai-workflows',
+  '/legal-ai-workflows',
   '/systems/events',
   '/waitlist',
   '/waiting-list',

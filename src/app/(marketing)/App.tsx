@@ -33,39 +33,13 @@ const pillars = [
   },
 ] as const
 
-const products = [
-  {
-    title: 'ProChat OS',
-    status: 'Flagship',
-    description: 'The Agentic Workflow OS and private runtime for turning messy business inputs into structured work.',
-    href: '/systems/prochat-os',
-    cta: 'EXPLORE — PROCHAT OS',
-    primary: true,
-  },
-  {
-    title: 'BuildFlow',
-    status: 'Legacy / secondary',
-    description: 'A project-context and repo workflow tool. Useful, but no longer the flagship strategy.',
-    href: '/buildflow',
-    cta: 'VIEW — BUILDFLOW',
-    primary: false,
-  },
-  {
-    title: 'SaaSKit',
-    status: 'Legacy product',
-    description: 'A production-ready SaaS foundation that remains available as a supporting product.',
-    href: '/kits/saaskit',
-    cta: 'VIEW — SAASKIT',
-    primary: false,
-  },
-  {
-    title: 'ProKit',
-    status: 'Legacy product',
-    description: 'The lean SaaS engine for builders who want more control over product surface and structure.',
-    href: '/kits/prokit',
-    cta: 'VIEW — PROKIT',
-    primary: false,
-  },
+const examples = [
+  'Client intake automation',
+  'Document and email summarization',
+  'Missing-information checklists',
+  'Draft follow-up emails',
+  'Internal reports and task creation',
+  'Content workflow automation',
 ] as const
 
 export default function App() {
@@ -157,32 +131,28 @@ export default function App() {
         </div>
       </Section>
 
-      <Section id="products" tone="muted" spacing="default">
+      <Section id="workflow-examples" tone="muted" spacing="default">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">One flagship, supporting legacy products</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">Automate one painful workflow first</h2>
             <p className="pc-body-copy pc-body-muted">
-              ProChat OS is the flagship. BuildFlow, SaaSKit, ProKit, UXKit, and WaaSKit remain useful context or legacy products, but they no longer define the company direction.
+              Start with one repetitive process. ProChat OS maps the inputs and outputs, structures the work, asks for human approval, and only expands once the workflow proves value.
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {products.map(product => (
-              <Panel
-                key={product.title}
-                tone={product.primary ? 'elevated' : 'default'}
-                padding="default"
-                className={product.primary ? 'border-primary/30' : ''}
-              >
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {examples.map(example => (
+              <Panel key={example} tone="default" padding="default" className="h-full">
                 <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
-                  {product.status}
+                  Workflow example
                 </div>
-                <h3 className="pc-card-title mb-3 text-foreground">{product.title}</h3>
-                <p className="mb-6 text-sm leading-relaxed text-muted-foreground">{product.description}</p>
-                <Button asChild variant={product.primary ? 'primary' : 'secondary'} size="sm">
-                  <Link href={product.href}>{product.cta}</Link>
-                </Button>
+                <h3 className="pc-card-title text-foreground">{example}</h3>
               </Panel>
             ))}
+          </div>
+          <div className="mt-10 flex justify-center">
+            <Button asChild variant="primary" size="lg">
+              <Link href="/ai-workflows">BOOK — WORKFLOW DISCOVERY</Link>
+            </Button>
           </div>
         </div>
       </Section>

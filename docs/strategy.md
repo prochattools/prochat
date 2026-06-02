@@ -262,3 +262,69 @@ Avoid language that is:
 When this repo conflicts with the `mind` ProChat strategy, `mind` wins.
 
 Before changing website positioning, landing pages, product pages, roadmap language, or implementation docs, read the ProChat OS strategy docs in `mind` or their synchronized equivalents in this repo.
+
+
+
+
+## Public website product rule — 2026-06-02
+
+The ProChat website sells one product only:
+
+```text
+ProChat OS
+```
+
+Legacy products may remain in this repository and may keep their routes for archive, compatibility, or direct-access reasons, but they must not be promoted in the public website navigation, footer, homepage product grids, or primary CTAs.
+
+Public website links should point to:
+
+- `/` — ProChat OS business-agnostic homepage
+- `/systems/prochat-os` — detailed ProChat OS product page
+- `/ai-workflows` — conversion page for managed workflow discovery
+- `/legal-ai-workflows` — law-firm-specific outreach landing page
+- `/book` — booking page
+- `/contact`, `/terms`, `/privacy` where needed
+
+Do not link publicly to:
+
+- `/kits`
+- `/kits/prokit`
+- `/kits/saaskit`
+- `/kits/uxkit`
+- `/kits/waaskit`
+- `/buildflow`
+
+Those pages should not be deleted unless explicitly requested. They are legacy/direct-access surfaces only.
+
+## First paid offer language
+
+External offer language should be simpler than the internal architecture language:
+
+```text
+One painful workflow automated in 30 days.
+```
+
+Preferred public offer:
+
+```text
+Managed AI workflows for messy business processes.
+```
+
+Explain it as:
+
+```text
+Emails, PDFs, forms, notes, folders, and APIs become summaries, checklists, reports, draft replies, tasks, and status updates — with human approval before anything is sent or changed.
+```
+
+Do not lead cold prospects with:
+
+- model routing
+- infrastructure
+- grants
+- AWS credits
+- agentic employee
+- open source
+- MikeOSS
+- ProKit/SaaSKit
+
+Lead with one workflow, one outcome, and human approval.

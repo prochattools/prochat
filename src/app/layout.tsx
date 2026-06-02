@@ -14,9 +14,9 @@ import '@fontsource/jetbrains-mono'
 
 import '@/assets/styles/globals.scss'
 
-const ROOT_TITLE = 'ProChat — Build SaaS with Structure, not Guesswork.'
+const ROOT_TITLE = 'ProChat OS — Agentic Workflows for Messy Business Processes'
 const ROOT_DESCRIPTION =
-  'ProChat helps founders build SaaS with structure, not guesswork. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.'
+  'ProChat OS turns messy business inputs into structured summaries, checklists, reports, draft replies, tasks, and status updates through private agentic workflows with human approval first.'
 
 const fontSans = localFont({
   src: '../assets/fonts/HostGrotesk-latin.woff2',

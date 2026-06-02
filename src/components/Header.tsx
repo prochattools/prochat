@@ -22,14 +22,14 @@ import { SocialIcon, type SocialIconName } from '@/components/ui/social-icons'
 import { useScrollDirection } from '@/hooks/useScrollDirection'
 
 const NAV_ITEMS = [
-  { label: 'Start Here', href: '/' },
-  { label: 'Kits', href: '/kits' },
+  { label: 'ProChat OS', href: '/systems/prochat-os' },
+  { label: 'AI Workflows', href: '/ai-workflows' },
+  { label: 'Book', href: '/book' },
 ] as const
 
 const MOBILE_SECONDARY_ITEMS = [
 	{ label: 'LinkedIn', href: 'https://www.linkedin.com/company/prochattools', icon: 'linkedin' },
 	{ label: 'GitHub', href: 'https://github.com/prochattools', icon: 'github' },
-	{ label: 'Discord', href: 'https://discord.gg/U75p2BQuAH', icon: 'discord' },
 ] as const
 
 function isActivePath(pathname: string, href: string) {
@@ -80,11 +80,12 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 			</ul>
 			<div className="justify-self-end">
 				<Link
-					href="/kits/saaskit"
+					href="/ai-workflows"
 					onClick={() =>
 						trackEvent('nav_cta_click', {
 							location: 'header_capsule',
-							product: 'saaskit',
+							product: 'prochat_os',
+							cta: 'workflow_discovery',
 							source_page: pathname,
 						})
 					}
@@ -93,7 +94,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 						'h-10 origin-center scale-[1.15] rounded-[var(--pc-button-radius)] px-5 font-mono text-[0.95rem] font-bold tracking-[0.04em] text-white [font-variant-ligatures:none]',
 					)}
 				>
-					<span>Start with SaaSKit</span>
+					<span>Automate one workflow</span>
 				</Link>
 			</div>
 		</nav>
@@ -113,16 +114,17 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 					className="h-9 rounded-[var(--pc-button-radius)] px-2.5 text-[0.72rem] font-bold tracking-[0.05em] sm:px-3 sm:text-[0.7rem] sm:tracking-[0.08em]"
 				>
 					<Link
-						href="/kits/saaskit"
+						href="/ai-workflows"
 						onClick={() =>
 							trackEvent('nav_cta_click', {
 								location: 'mobile_header_capsule',
-								product: 'saaskit',
+								product: 'prochat_os',
+								cta: 'workflow_discovery',
 								source_page: pathname,
 							})
 						}
 					>
-						<span className="whitespace-nowrap">Start with SaaSKit</span>
+						<span className="whitespace-nowrap">Automate workflow</span>
 					</Link>
 				</Button>
 				<Sheet open={open} onOpenChange={setOpen}>
@@ -210,17 +212,18 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 									className="h-auto w-full rounded-[var(--pc-button-radius)] py-4 shadow-none hover:brightness-[1.03] [&_.pc-action-label]:text-base [&_.pc-action-label]:tracking-[0.14em]"
 								>
 									<Link
-										href="/kits/saaskit"
+										href="/ai-workflows"
 										onClick={() => {
 											trackEvent('nav_cta_click', {
 												location: 'mobile_header_drawer',
-												product: 'saaskit',
+												product: 'prochat_os',
+												cta: 'workflow_discovery',
 												source_page: pathname,
 											})
 											setOpen(false)
 										}}
 									>
-										Start with SaaSKit
+										Automate one workflow
 									</Link>
 								</Button>
 							</div>

@@ -1,36 +1,23 @@
-import React from 'react';
-import Link from 'next/link';
-import Logo from '@/components/logo';
-import BuiltWithBadge from '@/components/ui/built-with-badge';
-import { SocialIcon } from '@/components/ui/social-icons';
+import React from 'react'
+import Link from 'next/link'
+import Logo from '@/components/logo'
+import { SocialIcon } from '@/components/ui/social-icons'
 
-const PRODUCT_LINKS = [
-  { href: '/kits/prokit', label: 'ProKit' },
-  { href: '/kits/saaskit', label: 'SaaSKit' },
-] as const
-
-const PRODUCT_CORE_LINK = {
-  href: 'https://github.com/stevewesthoek/',
-  label: 'ProKit Core',
-  external: true,
-} as const
-
-const ROADMAP_LINKS = [
-  { href: '/kits/uxkit', label: 'UXKit' },
-  { href: '/kits/waaskit', label: 'WaaSKit' },
+const OFFER_LINKS = [
   { href: '/systems/prochat-os', label: 'ProChat OS' },
+  { href: '/ai-workflows', label: 'AI Workflows' },
+  { href: '/legal-ai-workflows', label: 'Legal AI Workflows' },
+  { href: '/book', label: 'Book a Call' },
 ] as const
 
 const RESOURCE_LINKS = [
-  { href: '/learn/saas-starting-point', label: 'Starting Point' },
-  { href: '/prompts', label: 'AI Prompts' },
   { href: '/docs', label: 'Documentation' },
+  { href: '/contact', label: 'Contact' },
 ] as const
 
 const LEGAL_LINKS = [
-  { href: '/terms', label: 'Terms of services' },
+  { href: '/terms', label: 'Terms of Service' },
   { href: '/privacy', label: 'Privacy Policy' },
-  { href: 'https://prochat.tools/terms#digital-product-license', label: 'Licences', external: true },
 ] as const
 
 const CONTACT_ACTIONS = [
@@ -48,50 +35,22 @@ export const Footer: React.FC = () => {
   return (
     <footer className="relative z-[1] isolate bg-transparent pt-20 pb-10 font-mono [&_*]:font-mono">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 lg:px-page">
-        <div className="mb-14 lg:grid lg:gap-x-10 lg:gap-y-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.7fr)_minmax(0,0.7fr)_minmax(0,0.9fr)_minmax(0,0.85fr)]">
+        <div className="mb-14 lg:grid lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.8fr)_minmax(0,0.8fr)_minmax(0,0.9fr)] lg:gap-x-10 lg:gap-y-12">
           <div className="flex flex-col items-center space-y-6 pt-16 pb-16 text-center md:pt-12 md:pb-8 md:space-y-4 lg:block lg:space-y-5 lg:pt-0 lg:pb-0 lg:text-left">
             <Link href="/" className="inline-flex items-center">
               <Logo scale={1.1} />
             </Link>
-            <p className="mx-auto max-w-xs text-sm leading-relaxed text-muted-foreground lg:mx-0">
-              <span className="block">Build SaaS with Structure,</span>
-              <span className="block">not Guesswork.</span>
+            <p className="mx-auto max-w-sm text-sm leading-relaxed text-muted-foreground lg:mx-0">
+              <span className="block">ProChat OS turns messy business inputs</span>
+              <span className="block">into structured workflows and actions.</span>
             </p>
-            <BuiltWithBadge href="/kits/saaskit" className="mx-auto w-fit lg:mx-0" />
           </div>
 
           <div className="mt-16 grid grid-cols-2 gap-x-8 gap-y-10 sm:gap-x-10 md:mt-10 md:gap-x-12 lg:mt-0 lg:grid-cols-none lg:gap-0 lg:contents">
             <div className="min-w-0">
-              <h4 className="mb-4 text-xs font-semibold uppercase tracking-widest text-foreground/92 lg:mb-5 lg:text-sm lg:tracking-[0.14em]">Products</h4>
+              <h4 className="mb-4 text-xs font-semibold uppercase tracking-widest text-foreground/92 lg:mb-5 lg:text-sm lg:tracking-[0.14em]">Offer</h4>
               <ul className="space-y-4 text-sm text-muted-foreground">
-                {PRODUCT_LINKS.map(link => (
-                  <li key={`${link.href}-${link.label}`}>
-                    <Link href={link.href} className="break-words leading-relaxed transition-colors hover:text-primary md:break-normal">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-                <li className="pt-0">
-                  <span
-                    aria-hidden="true"
-                    className="mt-[7px] mb-[13px] block h-px w-[11ch] bg-gradient-to-r from-border/40 to-transparent"
-                  />
-                  <a
-                    href={PRODUCT_CORE_LINK.href}
-                    target="_blank"
-                    rel="nofollow noopener noreferrer"
-                    className="break-words leading-relaxed text-muted-foreground/72 transition-colors hover:text-muted-foreground md:break-normal"
-                  >
-                    {PRODUCT_CORE_LINK.label}
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="min-w-0">
-              <h4 className="mb-4 text-xs font-semibold uppercase tracking-widest text-foreground/92 lg:mb-5 lg:text-sm lg:tracking-[0.14em]">Roadmap</h4>
-              <ul className="space-y-4 text-sm text-muted-foreground">
-                {ROADMAP_LINKS.map(link => (
+                {OFFER_LINKS.map(link => (
                   <li key={`${link.href}-${link.label}`}>
                     <Link href={link.href} className="break-words leading-relaxed transition-colors hover:text-primary md:break-normal">
                       {link.label}
@@ -158,25 +117,15 @@ export const Footer: React.FC = () => {
             <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65">Startup</span>
           </a>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65 lg:justify-end">
-            {LEGAL_LINKS.map(link =>
-              'external' in link ? (
-                <a
-                  key={`legal-row-${link.label}`}
-                  href={link.href}
-                  className="transition-colors hover:text-primary"
-                >
-                  {link.label}
-                </a>
-              ) : (
-                <Link
-                  key={`legal-row-${link.label}`}
-                  href={link.href}
-                  className="transition-colors hover:text-primary"
-                >
-                  {link.label}
-                </Link>
-              ),
-            )}
+            {LEGAL_LINKS.map(link => (
+              <Link
+                key={`legal-row-${link.label}`}
+                href={link.href}
+                className="transition-colors hover:text-primary"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
 
@@ -207,7 +156,7 @@ export const Footer: React.FC = () => {
                       referrerPolicy="no-referrer"
                       sandbox="allow-scripts allow-same-origin"
                       className="block h-[30px] w-full border-0 pointer-events-none"
-                      style={{ colorScheme: "normal" }}
+                      style={{ colorScheme: 'normal' }}
                     />
                   </div>
                   <div className="mx-auto hidden md:mx-0 dark:block">
@@ -223,7 +172,7 @@ export const Footer: React.FC = () => {
                       referrerPolicy="no-referrer"
                       sandbox="allow-scripts allow-same-origin"
                       className="block h-[30px] w-full border-0 pointer-events-none"
-                      style={{ colorScheme: "normal" }}
+                      style={{ colorScheme: 'normal' }}
                     />
                   </div>
                 </div>
@@ -234,8 +183,7 @@ export const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-
       </div>
     </footer>
-  );
-};
+  )
+}

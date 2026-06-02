@@ -352,3 +352,32 @@ When generating implementation prompts:
 ## Authentication implementation status — 2026-05-25
 
 See [auth-status.md](./auth-status.md) for the canonical runtime auth state, warnings, and TODOs.
+
+
+
+
+## Public website single-product implementation — 2026-06-02
+
+Current implementation rule:
+
+```text
+Only ProChat OS is sold on the public ProChat website.
+```
+
+Tasks for website alignment:
+
+1. Remove legacy product links from header and footer.
+2. Remove homepage sections that promote BuildFlow, SaaSKit, ProKit, UXKit, or WaaSKit.
+3. Keep legacy routes/pages available, but make them direct-access only.
+4. Route primary CTAs to ProChat OS, `/ai-workflows`, or `/book`.
+5. Add `/ai-workflows` as the main narrow conversion page for managed workflow discovery.
+6. Add `/legal-ai-workflows` as the law-firm-specific outreach page.
+7. Keep the main website business-agnostic and ProChat OS-led.
+
+Acceptance criteria:
+
+- Header does not link to kits or BuildFlow.
+- Footer does not link to kits or BuildFlow.
+- Homepage does not present legacy products as options.
+- Sitemap prioritizes `/`, `/systems/prochat-os`, `/ai-workflows`, `/legal-ai-workflows`, and `/book`.
+- Legacy docs can still mention old products as legacy, but the website sells one product only.

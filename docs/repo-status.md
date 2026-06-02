@@ -76,3 +76,33 @@ legal-api.prochat.tools
 ```
 
 Use fake legal data only for the shared demo.
+
+
+
+
+## Public website cleanup status — 2026-06-02
+
+Current rule:
+
+```text
+The website promotes ProChat OS only.
+```
+
+Legacy product routes may remain for direct access, archive, old customers, or future repositioning, but public menus, footer links, homepage sections, and primary CTAs should not promote them.
+
+Public conversion pages:
+
+- `/` — business-agnostic ProChat OS homepage
+- `/systems/prochat-os` — product detail page
+- `/ai-workflows` — managed AI workflow offer page
+- `/legal-ai-workflows` — law-firm-specific workflow pilot page
+- `/book` — discovery/booking page
+
+Legacy/direct-access only:
+
+- `/kits`
+- `/kits/prokit`
+- `/kits/saaskit`
+- `/kits/uxkit`
+- `/kits/waaskit`
+- `/buildflow`
