@@ -144,9 +144,9 @@ export default function LegalAIWorkflowsPageContent() {
       <Section id="offer" tone="muted" spacing="default">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">A low-risk way to test it with your firm</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">See whether it saves your firm real time</h2>
             <p className="pc-body-copy pc-body-muted">
-              Start with one document-heavy admin process and prove whether it saves time before expanding anything.
+              Show us one intake, document, or follow-up task that takes too long. We prepare a review-ready version so your firm can judge the time savings clearly.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">

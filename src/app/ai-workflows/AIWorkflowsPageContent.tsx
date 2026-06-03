@@ -159,9 +159,9 @@ export default function AIWorkflowsPageContent() {
       <Section id="offer" tone="transparent" spacing="default">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">A practical way to test it</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">Start by proving the time savings</h2>
             <p className="pc-body-copy pc-body-muted">
-              We keep the first step small: show the before, define the after, and prove whether the result is worth paying for.
+              Show us one repetitive task. We turn the messy input into a review-ready result, so you can see whether it saves real time before expanding.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">

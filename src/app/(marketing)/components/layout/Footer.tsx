@@ -42,7 +42,7 @@ export const Footer: React.FC = () => {
             </Link>
             <p className="mx-auto max-w-sm text-sm leading-relaxed text-muted-foreground lg:mx-0">
               <span className="block">ProChat OS turns messy business inputs</span>
-              <span className="block">into structured workflows and actions.</span>
+              <span className="block">into useful work ready for review.</span>
             </p>
           </div>
 
