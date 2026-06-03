@@ -56,8 +56,8 @@ export default function ProChatOSPageContent({ priceId: _priceId }: ProChatOSPag
         eyebrow={<HeroBadge text="ProChat OS · Managed AI workflows" />}
         title={
           <>
-            <span className="block text-foreground dark:text-white">Messy business information in.</span>
-            <span className="hero-accent block">Useful work out.</span>
+            <span className="block text-foreground dark:text-white">Make messy business information</span>
+            <span className="hero-accent block">ready to review and use.</span>
           </>
         }
         subtitle="ProChat OS helps your team turn emails, PDFs, forms, notes, folders, and API data into summaries, checklists, tasks, reports, status updates, and draft replies for review."

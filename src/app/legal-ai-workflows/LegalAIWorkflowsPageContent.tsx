@@ -68,7 +68,7 @@ export default function LegalAIWorkflowsPageContent() {
             <span className="hero-accent block">into review-ready legal admin.</span>
           </>
         }
-        subtitle="Client emails, PDFs, notes, forms, and attachments become intake summaries, missing-information checklists, matter tasks, and draft follow-ups — with lawyer review before anything is used."
+        subtitle="Client emails, PDFs, notes, forms, and attachments become intake summaries, missing-information checklists, matter tasks, and draft follow-ups — ready for lawyer review."
         primaryCTA={{ href: '/book', label: 'Book a legal time-saving call' }}
         secondaryCTA={{ href: '#examples', label: 'See what it prepares', variant: 'secondary' }}
         ambientMotion
