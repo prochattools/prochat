@@ -99,7 +99,7 @@ Acceptance criteria:
 - ProChat OS is the flagship.
 - Public website remains business-agnostic.
 - Law firms are the direct outreach wedge only.
-- MikeOSS is a legal demo/install block, not ProChat OS.
+- MikeOSS is a legal demo/workspace block, not ProChat OS.
 - Legacy kits are preserved but secondary.
 
 ## Phase 1 — MikeOSS Dokploy legal demo
@@ -159,7 +159,7 @@ For the first demo:
 - use MikeOSS mostly unmodified
 - keep AGPL notices intact
 - do not rebrand MikeOSS as ProChat-owned software
-- position ProChat as installer, manager, and workflow layer
+- position ProChat as setup partner, manager, and workflow layer
 - do not use real law-firm client data in the shared demo
 
 ### Exit criteria
@@ -198,11 +198,29 @@ Exit criteria:
 first law-firm workflow + first managed pilot promise + first success metric
 ```
 
-## Phase 3 — First ProChat OS pilot wrapper
+## Phase 3 — First niche module outline
 
 Goal:
 
-Wrap the MikeOSS legal workspace with the first ProChat OS workflow layer.
+Turn the discovered workflow into a clear module outline before building too much.
+
+The first candidate remains legal intake unless outreach proves another niche easier.
+
+The outline should define:
+
+- buyer problem
+- safe sample data
+- expected inputs
+- expected outputs
+- first workflow promise
+- approval needs
+- success metric
+
+## Phase 4 — First ProChat OS pilot wrapper
+
+Goal:
+
+Wrap the selected niche workflow, and optionally the MikeOSS legal workspace, with the first ProChat OS workflow layer.
 
 Likely workflow:
 
@@ -232,7 +250,7 @@ This does not need to be the final public ProChat OS runtime yet.
 - support/debug logs avoid secrets
 - pilot can be explained as ProChat OS around MikeOSS
 
-## Phase 4 — Niche module validation
+## Phase 5 — Niche module validation
 
 Goal:
 
@@ -271,7 +289,7 @@ Exit criteria:
 One niche module produces useful ready-to-review output on safe sample data and can be explained clearly in a landing page or Loom.
 ```
 
-## Phase 5 — ProChat OS v1 runtime extraction
+## Phase 6 — ProChat OS v1 runtime extraction
 
 Goal:
 
@@ -325,20 +343,20 @@ Do not build yet:
 - ProChat OS can run without private Steve-specific repos.
 - Customer memory is separate from Steve's `mind` repo.
 - Customer credentials are separate.
-- One workflow can be installed and run repeatedly.
+- One workflow can be set up and run repeatedly.
 - CLI can check status and create a redacted support bundle.
 
-## Phase 5 — CLI and install path
+## Phase 7 — Support tooling and reproducible setup path
 
 Goal:
 
-Make ProChat OS installable and supportable.
+Make ProChat OS supportable and repeatable across managed, self-hosted, and demo environments.
 
 Initial CLI commands:
 
 ```bash
 prochat doctor
-prochat install
+prochat setup
 prochat status
 prochat workflows list
 prochat connectors list
@@ -359,11 +377,11 @@ prochat update
 
 ### Exit criteria
 
-- one operator can install and inspect a ProChat OS instance consistently
+- one operator can set up and inspect a ProChat OS environment consistently
 - support bundle redacts secrets
 - CLI avoids broad destructive actions by default
 
-## Phase 6 — Managed ProChat OS offer
+## Phase 8 — Managed ProChat OS offer
 
 Goal:
 
@@ -372,7 +390,7 @@ Turn pilots into a repeatable managed productized service.
 Offer direction:
 
 ```text
-Managed ProChat OS: private Agentic Workflow OS installation, setup, updates, support, and one or more workflow modules.
+Managed ProChat OS: ProChat sets up, runs, supports, and improves one or more workflow modules that turn messy business information into ready-to-review outputs.
 ```
 
 Commercial elements:
@@ -394,7 +412,7 @@ Exit criteria:
 - pilot-to-paid path exists
 - installation is repeatable enough to sell
 
-## Phase 7 — Public source-available ProChat OS repo
+## Phase 9 — Public source-available ProChat OS repo
 
 Goal:
 
@@ -420,7 +438,7 @@ Exit criteria:
 - install docs are safe
 - no private repo leakage
 
-## Phase 8 — Optional ProChat Cloud modules
+## Phase 10 — Optional ProChat Cloud modules
 
 Goal:
 
@@ -453,15 +471,17 @@ Avoid sharing too early:
 ## Implementation sequence summary
 
 ```text
-1. Deploy MikeOSS demo on Dokploy.
-2. Record law-firm Loom.
+1. Deploy or prepare the first tangible demo/wedge.
+2. Record a short buyer-facing Loom.
 3. Run outreach and discovery.
-4. Build first workflow wrapper.
-5. Extract ProChat OS v1 runtime.
-6. Add CLI/support path.
-7. Sell managed pilots.
-8. Publish sanitized personal/non-commercial repo later.
-9. Add ProChat Cloud modules only after demand is proven.
+4. Build the first workflow wrapper.
+5. Package the first useful workflow as a niche module.
+6. Validate skills, workflow steps, approvals, schedules, and evaluation criteria.
+7. Extract ProChat OS v1 runtime from the validated module pattern.
+8. Add support tooling and reproducible setup path.
+9. Sell managed pilots.
+10. Publish sanitized personal/non-commercial repo later.
+11. Add ProChat Cloud modules only after demand is proven.
 ```
 
 ## Engineering guardrails
