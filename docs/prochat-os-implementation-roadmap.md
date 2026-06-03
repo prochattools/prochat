@@ -1,6 +1,6 @@
 # ProChat OS Implementation Roadmap
 
-Status: implementation roadmap for building ProChat OS as an installable Agentic Workflow OS.
+Status: implementation roadmap for building ProChat OS as a managed AI workflow system with niche-specific modules.
 
 Last updated: 2026-05-24
 
@@ -15,6 +15,7 @@ mind/wiki/organisations/prochat/brand/prochat-os-strategy.md
 mind/wiki/organisations/prochat/brand/prochat-os-technical-definition.md
 mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
 mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
+mind/wiki/organisations/prochat/brand/prochat-os-modules.md
 mind/wiki/organisations/prochat/brand/mikeoss-dokploy-demo-checklist.md
 ```
 
@@ -33,32 +34,52 @@ docs/prochat-os-landing-page-copy.md
 
 Do not start by building the full platform.
 
-Start with a tangible demo, validate one workflow, then productize the runtime.
+Start with a tangible before/after demo, validate one workflow, then package that workflow as a ProChat OS module.
 
 ```text
-Demo wedge → workflow discovery → first managed pilot → ProChat OS v1 runtime → public repo → managed product
+Demo wedge → workflow discovery → first niche module → first managed pilot → ProChat OS v1 runtime → public repo → managed product
 ```
 
-## Technical definition
+Refined implementation principle:
 
-ProChat OS is an installable Agentic Workflow OS: a private workflow runtime that connects messy inputs to business tools through memory, connectors, model routing, workflow agents, approvals, logs, and a control console.
+```text
+core = messy information → ready-to-review output → human approval → repeatable workflow
+module = skills + workflows + schedules + examples + evaluation criteria + optional connectors
+```
 
-A customer installs a sanitized ProChat OS instance, not Steve's private `mind` or `brain` repositories.
+## Product and technical definition
 
-## Runtime components
+Buyer-facing definition:
 
-The target ProChat OS runtime includes:
+```text
+ProChat OS helps businesses get repetitive information work done faster by turning messy emails, PDFs, forms, notes, folders, attachments, reports, and API data into ready-to-review summaries, checklists, tasks, reports, status updates, and draft replies.
+```
 
-1. Core workflow runtime / API
-2. Worker and scheduler
-3. Memory and context store
-4. Input connector layer
-5. Output connector layer
-6. Model router / AI selector
-7. Approval and event log
-8. Control console
-9. CLI for install, status, updates, and support
-10. Optional workflow modules
+Internal technical definition:
+
+```text
+ProChat OS is a managed workflow system that coordinates inputs, skills, workflows, schedules, approvals, logs, optional modules, and business outputs.
+```
+
+Customers do not install Steve's private `mind` or `brain` repositories.
+
+Default customer-facing delivery should not imply that ProChat enters a customer's computers or internal network. ProChat can set up and manage the workflow system, and customers can send work to it through email, forms, file drops, manual upload, or API calls.
+
+## Runtime and module components
+
+The target ProChat OS implementation includes:
+
+1. workflow execution layer
+2. worker and scheduler
+3. context/data store where needed
+4. input entry points such as email, forms, file drops, manual upload, or API calls
+5. output formats such as summaries, checklists, tasks, reports, status updates, and draft replies
+6. model/provider execution layer
+7. approval and event log
+8. simple console/status view
+9. support tooling and optional CLI
+10. optional workflow modules
+11. module skills, workflows, schedules, examples, and evaluation criteria
 
 ## Phase 0 — Documentation and strategy alignment
 
@@ -211,11 +232,50 @@ This does not need to be the final public ProChat OS runtime yet.
 - support/debug logs avoid secrets
 - pilot can be explained as ProChat OS around MikeOSS
 
-## Phase 4 — ProChat OS v1 runtime extraction
+## Phase 4 — Niche module validation
 
 Goal:
 
-Extract the repeatable runtime from the pilot into a reusable installable product.
+Turn the first useful workflow into a repeatable ProChat OS module.
+
+Module structure:
+
+```text
+skills + workflows + schedules + examples + evaluation criteria + optional connectors
+```
+
+Candidate first modules:
+
+- legal intake
+- accounting document intake
+- agency lead intake
+- consultant proposal/profile preparation
+- content operations
+
+For the first selected module, define:
+
+- buyer problem
+- safe sample data
+- expected inputs
+- expected outputs
+- required skills
+- workflow steps
+- approval checkpoints
+- optional schedules
+- evaluation criteria
+- onboarding notes
+
+Exit criteria:
+
+```text
+One niche module produces useful ready-to-review output on safe sample data and can be explained clearly in a landing page or Loom.
+```
+
+## Phase 5 — ProChat OS v1 runtime extraction
+
+Goal:
+
+Extract the repeatable runtime from the pilot/module into a reusable managed workflow system.
 
 ### V1 components
 

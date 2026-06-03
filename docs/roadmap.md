@@ -22,6 +22,7 @@ mind/wiki/organisations/prochat/brand/prochat-os-strategy.md
 mind/wiki/organisations/prochat/brand/prochat-os-technical-definition.md
 mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
 mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
+mind/wiki/organisations/prochat/brand/prochat-os-modules.md
 mind/wiki/organisations/prochat/brand/mikeoss-dokploy-demo-checklist.md
 ```
 
@@ -74,16 +75,16 @@ The landing page should not be law-firm-specific.
 It should communicate:
 
 ```text
-ProChat OS is an Agentic Workflow OS.
-It sits between messy business inputs and the tools a business already uses.
-It turns messy information into structured outputs and actions through configurable workflows, agents, memory, approvals, and connectors.
+Messy business information in. Useful work out.
 ```
 
-Core website direction:
+Buyer-facing direction:
 
 ```text
-Agentic workflows between your messy inputs and your business tools.
+ProChat OS helps businesses get repetitive admin, document, intake, reporting, and follow-up work done faster by turning messy information into ready-to-review outputs.
 ```
+
+Do not lead marketing pages with technical/runtime language such as memory, connectors, model routing, CLI, or installation.
 
 Deliverables:
 
@@ -364,14 +365,184 @@ Avoid sharing too early:
 - autonomous actions
 - sensitive workflows
 
+## Module refinement lane
+
+Status: added from mind refinement on 2026-06-03.
+
+Purpose:
+
+```text
+Keep ProChat OS niche-agnostic at the core, but package sellable niche-specific workflow modules around it.
+```
+
+Module roadmap:
+
+1. Define module architecture: skills + workflows + schedules + examples + evaluation criteria.
+2. Validate one niche module on safe sample data.
+3. Add scheduling where recurring work creates obvious value.
+4. Add evaluation loops so reviewer feedback improves outputs.
+5. Add reproducible environment/setup paths for supportable deployments.
+
+Candidate first modules:
+
+- legal intake
+- accounting document intake
+- agency lead intake
+- consultant proposal/profile preparation
+- content operations
+
+Exit criteria:
+
+```text
+One niche module produces useful ready-to-review output on safe sample data and can be explained clearly in a landing page or Loom.
+```
+
 ## Long-term direction
 
 ProChat OS evolves into:
 
 ```text
-private customer instances + optional ProChat Cloud services + modular workflow agents + managed commercial support
+managed workflow systems + niche modules + optional ProChat Cloud services + commercial support
 ```
 
 The goal is not another narrow SaaS tool.
 
-The goal is the operating layer for agentic workflows.
+The goal is to help businesses turn repetitive messy information work into faster, ready-to-review outputs.
+
+
+
+
+## Refinement lane — niche modules, skills, schedules, and evaluation
+
+Status: synchronized from mind on 2026-06-03.
+
+Purpose:
+
+```text
+Keep ProChat OS niche-agnostic at the core, but package sellable niche-specific workflow modules around it.
+```
+
+This lane clarifies how ProChat OS becomes scalable across niches without turning the core product into a single vertical tool.
+
+### Phase M-1 — Module architecture definition
+
+Goal:
+
+Define how ProChat OS modules are packaged.
+
+Outputs:
+
+- `docs/prochat-os-modules.md`
+- module manifest principles
+- skill specification principles
+- workflow specification principles
+- schedule specification principles
+- evaluation loop principles
+
+Exit criteria:
+
+- each module can be described as skills + workflows + schedules + examples + evaluation criteria
+- docs make clear that customers buy outcomes, not architecture
+
+### Phase M-2 — First niche module validation
+
+Goal:
+
+Validate one vertical module around one clear business workflow.
+
+Candidate modules:
+
+- legal intake
+- accounting document intake
+- agency lead intake
+- consultant proposal/profile preparation
+- content operations
+
+Validation tasks:
+
+- define the painful workflow in buyer language
+- create safe sample data
+- define expected outputs
+- define skills
+- define workflow steps
+- define approval checkpoints
+- define evaluation criteria
+- test outputs on fake or approved sample data
+- use discovery calls to refine the offer
+
+Exit criteria:
+
+```text
+One niche module produces useful ready-to-review output on safe sample data and can be explained clearly in a landing page or Loom.
+```
+
+### Phase M-3 — Scheduling and recurring work
+
+Goal:
+
+Add recurring workflow concepts to modules where they create obvious value.
+
+Examples:
+
+- daily intake summary
+- weekly missing-information checklist
+- monthly document follow-up report
+- daily lead follow-up draft
+- weekly internal status report
+
+Exit criteria:
+
+- at least one module has a schedule definition
+- scheduled output still respects human review before important action
+
+### Phase M-4 — Evaluation and feedback loop
+
+Goal:
+
+Make module quality improvable through review.
+
+Each module should define:
+
+- what good output looks like
+- how reviewers score usefulness
+- how reviewer edits are captured
+- how examples/context/skill definitions are improved
+- how time saved is estimated
+
+Exit criteria:
+
+```text
+A reviewer can compare workflow output across iterations and say whether it became more useful.
+```
+
+### Phase M-5 — Reproducible environment and setup path
+
+Goal:
+
+Reduce support overhead for self-hosted, commercial, and managed deployments.
+
+Candidate tools:
+
+- Devbox
+- Nix
+- containers
+- documented managed-server baseline
+
+Exit criteria:
+
+- ProChat OS has a reproducible environment baseline for development and deployment
+- setup docs distinguish public buyer language from internal deployment details
+- deployment story does not imply ProChat must enter a customer's internal computers or network by default
+
+## Roadmap copy rule
+
+Buyer-facing roadmap output should focus on:
+
+- less admin work
+- faster follow-up
+- fewer missed details
+- ready-to-review outputs
+- human approval first
+- managed setup where wanted
+
+Technical roadmap output may use internal terms such as runtime, skills, schedules, connectors, Devbox, Nix, CLI, and module manifest when the audience is implementation or support.

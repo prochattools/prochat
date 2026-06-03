@@ -15,6 +15,7 @@ mind/wiki/organisations/prochat/brand/prochat-os-strategy.md
 mind/wiki/organisations/prochat/brand/prochat-os-technical-definition.md
 mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
 mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
+mind/wiki/organisations/prochat/brand/prochat-os-modules.md
 ```
 
 This ProChat repo must follow that strategy when updating website copy, product pages, roadmap language, and implementation docs.
@@ -28,11 +29,14 @@ ProChat is no longer primarily positioned around SaaSKit, ProKit, fixed kits, Wa
 The company direction is now:
 
 ```text
-Agentic workflows.
+Managed AI workflows.
 Modular automation.
-Private workflow runtimes.
-Managed ProChat OS installations.
+Niche-specific workflow modules.
+Business information turned into ready-to-review outputs.
+Human approval before important action.
 ```
+
+Internal docs may still use technical terms such as runtime, skills, schedules, modules, and connectors. Public website copy should use buyer-outcome language: less admin work, faster follow-up, fewer missed details, and ready-to-review output.
 
 ## Category
 
@@ -93,13 +97,13 @@ Those can be components, modules, or wedges. ProChat OS is the runtime system th
 ## Core product promise
 
 ```text
-Agentic workflows that work for you 24/7.
+Get repetitive business work done faster without the manual copy-paste.
 ```
 
 Supporting promise:
 
 ```text
-You keep working the way you work. ProChat OS sits in the middle and structures the mess.
+Send messy emails, PDFs, forms, notes, folders, or API data in. Get summaries, checklists, tasks, reports, status updates, and draft replies back for human review.
 ```
 
 ## Main problem
@@ -436,3 +440,64 @@ Better marketing copy:
 ```text
 Send messy information in. Get a clear summary, checklist, draft reply, and task list back.
 ```
+
+
+
+
+## Niche-agnostic core and vertical modules — 2026-06-03
+
+Mind now defines ProChat OS as niche-agnostic at the core and niche-specific at the module layer.
+
+Core pattern:
+
+```text
+messy information → ready-to-review output → human approval → repeatable workflow
+```
+
+The core ProChat OS strategy must remain reusable across many business types. It should not become only a law-firm, accounting, creator, or SaaS-builder product.
+
+Vertical modules package the core for a specific buyer problem.
+
+Examples:
+
+- legal intake module
+- accounting document intake module
+- agency lead intake module
+- consultant proposal/profile preparation module
+- content operations module
+- internal reporting module
+
+A module should include:
+
+- clear buyer problem
+- expected input examples
+- expected output examples
+- skills
+- workflows
+- schedules where useful
+- approval checkpoints
+- safe test data
+- evaluation criteria
+- onboarding notes
+
+The public website can stay business-agnostic while dedicated landing pages and outreach assets explain niche-specific outcomes.
+
+## Module architecture principle
+
+A ProChat OS module is not a vague AI assistant.
+
+A module is:
+
+```text
+skills + workflows + schedules + examples + evaluation criteria + optional connectors
+```
+
+Skills should be narrow, inspectable, and testable.
+
+Workflows should define entry points, outputs, approvals, and success criteria.
+
+Schedules should be used when recurring work creates obvious value, such as daily summaries, weekly missing-information lists, or monthly reporting tasks.
+
+Evaluation should capture whether outputs are accurate, useful, edited heavily, and actually save time.
+
+Customers buy the outcome. The module architecture is internal delivery language.

@@ -15,6 +15,7 @@ mind/wiki/organisations/prochat/brand/prochat-os-strategy.md
 mind/wiki/organisations/prochat/brand/prochat-os-technical-definition.md
 mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
 mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
+mind/wiki/organisations/prochat/brand/prochat-os-modules.md
 mind/wiki/organisations/prochat/brand/mikeoss-dokploy-demo-checklist.md
 ```
 
@@ -46,6 +47,7 @@ Use this document before changing homepage copy, product pages, kit comparison t
 | ProChat OS | Managed AI workflow system | Flagship strategy / productization in progress | businesses, solo builders, workflow-driven operators, creators, SaaS builders | Turns messy business information into ready-to-review summaries, checklists, reports, tasks, status updates, and draft replies. |
 | Managed ProChat OS | Managed productized service | First commercial direction | local businesses, law firms first, later other niches | ProChat sets up, runs, and supports workflow systems that customers can use through email, forms, file drops, or API calls. |
 | ProChat website/platform | Business, content, commerce, docs platform | Live | buyers, operators, readers | Business-agnostic marketing, education, conversion, docs, and future ProChat OS product surface. |
+| ProChat OS modules | Niche workflow packages | Productization roadmap | specific niches and workflow families | Package skills, workflows, schedules, examples, approval checkpoints, and evaluation criteria around one recognizable business problem. |
 | MikeOSS legal demo | Legal document AI workspace wedge | First law-firm demo / install block | law firms | Tangible legal AI workspace used to start law-firm conversations and upsell ProChat OS workflows. |
 | BuildFlow | AI workflow/context tooling | Supporting/internal or adjacent product | AI-native builders and internal operators | Useful tooling/patterns for repo context and safe operations; not the current ProChat flagship. |
 | SaaSKit | SaaS application foundation | Legacy/supporting product | SaaS builders/founders | Real product, but no longer strategic center; may later become a ProChat OS-compatible module/example. |
@@ -55,23 +57,27 @@ Use this document before changing homepage copy, product pages, kit comparison t
 
 ## ProChat OS boundary
 
-ProChat OS is technically an installable private workflow runtime.
+ProChat OS is buyer-facing as a managed AI workflow system:
 
-Core components:
+```text
+messy information → ready-to-review output → human approval → repeatable workflow
+```
 
-1. workflow runtime / API
-2. memory and context store
-3. input/output connectors
-4. model router / AI selector
-5. approval and event log
-6. control console
-7. CLI for install, update, configuration, and support
-8. optional workflow modules
+Internally, ProChat OS can still be described as a workflow runtime with skills, workflows, schedules, modules, approvals, logs, connectors, and support tooling.
+
+Public website and sales language should focus on outcomes:
+
+- less admin work
+- faster follow-up
+- fewer missed details
+- clearer handoffs
+- ready-to-review outputs
+- human approval first
 
 ProChat OS should be positioned as:
 
 ```text
-Agentic workflows between your messy inputs and your business tools.
+Messy business information in. Useful work out.
 ```
 
 ProChat OS should not be positioned as:
