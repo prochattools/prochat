@@ -64,8 +64,8 @@ export default function LegalAIWorkflowsPageContent() {
         eyebrow={<HeroBadge text="AI document workflow support for law firms" />}
         title={
           <>
-            <span className="block text-foreground dark:text-white">Spend less time sorting legal documents</span>
-            <span className="hero-accent block">and more time reviewing the work that matters.</span>
+            <span className="block text-foreground dark:text-white">Turn client document chaos</span>
+            <span className="hero-accent block">into review-ready legal admin.</span>
           </>
         }
         subtitle="Client emails, PDFs, notes, forms, and attachments become intake summaries, missing-information checklists, matter tasks, and draft follow-ups — with lawyer review before anything is used."
@@ -219,7 +219,7 @@ export default function LegalAIWorkflowsPageContent() {
             Show us one document, intake, or follow-up process. We will show what a faster reviewed version could look like.
           </p>
           <Button asChild variant="primary" size="lg">
-            <Link href="/book">BOOK — LEGAL WORKFLOW CALL</Link>
+            <Link href="/book">BOOK — LEGAL TIME-SAVING CALL</Link>
           </Button>
         </div>
       </Section>

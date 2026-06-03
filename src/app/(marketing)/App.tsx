@@ -199,7 +199,7 @@ Show us one repetitive task that keeps stealing time. We will show what a faster
               <Link href="/book">BOOK — A DISCOVERY CALL</Link>
             </Button>
             <Button asChild variant="secondary" size="lg">
-              <Link href="/ai-workflows">VIEW — WORKFLOW OFFER</Link>
+              <Link href="/ai-workflows">SEE — HOW IT SAVES TIME</Link>
             </Button>
           </div>
         </div>
