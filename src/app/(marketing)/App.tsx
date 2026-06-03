@@ -50,12 +50,12 @@ export default function App() {
         eyebrow={<HeroBadge text="ProChat OS · Managed AI Workflows" />}
         title={
           <>
-            <span className="block text-foreground dark:text-white">Get repetitive business work done</span>
-            <span className="hero-accent block">without the manual copy-paste.</span>
+            <span className="block text-foreground dark:text-white">Turn messy business work</span>
+            <span className="hero-accent block">into clear next steps.</span>
           </>
         }
-        subtitle="Send messy emails, PDFs, forms, notes, folders, or API data in. Get clear summaries, checklists, tasks, reports, and draft replies back for human review."
-        primaryCTA={{ href: '/ai-workflows', label: 'See managed workflows' }}
+        subtitle="Send in emails, PDFs, forms, notes, folders, or tool data. Get summaries, checklists, tasks, reports, and draft replies your team can review and use."
+        primaryCTA={{ href: '/ai-workflows', label: 'See what ProChat can do' }}
         secondaryCTA={{ href: '/book', label: 'Book a call', variant: 'secondary' }}
         ambientMotion
       >
@@ -192,7 +192,7 @@ export default function App() {
         <div className="mx-auto max-w-3xl px-page text-center">
           <h2 className="pc-section-title mb-6 text-foreground">Where is your team still doing the same admin work by hand?</h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            Bring one messy process. We will show what the before and after could look like, then decide whether it is worth automating.
+Show us one repetitive task that keeps stealing time. We will show what a faster, clearer version could look like before you commit to anything.
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button asChild variant="primary" size="lg">

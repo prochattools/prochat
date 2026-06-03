@@ -27,19 +27,19 @@ const outcomes = [
 
 const offerItems = [
   {
-    title: 'Workflow prototype',
+    title: 'First time-saving test',
     price: 'from €750',
-    description: 'A practical first version that shows how one messy process can become a clear output your team can review.',
+    description: 'See how one messy task can become a clear result your team can review before you commit to more.',
   },
   {
-    title: 'Managed setup',
+    title: 'Done-for-you launch',
     price: 'from €1,500',
-    description: 'ProChat sets up and manages the workflow for you, using simple entry points such as email, forms, file drops, or API calls.',
+    description: 'ProChat prepares the working flow for you, using simple entry points such as email, forms, file drops, or API calls.',
   },
   {
-    title: 'Monthly support',
+    title: 'Keep improving it',
     price: 'available',
-    description: 'Keep the workflow running, improve the outputs, add small changes, and expand only when it keeps saving time.',
+    description: 'Keep the result useful, adjust it as your work changes, and expand only when it keeps saving time.',
   },
 ] as const
 
@@ -64,7 +64,7 @@ export default function AIWorkflowsPageContent() {
           </>
         }
         subtitle="Send messy emails, PDFs, forms, notes, folders, or API data in. Get summaries, checklists, reports, tasks, and draft replies back for human review."
-        primaryCTA={{ href: '/book', label: 'Book a workflow discovery call' }}
+        primaryCTA={{ href: '/book', label: 'Book a time-saving call' }}
         secondaryCTA={{ href: '#examples', label: 'See examples', variant: 'secondary' }}
         ambientMotion
       >
@@ -235,7 +235,7 @@ export default function AIWorkflowsPageContent() {
             Show us the messy input and the result you wish your team had. We will tell you what a first useful version could look like.
           </p>
           <Button asChild variant="primary" size="lg">
-            <Link href="/book">BOOK — WORKFLOW DISCOVERY CALL</Link>
+            <Link href="/book">BOOK — TIME-SAVING CALL</Link>
           </Button>
         </div>
       </Section>

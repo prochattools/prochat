@@ -32,19 +32,19 @@ const outputs = [
 
 const pricing = [
   {
-    label: 'First pilot',
+    label: 'First time-saving test',
     price: '€750–€1,500',
-    description: 'A focused test around one intake, document, or follow-up process using fake or approved sample data first.',
+    description: 'Test one intake, document, or follow-up task using fake or approved sample data first.',
   },
   {
-    label: 'Larger firm pilot',
+    label: 'Larger firm test',
     price: 'from €2,500',
     description: 'For firms with more people, more review steps, or a more complex document process.',
   },
   {
-    label: 'Ongoing support',
+    label: 'Ongoing improvement',
     price: 'from €250/month',
-    description: 'Keep the workflow running, improve the outputs, and expand only when it keeps saving time.',
+    description: 'Keep the results useful, adjust them as your process changes, and expand only when it keeps saving time.',
   },
 ] as const
 
@@ -69,7 +69,7 @@ export default function LegalAIWorkflowsPageContent() {
           </>
         }
         subtitle="Client emails, PDFs, notes, forms, and attachments become intake summaries, missing-information checklists, matter tasks, and draft follow-ups — with lawyer review before anything is used."
-        primaryCTA={{ href: '/book', label: 'Book a legal workflow call' }}
+        primaryCTA={{ href: '/book', label: 'Book a legal time-saving call' }}
         secondaryCTA={{ href: '#examples', label: 'See what it prepares', variant: 'secondary' }}
         ambientMotion
       >
