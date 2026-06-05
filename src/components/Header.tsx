@@ -23,7 +23,7 @@ import { useScrollDirection } from '@/hooks/useScrollDirection'
 
 const NAV_ITEMS = [
   { label: 'ProChat OS', href: '/systems/prochat-os' },
-  { label: 'AI Workflows', href: '/ai-workflows' },
+  { label: 'Time-saving test', href: '/ai-workflows' },
   { label: 'Book', href: '/book' },
 ] as const
 
@@ -94,7 +94,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 						'h-10 origin-center scale-[1.15] rounded-[var(--pc-button-radius)] px-5 font-mono text-[0.95rem] font-bold tracking-[0.04em] text-white [font-variant-ligatures:none]',
 					)}
 				>
-					<span>Automate one workflow</span>
+					<span>Show one task</span>
 				</Link>
 			</div>
 		</nav>
@@ -124,7 +124,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 							})
 						}
 					>
-						<span className="whitespace-nowrap">Automate workflow</span>
+						<span className="whitespace-nowrap">Show one task</span>
 					</Link>
 				</Button>
 				<Sheet open={open} onOpenChange={setOpen}>
@@ -223,7 +223,7 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 											setOpen(false)
 										}}
 									>
-										Automate one workflow
+										Show one repeated task
 									</Link>
 								</Button>
 							</div>

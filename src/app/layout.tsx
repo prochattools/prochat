@@ -14,9 +14,9 @@ import '@fontsource/jetbrains-mono'
 
 import '@/assets/styles/globals.scss'
 
-const ROOT_TITLE = 'ProChat OS — Agentic Workflows for Messy Business Processes'
+const ROOT_TITLE = 'ProChat OS — Stop Rewriting the Same Work'
 const ROOT_DESCRIPTION =
-  'ProChat OS turns messy business inputs into structured summaries, checklists, reports, draft replies, tasks, and status updates through private agentic workflows with human approval first.'
+  'ProChat helps businesses turn repeated emails, notes, examples, reports, and follow-ups into drafts, summaries, tasks, and replies their team can review and use.'
 
 const fontSans = localFont({
   src: '../assets/fonts/HostGrotesk-latin.woff2',

@@ -67,7 +67,6 @@ async function main() {
     { path: '/', priority: '1.0' },
     { path: '/systems/prochat-os', priority: '0.95' },
     { path: '/ai-workflows', priority: '0.95' },
-    { path: '/legal-ai-workflows', priority: '0.85' },
     { path: '/book', priority: '0.8' },
     { path: '/contact', priority: '0.7' },
     { path: '/proof', priority: '0.5' },

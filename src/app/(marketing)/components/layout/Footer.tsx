@@ -5,8 +5,7 @@ import { SocialIcon } from '@/components/ui/social-icons'
 
 const OFFER_LINKS = [
   { href: '/systems/prochat-os', label: 'ProChat OS' },
-  { href: '/ai-workflows', label: 'AI Workflows' },
-  { href: '/legal-ai-workflows', label: 'Legal AI Workflows' },
+  { href: '/ai-workflows', label: 'Time-Saving Test' },
   { href: '/book', label: 'Book a Call' },
 ] as const
 
@@ -41,8 +40,8 @@ export const Footer: React.FC = () => {
               <Logo scale={1.1} />
             </Link>
             <p className="mx-auto max-w-sm text-sm leading-relaxed text-muted-foreground lg:mx-0">
-              <span className="block">ProChat OS turns messy business inputs</span>
-              <span className="block">into useful work ready for review.</span>
+              <span className="block">ProChat helps teams stop rewriting</span>
+              <span className="block">and re-explaining the same work.</span>
             </p>
           </div>
 

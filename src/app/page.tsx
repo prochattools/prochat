@@ -2,22 +2,23 @@ import { getSEOTags } from '@/libs/seo'
 import MarketingApp from './(marketing)/App'
 
 export const metadata = getSEOTags({
-  title: 'ProChat OS | Messy Business Information In, Useful Work Out',
+  title: 'ProChat OS | Stop Rewriting the Same Work',
   description:
-    'ProChat OS helps businesses turn messy emails, PDFs, forms, notes, folders, and API data into summaries, checklists, draft replies, reports, tasks, and status updates ready for human review.',
+    'ProChat helps businesses turn repeated emails, notes, examples, reports, and follow-ups into drafts, summaries, tasks, and replies their team can review and use.',
   keywords: [
     'ProChat OS',
-    'AI workflow automation',
+    'AI work automation',
     'business process automation',
-    'client intake automation',
-    'document workflow automation',
-    'admin automation',
+    'repeated work automation',
+    'AI drafts for business',
+    'support reply automation',
+    'sales follow-up automation',
     'managed AI workflows',
   ],
   openGraph: {
-    title: 'ProChat OS | Messy Business Information In, Useful Work Out',
+    title: 'ProChat OS | Stop Rewriting the Same Work',
     description:
-      'Turn messy business information into summaries, checklists, draft replies, reports, tasks, and status updates your team can review and use.',
+      'Turn repeated business work into drafts, summaries, task lists, reports, and replies your team can review and use.',
     images: ['/og'],
     type: 'website',
   },

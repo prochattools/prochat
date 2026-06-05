@@ -4,9 +4,9 @@ import { getSiteUrl } from '@/libs/site-url'
 import { getSoftwareApplicationSchema } from '@/libs/structured-data'
 import ProChatOSPageContent from './ProChatOSPageContent'
 
-const pageTitle = 'ProChat OS – Messy Business Information In, Useful Work Out'
+const pageTitle = 'ProChat OS – Turn Repeated Work Into Review-Ready Output'
 const pageDescription =
-  'ProChat OS helps businesses turn messy emails, PDFs, forms, notes, folders, and API data into summaries, checklists, tasks, reports, status updates, and draft replies for human review.'
+  'ProChat OS helps businesses use their own examples, style, notes, and business knowledge to prepare drafts, summaries, reports, replies, and next steps faster.'
 const pageCanonical = 'https://prochat.tools/systems/prochat-os'
 
 export const metadata = {
@@ -15,11 +15,12 @@ export const metadata = {
     description: pageDescription,
     keywords: [
       'ProChat OS',
-      'AI workflow automation',
-      'business process automation',
-      'admin automation',
-      'document workflow automation',
-      'client intake automation',
+      'AI work automation',
+      'repeated work automation',
+      'business knowledge automation',
+      'AI draft preparation',
+      'sales follow-up automation',
+      'support reply automation',
       'managed AI workflows',
     ],
     openGraph: {
@@ -59,7 +60,7 @@ export default function ProChatOSPage() {
         name: 'What is ProChat OS?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'ProChat OS helps businesses get repetitive information work done faster by turning messy emails, PDFs, forms, notes, folders, and API data into clear summaries, checklists, tasks, reports, status updates, and draft replies for human review.',
+          text: 'ProChat OS helps businesses turn repeated emails, notes, examples, reports, and follow-ups into drafts, summaries, tasks, replies, and next steps their team can review and use.',
         },
       },
       {
@@ -67,15 +68,15 @@ export default function ProChatOSPage() {
         name: 'How does a business use ProChat OS?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'A business can send work to ProChat through simple entry points such as email, forms, file drops, or API calls. ProChat prepares structured output that the team can review, edit, approve, or send onward.',
+          text: 'A business starts with one repeated task and a few examples of good work. ProChat prepares a review-ready output such as a reply, proposal draft, report, task list, or summary.',
         },
       },
       {
         '@type': 'Question',
-        name: 'Does ProChat OS act without approval?',
+        name: 'Does ProChat OS replace people?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Important outputs can be reviewed by people before they are sent, changed, or treated as final. The first goal is useful work that remains under human control.',
+          text: 'No. ProChat prepares work for people to review. Important outputs stay under human control before they are sent, changed, or treated as final.',
         },
       },
     ],

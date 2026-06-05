@@ -16,7 +16,7 @@ const config: ConfigProps = {
 	appName: 'ProChat',
 	// REQUIRED: a short description of your app for SEO tags (can be overwritten)
 	appDescription:
-		'ProChat OS turns messy business inputs into structured work through private agentic workflows, managed setup, and human approval first.',
+		'ProChat helps businesses turn repeated emails, notes, examples, reports, and follow-ups into drafts, summaries, tasks, and replies their team can review and use.',
 	// REQUIRED (no https://, no trailing slash; just the naked canonical domain)
 	domainName: 'prochat.tools',
 	stripe: {

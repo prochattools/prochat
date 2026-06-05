@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { CheckCircle2, Clock, FileText, Mail, ShieldCheck, TrendingUp } from 'lucide-react'
+import { CheckCircle2, Clock, FileText, MessageSquareText, ShieldCheck, TrendingUp } from 'lucide-react'
 
 import HeroSection from '@/components/marketing/HeroSection'
 import HeroBadge from '@/components/ui/hero-badge'
@@ -13,121 +13,121 @@ type ProChatOSPageContentProps = {
   priceId?: string | null
 }
 
-const outcomes = [
+const problemCards = [
+  'People explain the same context again.',
+  'Good examples are scattered across old work.',
+  'AI drafts still need heavy rewriting.',
+  'Reports, replies, and proposals start from scratch.',
+  'Useful knowledge stays stuck in one person’s head.',
+  'New team members need the same explanations repeatedly.',
+] as const
+
+const outputCards = [
+  'Reply draft',
+  'Proposal draft',
+  'Support answer',
+  'Report',
+  'Task list',
+  'Handoff note',
+  'Meeting summary',
+  'Next-step checklist',
+] as const
+
+const layers = [
   {
-    title: 'Less admin drag',
-    description: 'Repetitive sorting, summarizing, drafting, and task creation become faster and more consistent.',
-    icon: Clock,
-  },
-  {
-    title: 'Clearer information',
-    description: 'Messy documents, notes, forms, and emails become summaries, checklists, and reports people can review.',
+    title: 'Use your own examples',
+    description: 'ProChat works from the way your business already writes, explains, decides, and follows up.',
     icon: FileText,
   },
   {
-    title: 'Faster follow-up',
-    description: 'Prepare draft replies and next-step lists so important work does not wait for someone to start from scratch.',
-    icon: TrendingUp,
+    title: 'Prepare repeated work',
+    description: 'Emails, notes, files, calls, and old examples become drafts, summaries, reports, replies, and task lists.',
+    icon: MessageSquareText,
   },
   {
-    title: 'Human control',
-    description: 'Important outputs can be reviewed and approved before they are sent, changed, or treated as final.',
+    title: 'Review before use',
+    description: 'Your team checks important outputs before anything is sent, changed, or treated as final.',
     icon: ShieldCheck,
+  },
+  {
+    title: 'Improve over time',
+    description: 'Corrections and feedback improve future outputs, so the same work does not keep starting from zero.',
+    icon: TrendingUp,
   },
 ] as const
 
-const examples = [
-  'Emails and attachments become a clear client or customer summary.',
-  'PDFs and notes become missing-information checklists.',
-  'Incoming requests become priorities, tasks, and draft responses.',
-  'Recurring reports become structured updates instead of manual rewrites.',
-  'Content inputs become outlines, drafts, and publishing tasks.',
-  'Internal notes become a clean action list for the team.',
+const useCases = [
+  'Owner notes to delegation instructions',
+  'Sales call to follow-up email and proposal draft',
+  'Support issue to reply and escalation note',
+  'Meeting notes to task list and status update',
+  'Brand examples to content draft and brief',
+  'Client context to summary and next steps',
 ] as const
-
-const entryPoints = ['Email', 'Forms', 'File drops', 'Folders', 'API calls', 'Manual upload'] as const
-const outputs = ['Summary', 'Checklist', 'Draft reply', 'Task list', 'Report', 'Status update'] as const
 
 export default function ProChatOSPageContent({ priceId: _priceId }: ProChatOSPageContentProps) {
   return (
     <div className="bg-transparent text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
       <HeroSection
         showBackgrounds={false}
-        eyebrow={<HeroBadge text="ProChat OS · Managed AI workflows" />}
+        eyebrow={<HeroBadge text="ProChat OS" />}
         title={
           <>
-            <span className="block text-foreground dark:text-white">Make messy business information</span>
-            <span className="hero-accent block">ready to review and use.</span>
+            <span className="block text-foreground dark:text-white">Turn repeated work</span>
+            <span className="hero-accent block">into reusable output.</span>
           </>
         }
-        subtitle="ProChat OS helps your team turn emails, PDFs, forms, notes, folders, and API data into summaries, checklists, tasks, reports, status updates, and draft replies for review."
-        primaryCTA={{ href: '/ai-workflows', label: 'See managed workflows' }}
+        subtitle="ProChat helps your team use its own examples, style, notes, and business knowledge to prepare drafts, summaries, reports, replies, and next steps faster."
+        primaryCTA={{ href: '/ai-workflows', label: 'Start with one task' }}
         secondaryCTA={{ href: '/book', label: 'Book a call', variant: 'secondary' }}
         ambientMotion
       >
         <HeroCheckRow
-          items={['Save admin time', 'Review before action', 'Managed for your business']}
+          items={['Your examples', 'Faster drafts', 'Review first']}
           className="mx-auto"
         />
       </HeroSection>
 
-      <Section id="plain-definition" tone="transparent" spacing="default">
+      <Section id="problem" tone="transparent" spacing="default">
         <div className="mx-auto max-w-5xl px-page text-center">
-          <h2 className="pc-section-title mb-5 text-foreground">What ProChat OS does</h2>
+          <h2 className="pc-section-title mb-5 text-foreground">The work is not new. Your team is just doing it again.</h2>
           <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            ProChat OS helps businesses get repetitive information work done faster. Your team sends messy input in, and ProChat prepares a clear output that people can review, edit, approve, or send onward.
+            Every business has repeated emails, reports, follow-ups, proposals, support answers, and handoffs. ProChat helps turn the knowledge behind that work into outputs your team can review and use.
           </p>
         </div>
       </Section>
 
-      <Section id="before-after" tone="muted" spacing="default">
-        <div className="mx-auto grid max-w-7xl gap-8 px-page lg:grid-cols-[1fr_auto_1fr] lg:items-center">
-          <Panel tone="default" padding="default">
-            <div className="mb-5 flex items-center gap-3 text-primary">
-              <Mail className="h-5 w-5" />
-              <h3 className="pc-card-title text-foreground">Ways work can arrive</h3>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {entryPoints.map(item => (
-                <div key={item} className="rounded-lg border border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
-                  {item}
-                </div>
-              ))}
-            </div>
-          </Panel>
-
-          <div className="flex justify-center">
-            <div className="rounded-full border border-primary/30 bg-primary/10 px-5 py-3 font-mono text-sm uppercase tracking-[0.16em] text-primary">
-              Becomes
-            </div>
+      <Section id="before" tone="muted" spacing="default">
+        <div className="mx-auto max-w-7xl px-page">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="pc-section-title mb-4 text-foreground">Where time disappears</h2>
+            <p className="pc-body-copy pc-body-muted">
+              The pain is usually not one big task. It is the same small knowledge work repeated again and again.
+            </p>
           </div>
-
-          <Panel tone="default" padding="default">
-            <div className="mb-5 flex items-center gap-3 text-primary">
-              <FileText className="h-5 w-5" />
-              <h3 className="pc-card-title text-foreground">What your team gets back</h3>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {outputs.map(item => (
-                <div key={item} className="rounded-lg border border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
-                  {item}
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {problemCards.map(card => (
+              <Panel key={card} tone="default" padding="default" className="h-full">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
+                  <Clock className="h-5 w-5" />
                 </div>
-              ))}
-            </div>
-          </Panel>
+                <p className="text-sm leading-relaxed text-muted-foreground">{card}</p>
+              </Panel>
+            ))}
+          </div>
         </div>
       </Section>
 
-      <Section id="benefits" tone="transparent" spacing="default">
+      <Section id="how" tone="transparent" spacing="default">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">Why businesses use it</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">What ProChat makes easier</h2>
             <p className="pc-body-copy pc-body-muted">
-              ProChat is useful when the same type of information keeps arriving and people keep doing the same manual work to make it usable.
+              ProChat does not replace people. It prepares the work so people can review faster and start from a better draft.
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {outcomes.map(card => {
+            {layers.map(card => {
               const Icon = card.icon
               return (
                 <Panel key={card.title} tone="default" padding="default" className="h-full">
@@ -143,31 +143,27 @@ export default function ProChatOSPageContent({ priceId: _priceId }: ProChatOSPag
         </div>
       </Section>
 
-      <Section id="managed" tone="muted" spacing="default">
-        <div className="mx-auto grid max-w-7xl gap-10 px-page lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <div>
-            <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
-              Managed for your business
-            </div>
-            <h2 className="pc-section-title mb-5 text-foreground">You focus on the result, not the setup</h2>
-            <p className="pc-body-copy pc-body-muted">
-              ProChat sets up and manages the workflow system behind the scenes. Your business uses simple entry points like email, forms, file drops, or APIs and receives useful output back for review.
-            </p>
-          </div>
+      <Section id="input-output" tone="muted" spacing="default">
+        <div className="mx-auto grid max-w-7xl gap-8 px-page lg:grid-cols-[1fr_auto_1fr] lg:items-center">
           <Panel tone="default" padding="default">
-            <div className="space-y-4">
-              {[
-                'You choose the repetitive work that costs time.',
-                'We define what the finished output should look like.',
-                'Your team sends work in through the simplest entry point.',
-                'ProChat prepares the result for review.',
-                'You approve, edit, send, or use the output.',
-              ].map((step, index) => (
-                <div key={step} className="flex gap-4 text-sm leading-relaxed text-muted-foreground">
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-primary/10 font-mono text-xs text-primary">
-                    {index + 1}
-                  </div>
-                  <span>{step}</span>
+            <h3 className="pc-card-title mb-5 text-foreground">You bring</h3>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Notes, emails, examples, old proposals, support replies, brand voice, decisions, procedures, reports, files, or call summaries.
+            </p>
+          </Panel>
+
+          <div className="flex justify-center">
+            <div className="rounded-full border border-primary/30 bg-primary/10 px-5 py-3 font-mono text-sm uppercase tracking-[0.16em] text-primary">
+              Becomes
+            </div>
+          </div>
+
+          <Panel tone="default" padding="default">
+            <h3 className="pc-card-title mb-5 text-foreground">You get</h3>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {outputCards.map(item => (
+                <div key={item} className="rounded-lg border border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
+                  {item}
                 </div>
               ))}
             </div>
@@ -178,13 +174,13 @@ export default function ProChatOSPageContent({ priceId: _priceId }: ProChatOSPag
       <Section id="examples" tone="transparent" spacing="default">
         <div className="mx-auto max-w-7xl px-page">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">Examples of useful output</h2>
+            <h2 className="pc-section-title mb-4 text-foreground">Useful first examples</h2>
             <p className="pc-body-copy pc-body-muted">
-              The exact workflow depends on the business, but the outcome is always the same: less messy input, more usable work.
+              Start with one repeated task where examples already exist and the result is easy to judge.
             </p>
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {examples.map(example => (
+            {useCases.map(example => (
               <Panel key={example} tone="default" padding="default" className="h-full">
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
                   <CheckCircle2 className="h-5 w-5" />
@@ -198,16 +194,16 @@ export default function ProChatOSPageContent({ priceId: _priceId }: ProChatOSPag
 
       <Section id="cta" tone="muted" spacing="loose">
         <div className="mx-auto max-w-3xl px-page text-center">
-          <h2 className="pc-section-title mb-6 text-foreground">What messy work should become easier first?</h2>
+          <h2 className="pc-section-title mb-6 text-foreground">Start with one repeated task</h2>
           <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            Show us what your team receives today and what a useful finished output should look like. We will help you define the fastest practical version.
+            Send us a task your team still does by hand and a few examples. We will show what a faster, review-ready version could look like.
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button asChild variant="primary" size="lg">
-              <Link href="/book">BOOK — A CALL</Link>
+              <Link href="/ai-workflows">START — TIME-SAVING TEST</Link>
             </Button>
             <Button asChild variant="secondary" size="lg">
-              <Link href="/ai-workflows">SEE — MANAGED WORKFLOWS</Link>
+              <Link href="/book">BOOK — A CALL</Link>
             </Button>
           </div>
         </div>
