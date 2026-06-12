@@ -93,41 +93,6 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="mb-4 flex flex-col items-center justify-between gap-3 text-center lg:flex-row lg:text-left">
-          <a
-            href="https://aws.amazon.com/activate/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65 transition-colors hover:text-primary"
-          >
-            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground/65">An</span>
-            <img
-              src="/logo/aws-activate-logo-light.svg"
-              alt="AWS Activate"
-              className="h-[1.2em] w-auto dark:hidden ml-[3px] mr-[3px]"
-              style={{ transform: 'translateY(-1.6px)' }}
-            />
-            <img
-              src="/logo/aws-activate-logo-dark.svg"
-              alt="AWS Activate"
-              className="hidden h-[1.2em] w-auto dark:block ml-[3px] mr-[3px]"
-              style={{ transform: 'translateY(-1.6px)' }}
-            />
-            <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65">Startup</span>
-          </a>
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[9px] uppercase tracking-[0.12em] text-muted-foreground/65 lg:justify-end">
-            {LEGAL_LINKS.map(link => (
-              <Link
-                key={`legal-row-${link.label}`}
-                href={link.href}
-                className="transition-colors hover:text-primary"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-
         <div className="pt-8">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="mt-10 flex w-full justify-center text-center lg:mt-0 lg:w-auto lg:justify-start">
@@ -177,8 +142,17 @@ export const Footer: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="text-center text-sm text-muted-foreground lg:text-right">
-              © 2026 ProChat — All rights reserved
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-center text-sm text-muted-foreground lg:justify-end lg:text-right">
+              {LEGAL_LINKS.map(link => (
+                <Link
+                  key={`bottom-legal-${link.label}`}
+                  href={link.href}
+                  className="transition-colors hover:text-primary"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <span>© 2026 ProChat — All rights reserved</span>
             </div>
           </div>
         </div>
