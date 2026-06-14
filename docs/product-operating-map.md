@@ -1,191 +1,229 @@
 # Product Operating Map
 
-Status: canonical product and positioning map for ProChat documentation and website planning.
-
-Last updated: 2026-05-24
+**Status:** current product and positioning map  
+**Owner:** Steve Westhoek  
+**Last updated:** 2026-06-14
 
 ## Source of truth
 
-The business strategy in the `mind` repo leads this ProChat repo.
-
-Current leading strategy:
+The `mind` repository is canonical.
 
 ```text
 mind/wiki/organisations/prochat/brand/prochat-os-strategy.md
 mind/wiki/organisations/prochat/brand/prochat-os-technical-definition.md
+mind/wiki/organisations/prochat/brand/prochat-os-modules.md
 mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
 mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
-mind/wiki/organisations/prochat/brand/prochat-os-modules.md
-mind/wiki/organisations/prochat/brand/mikeoss-dokploy-demo-checklist.md
+mind/wiki/organisations/prochat/brand/brand-ruleset.md
 ```
 
-## Purpose
-
-This document defines the current ProChat product ecosystem, live versus roadmap state, and boundaries between ProChat OS, supporting products, legacy products, and niche wedges.
-
-Use this document before changing homepage copy, product pages, kit comparison tables, docs navigation, roadmap pages, or agent task briefs.
-
-## Current strategic decisions
-
-- ProChat OS is the flagship product.
-- ProChat OS is an Agentic Workflow OS.
-- The public website is business-agnostic and should not be law-firm-only.
-- Law firms are the first direct outreach wedge.
-- Accountants are the second local comparison niche.
-- Creators, SaaS builders, influencers, and personal developers are organic-content audiences.
-- MikeOSS is a law-firm wedge, not ProChat OS and not the main product.
-- SaaSKit, ProKit, UXKit, and WaaSKit are legacy/supporting products, not the flagship direction.
-- BuildFlow is supporting/internal tooling and may inform ProChat OS implementation, but it is not the current public flagship.
-- ProChat runtime auth direction is Ory.
-- See `docs/auth-status.md` for the canonical runtime auth state.
-- Clerk may remain part of sold boilerplate products where that is true for the client-facing codebase, but only with a legacy-only warning.
-
-## Product ecosystem
-
-| Product | Category | Status | Primary audience | Role |
-| --- | --- | --- | --- | --- |
-| ProChat OS | Managed AI workflow system | Flagship strategy / productization in progress | businesses, solo builders, workflow-driven operators, creators, SaaS builders | Turns messy business information into ready-to-review summaries, checklists, reports, tasks, status updates, and draft replies. |
-| Managed ProChat OS | Managed productized service | First commercial direction | local businesses, law firms first, later other niches | ProChat sets up, runs, and supports workflow systems that customers can use through email, forms, file drops, or API calls. |
-| ProChat website/platform | Business, content, commerce, docs platform | Live | buyers, operators, readers | Business-agnostic marketing, education, conversion, docs, and future ProChat OS product surface. |
-| ProChat OS modules | Niche workflow packages | Productization roadmap | specific niches and workflow families | Package skills, workflows, schedules, examples, approval checkpoints, and evaluation criteria around one recognizable business problem. |
-| MikeOSS legal demo | Legal document AI workspace wedge | First law-firm demo / install block | law firms | Tangible legal AI workspace used to start law-firm conversations and upsell ProChat OS workflows. |
-| BuildFlow | AI workflow/context tooling | Supporting/internal or adjacent product | AI-native builders and internal operators | Useful tooling/patterns for repo context and safe operations; not the current ProChat flagship. |
-| SaaSKit | SaaS application foundation | Legacy/supporting product | SaaS builders/founders | Real product, but no longer strategic center; may later become a ProChat OS-compatible module/example. |
-| ProKit | Lean SaaS engine | Legacy/supporting product | technical builders | Real product, but no longer strategic center; may later become a ProChat OS-compatible module/example. |
-| UXKit | Legacy product/concept | Legacy | builders needing UI/UX help | Preserve useful ideas for future agentic modules. |
-| WaaSKit | Legacy product/concept | Legacy | service-led founders | Preserve useful ideas for future agentic modules. |
-
-## ProChat OS boundary
-
-ProChat OS is buyer-facing as a managed AI workflow system:
+## Business and product hierarchy
 
 ```text
-messy information → ready-to-review output → human approval → repeatable workflow
+ProChat = the business
+ProChat OS = working name of the flagship product
 ```
 
-Internally, ProChat OS can still be described as a workflow runtime with skills, workflows, schedules, modules, approvals, logs, connectors, and support tooling.
+The flagship name is under review. Until that decision is made, `ProChat OS` remains the consistent working name.
 
-Public website and sales language should focus on outcomes:
-
-- less admin work
-- faster follow-up
-- fewer missed details
-- clearer handoffs
-- ready-to-review outputs
-- human approval first
-
-ProChat OS should be positioned as:
+## Core philosophy
 
 ```text
-Messy business information in. Useful work out.
+Memory is the product foundation.
+Workflows are the method.
+AI is the assistant.
 ```
 
-ProChat OS should not be positioned as:
+The durable asset is reusable business knowledge that improves repeated work over time.
 
-- a chatbot
-- a dashboard only
-- MikeOSS
-- a legal AI platform only
-- a SaaS kit
-- a BuildFlow rebrand
-- the model router alone
-- the memory store alone
-
-## MikeOSS boundary
-
-MikeOSS is a law-firm wedge and implementation block.
+## Product architecture
 
 ```text
-MikeOSS = legal document AI workspace
-ProChat OS = Agentic Workflow OS around and beyond it
+ProChat OS
+├── Work Memory
+│   ├── personal
+│   ├── project
+│   ├── client
+│   ├── team
+│   ├── department
+│   ├── company
+│   ├── cross-project
+│   └── niche
+├── Workflow Modules
+│   ├── founder and owner
+│   ├── sales
+│   ├── support
+│   ├── marketing and content
+│   ├── operations and reporting
+│   └── niche-specific workflows
+└── Review Loop
+    ├── approve or reject
+    ├── capture edits
+    ├── identify missing context
+    ├── improve memory
+    └── improve future outputs
 ```
 
-Use MikeOSS to make law-firm outreach tangible:
+## Core product pattern
 
-- private legal document workspace
-- document upload
-- document chat
-- cited answers
-- review workflows
+```text
+messy input + relevant memory → review-ready output → human feedback → better future work
+```
 
-Then sell ProChat OS as the broader managed workflow layer:
+## Product surfaces
 
-- intake workflows
-- admin/document agents
-- follow-up workflows
-- reporting
-- approvals
-- hosting/support
-- integrations
+| Surface | Purpose | Buyer value |
+| --- | --- | --- |
+| ProChat website | Explain the offer and convert buyers | Understand the pain, outcome, first offer, and next step |
+| First time-saving test | Prove one useful repeated-work outcome | See whether ProChat saves real time before expanding |
+| Work Memory | Store reusable examples, rules, context, style, and feedback | Stop re-explaining the same context and rewriting the same work |
+| Workflow Modules | Turn repeated situations into outputs | Get drafts, summaries, reports, replies, and next steps faster |
+| Review Loop | Improve output and memory through human feedback | Keep people in control and make later runs better |
+| Portable starter package | Run a small local or customer-owned setup | Demo or deploy without a large infrastructure project |
+| Managed deployment | ProChat hosts, configures, supports, and improves the system | Use the outcome without operating the infrastructure |
+| API | Let software submit work and retrieve reviewed results | Connect ProChat to existing business systems |
+| MCP server | Let compatible AI clients use approved memory and workflows | Reuse ProChat capabilities inside supported tools |
+| Niche derivatives | Package memory and workflows for one role or sector | Buy a focused solution without rebuilding the foundation |
 
-MikeOSS must not define the main ProChat website.
+## Delivery modes
 
-## Live versus roadmap language
+### Demo package
 
-Use these status labels consistently:
+```text
+ZIP or repository folder
++ safe sample memory
++ sample workflow
++ sample input
++ expected output
++ short manual
+```
 
-- Flagship strategy: current company direction and primary positioning.
-- Live: implemented and available as an active product/surface.
-- Demo wedge: tactical demo or niche-specific wedge, not the whole strategy.
-- Productization in progress: strategic product being shaped into installable software.
-- Legacy/supporting: real product or useful asset, but no longer the main strategy.
-- Roadmap: planned, not currently available.
+Use for demonstrations, Loom videos, discovery calls, and local proof.
 
-## Public website product hierarchy
+### Local starter package
 
-The website should present:
+```text
+config/
+memory/
+workflows/
+inbox/
+outputs/
+review/
+examples/
+README.md
+```
 
-1. ProChat OS as the flagship.
-2. Managed ProChat OS as the paid path.
-3. Modular workflow blocks as examples of how ProChat OS expands.
-4. Legacy/supporting products only as secondary or historical where needed.
+Use when the customer wants a portable local setup and the workflow does not require heavy integration.
 
-The website should not present:
+### Managed deployment
 
-- BuildFlow as the main product.
-- SaaSKit as the main product.
-- ProKit as the main product.
-- ProChat OS as phased out.
-- MikeOSS as the main brand.
-- Lawyers as the whole audience.
+ProChat sets up and operates the system. Customers use simple entry points such as email, forms, file drops, shared folders, API calls, or supported MCP clients.
 
-## Relationship between ProChat OS and legacy products
+This is the default commercial path when self-installation would create unnecessary support burden.
 
-SaaSKit, ProKit, UXKit, and WaaSKit remain real historical/supporting products.
+## Role-based wedges
 
-They are not deleted.
+Best first wedges:
 
-They can later be:
+1. Founder or owner
+2. Sales
+3. Support
+4. Marketing and content
+5. Operations and reporting
 
-- marked as legacy
-- preserved as reference
-- upgraded into agentic ProChat OS modules
-- used as examples/workflows inside ProChat OS
+Each wedge combines relevant memory and repeated workflows.
 
-They should not drive the main homepage or flagship positioning.
+Examples:
 
-## Auth boundary
+```text
+founder memory + delegation workflow
+sales memory + follow-up workflow
+support memory + reply workflow
+marketing memory + content workflow
+operations memory + reporting workflow
+```
 
-ProChat runtime:
+## Niche derivatives
 
-- Ory is the current active authentication platform for ProChat itself.
-- ProChat auth docs should describe shared ProChat auth UI backed by Ory where relevant.
-- Clerk should not appear as an active ProChat runtime requirement.
+Niche derivatives are focused packages on the same foundation.
 
-Sold boilerplate products:
+```text
+niche memory + niche workflows + review rules + delivery configuration
+```
 
-- Clerk may remain documented as part of client-facing boilerplate products where the product code actually includes it, but the doc must warn that it is legacy boilerplate reference only and not active ProChat runtime auth.
-- Product docs must clearly say that this is boilerplate/product behavior, not ProChat website/runtime behavior.
+Possible derivatives:
 
-## Documentation rules
+- legal
+- accounting
+- agencies
+- consultants
+- real estate
+- customer support
+- sales
+- content operations
 
-When updating docs or pages:
+A niche derivative should not require a separate core product, memory model, or implementation philosophy.
 
-1. Start from the mind ProChat OS strategy.
-2. Keep public brand and outreach wedges separate.
-3. Keep ProChat OS as the flagship.
-4. Do not make the main website law-firm-only.
-5. Do not make MikeOSS look like ProChat-owned software.
-6. Preserve legacy product information, but mark it as legacy/supporting.
-7. Keep live products, demo wedges, and roadmap products visibly separated.
-8. Keep ProChat runtime auth separate from boilerplate auth.
+## Supporting products and tools
+
+Existing kits, internal tools, and experiments may remain useful, but they do not define the flagship product or public positioning.
+
+They may contribute:
+
+- code
+- delivery patterns
+- UI components
+- infrastructure patterns
+- workflow examples
+- internal tooling
+
+They should not create competing flagship narratives.
+
+## Commercial sequence
+
+```text
+first time-saving test
+→ done-for-you launch
+→ managed improvement
+→ team rollout
+→ department or company memory
+→ niche or cross-project expansion
+```
+
+## Public positioning
+
+The website sells outcomes, not architecture.
+
+Use:
+
+- stop rewriting the same work
+- stop re-explaining the same context
+- prepare drafts faster
+- keep useful knowledge reusable
+- get review-ready output
+- improve future work from feedback
+
+Do not lead with:
+
+- operating system
+- Infinite Brain
+- Work Memory
+- knowledge graph
+- modules
+- API
+- MCP
+- runtime
+- connectors
+- installation
+
+## Naming status
+
+The final naming architecture must distinguish:
+
+- ProChat as the business
+- the flagship product
+- the memory foundation
+- workflow or capability packages
+- niche derivatives
+
+Names should communicate value, remain expandable, and avoid making related products appear disconnected.

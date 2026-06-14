@@ -1,255 +1,339 @@
 # ProChat OS Marketing Copy Blueprint
 
-Status: buyer-facing copy blueprint for the ProChat website and landing pages.
-
-Last updated: 2026-06-02
+**Status:** current buyer-facing copy blueprint  
+**Owner:** Steve Westhoek  
+**Last updated:** 2026-06-14
 
 ## Source of truth
 
-Mind remains canonical for strategy. This document translates that strategy into public marketing copy.
+Mind remains canonical for philosophy and strategy.
 
-Public website copy must speak to business outcomes, not internal architecture.
+This document translates that strategy into buyer-facing website language.
 
-## Buyer-facing definition
+## Translation rule
 
-Use this definition on the website and in sales conversations:
+Internal philosophy:
 
 ```text
-ProChat OS helps businesses get repetitive admin, document, intake, reporting, and follow-up work done faster by turning messy information into ready-to-review outputs.
+Memory is the product foundation.
+Workflows are the method.
+AI is the assistant.
+```
+
+Public translation:
+
+```text
+Stop rewriting, re-explaining, and redoing the same work.
+```
+
+Do not explain the architecture before the buyer understands the pain and outcome.
+
+## Primary buyer promise
+
+```text
+Turn repeated work into useful drafts, replies, reports, tasks, and next steps your team can review and use.
 ```
 
 Short version:
 
 ```text
-Messy business information in. Useful work out.
+Stop rewriting the same work.
 ```
 
-## What it does
+## Buyer pain
 
-ProChat OS helps a business turn scattered inputs into useful outputs.
+Lead with recognizable problems:
 
-Inputs:
+- the same context gets explained repeatedly
+- good examples are scattered across old work
+- AI drafts still need heavy rewriting
+- reports and proposals start from scratch
+- follow-ups take too long
+- notes do not become tasks quickly enough
+- useful knowledge stays in one person's head
+- new employees need the same explanations again
 
-- emails
-- PDFs
-- forms
-- notes
-- folders
-- attachments
-- reports
-- API data
+## Buyer outcome
 
-Outputs:
+Show what improves:
 
-- summaries
-- missing-information checklists
-- task lists
-- status updates
-- reports
-- draft replies
-- review notes
-
-## Benefits
-
-A buyer should immediately understand these benefits:
-
-- less repetitive admin work
-- faster first replies
-- fewer missed follow-ups
+- draft replies ready to review
+- summaries with clear next steps
+- proposals based on approved examples
+- support answers in the right style
+- reports prepared faster
+- task lists from messy notes
 - clearer handoffs
-- more consistent document and intake work
-- less copying, pasting, rewriting, and reformatting
-- human review before important output is used
+- useful knowledge that remains reusable
+- later outputs that improve from reviewed work
 
-## For whom
-
-Primary public audience:
-
-- small and local businesses
-- B2B service businesses
-- agencies and consultants
-- law firms and accountants as direct outreach niches
-- teams with repetitive document, email, intake, reporting, or follow-up work
-- builders and operators who want AI to help with real workflow output, not only chat answers
-
-## Public hosting explanation
-
-Do not imply that ProChat is installed into a customer computer or internal network by default.
-
-Preferred wording:
-
-```text
-ProChat sets up and manages the workflow system for you. Your team can send work to it by email, forms, file drops, or API calls, and receive structured outputs back for review.
-```
-
-Avoid:
-
-```text
-installable
-private runtime
-installed in your systems
-workflow runtime
-customer instance
-memory store
-model router
-connector layer
-CLI
-```
-
-Those are internal or technical terms and should not lead marketing pages.
-
-## Homepage goal
-
-The homepage should make the desired before/after obvious.
-
-### Hero
-
-Eyebrow:
-
-```text
-ProChat OS · Managed AI Workflows
-```
-
-Headline:
-
-```text
-Get repetitive business work done without the manual copy-paste.
-```
-
-Subheadline:
-
-```text
-Send messy emails, PDFs, forms, notes, folders, or API data in. Get clear summaries, checklists, tasks, reports, and draft replies back for human review.
-```
-
-CTA:
-
-```text
-See managed workflows
-Book a call
-```
-
-Trust row:
-
-```text
-Less admin work · Faster follow-up · Human approval first
-```
-
-## Homepage sections
-
-Recommended structure:
-
-1. Before/after: messy input becomes useful output.
-2. Problem: AI is useful, but the work around it is still manual.
-3. Benefits: save admin hours, respond faster, miss less information, keep control.
-4. How it feels: send work in, receive structured output, review, approve, repeat.
-5. Examples: client inquiry, document pack, internal notes, support request, report, content workflow.
-6. CTA: ask which repetitive task still costs the team the most time.
-
-## AI workflows page goal
-
-This page should sell one narrow conversion promise:
-
-```text
-Stop losing hours to repetitive admin work.
-```
-
-It should not say “start with one workflow” as the primary message. That is internal strategy. Public copy should focus on the buyer's desired outcome:
-
-- save time
-- respond faster
-- reduce manual admin
-- turn scattered information into a usable output
-- keep humans in control
-
-## Legal workflows page goal
-
-This page should sell legal admin/document support, not legal advice and not technical tooling.
-
-Headline direction:
-
-```text
-Spend less time sorting legal documents and more time reviewing the work that matters.
-```
-
-Subheadline direction:
-
-```text
-Client emails, PDFs, notes, forms, and attachments become intake summaries, missing-information checklists, matter tasks, and draft follow-ups — with lawyer review before anything is used.
-```
-
-Required trust language:
-
-- admin/document support only
-- lawyer review first
-- no automatic legal advice
-- fake or approved sample data for demos
-
-## Language rules
+## Public language rules
 
 Use:
 
-- get work done faster
-- save admin time
-- respond faster
-- messy information in, useful work out
-- ready for review
-- human approval first
-- managed for you
-- send by email, form, file drop, or API
-- summaries, checklists, reports, tasks, draft replies
+- your examples
+- your business knowledge
+- your preferred style
+- repeated work
+- review-ready output
+- faster drafts
+- less rewriting
+- clearer handoffs
+- human review
+- useful knowledge stays reusable
 
-Avoid on public pages:
+Do not lead with:
 
-- installable
+- Work Memory
+- Infinite Brain
+- operating system
+- knowledge graph
+- modules
+- agents
 - runtime
-- memory
 - connectors
-- routing
-- model router
-- CLI
-- agentic employee
-- internal architecture
-- broad AI rollout
-- private customer instance
-- start with one workflow first as a hero promise
+- model routing
+- API
+- MCP
+- installation
 
-## FAQ copy
+Technical terms may appear in technical documentation, procurement conversations, or implementation pages after the buyer understands the outcome.
 
-### What is ProChat OS?
+## Main website structure
 
-```text
-ProChat OS helps businesses get repetitive information work done faster by turning messy emails, PDFs, forms, notes, folders, and API data into summaries, checklists, tasks, reports, status updates, and draft replies for human review.
-```
+### 1. Hero
 
-### Do you install something on our computers?
+Pain first:
 
 ```text
-No. ProChat sets up and manages the workflow system for you. Your team can send work to it through simple entry points such as email, forms, file drops, or API calls.
+Stop rewriting the same work.
 ```
 
-### Does it act automatically?
+Support:
 
 ```text
-Important outputs can be reviewed by people before they are sent, changed, or treated as final.
+ProChat turns repeated emails, notes, examples, reports, and follow-ups into drafts, summaries, tasks, and replies your team can review and use.
 ```
 
-### What kind of work can it help with?
+Primary CTA:
 
 ```text
-Admin work, client intake, document summaries, missing-information checklists, draft replies, internal reports, task lists, status updates, and recurring information work.
+Show us one repeated task
 ```
 
-## Metadata direction
-
-Homepage title:
+Secondary CTA:
 
 ```text
-ProChat OS | Get Repetitive Business Work Done Faster
+Book a call
 ```
 
-Homepage description:
+### 2. Before and after
+
+Before:
+
+- rewriting emails
+- explaining context again
+- searching for examples
+- turning notes into tasks manually
+- drafting follow-ups from scratch
+- rebuilding reports every week
+
+After:
+
+- reply drafts
+- clear summaries
+- task lists
+- proposal drafts
+- support answers
+- faster reports
+
+### 3. Why the problem persists
+
+Explain simply:
 
 ```text
-ProChat OS helps businesses turn messy emails, PDFs, forms, notes, folders, and API data into clear summaries, checklists, tasks, reports, and draft replies for human review.
+Your team already has examples, rules, decisions, and old work that show what good looks like. The problem is that this knowledge is scattered, so every task starts too close to zero.
 ```
+
+### 4. Benefits
+
+- stop repeating yourself
+- prepare work faster
+- keep useful knowledge reusable
+- review important work before use
+- improve future output from feedback
+
+### 5. Role-based examples
+
+Founder or owner:
+
+```text
+Notes and examples become replies, proposals, delegation notes, and task instructions.
+```
+
+Sales:
+
+```text
+Calls and old examples become follow-ups, proposal drafts, CRM notes, and next steps.
+```
+
+Support:
+
+```text
+Questions and approved answers become reply drafts, issue summaries, and escalation notes.
+```
+
+Marketing:
+
+```text
+Ideas and brand examples become outlines, posts, briefs, and email drafts.
+```
+
+Operations:
+
+```text
+Meeting notes and recurring updates become reports, task lists, handoffs, and action plans.
+```
+
+### 6. First offer
+
+Name:
+
+```text
+First time-saving test
+```
+
+Description:
+
+```text
+Show us one task your team repeats and a few examples of what good looks like. We prepare one review-ready output so you can judge whether it saves real time before expanding.
+```
+
+Price direction:
+
+```text
+from €750
+```
+
+### 7. Expansion offer
+
+Name:
+
+```text
+Done-for-you launch
+```
+
+Description:
+
+```text
+We set up the working flow for one person or team using a simple delivery method that fits the job.
+```
+
+Price direction:
+
+```text
+from €1,500
+```
+
+### 8. Recurring offer
+
+Name:
+
+```text
+Managed improvement
+```
+
+Description:
+
+```text
+We keep the outputs useful, improve the examples and rules from review feedback, and expand only when the work keeps saving time.
+```
+
+Price direction:
+
+```text
+from €250/month
+```
+
+## Niche landing pages
+
+Niche pages should still lead with the buyer's pain and output.
+
+Do not begin by explaining niche memory, workflow modules, or architecture.
+
+Pattern:
+
+```text
+specific repeated niche pain
+→ recognizable output
+→ human review
+→ simple first offer
+```
+
+Examples:
+
+Legal:
+
+```text
+Spend less time sorting client emails, notes, and documents. Get intake summaries, missing-information checklists, task lists, and draft follow-ups ready for review.
+```
+
+Accounting:
+
+```text
+Spend less time chasing missing documents. Get clearer client summaries, missing-document lists, and draft follow-ups ready for review.
+```
+
+Sales:
+
+```text
+Turn call notes, objections, and old examples into faster follow-ups, proposal drafts, and next steps.
+```
+
+Support:
+
+```text
+Help your team answer customers faster and more consistently using your approved answers and examples.
+```
+
+## Demo language
+
+The demo should show:
+
+```text
+messy input
+→ relevant examples and context
+→ review-ready output
+→ human correction
+→ better next run
+```
+
+Do not show architecture unless the audience asks for it.
+
+## Delivery language
+
+Public default:
+
+```text
+ProChat sets up and manages the working flow for you.
+```
+
+For portable or local delivery:
+
+```text
+A lightweight local package can be provided when the workflow is suitable for customer-owned operation.
+```
+
+For integrations:
+
+```text
+ProChat can connect to existing tools where useful.
+```
+
+Do not lead with ZIP files, containers, APIs, MCP, servers, or installation choices on primary marketing pages.
+
+## Naming status
+
+`ProChat OS` remains the working flagship name while the naming architecture is reviewed.
+
+Website copy should avoid overusing the working name in headlines. Lead with the pain and outcome so the copy remains valid if the product name changes.
