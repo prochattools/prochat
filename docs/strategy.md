@@ -12,9 +12,9 @@ Leading documents:
 
 ```text
 mind/wiki/organisations/prochat/brand/product-naming-architecture.md
-mind/wiki/organisations/prochat/brand/prochat-os-strategy.md
-mind/wiki/organisations/prochat/brand/prochat-os-modules.md
-mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
+mind/wiki/organisations/prochat/brand/product-strategy.md
+mind/wiki/organisations/prochat/brand/product-modules.md
+mind/wiki/organisations/prochat/brand/go-to-market.md
 mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
 mind/wiki/organisations/prochat/brand/brand-ruleset.md
 ```

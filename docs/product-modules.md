@@ -10,7 +10,7 @@ Canonical mind documents:
 
 ```text
 mind/wiki/organisations/prochat/brand/product-naming-architecture.md
-mind/wiki/organisations/prochat/brand/prochat-os-modules.md
+mind/wiki/organisations/prochat/brand/product-modules.md
 ```
 
 ## Product suite relationship

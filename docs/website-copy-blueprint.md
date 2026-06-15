@@ -11,7 +11,7 @@ Mind remains canonical for strategy, naming, and brand rules.
 ```text
 mind/wiki/organisations/prochat/brand/product-naming-architecture.md
 mind/wiki/organisations/prochat/brand/brand-ruleset.md
-mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
+mind/wiki/organisations/prochat/brand/go-to-market.md
 ```
 
 This document translates that strategy into buyer-facing website language.
