@@ -1,14 +1,36 @@
-# ProChat OS Marketing Copy Blueprint
+# ProChat Website Copy Blueprint
 
 **Status:** current buyer-facing copy blueprint  
 **Owner:** Steve Westhoek  
-**Last updated:** 2026-06-14
+**Last updated:** 2026-06-15
 
 ## Source of truth
 
-Mind remains canonical for philosophy and strategy.
+Mind remains canonical for strategy, naming, and brand rules.
+
+```text
+mind/wiki/organisations/prochat/brand/product-naming-architecture.md
+mind/wiki/organisations/prochat/brand/brand-ruleset.md
+mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
+```
 
 This document translates that strategy into buyer-facing website language.
+
+## Product hierarchy
+
+```text
+ProChat
+├── ProChat Memory
+├── ProChat Answers
+├── ProChat Automations
+├── ProChat Workbench
+│   └── powered by the BuildFlow engine
+├── ProChat for [Role or Industry]
+├── ProChat API
+└── ProChat MCP
+```
+
+`ProChat OS` is retired from primary public naming.
 
 ## Translation rule
 
@@ -23,57 +45,440 @@ AI is the assistant.
 Public translation:
 
 ```text
-Stop rewriting, re-explaining, and redoing the same work.
+Reliable answers and repeated work prepared from the knowledge your business trusts.
 ```
 
-Do not explain the architecture before the buyer understands the pain and outcome.
+Do not explain architecture before the visitor understands the pain and outcome.
 
-## Primary buyer promise
+## Main company promise
 
 ```text
-Turn repeated work into useful drafts, replies, reports, tasks, and next steps your team can review and use.
+Put your business knowledge to work.
 ```
 
-Short version:
+Supporting message:
 
 ```text
-Stop rewriting the same work.
+ProChat turns approved knowledge, examples, and recurring information into reliable answers and useful work your team can review and use.
 ```
 
-## Buyer pain
+## Website information architecture
 
-Lead with recognizable problems:
+### Main navigation
 
-- the same context gets explained repeatedly
-- good examples are scattered across old work
-- AI drafts still need heavy rewriting
-- reports and proposals start from scratch
-- follow-ups take too long
-- notes do not become tasks quickly enough
-- useful knowledge stays in one person's head
-- new employees need the same explanations again
+```text
+Products
+Solutions
+For Builders
+About
+Book a Call
+```
 
-## Buyer outcome
+### Products
 
-Show what improves:
+```text
+ProChat Answers
+ProChat Automations
+ProChat Memory
+```
 
-- draft replies ready to review
-- summaries with clear next steps
-- proposals based on approved examples
-- support answers in the right style
-- reports prepared faster
-- task lists from messy notes
+### For Builders
+
+```text
+ProChat Workbench
+Powered by BuildFlow
+```
+
+### Solutions
+
+```text
+ProChat for Founders
+ProChat for Sales
+ProChat for Support
+ProChat for Marketing
+ProChat for Operations
+ProChat for Legal
+ProChat for Accounting
+```
+
+## Homepage structure
+
+### 1. Hero
+
+Headline:
+
+```text
+Put your business knowledge to work.
+```
+
+Support:
+
+```text
+Get reliable answers from approved knowledge and turn repeated work into drafts, reports, replies, tasks, and next steps your team can review and use.
+```
+
+Primary CTA:
+
+```text
+Show us one repeated problem
+```
+
+Secondary CTA:
+
+```text
+Explore the products
+```
+
+### 2. Two primary business outcomes
+
+#### Reliable answers
+
+```text
+Stop searching across scattered documents and asking the same people the same questions. ProChat Answers returns grounded answers with visible sources from approved business knowledge.
+```
+
+CTA:
+
+```text
+Explore ProChat Answers
+```
+
+#### Repeated work prepared faster
+
+```text
+Turn recurring notes, emails, documents, examples, and updates into useful work ready for human review with ProChat Automations.
+```
+
+CTA:
+
+```text
+Explore ProChat Automations
+```
+
+### 3. Shared foundation
+
+Headline:
+
+```text
+Powered by knowledge your business can inspect and improve.
+```
+
+Copy:
+
+```text
+ProChat Memory keeps approved examples, decisions, procedures, style, context, corrections, and source references reusable across answers and automations.
+```
+
+Do not present ProChat Memory as abstract architecture before showing the products it powers.
+
+### 4. Before and after
+
+Before:
+
+- searching through scattered files
+- asking the same internal questions repeatedly
+- explaining context again
+- pasting examples into prompts
+- rewriting AI output
+- creating reports and follow-ups from scratch
+- losing useful knowledge when people leave
+
+After:
+
+- grounded answers with visible sources
+- reply and proposal drafts
+- clear summaries and task lists
+- faster reports
+- consistent support responses
+- reusable knowledge
+- review and feedback that improve later results
+
+### 5. Role and industry solutions
+
+Use:
+
+```text
+ProChat for [Role or Industry]
+```
+
+Explain that each solution packages relevant memory, answers, automations, review rules, and delivery configuration.
+
+Examples:
+
+Founder or owner:
+
+```text
+Keep company knowledge reusable and turn notes, decisions, and examples into answers, delegation notes, proposals, and task instructions.
+```
+
+Sales:
+
+```text
+Answer questions about offers and objections, then prepare follow-ups, proposals, call summaries, and next steps.
+```
+
+Support:
+
+```text
+Use approved product knowledge for consistent answers, reply drafts, issue summaries, and escalation notes.
+```
+
+Marketing:
+
+```text
+Reuse approved voice and examples to prepare briefs, outlines, emails, and content drafts.
+```
+
+Operations:
+
+```text
+Turn procedures, notes, and recurring updates into answers, reports, task lists, and handoffs.
+```
+
+### 6. First offer
+
+Name:
+
+```text
+First useful proof
+```
+
+Description:
+
+```text
+Choose one recurring question set or one repeated task. Share approved source material and examples. We prepare a working proof so you can judge the quality before expanding.
+```
+
+Possible proof types:
+
+- ProChat Answers pilot
+- ProChat Automations pilot
+- ProChat Workbench local setup
+
+### 7. Human review
+
+Headline:
+
+```text
+Your team stays in control.
+```
+
+Copy:
+
+```text
+Important answers, outputs, and memory updates remain reviewable. Corrections can improve the next result without turning stored memory into unquestioned authority.
+```
+
+### 8. Builder section
+
+Eyebrow:
+
+```text
+For developers and AI-native builders
+```
+
+Headline:
+
+```text
+Let ChatGPT work safely with your real local projects.
+```
+
+Copy:
+
+```text
+ProChat Workbench connects ChatGPT to local repositories, documentation, notes, and knowledge folders. It provides exact context, guarded changes, targeted validation, and explicit Git operations without presenting itself as an autonomous agent.
+```
+
+Trust line:
+
+```text
+Local-first · Self-hosted · Guarded writes · Explicit commits
+```
+
+CTAs:
+
+```text
+Explore ProChat Workbench
+View BuildFlow on GitHub
+```
+
+Relationship label:
+
+```text
+ProChat Workbench is powered by the BuildFlow engine.
+```
+
+## ProChat Answers page
+
+### Hero
+
+Headline:
+
+```text
+Reliable answers from the knowledge your business trusts.
+```
+
+Support:
+
+```text
+Ask real questions against approved documents and reusable company knowledge. Get grounded answers with visible sources and a clear path for correction.
+```
+
+Primary CTA:
+
+```text
+Test your knowledge set
+```
+
+### Core flow
+
+```text
+question → approved knowledge → grounded answer → sources → feedback
+```
+
+### Buyer pain
+
+- knowledge is scattered
+- answers depend on who is available
+- employees search through the same documents repeatedly
+- generic AI answers cannot be trusted
+- source material is difficult to verify
+- corrections are not reused
+
+### Buyer outcome
+
+- grounded answers
+- visible source references
+- approved knowledge scopes
+- consistent internal guidance
+- correction and feedback
+- reusable improvements
+
+### Naming rule
+
+Use `Q&A` only as a descriptive phrase. Do not call the product `ProChat QA`, because software audiences commonly read QA as quality assurance.
+
+## ProChat Automations page
+
+### Hero
+
+Headline:
+
+```text
+Stop rebuilding the same work.
+```
+
+Support:
+
+```text
+ProChat Automations turns recurring notes, emails, documents, examples, and updates into useful output ready for review.
+```
+
+Primary CTA:
+
+```text
+Show us one repeated task
+```
+
+### Core flow
+
+```text
+messy input → relevant memory → automation → review-ready output → feedback
+```
+
+### Examples
+
+- Follow-up Automation
+- Proposal Automation
+- Support Reply Automation
+- Reporting Automation
+- Intake Automation
+- Content Automation
+- Delegation Automation
+
+### Buyer outcome
+
+- faster drafts
+- less rewriting
 - clearer handoffs
-- useful knowledge that remains reusable
-- later outputs that improve from reviewed work
+- more consistent output
+- reusable knowledge
+- human review
+- later runs that improve from feedback
+
+## ProChat Memory page
+
+### Position
+
+ProChat Memory is the foundation behind Answers and Automations, not a vague standalone AI brain.
+
+Headline:
+
+```text
+Keep useful business knowledge reusable.
+```
+
+Support:
+
+```text
+Organize approved examples, decisions, procedures, style, context, corrections, and source references so they can improve future answers and work.
+```
+
+Explain memory scopes, ownership, traceability, review, export, editing, and promotion only after the core benefit is clear.
+
+## ProChat Workbench page
+
+### Hero
+
+Eyebrow:
+
+```text
+For developers and builders
+```
+
+Headline:
+
+```text
+Stop pasting your project into ChatGPT.
+```
+
+Support:
+
+```text
+ProChat Workbench lets ChatGPT inspect exact local context, apply guarded changes, run approved checks, and commit only explicit paths.
+```
+
+Primary CTA:
+
+```text
+Install locally
+```
+
+Secondary CTA:
+
+```text
+View BuildFlow on GitHub
+```
+
+### Positioning
+
+```text
+ChatGPT does the reasoning.
+Your computer remains the source of truth.
+ProChat Workbench connects the two safely.
+```
+
+### Technical migration rule
+
+Use the public name `ProChat Workbench` while preserving BuildFlow repository names, package scopes, scripts, source IDs, action operation names, and API contracts until a compatibility-safe technical migration is approved.
 
 ## Public language rules
 
 Use:
 
-- your examples
-- your business knowledge
-- your preferred style
+- approved business knowledge
+- reliable answers
+- visible sources
 - repeated work
 - review-ready output
 - faster drafts
@@ -81,9 +486,12 @@ Use:
 - clearer handoffs
 - human review
 - useful knowledge stays reusable
+- safe local project access
+- guarded changes
 
-Do not lead with:
+Do not lead general buyer pages with:
 
+- ProChat OS
 - Work Memory
 - Infinite Brain
 - operating system
@@ -95,245 +503,40 @@ Do not lead with:
 - model routing
 - API
 - MCP
-- installation
 
-Technical terms may appear in technical documentation, procurement conversations, or implementation pages after the buyer understands the outcome.
+Technical terms may appear on Workbench, developer, implementation, or procurement pages after the outcome is clear.
 
-## Main website structure
+## Naming rules
 
-### 1. Hero
-
-Pain first:
+Approved product names:
 
 ```text
-Stop rewriting the same work.
+ProChat Memory
+ProChat Answers
+ProChat Automations
+ProChat Workbench
 ```
 
-Support:
+Approved solution pattern:
 
 ```text
-ProChat turns repeated emails, notes, examples, reports, and follow-ups into drafts, summaries, tasks, and replies your team can review and use.
+ProChat for [Role or Industry]
 ```
 
-Primary CTA:
+Approved interfaces:
 
 ```text
-Show us one repeated task
+ProChat API
+ProChat MCP
 ```
 
-Secondary CTA:
+Retire from primary public naming:
 
 ```text
-Book a call
+ProChat OS
+ProChat Workflows
+MemOS
+MemQA
+ProChat QA
+Ask ProChat
 ```
-
-### 2. Before and after
-
-Before:
-
-- rewriting emails
-- explaining context again
-- searching for examples
-- turning notes into tasks manually
-- drafting follow-ups from scratch
-- rebuilding reports every week
-
-After:
-
-- reply drafts
-- clear summaries
-- task lists
-- proposal drafts
-- support answers
-- faster reports
-
-### 3. Why the problem persists
-
-Explain simply:
-
-```text
-Your team already has examples, rules, decisions, and old work that show what good looks like. The problem is that this knowledge is scattered, so every task starts too close to zero.
-```
-
-### 4. Benefits
-
-- stop repeating yourself
-- prepare work faster
-- keep useful knowledge reusable
-- review important work before use
-- improve future output from feedback
-
-### 5. Role-based examples
-
-Founder or owner:
-
-```text
-Notes and examples become replies, proposals, delegation notes, and task instructions.
-```
-
-Sales:
-
-```text
-Calls and old examples become follow-ups, proposal drafts, CRM notes, and next steps.
-```
-
-Support:
-
-```text
-Questions and approved answers become reply drafts, issue summaries, and escalation notes.
-```
-
-Marketing:
-
-```text
-Ideas and brand examples become outlines, posts, briefs, and email drafts.
-```
-
-Operations:
-
-```text
-Meeting notes and recurring updates become reports, task lists, handoffs, and action plans.
-```
-
-### 6. First offer
-
-Name:
-
-```text
-First time-saving test
-```
-
-Description:
-
-```text
-Show us one task your team repeats and a few examples of what good looks like. We prepare one review-ready output so you can judge whether it saves real time before expanding.
-```
-
-Price direction:
-
-```text
-from €750
-```
-
-### 7. Expansion offer
-
-Name:
-
-```text
-Done-for-you launch
-```
-
-Description:
-
-```text
-We set up the working flow for one person or team using a simple delivery method that fits the job.
-```
-
-Price direction:
-
-```text
-from €1,500
-```
-
-### 8. Recurring offer
-
-Name:
-
-```text
-Managed improvement
-```
-
-Description:
-
-```text
-We keep the outputs useful, improve the examples and rules from review feedback, and expand only when the work keeps saving time.
-```
-
-Price direction:
-
-```text
-from €250/month
-```
-
-## Niche landing pages
-
-Niche pages should still lead with the buyer's pain and output.
-
-Do not begin by explaining niche memory, workflow modules, or architecture.
-
-Pattern:
-
-```text
-specific repeated niche pain
-→ recognizable output
-→ human review
-→ simple first offer
-```
-
-Examples:
-
-Legal:
-
-```text
-Spend less time sorting client emails, notes, and documents. Get intake summaries, missing-information checklists, task lists, and draft follow-ups ready for review.
-```
-
-Accounting:
-
-```text
-Spend less time chasing missing documents. Get clearer client summaries, missing-document lists, and draft follow-ups ready for review.
-```
-
-Sales:
-
-```text
-Turn call notes, objections, and old examples into faster follow-ups, proposal drafts, and next steps.
-```
-
-Support:
-
-```text
-Help your team answer customers faster and more consistently using your approved answers and examples.
-```
-
-## Demo language
-
-The demo should show:
-
-```text
-messy input
-→ relevant examples and context
-→ review-ready output
-→ human correction
-→ better next run
-```
-
-Do not show architecture unless the audience asks for it.
-
-## Delivery language
-
-Public default:
-
-```text
-ProChat sets up and manages the working flow for you.
-```
-
-For portable or local delivery:
-
-```text
-A lightweight local package can be provided when the workflow is suitable for customer-owned operation.
-```
-
-For integrations:
-
-```text
-ProChat can connect to existing tools where useful.
-```
-
-Do not lead with ZIP files, containers, APIs, MCP, servers, or installation choices on primary marketing pages.
-
-## Naming status
-
-`ProChat OS` remains the working flagship name while the naming architecture is reviewed.
-
-Website copy should avoid overusing the working name in headlines. Lead with the pain and outcome so the copy remains valid if the product name changes.

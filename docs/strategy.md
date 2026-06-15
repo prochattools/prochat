@@ -2,7 +2,7 @@
 
 **Status:** current business and product strategy  
 **Owner:** Steve Westhoek  
-**Last updated:** 2026-06-14
+**Last updated:** 2026-06-15
 
 ## Source of truth
 
@@ -11,8 +11,8 @@ The `mind` repository is canonical.
 Leading documents:
 
 ```text
+mind/wiki/organisations/prochat/brand/product-naming-architecture.md
 mind/wiki/organisations/prochat/brand/prochat-os-strategy.md
-mind/wiki/organisations/prochat/brand/prochat-os-technical-definition.md
 mind/wiki/organisations/prochat/brand/prochat-os-modules.md
 mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
 mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
@@ -21,28 +21,48 @@ mind/wiki/organisations/prochat/brand/brand-ruleset.md
 
 This repository translates that philosophy into product documentation, implementation plans, and buyer-facing website copy.
 
-## Business and product distinction
+## Company and product hierarchy
 
 ```text
-ProChat = the business
-ProChat OS = the current working name of the flagship product
+COMPANY
+ProChat
+
+FOUNDATION
+ProChat Memory
+
+BUSINESS PRODUCTS
+ProChat Answers
+ProChat Automations
+
+BUILDER PRODUCT
+ProChat Workbench
+Powered by the BuildFlow engine
+
+SOLUTIONS
+ProChat for [Role or Industry]
+
+INTERFACES
+ProChat API
+ProChat MCP
 ```
 
-The flagship product name is under review. Until a naming decision is made, this repository continues to use `ProChat OS` consistently.
+`ProChat OS` is retired from primary public product naming.
+
+BuildFlow remains the technical engine and temporary internal identifier behind ProChat Workbench where renaming would create compatibility risk.
 
 ## One-sentence strategy
 
-ProChat helps businesses turn messy information and reusable company knowledge into ready-to-review work.
+ProChat turns reusable business knowledge into reliable answers, review-ready work, and safe local project action.
 
 ## Short definition
 
 ```text
-Messy work in. Useful work out.
+Business knowledge, put to work.
 ```
 
 ## Core philosophy
 
-ProChat OS is memory-first.
+The ProChat product suite is memory-first.
 
 ```text
 Memory is the product foundation.
@@ -50,25 +70,17 @@ Workflows are the method.
 AI is the assistant.
 ```
 
-Every repeated work situation should leave useful memory behind. That memory should make the next run faster, clearer, and more accurate.
+Every repeated work situation should leave useful memory behind. That memory should make later answers and outputs faster, clearer, and more accurate.
 
-The durable value is not a single model, prompt, automation, or interface. The durable value is the business knowledge that becomes reusable across people, projects, teams, departments, niches, and tools.
+The durable value is not one model, prompt, automation, or interface. It is the knowledge that becomes reusable across people, projects, clients, teams, departments, industries, and tools.
 
-## Product structure
+## ProChat Memory
 
-ProChat OS combines three layers:
-
-```text
-Work Memory + Workflow Modules + Review Loop
-```
-
-### Work Memory
-
-Work Memory stores the reusable knowledge that improves future work.
+ProChat Memory is the shared foundation behind the business products.
 
 It can include:
 
-- examples of good work
+- approved examples
 - preferred style and tone
 - decisions and rules
 - procedures and templates
@@ -87,40 +99,119 @@ team
 department
 company
 cross-project
+niche
 ```
 
-### Workflow Modules
+Memory should be portable, inspectable, editable, source-traceable, and safely promoted through review.
 
-Workflow modules turn repeated situations into useful outputs.
+## ProChat Answers
+
+ProChat Answers provides reliable, sourced answers from approved business knowledge.
+
+```text
+question
+→ approved memory and sources
+→ grounded answer
+→ visible sources
+→ correction or approval
+→ improved memory
+```
 
 Examples:
 
-- sales follow-up
-- support reply
-- proposal draft
-- founder delegation
-- status report
-- document summary
-- content preparation
-- niche-specific intake or review flows
+- company policy answers
+- support knowledge answers
+- project and client-file answers
+- sales offer and objection answers
+- legal or accounting knowledge answers
 
-### Review Loop
+## ProChat Automations
 
-People review important outputs and memory updates.
+ProChat Automations turns repeated business work into useful output ready for review.
 
 ```text
-run → review → correct → improve memory and workflow → run better next time
+messy input
+→ relevant memory
+→ automation
+→ review-ready output
+→ human feedback
+→ better future work
 ```
 
-## Product pattern
+Examples:
+
+- Follow-up Automation
+- Proposal Automation
+- Support Reply Automation
+- Reporting Automation
+- Intake Automation
+- Content Automation
+- Delegation Automation
+
+Internally, automations may use workflow modules. Publicly, use `Automations` because it communicates buyer value more clearly.
+
+## ProChat Workbench
+
+ProChat Workbench lets ChatGPT work safely with real local repositories, documentation, notes, and projects.
 
 ```text
-messy input + relevant memory → review-ready output → human feedback → better future work
+ChatGPT does the reasoning.
+The local computer remains the source of truth.
+ProChat Workbench provides bounded context, guarded changes, validation, and Git operations.
+```
+
+Relationship to BuildFlow:
+
+```text
+Public product: ProChat Workbench
+Technical engine: BuildFlow
+```
+
+Preserve technical identifiers such as repository names, package scopes, scripts, action names, source IDs, and API contracts until a separate compatibility-safe migration is approved.
+
+## Solutions
+
+Use:
+
+```text
+ProChat for [Role or Industry]
+```
+
+Examples:
+
+- ProChat for Founders
+- ProChat for Sales
+- ProChat for Support
+- ProChat for Marketing
+- ProChat for Operations
+- ProChat for Legal
+- ProChat for Accounting
+
+A solution packages relevant memory, answers, automations, review rules, and delivery configuration for one audience.
+
+## Product patterns
+
+Answers:
+
+```text
+question + approved memory → grounded answer with sources
+```
+
+Automations:
+
+```text
+messy input + reusable memory → review-ready work
+```
+
+Workbench:
+
+```text
+ChatGPT reasoning + exact local context + guarded operations
 ```
 
 ## Design principles
 
-ProChat OS must be:
+The product suite must be:
 
 - memory-first
 - review-first
@@ -132,26 +223,28 @@ ProChat OS must be:
 - tool-agnostic
 - environment-agnostic
 - source-traceable
-- safe to promote from raw notes into trusted shared memory
+- safe to promote from raw input into trusted memory
 - able to improve through use
 
-## What we sell
+## What we sell first
 
 The first sale is not a broad platform rollout.
 
 ```text
-We make one person or one team faster by turning repeated information work into review-ready output.
+We prove one reliable answer set, one repeated-work automation, or one safe local project workflow.
 ```
 
 Practical starting offers:
 
-- first time-saving test
+- ProChat Answers pilot
+- ProChat Automations pilot
 - done-for-you launch
 - managed improvement
 - team rollout
-- department or company memory rollout
+- department or company rollout
+- ProChat Workbench installation or adoption support
 
-## Best first wedges
+## Best first business wedges
 
 Start with roles before industries:
 
@@ -161,81 +254,80 @@ Start with roles before industries:
 4. Marketing and content
 5. Operations and reporting
 
-Niche-specific products sit on top of the same memory-first foundation.
-
-Examples:
-
-- legal memory plus legal intake workflow
-- accounting memory plus document collection workflow
-- agency memory plus lead and proposal workflow
-- support memory plus response workflow
-- sales memory plus follow-up workflow
+Industry and role solutions sit on top of the same memory-first foundation.
 
 ## Delivery model
 
-Default delivery is managed by ProChat.
+Default business delivery is managed by ProChat.
 
-Customers can send work through simple entry points such as:
+Customers can use simple entry points such as:
 
 - email
 - forms
-- file drops
-- manual upload
+- file uploads
 - shared folders
 - API calls
-- MCP-compatible tools where useful
+- supported MCP clients
 
-The system returns outputs such as:
+ProChat Workbench remains local-first and self-hosted for builders.
 
-- drafts
-- summaries
-- checklists
-- reports
-- replies
-- proposals
-- task lists
-- next steps
+## Interfaces
 
-Important outputs remain review-first by default.
+### ProChat API
+
+Programmatic access to approved memory, answers, automations, review, feedback, and results.
+
+### ProChat MCP
+
+MCP-compatible access for supported AI clients and developer tools.
+
+API and MCP are technical interfaces, not primary buyer-facing products.
 
 ## Public marketing rule
 
-The website should not explain the internal philosophy first.
+Lead with buyer pain and outcome.
 
-Do not lead public pages with:
+Use:
 
-- memory architecture
-- operating system
-- infinite brain
-- knowledge graph
-- modules
-- runtime
-- connectors
-- routing
-- MCP
-- API
-- installation
+- reliable answers from approved knowledge
+- visible sources
+- less rewriting and re-explaining
+- faster drafts and clearer handoffs
+- useful knowledge that stays reusable
+- safe local project work with ChatGPT
 
-Lead with buyer pain and outcome:
+Do not lead with:
 
-- stop rewriting the same work
-- stop re-explaining the same context
-- prepare drafts faster
-- reply more consistently
-- turn messy notes into clear next steps
-- keep useful knowledge reusable
-- review important work before use
+- ProChat OS
+- Work Memory
+- workflow modules
+- knowledge graphs
+- runtimes
+- agents
+- model routing
+- API or MCP architecture
 
-## Current product naming status
+## Naming rules
 
-`ProChat OS` is the working flagship name.
+Use:
 
-A naming review should decide:
+```text
+ProChat Memory
+ProChat Answers
+ProChat Automations
+ProChat Workbench
+ProChat for [Role or Industry]
+ProChat API
+ProChat MCP
+```
 
-- the business name
-- the flagship platform name
-- the name of the memory foundation
-- the naming pattern for niche derivatives
-- whether names communicate the buyer outcome clearly enough
+Retire from primary public naming:
 
-The naming decision must preserve one clear hierarchy and avoid creating several products that appear unrelated.
+```text
+ProChat OS
+ProChat Workflows
+MemOS
+MemQA
+ProChat QA
+Ask ProChat
+```

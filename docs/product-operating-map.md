@@ -2,29 +2,46 @@
 
 **Status:** current product and positioning map  
 **Owner:** Steve Westhoek  
-**Last updated:** 2026-06-14
+**Last updated:** 2026-06-15
 
 ## Source of truth
 
 The `mind` repository is canonical.
 
 ```text
+mind/wiki/organisations/prochat/brand/product-naming-architecture.md
 mind/wiki/organisations/prochat/brand/prochat-os-strategy.md
-mind/wiki/organisations/prochat/brand/prochat-os-technical-definition.md
 mind/wiki/organisations/prochat/brand/prochat-os-modules.md
 mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
-mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
 mind/wiki/organisations/prochat/brand/brand-ruleset.md
 ```
 
-## Business and product hierarchy
+## Product hierarchy
 
 ```text
-ProChat = the business
-ProChat OS = working name of the flagship product
+ProChat
+│
+├── ProChat Memory
+│   └── shared reusable knowledge foundation
+│
+├── ProChat Answers
+│   └── reliable, sourced answers from approved knowledge
+│
+├── ProChat Automations
+│   └── repeated work prepared for human review
+│
+├── ProChat Workbench
+│   └── safe local project work for ChatGPT
+│       powered by the BuildFlow engine
+│
+├── ProChat for [Role or Industry]
+│   └── packaged solutions for one audience
+│
+├── ProChat API
+└── ProChat MCP
 ```
 
-The flagship name is under review. Until that decision is made, `ProChat OS` remains the consistent working name.
+`ProChat OS` is no longer the public flagship name.
 
 ## Core philosophy
 
@@ -34,78 +51,155 @@ Workflows are the method.
 AI is the assistant.
 ```
 
-The durable asset is reusable business knowledge that improves repeated work over time.
+The durable asset is reusable knowledge that improves answers and repeated work over time.
 
 ## Product architecture
 
-```text
-ProChat OS
-├── Work Memory
-│   ├── personal
-│   ├── project
-│   ├── client
-│   ├── team
-│   ├── department
-│   ├── company
-│   ├── cross-project
-│   └── niche
-├── Workflow Modules
-│   ├── founder and owner
-│   ├── sales
-│   ├── support
-│   ├── marketing and content
-│   ├── operations and reporting
-│   └── niche-specific workflows
-└── Review Loop
-    ├── approve or reject
-    ├── capture edits
-    ├── identify missing context
-    ├── improve memory
-    └── improve future outputs
-```
-
-## Core product pattern
+### ProChat Memory
 
 ```text
-messy input + relevant memory → review-ready output → human feedback → better future work
+ProChat Memory
+├── personal memory
+├── project memory
+├── client memory
+├── team memory
+├── department memory
+├── company memory
+├── cross-project memory
+└── niche memory
 ```
+
+Memory stores approved examples, rules, decisions, procedures, context, corrections, feedback, and source references.
+
+### ProChat Answers
+
+```text
+question
+→ retrieve approved memory and sources
+→ prepare grounded answer
+→ show sources
+→ collect correction or approval
+→ improve memory
+```
+
+### ProChat Automations
+
+```text
+messy input
+→ retrieve relevant memory
+→ run an automation
+→ prepare review-ready output
+→ capture feedback
+→ improve memory or automation
+```
+
+Examples:
+
+- Follow-up Automation
+- Proposal Automation
+- Support Reply Automation
+- Reporting Automation
+- Intake Automation
+- Content Automation
+
+### ProChat Workbench
+
+```text
+request
+→ exact local context
+→ guarded change or answer
+→ targeted validation
+→ explicit commit when approved
+```
+
+Public product name:
+
+```text
+ProChat Workbench
+```
+
+Technical engine and temporary internal identifier:
+
+```text
+BuildFlow
+```
+
+Preserve BuildFlow repository names, packages, scripts, source IDs, action names, and API contracts until a separate compatibility-safe migration is approved.
 
 ## Product surfaces
 
 | Surface | Purpose | Buyer value |
 | --- | --- | --- |
-| ProChat website | Explain the offer and convert buyers | Understand the pain, outcome, first offer, and next step |
-| First time-saving test | Prove one useful repeated-work outcome | See whether ProChat saves real time before expanding |
-| Work Memory | Store reusable examples, rules, context, style, and feedback | Stop re-explaining the same context and rewriting the same work |
-| Workflow Modules | Turn repeated situations into outputs | Get drafts, summaries, reports, replies, and next steps faster |
-| Review Loop | Improve output and memory through human feedback | Keep people in control and make later runs better |
+| ProChat website | Explain the suite and route buyers | Understand the right product, outcome, and next step |
+| ProChat Memory | Preserve reusable business knowledge | Stop re-explaining context and losing useful knowledge |
+| ProChat Answers | Answer questions from approved sources | Get reliable answers with visible supporting sources |
+| ProChat Automations | Prepare repeated business work | Get drafts, summaries, reports, replies, and next steps faster |
+| ProChat Workbench | Connect ChatGPT to real local projects | Use exact context with guarded changes and targeted checks |
+| ProChat for [Audience] | Package products for one role or industry | Buy a focused solution without rebuilding the foundation |
+| Review and feedback | Keep people in control and improve results | Correct important output and make later runs better |
 | Portable starter package | Run a small local or customer-owned setup | Demo or deploy without a large infrastructure project |
-| Managed deployment | ProChat hosts, configures, supports, and improves the system | Use the outcome without operating the infrastructure |
-| API | Let software submit work and retrieve reviewed results | Connect ProChat to existing business systems |
-| MCP server | Let compatible AI clients use approved memory and workflows | Reuse ProChat capabilities inside supported tools |
-| Niche derivatives | Package memory and workflows for one role or sector | Buy a focused solution without rebuilding the foundation |
+| Managed deployment | Let ProChat configure and operate business products | Use the outcome without managing infrastructure |
+| ProChat API | Programmatic access to capabilities | Connect ProChat to existing systems |
+| ProChat MCP | Access through compatible AI clients | Reuse approved memory and product actions in supported tools |
+
+## Solution architecture
+
+Use:
+
+```text
+ProChat for [Role or Industry]
+```
+
+Examples:
+
+- ProChat for Founders
+- ProChat for Sales
+- ProChat for Support
+- ProChat for Marketing
+- ProChat for Operations
+- ProChat for Legal
+- ProChat for Accounting
+
+Each solution can combine:
+
+```text
+relevant ProChat Memory
++ ProChat Answers
++ ProChat Automations
++ review rules
++ delivery configuration
+```
+
+Solutions are packaging layers, not separate technical foundations.
 
 ## Delivery modes
 
-### Demo package
+### Answers pilot
 
 ```text
-ZIP or repository folder
-+ safe sample memory
-+ sample workflow
-+ sample input
-+ expected output
-+ short manual
+approved source set
++ real questions
++ grounded answers
++ visible sources
++ correction and feedback
 ```
 
-Use for demonstrations, Loom videos, discovery calls, and local proof.
+### Automation pilot
 
-### Local starter package
+```text
+sample memory
++ one repeated task
++ sample input
++ review-ready output
++ human review
+```
+
+### Portable starter package
 
 ```text
 config/
 memory/
-workflows/
+automations/
 inbox/
 outputs/
 review/
@@ -113,13 +207,15 @@ examples/
 README.md
 ```
 
-Use when the customer wants a portable local setup and the workflow does not require heavy integration.
+Use for demonstrations, customer-owned deployments, and local proof.
 
 ### Managed deployment
 
-ProChat sets up and operates the system. Customers use simple entry points such as email, forms, file drops, shared folders, API calls, or supported MCP clients.
+ProChat configures and operates ProChat Memory, Answers, and Automations. Customers use simple entry points such as email, forms, uploads, shared folders, API calls, or supported MCP clients.
 
-This is the default commercial path when self-installation would create unnecessary support burden.
+### Local builder deployment
+
+ProChat Workbench remains local-first and self-hosted. The user’s computer and repositories remain the source of truth.
 
 ## Role-based wedges
 
@@ -131,99 +227,85 @@ Best first wedges:
 4. Marketing and content
 5. Operations and reporting
 
-Each wedge combines relevant memory and repeated workflows.
+## Interfaces
 
-Examples:
+### ProChat API
 
-```text
-founder memory + delegation workflow
-sales memory + follow-up workflow
-support memory + reply workflow
-marketing memory + content workflow
-operations memory + reporting workflow
-```
+Core operations may include:
 
-## Niche derivatives
+- submit a question
+- select a memory scope
+- retrieve a grounded answer and sources
+- submit work for an automation
+- retrieve output
+- approve or reject
+- submit feedback
+- update or promote memory
 
-Niche derivatives are focused packages on the same foundation.
+### ProChat MCP
 
-```text
-niche memory + niche workflows + review rules + delivery configuration
-```
+Core tools may include:
 
-Possible derivatives:
+- `search_memory`
+- `read_memory`
+- `ask_answers`
+- `submit_work`
+- `run_automation`
+- `review_output`
+- `add_feedback`
+- `promote_memory`
+- `list_products`
 
-- legal
-- accounting
-- agencies
-- consultants
-- real estate
-- customer support
-- sales
-- content operations
+API and MCP are integration surfaces, not primary buyer-facing products.
 
-A niche derivative should not require a separate core product, memory model, or implementation philosophy.
+## Naming rules
 
-## Supporting products and tools
-
-Existing kits, internal tools, and experiments may remain useful, but they do not define the flagship product or public positioning.
-
-They may contribute:
-
-- code
-- delivery patterns
-- UI components
-- infrastructure patterns
-- workflow examples
-- internal tooling
-
-They should not create competing flagship narratives.
-
-## Commercial sequence
+Products:
 
 ```text
-first time-saving test
-→ done-for-you launch
-→ managed improvement
-→ team rollout
-→ department or company memory
-→ niche or cross-project expansion
+ProChat + clear noun
 ```
 
-## Public positioning
+Approved:
 
-The website sells outcomes, not architecture.
+- ProChat Memory
+- ProChat Answers
+- ProChat Automations
+- ProChat Workbench
 
-Use:
+Solutions:
 
-- stop rewriting the same work
-- stop re-explaining the same context
-- prepare drafts faster
-- keep useful knowledge reusable
-- get review-ready output
-- improve future work from feedback
+```text
+ProChat for [Audience]
+```
 
-Do not lead with:
+Automations:
 
-- operating system
-- Infinite Brain
-- Work Memory
-- knowledge graph
-- modules
-- API
-- MCP
-- runtime
-- connectors
-- installation
+```text
+[Outcome] Automation
+```
 
-## Naming status
+Technical access:
 
-The final naming architecture must distinguish:
+- ProChat API
+- ProChat MCP
 
-- ProChat as the business
-- the flagship product
-- the memory foundation
-- workflow or capability packages
-- niche derivatives
+Retire from primary public naming:
 
-Names should communicate value, remain expandable, and avoid making related products appear disconnected.
+- ProChat OS
+- ProChat Workflows
+- MemOS
+- MemQA
+- ProChat QA
+- Ask ProChat
+
+## One-line suite logic
+
+```text
+Memory remembers.
+Answers explains.
+Automations prepares.
+Workbench changes.
+Solutions package.
+API and MCP connect.
+```

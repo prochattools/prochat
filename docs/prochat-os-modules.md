@@ -1,46 +1,65 @@
-# ProChat OS Modules
+# ProChat Product Modules
 
 **Status:** current module architecture  
 **Owner:** Steve Westhoek  
-**Last updated:** 2026-06-14
+**Last updated:** 2026-06-15
 
 ## Source of truth
 
-Canonical mind document:
+Canonical mind documents:
 
 ```text
+mind/wiki/organisations/prochat/brand/product-naming-architecture.md
 mind/wiki/organisations/prochat/brand/prochat-os-modules.md
 ```
 
-## Module model
-
-ProChat OS has two module types:
+## Product suite relationship
 
 ```text
-Work Memory modules
-Workflow modules
+ProChat Memory      = reusable knowledge foundation
+ProChat Answers     = grounded question-answering product
+ProChat Automations = repeated-work product
+ProChat Workbench   = safe local project workbench
+ProChat for [...]   = packaged role or industry solution
 ```
 
-They work together:
+`ProChat OS` is retired from primary public naming.
+
+## Internal module model
+
+The business products use two internal module types:
 
 ```text
-messy input + reusable memory → review-ready output
+Memory modules
+Automation modules
 ```
 
-## Work Memory modules
+They support two main product patterns:
 
-A Work Memory module stores the reusable knowledge that makes output useful for a person, team, department, company, or niche.
+```text
+question + approved memory → reliable answer with sources
+```
+
+```text
+messy input + reusable memory → review-ready work
+```
+
+Internal documentation may still discuss modules and workflows. Public product language should use ProChat Memory, ProChat Answers, and ProChat Automations.
+
+## Memory modules
+
+A memory module stores reusable knowledge for a person, project, client, team, department, company, or niche.
 
 It can contain:
 
 - style and tone
-- examples of good work
+- approved examples
 - examples to avoid
 - procedures
 - templates
 - decisions and rules
 - client and project context
-- common answers
+- approved answers
 - objections and responses
 - recurring formats
 - reviewer feedback
@@ -67,11 +86,48 @@ Memory should be:
 - portable
 - source-traceable
 - model-agnostic
-- safe to promote through review
+- safely promoted through review
 
-## Workflow modules
+## ProChat Answers modules
 
-A workflow module turns one repeated work situation into one recognizable output.
+ProChat Answers uses approved memory and source material to answer questions reliably.
+
+An Answers module defines:
+
+- supported question types
+- allowed memory scopes
+- source requirements
+- retrieval behavior
+- answer format
+- citation behavior
+- confidence and uncertainty behavior
+- review and correction rules
+- feedback capture
+
+Examples:
+
+- company policy answers
+- product support answers
+- project knowledge answers
+- client-file answers
+- legal knowledge answers
+- accounting procedure answers
+- sales offer and objection answers
+
+Core loop:
+
+```text
+question
+→ retrieve approved memory and sources
+→ prepare grounded answer
+→ show sources
+→ capture correction or approval
+→ improve memory
+```
+
+## ProChat Automations modules
+
+An automation module turns one repeated work situation into one recognizable output.
 
 It defines:
 
@@ -79,67 +135,73 @@ It defines:
 - input types
 - expected output
 - required memory
-- workflow steps
-- skills
+- automation steps
+- reusable skills
 - approval checkpoints
 - schedule where useful
 - evaluation criteria
 
 Examples:
 
-- founder delegation
-- sales follow-up
-- support reply
-- proposal draft
-- status report
-- document summary
-- content preparation
-- client intake
+- Follow-up Automation
+- Proposal Automation
+- Support Reply Automation
+- Reporting Automation
+- Intake Automation
+- Content Automation
+- Delegation Automation
 
 Design rule:
 
 ```text
-One workflow module should solve one repeated work problem.
+One automation should solve one repeated work problem.
 ```
 
-## Module pairing
+## Product pairing
 
-The product becomes valuable when memory and workflow modules are paired.
+The strongest products pair memory with answers or automations.
 
 Examples:
 
 ```text
-founder memory + delegation workflow → clearer task instructions
-sales memory + follow-up workflow → stronger follow-up drafts
-support memory + reply workflow → more consistent customer answers
-marketing memory + content workflow → more on-brand drafts
-operations memory + reporting workflow → faster recurring reports
-legal memory + intake workflow → better legal admin preparation
-accounting memory + collection workflow → clearer document follow-up
+sales memory + ProChat Answers → grounded answers about offers and objections
+sales memory + Follow-up Automation → stronger follow-up drafts
+support memory + ProChat Answers → consistent internal support guidance
+support memory + Support Reply Automation → review-ready customer replies
+founder memory + Delegation Automation → clearer task instructions
+marketing memory + Content Automation → more on-brand drafts
+operations memory + Reporting Automation → faster recurring reports
 ```
 
-## Niche derivatives
+## Solutions
 
-Niche products are not separate foundations.
-
-They are focused combinations of:
+Use:
 
 ```text
-niche memory + niche workflow modules + review rules + delivery configuration
+ProChat for [Role or Industry]
 ```
 
 Examples:
 
-- legal
-- accounting
-- agencies
-- consultants
-- real estate
-- support teams
-- sales teams
-- content teams
+- ProChat for Founders
+- ProChat for Sales
+- ProChat for Support
+- ProChat for Marketing
+- ProChat for Operations
+- ProChat for Legal
+- ProChat for Accounting
 
-The flagship product stays business-agnostic. Niche derivatives package the same foundation around a specific buyer problem.
+A solution can combine:
+
+```text
+relevant ProChat Memory
++ ProChat Answers where useful
++ ProChat Automations where useful
++ review rules
++ delivery configuration
+```
+
+Solutions reuse the same foundation. They are not separate technical platforms.
 
 ## Memory promotion
 
@@ -153,14 +215,15 @@ A personal preference should not automatically become company memory. A client-s
 
 ## Skills
 
-A skill is a small reusable ability inside a workflow.
+A skill is a small reusable ability inside an Answers or Automation module.
 
 Examples:
 
+- retrieve relevant sources
 - summarize notes
 - extract missing information
-- draft follow-up email
-- classify support request
+- draft a follow-up email
+- classify a support request
 - convert notes to tasks
 - apply a preferred style
 - prepare a report outline
@@ -188,50 +251,52 @@ Examples:
 
 Scheduled work remains review-first unless low-risk automation has been explicitly approved.
 
-## Evaluation
+## Review and evaluation
 
-Every module needs evaluation.
+Every Answers and Automation module needs evaluation.
 
 Questions:
 
-- Was the output useful?
+- Was the answer or output useful?
 - Was it accurate?
+- Were the right sources used?
 - Did it match the expected style?
 - What did the reviewer edit?
 - What context was missing?
 - Did it save time?
-- Should memory, examples, rules, or workflow steps change?
+- Should memory, rules, or module behavior change?
 
 Improvement loop:
 
 ```text
-run → review → capture feedback → improve memory or workflow → run better next time
+run → review → capture feedback → improve memory or module → run better next time
 ```
 
-## First modules to build
+## ProChat Workbench relationship
 
-Priority:
+ProChat Workbench is the builder product powered by the BuildFlow engine.
 
-1. Founder or owner memory
-2. Sales memory plus follow-up workflow
-3. Support memory plus reply workflow
-4. Marketing memory plus content workflow
-5. Operations memory plus reporting workflow
+It can help maintain:
 
-Niche-specific derivatives should follow after the memory foundation and first role-based workflow prove useful.
+- memory files
+- source indexes
+- automation definitions
+- documentation
+- tests and validation
+- explicit reviewed changes
+
+It is not a memory or automation module. It is a separate product for safe local project work.
+
+During the naming migration, preserve BuildFlow technical identifiers such as repository names, package scopes, scripts, source IDs, action names, and API contracts.
 
 ## Public language rule
 
-Do not sell modules, manifests, memory graphs, or architecture.
+Do not sell manifests, module graphs, retrieval architecture, or workflow runtimes first.
 
-Sell the outcome:
-
-```text
-Stop rewriting, re-explaining, and redoing the same work.
-```
-
-Internal delivery language:
+Sell the relevant product outcome:
 
 ```text
-Configure the relevant memory module, workflow module, review rules, and delivery method.
+ProChat Answers → reliable answers from trusted knowledge
+ProChat Automations → repeated work prepared for review
+ProChat Workbench → safe local project work with ChatGPT
 ```
