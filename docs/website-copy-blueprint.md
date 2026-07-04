@@ -1,542 +1,333 @@
-# ProChat Website Copy Blueprint
+# ProChat website copy blueprint
 
-**Status:** current buyer-facing copy blueprint  
+**Status:** active website copy guidance  
 **Owner:** Steve Westhoek  
-**Last updated:** 2026-06-15
+**Scope:** homepage, product pages, niche page, contact/waitlist copy, navigation, footer, metadata, and social copy
 
-## Source of truth
+## Authority
 
-Mind remains canonical for strategy, naming, and brand rules.
+Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning, business stage, growth policy, legal-policy direction, and cross-product roadmap.
+
+Read before changing public website positioning:
 
 ```text
+mind/wiki/organisations/prochat/README.md
+mind/wiki/organisations/prochat/brand/product-strategy.md
 mind/wiki/organisations/prochat/brand/product-naming-architecture.md
-mind/wiki/organisations/prochat/brand/brand-ruleset.md
-mind/wiki/organisations/prochat/brand/go-to-market.md
+mind/wiki/organisations/prochat/brand/product-roadmap.md
+mind/wiki/organisations/prochat/growth/README.md
+mind/wiki/organisations/prochat/legal/README.md
 ```
 
-This document translates that strategy into buyer-facing website language.
+This document is not a product strategy source. It translates Mind into website copy and page structure for this repository.
 
-## Product hierarchy
+## Current product boundary
 
-```text
-ProChat
-├── ProChat Memory
-├── ProChat Answers
-├── ProChat Automations
-├── ProChat Workbench
-│   └── powered by the BuildFlow engine
-├── ProChat for [Role or Industry]
-├── ProChat API
-└── ProChat MCP
-```
-
-`ProChat OS` is retired from primary public naming.
-
-## Translation rule
-
-Internal philosophy:
+Use exactly two current products:
 
 ```text
-Memory is the product foundation.
-Workflows are the method.
-AI is the assistant.
-```
-
-Public translation:
-
-```text
-Reliable answers and repeated work prepared from the knowledge your business trusts.
-```
-
-Do not explain architecture before the visitor understands the pain and outcome.
-
-## Main company promise
-
-```text
-Put your business knowledge to work.
-```
-
-Supporting message:
-
-```text
-ProChat turns approved knowledge, examples, and recurring information into reliable answers and useful work your team can review and use.
-```
-
-## Website information architecture
-
-### Main navigation
-
-```text
-Products
-Solutions
-For Builders
-About
-Book a Call
-```
-
-### Products
-
-```text
-ProChat Answers
-ProChat Automations
 ProChat Memory
+ProChat Workbench
 ```
 
-### For Builders
+Current launch focus:
+
+```text
+ProChat Memory for QA
+```
+
+Copy rules:
+
+- ProChat Memory is the flagship product.
+- ProChat Memory for QA is the first launch niche and first discipline-specific edition.
+- ProChat Workbench is the second product.
+- Answers, repeated-work preparation, API access, and MCP integrations may be described as capabilities or future interfaces where Mind permits; do not present them as current products.
+- ProChat OS, SaaSKit, ProKit, UXKit, WaaSKit, MikeOSS, and BuildFlow must not appear as current products. BuildFlow may appear only as a Workbench technical/internal compatibility identifier where necessary.
+
+## Website narrative
+
+The website should be Memory-led.
+
+Primary story:
+
+```text
+ProChat helps people keep useful knowledge reusable, inspectable, and reviewable across AI-assisted work.
+```
+
+Practical translation:
+
+```text
+AI can help with work, but it forgets context. ProChat Memory gives people a local, review-first way to preserve useful lessons, examples, decisions, sources, and corrections so future work starts with better context.
+```
+
+Secondary story:
+
+```text
+ProChat Workbench lets ChatGPT work safely with local repositories, documentation, notes, and project folders through bounded, reviewed operations.
+```
+
+## Company homepage
+
+### Goal
+
+Explain ProChat as a Memory-first company with two products and one first niche launch.
+
+### Hero direction
+
+Headline options:
+
+```text
+Keep useful knowledge reusable.
+```
+
+```text
+Memory for AI-assisted work.
+```
+
+```text
+Stop rebuilding context every time.
+```
+
+Supporting copy option:
+
+```text
+ProChat Memory helps teams preserve approved examples, lessons, sources, decisions, and corrections so AI-assisted work can continue with context people can inspect and improve.
+```
+
+CTA options:
+
+```text
+Explore ProChat Memory
+```
+
+```text
+See ProChat Memory for QA
+```
+
+```text
+Learn about ProChat Workbench
+```
+
+Avoid homepage heroes that lead with infrastructure, autonomous agents, dashboards, operating systems, kits, legal automation, API access, MCP, or generic AI productivity claims.
+
+### Homepage section order
+
+Use this order unless a later design review changes it:
+
+1. Memory-led hero.
+2. The repeated-context problem.
+3. How ProChat Memory works: keep, select, use, review, improve.
+4. ProChat Memory for QA as the first niche launch.
+5. ProChat Workbench as the second product for local project work.
+6. Review-first and local-first trust boundaries.
+7. Contact or waitlist CTA.
+
+### Homepage product cards
+
+Use two product cards only:
+
+```text
+ProChat Memory
+Flagship product for reusable, inspectable memory in AI-assisted work.
+```
 
 ```text
 ProChat Workbench
-Powered by BuildFlow
+Local builder workbench for safe ChatGPT-assisted project work.
 ```
 
-### Solutions
+Optional nested callout under ProChat Memory:
 
 ```text
-ProChat for Founders
-ProChat for Sales
-ProChat for Support
-ProChat for Marketing
-ProChat for Operations
-ProChat for Legal
-ProChat for Accounting
+First edition: ProChat Memory for QA
+A QA-focused edition for preserving tester lessons, project rules, failed-test patterns, and reviewable memory updates.
 ```
-
-## Homepage structure
-
-### 1. Hero
-
-Headline:
-
-```text
-Put your business knowledge to work.
-```
-
-Support:
-
-```text
-Get reliable answers from approved knowledge and turn repeated work into drafts, reports, replies, tasks, and next steps your team can review and use.
-```
-
-Primary CTA:
-
-```text
-Show us one repeated problem
-```
-
-Secondary CTA:
-
-```text
-Explore the products
-```
-
-### 2. Two primary business outcomes
-
-#### Reliable answers
-
-```text
-Stop searching across scattered documents and asking the same people the same questions. ProChat Answers returns grounded answers with visible sources from approved business knowledge.
-```
-
-CTA:
-
-```text
-Explore ProChat Answers
-```
-
-#### Repeated work prepared faster
-
-```text
-Turn recurring notes, emails, documents, examples, and updates into useful work ready for human review with ProChat Automations.
-```
-
-CTA:
-
-```text
-Explore ProChat Automations
-```
-
-### 3. Shared foundation
-
-Headline:
-
-```text
-Powered by knowledge your business can inspect and improve.
-```
-
-Copy:
-
-```text
-ProChat Memory keeps approved examples, decisions, procedures, style, context, corrections, and source references reusable across answers and automations.
-```
-
-Do not present ProChat Memory as abstract architecture before showing the products it powers.
-
-### 4. Before and after
-
-Before:
-
-- searching through scattered files
-- asking the same internal questions repeatedly
-- explaining context again
-- pasting examples into prompts
-- rewriting AI output
-- creating reports and follow-ups from scratch
-- losing useful knowledge when people leave
-
-After:
-
-- grounded answers with visible sources
-- reply and proposal drafts
-- clear summaries and task lists
-- faster reports
-- consistent support responses
-- reusable knowledge
-- review and feedback that improve later results
-
-### 5. Role and industry solutions
-
-Use:
-
-```text
-ProChat for [Role or Industry]
-```
-
-Explain that each solution packages relevant memory, answers, automations, review rules, and delivery configuration.
-
-Examples:
-
-Founder or owner:
-
-```text
-Keep company knowledge reusable and turn notes, decisions, and examples into answers, delegation notes, proposals, and task instructions.
-```
-
-Sales:
-
-```text
-Answer questions about offers and objections, then prepare follow-ups, proposals, call summaries, and next steps.
-```
-
-Support:
-
-```text
-Use approved product knowledge for consistent answers, reply drafts, issue summaries, and escalation notes.
-```
-
-Marketing:
-
-```text
-Reuse approved voice and examples to prepare briefs, outlines, emails, and content drafts.
-```
-
-Operations:
-
-```text
-Turn procedures, notes, and recurring updates into answers, reports, task lists, and handoffs.
-```
-
-### 6. First offer
-
-Name:
-
-```text
-First useful proof
-```
-
-Description:
-
-```text
-Choose one recurring question set or one repeated task. Share approved source material and examples. We prepare a working proof so you can judge the quality before expanding.
-```
-
-Possible proof types:
-
-- ProChat Answers pilot
-- ProChat Automations pilot
-- ProChat Workbench local setup
-
-### 7. Human review
-
-Headline:
-
-```text
-Your team stays in control.
-```
-
-Copy:
-
-```text
-Important answers, outputs, and memory updates remain reviewable. Corrections can improve the next result without turning stored memory into unquestioned authority.
-```
-
-### 8. Builder section
-
-Eyebrow:
-
-```text
-For developers and AI-native builders
-```
-
-Headline:
-
-```text
-Let ChatGPT work safely with your real local projects.
-```
-
-Copy:
-
-```text
-ProChat Workbench connects ChatGPT to local repositories, documentation, notes, and knowledge folders. It provides exact context, guarded changes, targeted validation, and explicit Git operations without presenting itself as an autonomous agent.
-```
-
-Trust line:
-
-```text
-Local-first · Self-hosted · Guarded writes · Explicit commits
-```
-
-CTAs:
-
-```text
-Explore ProChat Workbench
-View BuildFlow on GitHub
-```
-
-Relationship label:
-
-```text
-ProChat Workbench is powered by the BuildFlow engine.
-```
-
-## ProChat Answers page
-
-### Hero
-
-Headline:
-
-```text
-Reliable answers from the knowledge your business trusts.
-```
-
-Support:
-
-```text
-Ask real questions against approved documents and reusable company knowledge. Get grounded answers with visible sources and a clear path for correction.
-```
-
-Primary CTA:
-
-```text
-Test your knowledge set
-```
-
-### Core flow
-
-```text
-question → approved knowledge → grounded answer → sources → feedback
-```
-
-### Buyer pain
-
-- knowledge is scattered
-- answers depend on who is available
-- employees search through the same documents repeatedly
-- generic AI answers cannot be trusted
-- source material is difficult to verify
-- corrections are not reused
-
-### Buyer outcome
-
-- grounded answers
-- visible source references
-- approved knowledge scopes
-- consistent internal guidance
-- correction and feedback
-- reusable improvements
-
-### Naming rule
-
-Use `Q&A` only as a descriptive phrase. Do not call the product `ProChat QA`, because software audiences commonly read QA as quality assurance.
-
-## ProChat Automations page
-
-### Hero
-
-Headline:
-
-```text
-Stop rebuilding the same work.
-```
-
-Support:
-
-```text
-ProChat Automations turns recurring notes, emails, documents, examples, and updates into useful output ready for review.
-```
-
-Primary CTA:
-
-```text
-Show us one repeated task
-```
-
-### Core flow
-
-```text
-messy input → relevant memory → automation → review-ready output → feedback
-```
-
-### Examples
-
-- Follow-up Automation
-- Proposal Automation
-- Support Reply Automation
-- Reporting Automation
-- Intake Automation
-- Content Automation
-- Delegation Automation
-
-### Buyer outcome
-
-- faster drafts
-- less rewriting
-- clearer handoffs
-- more consistent output
-- reusable knowledge
-- human review
-- later runs that improve from feedback
 
 ## ProChat Memory page
 
-### Position
+### Goal
 
-ProChat Memory is the foundation behind Answers and Automations, not a vague standalone AI brain.
-
-Headline:
-
-```text
-Keep useful business knowledge reusable.
-```
-
-Support:
-
-```text
-Organize approved examples, decisions, procedures, style, context, corrections, and source references so they can improve future answers and work.
-```
-
-Explain memory scopes, ownership, traceability, review, export, editing, and promotion only after the core benefit is clear.
-
-## ProChat Workbench page
-
-### Hero
-
-Eyebrow:
-
-```text
-For developers and builders
-```
-
-Headline:
-
-```text
-Stop pasting your project into ChatGPT.
-```
-
-Support:
-
-```text
-ProChat Workbench lets ChatGPT inspect exact local context, apply guarded changes, run approved checks, and commit only explicit paths.
-```
-
-Primary CTA:
-
-```text
-Install locally
-```
-
-Secondary CTA:
-
-```text
-View BuildFlow on GitHub
-```
+Explain the flagship product without turning the page into a strategy document.
 
 ### Positioning
 
 ```text
-ChatGPT does the reasoning.
-Your computer remains the source of truth.
-ProChat Workbench connects the two safely.
+ProChat Memory keeps useful knowledge reusable across AI-assisted work.
 ```
 
-### Technical migration rule
+### Key ideas
 
-Use the public name `ProChat Workbench` while preserving BuildFlow repository names, package scopes, scripts, source IDs, action operation names, and API contracts until a compatibility-safe technical migration is approved.
+- memory is local-first and inspectable;
+- memory is made from approved examples, decisions, sources, corrections, and lessons;
+- AI may draft memory updates;
+- people approve what becomes trusted memory;
+- current evidence overrides stored memory;
+- memory can remain scoped to a person, project, client, or niche;
+- the goal is better continuity, not autonomous decision-making.
 
-## Public language rules
+### Safe benefit language
 
 Use:
 
-- approved business knowledge
-- reliable answers
-- visible sources
-- repeated work
-- review-ready output
-- faster drafts
-- less rewriting
-- clearer handoffs
-- human review
-- useful knowledge stays reusable
-- safe local project access
-- guarded changes
+- designed to reduce repeated explanation;
+- helps preserve useful lessons;
+- helps future work start with better context;
+- keeps approved knowledge reusable;
+- makes memory inspectable and editable;
+- supports review before trust.
 
-Do not lead general buyer pages with:
+Avoid:
 
-- ProChat OS
-- Work Memory
-- Infinite Brain
-- operating system
-- knowledge graph
-- modules
-- agents
-- runtime
-- connectors
-- model routing
-- API
-- MCP
+- guaranteed savings;
+- perfect recall;
+- zero hallucinations;
+- autonomous promotion of memory;
+- claims that customer data is centrally hosted unless implemented and approved;
+- claims that all integrations are available now.
 
-Technical terms may appear on Workbench, developer, implementation, or procurement pages after the outcome is clear.
+## ProChat Memory for QA page
 
-## Naming rules
+### Goal
 
-Approved product names:
+Present the first launch niche and first discipline-specific edition.
+
+### Positioning
 
 ```text
-ProChat Memory
-ProChat Answers
-ProChat Automations
-ProChat Workbench
+ProChat Memory for QA helps testers preserve reviewable lessons from failed tests, flaky behavior, selectors, environments, test data, and release decisions.
 ```
 
-Approved solution pattern:
+### QA-specific examples
+
+Use examples such as:
+
+- failed-test analysis;
+- flaky-test patterns;
+- selector and locator rules;
+- test-data rules;
+- environment differences;
+- release lessons;
+- acceptance criteria;
+- reviewer corrections;
+- source evidence and current run evidence.
+
+### QA trust boundary
+
+Make clear:
+
+- current evidence overrides stored memory;
+- stored memory is not automatically trusted forever;
+- AI can draft a proposed memory update;
+- testers approve, edit, or reject the update;
+- client-specific lessons can remain scoped or be sanitized before broader reuse.
+
+## ProChat Workbench page
+
+### Goal
+
+Present the second product separately from Memory.
+
+### Positioning
 
 ```text
-ProChat for [Role or Industry]
+ProChat Workbench lets ChatGPT work safely with real local projects.
 ```
 
-Approved interfaces:
+### Explain in plain language
 
 ```text
-ProChat API
-ProChat MCP
+Workbench connects ChatGPT to repositories, documentation, notes, and project folders through bounded reads, guarded edits, validation, and explicit Git operations.
 ```
 
-Retire from primary public naming:
+### Boundary
+
+Do not describe Workbench as the flagship product or the ProChat strategy. It is one of two current products.
+
+BuildFlow may be mentioned only as a technical/internal compatibility identifier where needed, for example:
 
 ```text
-ProChat OS
-ProChat Workflows
-MemOS
-MemQA
-ProChat QA
-Ask ProChat
+Powered by the BuildFlow engine only where a technical/internal compatibility identifier is required.
 ```
+
+## Navigation and footer
+
+Preferred active product navigation:
+
+```text
+Products
+- ProChat Memory
+- ProChat Memory for QA
+- ProChat Workbench
+```
+
+Alternative lean navigation:
+
+```text
+Memory
+Memory for QA
+Workbench
+Learn
+Contact
+```
+
+Do not include active product nav items for ProChat OS, ProChat Answers, ProChat Automations, API, MCP, SaaSKit, ProKit, UXKit, WaaSKit, MikeOSS, or BuildFlow.
+
+Legacy pages may remain direct-access or archived, but should not drive active navigation.
+
+## Contact and waitlist copy
+
+Ask visitors what they are interested in:
+
+```text
+I want to learn about ProChat Memory.
+I am interested in ProChat Memory for QA.
+I want to understand ProChat Workbench.
+I have a different ProChat question.
+```
+
+Avoid implying broad public availability, paid commercial terms, or beta access rules beyond what Mind currently approves.
+
+## Metadata and social copy
+
+Use Memory-first descriptions.
+
+Homepage meta direction:
+
+```text
+ProChat builds local-first, review-first tools for reusable memory and safe AI-assisted project work.
+```
+
+ProChat Memory meta direction:
+
+```text
+ProChat Memory keeps useful knowledge reusable, inspectable, and reviewable across AI-assisted work.
+```
+
+ProChat Memory for QA meta direction:
+
+```text
+ProChat Memory for QA helps testers preserve reviewable lessons from failed tests, flaky behavior, selectors, environments, and release decisions.
+```
+
+ProChat Workbench meta direction:
+
+```text
+ProChat Workbench lets ChatGPT work safely with local repositories, docs, notes, and project folders.
+```
+
+## Claims checklist
+
+Before publishing copy, confirm:
+
+- current products are only ProChat Memory and ProChat Workbench;
+- ProChat Memory is the flagship;
+- ProChat Memory for QA is the first launch niche;
+- Workbench is distinct from Memory;
+- capabilities and future interfaces are not product cards;
+- legacy names are not active public strategy;
+- legal, licensing, beta, growth, and roadmap claims match Mind;
+- local implementation claims match this repository's actual website code.
+
+## Rule
+
+Keep this blueprint lean. Link to Mind for strategy, and use this document only to guide website copy implementation.
