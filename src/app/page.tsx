@@ -2,23 +2,23 @@ import { getSEOTags } from '@/libs/seo'
 import MarketingApp from './(marketing)/App'
 
 export const metadata = getSEOTags({
-  title: 'ProChat OS | Stop Rewriting the Same Work',
+  title: 'ProChat | Memory for AI-Assisted Work',
   description:
-    'ProChat helps businesses turn repeated emails, notes, examples, reports, and follow-ups into drafts, summaries, tasks, and replies their team can review and use.',
+    'ProChat builds local-first, review-first tools for reusable memory and safe AI-assisted project work.',
   keywords: [
-    'ProChat OS',
-    'AI work automation',
-    'business process automation',
-    'repeated work automation',
-    'AI drafts for business',
-    'support reply automation',
-    'sales follow-up automation',
-    'managed AI workflows',
+    'ProChat Memory',
+    'ProChat Memory for QA',
+    'ProChat Workbench',
+    'AI-assisted work memory',
+    'local-first memory',
+    'review-first AI tools',
+    'persistent project context',
+    'safe AI-assisted project work',
   ],
   openGraph: {
-    title: 'ProChat OS | Stop Rewriting the Same Work',
+    title: 'ProChat | Memory for AI-Assisted Work',
     description:
-      'Turn repeated business work into drafts, summaries, task lists, reports, and replies your team can review and use.',
+      'Local-first, review-first tools for reusable memory and safe AI-assisted project work.',
     images: ['/og'],
     type: 'website',
   },

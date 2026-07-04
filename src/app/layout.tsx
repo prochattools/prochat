@@ -14,9 +14,9 @@ import '@fontsource/jetbrains-mono'
 
 import '@/assets/styles/globals.scss'
 
-const ROOT_TITLE = 'ProChat OS — Stop Rewriting the Same Work'
+const ROOT_TITLE = 'ProChat — Memory for AI-Assisted Work'
 const ROOT_DESCRIPTION =
-  'ProChat helps businesses turn repeated emails, notes, examples, reports, and follow-ups into drafts, summaries, tasks, and replies their team can review and use.'
+  'ProChat builds local-first, review-first tools for reusable memory and safe AI-assisted project work.'
 
 const fontSans = localFont({
   src: '../assets/fonts/HostGrotesk-latin.woff2',
