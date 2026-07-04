@@ -119,7 +119,7 @@ ProChat sets up and manages the system. Customers interact through simple entry 
 - forms
 - file drops
 - shared folders
-- manual upload
+- manual file intake
 - API calls
 - MCP-compatible clients where useful
 

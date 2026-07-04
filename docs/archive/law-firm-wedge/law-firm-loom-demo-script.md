@@ -118,14 +118,14 @@ Visual:
 ```text
 For the demo, I’m using an open-source legal document workspace called MikeOSS.
 
-It gives us a private place to upload the document pack, ask questions, and get document-grounded answers.
+It gives us a private place to load the document pack, ask questions, and get document-grounded answers.
 ```
 
 Visual:
 
 - open `legal.prochat.tools`
 - show project/matter
-- show uploaded fake documents
+- show loaded fake documents
 
 ### Ask questions and show output
 
@@ -182,7 +182,7 @@ Hi, I’m Steve from ProChat.
 
 I’m testing a workflow for document-heavy law firms. This is not legal advice. It is about the admin around client intake and document review.
 
-Here is a fake matter with messy emails, PDFs, notes, invoices, and timelines. In the demo, I’m using MikeOSS, an open-source legal document workspace, to upload the documents and ask grounded questions.
+Here is a fake matter with messy emails, PDFs, notes, invoices, and timelines. In the demo, I’m using MikeOSS, an open-source legal document workspace, to load the documents and ask grounded questions.
 
 The bigger system is ProChat OS: an Agentic Workflow OS that sits between messy inputs and the tools a business already uses. Around this document workspace, it can help prepare intake summaries, missing-information checklists, follow-up drafts, task lists, and status updates — with human approval first.
 
@@ -195,7 +195,7 @@ Before recording:
 
 - [ ] Use fake legal matter only.
 - [ ] Confirm `legal.prochat.tools` loads.
-- [ ] Confirm fake documents are uploaded.
+- [ ] Confirm fake documents are loaded.
 - [ ] Prepare one strong question and one strong output.
 - [ ] Hide bookmarks, private tabs, notifications, and secrets.
 - [ ] Keep the desktop clean.

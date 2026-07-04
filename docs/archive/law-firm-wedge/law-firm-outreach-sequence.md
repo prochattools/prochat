@@ -119,7 +119,7 @@ Create a simple spreadsheet with these fields:
 When reviewing a firm website, look for clues such as:
 
 - free consultation forms
-- document upload portals
+- document intake portals
 - intake forms
 - many practice pages
 - high-volume client types
@@ -307,7 +307,7 @@ A firm is not qualified yet if:
 - they cannot name a workflow
 - the workflow happens rarely
 - they need full production compliance answers before a demo conversation
-- they want to upload real sensitive data into the shared demo immediately
+- they want to provide real sensitive data to the shared demo immediately
 - they are only curious and have no pain
 
 ## Response tracking statuses
@@ -363,7 +363,7 @@ If law firms respond poorly after two batches, compare against accountants as th
 No. The demo is not legal advice. The goal is to reduce admin/document preparation work and produce structured outputs for human review.
 ```
 
-### “Can we upload real client files?”
+### “Can we provide real client files?”
 
 ```text
 Not into the shared demo. For real files, we would discuss a private setup, access boundaries, and approval process first.
