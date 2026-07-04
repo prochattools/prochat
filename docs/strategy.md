@@ -1,333 +1,110 @@
-# ProChat Strategy
+# ProChat website strategy bridge
 
-**Status:** current business and product strategy  
+**Status:** repository-local website guidance  
 **Owner:** Steve Westhoek  
-**Last updated:** 2026-06-15
+**Scope:** translating Mind's canonical ProChat strategy into website structure and marketing implementation
 
 ## Source of truth
 
-The `mind` repository is canonical.
+Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning, business stage, growth policy, legal-policy direction, and cross-product roadmap.
 
-Leading documents:
+Canonical references:
 
 ```text
-mind/wiki/organisations/prochat/brand/product-naming-architecture.md
+mind/wiki/organisations/prochat/README.md
 mind/wiki/organisations/prochat/brand/product-strategy.md
-mind/wiki/organisations/prochat/brand/product-modules.md
-mind/wiki/organisations/prochat/brand/go-to-market.md
-mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
-mind/wiki/organisations/prochat/brand/brand-ruleset.md
+mind/wiki/organisations/prochat/brand/product-naming-architecture.md
+mind/wiki/organisations/prochat/brand/product-roadmap.md
+mind/wiki/organisations/prochat/growth/README.md
+mind/wiki/organisations/prochat/legal/README.md
 ```
 
-This repository translates that philosophy into product documentation, implementation plans, and buyer-facing website copy.
+This document is not a second ProChat strategy source. It only explains how this website repository should apply Mind's strategy in local pages, navigation, metadata, and conversion flows.
 
-## Company and product hierarchy
+## Current product boundary for the website
 
-```text
-COMPANY
-ProChat
-
-FOUNDATION
-ProChat Memory
-
-BUSINESS PRODUCTS
-ProChat Answers
-ProChat Automations
-
-BUILDER PRODUCT
-ProChat Workbench
-Powered by the BuildFlow engine
-
-SOLUTIONS
-ProChat for [Role or Industry]
-
-INTERFACES
-ProChat API
-ProChat MCP
-```
-
-`ProChat OS` is retired from primary public product naming.
-
-BuildFlow remains the technical engine and temporary internal identifier behind ProChat Workbench where renaming would create compatibility risk.
-
-## One-sentence strategy
-
-ProChat turns reusable business knowledge into reliable answers, review-ready work, and safe local project action.
-
-## Short definition
-
-```text
-Business knowledge, put to work.
-```
-
-## Core philosophy
-
-The ProChat product suite is memory-first.
-
-```text
-Memory is the product foundation.
-Workflows are the method.
-AI is the assistant.
-```
-
-Every repeated work situation should leave useful memory behind. That memory should make later answers and outputs faster, clearer, and more accurate.
-
-The durable value is not one model, prompt, automation, or interface. It is the knowledge that becomes reusable across people, projects, clients, teams, departments, industries, and tools.
-
-## ProChat Memory
-
-ProChat Memory is the shared foundation behind the business products.
-
-It can include:
-
-- approved examples
-- preferred style and tone
-- decisions and rules
-- procedures and templates
-- client and project context
-- recurring formats
-- corrections and reviewer feedback
-- source references and indexes
-
-Memory can be scoped to:
-
-```text
-personal
-project
-client
-team
-department
-company
-cross-project
-niche
-```
-
-Memory should be portable, inspectable, editable, source-traceable, and safely promoted through review.
-
-## ProChat Answers
-
-ProChat Answers provides reliable, sourced answers from approved business knowledge.
-
-```text
-question
-→ approved memory and sources
-→ grounded answer
-→ visible sources
-→ correction or approval
-→ improved memory
-```
-
-Examples:
-
-- company policy answers
-- support knowledge answers
-- project and client-file answers
-- sales offer and objection answers
-- legal or accounting knowledge answers
-
-## ProChat Automations
-
-ProChat Automations turns repeated business work into useful output ready for review.
-
-```text
-messy input
-→ relevant memory
-→ automation
-→ review-ready output
-→ human feedback
-→ better future work
-```
-
-Examples:
-
-- Follow-up Automation
-- Proposal Automation
-- Support Reply Automation
-- Reporting Automation
-- Intake Automation
-- Content Automation
-- Delegation Automation
-
-Internally, automations may use workflow modules. Publicly, use `Automations` because it communicates buyer value more clearly.
-
-## ProChat Workbench
-
-ProChat Workbench lets ChatGPT work safely with real local repositories, documentation, notes, and projects.
-
-```text
-ChatGPT does the reasoning.
-The local computer remains the source of truth.
-ProChat Workbench provides bounded context, guarded changes, validation, and Git operations.
-```
-
-Relationship to BuildFlow:
-
-```text
-Public product: ProChat Workbench
-Technical engine: BuildFlow
-```
-
-Preserve technical identifiers such as repository names, package scopes, scripts, action names, source IDs, and API contracts until a separate compatibility-safe migration is approved.
-
-## Solutions
-
-Use:
-
-```text
-ProChat for [Role or Industry]
-```
-
-Examples:
-
-- ProChat for Founders
-- ProChat for Sales
-- ProChat for Support
-- ProChat for Marketing
-- ProChat for Operations
-- ProChat for Legal
-- ProChat for Accounting
-
-A solution packages relevant memory, answers, automations, review rules, and delivery configuration for one audience.
-
-## Product patterns
-
-Answers:
-
-```text
-question + approved memory → grounded answer with sources
-```
-
-Automations:
-
-```text
-messy input + reusable memory → review-ready work
-```
-
-Workbench:
-
-```text
-ChatGPT reasoning + exact local context + guarded operations
-```
-
-## Design principles
-
-The product suite must be:
-
-- memory-first
-- review-first
-- modular
-- portable
-- inspectable
-- editable
-- model-agnostic
-- tool-agnostic
-- environment-agnostic
-- source-traceable
-- safe to promote from raw input into trusted memory
-- able to improve through use
-
-## What we sell first
-
-The first sale is not a broad platform rollout.
-
-```text
-We prove one reliable answer set, one repeated-work automation, or one safe local project workflow.
-```
-
-Practical starting offers:
-
-- ProChat Answers pilot
-- ProChat Automations pilot
-- done-for-you launch
-- managed improvement
-- team rollout
-- department or company rollout
-- ProChat Workbench installation or adoption support
-
-## Best first business wedges
-
-Start with roles before industries:
-
-1. Founder or owner
-2. Sales
-3. Support
-4. Marketing and content
-5. Operations and reporting
-
-Industry and role solutions sit on top of the same memory-first foundation.
-
-## Delivery model
-
-Default business delivery is managed by ProChat.
-
-Customers can use simple entry points such as:
-
-- email
-- forms
-- file uploads
-- shared folders
-- API calls
-- supported MCP clients
-
-ProChat Workbench remains local-first and self-hosted for builders.
-
-## Interfaces
-
-### ProChat API
-
-Programmatic access to approved memory, answers, automations, review, feedback, and results.
-
-### ProChat MCP
-
-MCP-compatible access for supported AI clients and developer tools.
-
-API and MCP are technical interfaces, not primary buyer-facing products.
-
-## Public marketing rule
-
-Lead with buyer pain and outcome.
-
-Use:
-
-- reliable answers from approved knowledge
-- visible sources
-- less rewriting and re-explaining
-- faster drafts and clearer handoffs
-- useful knowledge that stays reusable
-- safe local project work with ChatGPT
-
-Do not lead with:
-
-- ProChat OS
-- Work Memory
-- workflow modules
-- knowledge graphs
-- runtimes
-- agents
-- model routing
-- API or MCP architecture
-
-## Naming rules
-
-Use:
+Mind currently defines exactly two ProChat products:
 
 ```text
 ProChat Memory
-ProChat Answers
-ProChat Automations
 ProChat Workbench
-ProChat for [Role or Industry]
-ProChat API
-ProChat MCP
 ```
 
-Retire from primary public naming:
+The current launch focus is:
 
 ```text
-ProChat OS
-ProChat Workflows
-MemOS
-MemQA
-ProChat QA
-Ask ProChat
+ProChat Memory for QA
 ```
+
+Website priorities:
+
+1. Lead with ProChat Memory as the flagship product.
+2. Present ProChat Memory for QA as the first launch niche and first discipline-specific edition.
+3. Present ProChat Workbench as the second product, separate from Memory.
+4. Keep future capabilities and interfaces clearly labeled as non-products.
+5. Archive or de-emphasize older directions instead of deleting historical material.
+
+## What this repository may decide
+
+This repository may decide website implementation details, including:
+
+- route structure;
+- page sequencing;
+- component layout;
+- navigation and footer implementation;
+- metadata and sitemap implementation;
+- contact, waitlist, and conversion flows;
+- public docs and learn surface implementation;
+- archive location for obsolete website docs or pages.
+
+## What this repository must not decide
+
+This repository must not redefine:
+
+- ProChat philosophy;
+- product count;
+- product hierarchy;
+- naming architecture;
+- business stage;
+- legal-policy direction;
+- growth policy;
+- cross-product roadmap.
+
+Those decisions live in Mind.
+
+## Website translation rules
+
+Use Mind for the canonical product story, then translate it into website surfaces as follows:
+
+- homepage: explain ProChat through the Memory-first product direction without duplicating Mind's full strategy;
+- ProChat Memory page: explain the flagship product and local, inspectable, review-first memory benefits;
+- ProChat Memory for QA page: explain the first launch niche for QA testers;
+- ProChat Workbench page: explain the local ChatGPT-first builder workbench;
+- contact/waitlist: route users toward the relevant product or selected beta interest;
+- docs/learn: support understanding and adoption without inventing new product categories.
+
+## Capability and legacy boundaries
+
+ProChat Answers and ProChat Automations may be described only as capabilities, use cases, or future directions under the current product boundary. They are not current products.
+
+API access and MCP integrations may be described only as future interfaces or integration methods where Mind permits. They are not current products.
+
+ProChat OS, SaaSKit, ProKit, UXKit, WaaSKit, and MikeOSS are legacy, historical, external, or archived references where relevant. They are not current ProChat products.
+
+BuildFlow may remain only as a technical/internal compatibility identifier for Workbench where required.
+
+## Copy safety rules
+
+Website copy must not claim:
+
+- unlimited model usage;
+- zero hallucinations;
+- guaranteed savings;
+- automatic trust without human review;
+- autonomous memory promotion without approval;
+- commercial or legal rights not recorded in Mind/legal docs;
+- that future capabilities are current products.
+
+## Rule
+
+Keep this repo lean: link to Mind for strategy and document only the website implementation choices needed to publish accurate ProChat pages.

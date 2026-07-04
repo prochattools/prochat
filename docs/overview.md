@@ -1,133 +1,131 @@
-# ProChat Overview
+# ProChat website overview
 
-ProChat is a Next.js monolith that combines three systems in one repository:
+**Status:** repository-local website implementation overview  
+**Owner:** Steve Westhoek  
+**Scope:** ProChat website, marketing pages, public docs/learn surfaces, conversion flows, SEO metadata, and website implementation
 
-1. The app/runtime platform
-2. The content and SEO platform
-3. The documentation automation system
+## Authority
 
-The repo follows SaaSKit infrastructure patterns where they still match the implementation, but this is the ProChat codebase and the operational surface is broader than the SaaSKit baseline.
+Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning, business stage, growth policy, legal-policy direction, and cross-product roadmap.
 
-## Strategy references
+Read Mind before changing public product positioning or strategy language:
 
-Before changing product positioning, homepage copy, product pages, or roadmap language, read:
+```text
+mind/wiki/organisations/prochat/README.md
+mind/wiki/organisations/prochat/brand/product-strategy.md
+mind/wiki/organisations/prochat/brand/product-naming-architecture.md
+mind/wiki/organisations/prochat/brand/product-roadmap.md
+mind/wiki/organisations/prochat/growth/README.md
+mind/wiki/organisations/prochat/legal/README.md
+```
 
-- [product-operating-map.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/product-operating-map.md)
-- [strategy.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/strategy.md)
-- [roadmap.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/roadmap.md)
-- [implementation-plan.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/implementation-plan.md)
+This repository is subordinate to Mind. It describes website implementation and must not independently redefine ProChat strategy.
 
-Current strategic boundaries:
+## Current product boundary
 
-- Mind is the business source of truth for ProChat strategy.
-- ProChat OS is the flagship product and public website focus.
-- ProChat OS is an installable Agentic Workflow OS, not a chatbot, dashboard-only product, SaaS kit, or MikeOSS wrapper.
-- The public website should remain business-agnostic.
-- Law firms are the first direct outreach wedge, not the whole ProChat brand.
-- MikeOSS is a law-firm demo/install block, not ProChat OS and not ProChat-owned software.
-- BuildFlow is supporting/internal or adjacent tooling, not the current public flagship.
-- SaaSKit, ProKit, UXKit, and WaaSKit remain legacy/supporting products.
-- Clerk has been removed from active ProChat runtime code.
-- Ory is the intended authentication direction, but runtime session validation is still TODO.
-- Protected routes must not assume auth enforcement until Ory middleware or route guards exist.
-- See `docs/auth-status.md` for the canonical auth state.
-- Clerk belongs only to sold boilerplate/product context where that code actually uses it.
+Mind currently defines exactly two ProChat products:
+
+```text
+ProChat Memory
+ProChat Workbench
+```
+
+Current edition and launch focus:
+
+```text
+ProChat Memory for QA
+```
+
+Repository-local rules:
+
+- ProChat Memory is the flagship product.
+- ProChat Memory for QA is the first launch niche and first discipline-specific edition.
+- ProChat Workbench is the second product.
+- ProChat Answers, ProChat Automations, API access, and MCP integrations are capabilities or future interfaces, not current products.
+- ProChat OS, SaaSKit, ProKit, UXKit, WaaSKit, and MikeOSS are legacy, historical, external, or archive-only references where relevant.
+- BuildFlow is a technical/internal compatibility identifier for Workbench where required, not a current ProChat product.
+
+## Repository purpose
+
+The ProChat repository implements the public website and related conversion surfaces.
+
+It owns:
+
+- homepage and product landing pages;
+- ProChat Memory marketing pages;
+- ProChat Memory for QA niche page;
+- ProChat Workbench marketing page;
+- contact, waitlist, and conversion routes;
+- public docs and learn surfaces;
+- SEO metadata, Open Graph, robots, and sitemap behavior;
+- website runtime and deployment mechanics.
+
+It does not own:
+
+- ProChat company philosophy;
+- product count or hierarchy;
+- product naming architecture;
+- legal-policy direction;
+- growth policy;
+- cross-product roadmap.
 
 ## System domains
 
-### 1. App/runtime platform
+### 1. Website runtime
 
-The app/runtime side owns tenant provisioning, authenticated product flows, billing, automation provisioning, and production startup.
+The app/runtime side serves website pages, product routes, contact/waitlist flows, API routes, auth-adjacent surfaces, billing-adjacent surfaces where still present, and operational integrations.
 
-Core characteristics:
+Implementation references:
 
-- One app slug maps to one tenant schema: `tenant_<slug>`
-- One tenant database user maps to that schema: `tenant_<slug>_user`
-- Provisioning is script-driven through `scripts/provision-auto.js` and `scripts/db/init-tenant.js`
-- Prisma migrations run from `prisma/system.prisma`
-- Production startup runs the repo-owned schema-readiness step before Next begins serving traffic
-
-Reference docs:
-
-- [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md)
-- [production-lifecycle.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/production-lifecycle.md)
-- [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
-- [development.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/development.md)
-- [integrations.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/integrations.md)
-- [github-entitlements.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/github-entitlements.md)
-- [automation-routes.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/automation-routes.md)
-- [tenant-cleanup.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/tenant-cleanup.md)
+```text
+docs/deployment.md
+docs/production-lifecycle.md
+docs/database.md
+docs/development.md
+docs/integrations.md
+docs/auth-status.md
+```
 
 ### 2. Content and SEO platform
 
-The root domain is an MDX-driven authority system, not a separate marketing site bolted onto the app.
+The content/SEO side owns public learn/docs surfaces, metadata, Open Graph output, and sitemap behavior.
 
-Implemented content surfaces:
+Implementation references:
 
-- `/learn`
-- `/learn/saas-starting-point`
-- `/learn/production-guide`
-- `/docs`
-- `/prompts`
-- main marketing and product pages exposed through the root sitemap
+```text
+docs/content-platform.md
+docs/open-graph-system.md
+docs/design-system.md
+docs/mailerlite-funnel.md
+```
 
-The prompt library remains live but `noindex` while it is still thin. The removed blog corpus, glossary, snippets, playbooks, guides, and `/saas-glossary` are not exposed through sitemap generation.
+### 3. Documentation automation
 
-The content platform also owns:
+The documentation automation system may ingest, normalize, generate, and publish docs into the website surface.
 
-- generated Open Graph assets
-- build-time sitemap generation
-- taxonomy and metadata helpers
+Implementation references:
 
-Reference docs:
+```text
+docs/docs-automation.md
+scripts/docs/README.md
+```
 
-- [content-platform.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/content-platform.md)
-- [open-graph-system.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/open-graph-system.md)
-- [design-system.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/design-system.md)
-- [mailerlite-funnel.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/mailerlite-funnel.md)
+## Active documentation rule
 
-### 3. Documentation automation system
+Active docs in this repository should be lean. They should explain how the website implements Mind's strategy, not duplicate the strategy itself.
 
-ProChat also runs a generated documentation pipeline for public docs. That pipeline is separate from the internal `/docs` folder.
+Older ProChat OS, kit, BuildFlow, MikeOSS, law-firm, or module documents should be archived in a later cleanup batch when they are no longer active website guidance.
 
-Implemented flow:
+## Current local docs
 
-- raw source docs land in `docs-export/` or external sources
-- `docs:ingest` normalizes them into `docs-ingest/`
-- AI and template stages generate normalized output
-- generated public docs are emitted into `src/content/docs`
+Use:
 
-This is an internal build/publishing system inside the same repo, not a separate service.
+```text
+docs/strategy.md
+docs/roadmap.md
+docs/implementation-plan.md
+```
 
-Reference docs:
+as repository-local website implementation guides only.
 
-- [docs-automation.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/docs-automation.md)
-- [scripts/docs/README.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/docs/README.md)
-
-## How the domains interact
-
-- The app/runtime platform serves the product routes, API routes, auth flows, billing flows, and automation endpoints.
-- The content/SEO platform serves the public authority graph from MDX content and generated metadata assets.
-- The docs automation system feeds public `/docs` content into the same Next.js app by generating files under `src/content/docs`.
-
-That means the monolith has one deployment target, one build pipeline, and one runtime, but multiple operational domains.
-
-## Shared infrastructure patterns
-
-These patterns are central across the repo:
-
-- schema-per-app Postgres tenancy
-- scripted tenant provisioning
-- Prisma-based schema management
-- build-time generation for SEO and docs artifacts
-- integration-heavy API routes for Stripe, shared Ory auth UI, Resend, GitHub App, Make, n8n, and MailerLite
-
-## Canonical references
-
-- [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md) for build, provisioning, migration, and startup behavior
-- [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md) for the tenant schema model
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md) for the full env contract
-- [development.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/development.md) for local workflow
-- [integrations.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/integrations.md) for external service behavior
-- [docs-automation.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/docs-automation.md) for the generated public docs system
+Use Mind for product strategy and product roadmap decisions.

@@ -1,383 +1,170 @@
-# ProChat Implementation Plan
+# ProChat website implementation plan
 
-Status: executable implementation plan for ProChat OS strategy, website, roadmap, and outreach alignment.
-
-Last updated: 2026-05-24
+**Status:** repository-local implementation plan  
+**Owner:** Steve Westhoek  
+**Scope:** aligning the ProChat website repository with Mind
 
 ## Source of truth
 
-Mind is leading over this repo.
+Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning, business stage, growth policy, legal-policy direction, and cross-product roadmap.
 
-Before changing strategy, homepage copy, product pages, roadmap language, or implementation docs, read the current ProChat OS strategy:
+Read before changing website strategy, product pages, roadmap language, legal copy, growth claims, or marketing structure:
 
 ```text
-mind/wiki/organisations/prochat/brand/prochat-os-strategy.md
-mind/wiki/organisations/prochat/brand/prochat-os-technical-definition.md
-mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
-mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
-mind/wiki/organisations/prochat/brand/mikeoss-dokploy-demo-checklist.md
+mind/wiki/organisations/prochat/README.md
+mind/wiki/organisations/prochat/brand/product-strategy.md
+mind/wiki/organisations/prochat/brand/product-naming-architecture.md
+mind/wiki/organisations/prochat/brand/product-roadmap.md
+mind/wiki/organisations/prochat/growth/README.md
+mind/wiki/organisations/prochat/legal/README.md
 ```
 
-## Purpose
+This plan is executable website-repo guidance only. It does not define ProChat product strategy.
 
-This document turns the ProChat OS strategy into practical implementation tasks that can be executed safely by Codex, Claude, Haiku, or another implementation agent.
+## Current product boundary
 
-The order is intentional:
+Mind currently defines exactly two current products:
 
-1. Align strategy docs.
-2. Write business-agnostic website/landing page copy.
-3. Build the ProChat OS implementation roadmap.
-4. Create the law-firm Loom demo script.
-5. Create the law-firm outreach list and message sequence.
-6. Deploy the MikeOSS Dokploy demo.
-7. Move toward managed pilots and ProChat OS v1.
+```text
+ProChat Memory
+ProChat Workbench
+```
+
+Current launch focus:
+
+```text
+ProChat Memory for QA
+```
+
+Implementation rules:
+
+- ProChat Memory is the flagship product.
+- ProChat Memory for QA is the first launch niche and first discipline-specific edition.
+- ProChat Workbench is the second product.
+- ProChat Answers, ProChat Automations, API access, and MCP integrations are capabilities or future interfaces, not current products.
+- ProChat OS, SaaSKit, ProKit, UXKit, WaaSKit, and MikeOSS are legacy, historical, external, or archive-only references where relevant.
+- BuildFlow is a technical/internal compatibility identifier for Workbench where required, not a current ProChat product.
 
 ## Safety rules
 
-- Work only in the ProChat repo unless a task explicitly says otherwise.
-- Treat the mind ProChat OS strategy as the business source of truth.
-- Do not delete legacy documents during alignment.
-- Prefer status notes, reframing, and canonical docs before destructive cleanup.
-- Never write secrets, env values, credentials, private keys, or raw account data.
-- Keep the main website business-agnostic.
-- Do not make the ProChat website law-firm-only.
-- Do not imply MikeOSS is owned by ProChat.
-- Do not rebrand MikeOSS as proprietary ProChat software.
-- Keep ProChat runtime auth as Ory-only unless implementation docs/code are deliberately changed later.
-- Keep Clerk references only where they clearly refer to sold boilerplate products.
-- See `docs/auth-status.md` for the canonical auth state and TODO list.
+- Work only in the `prochat` repository unless a task explicitly says otherwise.
+- Do not modify Mind from this repo's implementation batches.
+- Do not duplicate Mind strategy in local docs.
+- Do not delete historical docs or pages during cleanup; archive them when approved.
+- Do not stage unrelated website, design, Graphify, or component changes with documentation-alignment batches.
+- Do not change environment files, secrets, credentials, private keys, or production account data.
+- Do not promote future capabilities as current products.
+- Do not make unsupported claims about savings, accuracy, legal rights, automation, or commercial licensing.
 
-## Canonical docs for this repo
+## Batch A — authority and lean documentation alignment
 
-- `docs/strategy.md`
-- `docs/product-operating-map.md`
-- `docs/roadmap.md`
-- `docs/product-hierarchy-plan.md`
-- `docs/prochat-os-landing-page-copy.md`
-- `docs/prochat-os-implementation-roadmap.md`
-- `docs/repo-status.md`
-- `docs/implementation-plan.md`
+Status: current batch.
 
-These docs should be read before website/page changes.
+Allowed files:
 
-## Phase 0 — Strategy alignment
-
-Status: in progress / nearly complete.
+```text
+README.md
+docs/overview.md
+docs/strategy.md
+docs/roadmap.md
+docs/implementation-plan.md
+```
 
 Goal:
 
-Align the ProChat repo with the mind-led ProChat OS strategy.
-
-Tasks:
-
-1. Update `docs/strategy.md` to make ProChat OS the flagship.
-2. Update `docs/product-operating-map.md` to stop treating ProChat OS as phased out.
-3. Update `docs/roadmap.md` to make website/landing copy the next step.
-4. Update `docs/product-hierarchy-plan.md` around ProChat OS-first website hierarchy.
-5. Update `README.md` and `docs/overview.md` to point to the current strategy docs.
-6. Mark `docs/90-day-execution.md` as historical relative to ProChat OS.
+Make active repo-local docs subordinate to Mind and remove stale active product-strategy duplication.
 
 Acceptance criteria:
 
-- ProChat OS is clearly the flagship.
-- BuildFlow is no longer the public flagship strategy.
-- SaaSKit/ProKit/UXKit/WaaSKit are legacy/supporting.
-- MikeOSS is a law-firm wedge only.
-- Website work can proceed from clear ProChat OS-first docs.
+- this repo is described as the website and marketing implementation repo;
+- active Batch A docs link to Mind canonical docs;
+- active Batch A docs state the repo must not redefine ProChat philosophy, product hierarchy, naming, positioning, business stage, legal-policy direction, growth policy, or cross-product roadmap;
+- active Batch A docs declare exactly two current products: ProChat Memory and ProChat Workbench;
+- active Batch A docs declare ProChat Memory as flagship;
+- active Batch A docs declare ProChat Memory for QA as the first launch niche;
+- active Batch A docs treat future interfaces and capabilities as non-products;
+- active Batch A docs treat older names and kit directions as legacy, historical, external, archived, or technical/internal references;
+- unrelated worktree changes remain unstaged.
 
-## Phase 1 — Website / landing page copy
+## Batch B — archive stale docs
 
-Status: next.
-
-Goal:
-
-Create business-agnostic ProChat OS website and landing page copy.
-
-Allowed output first:
-
-- a copy document or page blueprint before editing production page components
-
-Likely file:
-
-```text
-docs/prochat-os-landing-page-copy.md
-```
-
-Acceptance criteria:
-
-- leads with ProChat OS, not law firms
-- explains Agentic Workflow OS in plain language
-- uses “messy inputs → structured outputs/actions”
-- explains the private workflow runtime
-- explains dashboard/console as command center, not the product
-- explains managed install and commercial license path
-- explains free personal/non-commercial GitHub direction carefully
-- does not lead with MikeOSS
-- does not lead with BuildFlow
-- does not lead with SaaSKit or kits
-
-## Phase 2 — ProChat OS implementation roadmap
-
-Status: after landing copy.
+Status: planned after Batch A review.
 
 Goal:
 
-Create the project implementation roadmap for building ProChat OS as an installable runtime.
+Archive historical docs that should not remain active website guidance.
 
-Likely file:
+Do not delete. Move reviewed files into explicit archive folders.
 
-```text
-docs/prochat-os-implementation-roadmap.md
-```
-
-Must include the MikeOSS Dokploy checklist as the first demo wedge.
-
-Mind source:
+Candidate archive groups:
 
 ```text
-mind/wiki/organisations/prochat/brand/mikeoss-dokploy-demo-checklist.md
+docs/archive/prochat-os/
+docs/archive/legacy-kits/
+docs/archive/law-firm-wedge/
+docs/archive/buildflow/
+docs/archive/old-modules/
 ```
 
-Implementation roadmap should include:
+Candidate documents must be reviewed before moving.
 
-- ProChat OS core workflow runtime
-- memory/context store
-- connector layer
-- model router / AI selector
-- approval and event log
-- control console
-- CLI install/support commands
-- optional modules
-- MikeOSS Dokploy demo
-- managed pilot path
-- eventual public GitHub/source-available release
+## Batch C — copy and design guidance rewrite
 
-Acceptance criteria:
-
-- describes what must be built in code
-- separates demo from product runtime
-- includes MikeOSS Dokploy demo checklist
-- avoids using private mind/brain repos as customer installs
-- includes security/trust boundaries
-
-## Phase 3 — Law-firm Loom demo script
-
-Status: after implementation roadmap.
+Status: after archive plan.
 
 Goal:
 
-Create a 60–90 second Loom script for law-firm outreach.
+Rewrite active website guidance for the current product boundary:
 
-Likely file:
+- ProChat homepage;
+- ProChat Memory page;
+- ProChat Memory for QA page;
+- ProChat Workbench page;
+- contact/waitlist pages;
+- navigation and footer language;
+- metadata and social images.
 
-```text
-docs/law-firm-loom-demo-script.md
-```
+Expected files include copy/design docs only until the guidance is reviewed.
 
-Acceptance criteria:
+## Batch D — production marketing page alignment
 
-- uses fake legal/sample data only
-- does not claim legal advice
-- shows messy legal documents → structured output
-- introduces MikeOSS as legal document workspace
-- introduces ProChat OS as workflow layer around it
-- ends with a discovery question
-
-## Phase 4 — Law-firm outreach list and message sequence
-
-Status: after Loom script.
+Status: after Batch C.
 
 Goal:
 
-Create the outreach system for local law firms.
+Update production pages and navigation to match the approved website guidance.
 
-Likely file:
-
-```text
-docs/law-firm-outreach-sequence.md
-```
-
-Deliverables:
-
-- target profile
-- list-building criteria
-- first message
-- follow-up sequence
-- discovery call questions
-- qualification criteria
-- response tracking fields
-
-Acceptance criteria:
-
-- focuses on law firms
-- asks about real workflow pain instead of assuming it
-- uses the Loom as a conversation starter
-- avoids legal advice claims
-- sells the demo/managed workflow path, not generic AI
-
-## Phase 5 — MikeOSS Dokploy demo deployment
-
-Status: after outreach assets are ready or in parallel if implementation capacity exists.
-
-Goal:
-
-Deploy the MikeOSS legal demo quickly using the existing Dokploy environment.
-
-Use domains:
+Likely surfaces must be reviewed before editing:
 
 ```text
-legal.prochat.tools      → MikeOSS frontend
-legal-api.prochat.tools  → MikeOSS backend
+src/app/(marketing)/
+src/app/prochat-memory/
+src/app/qa-memory/
+src/app/buildflow/
+src/app/systems/prochat-os/
+src/app/kits/
+src/components/Header.tsx
+src/app/(marketing)/components/layout/Footer.tsx
+src/helpers/chrome-routes.ts
 ```
 
-Mind checklist:
+Keep edits scoped and do not stage unrelated pre-existing changes.
 
-```text
-mind/wiki/organisations/prochat/brand/mikeoss-dokploy-demo-checklist.md
-```
+## Batch E — validation
 
-Repo helper docs/scripts may be created later in this repo if needed, but the current strategic source is mind.
+Status: final validation after docs and website updates.
 
-Acceptance criteria:
+Validate:
 
-- demo loads
-- fake matter can be uploaded
-- document questions work
-- no real client data used
-- MikeOSS AGPL notices remain intact
-- ProChat is positioned as installer/manager/workflow layer
+- Mind remains canonical;
+- this repo remains lean and subordinate;
+- only ProChat Memory and ProChat Workbench are current products;
+- ProChat Memory for QA is the first launch niche;
+- capabilities and future interfaces are not presented as products;
+- legacy names are not active product navigation;
+- public claims match Mind legal and growth boundaries;
+- unrelated worktree changes are not staged or committed.
 
-## Phase 6 — First managed pilot
+## Rule
 
-Status: future.
-
-Goal:
-
-Install a private ProChat OS/MikeOSS pilot for one law firm.
-
-Preferred pilot model:
-
-```text
-free setup + higher monthly managed plan after 30 days
-```
-
-Pilot scope:
-
-- private environment
-- one workflow only
-- human approval first
-- structured output
-- redacted support logs
-- clear success metric
-
-## Phase 7 — ProChat OS v1 runtime
-
-Status: future.
-
-Goal:
-
-Build a productized installable ProChat OS runtime.
-
-V1 components:
-
-- core workflow API
-- worker/scheduler
-- memory database
-- one input connector
-- one output connector
-- event log
-- human approval queue
-- simple console/status page
-- CLI install/status/support commands
-- one model provider
-- optional MikeOSS module
-
-Non-goals:
-
-- full multi-tenant SaaS
-- every connector
-- perfect model routing
-- deep CRM integrations
-- autonomous unsupervised actions
-- broad shell access
-- complex dashboard-first UX
-
-## Phase 8 — Public GitHub and managed offer
-
-Status: future.
-
-Goal:
-
-Publish ProChat OS as a source-available personal/non-commercial project and sell commercial/managed usage.
-
-Deliverables:
-
-- license
-- commercial license notice
-- trademark policy
-- install docs
-- architecture docs
-- examples
-- managed offer page
-- support workflow
-
-## Verification expectations
-
-For documentation-only changes:
-
-- read changed files back if needed
-- check links and headings manually
-- no type-check required unless code changed
-
-For future code changes:
-
-- run type-check/build where available
-- validate sitemap and metadata if routes change
-- validate mobile layout manually or with a UI reviewer
-
-## Handoff prompt rules
-
-When generating implementation prompts:
-
-- use one task per prompt
-- name exact allowed files
-- state exact acceptance criteria
-- preserve legacy docs unless explicitly asked to delete
-- keep mind strategy leading
-- keep the public website business-agnostic
-
-
-
-
-## Authentication implementation status — 2026-05-25
-
-See [auth-status.md](./auth-status.md) for the canonical runtime auth state, warnings, and TODOs.
-
-
-
-
-## Public website single-product implementation — 2026-06-02
-
-Current implementation rule:
-
-```text
-Only ProChat OS is sold on the public ProChat website.
-```
-
-Tasks for website alignment:
-
-1. Remove legacy product links from header and footer.
-2. Remove homepage sections that promote BuildFlow, SaaSKit, ProKit, UXKit, or WaaSKit.
-3. Keep legacy routes/pages available, but make them direct-access only.
-4. Route primary CTAs to ProChat OS, `/ai-workflows`, or `/book`.
-5. Add `/ai-workflows` as the main narrow conversion page for managed workflow discovery.
-6. Add `/legal-ai-workflows` as the law-firm-specific outreach page.
-7. Keep the main website business-agnostic and ProChat OS-led.
-
-Acceptance criteria:
-
-- Header does not link to kits or BuildFlow.
-- Footer does not link to kits or BuildFlow.
-- Homepage does not present legacy products as options.
-- Sitemap prioritizes `/`, `/systems/prochat-os`, `/ai-workflows`, `/legal-ai-workflows`, and `/book`.
-- Legacy docs can still mention old products as legacy, but the website sells one product only.
+This implementation plan governs website-repo execution only. Product strategy lives in Mind.

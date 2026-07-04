@@ -1,265 +1,105 @@
-# ProChat
+# ProChat website
 
-ProChat builds **ProChat OS**: an installable Agentic Workflow OS that sits between messy business inputs and the tools a business already uses.
+This repository owns the ProChat website and marketing implementation.
 
-This repository runs the root-domain marketing, learning, documentation, and conversion experience for ProChat. The public website strategy is now ProChat OS-first and business-agnostic. Law firms are the first direct outreach wedge, but the main website should not become law-firm-specific.
+It is responsible for:
 
-## Strategy and product map
+- public marketing pages;
+- product and niche landing pages;
+- public docs and learn surfaces;
+- conversion flows;
+- contact and waitlist surfaces;
+- SEO metadata, Open Graph output, and sitemap behavior;
+- website runtime and deployment implementation.
 
-The canonical product and strategy references are:
+It is not the source of truth for ProChat company philosophy or product strategy.
 
-- `docs/strategy.md` — ProChat OS-first business strategy, audience, positioning, and messaging rules
-- `docs/product-operating-map.md` — ProChat OS, managed offer, legacy products, MikeOSS wedge, and product boundaries
-- `docs/roadmap.md` — phased website, implementation, demo, outreach, and ProChat OS roadmap
-- `docs/implementation-plan.md` — executable, agent-ready task plan for safe documentation and website updates
-- `docs/product-hierarchy-plan.md` — homepage, product hierarchy, navigation, and CTA rules
+## Canonical ProChat authority
 
-Important current product boundaries:
+Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning, business stage, growth policy, legal-policy direction, and cross-product roadmap.
 
-- The `mind` repo ProChat strategy is leading over this repo.
-- ProChat OS is the flagship product.
-- ProChat OS is an Agentic Workflow OS, not a chatbot, dashboard, SaaS kit, or MikeOSS.
-- The public website should be business-agnostic.
-- Law firms are the first direct outreach wedge.
-- MikeOSS is a law-firm demo/install block, not ProChat OS and not ProChat-owned software.
-- BuildFlow is supporting/internal or adjacent tooling, not the current public flagship.
-- SaaSKit, ProKit, UXKit, and WaaSKit are legacy/supporting products.
-- ProChat runtime does not use Clerk.
-- Ory is the intended authentication direction, but session validation is still TODO.
-- Protected routes must not assume auth enforcement until Ory middleware or route guards exist.
-- See `docs/auth-status.md` for the canonical auth state.
-
-## Architecture Overview
-
-The site is built on Next.js App Router and deployed on Dokploy. The system is dark-mode-first, tokenized, and build-driven: content is loaded from MDX, validated, rendered into static routes, then enriched with deterministic Open Graph images and sitemap output during deployment.
-
-Core architectural properties:
-
-- Next.js App Router for route ownership and static generation
-- Dokploy deployment with Node runtime
-- Deterministic build-time behavior for content visibility and publishing
-- Dark-mode-first design system driven by shared brand tokens
-- Tokenized brand architecture across UI, metadata, and OG rendering
-
-## System Flow
-
-The production content flow is:
+Before changing website positioning, product navigation, roadmap language, legal copy, growth claims, or marketing page structure, read:
 
 ```text
-Content (MDX)
-  -> Build (Next.js App Router)
-  -> Open Graph generation
-  -> Sitemap generation
-  -> Dokploy deploy
+mind/wiki/organisations/prochat/README.md
+mind/wiki/organisations/prochat/brand/product-strategy.md
+mind/wiki/organisations/prochat/brand/product-naming-architecture.md
+mind/wiki/organisations/prochat/brand/product-roadmap.md
+mind/wiki/organisations/prochat/growth/README.md
+mind/wiki/organisations/prochat/legal/README.md
 ```
 
-Core layers:
+This repository must not independently redefine ProChat philosophy, product hierarchy, naming, positioning, business stage, legal-policy direction, growth policy, or cross-product roadmap.
 
-- `src/app` — route tree, page templates, OG routes, section sitemap routes
-- `src/components/content` — shared content layout, MDX renderer, CTA, related content
-- `src/lib/content` — MDX content roots and shared content loader
-- `src/lib/brand.ts` — centralized brand, spacing, type, depth, and motion tokens
-- `src/lib/seo` — metadata and schema helpers
-- `src/lib/taxonomy.ts` — categories, tags, and mapping helpers
-- `src/content/learn/production-guide.mdx` — retained curated source for the public Production Guide and legacy share compatibility
+If local website implementation facts appear to conflict with Mind, report and reconcile the conflict in Mind before changing public positioning.
 
-## Folder Structure
+## Current product boundary
+
+Mind currently defines exactly two ProChat products:
 
 ```text
-src/
-  app/
-    blog/[slug]/page.tsx
-    blog/[slug]/og/route.ts
-    docs/[category]/[slug]/page.tsx
-    learn/page.tsx
-    learn/production-guide/page.tsx
-    learn/saas-starting-point/page.tsx
-    prompts/[category]/[slug]/page.tsx
-    starting-point/page.tsx
-    og/route.ts
-    */sitemap.ts
-  components/
-    content/
-      ContentLayout.tsx
-      MDXRenderer.tsx
-      CTASection.tsx
-      RelatedContent.tsx
-  lib/
-    content/
-      docs/
-      prompts/
-    learning/
-    seo/
-      metadata.ts
-      schema.ts
-    taxonomy.ts
-scripts/
-  generate-sitemap.ts
-  start-production.sh
+ProChat
+├── ProChat Memory
+│   └── ProChat Memory for QA
+└── ProChat Workbench
 ```
 
-## Content Clustering Strategy
+Current website implications:
 
-ProChat now keeps the public content surface intentionally small:
+- ProChat Memory is the flagship product.
+- ProChat Memory for QA is the first launch niche and first discipline-specific edition.
+- ProChat Workbench is the second product and should be presented separately from Memory.
+- ProChat Answers, ProChat Automations, API access, and MCP integrations are capabilities or future interfaces, not current products.
+- ProChat OS, SaaSKit, ProKit, UXKit, WaaSKit, and MikeOSS are legacy, historical, external, or archived references where relevant; they are not current ProChat products.
+- BuildFlow may appear only as a technical/internal compatibility identifier for Workbench where required.
 
-- `learn` — the curated onboarding and sequencing layer
-- `starting-point` — the standalone conversion surface for the framework
-- `production-guide` — the retained implementation walkthrough under `/learn/production-guide`
-- `docs` — implementation detail and architecture explanation
-- `prompts` — live execution assets that remain `noindex` until the library is stronger
+## Repository-local reading order
 
-The blog corpus, glossary, snippets, playbooks, guides, and `/saas-glossary` are not part of the live indexed surface.
+Use these docs for website implementation only:
 
-## Internal Linking Rules
+1. `docs/overview.md` — repo-local website architecture and operating map.
+2. `docs/strategy.md` — how this repo translates Mind into website implementation without redefining strategy.
+3. `docs/roadmap.md` — website implementation roadmap only.
+4. `docs/implementation-plan.md` — bounded implementation batches for aligning docs and marketing pages.
+5. `docs/auth-status.md`, `docs/deployment.md`, `docs/content-platform.md`, and related implementation docs — runtime and deployment facts.
 
-Every content page should link in three directions:
+## Architecture overview
 
-1. Upward to its section hub or canonical parent context
-2. Sideways to closely related assets in the same cluster
-3. Forward to the next decision asset or conversion step
+The site is built on Next.js App Router and deployed as the root-domain ProChat website.
 
-Practical rules:
+Core implementation areas:
 
-- Learn should move users in order: Starting Point -> Production Guide -> Prompts -> Docs
-- Starting Point should route users toward the framework signup and then back into Learn
-- Production Guide and Docs should route toward prompts, kits, or contact when execution starts
-- Prompts should point back to the Production Guide or Docs instead of acting like an index target
-- CTA blocks should move readers toward `/kits`, `/contact`, or the next retained learning asset
-
-## Sitemap Structure
-
-The root sitemap lives at `/sitemap.xml` and covers static/site-critical routes.
-
-Section sitemaps live at:
-
-- `/docs/sitemap.xml`
-- `/learn/sitemap.xml`
-
-The root sitemap index intentionally exposes only:
-
-- the root marketing sitemap (`/sitemap-pages.xml`)
-- `/docs/sitemap.xml`
-- `/learn/sitemap.xml`
-
-The removed surfaces (`/blog`, `/guides`, `/playbooks`, `/snippets`, `/glossary`, `/saas-glossary`) are not emitted. `/prompts` stays live but remains out of sitemap output and returns `noindex` until the library is production-ready.
-
-This keeps section-level discovery explicit while preserving one root-domain authority graph.
-
-## SEO Philosophy
-
-The SEO system is centralized and route-safe:
-
-- one metadata helper: `src/lib/seo/metadata.ts`
-- one structured-data helper layer: `src/lib/seo/schema.ts`
-- route-level metadata extends the same defaults instead of creating one-off SEO logic
-- content routes are statically generated via `generateStaticParams`
-- canonical URLs are always built from the same site-url source
-
-The positioning should stay consistent across metadata and content:
-
-> ProChat OS — Agentic workflows between your messy inputs and your business tools.
-
-## Learning Architecture
-
-The public learning layer is sequence-driven rather than archive-driven.
-
-- `Learn` is the curated entry point
-- `Starting Point` clarifies the idea and scope before build work starts
-- `Production Guide` carries the retained implementation walkthrough
-- `Prompts` stay accessible by direct URL but are withheld from indexing while thin
-- `Docs` remain the implementation reference surface
-
-## Conversion Flow Logic
-
-The content system is not isolated from conversion. It is designed to move users through a clear ladder:
-
-1. Discover via the core marketing pages, Learn, Starting Point, Production Guide, Docs, or direct prompt links
-2. Understand the system through related content and structured layouts
-3. Move into a CTA that routes to ProChat OS, managed setup, contact, or the next execution asset
-4. Convert into a ProChat OS conversation, managed setup request, commercial path, or supporting legacy product where relevant
-
-Each content layout injects a CTA section automatically so discovery traffic does not dead-end.
-
-## System domains
-
-- **App/runtime** — tenant provisioning, database wiring, infrastructure deploy flow, and production runtime. See `docs/overview.md`, `docs/database.md`, `docs-public/environment.md`, `docs/deployment.md`, `docs/production-lifecycle.md`, `docs/development.md`, `docs/integrations.md`, `docs/github-entitlements.md`, `docs/automation-routes.md`, `docs/getting-started.md`, `docs/tenant-cleanup.md`, `docs/builder-reference.md`, and `docs/ai-guidelines.md` for the operator-facing contracts.
-- **Content + SEO platform** — the retained learning surfaces, generated docs, OG generation, sitemap output, analytics, and design system. The canonical entries are `docs/content-platform.md`, `docs/open-graph-system.md`, `docs/design-system.md`, `docs/design-rules.md`, `docs/allowed-section-types.md`, `docs/page-blueprint-template.md`, and `docs/analytics-audit.md`.
-- **Docs automation** — generated docs are defined in `docs/docs-automation.md` and `scripts/docs/README.md`; use the internal doc for the operator overview and the script guide for implementation details.
-
-## Internal documentation map
-
-- `/docs` is strictly internal. These markdown files describe the environment, deployment, content plane, and docs automation that the ProChat team operates directly.
-- `scripts/docs/README.md` is the low-level reference for the docs pipeline; it is not part of the generated public docs map but links to `docs-ingest`, `docs-export`, and `src/content/docs`.
-- Use the generated public docs inside `src/content/docs/*` when you need the public-facing output; they are produced from the upstream development repositories (`prochattools/prokit-dev` and `prochattools/saaskit-dev`) plus the AI pipeline. ProChat repo-root `/docs` remains internal operator documentation and is not the product-doc source of truth.
-AI coding agents should consult `AGENTS.md` for repository context before editing the docs or code.
-Operational commands and validation paths are documented in `REPO_OPERATIONS.md`.
-
-## Documentation Integrity
-
-CI enforces that the internal docs stay aligned with the codebase. Every push runs the environment-variable documentation check, verifies `/docs/*.md` links, and executes `npm run docs:validate`, so drift is caught before a merge.
-
-## Public docs vs internal docs
-
-- Internal: `/docs` contains team-facing references, policies, and templates. Link here only from internal guides and keep sensitive deployment details inside the repo.
-- Public: the generated docs live under `src/content/docs/{prokit,saaskit,waaskit,future}` and follow the manifest in `.generated-manifest.json`. The AI/regeneration pipeline runs `npm run docs:ingest`, `npm run docs:ai-generate`, `npm run docs:generate`, and `npm run docs:validate`, so you never edit the published tree directly.
-
-## Notes on current infra truth
-
-- This is the ProChat repo; it inherits SaaSKit conventions but is not the same as the older ProKit brand. Keep the naming aligned with ProChat going forward.
-- The marketing/content site is MDX-first and no longer relies on WordPress, so do not document the WordPress stack as the active content system.
-- Dokploy is reserved for the main branch; there is no active branch-level preview deployment pipeline.
-- The SaaSKit runtime deploy gate (runtime scripts performing backups/smoke checks before `next start`) is not part of the current ProChat build. Production starts with `npm run start`, and that start path now runs the repo-owned schema-readiness step before Next launches.
-- Both Docker and GitHub workflows now target Node 20 (`Dockerfile` uses `node:20-bullseye`; CI installs Node 20), and `package.json` enforces `node >=20`.
-
-## Development Notes
-
-Useful commands:
-
-```bash
-npm install
-npm run dev
-npm run lint:design
-npx tsc --noEmit
-npx next build
+```text
+src/app/                 route tree, pages, metadata, API routes
+src/components/          shared UI and website components
+src/assets/styles/       global styling and tokens
+src/lib/                 content, metadata, taxonomy, runtime helpers
+docs/                    repository-local implementation documentation
 ```
 
-Notes:
+The website includes several implementation domains:
 
-- `npm run lint` is not defined in this repository.
-- `npm run build` is a compile step. Production schema provisioning and migrations are enforced by `npm run start`, which runs `sh scripts/deploy/prepare-production.sh` before Next starts.
+- marketing and product pages;
+- public learning/docs content;
+- contact, waitlist, and conversion routes;
+- SEO metadata and structured data;
+- Open Graph and sitemap generation;
+- runtime integrations used by the website.
 
-## Build-Time Automation
+Technical website/runtime docs may describe this repository's implementation. They must not become independent product strategy documents.
 
-Production build order:
+## Legacy and archive handling
 
-1. `next build`
-2. `npm run sitemap`
-The root build script is deterministic. There is no runtime cron, no ISR publishing toggle, and no background worker that mutates content visibility after deploy.
+Older docs and routes may mention ProChat OS, kits, BuildFlow, MikeOSS, law-firm outreach, or other historical directions.
 
-## Deployment Model
+Do not delete historical material during alignment. Archive stale pages or docs when needed, and keep active navigation focused on the current Mind-defined product boundary.
 
-- Dokploy is the deployment target
-- OG routes run on the Node runtime, not Edge
-- Publishing visibility is decided at build time using `publishedAt`
-- Google Search Console follow-up is manual after deploy; the runtime does not auto-submit sitemaps
-- Weekly scheduled publishing is handled by GitHub Actions triggering a Dokploy redeploy
+## Rule
 
-## Zero Manual Content Workflow
+Keep this repository lean:
 
-The publishing system is designed to remove repetitive operational work:
-
-- No manual OG image creation
-- No manual sitemap updates
-- No manual publish toggles for retained curated assets
-- The Production Guide and prompt/docs surfaces are rendered from controlled sources
-- Internal linking follows the retained learning-path structure
-
-## Next Step for Content Expansion
-
-To add a new authority asset:
-
-1. Add or update MDX content in the appropriate section root
-2. Use shared taxonomy values where possible
-3. Ensure tags and category align with adjacent cluster content
-4. Link to a next-step asset and a conversion target
-5. Verify route metadata, structured data, and sitemap coverage
+- document website implementation here;
+- link to Mind for ProChat philosophy and strategy;
+- avoid duplicating canonical strategy;
+- archive older material instead of deleting it;
+- do not stage or commit unrelated website/design work with documentation alignment batches.
