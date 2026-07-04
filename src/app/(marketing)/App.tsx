@@ -1,248 +1,244 @@
 import Link from 'next/link'
-import { CheckCircle2, Clock, FileText, MessageSquareText, ShieldCheck, TrendingUp } from 'lucide-react'
 
-import HeroSection from '@/components/marketing/HeroSection'
-import HeroBadge from '@/components/ui/hero-badge'
-import HeroCheckRow from '@/components/ui/hero-check-row'
 import { Button } from '@/components/ui/button'
-import { Panel, Section } from '@/components/ui/surface'
 
-const beforeItems = [
-  'Rewriting the same emails',
-  'Explaining context again',
-  'Searching for old examples',
-  'Turning notes into tasks by hand',
-  'Drafting follow-ups from scratch',
-  'Reports that take too long',
+import './prochat-memory-theme.css'
+
+const memoryInputs = [
+  'Repeated explanations',
+  'Old examples',
+  'Project notes',
+  'Review decisions',
 ] as const
 
-const afterItems = [
-  'Draft replies ready to review',
-  'Clear summaries and next steps',
-  'Task lists from messy notes',
-  'Proposal drafts from examples',
-  'Support answers in your style',
-  'Reports prepared faster',
+const memoryOutputs = [
+  'Reusable drafts',
+  'Clear summaries',
+  'Reviewed tasks',
+  'Trusted answers',
 ] as const
 
-const benefits = [
+const recordCards = [
   {
-    title: 'Stop repeating yourself',
-    description: 'Use your own examples, style, and business knowledge so the same context does not need to be explained every time.',
-    icon: MessageSquareText,
+    label: 'Decision',
+    title: 'Response format',
+    body: 'Use the approved structure for recurring client replies.',
   },
   {
-    title: 'Prepare work faster',
-    description: 'Turn messy notes, emails, files, and examples into drafts, summaries, tasks, and reports your team can review.',
-    icon: Clock,
+    label: 'Correction',
+    title: 'Null handling',
+    body: 'Return empty collections instead of null when no records exist.',
   },
   {
-    title: 'Keep knowledge reusable',
-    description: 'Capture the way good work is done so it does not stay hidden in one person’s head, inbox, or old documents.',
-    icon: FileText,
-  },
-  {
-    title: 'Review before use',
-    description: 'People stay in control. Important outputs are reviewed before they are sent, changed, or treated as final.',
-    icon: ShieldCheck,
+    label: 'Source',
+    title: 'Release review',
+    body: 'Keep final decisions connected to the source that produced them.',
   },
 ] as const
 
-const roleExamples = [
-  {
-    title: 'Founder / owner',
-    description: 'Messy notes and examples become client replies, proposal drafts, delegation notes, and task instructions.',
-  },
-  {
-    title: 'Sales',
-    description: 'Call notes, objections, and old examples become follow-up emails, proposal drafts, CRM notes, and next steps.',
-  },
-  {
-    title: 'Support',
-    description: 'Customer questions and scattered knowledge become reply drafts, issue summaries, escalation notes, and FAQ updates.',
-  },
-  {
-    title: 'Marketing',
-    description: 'Ideas, examples, and brand voice become outlines, posts, email drafts, briefs, and publishing tasks.',
-  },
-  {
-    title: 'Operations',
-    description: 'Meeting notes and recurring updates become status reports, task lists, handoffs, and action plans.',
-  },
-  {
-    title: 'Consulting / agencies',
-    description: 'Client notes and past work become summaries, recommendations, proposal sections, and follow-up drafts.',
-  },
+const workflowSteps = [
+  ['01', 'Capture', 'Messy work, examples, notes, and decisions enter the memory workspace.'],
+  ['02', 'Structure', 'Useful knowledge becomes inspectable Markdown records.'],
+  ['03', 'Review', 'People approve what becomes trusted memory.'],
+  ['04', 'Reuse', 'Only relevant memory enters the current task context.'],
 ] as const
 
-const offerSteps = [
-  'You show us one task your team repeats every week.',
-  'We collect a few examples of what good output looks like.',
-  'ProChat prepares the first draft, summary, task list, reply, or report.',
-  'Your team reviews it and tells us what should improve.',
-  'If it saves time, we turn it into a managed working flow.',
+const productHighlights = [
+  'ProChat Memory — flagship product',
+  'ProChat Memory for QA — first launch niche and first discipline-specific edition',
+  'ProChat Workbench — second product',
 ] as const
+
+function Kicker({ children }: { children: React.ReactNode }) {
+  return <p className="pm-kicker">{children}</p>
+}
+
+function MemoryRecord({ label, title, body }: { label: string; title: string; body: string }) {
+  return (
+    <article className="pm-record-card">
+      <div className="pm-record-meta">
+        <span>{label}</span>
+        <span>TRUSTED</span>
+      </div>
+      <h3>{title}</h3>
+      <p>{body}</p>
+    </article>
+  )
+}
 
 export default function App() {
   return (
-    <div className="pc-homepage bg-transparent text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
-      <HeroSection
-        showBackgrounds={false}
-        eyebrow={<HeroBadge text="ProChat OS · Repeated work made faster" />}
-        title={
-          <>
-            <span className="block text-foreground dark:text-white">Stop rewriting</span>
-            <span className="hero-accent block">the same work.</span>
-          </>
-        }
-        subtitle="ProChat turns your repeated emails, notes, examples, reports, and follow-ups into drafts, summaries, tasks, and replies your team can review and use."
-        primaryCTA={{ href: '/ai-workflows', label: 'Show us one repeated task' }}
-        secondaryCTA={{ href: '/book', label: 'Book a call', variant: 'secondary' }}
-        ambientMotion
-      >
-        <HeroCheckRow
-          items={['Less rewriting', 'Faster drafts', 'Human review first']}
-          className="mx-auto"
-        />
-      </HeroSection>
-
-      <Section id="before-after" tone="muted" spacing="default">
-        <div className="mx-auto grid max-w-7xl gap-8 px-page lg:grid-cols-[1fr_auto_1fr] lg:items-center">
-          <Panel tone="default" padding="default">
-            <h3 className="pc-card-title mb-5 text-foreground">What slows teams down</h3>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {beforeItems.map(item => (
-                <div key={item} className="rounded-lg border border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
-                  {item}
-                </div>
-              ))}
+    <div className="pc-homepage pm-marketing-page pm-homepage">
+      <section className="pm-hero-section">
+        <div className="pm-container pm-hero-grid">
+          <div className="pm-hero-copy">
+            <Kicker>PRIVATE, PERSISTENT MEMORY</Kicker>
+            <h1>
+              Stop rebuilding <em>context.</em>
+            </h1>
+            <p>
+              ProChat Memory helps teams preserve useful decisions, corrections, examples, and review notes so AI-assisted work starts from remembered understanding instead of zero.
+            </p>
+            <div className="pm-actions">
+              <Button asChild variant="primary" size="lg">
+                <Link href="/prochat-memory">Explore Memory</Link>
+              </Button>
+              <Button asChild variant="secondary" size="lg">
+                <Link href="/qa-memory">See Memory for QA</Link>
+              </Button>
             </div>
-          </Panel>
-
-          <div className="flex justify-center">
-            <div className="rounded-full border border-primary/30 bg-primary/10 px-5 py-3 font-mono text-sm uppercase tracking-[0.16em] text-primary">
-              Becomes
-            </div>
+            <div className="pm-trust-line">Local files · Human-reviewed · Under your control</div>
           </div>
 
-          <Panel tone="default" padding="default">
-            <h3 className="pc-card-title mb-5 text-foreground">What ProChat prepares</h3>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {afterItems.map(item => (
-                <div key={item} className="rounded-lg border border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
-                  {item}
-                </div>
-              ))}
+          <div className="pm-hero-art" aria-label="Messy work becoming structured persistent memory">
+            <div className="pm-archive-caption">Filed under Memory · AI-assisted work</div>
+            <div className="pm-memory-flow">
+              <div className="pm-input-stack">
+                {memoryInputs.map(item => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+              <div className="pm-flow-arrow">→</div>
+              <div className="pm-archive-box">
+                <span className="pm-archive-label">Persistent memory</span>
+                {memoryOutputs.map(item => (
+                  <div key={item} className="pm-archive-row">{item}</div>
+                ))}
+              </div>
             </div>
-          </Panel>
+          </div>
         </div>
-      </Section>
+      </section>
 
-      <Section id="problem" tone="transparent" spacing="default">
-        <div className="mx-auto max-w-5xl px-page text-center">
-          <h2 className="pc-section-title mb-5 text-foreground">Your team should not keep re-explaining the same context</h2>
-          <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            Most teams already have examples, rules, notes, decisions, and old work that show what good looks like. The problem is that this knowledge is scattered, so every draft starts too close to zero.
-          </p>
+      <section className="pm-editorial-section pm-section-rule">
+        <div className="pm-container pm-two-column">
+          <div>
+            <Kicker>THE PROBLEM</Kicker>
+            <h2>Every new session makes you pay again.</h2>
+          </div>
+          <div className="pm-section-copy">
+            <p>
+              Useful context already exists in previous conversations, files, reviews, corrections, and decisions. Without persistent memory, every new task starts with recovery work.
+            </p>
+            <p className="pm-statement">The work was already done. The understanding was not preserved.</p>
+          </div>
         </div>
-      </Section>
+      </section>
 
-      <Section id="benefits" tone="muted" spacing="default">
-        <div className="mx-auto max-w-7xl px-page">
-          <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">What your business gets</h2>
-            <p className="pc-body-copy pc-body-muted">
-              Clearer work, faster drafts, and less repeated explanation — without giving up human review.
+      <section className="pm-editorial-section">
+        <div className="pm-container pm-visual-split">
+          <div>
+            <Kicker>FROM WORK TO MEMORY</Kicker>
+            <h2>Your work is already creating knowledge.</h2>
+            <p>
+              Decisions, corrections, conventions, examples, and sources can become structured records that remain available, inspectable, and reusable.
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {benefits.map(card => {
-              const Icon = card.icon
-              return (
-                <Panel key={card.title} tone="default" padding="default" className="h-full">
-                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="pc-card-title mb-3 text-foreground">{card.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{card.description}</p>
-                </Panel>
-              )
-            })}
-          </div>
-        </div>
-      </Section>
-
-      <Section id="roles" tone="transparent" spacing="default">
-        <div className="mx-auto max-w-7xl px-page">
-          <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="pc-section-title mb-4 text-foreground">Where it helps first</h2>
-            <p className="pc-body-copy pc-body-muted">
-              Start with the person or team that repeats the most valuable work every week.
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {roleExamples.map(example => (
-              <Panel key={example.title} tone="default" padding="default" className="h-full">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary">
-                  <CheckCircle2 className="h-5 w-5" />
-                </div>
-                <h3 className="pc-card-title mb-3 text-foreground">{example.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{example.description}</p>
-              </Panel>
+          <div className="pm-record-grid">
+            {recordCards.map(card => (
+              <MemoryRecord key={card.title} {...card} />
             ))}
           </div>
         </div>
-      </Section>
+      </section>
 
-      <Section id="offer" tone="muted" spacing="default">
-        <div className="mx-auto grid max-w-7xl gap-10 px-page lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <div>
-            <div className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
-              First offer
-            </div>
-            <h2 className="pc-section-title mb-5 text-foreground">Prove one time-saving result first</h2>
-            <p className="pc-body-copy pc-body-muted">
-              No broad rollout. No complicated setup. We start with one repeated task, a few examples, and one useful output your team can judge.
+      <section className="pm-editorial-section pm-section-rule">
+        <div className="pm-container">
+          <div className="pm-centered-copy">
+            <Kicker>RELEVANT BY DESIGN</Kicker>
+            <h2>Remember broadly. Send only what matters.</h2>
+            <p>
+              The full archive remains available in the workspace. For the current task, ProChat selects the relevant records, sources, and known constraints so the active context stays focused.
             </p>
-            <div className="mt-8 flex flex-col gap-3 text-sm text-muted-foreground sm:flex-row sm:items-center">
-              <span className="rounded-full border border-border bg-background px-4 py-2">First test from €750</span>
-              <span className="rounded-full border border-border bg-background px-4 py-2">Done-for-you launch from €1,500</span>
+          </div>
+          <div className="pm-selection-panel">
+            <div className="pm-drawer">
+              <span>Archive remains whole</span>
+              <span>127 reviewed records</span>
+            </div>
+            <div className="pm-selected-records">
+              <span>3 relevant records</span>
+              <span>2 sources</span>
+              <span>1 known constraint</span>
             </div>
           </div>
-          <Panel tone="default" padding="default">
-            <div className="space-y-4">
-              {offerSteps.map((step, index) => (
-                <div key={step} className="flex gap-4 text-sm leading-relaxed text-muted-foreground">
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-primary/10 font-mono text-xs text-primary">
-                    {index + 1}
-                  </div>
-                  <span>{step}</span>
-                </div>
-              ))}
-            </div>
-          </Panel>
         </div>
-      </Section>
+      </section>
 
-      <Section id="cta" tone="transparent" spacing="loose">
-        <div className="mx-auto max-w-3xl px-page text-center">
-          <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <TrendingUp className="h-5 w-5" />
+      <section className="pm-editorial-section">
+        <div className="pm-container pm-method-grid">
+          <div>
+            <Kicker>HOW IT WORKS</Kicker>
+            <h2>Capture, structure, review, reuse.</h2>
           </div>
-          <h2 className="pc-section-title mb-6 text-foreground">What work is your team repeating by hand?</h2>
-          <p className="mb-10 text-xl leading-relaxed text-muted-foreground">
-            Show us one repeated task and a few examples. We will show what a faster, review-ready version could look like.
+          <div className="pm-step-list">
+            {workflowSteps.map(([number, title, description]) => (
+              <article key={title} className="pm-step-card">
+                <span>{number}</span>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="pm-editorial-section pm-section-rule">
+        <div className="pm-container pm-visual-split">
+          <div className="pm-review-card">
+            <div className="pm-review-state">REVIEW REQUIRED</div>
+            <h3>Batch endpoints should validate array length before processing.</h3>
+            <p>AI can propose. You control what the system remembers.</p>
+            <div className="pm-review-actions">
+              <button type="button">Approve</button>
+              <button type="button">Edit</button>
+              <button type="button">Reject</button>
+            </div>
+          </div>
+          <div>
+            <Kicker>HUMAN CONTROL</Kicker>
+            <h2>It notices. You decide.</h2>
+            <p>
+              ProChat may identify a reusable lesson and draft a memory record. Only reviewed information becomes trusted memory.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="pm-editorial-section">
+        <div className="pm-container">
+          <div className="pm-centered-copy">
+            <Kicker>CURRENT PRODUCTS</Kicker>
+            <h2>Memory first. QA first. Workbench second.</h2>
+            <p>
+              ProChat Memory is the flagship. ProChat Memory for QA is the first launch niche. ProChat Workbench is the second product for safe local project work.
+            </p>
+          </div>
+          <div className="pm-usecase-grid">
+            {productHighlights.map(item => (
+              <div key={item}>{item}</div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="pm-final-cta">
+        <div className="pm-container pm-final-panel">
+          <Kicker>MEMORY FOR QA</Kicker>
+          <h2>Help shape the first discipline-specific edition.</h2>
+          <p>
+            Start with one repeated QA or project-context problem and help evaluate where ProChat Memory can reduce repeated explanation and recovery effort.
           </p>
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="pm-actions pm-actions-center">
             <Button asChild variant="primary" size="lg">
-              <Link href="/ai-workflows">START — TIME-SAVING TEST</Link>
+              <Link href="/contact?topic=memory-qa">Become a tester</Link>
             </Button>
             <Button asChild variant="secondary" size="lg">
-              <Link href="/book">BOOK — A CALL</Link>
+              <Link href="/prochat-memory">See how Memory works</Link>
             </Button>
           </div>
         </div>
-      </Section>
+      </section>
     </div>
   )
 }
