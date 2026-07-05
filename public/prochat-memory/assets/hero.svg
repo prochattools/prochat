@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+
+  <!-- Card 1 — decisions/ — top, y≈-5..207 -->
+  <g transform="translate(10,12) rotate(-7,126,90)">
+    <rect width="252" height="178" rx="3" fill="#f7f1de" stroke="#c8bfa8" stroke-width="1.5"/>
+    <rect width="252" height="36" rx="3" fill="#15140f" opacity="0.09"/>
+    <text x="14" y="24" font-family="'JetBrains Mono',Menlo,monospace" font-size="13" fill="#8b8676">decisions/</text>
+    <rect x="14" y="52" width="206" height="11" rx="2" fill="#d3cbb8"/>
+    <rect x="14" y="72" width="152" height="11" rx="2" fill="#d3cbb8"/>
+    <rect x="14" y="92" width="212" height="11" rx="2" fill="#e9b94a" opacity="0.5"/>
+    <rect x="14" y="112" width="120" height="11" rx="2" fill="#d3cbb8"/>
+    <rect x="14" y="132" width="176" height="11" rx="2" fill="#d3cbb8"/>
+    <rect x="14" y="152" width="198" height="11" rx="2" fill="#d3cbb8"/>
+  </g>
+
+  <!-- Card 2 — corrections/ — middle, y≈338..530 -->
+  <g transform="translate(14,344) rotate(4,122,84)">
+    <rect width="244" height="168" rx="3" fill="#f7f1de" stroke="#c8bfa8" stroke-width="1.5"/>
+    <rect width="244" height="36" rx="3" fill="#15140f" opacity="0.09"/>
+    <text x="14" y="24" font-family="'JetBrains Mono',Menlo,monospace" font-size="13" fill="#8b8676">corrections/</text>
+    <rect x="14" y="52" width="190" height="11" rx="2" fill="#d3cbb8"/>
+    <rect x="14" y="72" width="136" height="11" rx="2" fill="#d3cbb8"/>
+    <rect x="14" y="92" width="200" height="11" rx="2" fill="#ed6f5c" opacity="0.45"/>
+    <rect x="14" y="112" width="114" height="11" rx="2" fill="#d3cbb8"/>
+    <rect x="14" y="132" width="164" height="11" rx="2" fill="#d3cbb8"/>
+    <rect x="14" y="152" width="186" height="11" rx="2" fill="#d3cbb8"/>
+  </g>
+
+  <!-- Card 3 — sources/ — bottom, y≈578..760 -->
+  <g transform="translate(8,588) rotate(-5,124,80)">
+    <rect width="248" height="158" rx="3" fill="#f7f1de" stroke="#c8bfa8" stroke-width="1.5"/>
+    <rect width="248" height="36" rx="3" fill="#15140f" opacity="0.09"/>
+    <text x="14" y="24" font-family="'JetBrains Mono',Menlo,monospace" font-size="13" fill="#8b8676">sources/</text>
+    <rect x="14" y="52" width="180" height="11" rx="2" fill="#d3cbb8"/>
+    <rect x="14" y="72" width="128" height="11" rx="2" fill="#d3cbb8"/>
+    <rect x="14" y="92" width="192" height="11" rx="2" fill="#6e7448" opacity="0.4"/>
+    <rect x="14" y="112" width="112" height="11" rx="2" fill="#d3cbb8"/>
+    <rect x="14" y="132" width="158" height="11" rx="2" fill="#d3cbb8"/>
+  </g>
+
+  <!-- Archive panel — x=370-644, y=10-760; x=644-800 clear for HTML .index overlay -->
+  <rect x="370" y="10" width="274" height="750" rx="6" fill="#f7f1de" stroke="#c8bfa8" stroke-width="1.5"/>
+
+  <!-- Archive header (dark) -->
+  <rect x="370" y="10" width="274" height="82" rx="6" fill="#15140f"/>
+  <rect x="370" y="56" width="274" height="36" fill="#15140f"/>
+  <text x="390" y="50" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="15" font-weight="700" letter-spacing="0.12em" fill="#efe7d2">MEMORY</text>
+  <text x="630" y="50" font-family="'JetBrains Mono',Menlo,monospace" font-size="10" fill="#8b8676" text-anchor="end">5 records</text>
+  <text x="390" y="72" font-family="'JetBrains Mono',Menlo,monospace" font-size="10" fill="#5a5448">~/.brain/memory/</text>
+  <line x1="390" y1="104" x2="630" y2="104" stroke="#c8bfa8" stroke-width="0.75"/>
+
+  <!-- Record 1: coral -->
+  <rect x="390" y="112" width="5" height="80" rx="2" fill="#ed6f5c"/>
+  <text x="406" y="131" font-family="'JetBrains Mono',Menlo,monospace" font-size="11" fill="#8b8676">corrections/</text>
+  <text x="406" y="157" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="19" font-weight="700" fill="#15140f">Null handling</text>
+  <text x="406" y="182" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="11" fill="#8b8676">api.response-contracts</text>
+  <rect x="590" y="118" width="32" height="18" rx="3" fill="#ed6f5c" opacity="0.15"/>
+  <text x="606" y="132" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="10" font-weight="700" fill="#ed6f5c" text-anchor="middle">OK</text>
+  <line x1="390" y1="204" x2="630" y2="204" stroke="#e2d9c4" stroke-width="0.75"/>
+
+  <!-- Record 2: olive -->
+  <rect x="390" y="212" width="5" height="80" rx="2" fill="#6e7448"/>
+  <text x="406" y="231" font-family="'JetBrains Mono',Menlo,monospace" font-size="11" fill="#8b8676">corrections/</text>
+  <text x="406" y="257" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="19" font-weight="700" fill="#15140f">Type safety</text>
+  <text x="406" y="282" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="11" fill="#8b8676">typescript.generics</text>
+  <line x1="390" y1="304" x2="630" y2="304" stroke="#e2d9c4" stroke-width="0.75"/>
+
+  <!-- Record 3: mustard -->
+  <rect x="390" y="312" width="5" height="80" rx="2" fill="#e9b94a"/>
+  <text x="406" y="331" font-family="'JetBrains Mono',Menlo,monospace" font-size="11" fill="#8b8676">decisions/</text>
+  <text x="406" y="357" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="19" font-weight="700" fill="#15140f">API conventions</text>
+  <text x="406" y="382" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="11" fill="#8b8676">rest.response-format</text>
+  <line x1="390" y1="404" x2="630" y2="404" stroke="#e2d9c4" stroke-width="0.75"/>
+
+  <!-- Record 4: coral -->
+  <rect x="390" y="412" width="5" height="80" rx="2" fill="#ed6f5c"/>
+  <text x="406" y="431" font-family="'JetBrains Mono',Menlo,monospace" font-size="11" fill="#8b8676">procedures/</text>
+  <text x="406" y="457" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="19" font-weight="700" fill="#15140f">Deploy checklist</text>
+  <text x="406" y="482" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="11" fill="#8b8676">ci.production</text>
+  <line x1="390" y1="504" x2="630" y2="504" stroke="#e2d9c4" stroke-width="0.75"/>
+
+  <!-- Record 5: muted -->
+  <rect x="390" y="512" width="5" height="72" rx="2" fill="#5a5448"/>
+  <text x="406" y="531" font-family="'JetBrains Mono',Menlo,monospace" font-size="11" fill="#8b8676">sources/</text>
+  <text x="406" y="557" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="19" font-weight="700" fill="#15140f">References</text>
+  <text x="406" y="582" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="11" fill="#8b8676">external · 3 entries</text>
+
+  <!-- Footer -->
+  <line x1="390" y1="600" x2="630" y2="600" stroke="#c8bfa8" stroke-width="0.75"/>
+  <text x="390" y="618" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="11" letter-spacing="0.14em" fill="#8b8676">LOCAL · REVIEWED</text>
+  <text x="630" y="618" font-family="'JetBrains Mono',Menlo,monospace" font-size="11" fill="#ed6f5c" text-anchor="end">5 / 5</text>
+  <line x1="390" y1="632" x2="630" y2="632" stroke="#c8bfa8" stroke-width="0.75"/>
+  <text x="390" y="656" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="13" letter-spacing="0.12em" fill="#8b8676">TRUSTED MEMORY</text>
+  <line x1="390" y1="674" x2="630" y2="674" stroke="#e2d9c4" stroke-width="0.75"/>
+
+  <!-- Remaining records summary -->
+  <text x="406" y="706" font-family="'Inter Tight','Inter',system-ui,sans-serif" font-size="14" font-weight="600" fill="#15140f">— 2 more records —</text>
+  <text x="406" y="728" font-family="'JetBrains Mono',Menlo,monospace" font-size="10" fill="#8b8676">procedures/ · corrections/</text>
+
+  <!-- Coral arrow — drawn last (on top), sits in gap between Card 1 (bottom ≈y=207) and Card 2 (top ≈y=338) -->
+  <!-- Arrow at y=272; polygon y=249-295; clearances: top=249-207=42px, bottom=338-295=43px — no card overlap -->
+  <line x1="272" y1="272" x2="362" y2="272" stroke="#ed6f5c" stroke-width="10" stroke-linecap="round"/>
+  <polygon points="354,249 394,272 354,295" fill="#ed6f5c"/>
+
+</svg>

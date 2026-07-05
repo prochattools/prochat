@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+
+  <!-- review panel — 4px margins -->
+  <rect x="4" y="4" width="392" height="392" rx="6" fill="#f7f1de" stroke="#15140f" stroke-width="1"/>
+
+  <!-- review header mustard -->
+  <rect x="4" y="4" width="392" height="56" rx="6" fill="#e9b94a"/>
+  <rect x="4" y="32" width="392" height="28" fill="#e9b94a"/>
+  <text x="24" y="38" font-family="'Inter Tight',sans-serif" font-size="15" font-weight="700" letter-spacing="0.12em" fill="#15140f">REVIEW REQUIRED</text>
+
+  <!-- record path -->
+  <text x="24" y="86" font-family="'JetBrains Mono',monospace" font-size="11" fill="#8b8676">corrections/null-handling.md</text>
+  <line x1="24" y1="102" x2="376" y2="102" stroke="#e2d9c4" stroke-width="0.75"/>
+
+  <!-- rule text large -->
+  <text x="24" y="142" font-family="'Inter Tight',sans-serif" font-size="24" font-weight="700" fill="#15140f">Return empty array,</text>
+  <text x="24" y="174" font-family="'Inter Tight',sans-serif" font-size="24" font-weight="700" fill="#15140f">never null.</text>
+
+  <line x1="24" y1="202" x2="376" y2="202" stroke="#e2d9c4" stroke-width="0.75"/>
+
+  <!-- action buttons -->
+  <rect x="24" y="216" width="112" height="44" rx="5" fill="#15140f"/>
+  <text x="80" y="243" font-family="'Inter Tight',sans-serif" font-size="15" font-weight="700" fill="#efe7d2" text-anchor="middle">Approve</text>
+
+  <rect x="146" y="216" width="76" height="44" rx="5" fill="none" stroke="#c8bfa8" stroke-width="1"/>
+  <text x="184" y="243" font-family="'Inter Tight',sans-serif" font-size="15" fill="#5a5448" text-anchor="middle">Edit</text>
+
+  <rect x="232" y="216" width="76" height="44" rx="5" fill="none" stroke="#c8bfa8" stroke-width="1"/>
+  <text x="270" y="243" font-family="'Inter Tight',sans-serif" font-size="15" fill="#5a5448" text-anchor="middle">Reject</text>
+
+  <rect x="24" y="272" width="118" height="44" rx="5" fill="none" stroke="#c8bfa8" stroke-width="1"/>
+  <text x="83" y="299" font-family="'Inter Tight',sans-serif" font-size="15" fill="#5a5448" text-anchor="middle">Keep draft</text>
+
+  <line x1="24" y1="330" x2="376" y2="330" stroke="#e2d9c4" stroke-width="0.75"/>
+
+  <!-- trusted state -->
+  <rect x="24" y="344" width="118" height="40" rx="5" fill="#ed6f5c" opacity="0.12"/>
+  <text x="83" y="369" font-family="'Inter Tight',sans-serif" font-size="15" font-weight="700" fill="#ed6f5c" text-anchor="middle">TRUSTED</text>
+  <text x="240" y="369" font-family="'JetBrains Mono',monospace" font-size="11" fill="#8b8676">After approval</text>
+
+</svg>

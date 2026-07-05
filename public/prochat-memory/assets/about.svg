@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+
+  <!-- top arc: CAPTURE → over top → REUSE -->
+  <path d="M 120 270 Q 300 50 480 270" fill="none" stroke="#d3cbb8" stroke-width="3.5"/>
+  <polygon points="472,253 489,272 465,281" fill="#d3cbb8"/>
+
+  <!-- bottom arc: REUSE → under bottom → CAPTURE -->
+  <path d="M 480 330 Q 300 550 120 330" fill="none" stroke="#d3cbb8" stroke-width="3.5"/>
+  <polygon points="128,347 111,328 135,319" fill="#d3cbb8"/>
+
+  <!-- CAPTURE pill — left, vertically centered on 300 -->
+  <rect x="0" y="240" width="240" height="120" rx="10" fill="#15140f"/>
+  <text x="120" y="289" font-family="'Inter Tight','Inter',sans-serif" font-size="28" font-weight="700" letter-spacing="0.05em" fill="#efe7d2" text-anchor="middle">CAPTURE</text>
+  <text x="120" y="321" font-family="'Inter Tight',sans-serif" font-size="18" fill="#8b8676" text-anchor="middle">From your work</text>
+
+  <!-- STRUCTURE pill — top center -->
+  <rect x="180" y="0" width="240" height="120" rx="10" fill="#f7f1de" stroke="#c8bfa8" stroke-width="1.5"/>
+  <text x="300" y="49" font-family="'Inter Tight','Inter',sans-serif" font-size="28" font-weight="700" letter-spacing="0.05em" fill="#15140f" text-anchor="middle">STRUCTURE</text>
+  <text x="300" y="81" font-family="'Inter Tight',sans-serif" font-size="18" fill="#8b8676" text-anchor="middle">Into records</text>
+
+  <!-- REVIEW pill — bottom center -->
+  <rect x="180" y="480" width="240" height="120" rx="10" fill="#ed6f5c"/>
+  <text x="300" y="529" font-family="'Inter Tight','Inter',sans-serif" font-size="28" font-weight="700" letter-spacing="0.05em" fill="#fff" text-anchor="middle">REVIEW</text>
+  <text x="300" y="561" font-family="'Inter Tight',sans-serif" font-size="18" fill="rgba(255,255,255,0.78)" text-anchor="middle">You decide</text>
+
+  <!-- REUSE pill — right, vertically centered on 300 -->
+  <rect x="360" y="240" width="240" height="120" rx="10" fill="#6e7448"/>
+  <text x="480" y="289" font-family="'Inter Tight','Inter',sans-serif" font-size="28" font-weight="700" letter-spacing="0.05em" fill="#efe7d2" text-anchor="middle">REUSE</text>
+  <text x="480" y="321" font-family="'Inter Tight',sans-serif" font-size="18" fill="rgba(239,231,210,0.72)" text-anchor="middle">In new work</text>
+
+  <!-- center mark -->
+  <circle cx="300" cy="300" r="28" fill="none" stroke="#d3cbb8" stroke-width="2"/>
+  <circle cx="300" cy="300" r="8" fill="#e9b94a"/>
+
+  <!-- arc endpoint dots — mark top and bottom peaks -->
+  <circle cx="300" cy="68" r="7" fill="#e9b94a"/>
+  <circle cx="300" cy="532" r="7" fill="#e9b94a"/>
+
+</svg>

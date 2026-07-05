@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- no background rect — container (.bone) background shows through -->
+
+  <!-- header bar -->
+  <rect width="800" height="82" fill="#15140f"/>
+  <text x="36" y="36" font-family="'JetBrains Mono',Menlo,monospace" font-size="14" fill="#8b8676">corrections/</text>
+  <text x="36" y="66" font-family="'JetBrains Mono',Menlo,monospace" font-size="18" font-weight="500" fill="#efe7d2">type-safety.md</text>
+  <rect x="676" y="22" width="98" height="30" rx="4" fill="#6e7448" opacity="0.18"/>
+  <text x="725" y="42" font-family="'Inter Tight',sans-serif" font-size="13" font-weight="700" fill="#6e7448" text-anchor="middle" letter-spacing="0.07em">TRUSTED</text>
+
+  <!-- left accent bar — olive -->
+  <rect x="0" y="82" width="8" height="518" fill="#6e7448"/>
+
+  <!-- metadata -->
+  <text x="44" y="130" font-family="'JetBrains Mono',monospace" font-size="14" fill="#8b8676">type:</text>
+  <text x="190" y="130" font-family="'JetBrains Mono',monospace" font-size="14" fill="#15140f">correction</text>
+
+  <text x="44" y="162" font-family="'JetBrains Mono',monospace" font-size="14" fill="#8b8676">scope:</text>
+  <text x="190" y="162" font-family="'JetBrains Mono',monospace" font-size="14" fill="#15140f">typescript.generics</text>
+
+  <text x="44" y="194" font-family="'JetBrains Mono',monospace" font-size="14" fill="#8b8676">status:</text>
+  <text x="190" y="194" font-family="'JetBrains Mono',monospace" font-size="14" fill="#6e7448">trusted</text>
+
+  <text x="44" y="226" font-family="'JetBrains Mono',monospace" font-size="14" fill="#8b8676">source:</text>
+  <text x="190" y="226" font-family="'JetBrains Mono',monospace" font-size="14" fill="#15140f">architecture-review</text>
+
+  <!-- divider -->
+  <line x1="44" y1="256" x2="756" y2="256" stroke="#d3cbb8" stroke-width="0.75"/>
+
+  <!-- rule -->
+  <text x="44" y="322" font-family="'Inter Tight',sans-serif" font-size="42" font-weight="800" fill="#15140f" letter-spacing="-0.01em">Prefer explicit generic types.</text>
+
+  <text x="44" y="378" font-family="'Inter',sans-serif" font-size="23" fill="#5a5448">Never infer from ambiguous context.</text>
+  <text x="44" y="412" font-family="'Inter',sans-serif" font-size="23" fill="#5a5448">Type parameters must be stated, not implied.</text>
+
+  <!-- footer -->
+  <line x1="44" y1="468" x2="756" y2="468" stroke="#d3cbb8" stroke-width="0.75"/>
+  <text x="44" y="504" font-family="'JetBrains Mono',monospace" font-size="13" fill="#8b8676">typescript.generics · correction · architecture-review</text>
+  <text x="756" y="504" font-family="'JetBrains Mono',monospace" font-size="13" fill="#6e7448" text-anchor="end">✓ TRUSTED</text>
+
+  <text x="44" y="566" font-family="'Inter Tight',sans-serif" font-size="12" letter-spacing="0.14em" fill="#8b8676">PROCHAT MEMORY · LOCAL RECORD</text>
+</svg>

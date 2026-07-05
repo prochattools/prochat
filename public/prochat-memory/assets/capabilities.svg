@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+
+  <!-- spoke lines -->
+  <line x1="300" y1="196" x2="300" y2="110" stroke="#d3cbb8" stroke-width="2.5"/>
+  <line x1="300" y1="404" x2="300" y2="490" stroke="#d3cbb8" stroke-width="2.5"/>
+  <line x1="196" y1="300" x2="100" y2="300" stroke="#d3cbb8" stroke-width="2.5"/>
+  <line x1="404" y1="300" x2="500" y2="300" stroke="#d3cbb8" stroke-width="2.5"/>
+
+  <!-- center memory box — large -->
+  <rect x="164" y="190" width="272" height="220" rx="12" fill="#15140f"/>
+  <text x="300" y="260" font-family="'Inter Tight','Inter',sans-serif" font-size="15" font-weight="700" letter-spacing="0.18em" fill="#8b8676" text-anchor="middle">LOCAL</text>
+  <text x="300" y="302" font-family="'Inter Tight','Inter',sans-serif" font-size="33" font-weight="800" letter-spacing="0.04em" fill="#efe7d2" text-anchor="middle">MEMORY</text>
+  <text x="300" y="332" font-family="'JetBrains Mono',monospace" font-size="12" fill="#6e7448" text-anchor="middle">~/.brain/memory/</text>
+  <text x="300" y="386" font-family="'Inter Tight',sans-serif" font-size="13" fill="#8b8676" text-anchor="middle">One shared foundation</text>
+
+  <!-- top satellite: AI Assistant — tall enough to read -->
+  <rect x="164" y="8" width="272" height="96" rx="8" fill="#f7f1de" stroke="#c8bfa8" stroke-width="1.5"/>
+  <text x="300" y="50" font-family="'Inter Tight',sans-serif" font-size="20" font-weight="700" fill="#15140f" text-anchor="middle">AI Assistant</text>
+  <text x="300" y="78" font-family="'Inter Tight',sans-serif" font-size="14" fill="#8b8676" text-anchor="middle">Claude · Codex · Gemini</text>
+
+  <!-- bottom satellite: Editor -->
+  <rect x="164" y="496" width="272" height="96" rx="8" fill="#f7f1de" stroke="#c8bfa8" stroke-width="1.5"/>
+  <text x="300" y="538" font-family="'Inter Tight',sans-serif" font-size="20" font-weight="700" fill="#15140f" text-anchor="middle">Editor</text>
+  <text x="300" y="566" font-family="'Inter Tight',sans-serif" font-size="14" fill="#8b8676" text-anchor="middle">VS Code · Cursor</text>
+
+  <!-- left satellite: Repo (coral) — wider to balance -->
+  <rect x="8" y="248" width="88" height="104" rx="8" fill="#ed6f5c"/>
+  <text x="52" y="290" font-family="'Inter Tight',sans-serif" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">Repo</text>
+  <text x="52" y="316" font-family="'Inter Tight',sans-serif" font-size="12" fill="rgba(255,255,255,0.85)" text-anchor="middle">GitHub</text>
+
+  <!-- right satellite: Project (olive) -->
+  <rect x="504" y="248" width="88" height="104" rx="8" fill="#6e7448"/>
+  <text x="548" y="290" font-family="'Inter Tight',sans-serif" font-size="18" font-weight="700" fill="#efe7d2" text-anchor="middle">Project</text>
+  <text x="548" y="316" font-family="'Inter Tight',sans-serif" font-size="12" fill="rgba(239,231,210,0.85)" text-anchor="middle">Workspace</text>
+
+</svg>

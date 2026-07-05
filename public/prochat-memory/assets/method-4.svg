@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+
+  <!-- context window dark terminal, 4px margins -->
+  <rect x="4" y="4" width="392" height="282" rx="6" fill="#15140f"/>
+
+  <!-- window chrome dots -->
+  <circle cx="26" cy="26" r="7" fill="#ed6f5c" opacity="0.7"/>
+  <circle cx="48" cy="26" r="7" fill="#e9b94a" opacity="0.7"/>
+  <circle cx="70" cy="26" r="7" fill="#6e7448" opacity="0.7"/>
+  <text x="200" y="31" font-family="'JetBrains Mono',monospace" font-size="11" fill="#5a5448" text-anchor="middle">Active context</text>
+  <line x1="4" y1="44" x2="396" y2="44" stroke="#2a2620" stroke-width="1"/>
+
+  <!-- memory context header -->
+  <text x="22" y="68" font-family="'JetBrains Mono',monospace" font-size="11" fill="#ed6f5c">--- Memory context ---</text>
+
+  <!-- record 1 coral -->
+  <rect x="22" y="78" width="5" height="56" rx="2" fill="#ed6f5c"/>
+  <text x="36" y="96" font-family="'JetBrains Mono',monospace" font-size="11" fill="#8b8676">corrections/null-handling.md</text>
+  <text x="36" y="116" font-family="'Inter Tight',sans-serif" font-size="15" font-weight="600" fill="#efe7d2">Return empty array</text>
+  <text x="36" y="132" font-family="'Inter Tight',sans-serif" font-size="12" fill="#5a5448">api.response-contracts · trusted</text>
+
+  <!-- record 2 olive -->
+  <rect x="22" y="146" width="5" height="56" rx="2" fill="#6e7448"/>
+  <text x="36" y="164" font-family="'JetBrains Mono',monospace" font-size="11" fill="#8b8676">corrections/type-safety.md</text>
+  <text x="36" y="184" font-family="'Inter Tight',sans-serif" font-size="15" font-weight="600" fill="#efe7d2">Explicit generic types</text>
+  <text x="36" y="200" font-family="'Inter Tight',sans-serif" font-size="12" fill="#5a5448">typescript.generics · trusted</text>
+
+  <!-- record 3 mustard -->
+  <rect x="22" y="214" width="5" height="56" rx="2" fill="#e9b94a"/>
+  <text x="36" y="232" font-family="'JetBrains Mono',monospace" font-size="11" fill="#8b8676">decisions/api-conventions.md</text>
+  <text x="36" y="252" font-family="'Inter Tight',sans-serif" font-size="14" font-weight="600" fill="#efe7d2">REST response format</text>
+  <text x="36" y="270" font-family="'Inter Tight',sans-serif" font-size="12" fill="#5a5448">rest.response-format · trusted</text>
+
+  <!-- upward arrow below window -->
+  <line x1="200" y1="330" x2="200" y2="306" stroke="#ed6f5c" stroke-width="4" stroke-linecap="round"/>
+  <polygon points="192,312 200,296 208,312" fill="#ed6f5c"/>
+
+  <!-- status label -->
+  <text x="200" y="357" font-family="'JetBrains Mono',monospace" font-size="12" letter-spacing="0.08em" fill="#8b8676" text-anchor="middle">3 RECORDS SELECTED</text>
+  <text x="200" y="378" font-family="'Inter Tight',sans-serif" font-size="12" fill="#8b8676" text-anchor="middle">Relevant to current task</text>
+  <line x1="60" y1="392" x2="340" y2="392" stroke="#d3cbb8" stroke-width="0.75"/>
+
+</svg>
