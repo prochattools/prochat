@@ -45,3 +45,13 @@ next-env.d.ts
 public/sitemap.xml
 public/sitemap-pages.xml
 public/sitemap-0.xml_brain
+
+
+
+# Graphify local analysis output
+.graphifyignore
+.graphifyignore.full
+graphify-out/
+
+# Unused ProChat Memory asset draft
+public/prochat-memory/assets/cta.svg
