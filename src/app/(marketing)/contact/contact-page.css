@@ -225,3 +225,55 @@
   background: rgb(var(--pc-surface-rgb) / 1);
   color: rgb(var(--pc-blue-500-rgb) / 0.88);
 }
+
+
+
+/* ProChat Memory contact page layout refinements */
+.contact-memory-hero .pm-hero-grid {
+  align-items: start;
+}
+
+.contact-form-panel {
+  min-height: auto;
+}
+
+.contact-form-panel h2 {
+  color: var(--ink);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  letter-spacing: -0.045em;
+  margin-bottom: 0.75rem;
+}
+
+.contact-memory-form,
+.contact-memory-field {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.contact-memory-form {
+  margin-top: 1.75rem;
+  gap: 1.15rem;
+}
+
+.contact-memory-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.contact-reason-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.contact-memory-footer-cta .pm-final-panel a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+@media (max-width: 720px) {
+  .contact-memory-grid,
+  .contact-reason-grid {
+    grid-template-columns: 1fr;
+  }
+}

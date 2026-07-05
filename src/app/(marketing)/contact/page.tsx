@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react'
 import { contactSubmissionSchema } from '@/lib/contact/schema'
 import { trackEvent } from '@/utils/analytics'
 
+import '../prochat-memory-theme.css'
 import './contact-page.css'
 import ContactPageMarkup from './ContactPageMarkup'
 
@@ -36,7 +37,7 @@ const CONTACT_SUBMIT_IDLE_HTML = `
     <span class="text-current md:hidden">SEND MY BRIEF</span>
     <span class="hidden text-current md:inline">SEND MY BRIEF</span>
     <span aria-hidden="true" class="hidden opacity-50 md:inline"> - </span>
-    <span class="hidden opacity-50 md:inline">USUALLY REPLIES WITHIN 1 BUSINESS DAY</span>
+    <span class="hidden opacity-50 md:inline">FOCUSED MEMORY CONTEXT</span>
   </span>
 `
 
@@ -285,7 +286,7 @@ export default function ContactPage() {
   }, [])
 
   return (
-    <main ref={rootRef} className="contact-page-root">
+    <main ref={rootRef} className="contact-page-root pm-marketing-page">
       <ContactPageMarkup />
     </main>
   )
