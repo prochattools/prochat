@@ -1,420 +1,902 @@
-# DESIGN.md — prochat.tools
+# ProChat Memory Design System
 
-*Extracted from prochat.tools brand tokens (April 2026). Professional SaaS, AI-first, developer-adjacent. Dark mode default.*
+> Category: private, persistent memory for AI-assisted work  
+> Scope: ProChat Memory homepage, ProChat Memory for QA page, contact/tester-interest surfaces, and future interface explorations  
+> Strategic source: `docs/prochat-memory-website-design-strategy.md`  
+> Status: production design direction
+
+ProChat Memory is the flagship product for local, reviewable memory in AI-assisted work. ProChat Memory for QA is the first launch niche and first discipline-specific edition. This file is design-system and visual guidance only; product strategy, naming, and company-level positioning remain subordinate to Mind and the active website strategy docs.
+
+ProChat Memory turns scattered, reusable knowledge into a private memory system that remains available across AI-assisted work. The design must explain this process visually: information is captured, structured, selected, reviewed, and reused without treating an LLM context window as permanent storage.
+
+Lead with buyer outcomes and progressively reveal the technical model. Never imply autonomous trusted-memory updates, automatic self-healing, universal compatibility, or proven quantitative savings.
 
 ---
 
 ## 1. Visual Theme & Atmosphere
 
-**Vibe:** Professional SaaS product with AI capabilities, developer-adjacent, approachable but premium.
+### Core direction
 
-**Mood:** Clean, precise, modern, with subtle AI-inspired accents (radial glows, smooth transitions).
+**The Living Memory System**
 
-**Density:** Medium-tight spacing. Not minimal (like Vercel), not dense (like Linear). Balanced whitespace with purpose.
+Visualize ProChat Memory as a stable, user-owned memory structure surrounded by changing tasks, tools, projects, and inputs. The surrounding workflow changes; the memory remains.
 
-**Dark mode first:** Primary interface is dark navy (`#0b1220`). Light mode is secondary (rarely used).
+The experience should feel:
 
-**Motion:** Smooth, purposeful transitions. 650ms duration on theme switches. Radial glow effects on interaction.
+- calm
+- precise
+- private
+- durable
+- authored
+- technically credible
+- human-controlled
+- quietly intelligent
 
-**Aesthetic classification:** Linear-adjacent but warmer. Precision-focused but approachable.
+Brand balance:
 
----
-
-## 2. Color Palette & Roles
-
-### Primary Colors
-
-| Token | Hex | RGB | Role |
-|-------|-----|-----|------|
-| `blue-500` | `#5b7cff` | `(91, 124, 255)` | Secondary accent, hover states |
-| `blue-600` | `#4c6fff` | `(76, 111, 255)` | **Primary accent**, buttons, selection, links |
-| `blue-700` | `#3e5ae0` | `(62, 90, 224)` | Pressed/active state for `blue-600` |
-| `blue-glow` | `#6d83ff` | `(109, 131, 255)` | Focus rings, AI radial glow effects |
-
-### Backgrounds
-
-| Token | Light | Dark | Role |
-|-------|-------|------|------|
-| `background` | `#f7f8fa` | `#0b1220` | **Primary background** |
-| `surface` | `#ffffff` | `#1a2540` | Cards, elevated surfaces, containers |
-| `surface-hover` | `#f0f2f8` | `#252f47` | Hover state for surfaces |
-
-### Text & Foreground
-
-| Token | Light | Dark | Role |
-|-------|-------|------|------|
-| `text-primary` | `#101828` | `#f3f5fa` | Body text, headings, primary content |
-| `text-secondary` | `#667085` | `#a8afc3` | Secondary text, descriptions, labels |
-| `text-tertiary` | `#98a2b3` | `#6b7280` | Tertiary text, placeholders, hints |
-
-### Semantic Colors
-
-| Token | Value | Role |
-|-------|-------|------|
-| `success` | `#10b981` | Success states, checkmarks, confirmations |
-| `warning` | `#f59e0b` | Warnings, cautions, attention |
-| `error` | `#ef4444` | Errors, destructive actions, failures |
-| `info` | `#3b82f6` | Info messages, neutral callouts |
-
-### Grayscale
-
-| Token | Light | Dark |
-|-------|-------|------|
-| `gray-50` | `#fafafa` | `#0f1420` |
-| `gray-100` | `#f3f4f6` | `#1a2540` |
-| `gray-200` | `#e5e7eb` | `#3d4a63` |
-| `gray-300` | `#d1d5db` | `#5a6b7e` |
-| `gray-400` | `#9ca3af` | `#8994a8` |
-| `gray-500` | `#6b7280` | `#a8afc3` |
-| `gray-600` | `#4b5563` | `#d1d9e5` |
-| `gray-700` | `#374151` | `#e5e7eb` |
-| `gray-800` | `#1f2937` | `#f3f4f6` |
-| `gray-900` | `#111827` | `#fafafa` |
-
----
-
-## 3. Typography Rules
-
-### Font Family
-
-**Primary:** Host Grotesk (Google Fonts, weights 400–700)
-
-```css
---font-sans: 'Host Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
---font-brand: 'Host Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+```text
+75% dependable infrastructure
+25% future-facing intelligence
 ```
 
-No serif fonts. All headings, body, and labels use Host Grotesk.
+Internal art-direction phrase:
 
-### Font Scale & Hierarchy
+```text
+An editorial systems journal for persistent intelligence.
+```
 
-| Token | Size (px) | Weight | Line Height | Letter Spacing | Use |
-|-------|-----------|--------|-------------|----------------|-----|
-| `h1` | 40 | 700 | 1.2 | -0.05em | Page heroes, main headings |
-| `h2` | 32 | 700 | 1.25 | -0.05em | Section headings |
-| `h3` | 24 | 700 | 1.33 | -0.05em | Subsection headings |
-| `h4` | 20 | 600 | 1.4 | -0.04em | Component headings, cards |
-| `h5` | 16 | 600 | 1.5 | -0.03em | Labels, small headings |
-| `h6` | 14 | 600 | 1.5 | -0.02em | Tiny headings, captions |
-| `body-lg` | 18 | 400 | 1.6 | 0em | Large body text, introductions |
-| `body-md` | 15.5 | 400 | 1.6 | 0em | **Primary body text** |
-| `body-sm` | 14 | 400 | 1.6 | 0em | Secondary text, descriptions |
-| `label` | 12 | 500 | 1.5 | 0em | Form labels, captions, tags |
-| `mono` | 13 | 400 | 1.6 | 0em | Code, terminal, technical text |
+### Primary presentation
 
-### Base Font Size & Scaling
+Use a warm, light, editorial canvas as the primary marketing presentation. Introduce dark graphite instrument panels selectively for retrieval, architecture, guided setup, or context-window explanations.
 
-- **Default:** `15.5px` at breakpoint 0–1279px
-- **Large screens:** `15.75px` at breakpoint 1280px+
-- Subtle scaling for typography hierarchy across devices
+The design should feel authored rather than assembled from SaaS blocks. Use numbered chapters, strong typographic hierarchy, measured asymmetry, technical annotations, and large explanatory visuals.
 
-### Letter Spacing & Tracking
+### Premium quality bar — non-negotiable
 
-- **Headings:** -0.05em to -0.02em (tight)
-- **Body:** 0em (neutral)
-- **Labels:** 0em (neutral)
-- **Mono:** 0em (neutral)
+This website must look and feel like a bespoke, art-directed digital product launch, not a generated landing-page template, documentation page, dashboard mockup, or wireframe.
+
+The final direction must demonstrate:
+
+- a distinctive art-directed visual identity that is recognizable without the logo
+- a hero composition with depth, tension, layering, cropping, and a clear focal point
+- custom visual assets designed specifically for ProChat Memory
+- refined typography with deliberate scale contrast, rhythm, and line breaks
+- sophisticated transitions between editorial, immersive, and technical sections
+- visual storytelling that carries the narrative even when body copy is skimmed
+- strong desktop and mobile compositions designed independently rather than mechanically stacked
+- production-feasible motion that feels cinematic and controlled rather than decorative
+- deliberate use of texture, light, depth, transparency, and spatial hierarchy
+- premium micro-detail: optical alignment, custom icon treatment, refined borders, nuanced surfaces, and purposeful hover states
+
+The page must not be a sequence of headings followed by plain boxes. Every major chapter needs one dominant visual idea with an original composition.
+
+### Visual ambition
+
+The Living Memory System should be rendered as a layered visual world, not as a flat list of cards.
+
+Suitable approaches include:
+
+- a deep 2.5D memory landscape built from layered translucent records, source trails, and focus planes
+- an editorial collage of fragments becoming ordered memory, using custom SVG, masks, clipping, blur, and depth
+- a spatial memory atlas with foreground, middle-ground, and background layers
+- a cinematic context lens that reveals only selected information while the larger memory remains present
+- a visual handoff between changing workspaces and one persistent memory core
+
+Use custom art direction for the memory field, context packet, and review gate. Avoid default rectangles, standard SaaS cards, and equal-width grids unless they are part of a larger art-directed composition.
+
+### Composition requirements
+
+- At least one section should use a full-bleed immersive composition.
+- At least one section should use editorial asymmetry with unexpected but controlled alignment.
+- At least one section should use a dark technical environment with layered depth and luminous state changes.
+- At least one section should use an oversized visual that continues beyond the viewport edge.
+- Section transitions should vary in rhythm and composition; do not repeat the same heading-plus-box pattern.
+- Use whitespace intentionally, but never leave large areas visually empty without tension, scale, or atmosphere.
+- The hero visual must occupy substantial visual weight and should feel like a product film frame, not an embedded widget.
+
+### Quality rejection criteria
+
+Reject any direction that looks like:
+
+- a clean wireframe with brand colors
+- a documentation site
+- a generic AI SaaS template
+- a collection of bordered rectangles
+- a dashboard preview used as the entire visual identity
+- default Lucide icons placed above short labels
+- large empty beige sections without visual purpose
+- a typography-only page with weak or repetitive imagery
+- simple left-copy/right-card layouts repeated throughout
+- an implementation sketch presented as final art direction
+
+If the result could be produced from a generic landing-page prompt in one pass, it does not meet the quality bar.
+
+### Core visual metaphor
+
+Use a structured memory field made of readable records, scopes, sources, status states, and relationships.
+
+The field should visibly support:
+
+```text
+capture → structure → select → review → improve
+```
+
+The system may include:
+
+- memory records
+- source links
+- project or personal scopes
+- trusted, draft, review, and superseded states
+- a context lens
+- a compact context packet
+- a human review gate
+- a stable local workspace
+- changing outer tools and tasks
+
+### Avoid
+
+Do not use:
+
+- literal brains
+- neural-network globes
+- robots or anthropomorphic assistants
+- generic AI sparkles
+- purple-gradient AI clichés
+- database cylinders as the hero
+- decorative glass cards without meaning
+- constant particles
+- cyberpunk styling
+- magical or autonomous visual language
+- a wall of vendor logos as primary proof
+
+The visual promise is that complexity becomes calm.
 
 ---
 
-## 4. Component Stylings
+## 2. Color
+
+Use semantic design tokens exclusively in production components. Preserve and extend the existing ProChat CSS-variable and Tailwind-token architecture. Do not introduce raw hexadecimal colors inside page components.
+
+### Base roles
+
+- **Canvas:** warm mineral off-white, not sterile pure white.
+- **Primary ink:** very dark graphite-blue, not flat black.
+- **Surface:** quiet neutral layers with a slight cool bias.
+- **Border:** subtle cool-gray separation.
+- **Dark panel:** deep graphite-blue for technical instrument sections.
+
+### Semantic signal colors
+
+```text
+Cobalt = system structure, retrieval, active selection, primary action
+Mint   = trusted, reviewed, approved, healthy memory
+Amber  = recommendation, uncertainty, draft, review required
+Coral  = correction, conflict, stale, superseded, destructive state
+```
+
+Signal colors explain state; they are not decorative background noise.
+
+### Required semantic roles
+
+- background
+- foreground
+- foreground-muted
+- surface
+- surface-soft
+- surface-elevated
+- border
+- border-subtle
+- border-strong
+- primary
+- primary-hover
+- primary-foreground
+- trusted
+- provisional
+- correction
+- destructive
+- focus-ring
+
+### Color behavior
+
+- Keep most layouts neutral.
+- Use cobalt as the dominant brand and system signal.
+- Use mint only after review or verification.
+- Use amber for pending decisions and uncertainty.
+- Use coral for conflict, correction, or superseded information.
+- Never communicate state through color alone.
+- Avoid full-screen gradients.
+- Use soft illumination only to indicate retrieval or focus.
+
+### Light and dark themes
+
+Light mode is the primary editorial presentation.
+
+Dark mode must preserve equivalent hierarchy, readable muted text, meaningful signal colors, and restrained glow. It must not be a simple inversion.
+
+---
+
+## 3. Typography
+
+Typography should express serious infrastructure with human clarity.
+
+### Primary family
+
+Use **Geist Sans** or a similarly controlled modern grotesk for headings, body copy, navigation, buttons, diagram labels, and product interface text.
+
+Desired qualities:
+
+- highly legible
+- modern without trend dependence
+- technical without coldness
+- confident at large sizes
+- compact enough for information-rich diagrams
+
+### Technical family
+
+Use **JetBrains Mono** for memory states, source counts, timestamps, file paths, identifiers, section numbers, and context-packet metadata.
+
+Examples:
+
+```text
+MEMORY / ACTIVE
+8 RECORDS
+3 SOURCES
+REVIEW REQUIRED
+LOCAL WORKSPACE
+```
+
+### Editorial accent
+
+A restrained serif italic such as **Newsreader Italic** may be used sparingly for conceptual emphasis.
+
+Suitable examples:
+
+```text
+Your work remembers.
+A memory that stays.
+```
+
+Do not use serif accents in every headline.
+
+### Type hierarchy
+
+Recommended desktop ranges:
+
+- Hero display: `clamp(3.5rem, 7vw, 7.5rem)` with compact line height.
+- Major section heading: `clamp(2.5rem, 5vw, 5rem)`.
+- Supporting heading: `clamp(1.75rem, 3vw, 3rem)`.
+- Lead copy: `1.125rem–1.375rem`.
+- Body copy: `1rem–1.125rem`.
+- Technical labels: `0.6875rem–0.8125rem` uppercase mono with increased tracking.
+
+### Rules
+
+- Lead with direct outcome statements.
+- Keep paragraph width near 60–70 characters.
+- Avoid very light body weights.
+- Tighten display tracking without harming readability.
+- Prevent single-word orphan lines in hero headings.
+- Use uppercase mono only where it adds system meaning.
+- Keep important copy visually stronger than annotations.
+
+---
+
+## 4. Spacing & Grid
+
+Use a 4px base spacing unit.
+
+Preferred sequence:
+
+```text
+4, 8, 12, 16, 24, 32, 48, 64, 96, 128, 160
+```
+
+### Page grid
+
+- Use one consistent centered content container.
+- Align editorial copy and system diagrams.
+- Use responsive gutters through the existing semantic page-gutter token.
+- Allow explanatory visuals to extend beyond the text column while remaining grid-aligned.
+- Use asymmetry only when it strengthens hierarchy or movement.
+
+### Major spacing
+
+- Desktop section spacing: generally 112–160px.
+- Mobile section spacing: generally 72–104px.
+- Keep technical labels compact within a generously spaced complete visual.
+
+### Composition rules
+
+- Alternate quiet editorial sections with immersive visual sections.
+- Do not build the homepage from repeated equal cards.
+- Use cards only when grouping improves comprehension.
+- Avoid nested card stacks.
+- Use negative space to communicate stability.
+- Use numbered chapters for narrative progression.
+- Preserve causal reading order on mobile.
+
+---
+
+## 5. Layout & Composition
+
+### Narrative order
+
+The homepage becomes progressively more technical:
+
+1. Outcome and emotional problem.
+2. Cost of repeated context.
+3. Scattered work becoming reusable memory.
+4. Relevant memory instead of maximum context.
+5. Continuity across tools and projects.
+6. Local ownership and privacy architecture.
+7. Human-reviewed improvement.
+8. Current product and edition boundary.
+9. Tester interest and qualitative comparison.
+
+### Main homepage hero
+
+Desktop:
+
+- left: outcome-led copy and actions
+- right: Living Memory System animation
+- bottom: concise outcome indicators
+
+Mobile:
+
+- copy first
+- simplified process animation second
+- indicators in a two-column grid
+
+Recommended copy:
+
+```text
+Eyebrow: PRIVATE, PERSISTENT MEMORY FOR AI
+Headline: Stop rebuilding context.
+Body: ProChat Memory keeps useful knowledge reusable across AI-assisted work, so you spend less time repeating context and more time moving work forward.
+Primary CTA: Become a tester
+Secondary CTA: See how Memory works
+Proof: Portable. Inspectable. Human-reviewed. Under your control.
+```
+
+Outcome indicators:
+
+```text
+Less repetition
+Less wasted context
+Faster continuation
+Less to remember yourself
+```
+
+### Main homepage sections
+
+#### 01 — Stop rebuilding context
+
+Use the complete Living Memory System hero animation.
+
+#### 02 — Every new session makes you pay again
+
+Visualize:
+
+```text
+find → explain → paste → correct → lose → repeat
+```
+
+Use non-numeric accumulators for time, context, repeated decisions, and mental effort. Do not invent savings figures.
+
+#### 03 — Your work is already creating knowledge
+
+Visualize:
+
+```text
+Capture → Structure → Connect → Review → Reuse
+```
+
+Real fragments become scoped, sourced, reviewed records.
+
+#### 04 — Remember broadly. Send only what matters
+
+Use a dark graphite instrument panel showing a large persistent memory field and a narrow context packet containing only relevant records.
+
+#### 05 — The tool changes. The memory remains
+
+Change the surrounding workspace while the central memory remains fixed.
+
+#### 06 — It lives with you
+
+Visualize readable local files and a user-owned workspace. Show client repositories remaining separate and unchanged by default.
+
+#### 07 — It notices. You decide
+
+Show:
+
+```text
+Draft → Human review → Trusted memory
+```
+
+The review gate must be prominent.
+
+#### 08 — One foundation, many applications
+
+Show ProChat Memory as the flagship foundation. Present ProChat Memory for QA as the first launch niche and first discipline-specific edition. Treat future role or industry examples as visual applications, not current products.
+
+#### 09 — Become a tester
+
+Show:
+
+```text
+Describe repeated work → Try a focused flow → Compare qualitatively → Share reviewed feedback
+```
+
+### ProChat Memory for QA page
+
+The ProChat Memory for QA page inherits the same system and changes its language, records, evidence, and outcomes for the first launch niche and first discipline-specific edition.
+
+Recommended hero:
+
+```text
+Headline: Stop testing from memory. Start testing with it.
+Body: ProChat Memory keeps reviewed defects, regressions, environment lessons, test-data rules, and tester corrections available for future investigations.
+Primary CTA: Talk about Memory for QA
+Secondary CTA: See a ProChat Memory for QA example
+```
+
+QA narrative:
+
+1. QA outcome hero.
+2. Why testing knowledge disappears.
+3. What ProChat Memory for QA remembers.
+4. Generic AI triage versus memory-aware triage.
+5. Current evidence wins.
+6. Human-reviewed learning.
+7. Fits beside existing QA tools.
+8. Local and portable architecture.
+9. Tester interest and qualitative comparison.
+
+### Installation page
+
+Primary promise:
+
+```text
+Paste one setup prompt into your AI assistant.
+```
+
+Use a three-stage composition:
+
+```text
+1. Copy setup prompt
+2. Answer a few questions
+3. Analyze a failed test normally
+```
+
+Do not present this as a universal setup path or fully automatic onboarding flow.
+
+---
+
+## 6. Components & Visual Language
+
+### Memory record
+
+Expose:
+
+- title or pattern
+- scope
+- status
+- source count
+- last reviewed date
+- confidence or uncertainty where relevant
+
+States:
+
+- draft
+- review required
+- trusted
+- superseded
+- conflicting
+
+### Memory field
+
+Use a structured layout of records, not a decorative node graph. Relationships must have a readable reason: shared scope, source, pattern, task, or history.
+
+### Context lens
+
+A soft bounded focus area identifies relevant memory. It moves slowly and illuminates only selected records.
+
+### Context packet
+
+A compact output bundle showing:
+
+- records selected
+- sources used
+- known constraints
+- current scope
+- uncertainty
+
+### Review gate
+
+A visible decision surface with:
+
+- approve
+- edit
+- reject
+- keep as draft
+
+Promotion into trusted memory occurs only after this gate.
+
+### Local workspace visual
+
+Use a readable file tree and Markdown previews. Avoid fake terminals as the only explanation.
 
 ### Buttons
 
-**Primary Button**
-- Background: `blue-600` (#4c6fff)
-- Text: white, `body-md` weight 600
-- Padding: 12px 24px
-- Border radius: 8px
-- Hover: `blue-500` (#5b7cff)
-- Active/pressed: `blue-700` (#3e5ae0)
-- Focus: 2px `blue-glow` (#6d83ff) outline
-- Transition: all 650ms cubic-bezier(0.22, 1, 0.36, 1)
+Use shared ProChat button primitives.
 
-**Secondary Button**
-- Background: `surface-hover`
-- Text: `text-primary`
-- Border: 1px `gray-300` (light) / `gray-500` (dark)
-- Padding: 12px 24px
-- Border radius: 8px
-- Hover: background darken 5%
-- Active: darken 10%
-- Focus: 2px `blue-glow` outline
-
-**Ghost Button**
-- Background: transparent
-- Text: `blue-600`, weight 600
-- Border: none
-- Padding: 12px 24px
-- Hover: background 10% `blue-600` with opacity
-- Active: background 20%
-- Focus: 2px `blue-glow` outline
+- one primary style
+- one secondary style
+- one tertiary or text style
+- visible hover, active, focus, loading, and disabled states
+- stable dimensions during interaction
 
 ### Cards
 
-- Background: `surface`
-- Border: 1px `gray-200` (light) / `gray-400` (dark)
-- Border radius: 12px
-- Padding: 24px
-- Hover: shadow 0 8px 16px rgba(0, 0, 0, 0.1)
-- Transition: all 650ms ease
-
-**Elevated Card**
-- Box shadow: 0 4px 12px rgba(0, 0, 0, 0.15)
-- Slightly higher padding: 32px
-
-### Input Fields
-
-- Background: `background`
-- Border: 1px `gray-300` (light) / `gray-500` (dark)
-- Text: `text-primary`, `body-md`
-- Padding: 12px 16px
-- Border radius: 8px
-- Focus: 2px `blue-glow` outline, border color to `blue-600`
-- Placeholder: `text-tertiary`, opacity 60%
-- Transition: all 200ms ease
-
-**Input States**
-- Disabled: opacity 50%, cursor not-allowed
-- Error: border `error` (#ef4444), focus outline `error`
-- Success: border `success` (#10b981), focus outline `success`
+- Use only when grouping is meaningful.
+- Keep radius, border, and padding consistent.
+- Use subtle elevation.
+- Avoid card grids as the default explanation method.
 
 ### Navigation
 
-- Background: `surface` on dark background
-- Text: `text-primary`, weight 500
-- Active link: `blue-600` with underline
-- Hover: text `blue-600`, underline appears
-- Transition: all 200ms ease
+- Sticky navigation may simplify during scroll.
+- Current section or route must remain clear.
+- Tester CTA should remain easy to reach.
+- Mobile navigation must be keyboard accessible.
 
-### Badges / Tags
+### Forms
 
-- Background: `blue-600` with 15% opacity
-- Text: `blue-600`, weight 500, `label` size
-- Padding: 4px 12px
-- Border radius: 6px
-- Optional border: 1px `blue-600`
+- Keep labels visible.
+- Place specific errors near fields.
+- Do not replace labels with placeholders.
+- Make tester onboarding feel guided rather than technical.
 
-### Icons
+### Illustration and icons
 
-- Size: 24px (default), 16px (small), 32px (large)
-- Color: inherit from text color or `blue-600` for primary
-- Stroke width: 2px (consistent)
-- Library: Phosphor icons preferred (open-source, high quality)
+Use:
 
----
+- file structures
+- memory records
+- evidence cards
+- source links
+- scopes
+- context packets
+- review panels
+- system diagrams
 
-## 5. Layout Principles
-
-### Spacing Scale
-
-```
-4px, 8px, 12px, 16px, 24px, 32px, 48px, 64px, 80px, 96px
-```
-
-Use these consistently. Never improvise spacing.
-
-### Grid System
-
-- **Desktop:** 12-column grid, max-width 1440px
-- **Tablet:** 8-column grid
-- **Mobile:** 4-column grid
-
-Gutter: 24px (desktop), 20px (tablet), 16px (mobile)
-
-### Container Padding
-
-- **Desktop:** 48px left/right
-- **Tablet:** 32px left/right
-- **Mobile:** 20px left/right
-
-### Whitespace
-
-- **Tight sections** (hero, CTA): 64px vertical padding
-- **Normal sections** (content, features): 80px vertical padding
-- **Loose sections** (breathing room): 96px vertical padding
-
-Never compress below 40px between major sections.
-
-### Alignment
-
-- All sections left-aligned with container max-width
-- Content should breathe; avoid walls of text
-- Use consistent column-based positioning
+Icons are functional aids, not substitutes for explanations.
 
 ---
 
-## 6. Depth & Elevation
+## 7. Motion & Interaction
 
-### Shadow System
+Animation is an explanatory layer, not decoration. Every major visual must still communicate as a paused frame.
 
-| Level | Shadow | Use |
-|-------|--------|-----|
-| **None** | - | Flat elements, backgrounds |
-| **Subtle** | 0 2px 4px rgba(0,0,0,0.08) | Slight elevation, hover states |
-| **Medium** | 0 4px 8px rgba(0,0,0,0.12) | Cards, dropdowns, modals |
-| **Strong** | 0 8px 16px rgba(0,0,0,0.16) | Elevated cards, floating elements |
-| **Dramatic** | 0 16px 32px rgba(0,0,0,0.24) | Modals, overlays, heavy emphasis |
+### Tier 1 — Ambient motion
 
-Apply shadows on light backgrounds: increase opacity by 10–20%. On dark backgrounds: use as-is.
+Examples:
 
-### Elevation (Z-index)
+- slow context-lens drift
+- faint signal movement along meaningful connections
+- soft status pulse on trusted memory
+- slight parallax between memory layers
+- subtle reordering after approval
+- calm background-grid movement
 
-```
-0 — base/background
-10 — cards, surfaces
-20 — dropdowns, popovers
-30 — modals, dialogs
-40 — tooltips
-50 — notifications
+Timing:
+
+```text
+4–12 seconds per cycle
 ```
 
-Keep layering predictable. Never skip levels.
+### Tier 2 — Interaction motion
 
-### AI Glow Effect
+Examples:
 
-Subtle radial glow accent for AI-related elements:
+- memory-record focus and expansion
+- source reveal
+- scope selection
+- review-state transition
+- copy-command confirmation
+- context packet highlighting its source records
 
-```css
-background: radial-gradient(circle at 50% 50%, rgba(109, 131, 255, 0.15), transparent 70%);
+Timing:
+
+```text
+120–240ms
 ```
 
-Use sparingly on hero backgrounds, AI-powered badges, or focus states.
+### Tier 3 — Narrative motion
+
+Use for the hero and major explanations.
+
+Timing:
+
+```text
+8–15 seconds per complete loop
+```
+
+#### Homepage hero storyboard
+
+1. **Scattered work:** real fragments enter from different directions.
+2. **Structured memory:** records align, connect to sources, and receive draft or trusted states.
+3. **Current task:** a task appears in the outer workspace.
+4. **Relevant context:** the lens selects only relevant records and forms a compact packet.
+5. **Result and review:** a possible reusable lesson appears behind a review gate.
+6. **Continuity:** the outer tool changes while memory remains fixed.
+
+Example fragments:
+
+```text
+Decision approved
+Project convention
+Reviewer correction
+Known issue
+Preferred format
+Do not repeat this approach
+Source document
+```
+
+Example packet:
+
+```text
+8 records
+3 sources
+1 known constraint
+```
+
+Review state:
+
+```text
+Reusable lesson detected
+Review before adding to memory
+```
+
+Closing statement:
+
+```text
+The tool changes. The memory remains.
+```
+
+#### QA hero storyboard
+
+Input fragments:
+
+```text
+Known regression
+Flaky pattern
+Selector rule
+Environment difference
+Changed acceptance criterion
+Previous workaround
+Tester correction
+Release lesson
+```
+
+Current task:
+
+```text
+What should I investigate first?
+```
+
+Context packet:
+
+```text
+3 related failures
+2 environment notes
+1 known regression
+4 source references
+```
+
+Output must show:
+
+- evidence used
+- memory used
+- likely category
+- recommended next action
+- confidence and uncertainty
+- draft reusable lesson
+- tester review
+
+### Motion behavior
+
+Use:
+
+- smooth directional flow
+- short travel distances
+- calm easing
+- slight depth changes
+- state-based illumination
+- progressive disclosure
+- clear pauses at comprehension points
+
+Avoid:
+
+- bouncing cards
+- constant particle fields
+- rapid zooms
+- spinning objects
+- fake typing loops
+- looping decorative blobs
+- scroll-jacking
+- motion on every paragraph
+
+### Reduced motion
+
+When reduced motion is enabled:
+
+- replace long sequences with three or four static states
+- remove parallax and drifting layers
+- preserve labels and state information
+- keep review gates visible
+- never hide meaning behind animation
 
 ---
 
-## 7. Do's and Don'ts
+## 8. Voice & Brand
 
-### ✅ Do
+ProChat speaks with calm technical confidence.
 
-- Use Host Grotesk for all typography
-- Maintain tight letter-spacing on headings (even when breathing room exists)
-- Apply consistent shadows from the system
-- Use the full blue palette (500–700 spectrum)
-- Transition all color changes with 650ms timing
-- Align to the 8px and 24px spacing scales
-- Keep dark mode as the primary experience
-- Use radial glows for AI-related or interactive elements
-- Keep components rounded (8–12px radius)
+Voice characteristics:
 
-### ❌ Don't
+- simple
+- practical
+- direct
+- buyer-focused
+- outcome-first
+- calm
+- specific
+- transparent about current limits
 
-- Mix fonts. Host Grotesk only.
-- Use serif typefaces anywhere
-- Override spacing with random pixel values
-- Apply custom shadows not in the system
-- Use flat blue on flat blue (always vary value or contrast)
-- Rush animations. 650ms is the baseline.
-- Create spacious light mode as the default
-- Use harsh black (#000000) — use `#0b1220` instead
-- Round corners below 8px or above 12px (except inline elements)
-- Add decorative gradients (reserve gradients for functional UI)
+### Core messages
 
-### Anti-patterns to Avoid
+```text
+Stop rebuilding context.
+Your files. Your memory. Under your control.
+AI drafts. You decide what becomes trusted memory.
+The tool changes. The memory remains.
+```
 
-- "AI purple" or "AI blue" on everything — use accents sparingly
-- Decorative illustrations competing with content
-- Three-column card grids below 1280px (collapses badly)
-- Thin font weights below 14px (readability issues on dark)
-- Mixing serif and sans-serif in the same section
-- Opacity stacking shadows (creates muddy depth)
+### Approved language
+
+Use:
+
+- keep useful knowledge reusable
+- stop re-explaining the same context
+- designed to reduce repeated work
+- relevant memory for the current task
+- portable and inspectable
+- current evidence wins
+- human-reviewed memory
+- use the tools you already have
+- guided setup prompt where relevant
+- express tester interest
+
+### Qualified language
+
+For model, tool, privacy, time, or token claims, use:
+
+- designed to
+- can
+- when the AI tool can access the workspace
+- current implementation where verified
+- no hosted memory service is required
+- internal testing suggests
+
+### Prohibited claims
+
+Do not claim:
+
+- universal one-command installation
+- autonomous trusted-memory updates
+- self-healing
+- fully autonomous learning
+- compatibility with every model, IDE, and operating system
+- proven financial savings
+- proven token reductions
+- zero third-party data processing
+- replacement of existing QA tools
+- a hosted dashboard that does not exist
+
+### Public terminology
+
+Use:
+
+- ProChat
+- ProChat Memory
+- ProChat Memory for QA
+- ProChat Workbench only where directly relevant
+
+Do not lead with:
+
+- ProChat OS
+- Infinite Brain
+- second brain
+- knowledge graph
+- runtime
+- modules
+- autonomous agent
+
+“Infinite Memory philosophy” may appear only as an internal concept, never as an unlimited capability claim.
 
 ---
 
-## 8. Responsive Behavior
+## 9. Anti-patterns, Accessibility & Production Rules
 
-### Breakpoints
+### Anti-patterns
 
-```
-Mobile: 0–639px
-Tablet: 640–1023px
-Desktop: 1024px+
-Large desktop: 1280px+
-```
+Do not:
 
-### Typography Scaling
+- copy another company’s complete visual identity
+- add raw colors inside production components
+- create page-specific versions of shared controls
+- place every concept inside a card
+- use low-contrast body text
+- hide labels inside placeholders
+- rely on motion for essential meaning
+- imply that drafts become trusted without review
+- show all stored memory entering the active context window
+- imply that local files prevent the selected AI provider from processing supplied content
+- represent roadmap features as current capabilities
+- use generic icon grids where a process animation is required
 
-- **Mobile:** body-md 14px, h1 28px, h2 24px
-- **Tablet:** body-md 15px, h1 32px, h2 28px
-- **Desktop:** body-md 15.5px, h1 40px, h2 32px (base)
-- **Large desktop:** body-md 15.75px, h1 40px, h2 32px (subtle increase)
+### Accessibility
 
-### Layout Collapsing
+Required:
 
-- **Multi-column grids:** collapse to single column below 768px
-- **Sidebars:** move below main content or hide (nav drawer)
-- **Cards:** stack vertically on mobile, 2-column on tablet, 3+ on desktop
-- **Padding:** reduce from 48px (desktop) to 20px (mobile) as viewport narrows
+- WCAG-compliant contrast
+- keyboard-accessible controls
+- visible focus states
+- reduced-motion alternatives
+- descriptive summaries for diagrams
+- captions or adjacent explanations for narrative animations
+- no state communicated by color alone
+- no autoplay sound
+- no trapped scrolling
+- responsive behavior from 360px upward
 
-### Touch Targets
+### Technical production rules
 
-- Minimum 48px × 48px for interactive elements on mobile
-- 44px × 44px acceptable for close buttons, secondary actions
-- Increase spacing between touch targets on mobile (min 8px gap)
+Preserve:
 
-### Images & Media
+- Next.js
+- React
+- semantic CSS variables
+- Tailwind token mapping
+- Radix primitives
+- Framer Motion
+- shared ProChat UI components
+- light and dark themes
+- design-system linting
 
-- Full-width on mobile (minus padding)
-- Max-width container on tablet/desktop
-- Aspect ratios: 16:9 (hero), 4:3 (cards), 1:1 (avatars)
+Preferred visual implementation:
 
----
+- SVG
+- CSS transforms
+- Framer Motion
+- lightweight canvas only where clearly justified
 
-## 9. Agent Prompt Guide
+Avoid heavy 3D engines and large background videos for core product explanations.
 
-**Quick color reference:**
-```
-Primary: #4c6fff (blue-600)
-Secondary: #5b7cff (blue-500)
-Pressed: #3e5ae0 (blue-700)
-Glow: #6d83ff (focus rings, AI effects)
-Dark bg: #0b1220
-Text (dark mode): #f3f5fa
-```
+### Design validation
 
-**Quick typography reference:**
-```
-All fonts: Host Grotesk
-Headings: 700 weight, -0.05em tracking
-Body: 400 weight, 15.5px default
-Buttons: 600 weight, 12px padding vertical
-```
+A successful page lets a first-time visitor answer:
 
-**When building UI:**
+1. What problem does ProChat Memory solve?
+2. What does it remember?
+3. How does it help a current task?
+4. Why does it reduce repeated context?
+5. Who controls trusted memory?
+6. Where does the memory live?
+7. Does it replace existing tools?
+8. What can a tester do today?
+9. What is roadmap-only?
+10. What should the visitor do next?
 
-1. Read this DESIGN.md first
-2. Use colors from the palette above
-3. Apply typography from Section 3
-4. Style components using Section 4 as template
-5. Respect spacing scale: 4, 8, 12, 16, 24, 32, 48, 64, 80, 96px
-6. Add shadows from Section 6
-7. Test on mobile (breakpoint 640px), tablet (1024px), desktop (1280px+)
-8. All transitions: 650ms cubic-bezier(0.22, 1, 0.36, 1)
-
-**Example prompt for agent:**
-```
-"Build a hero section using prochat DESIGN.md. 
-Use blue-600 for the CTA button, Host Grotesk for heading. 
-Apply dark background (#0b1220), add subtle glow on hover. 
-Ensure responsive below 768px."
-```
-
----
-
-## Metadata
-
-- **Brand:** prochat.tools
-- **Extracted:** 2026-04-10
-- **Tech stack:** Next.js 14, TypeScript, Tailwind CSS v3, shadcn/ui
-- **Mode:** Dark-first (light mode secondary)
-- **Font:** Host Grotesk (Google Fonts)
-- **Color system:** Custom `--pc-*` CSS variables
-- **Design system linter:** Available at `scripts/design/lint-design-system.mjs`
-
----
-
-## Updates & Maintenance
-
-This DESIGN.md is the source of truth for prochat.tools branding. Update it as the brand evolves. Keep the 9-section format.
-
-All tools (Claude, Codex, Gemini) read this file. Changes propagate automatically.
+The design succeeds only when visuals and text answer these questions together.
