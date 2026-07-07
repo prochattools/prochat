@@ -29,12 +29,19 @@ const CONTACT_ACTIONS = [
 
 function FooterColumn({ title, links }: { title: string; links: readonly { href: string; label: string }[] }) {
   return (
-    <div className="pm-footer-column">
-      <h4>{title}</h4>
-      <ul>
+    <div className="space-y-4">
+      <h4 className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/85">
+        {title}
+      </h4>
+      <ul className="space-y-3">
         {links.map(link => (
           <li key={`${link.href}-${link.label}`}>
-            <Link href={link.href}>{link.label}</Link>
+            <Link
+              href={link.href}
+              className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {link.label}
+            </Link>
           </li>
         ))}
       </ul>
@@ -44,44 +51,51 @@ function FooterColumn({ title, links }: { title: string; links: readonly { href:
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="pm-site-footer">
-      <div className="pm-footer-inner">
-        <div className="pm-footer-brand">
-          <Link href="/" className="pm-footer-logo" aria-label="ProChat home">
-            <Logo scale={1.02} />
-          </Link>
-          <p>
-            Private, persistent memory for AI-assisted work.
-          </p>
-          <p className="pm-footer-proof">
-            Your files. Your memory. Under your control.
-          </p>
-        </div>
+    <footer className="relative z-10 border-t border-border/60 bg-background/55 text-foreground backdrop-blur-xl">
+      <div className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.6fr)] lg:gap-16">
+          <div className="max-w-md space-y-6">
+            <Link href="/" className="inline-flex" aria-label="ProChat home">
+              <Logo scale={1.02} />
+            </Link>
+            <div className="space-y-3">
+              <p className="text-base leading-7 text-muted-foreground">
+                Private, persistent memory for AI-assisted work.
+              </p>
+              <p className="text-base font-medium leading-7 text-foreground">
+                Your files. Your memory. Under your control.
+              </p>
+            </div>
+          </div>
 
-        <div className="pm-footer-links">
-          <FooterColumn title="Product" links={PRODUCT_LINKS} />
-          <FooterColumn title="Use cases" links={USE_LINKS} />
-          <FooterColumn title="Resources" links={RESOURCE_LINKS} />
-          <div className="pm-footer-column">
-            <h4>Contact</h4>
-            <div className="pm-footer-socials">
-              {CONTACT_ACTIONS.map(action => (
-                <a
-                  key={action.label}
-                  href={action.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={action.label}
-                >
-                  <SocialIcon icon={action.icon} className="h-4 w-4 fill-current" />
-                  <span>{action.label}</span>
-                </a>
-              ))}
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            <FooterColumn title="Product" links={PRODUCT_LINKS} />
+            <FooterColumn title="Use cases" links={USE_LINKS} />
+            <FooterColumn title="Resources" links={RESOURCE_LINKS} />
+            <div className="space-y-4">
+              <h4 className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/85">
+                Contact
+              </h4>
+              <div className="space-y-3">
+                {CONTACT_ACTIONS.map(action => (
+                  <a
+                    key={action.label}
+                    href={action.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={action.label}
+                    className="inline-flex items-center gap-2 text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <SocialIcon icon={action.icon} className="h-4 w-4 fill-current" />
+                    <span>{action.label}</span>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="pm-footer-bottom">
+        <div className="mt-12 flex flex-col gap-3 border-t border-border/60 pt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <span>© {new Date().getFullYear()} ProChat</span>
           <span>Local files · Human-reviewed · Portable memory</span>
         </div>
