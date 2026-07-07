@@ -1,8 +1,14 @@
 # Book Page Blueprint
 
-Status: canonical plan for the ProChat `/book` page.
+Status: repository-local draft plan for the ProChat `/book` page, subordinate to Mind's canonical ProChat strategy.
 
 Last updated: 2026-05-25
+
+## Canonical authority
+
+Mind is canonical for ProChat company philosophy, product hierarchy, naming, positioning, business stage, legal-policy direction, growth policy, and cross-product roadmap.
+
+This blueprint may guide page execution only. It must not present a product hierarchy or flagship strategy that differs from Mind.
 
 ## Goal
 
@@ -136,13 +142,13 @@ The page should speak to:
 
 ## Credibility section
 
-Mention ProChat OS as the credibility anchor, because it is the flagship strategy.
+Do not present ProChat OS, BuildFlow, kits, or older project names as the flagship strategy.
 
 Suggested copy:
 
-> I also build ProChat OS, ProChat's Agentic Workflow OS for turning messy inputs into structured work. The same practical, workflow-first approach is what I bring into these 1:1 setup sessions.
+> I build ProChat Memory, a local-first product for keeping useful project knowledge reusable, and ProChat Workbench, a local workbench for using ChatGPT with real repositories and documents. The same practical, review-first approach is what I bring into these 1:1 setup sessions.
 
-BuildFlow may be referenced only as secondary/internal context if needed. Do not make BuildFlow the credibility center or main offer.
+Keep this section short. The booking page is a service page, not a replacement for canonical ProChat product strategy in Mind.
 
 ## Recommended page sections
 
@@ -265,6 +271,6 @@ Recommended later:
 - The two Google Calendar links are used exactly.
 - The page clearly separates free triage from paid implementation help.
 - The $150 paid session has clear scope and boundaries.
-- ProChat OS is the main credibility anchor.
-- BuildFlow is mentioned only as secondary context if needed, not as the main offer.
+- The page does not present ProChat OS, BuildFlow, kits, or older project names as the flagship strategy.
+- Any ProChat product references align with Mind: ProChat Memory is the flagship, ProChat Memory for QA is the first launch niche, and ProChat Workbench is the second product.
 - No custom booking backend is created.

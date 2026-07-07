@@ -1,108 +1,83 @@
 # ProChat Repo Status
 
-Status: current repo alignment note.
+Status: current repository alignment note.  
+Last updated: 2026-07-07
 
-Last updated: 2026-05-25
+## Canonical authority
 
-## Source of truth
+The `mind` repository is canonical for ProChat company philosophy, product hierarchy, naming, positioning, business stage, legal-policy direction, growth policy, and cross-product roadmap.
 
-The `mind` repo is canonical.
-
-ProChat follows:
+Start with:
 
 ```text
-mind/wiki/organisations/prochat/brand/prochat-os-strategy.md
-mind/wiki/organisations/prochat/brand/prochat-os-technical-definition.md
-mind/wiki/organisations/prochat/brand/prochat-os-go-to-market.md
-mind/wiki/organisations/prochat/brand/prochat-os-roadmap.md
+mind/wiki/organisations/prochat/README.md
+mind/wiki/organisations/prochat/brand/
+mind/wiki/organisations/prochat/legal/
+mind/wiki/organisations/prochat/growth/
 ```
 
-When this repo conflicts with `mind`, `mind` wins.
+This repository is subordinate to Mind. It controls verified website implementation facts only: routes, components, content rendering, analytics hooks, deployment behavior, environment contracts, and docs automation.
 
-## Strategy status
+When this repository conflicts with Mind, Mind wins and this repository must be corrected.
 
-ProChat OS is the flagship.
+## Current product hierarchy
 
-BuildFlow, ProKit, SaaSKit, UXKit, and WaaSKit are legacy or secondary/supporting products.
+```text
+ProChat
+├── ProChat Memory
+│   └── ProChat Memory for QA
+└── ProChat Workbench
+```
 
-They may remain in the repo and on the website, but they should not be described as the company flagship or main strategy.
+ProChat currently has exactly two products:
+
+- **ProChat Memory** — flagship product.
+- **ProChat Workbench** — second product.
+
+**ProChat Memory for QA** is the first launch niche and first discipline-specific edition of ProChat Memory.
 
 ## Website status
 
-The ProChat website should lead with ProChat OS:
+The public website should lead with the Memory-first ProChat strategy:
 
-```text
-Agentic workflows between messy inputs and business tools.
-```
+- ProChat Memory as the flagship;
+- ProChat Memory for QA as the first launch niche and first discipline-specific edition;
+- ProChat Workbench as the second product, introduced separately and only where relevant.
 
-The public website is business-agnostic.
+Current primary public routes:
 
-Law-firm/MikeOSS messaging is a direct outreach wedge, not the main public brand.
+- `/` — Memory-led ProChat homepage;
+- `/prochat-memory` — ProChat Memory page;
+- `/qa-memory` — ProChat Memory for QA page;
+- `/contact` — contact and tester-interest route.
 
-## BuildFlow status
+## Legacy and historical references
 
-BuildFlow is no longer the flagship.
+The following names may appear only when clearly framed as historical, archived, legacy, internal, technical, or future/capability context:
 
-BuildFlow remains a useful secondary project/application for AI project context, repo operations, safe writes, and support workflows.
+- ProChat OS;
+- SaaSKit, ProKit, UXKit, WaaSKit;
+- MikeOSS;
+- BuildFlow;
+- ProChat Answers;
+- ProChat Automations;
+- ProChat API;
+- ProChat MCP.
 
-BuildFlow can inform ProChat OS CLI/runtime/support tooling, but ProChat OS is the leading product strategy.
+They must not be presented as current public products, current flagship strategy, product navigation, homepage positioning, or primary calls to action.
 
-## Legacy products status
+BuildFlow may remain as an internal/technical compatibility identifier for ProChat Workbench when required by implementation details.
 
-SaaSKit and ProKit remain real legacy/supporting products.
+## Public conversion and cleanup status
 
-UXKit and WaaSKit remain historical concepts/products whose useful ideas may later become ProChat OS modules or workflows.
+Public menus, footer links, homepage sections, and primary CTAs should align with the current Mind-defined product hierarchy.
+
+Older direct-access or archived routes may remain temporarily for compatibility, redirects, historical review, or future cleanup. They should not be promoted as current company strategy unless Mind explicitly changes the product boundary.
 
 ## Authentication status
 
 See [auth-status.md](./auth-status.md).
 
-## MikeOSS / law-firm wedge status
+## Rule
 
-MikeOSS is not ProChat OS.
-
-MikeOSS is a law-firm demo/install block:
-
-```text
-MikeOSS = legal document AI workspace
-ProChat OS = Agentic Workflow OS around and beyond it
-```
-
-Demo domains:
-
-```text
-legal.prochat.tools
-legal-api.prochat.tools
-```
-
-Use fake legal data only for the shared demo.
-
-
-
-
-## Public website cleanup status — 2026-06-02
-
-Current rule:
-
-```text
-The website promotes ProChat OS only.
-```
-
-Legacy product routes may remain for direct access, archive, old customers, or future repositioning, but public menus, footer links, homepage sections, and primary CTAs should not promote them.
-
-Public conversion pages:
-
-- `/` — business-agnostic ProChat OS homepage
-- `/systems/prochat-os` — product detail page
-- `/ai-workflows` — managed AI workflow offer page
-- `/legal-ai-workflows` — law-firm-specific workflow pilot page
-- `/book` — discovery/booking page
-
-Legacy/direct-access only:
-
-- `/kits`
-- `/kits/prokit`
-- `/kits/saaskit`
-- `/kits/uxkit`
-- `/kits/waaskit`
-- `/buildflow`
+Do not use this file to redefine ProChat strategy. Use it only to record the current website repository status under Mind's canonical strategy.
