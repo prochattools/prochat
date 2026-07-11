@@ -51,15 +51,118 @@ Use `CRITICAL` for changes that can break primary navigation, legal access, prod
 
 ## Master matrix
 
-Populate one row per audited item.
+The route rows below were populated during Phase 5 Task 5.1. Detailed evidence, risks, consumers, and unresolved questions live in `ROUTE_AUDIT.md`.
 
-| ID | Category | Current path | Current purpose | Consumers | Canonical destination | Disposition | Wave | Risk | Status | Redirect | Validation | Rollback | Owner |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| DOC-001 | document | `docs/strategy.md` | repo-local strategy bridge | contributors | keep as subordinate bridge | KEEP | 0 | LOW | DECIDED | — | canonical-link review | revert file | Steve |
-| ROUTE-001 | route | legacy route to be inventoried | unknown until audit | public visitors | canonical page or archive | DECISION_REQUIRED | 7 | HIGH | INVENTORIED | TBD | route crawl, redirect test | restore route | Steve |
-| STYLE-001 | style | legacy global theme to be inventoried | historic visual foundation | multiple pages | ProChat semantic tokens | REPLACE | 1–8 | HIGH | INVENTORIED | — | visual regression, build | restore stylesheet/import | Steve |
+### Canonical and required public responsibilities
 
-The example rows are scaffolding, not a completed audit.
+| ID | Current path | Canonical destination | Disposition | Wave | Risk | Status | Redirect |
+|---|---|---|---|---:|---|---|---|
+| ROUTE-001 | `/` | `/` | REWRITE | 3 | HIGH | DECIDED | no |
+| ROUTE-002 | `/prochat-memory` | `/memory` | REPLACE then REDIRECT | 4/7 | HIGH | DECISION_REQUIRED | probable |
+| ROUTE-003 | `/qa-memory` | `/memory/qa` | REPLACE then REDIRECT | 4/7 | HIGH | DECISION_REQUIRED | probable |
+| ROUTE-004 | `/contact` | `/contact` | REWRITE/REFACTOR | 6 | HIGH | DECIDED | no |
+| ROUTE-005 | `/privacy` | `/privacy` | REWRITE | 6 | CRITICAL | DECIDED | no |
+| ROUTE-006 | `/terms` | `/terms` | REWRITE | 6 | CRITICAL | DECIDED | no |
+| ROUTE-007 | `/docs` | `/docs` | REWRITE | 6 | HIGH | DECIDED | no |
+| ROUTE-008 | `/docs/[category]/[[...slug]]` | current docs taxonomy TBD | ARCHIVE/REWRITE/NOINDEX by entry | 6/7 | HIGH | DECISION_REQUIRED | possible |
+| ROUTE-009 | global 404 | global 404 | REPLACE | 6 | MEDIUM | DECIDED | no |
+| ROUTE-010 | global error | global error | REPLACE | 6 | HIGH | DECIDED | no |
+| ROUTE-011 | docs 404 | docs error | REFACTOR | 6 | MEDIUM | DECIDED | no |
+| ROUTE-012 | missing `/memory` | `/memory` | CREATE | 4 | HIGH | REPLACEMENT_PLANNED | n/a |
+| ROUTE-013 | missing `/memory/qa` | `/memory/qa` | CREATE | 4 | HIGH | REPLACEMENT_PLANNED | n/a |
+| ROUTE-014 | missing `/workbench` | `/workbench` | CREATE | 5 | HIGH | REPLACEMENT_PLANNED | n/a |
+| ROUTE-015 | missing `/philosophy` | `/philosophy` | CREATE | 6 | MEDIUM | REPLACEMENT_PLANNED | n/a |
+| ROUTE-016 | missing `/about` | `/about` | CREATE | 6 | MEDIUM | REPLACEMENT_PLANNED | n/a |
+
+### Legacy, duplicate, and experimental public pages
+
+| ID | Current path | Canonical destination | Disposition | Wave | Risk | Status | Redirect |
+|---|---|---|---|---:|---|---|---|
+| ROUTE-017 | `/buildflow` | `/workbench` | REDIRECT after replacement | 5/7 | CRITICAL | DECISION_REQUIRED | probable |
+| ROUTE-018 | `/systems/prochat-os` | TBD | ARCHIVE or REDIRECT | 7 | CRITICAL | DECISION_REQUIRED | probable |
+| ROUTE-019 | `/systems/events` | TBD | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | possible |
+| ROUTE-020 | `/ai-workflows` | TBD | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | possible |
+| ROUTE-021 | `/legal-ai-workflows` | TBD | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | possible |
+| ROUTE-022 | `/studio` | none currently | ARCHIVE/REWRITE/REMOVE after decision | 7 | HIGH | DECISION_REQUIRED | possible |
+| ROUTE-023 | `/kits` | none | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | probable |
+| ROUTE-024 | `/kits/prokit` | none | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | probable |
+| ROUTE-025 | `/kits/prokit/finish` | purchaser obligation TBD | KEEP temporarily | 7/8 | CRITICAL | BLOCKED | no immediate redirect |
+| ROUTE-026 | `/kits/saaskit` | none | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | probable |
+| ROUTE-027 | `/kits/saaskit/finish` | purchaser obligation TBD | KEEP temporarily | 7/8 | CRITICAL | BLOCKED | no immediate redirect |
+| ROUTE-028 | `/kits/uxkit` | none | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | probable |
+| ROUTE-029 | `/kits/waaskit` | none | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | probable |
+| ROUTE-030 | `/waitlist` | contact/beta destination TBD | REPLACE or REDIRECT | 6/7 | CRITICAL | DECISION_REQUIRED | probable |
+| ROUTE-031 | `/waiting-list` | `/waitlist` currently | retain redirect until replacement | 7 | HIGH | REDIRECTED | existing |
+| ROUTE-032 | `/book` | TBD | ARCHIVE or REDIRECT | 7 | MEDIUM | DECISION_REQUIRED | possible |
+| ROUTE-033 | `/proof` | TBD | ARCHIVE or REDIRECT | 7 | MEDIUM | DECISION_REQUIRED | possible |
+| ROUTE-034 | `/starting-point` | resources destination TBD | REDIRECT or ARCHIVE | 7 | MEDIUM | DECISION_REQUIRED | probable |
+| ROUTE-035 | `/learn` | resources/docs decision TBD | ARCHIVE/NOINDEX/REPLACE | 6/7 | HIGH | DECISION_REQUIRED | possible |
+| ROUTE-036 | `/learn/production-guide` | resources archive | ARCHIVE/NOINDEX | 7 | MEDIUM | DECISION_REQUIRED | possible |
+| ROUTE-037 | `/learn/saas-starting-point` | resources archive | ARCHIVE/NOINDEX | 7 | MEDIUM | DECISION_REQUIRED | possible |
+| ROUTE-038 | `/blog` | `/learn` currently | review redirect after resource decision | 7 | MEDIUM | REDIRECTED | existing runtime |
+| ROUTE-039 | `/blog/[slug]` | entry-level TBD | ARCHIVE/KEEP selectively/REDIRECT | 7 | HIGH | DECISION_REQUIRED | possible |
+| ROUTE-040 | `/prompts` | current docs/resources TBD | ARCHIVE/REWRITE | 6/7 | MEDIUM | DECISION_REQUIRED | possible |
+| ROUTE-041 | `/prompts/[category]/[slug]` | entry-level TBD | ARCHIVE/KEEP selectively | 7 | MEDIUM | DECISION_REQUIRED | possible |
+| ROUTE-042 | `/waas/accountants` | none | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | probable |
+| ROUTE-043 | `/privacy-policy` | `/privacy` | retain redirect | 7 | MEDIUM | REDIRECTED | existing permanent |
+| ROUTE-044 | `/tos` | `/terms` | retain redirect | 7 | MEDIUM | REDIRECTED | existing permanent |
+
+### Internal, authenticated, operational, and utility pages
+
+| ID | Current path | Canonical destination | Disposition | Wave | Risk | Status | Redirect |
+|---|---|---|---|---:|---|---|---|
+| ROUTE-045 | `/admin` | `/admin/licenses` | KEEP | protected | HIGH | DECIDED | existing runtime |
+| ROUTE-046 | `/admin/licenses` | same | KEEP/REFACTOR if used | protected | CRITICAL | DECISION_REQUIRED | no |
+| ROUTE-047 | `/admin/og` | same or remove | KEEP/REMOVE after audit | protected | HIGH | DECISION_REQUIRED | no |
+| ROUTE-048 | `/admin/waitlist` | beta admin TBD | REFACTOR/REPLACE | protected | HIGH | DECISION_REQUIRED | no |
+| ROUTE-049 | `/dashboard` | application decision TBD | DECISION REQUIRED | protected | HIGH | DECISION_REQUIRED | no |
+| ROUTE-050 | `/chat/[projectID]` | application decision TBD | KEEP/DECISION REQUIRED | protected | CRITICAL | DECISION_REQUIRED | no |
+| ROUTE-051 | `/preferences` | same | KEEP/REFACTOR | protected | HIGH | DECISION_REQUIRED | no |
+| ROUTE-052 | `/sign-in/[[...sign-in]]` | same | KEEP | protected | CRITICAL | DECIDED | no |
+| ROUTE-053 | `/sign-up/[[...sign-up]]` | same | KEEP | protected | CRITICAL | DECIDED | no |
+| ROUTE-054 | `/processing-page/[[...processing-page]]` | transactional decision TBD | KEEP temporarily | protected | CRITICAL | BLOCKED | no |
+| ROUTE-055 | `/success` | transactional decision TBD | KEEP temporarily | protected | CRITICAL | BLOCKED | no |
+| ROUTE-056 | `/maintenance` | same | KEEP/REFACTOR | 6 | HIGH | DECIDED | no |
+| ROUTE-057 | `/debug/analytics` | internal only | PROTECT/NOINDEX/REMOVE after audit | protected | HIGH | DECISION_REQUIRED | no |
+| ROUTE-058 | `/unsubscribe` | same | KEEP/REFACTOR | 6 | HIGH | DECIDED | no |
+
+### Current, legacy, and internal route handlers
+
+| ID | Current path | Canonical destination | Disposition | Wave | Risk | Status |
+|---|---|---|---|---:|---|---|
+| ROUTE-059 | `/api/contact` | same | KEEP then REFACTOR | 6 | CRITICAL | DECIDED |
+| ROUTE-060 | `/api/health` | same | KEEP | protected | HIGH | DECIDED |
+| ROUTE-084 | `/admin/licenses/revoke` | same | KEEP until licensing audit | protected | CRITICAL | DECISION_REQUIRED |
+| ROUTE-061 | `/api/preferences` | same | KEEP | protected | HIGH | DECIDED |
+| ROUTE-062 | `/api/projects` | product decision TBD | DECISION REQUIRED | protected | CRITICAL | DECISION_REQUIRED |
+| ROUTE-063 | `/api/tenants/projects` | product decision TBD | DECISION REQUIRED | protected | CRITICAL | DECISION_REQUIRED |
+| ROUTE-064 | `/api/subscription` | commerce decision TBD | KEEP temporarily | protected | CRITICAL | BLOCKED |
+| ROUTE-065 | `/api/stripe/create-checkout` | commerce decision TBD | KEEP temporarily | protected | CRITICAL | BLOCKED |
+| ROUTE-066 | `/api/stripe/create-portal` | commerce decision TBD | KEEP temporarily | protected | CRITICAL | BLOCKED |
+| ROUTE-067 | `/api/webhook/stripe` | commerce decision TBD | KEEP until zero-consumer proof | protected | CRITICAL | BLOCKED |
+| ROUTE-068 | `/api/store/prokit/claim` | purchaser obligation TBD | DEPRECATE after obligations audit | 8 | CRITICAL | BLOCKED |
+| ROUTE-069 | `/api/store/saaskit/claim` | purchaser obligation TBD | DEPRECATE after obligations audit | 8 | CRITICAL | BLOCKED |
+| ROUTE-070 | `/api/waitlist` | beta/contact handler TBD | REPLACE or RETIRE | 6/8 | CRITICAL | DECISION_REQUIRED |
+| ROUTE-071 | `/api/waiting-list` | beta/contact handler TBD | DEPRECATE after consumer audit | 8 | CRITICAL | DECISION_REQUIRED |
+| ROUTE-072 | `/api/mailerlite/subscribe` | communications decision TBD | KEEP/REFACTOR or retire | 6/8 | CRITICAL | DECISION_REQUIRED |
+| ROUTE-073 | `/api/(make)/active` | integration decision TBD | DECISION REQUIRED | protected | CRITICAL | DECISION_REQUIRED |
+| ROUTE-074 | `/api/(make)/link` | integration decision TBD | DECISION REQUIRED | protected | CRITICAL | DECISION_REQUIRED |
+| ROUTE-075 | `/api/(make)/scenarios` | integration decision TBD | KEEP/ARCHIVE by evidence | protected | CRITICAL | DECISION_REQUIRED |
+| ROUTE-076 | `/api/(make)/scenarios/openAIAssistant` | integration decision TBD | DECISION REQUIRED | protected | CRITICAL | DECISION_REQUIRED |
+| ROUTE-077 | `/api/(n8n)/workflows/openAIAssistant` | integration decision TBD | DECISION REQUIRED | protected | CRITICAL | DECISION_REQUIRED |
+| ROUTE-078 | `/api/social/next` | same or retire | KEEP/DECISION REQUIRED | protected | HIGH | DECISION_REQUIRED |
+| ROUTE-079 | `/api/social/mark-posted` | same or retire | KEEP/DECISION REQUIRED | protected | HIGH | DECISION_REQUIRED |
+| ROUTE-080 | `/social` | same or retire | KEEP/DECISION REQUIRED | protected | HIGH | DECISION_REQUIRED |
+| ROUTE-081 | `/go` | destination/consumer TBD | DECISION REQUIRED | protected | HIGH | DECISION_REQUIRED |
+| ROUTE-082 | `/og` | current OG service | KEEP/REFACTOR | 6 | MEDIUM | DECIDED |
+| ROUTE-083 | `/blog/[slug]/og` | retained article entries only | KEEP conditionally | 7 | MEDIUM | DECISION_REQUIRED |
+
+### Non-route migration rows retained for later audits
+
+| ID | Category | Current path | Canonical destination | Disposition | Wave | Risk | Status |
+|---|---|---|---|---|---:|---|---|
+| DOC-001 | document | `docs/strategy.md` | subordinate strategy bridge | KEEP | 0 | LOW | DECIDED |
+| STYLE-001 | style | legacy global theme systems | ProChat semantic tokens | REPLACE | 1–8 | HIGH | INVENTORIED |
 
 ## Detailed record template
 

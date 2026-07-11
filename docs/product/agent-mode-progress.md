@@ -296,6 +296,53 @@ Still required before commit:
 7. commit only intended documentation paths;
 8. close the active run with commit hash and exact next task.
 
+## Phase 5 Task 5.1 completion
+
+Completed inventory scope:
+
+```yaml
+page_routes: 50
+route_handlers: 26
+layouts: 8
+error_or_not_found_files: 3
+sitemaps: 2
+robots_files: 1
+next_config_redirects: 14
+route_records: 84
+```
+
+Changed documentation:
+
+```text
+docs/migration/ROUTE_AUDIT.md
+docs/migration/MIGRATION_MATRIX.md
+docs/product/agent-mode-progress.md
+```
+
+Key findings:
+
+- six canonical responsibilities exist at their final paths;
+- three product responsibilities exist only at legacy paths;
+- five required canonical routes are missing;
+- BuildFlow and ProChat OS publicly contradict current product strategy;
+- Privacy and Terms remain tied to legacy kit commerce;
+- public docs remain SaaSKit/ProKit-oriented;
+- the current waitlist promotes legacy products;
+- header, footer, chrome routing, sitemap, robots, metadata, and analytics require later migration;
+- commerce, auth, admin, project, subscription, waitlist, and integration handlers contain critical migration risk;
+- no DELETE decision was finalized.
+
+Validation evidence:
+
+- bounded source inventory independently confirmed 50 pages, 26 handlers, 8 layouts, 3 error/not-found files, 2 sitemaps, and 1 robots file;
+- direct reads confirmed all highest-risk public claims and shell findings;
+- all 84 route IDs appear in both the route audit and migration matrix;
+- no production source, route, metadata, navigation, redirect, package, or copy file changed;
+- no dependency was installed;
+- no route was moved, deleted, or redirected.
+
+Unresolved route decisions are recorded in `docs/migration/ROUTE_AUDIT.md`, including canonical product URL migration, legacy product/resource archives, waitlist destination, purchaser obligations, internal application scope, root sitemap behavior, company versus founder social channels, and temporary noindex needs.
+
 ## Restrictions for the next execution phase
 
 During Phase 5 inventory:
@@ -308,42 +355,55 @@ During Phase 5 inventory:
 - record audit evidence and migration decisions only;
 - keep each audit category in a separate reviewable commit where practical.
 
-## Exact next task after documentation commit
+## Exact next task after route-audit commit
 
 ```text
-Execute Phase 5, Task 5.1 only: inventory all ProChat routes and page responsibilities.
+Execute Phase 5, Task 5.2 only: component inventory.
 
 Read first:
 - docs/product/agent-mode-progress.md
-- docs/roadmap.md
 - docs/implementation-plan.md
-- docs/platform/PAGE_ARCHITECTURE.md
+- docs/design/COMPONENT_LIBRARY.md
+- docs/design/PRODUCT_VISUAL_LIBRARY.md
 - docs/migration/LEGACY_SWEEP_PLAN.md
 - docs/migration/MIGRATION_MATRIX.md
-- docs/migration/ROUTE_AUDIT.md
-- PRODUCT.md
+- docs/migration/COMPONENT_AUDIT.md
+- DESIGN.md
+- brand-spec.md
 
-Inspect:
-- src/app/** route tree
-- layouts, loading, error, and not-found files
-- redirects and rewrites
-- navigation and footer route helpers
-- sitemap and robots sources
-- metadata exports
-- public form/API routes
+Inspect read-only:
+- src/components/**
+- src/app/**/_components/**
+- marketing component directories
+- shared UI wrappers
+- buttons, links, headers, navigation, footers, heroes, forms, cards, sections, product visuals, analytics wrappers, and compatibility components
 
-Output:
-- completed route inventory records in docs/migration/ROUTE_AUDIT.md
-- corresponding rows in docs/migration/MIGRATION_MATRIX.md
-- every route mapped to a canonical responsibility or DECISION_REQUIRED
-- initial route risk and redirect notes
-- validation evidence and exact changed paths
+For every component record:
+- path and responsibility
+- direct consumers
+- public API and variants
+- design and runtime dependencies
+- accessibility, responsive, and motion behavior
+- tests
+- current status
+- proposed disposition
+- canonical replacement
+- migration wave and risk
+- validation and rollback
+
+Outputs:
+- completed component records in docs/migration/COMPONENT_AUDIT.md
+- matching component rows in docs/migration/MIGRATION_MATRIX.md
+- duplicate-responsibility groups
+- protected shared components
+- zero-consumer candidates, without deletion approval
+- exact evidence and unresolved component decisions
 
 Restrictions:
 - do not edit production code
-- do not delete or move routes
-- do not implement redirects
-- do not modify copy
+- do not move, rename, merge, or delete components
+- do not change component APIs
+- do not update imports
+- do not modify styles or copy
 - do not install dependencies
-- do not commit unrelated changes
 ```
