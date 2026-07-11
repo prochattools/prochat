@@ -10,10 +10,14 @@ The `mind` repository is canonical for ProChat company philosophy, product hiera
 Start with:
 
 ```text
-mind/wiki/organisations/prochat/README.md
-mind/wiki/organisations/prochat/brand/
-mind/wiki/organisations/prochat/legal/
-mind/wiki/organisations/prochat/growth/
+mind/wiki/organisations/prochat/brand/README.md
+mind/wiki/organisations/prochat/brand/product-strategy.md
+mind/wiki/organisations/prochat/brand/product-naming-architecture.md
+mind/wiki/organisations/prochat/brand/product-roadmap.md
+mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
+mind/wiki/organisations/prochat/brand/global-design-foundation.md
+mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
+mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```
 
 This repository is subordinate to Mind. It controls verified website implementation facts only: routes, components, content rendering, analytics hooks, deployment behavior, environment contracts, and docs automation.

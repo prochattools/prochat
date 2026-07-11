@@ -11,12 +11,14 @@ Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning
 Canonical references:
 
 ```text
-mind/wiki/organisations/prochat/README.md
+mind/wiki/organisations/prochat/brand/README.md
 mind/wiki/organisations/prochat/brand/product-strategy.md
 mind/wiki/organisations/prochat/brand/product-naming-architecture.md
 mind/wiki/organisations/prochat/brand/product-roadmap.md
-mind/wiki/organisations/prochat/growth/README.md
-mind/wiki/organisations/prochat/legal/README.md
+mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
+mind/wiki/organisations/prochat/brand/global-design-foundation.md
+mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
+mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```
 
 This document is not a second ProChat strategy source. It only explains how this website repository should apply Mind's strategy in local pages, navigation, metadata, and conversion flows.

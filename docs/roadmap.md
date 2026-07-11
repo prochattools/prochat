@@ -9,12 +9,14 @@
 Mind is canonical for the ProChat cross-product roadmap and product strategy:
 
 ```text
-mind/wiki/organisations/prochat/README.md
+mind/wiki/organisations/prochat/brand/README.md
 mind/wiki/organisations/prochat/brand/product-strategy.md
 mind/wiki/organisations/prochat/brand/product-naming-architecture.md
 mind/wiki/organisations/prochat/brand/product-roadmap.md
-mind/wiki/organisations/prochat/growth/README.md
-mind/wiki/organisations/prochat/legal/README.md
+mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
+mind/wiki/organisations/prochat/brand/global-design-foundation.md
+mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
+mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```
 
 This document is a website implementation roadmap only. It must not redefine ProChat product strategy, naming, business stage, legal-policy direction, growth policy, or cross-product roadmap.
@@ -99,64 +101,221 @@ docs/archive/old-modules/
 
 Candidate files will be reviewed before moving.
 
-## Phase C — Website copy blueprint rewrite
+## Phase C — Canonical copy and claim system
+
+Status: complete.
 
 Goal:
 
-Rewrite active copy guidance for:
+Establish the canonical homepage narrative and public claim boundaries before visual design.
 
-- homepage;
-- ProChat Memory page;
-- ProChat Memory for QA page;
-- ProChat Workbench page;
-- contact/waitlist pages;
-- navigation and footer language;
-- metadata and social copy.
+Completed outcomes:
 
-Constraints:
+- canonical homepage copy lives in Mind;
+- the homepage presents ProChat as a memory-first software company;
+- ProChat Memory is the flagship;
+- ProChat Memory for QA is the current edition and first launch niche;
+- ProChat Workbench is the second product;
+- unsupported security, privacy, integration, savings, and availability claims are excluded.
 
-- do not duplicate Mind strategy;
-- do not invent product names;
-- do not overpromise beta status, legal rights, savings, or automation capabilities;
-- distinguish current products from capabilities and future interfaces.
+## Phase D — Global design foundation
 
-## Phase D — Marketing page rewrite
+Status: complete.
 
 Goal:
 
-Bring production marketing pages into line with the cleaned docs.
+Create one deliberate design system for the company and both products.
 
-Likely surfaces:
+Completed decisions:
+
+- Golos Text is the primary font;
+- JetBrains Mono is the technical font;
+- there is no secondary font;
+- the palette is grayscale plus ProChat Cobalt `#3158C7`;
+- product differentiation comes through structure, density, content, and behavior rather than separate themes;
+- native scrolling remains the default;
+- GSAP ScrollTrigger owns approved cinematic sequences;
+- semantic HTML, CSS, and SVG own product visualization;
+- mobile and reduced-motion variants are mandatory.
+
+Repository outputs:
+
+```text
+PRODUCT.md
+DESIGN.md
+brand-spec.md
+docs/homepage-design-spec.md
+docs/homepage-visual-storyboard.md
+docs/homepage-technical-design.md
+docs/homepage-design-orchestration.md
+docs/homepage-validation-plan.md
+```
+
+## Phase E — Foundation specimens and static directions
+
+Status: next.
+
+Goal:
+
+Prove typography, color, spacing, component anatomy, and the hero composition before production code.
+
+Tasks:
+
+1. build a typography and token specimen;
+2. create realistic Memory and Workbench visual primitives;
+3. create three distinct static hero compositions using the same canonical design system;
+4. create a static mobile hero for each viable direction;
+5. select one hero direction;
+6. document the selected composition and rejected alternatives.
+
+Exit criteria:
+
+- Gate 1 Foundation passes;
+- Gate 2 Hero Direction passes;
+- the selected direction works without animation;
+- no foundational typography, palette, or product-visual question remains open.
+
+## Phase F — Cinematic prototype system
+
+Status: planned after Phase E.
+
+Goal:
+
+Prove the visual language and scroll architecture in an isolated design-lab environment.
+
+Prototype order:
+
+1. animated hero;
+2. Memory lifecycle;
+3. relevant-context selection;
+4. QA investigation;
+5. Workbench control plane;
+6. mobile scene variants;
+7. reduced-motion variants;
+8. full-page low-fidelity assembly.
+
+Implementation constraints:
+
+- use native scrolling;
+- use GSAP ScrollTrigger only for approved cinematic chapters;
+- use semantic DOM and SVG;
+- keep named product states separate from animation code;
+- no smooth-scroll engine;
+- no WebGL, Three.js, Rive, Lottie, or image sequences unless a later approved decision changes scope.
+
+Exit criteria:
+
+- all four cinematic sequences pass motion review;
+- initial, middle, and final screenshot states exist;
+- mobile and reduced-motion experiences are coherent;
+- performance proof is within the prototype budget;
+- Gate 3 Motion and Gate 4 Product Explanation pass.
+
+## Phase G — Independent design-plan review
+
+Status: planned after Phase F.
+
+Goal:
+
+Challenge the complete design before production integration.
+
+Review sequence:
+
+1. `/plan-design-review` scores the full plan and fixes weaknesses;
+2. `/design-motion-principles` reviews each cinematic prototype;
+3. `/taste-skill` audits anti-template quality;
+4. canonical product and claim review verifies every visual implication;
+5. the approved plan is reconciled into repository documentation.
+
+Exit criteria:
+
+- full-page prototype is approved;
+- review findings are resolved or explicitly rejected with rationale;
+- Gate 5 Full-page Prototype passes;
+- production implementation packets are ready.
+
+## Phase H — Production implementation
+
+Status: planned after Phase G.
+
+Goal:
+
+Integrate the approved design into the existing Next.js website without broad framework migration.
+
+Implementation order:
+
+1. global fonts and semantic design tokens;
+2. shared product-visual primitives;
+3. development-only design-lab route;
+4. hero;
+5. Memory lifecycle;
+6. relevant context;
+7. QA investigation;
+8. Workbench;
+9. supporting chapters;
+10. navigation, footer, metadata, and conversion routes;
+11. production homepage assembly.
+
+Primary surfaces must be confirmed before editing:
 
 ```text
 src/app/(marketing)/
 src/app/prochat-memory/
 src/app/qa-memory/
 src/app/buildflow/
-src/app/systems/prochat-os/
-src/app/kits/
 src/components/Header.tsx
 src/app/(marketing)/components/layout/Footer.tsx
 src/helpers/chrome-routes.ts
+src/assets/styles/
 ```
 
-Each route should be reviewed before edit. Archive or de-emphasize stale pages rather than deleting them unless a separate deletion decision is approved.
+Archive or de-emphasize stale pages rather than deleting them unless a separate deletion decision is approved.
 
-## Phase E — Validation
+## Phase I — Production craft and hardening
+
+Status: planned after Phase H.
 
 Goal:
 
-Validate that the website, docs, navigation, and metadata match Mind.
+Raise the assembled site from correct implementation to premium production quality.
+
+Review and refinement:
+
+- `/impeccable shape` confirms the approved production brief;
+- `/impeccable craft`, `typeset`, `layout`, and `animate` refine implementation;
+- `/design-review` performs live visual QA;
+- `/impeccable polish` and `harden` resolve edge cases;
+- Playwright visual baselines prevent regressions.
+
+Exit criteria:
+
+- desktop, tablet, mobile, and reduced-motion states are complete;
+- no generic AI or template patterns remain;
+- all interaction, loading, error, focus, and expanded states are designed;
+- production build and visual regression tests pass.
+
+## Phase J — Release validation and launch
+
+Status: planned after Phase I.
+
+Goal:
+
+Validate product truth, comprehension, accessibility, performance, browser behavior, conversion, metadata, and production safety.
 
 Checks:
 
 - only ProChat Memory and ProChat Workbench are treated as current products;
-- ProChat Memory for QA is the first launch niche;
-- ProChat Memory is the flagship product;
+- ProChat Memory for QA is the current edition and first launch niche;
+- ProChat Memory is the flagship;
 - future interfaces are not product cards;
-- legacy/historical names do not drive active navigation;
-- public claims match Mind legal and growth boundaries;
-- unrelated worktree changes are not staged with docs alignment work.
+- legacy names do not drive active navigation;
+- public claims match canonical boundaries;
+- five-second hero comprehension passes;
+- WCAG 2.2 AA checks pass;
+- LCP, INP, and CLS meet the defined budgets;
+- Playwright functional and visual tests pass;
+- design-lab and debug tooling are excluded from public discovery;
+- unrelated worktree changes are not staged with homepage work.
 
 ## Rule
 

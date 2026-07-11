@@ -21,12 +21,14 @@ Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning
 Before changing website positioning, product navigation, roadmap language, legal copy, growth claims, or marketing page structure, read:
 
 ```text
-mind/wiki/organisations/prochat/README.md
+mind/wiki/organisations/prochat/brand/README.md
 mind/wiki/organisations/prochat/brand/product-strategy.md
 mind/wiki/organisations/prochat/brand/product-naming-architecture.md
 mind/wiki/organisations/prochat/brand/product-roadmap.md
-mind/wiki/organisations/prochat/growth/README.md
-mind/wiki/organisations/prochat/legal/README.md
+mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
+mind/wiki/organisations/prochat/brand/global-design-foundation.md
+mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
+mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```
 
 This repository must not independently redefine ProChat philosophy, product hierarchy, naming, positioning, business stage, legal-policy direction, growth policy, or cross-product roadmap.
@@ -59,9 +61,15 @@ Use these docs for website implementation only:
 
 1. `docs/overview.md` — repo-local website architecture and operating map.
 2. `docs/strategy.md` — how this repo translates Mind into website implementation without redefining strategy.
-3. `docs/roadmap.md` — website implementation roadmap only.
-4. `docs/implementation-plan.md` — bounded implementation batches for aligning docs and marketing pages.
-5. `docs/auth-status.md`, `docs/deployment.md`, `docs/content-platform.md`, and related implementation docs — runtime and deployment facts.
+3. `PRODUCT.md` — product context required by design and implementation agents.
+4. `DESIGN.md` and `brand-spec.md` — persistent design truth and factual tokens.
+5. `docs/homepage-design-spec.md` — central homepage design brief and closed decisions.
+6. `docs/homepage-visual-storyboard.md` and `docs/homepage-example-data.md` — visual states and sanitized prototype content.
+7. `docs/homepage-technical-design.md` and `docs/homepage-design-orchestration.md` — build architecture, skills, tools, and AI workflow.
+8. `docs/homepage-validation-plan.md` — visual, motion, accessibility, performance, and release gates.
+9. `docs/roadmap.md` — website implementation roadmap only.
+10. `docs/implementation-plan.md` — bounded implementation batches.
+11. `docs/auth-status.md`, `docs/deployment.md`, `docs/content-platform.md`, and related implementation docs — runtime and deployment facts.
 
 ## Architecture overview
 

@@ -11,12 +11,14 @@ Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning
 Read before changing website strategy, product pages, roadmap language, legal copy, growth claims, or marketing structure:
 
 ```text
-mind/wiki/organisations/prochat/README.md
+mind/wiki/organisations/prochat/brand/README.md
 mind/wiki/organisations/prochat/brand/product-strategy.md
 mind/wiki/organisations/prochat/brand/product-naming-architecture.md
 mind/wiki/organisations/prochat/brand/product-roadmap.md
-mind/wiki/organisations/prochat/growth/README.md
-mind/wiki/organisations/prochat/legal/README.md
+mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
+mind/wiki/organisations/prochat/brand/global-design-foundation.md
+mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
+mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```
 
 This plan is executable website-repo guidance only. It does not define ProChat product strategy.
@@ -108,62 +110,410 @@ docs/archive/old-modules/
 
 Candidate documents must be reviewed before moving.
 
-## Batch C — copy and design guidance rewrite
+## Batch C — canonical local design context
 
-Status: after archive plan.
-
-Goal:
-
-Rewrite active website guidance for the current product boundary:
-
-- ProChat homepage;
-- ProChat Memory page;
-- ProChat Memory for QA page;
-- ProChat Workbench page;
-- contact/waitlist pages;
-- navigation and footer language;
-- metadata and social images.
-
-Expected files include copy/design docs only until the guidance is reviewed.
-
-## Batch D — production marketing page alignment
-
-Status: after Batch C.
+Status: complete in the current documentation batch.
 
 Goal:
 
-Update production pages and navigation to match the approved website guidance.
+Translate approved Mind strategy, copy, and design truth into the files required by design and implementation agents.
 
-Likely surfaces must be reviewed before editing:
+Files:
 
 ```text
-src/app/(marketing)/
-src/app/prochat-memory/
-src/app/qa-memory/
-src/app/buildflow/
-src/app/systems/prochat-os/
-src/app/kits/
-src/components/Header.tsx
-src/app/(marketing)/components/layout/Footer.tsx
-src/helpers/chrome-routes.ts
+PRODUCT.md
+DESIGN.md
+brand-spec.md
+docs/homepage-design-spec.md
+docs/homepage-visual-storyboard.md
+docs/homepage-technical-design.md
+docs/homepage-design-orchestration.md
+docs/homepage-validation-plan.md
 ```
 
-Keep edits scoped and do not stage unrelated pre-existing changes.
+Acceptance criteria:
 
-## Batch E — validation
+- `PRODUCT.md` accurately defines the product family, current audience, conversion, and claim boundaries;
+- `DESIGN.md` contains the approved nine-section global design system;
+- `brand-spec.md` contains factual tokens and no speculative alternatives;
+- all product visuals have named state models;
+- the stack, tools, skills, models, prototype gates, and quality gates are documented;
+- no production homepage component is changed in this batch.
 
-Status: final validation after docs and website updates.
+Validation:
+
+- Markdown and link review;
+- design-system security scan;
+- repository diff review;
+- explicit-path commit only.
+
+## Batch D — foundation specimen
+
+Status: next.
+
+Primary skills:
+
+```text
+/design
+/design-system
+/web-design
+/taste-skill
+/huashu-design
+```
+
+Primary model:
+
+```text
+Claude Opus for visual production
+GPT-5.6 Sol for canonical reconciliation
+```
+
+Tasks:
+
+### D1 — Token implementation prototype
+
+Create a design-lab specimen for:
+
+- Golos Text;
+- JetBrains Mono;
+- grayscale hierarchy;
+- ProChat Cobalt;
+- buttons;
+- links;
+- borders;
+- radii;
+- shadows;
+- status states;
+- light surfaces;
+- approved dark technical panels.
+
+### D2 — Product primitive prototype
+
+Create realistic static prototypes for:
+
+- EvidenceCard;
+- MemoryRecord;
+- ScopeBadge;
+- SourceConnector;
+- ReviewGate;
+- ContextWindow;
+- RepositoryTree;
+- GuardedOperation;
+- ValidationResult;
+- GitAction.
+
+### D3 — Foundation review
 
 Validate:
 
+- typography hierarchy;
+- color contrast;
+- product realism;
+- desktop and mobile behavior;
+- absence of template and AI-slop patterns.
+
+Exit:
+
+- Gate 1 Foundation approved.
+
+## Batch E — static hero directions
+
+Status: after Batch D.
+
+Tasks:
+
+### E1 — Three desktop directions
+
+Create three materially different hero compositions using the same approved tokens and content.
+
+They must differ through composition and storytelling, not through new palettes or fonts.
+
+### E2 — Mobile equivalents
+
+Create a purpose-built mobile first state for every viable direction.
+
+### E3 — Five-second test
+
+Run the comprehension protocol from `docs/homepage-validation-plan.md`.
+
+### E4 — Direction decision
+
+Record:
+
+- selected direction;
+- selection rationale;
+- rejected directions;
+- reusable ideas from rejected directions;
+- final static acceptance screenshot.
+
+Exit:
+
+- Gate 2 Hero Direction approved.
+
+## Batch F — hero motion proof
+
+Status: after Batch E.
+
+Planned dependency changes:
+
+```text
+gsap
+@gsap/react
+@playwright/test
+@axe-core/playwright
+```
+
+Tasks:
+
+### F1 — Install and verify tooling
+
+- verify current package versions and licenses;
+- add exact dependencies;
+- configure scoped GSAP usage;
+- configure Playwright;
+- add no public route or production behavior yet.
+
+### F2 — Build hero state model
+
+Implement named states:
+
+```text
+scattered-evidence
+structured-candidates
+review-gate
+approved-memory
+new-task
+focused-context
+```
+
+### F3 — Build desktop scroll proof
+
+- native scrolling;
+- one scoped timeline;
+- deterministic cleanup;
+- transform and opacity first;
+- debug markers development-only.
+
+### F4 — Mobile and reduced motion
+
+Build separate mobile scenes and a complete reduced-motion composition.
+
+### F5 — Motion and performance review
+
+Use:
+
+```text
+/design-motion-principles
+Playwright screenshots
+browser performance trace
+```
+
+Exit:
+
+- Gate 3 Motion approved;
+- no scroll jump, cleanup defect, accessibility failure, or unacceptable frame cost.
+
+## Batch G — product-mechanism prototypes
+
+Status: after Batch F.
+
+Build in order:
+
+### G1 — Memory lifecycle
+
+```text
+current evidence
+→ draft lesson
+→ sanitization and scope
+→ human review
+→ approved memory
+→ relevant retrieval
+→ correction or retirement
+```
+
+### G2 — Relevant context
+
+```text
+full workspace
+→ task signals
+→ selection
+→ focused context
+→ selection explanation
+```
+
+### G3 — QA investigation
+
+```text
+failed test
+→ evidence
+→ investigation
+→ root cause
+→ reviewed lesson
+→ later reuse
+```
+
+### G4 — Workbench control plane
+
+```text
+request
+→ exact local context
+→ guarded change
+→ targeted validation
+→ explicit Git action
+```
+
+For every prototype:
+
+- create desktop, mobile, and reduced-motion variants;
+- use realistic sanitized content;
+- create deterministic screenshot states;
+- run product-truth review;
+- run motion review where animated.
+
+Exit:
+
+- Gate 4 Product Explanation approved.
+
+## Batch H — full-page prototype and independent review
+
+Status: after Batch G.
+
+Tasks:
+
+### H1 — Low-fidelity full-page assembly
+
+Combine all seven chapters in the design-lab route.
+
+### H2 — Narrative pacing review
+
+Check:
+
+- chapter length;
+- visual fatigue;
+- text density;
+- CTA timing;
+- product-family balance;
+- mobile pacing;
+- reduced-motion pacing.
+
+### H3 — Independent reviews
+
+Run:
+
+```text
+/plan-design-review
+/design-motion-principles
+/taste-skill
+```
+
+### H4 — Reconciliation
+
+GPT-5.6 Sol reviews findings against canonical documents, accepts or rejects each finding, and updates the approved design plan.
+
+Exit:
+
+- Gate 5 Full-page Prototype approved;
+- production implementation packets finalized.
+
+## Batch I — production foundation
+
+Status: after Batch H.
+
+Primary implementation:
+
+```text
+GPT-5.6 Sol + ProChat Workbench
+/redesign-skill
+/code
+```
+
+Tasks:
+
+### I1 — Fonts and tokens
+
+- implement Golos Text and JetBrains Mono;
+- implement semantic token CSS;
+- map existing marketing surfaces without broad visual migration;
+- verify production font loading and CLS.
+
+### I2 — Shared visual primitives
+
+Move approved primitives from prototype to production components with typed props and accessibility states.
+
+### I3 — Animation infrastructure
+
+- isolated client leaves;
+- shared reduced-motion utility;
+- scoped GSAP registration and cleanup;
+- dynamic loading strategy;
+- deterministic visual-test hooks.
+
+### I4 — Design-lab lifecycle
+
+Retain the design-lab for development and testing while excluding it from navigation, sitemap, and indexing.
+
+Exit:
+
+- production foundation builds and passes targeted tests.
+
+## Batch J — production homepage chapters
+
+Status: after Batch I.
+
+Implement and commit in bounded chapter packets:
+
+1. Hero and premise
+2. Company and Memory definition
+3. Memory lifecycle and example record
+4. Trust, evidence, local ownership, Markdown, and Git
+5. Relevant context
+6. Value and measurement
+7. Memory for QA and beta
+8. Workbench and shared philosophy
+9. Boundaries, FAQ, final CTA
+10. Navigation, footer, metadata, and conversion destinations
+
+Each packet requires:
+
+- exact source read;
+- desktop, mobile, and reduced-motion implementation;
+- screenshot evidence;
+- targeted functional and visual tests;
+- design and product-truth review;
+- explicit-path commit.
+
+## Batch K — craft, QA, and release
+
+Status: after Batch J.
+
+Review sequence:
+
+```text
+/impeccable shape
+/impeccable craft
+/impeccable typeset
+/impeccable layout
+/impeccable animate
+/design-review
+/impeccable polish
+/impeccable harden
+```
+
+Final validation:
+
 - Mind remains canonical;
-- this repo remains lean and subordinate;
-- only ProChat Memory and ProChat Workbench are current products;
-- ProChat Memory for QA is the first launch niche;
-- capabilities and future interfaces are not presented as products;
-- legacy names are not active product navigation;
-- public claims match Mind legal and growth boundaries;
-- unrelated worktree changes are not staged or committed.
+- this repo remains subordinate;
+- only current products are represented as products;
+- public claims match canonical boundaries;
+- five-second hero comprehension passes;
+- WCAG 2.2 AA passes;
+- Playwright functional and visual tests pass;
+- current Chrome, Safari, Firefox, and Edge pass;
+- LCP, INP, and CLS meet budgets;
+- design-lab and debug tools are excluded from public discovery;
+- no unrelated changes are staged or committed.
+
+Required release evidence is defined in `docs/homepage-validation-plan.md`.
 
 ## Rule
 

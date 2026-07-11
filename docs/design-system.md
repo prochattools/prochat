@@ -1,107 +1,190 @@
-# Design System
+# ProChat Design-System Implementation Bridge
 
-## Brand Tokens
+**Status:** repository-local implementation guidance  
+**Canonical design truth:** `DESIGN.md` and `brand-spec.md`  
+**Canonical strategy and company design:** Mind
 
-The centralized token source is:
+This file explains how the approved ProChat design system should be introduced into the existing website repository.
 
-- `src/lib/brand.ts`
+Existing tokens, themes, gradients, fonts, hero components, and page-specific styles remain implementation inventory. They are not canonical design authority and must not be extended by default.
 
-The token model covers:
+## Required reading order
 
-- color tokens
-- surface tokens
-- gradient tokens
-- radius tokens
-- spacing tokens
-- typography tokens
-- depth tokens
-- motion tokens
-- effect tokens
+```text
+PRODUCT.md
+DESIGN.md
+brand-spec.md
+docs/homepage-design-spec.md
+docs/homepage-visual-storyboard.md
+docs/homepage-example-data.md
+docs/homepage-technical-design.md
+docs/homepage-design-orchestration.md
+docs/homepage-validation-plan.md
+```
 
-Global CSS variables and shared utility classes are mapped in:
+## Canonical foundation
 
-- `src/assets/styles/globals.scss`
+```yaml
+fonts:
+  primary: "Golos Text"
+  technical: "JetBrains Mono"
+  secondary: null
+color:
+  strategy: "grayscale plus one global cobalt accent"
+  accent: "#3158C7"
+motion:
+  cinematic: "GSAP ScrollTrigger"
+  micro_interactions: "CSS"
+  scroll: "native browser scrolling"
+visuals: "semantic HTML + CSS + SVG"
+```
 
-## Hero System
+## Current implementation inventory
 
-The reusable marketing hero component is:
+The repository currently contains design implementation across:
 
-- `src/components/marketing/HeroSection.tsx`
+```text
+src/lib/brand.ts
+src/assets/styles/globals.scss
+src/components/marketing/HeroSection.tsx
+src/components/ui/Button.tsx
+src/app/(marketing)/components/ui/Button.tsx
+page-specific CSS and SCSS
+Framer Motion components
+legacy theme files
+```
 
-Hero rules:
+These sources must be audited before migration.
 
-- use the shared hero component instead of custom hero markup
-- line backgrounds must use:
-  - `public/assets/backgrounds/hero-main-lines-dark.svg`
-  - `public/assets/backgrounds/hero-main-lines-light.svg`
-- grid overlays are not allowed inside hero sections
-- hero background layers stay absolute, non-interactive, and behind content
-- dark-mode depth overlays are allowed only in dark mode
+Do not assume that existing colors, fonts, radii, shadows, gradients, hero backgrounds, or motion rules remain approved.
 
-The hero system is standardized for:
+## Planned token source
 
-- headline scale
-- max width
-- line-height
-- CTA spacing
-- background layering
+Create:
 
-## Button System
+```text
+src/assets/styles/prochat-tokens.css
+```
 
-The shared button implementation is:
+Map the factual values from `brand-spec.md` to semantic CSS custom properties.
 
-- `src/components/ui/Button.tsx`
+Components should consume semantic tokens rather than raw values.
 
-Marketing-facing wrapper:
+## Typography migration
 
-- `src/app/(marketing)/components/ui/Button.tsx`
+Planned implementation:
 
-Primary button variants:
+- Golos Text through `next/font` when supported by the installed Next.js version;
+- JetBrains Mono through `next/font` or the existing Fontsource dependency;
+- CSS variables applied at the relevant root layout;
+- production-build verification for font loading and layout shift.
 
-- `primary`
-- `secondary`
-- `tertiary`
-- `ghost`
-- `nav`
+Do not add another font during implementation.
 
-Rules:
+## Component migration principle
 
-- no inline button styles
-- no per-page duplicated button class definitions
-- border radius, height, padding, label treatment, and transitions come from the shared system
+Use existing components where their structure and behavior remain useful.
 
-## Typography Scale
+Replace or refactor only when the existing abstraction prevents the approved design.
 
-Shared typography tokens are defined in:
+For every component:
 
-- `src/lib/brand.ts`
-- `src/assets/styles/globals.scss`
+1. identify current consumers;
+2. identify legacy visual assumptions;
+3. map approved tokens;
+4. preserve accessible behavior;
+5. add missing states;
+6. verify in browser;
+7. commit the smallest coherent change.
 
-Usage rules:
+## Hero rule
 
-- `H1` = hero only
-- `H2` = section title
-- `H3` = card title
-- `H4` = micro header / supporting header
+The existing shared hero component is not automatically suitable for the new homepage.
 
-Arbitrary one-off text scaling should be removed in favor of shared hero and section heading classes.
+The homepage hero requires a product-story composition with named visual states and may need a dedicated component.
 
-## Motion System
+Do not force the cinematic homepage hero into a legacy generic hero abstraction.
 
-Motion is intentionally restrained.
+Other marketing pages may continue using an updated shared hero where appropriate.
 
-Rules:
+## Button rule
 
-- dark-mode only ambient halo/glow motion
-- CSS-only implementation
-- no JS animation hooks required
-- reduced-motion compliant
-- animate `transform` and `opacity` only
+Buttons should continue using shared accessible primitives where possible.
 
-The motion system is defined across:
+Canonical button behavior:
 
-- `src/lib/brand.ts`
-- `src/assets/styles/globals.scss`
-- `src/components/marketing/HeroSection.tsx`
+- one clear primary action per decision area;
+- Golos Text;
+- cobalt primary state;
+- visible focus;
+- no colored glow;
+- restrained radius;
+- predictable hover, pressed, disabled, loading, and focus states.
 
-It is meant to create depth, not call attention to itself.
+No page-local duplicated button systems.
+
+## Motion rule
+
+The previous CSS-only motion policy is superseded for the approved homepage cinematic chapters.
+
+Use:
+
+- GSAP ScrollTrigger for the approved cinematic sequences;
+- CSS for simple transitions and micro-interactions;
+- native scrolling;
+- semantic HTML and SVG visuals;
+- complete reduced-motion alternatives.
+
+Framer Motion may remain in existing components, but do not mix it with GSAP orchestration inside one component.
+
+## Migration order
+
+```text
+1. design-lab token and typography specimen
+2. shared product-visual primitives
+3. static hero directions
+4. hero motion proof
+5. product-mechanism prototypes
+6. approved global token implementation
+7. production homepage chapters
+8. shared marketing-component migration where justified
+9. remove or archive obsolete theme code only through separate reviewed tasks
+```
+
+## Design linting
+
+The existing commands remain useful:
+
+```text
+npm run lint:design
+npm run lint:design:baseline
+```
+
+Before implementation, audit the design linter so it recognizes:
+
+- Golos Text;
+- JetBrains Mono;
+- approved semantic token names;
+- allowed GSAP client components;
+- prohibited raw colors and obsolete theme patterns.
+
+Do not rewrite the baseline merely to silence new violations. Review each exception.
+
+## Validation
+
+Every design-system migration packet must include:
+
+- exact changed paths;
+- desktop and mobile screenshots;
+- reduced-motion evidence where relevant;
+- design-lint result;
+- type check or production build where appropriate;
+- accessibility review;
+- visual regression result after Playwright is introduced;
+- confirmation that unrelated legacy styles remain untouched.
+
+## Rule
+
+`DESIGN.md` and `brand-spec.md` define what ProChat should look and feel like.
+
+This file defines how the current repository moves toward that truth without uncontrolled redesign or broad migration.

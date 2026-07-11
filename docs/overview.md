@@ -11,12 +11,14 @@ Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning
 Read Mind before changing public product positioning or strategy language:
 
 ```text
-mind/wiki/organisations/prochat/README.md
+mind/wiki/organisations/prochat/brand/README.md
 mind/wiki/organisations/prochat/brand/product-strategy.md
 mind/wiki/organisations/prochat/brand/product-naming-architecture.md
 mind/wiki/organisations/prochat/brand/product-roadmap.md
-mind/wiki/organisations/prochat/growth/README.md
-mind/wiki/organisations/prochat/legal/README.md
+mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
+mind/wiki/organisations/prochat/brand/global-design-foundation.md
+mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
+mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```
 
 This repository is subordinate to Mind. It describes website implementation and must not independently redefine ProChat strategy.
@@ -121,11 +123,20 @@ Older ProChat OS, kit, BuildFlow, MikeOSS, law-firm, or module documents should 
 Use:
 
 ```text
+PRODUCT.md
+DESIGN.md
+brand-spec.md
 docs/strategy.md
+docs/homepage-design-spec.md
+docs/homepage-visual-storyboard.md
+docs/homepage-example-data.md
+docs/homepage-technical-design.md
+docs/homepage-design-orchestration.md
+docs/homepage-validation-plan.md
 docs/roadmap.md
 docs/implementation-plan.md
 ```
 
-as repository-local website implementation guides only.
+as repository-local product, design, and website implementation guides only.
 
-Use Mind for product strategy and product roadmap decisions.
+Use Mind for company strategy, canonical product truth, canonical homepage copy, and cross-product roadmap decisions.
