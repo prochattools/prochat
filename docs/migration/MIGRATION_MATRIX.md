@@ -157,6 +157,27 @@ The route rows below were populated during Phase 5 Task 5.1. Detailed evidence, 
 | ROUTE-082 | `/og` | current OG service | KEEP/REFACTOR | 6 | MEDIUM | DECIDED |
 | ROUTE-083 | `/blog/[slug]/og` | retained article entries only | KEEP conditionally | 7 | MEDIUM | DECISION_REQUIRED |
 
+### Component systems — Phase 5 Task 5.2
+
+Detailed evidence and per-file dispositions for all 140 component IDs live in `COMPONENT_AUDIT.md`. The grouped rows below mirror the complete component register and define migration control boundaries. No component is approved for deletion.
+
+| ID range | Component system | Count | Canonical destination | Primary disposition | Wave | Highest risk | Status |
+|---|---|---:|---|---|---:|---|---|
+| COMP-001–COMP-027 | marketing assembly, sections, UI, Contact, Studio | 27 | approved page architecture and shared foundations | REWRITE/REPLACE/REFACTOR | 3/6/8 | CRITICAL | INVENTORIED |
+| COMP-028–COMP-031 | admin access, navigation, licence revoke, OG tool | 4 | protected admin system | KEEP/REFACTOR | protected | CRITICAL | INVENTORIED |
+| COMP-032–COMP-035 | AI workflows, Book, BuildFlow, docs layout | 4 | archive/replacement pages and canonical docs shell | ARCHIVE/REPLACE/REFACTOR | 5/6/8 | CRITICAL | INVENTORIED |
+| COMP-036–COMP-047 | Kits pages, shells, finish flow, trackers, duplicate icons | 12 | purchaser-safe archive and compatibility flow | PROTECT/ARCHIVE/REPLACE | 6/8 | CRITICAL | INVENTORIED |
+| COMP-048–COMP-057 | Proof, starting point, events, ProChat OS, waitlist | 10 | approved resources, product pages, and Contact/beta flow | REPLACE/ARCHIVE/PROTECT | 5/6/8 | CRITICAL | INVENTORIED |
+| COMP-058–COMP-068 | personal, access, shell, auth, buttons, checkout, CTA | 11 | company About, canonical shell/button, protected auth/commerce | REFACTOR/REPLACE/KEEP | 1/6/8 | CRITICAL | INVENTORIED |
+| COMP-069–COMP-080 | dashboard, FAQ, Header, hero, pricing, reviews, portal | 12 | protected app/commerce plus canonical public components | KEEP/REFACTOR/REWRITE | 1/3/6/8 | CRITICAL | INVENTORIED |
+| COMP-081–COMP-091 | structured data, testimonials, theme motion, analytics, claims | 11 | canonical metadata, analytics, content, and theme behavior | KEEP/REFACTOR/ARCHIVE | 1/6/8 | CRITICAL | INVENTORIED |
+| COMP-092–COMP-100 | content taxonomy, layouts, MDX, related content | 9 | current-product documentation system | KEEP/REFACTOR | 6 | HIGH | INVENTORIED |
+| COMP-101–COMP-108 | contact, licence, purchase, and waitlist emails | 8 | protected email-safe design and current copy | PROTECT/REBRAND/REWRITE | protected | CRITICAL | INVENTORIED |
+| COMP-109–COMP-120 | typography, icon buttons, media, payment, logo, hero, providers | 12 | canonical foundations plus protected provider/commerce boundaries | KEEP/REFACTOR/ARCHIVE | 1/3/6/8 | CRITICAL | INVENTORIED |
+| COMP-121–COMP-140 | shared UI primitives and visual scaffolding | 20 | canonical token-based component library | KEEP/REFACTOR/VERIFY | 1/2/8 | HIGH | INVENTORIED |
+
+Component-level migration cannot move from `INVENTORIED` to `DECIDED` until exact consumers, public APIs, accessibility, responsive behavior, runtime dependencies, and rollback are verified for the selected packet.
+
 ### Non-route migration rows retained for later audits
 
 | ID | Category | Current path | Canonical destination | Disposition | Wave | Risk | Status |

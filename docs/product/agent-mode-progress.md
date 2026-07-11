@@ -343,6 +343,75 @@ Validation evidence:
 
 Unresolved route decisions are recorded in `docs/migration/ROUTE_AUDIT.md`, including canonical product URL migration, legacy product/resource archives, waitlist destination, purchaser obligations, internal application scope, root sitemap behavior, company versus founder social channels, and temporary noindex needs.
 
+## Phase 5 Task 5.2 completion
+
+Completed component inventory:
+
+```yaml
+component_files: 140
+shared_components: 83
+page_local_components: 57
+component_ids: COMP-001 through COMP-140
+production_files_changed: 0
+component_apis_changed: 0
+components_moved_or_deleted: 0
+packages_changed: 0
+```
+
+Changed documentation:
+
+```text
+docs/migration/COMPONENT_AUDIT.md
+docs/migration/MIGRATION_MATRIX.md
+docs/product/agent-mode-progress.md
+```
+
+Duplicate-responsibility groups identified:
+
+- three button layers plus action-specific wrappers;
+- global shell, Header, AppChrome, AppShell, local navigation, and mobile sheet overlap;
+- one active Footer with legacy route and copy coupling;
+- multiple hero abstractions and route-local hero implementations;
+- incomplete form foundation across Contact, signup, waitlist, admin, and commerce flows;
+- Card, Surface, Scaffolding, and route-local card systems;
+- broad reusable marketing sections containing historical offers and visual assumptions;
+- five duplicated legacy FeatureIcon components;
+- fragmented analytics wrappers and embedded event calls;
+- no canonical reusable error, empty, blocked, or unavailable-state family.
+
+Protected component groups:
+
+- authentication and provider boundaries;
+- admin access, navigation, licence revocation, and OG generation;
+- checkout, portal, pricing, Stripe, licence, and purchase flows;
+- Contact, signup, waitlist, and personal-data email flows;
+- purchaser access and finish components;
+- application shell, analytics, and transactional email templates.
+
+Highest-risk findings:
+
+- component-level tests were not directly discoverable by static reference search;
+- many mostly static marketing sections are broad client components;
+- Framer Motion is embedded in Reveal, Newsletter, and ProofOperational;
+- legacy product names and claims are embedded inside components and emails;
+- raw colors, gradients, and historical visual rules are widespread;
+- Header and Footer combine legacy routing, analytics, social, theme, and mobile behavior;
+- canonical Memory/Workbench product visual primitives are not implemented;
+- canonical error and system-state primitives are missing.
+
+Zero-consumer candidates are recorded in `COMPONENT_AUDIT.md`. They are candidates for exact proof only; no deletion or archival action is authorized.
+
+Validation evidence:
+
+- recursive bounded source inventory independently confirmed 140 files;
+- static consumer and risk mapping covered all 83 shared and 57 page-local files;
+- direct source reads verified the shell, Footer, three button layers, protected flows, and legacy coupling;
+- all component IDs are represented in the audit and mirrored by grouped ranges in the migration matrix;
+- no production source, import, API, style, copy, route, metadata, redirect, or package file changed;
+- no component was moved, renamed, merged, or deleted.
+
+Unresolved component decisions include canonical button consolidation, shell replacement strategy, purchaser obligations, protected application scope, MDX/content retention, public theme behavior, Framer Motion retention, zero-consumer proof, email-safe design tokens, and the required product/error primitives.
+
 ## Restrictions for the next execution phase
 
 During Phase 5 inventory:
@@ -351,59 +420,55 @@ During Phase 5 inventory:
 - do not delete or move legacy files;
 - do not install dependencies;
 - do not start design-lab implementation;
-- do not change live routes, metadata, forms, or redirects;
+- do not change live routes, metadata, forms, redirects, APIs, or styles;
 - record audit evidence and migration decisions only;
 - keep each audit category in a separate reviewable commit where practical.
 
-## Exact next task after route-audit commit
+## Exact next task after component-audit commit
 
 ```text
-Execute Phase 5, Task 5.2 only: component inventory.
+Execute Phase 5, Task 5.3 only: style and motion inventory.
 
 Read first:
 - docs/product/agent-mode-progress.md
 - docs/implementation-plan.md
-- docs/design/COMPONENT_LIBRARY.md
-- docs/design/PRODUCT_VISUAL_LIBRARY.md
-- docs/migration/LEGACY_SWEEP_PLAN.md
-- docs/migration/MIGRATION_MATRIX.md
-- docs/migration/COMPONENT_AUDIT.md
 - DESIGN.md
 - brand-spec.md
+- docs/platform/RESPONSIVE_STRATEGY.md
+- docs/platform/ACCESSIBILITY_STRATEGY.md
+- docs/platform/PERFORMANCE_STRATEGY.md
+- docs/design/MOTION_STORYBOARD.md
+- docs/migration/LEGACY_SWEEP_PLAN.md
+- docs/migration/MIGRATION_MATRIX.md
+- docs/migration/STYLE_AUDIT.md
+- docs/migration/MOTION_AUDIT.md
+- docs/migration/COMPONENT_AUDIT.md
 
 Inspect read-only:
-- src/components/**
-- src/app/**/_components/**
-- marketing component directories
-- shared UI wrappers
-- buttons, links, headers, navigation, footers, heroes, forms, cards, sections, product visuals, analytics wrappers, and compatibility components
-
-For every component record:
-- path and responsibility
-- direct consumers
-- public API and variants
-- design and runtime dependencies
-- accessibility, responsive, and motion behavior
-- tests
-- current status
-- proposed disposition
-- canonical replacement
-- migration wave and risk
-- validation and rollback
+- src/assets/styles/**
+- global CSS and SCSS entry points
+- CSS Modules and page-local styles
+- Tailwind configuration and plugins
+- CSS variables and theme providers
+- font imports and next/font usage
+- raw colors, gradients, shadows, radii, spacing, breakpoints, and z-index systems
+- @keyframes, animation, transition, IntersectionObserver, scroll listeners, requestAnimationFrame, timers, and Framer Motion imports
+- reduced-motion media queries and runtime handling
+- style and motion imports from all 140 audited components
 
 Outputs:
-- completed component records in docs/migration/COMPONENT_AUDIT.md
-- matching component rows in docs/migration/MIGRATION_MATRIX.md
-- duplicate-responsibility groups
-- protected shared components
-- zero-consumer candidates, without deletion approval
-- exact evidence and unresolved component decisions
+- complete style records in docs/migration/STYLE_AUDIT.md
+- complete motion records in docs/migration/MOTION_AUDIT.md
+- matching STYLE-* and MOTION-* rows in docs/migration/MIGRATION_MATRIX.md
+- token, font, theme, cascade, responsive, and specificity findings
+- motion mechanism, purpose, cleanup, accessibility, and performance findings
+- zero-consumer candidates without deletion approval
+- exact evidence and unresolved decisions
 
 Restrictions:
-- do not edit production code
-- do not move, rename, merge, or delete components
-- do not change component APIs
-- do not update imports
-- do not modify styles or copy
+- do not edit CSS, SCSS, Tailwind config, components, routes, or production code
+- do not change fonts, tokens, colors, themes, breakpoints, or animations
+- do not remove Framer Motion or add GSAP
+- do not move, rename, merge, or delete style or motion files
 - do not install dependencies
 ```
