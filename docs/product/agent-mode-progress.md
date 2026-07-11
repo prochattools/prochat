@@ -1,7 +1,8 @@
 # ProChat Public Platform Foundation Handoff
 
 **Run:** `agent-c2830f11-a2a0-4d49-b000-d5b5398e337a`  
-**Status:** public-platform documentation and validation complete; commit pending  
+**Status:** public-platform documentation, validation, and commit complete  
+**Commit:** `8180a7d` — `docs(prochat): plan public platform foundation sweep`  
 **Source:** `prochat`  
 **Production code changed:** no  
 **Legacy files deleted:** no
