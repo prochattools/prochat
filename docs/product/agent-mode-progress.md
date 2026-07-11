@@ -1,7 +1,8 @@
 # ProChat Homepage Design Preparation Handoff
 
 **Run:** `agent-47cee477-6778-4241-b587-ca478901d8f5`  
-**Status:** documentation preparation and validation complete; commit pending  
+**Status:** documentation preparation, validation, and commit complete  
+**Commit:** `c375f1a` — `docs(prochat): prepare canonical homepage design workflow`  
 **Source:** `prochat`
 
 ## Goal
