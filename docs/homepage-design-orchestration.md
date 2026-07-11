@@ -4,7 +4,7 @@
 **Source skills:** Brain `ai/skills`  
 **Scope:** design research, specification, prototyping, implementation, review, and polish
 
-This document defines which Brain design skills and AI models own each stage. It prevents duplicated design authority, conflicting edits, and unstructured multi-model work.
+This document defines how GPT-5.6 Sol uses the Brain design skills across research, specification, prototyping, implementation, review, and polish. It prevents duplicated design authority, conflicting methods, and unstructured execution.
 
 ## Operating principle
 
@@ -30,13 +30,13 @@ No model or skill may silently create a competing palette, font system, product 
 
 ## Design profile
 
-When working through Claude Code, activate the Brain design profile:
+When running a design session, load the Brain design profile as a method reference:
 
 ```text
 docs/skills/profiles/design.txt
 ```
 
-It exposes:
+GPT-5.6 Sol uses the profile through the available Workbench context and exact Brain skill documents. The profile exposes:
 
 - `design`
 - `design-system`
@@ -57,19 +57,27 @@ Use the profile for design sessions. Do not promote the full design stack into t
 
 ## Model ownership
 
-### GPT-5.6 Sol — primary architect and implementer
+### GPT-5.6 Sol — accountable design and implementation model
 
-Use for:
+Use GPT-5.6 Sol for:
 
 - canonical synthesis;
 - repository analysis;
+- design research;
+- typography and layout exploration;
+- static visual directions;
+- HTML-native prototypes;
+- motion storyboards;
+- design-plan critique;
+- motion critique;
+- premium-polish critique;
 - technical architecture;
 - implementation planning;
 - bounded code changes;
 - validation strategy;
 - accessibility and performance integration;
 - Git discipline;
-- reconciliation of external critique with canonical documents.
+- final reconciliation with canonical documents.
 
 Primary environment:
 
@@ -77,37 +85,32 @@ Primary environment:
 ProChat Workbench
 ```
 
-GPT-5.6 Sol owns the final implementation decisions because Workbench supplies exact local context, guarded changes, validation, persistent state, and explicit Git operations.
+GPT-5.6 Sol owns the complete workflow because Workbench supplies exact local context, guarded changes, validation, persistent state, and explicit Git operations.
 
-### Claude Opus — primary visual explorer and independent critic
+Independent challenge comes from evidence rather than a second model by default:
 
-Use through Claude Code with the Brain design profile for:
+- multiple materially different prototypes;
+- structured Brain design-skill reviews;
+- browser screenshots;
+- five-second comprehension testing;
+- accessibility review;
+- performance traces;
+- visual regression;
+- explicit human approval at major gates.
 
-- design orchestration;
-- static visual directions;
-- typography and layout exploration;
-- HTML-native prototypes;
-- motion storyboards;
-- design-plan critique;
-- motion critique;
-- premium-polish critique;
-- independent visual QA.
-
-Claude Opus does not own canonical strategy or final repository truth.
+External model critique is optional and advisory only. It is never required for progress and never becomes design authority.
 
 ### Role rule
 
 ```yaml
 ai_roles:
   canonical_authority: "Mind + approved ProChat docs"
-  architecture_and_implementation: "GPT-5.6 Sol"
-  visual_exploration_and_critique: "Claude Opus"
+  design_architecture_implementation: "GPT-5.6 Sol"
+  review_methods: "Brain design skills + browser evidence + human approval"
   final_reconciliation: "GPT-5.6 Sol"
 ```
 
-Do not let both models edit the same implementation files concurrently.
-
-Use sequential handoffs with explicit changed paths, screenshots, unresolved issues, and validation evidence.
+Use explicit phase handoffs with changed paths, screenshots, unresolved issues, validation evidence, and the exact next task.
 
 ## Skill sequence
 
@@ -443,24 +446,26 @@ Screenshots should include desktop, mobile, and reduced-motion states when motio
 ## Recommended session pattern
 
 ```text
-Claude Opus + /design
-→ visual exploration or independent critique
+GPT-5.6 Sol + Workbench + /design
+→ read canonical truth
+→ create multiple visual directions
+→ document assumptions and differences
+
+GPT-5.6 Sol + /web-design + /taste-skill + /huashu-design
+→ produce the selected browser-visible prototype
+→ capture desktop, mobile, and reduced-motion evidence
+
+GPT-5.6 Sol + /plan-design-review + /design-motion-principles
+→ run an explicit adversarial review against product, design, accessibility, performance, and motion criteria
 
 GPT-5.6 Sol + Workbench
-→ reconcile against canonical truth
-→ update plan
-→ implement bounded packet
+→ accept, reject, or defer every finding
+→ update canonical repository documents
+→ implement one bounded packet
 → validate and commit
-
-Claude Opus + /design-review or /design-motion-principles
-→ independent audit
-
-GPT-5.6 Sol + Workbench
-→ accept or reject findings
-→ implement verified fixes
 ```
 
-This sequence produces productive disagreement without split authority.
+This sequence creates productive challenge through alternative designs, explicit review criteria, measurable browser evidence, and human approval without splitting authority across models.
 
 ## Definition of orchestration readiness
 

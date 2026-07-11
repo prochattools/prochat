@@ -127,6 +127,9 @@ PRODUCT.md
 DESIGN.md
 brand-spec.md
 docs/strategy.md
+docs/design/
+docs/platform/
+docs/migration/
 docs/homepage-design-spec.md
 docs/homepage-visual-storyboard.md
 docs/homepage-example-data.md

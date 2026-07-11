@@ -519,8 +519,9 @@ Implementation rules:
 
 ### Design exploration and critique
 
-- Claude Opus through Claude Code with the Brain design profile.
-- Use it for design orchestration, visual variants, prototypes, plan critique, motion critique, and independent review.
+- GPT-5.6 Sol through ProChat Workbench remains the primary model for design orchestration, visual directions, prototypes, plan critique, motion critique, and final reconciliation.
+- The Brain design skills are used as structured methods and review lenses, not as competing sources of authority.
+- Independent human review, browser evidence, accessibility checks, performance traces, and deterministic screenshots provide the required external challenge.
 
 ### Browser and visual QA
 

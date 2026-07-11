@@ -1,520 +1,1884 @@
-# ProChat website implementation plan
+# ProChat Public Platform Implementation Plan
 
-**Status:** repository-local implementation plan  
+**Status:** canonical executable plan  
 **Owner:** Steve Westhoek  
-**Scope:** aligning the ProChat website repository with Mind
+**Scope:** documentation, audits, prototypes, production foundation, public pages, migration, validation, launch, and maintenance  
+**Last updated:** 2026-07-11
 
-## Source of truth
+## Authority and reading order
 
-Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning, business stage, growth policy, legal-policy direction, and cross-product roadmap.
-
-Read before changing website strategy, product pages, roadmap language, legal copy, growth claims, or marketing structure:
+Before any task, read the smallest relevant subset in this order:
 
 ```text
-mind/wiki/organisations/prochat/brand/README.md
+Mind company and product truth
+→ PRODUCT.md
+→ DESIGN.md
+→ brand-spec.md
+→ docs/roadmap.md
+→ relevant design/platform/migration documents
+→ exact current source files
+```
+
+Canonical Mind references:
+
+```text
+mind/wiki/organisations/prochat/brand/company-principles.md
 mind/wiki/organisations/prochat/brand/product-strategy.md
 mind/wiki/organisations/prochat/brand/product-naming-architecture.md
-mind/wiki/organisations/prochat/brand/product-roadmap.md
+mind/wiki/organisations/prochat/brand/public-platform-strategy.md
+mind/wiki/organisations/prochat/brand/brand-governance.md
+mind/wiki/organisations/prochat/brand/public-platform-roadmap.md
 mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
 mind/wiki/organisations/prochat/brand/global-design-foundation.md
 mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
 mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```
 
-This plan is executable website-repo guidance only. It does not define ProChat product strategy.
-
-## Current product boundary
-
-Mind currently defines exactly two current products:
+## Current position
 
 ```text
-ProChat Memory
-ProChat Workbench
+Mind public-platform foundation: committed
+Repository design/platform/migration planning: current documentation batch
+Production code changes: not authorized in current batch
+Legacy deletion: not authorized in current batch
+Next execution after documentation commit: Phase 5 inventory tasks only
 ```
 
-Current launch focus:
+## Global safety rules
 
-```text
-ProChat Memory for QA
+- Use sourceId `prochat` for all repository work.
+- Read exact current source before editing.
+- Do not edit `.env`, secrets, keys, `.git/**`, generated output, or vendor code.
+- Do not stage or commit unrelated changes.
+- Do not delete legacy files until an approved migration row has a verified replacement or explicit archive/redirect decision.
+- Do not invent product names, claims, palettes, fonts, routes, or availability.
+- Do not install GSAP, Playwright, axe, or other planned dependencies before the authorized task.
+- Do not upgrade Next.js, React, Tailwind, or the full component system as part of this program without a separate migration decision.
+- Use native scrolling.
+- Preserve mobile, keyboard, reduced-motion, and no-animation comprehension.
+- Stage explicit paths only.
+- Run the smallest meaningful validation after every change.
+
+## Task execution contract
+
+Every task must record:
+
+```yaml
+task:
+  purpose: ""
+  dependencies: []
+  exact_inputs: []
+  expected_files: []
+  acceptance_criteria: []
+  validation: []
+  rollback_or_migration: ""
+  commit_boundary: ""
 ```
 
-Implementation rules:
+A task may not begin when a dependency or exact source path is unresolved.
 
-- ProChat Memory is the flagship product.
-- ProChat Memory for QA is the first launch niche and first discipline-specific edition.
-- ProChat Workbench is the second product.
-- ProChat Answers, ProChat Automations, API access, and MCP integrations are capabilities or future interfaces, not current products.
-- ProChat OS, SaaSKit, ProKit, UXKit, WaaSKit, and MikeOSS are legacy, historical, external, or archive-only references where relevant.
-- BuildFlow is a technical/internal compatibility identifier for Workbench where required, not a current ProChat product.
+# Phase 1 — Company foundation
 
-## Safety rules
+## Task 1.1 — Repository authority reconciliation
 
-- Work only in the `prochat` repository unless a task explicitly says otherwise.
-- Do not modify Mind from this repo's implementation batches.
-- Do not duplicate Mind strategy in local docs.
-- Do not delete historical docs or pages during cleanup; archive them when approved.
-- Do not stage unrelated website, design, Graphify, or component changes with documentation-alignment batches.
-- Do not change environment files, secrets, credentials, private keys, or production account data.
-- Do not promote future capabilities as current products.
-- Do not make unsupported claims about savings, accuracy, legal rights, automation, or commercial licensing.
+**Status:** COMPLETE.
 
-## Batch A — authority and lean documentation alignment
+**Purpose**  
+Ensure repository-local product and design context is subordinate to canonical Mind truth.
 
-Status: current batch.
+**Dependencies**  
+Mind company, product, brand, and public-platform foundation.
 
-Allowed files:
-
-```text
-README.md
-docs/overview.md
-docs/strategy.md
-docs/roadmap.md
-docs/implementation-plan.md
-```
-
-Goal:
-
-Make active repo-local docs subordinate to Mind and remove stale active product-strategy duplication.
-
-Acceptance criteria:
-
-- this repo is described as the website and marketing implementation repo;
-- active Batch A docs link to Mind canonical docs;
-- active Batch A docs state the repo must not redefine ProChat philosophy, product hierarchy, naming, positioning, business stage, legal-policy direction, growth policy, or cross-product roadmap;
-- active Batch A docs declare exactly two current products: ProChat Memory and ProChat Workbench;
-- active Batch A docs declare ProChat Memory as flagship;
-- active Batch A docs declare ProChat Memory for QA as the first launch niche;
-- active Batch A docs treat future interfaces and capabilities as non-products;
-- active Batch A docs treat older names and kit directions as legacy, historical, external, archived, or technical/internal references;
-- unrelated worktree changes remain unstaged.
-
-## Batch B — archive stale docs
-
-Status: planned after Batch A review.
-
-Goal:
-
-Archive historical docs that should not remain active website guidance.
-
-Do not delete. Move reviewed files into explicit archive folders.
-
-Candidate archive groups:
-
-```text
-docs/archive/prochat-os/
-docs/archive/legacy-kits/
-docs/archive/law-firm-wedge/
-docs/archive/buildflow/
-docs/archive/old-modules/
-```
-
-Candidate documents must be reviewed before moving.
-
-## Batch C — canonical local design context
-
-Status: complete in the current documentation batch.
-
-Goal:
-
-Translate approved Mind strategy, copy, and design truth into the files required by design and implementation agents.
-
-Files:
+**Exact inputs**
 
 ```text
 PRODUCT.md
 DESIGN.md
 brand-spec.md
+README.md
+docs/overview.md
+docs/strategy.md
+```
+
+**Expected files**  
+The same documentation paths only.
+
+**Acceptance criteria**
+
+- ProChat is the company.
+- Memory is flagship.
+- Memory for QA is the current edition.
+- Workbench is the second product.
+- Steve is QA Engineer and Founder, not the public product.
+- Repository docs link to real canonical Mind files.
+
+**Validation**  
+Canonical-link check, product-name search, security scan, exact diff.
+
+**Rollback or migration concerns**  
+Documentation-only; revert explicit commit if authority links are wrong.
+
+**Commit boundary**  
+Docs only.
+
+# Phase 2 — Public platform architecture
+
+## Task 2.1 — Page responsibility and platform-shell specification
+
+**Status:** COMPLETE FOR DOCUMENTATION.
+
+**Purpose**  
+Define the complete page map, audience, job, CTA, navigation, footer, and company/founder presentation.
+
+**Dependencies**  
+Task 1.1.
+
+**Exact inputs**
+
+```text
+Mind public-platform-strategy.md
+docs/platform/PAGE_ARCHITECTURE.md
+PRODUCT.md
+```
+
+**Expected files**
+
+```text
+docs/platform/PAGE_ARCHITECTURE.md
+docs/roadmap.md
+docs/implementation-plan.md
+```
+
+**Acceptance criteria**  
+Every required page has one primary job and no legacy product becomes a current top-level destination.
+
+**Validation**  
+Page-list comparison, product hierarchy check, navigation/footer review.
+
+**Rollback or migration concerns**  
+No route changes yet.
+
+**Commit boundary**  
+Docs only.
+
+# Phase 3 — Canonical content second pass
+
+## Task 3.1 — Complete public content inventory
+
+**Purpose**  
+Locate all public copy, metadata, navigation, footer, form, legal, documentation, and error text.
+
+**Dependencies**  
+Tasks 1.1–2.1.
+
+**Exact inputs**
+
+```text
+docs/migration/CONTENT_AUDIT.md
+docs/migration/ROUTE_AUDIT.md
+src/app/**
+src/components/**
+src/helpers/chrome-routes.ts
+metadata, sitemap, robots, form, and content-platform files discovered by exact search
+```
+
+**Expected files**
+
+```text
+docs/migration/CONTENT_AUDIT.md
+docs/migration/MIGRATION_MATRIX.md
+```
+
+No production files change.
+
+**Acceptance criteria**
+
+- Every indexable route and shared shell copy source is inventoried.
+- Every item has location, content type, product scope, and current status.
+- Embedded asset text and metadata are included.
+
+**Validation**  
+Route-to-copy cross-check, search for headings/metadata/navigation/form labels, exact diff.
+
+**Rollback or migration concerns**  
+Inventory only; do not rewrite or delete.
+
+**Commit boundary**  
+Content-audit records only.
+
+## Task 3.2 — Claims and terminology classification
+
+**Purpose**  
+Classify every public claim and legacy term against canonical truth.
+
+**Dependencies**  
+Task 3.1.
+
+**Exact inputs**
+
+```text
+completed CONTENT_AUDIT.md
+Mind brand-ruleset.md
+Mind canonical-homepage-copy.md
+Mind product-strategy.md
+PRODUCT.md
+```
+
+**Expected files**
+
+```text
+docs/migration/CONTENT_AUDIT.md
+docs/migration/MIGRATION_MATRIX.md
+optional docs/content/claims-register.md if volume requires separation
+```
+
+**Acceptance criteria**
+
+- Every claim is approved-current, approved-qualified, beta-only, future, unverified, prohibited, or legal-review-required.
+- Legacy terms have keep/replace/archive decisions.
+- No current product claim remains unclassified.
+
+**Validation**  
+Search for prohibited claims and legacy product names; canonical comparison; legal-risk list review.
+
+**Rollback or migration concerns**  
+No public copy changes yet.
+
+**Commit boundary**  
+Claims and terminology records only.
+
+## Task 3.3 — Homepage copy second pass
+
+**Purpose**  
+Re-evaluate the canonical homepage after company philosophy, page architecture, visual language, and footer strategy were finalized.
+
+**Dependencies**  
+Tasks 3.1–3.2.
+
+**Exact inputs**
+
+```text
+Mind canonical-homepage-copy.md
+Mind company-principles.md
+Mind public-platform-strategy.md
 docs/homepage-design-spec.md
-docs/homepage-visual-storyboard.md
-docs/homepage-technical-design.md
-docs/homepage-design-orchestration.md
-docs/homepage-validation-plan.md
+docs/design/COPY_VISUAL_MAP.md
+completed claims register
 ```
 
-Acceptance criteria:
-
-- `PRODUCT.md` accurately defines the product family, current audience, conversion, and claim boundaries;
-- `DESIGN.md` contains the approved nine-section global design system;
-- `brand-spec.md` contains factual tokens and no speculative alternatives;
-- all product visuals have named state models;
-- the stack, tools, skills, models, prototype gates, and quality gates are documented;
-- no production homepage component is changed in this batch.
-
-Validation:
-
-- Markdown and link review;
-- design-system security scan;
-- repository diff review;
-- explicit-path commit only.
-
-## Batch D — foundation specimen
-
-Status: next.
-
-Primary skills:
+**Expected files**
 
 ```text
-/design
-/design-system
-/web-design
-/taste-skill
-/huashu-design
+Mind canonical homepage copy only if canonical revision is required
+repository-local page copy mapping or audit records
 ```
 
-Primary model:
+Production page files remain unchanged.
+
+**Acceptance criteria**
+
+- ProChat leads as company.
+- Memory dominates as flagship.
+- QA is the primary conversion.
+- Workbench is clear but secondary.
+- Philosophy, founder, navigation, footer, and boundaries are represented appropriately.
+- Every major section has a visual mapping.
+
+**Validation**  
+Five-second comprehension review, claims review, page-job review, copy-to-visual completeness check.
+
+**Rollback or migration concerns**  
+Canonical Mind changes require a separate Mind commit before repository copy work.
+
+**Commit boundary**  
+Canonical copy and audit mapping only.
+
+## Task 3.4 — ProChat Memory page copy
+
+**Purpose**  
+Approve the general flagship product page without overstating broad availability.
+
+**Dependencies**  
+Tasks 3.1–3.2 and homepage second-pass outcomes.
+
+**Exact inputs**
 
 ```text
-Claude Opus for visual production
-GPT-5.6 Sol for canonical reconciliation
+Mind product strategy
+Memory technical definition
+customer profiles
+canonical glossary and claims
+PAGE_ARCHITECTURE.md
+COPY_VISUAL_MAP.md
 ```
 
-Tasks:
-
-### D1 — Token implementation prototype
-
-Create a design-lab specimen for:
-
-- Golos Text;
-- JetBrains Mono;
-- grayscale hierarchy;
-- ProChat Cobalt;
-- buttons;
-- links;
-- borders;
-- radii;
-- shadows;
-- status states;
-- light surfaces;
-- approved dark technical panels.
-
-### D2 — Product primitive prototype
-
-Create realistic static prototypes for:
-
-- EvidenceCard;
-- MemoryRecord;
-- ScopeBadge;
-- SourceConnector;
-- ReviewGate;
-- ContextWindow;
-- RepositoryTree;
-- GuardedOperation;
-- ValidationResult;
-- GitAction.
-
-### D3 — Foundation review
-
-Validate:
-
-- typography hierarchy;
-- color contrast;
-- product realism;
-- desktop and mobile behavior;
-- absence of template and AI-slop patterns.
-
-Exit:
-
-- Gate 1 Foundation approved.
-
-## Batch E — static hero directions
-
-Status: after Batch D.
-
-Tasks:
-
-### E1 — Three desktop directions
-
-Create three materially different hero compositions using the same approved tokens and content.
-
-They must differ through composition and storytelling, not through new palettes or fonts.
-
-### E2 — Mobile equivalents
-
-Create a purpose-built mobile first state for every viable direction.
-
-### E3 — Five-second test
-
-Run the comprehension protocol from `docs/homepage-validation-plan.md`.
-
-### E4 — Direction decision
-
-Record:
-
-- selected direction;
-- selection rationale;
-- rejected directions;
-- reusable ideas from rejected directions;
-- final static acceptance screenshot.
-
-Exit:
-
-- Gate 2 Hero Direction approved.
-
-## Batch F — hero motion proof
-
-Status: after Batch E.
-
-Planned dependency changes:
+**Expected files**
 
 ```text
-gsap
-@gsap/react
-@playwright/test
-@axe-core/playwright
+approved Memory page copy document
+CONTENT_AUDIT.md
+MIGRATION_MATRIX.md
 ```
 
-Tasks:
+**Acceptance criteria**
 
-### F1 — Install and verify tooling
+- Trust lifecycle, local ownership, readable storage, relevant retrieval, correction, retirement, and QA availability are accurate.
+- The page has one primary CTA to Memory for QA.
+- Broad commercial availability is not implied.
 
-- verify current package versions and licenses;
-- add exact dependencies;
-- configure scoped GSAP usage;
-- configure Playwright;
-- add no public route or production behavior yet.
+**Validation**  
+Product-truth review, claims review, visual-map review, CTA review.
 
-### F2 — Build hero state model
+**Rollback or migration concerns**  
+Do not edit the production Memory route until Phase 10.
 
-Implement named states:
+**Commit boundary**  
+Copy and audit docs only.
+
+## Task 3.5 — Memory for QA page copy
+
+**Purpose**  
+Approve the niche-specific conversion page using credible QA investigation language.
+
+**Dependencies**  
+Tasks 3.1–3.2.
+
+**Exact inputs**
 
 ```text
-scattered-evidence
-structured-candidates
-review-gate
-approved-memory
-new-task
-focused-context
+Mind customer profiles
+Memory for QA strategy
+homepage-example-data.md
+COPY_VISUAL_MAP.md
+claims register
+beta status
 ```
 
-### F3 — Build desktop scroll proof
-
-- native scrolling;
-- one scoped timeline;
-- deterministic cleanup;
-- transform and opacity first;
-- debug markers development-only.
-
-### F4 — Mobile and reduced motion
-
-Build separate mobile scenes and a complete reduced-motion composition.
-
-### F5 — Motion and performance review
-
-Use:
+**Expected files**
 
 ```text
-/design-motion-principles
-Playwright screenshots
-browser performance trace
+approved QA page copy document
+CONTENT_AUDIT.md
+MIGRATION_MATRIX.md
 ```
 
-Exit:
+**Acceptance criteria**
 
-- Gate 3 Motion approved;
-- no scroll jump, cleanup defect, accessibility failure, or unacceptable frame cost.
+- The page explains repeated investigation, evidence, review, later reuse, and beta qualification.
+- Current evidence remains stronger than memory.
+- No automatic diagnosis or measured result is implied.
+- Primary CTA is the selected QA beta.
 
-## Batch G — product-mechanism prototypes
+**Validation**  
+QA credibility review, claims review, form-purpose review, visual-map review.
 
-Status: after Batch F.
+**Rollback or migration concerns**  
+Production QA routes remain unchanged until Phase 10.
 
-Build in order:
+**Commit boundary**  
+Copy and audit docs only.
 
-### G1 — Memory lifecycle
+## Task 3.6 — Workbench page copy
+
+**Purpose**  
+Approve the second-product page and remove public confusion with BuildFlow or autonomous-agent claims.
+
+**Dependencies**  
+Tasks 3.1–3.2.
+
+**Exact inputs**
 
 ```text
-current evidence
-→ draft lesson
-→ sanitization and scope
-→ human review
-→ approved memory
-→ relevant retrieval
-→ correction or retirement
+Mind Workbench strategy
+PRODUCT.md
+existing Workbench/BuildFlow copy sources
+COPY_VISUAL_MAP.md
+claims register
 ```
 
-### G2 — Relevant context
+**Expected files**
 
 ```text
-full workspace
-→ task signals
-→ selection
-→ focused context
-→ selection explanation
+approved Workbench page copy document
+CONTENT_AUDIT.md
+MIGRATION_MATRIX.md
 ```
 
-### G3 — QA investigation
+**Acceptance criteria**
+
+- Request, exact context, guarded change, validation, run state, and explicit Git are clear.
+- Workbench is not described as autonomous.
+- BuildFlow remains technical compatibility language only where needed.
+- Availability is accurate.
+
+**Validation**  
+Product-truth review, legacy-name search, claims review, CTA review.
+
+**Rollback or migration concerns**  
+Preserve required compatibility identifiers in code and technical docs.
+
+**Commit boundary**  
+Copy and audit docs only.
+
+## Task 3.7 — Company and support page copy
+
+**Purpose**  
+Approve Philosophy, About, Contact, beta forms, documentation entry, and error-state copy.
+
+**Dependencies**  
+Tasks 3.1–3.2.
+
+**Exact inputs**
 
 ```text
-failed test
-→ evidence
-→ investigation
-→ root cause
-→ reviewed lesson
-→ later reuse
+Mind company-principles.md
+Mind public-platform-strategy.md
+PAGE_ARCHITECTURE.md
+CONTENT_AUDIT.md
+current forms and documentation routes
 ```
 
-### G4 — Workbench control plane
+**Expected files**
 
 ```text
-request
-→ exact local context
-→ guarded change
-→ targeted validation
-→ explicit Git action
+approved page copy documents for Philosophy, About, Contact, docs entry, 404, and errors
+form microcopy specification
+CONTENT_AUDIT.md
 ```
 
-For every prototype:
+**Acceptance criteria**
 
-- create desktop, mobile, and reduced-motion variants;
-- use realistic sanitized content;
-- create deterministic screenshot states;
-- run product-truth review;
-- run motion review where animated.
+- About presents ProChat as company and Steve transparently as founder.
+- Contact routes enquiry types and asks minimal data.
+- Documentation exposes current product directions only.
+- Error states route visitors to current pages.
 
-Exit:
+**Validation**  
+Founder-positioning review, accessibility review of form language, link and CTA review.
 
-- Gate 4 Product Explanation approved.
+**Rollback or migration concerns**  
+Do not alter live forms or data handling in this task.
 
-## Batch H — full-page prototype and independent review
+**Commit boundary**  
+Copy and audit docs only.
 
-Status: after Batch G.
+## Task 3.8 — Privacy and Terms second pass
 
-Tasks:
+**Purpose**  
+Align legal pages with the current local-memory model, website data behavior, beta stage, and external-provider boundaries.
 
-### H1 — Low-fidelity full-page assembly
+**Dependencies**  
+Content inventory and claims classification.
 
-Combine all seven chapters in the design-lab route.
-
-### H2 — Narrative pacing review
-
-Check:
-
-- chapter length;
-- visual fatigue;
-- text density;
-- CTA timing;
-- product-family balance;
-- mobile pacing;
-- reduced-motion pacing.
-
-### H3 — Independent reviews
-
-Run:
+**Exact inputs**
 
 ```text
-/plan-design-review
-/design-motion-principles
-/taste-skill
+existing Privacy and Terms pages
+Mind legal-policy direction
+public-platform strategy
+current form, analytics, hosting, and provider behavior
 ```
 
-### H4 — Reconciliation
-
-GPT-5.6 Sol reviews findings against canonical documents, accepts or rejects each finding, and updates the approved design plan.
-
-Exit:
-
-- Gate 5 Full-page Prototype approved;
-- production implementation packets finalized.
-
-## Batch I — production foundation
-
-Status: after Batch H.
-
-Primary implementation:
+**Expected files**
 
 ```text
-GPT-5.6 Sol + ProChat Workbench
-/redesign-skill
-/code
+legal review notes
+approved Privacy copy
+approved Terms copy
+CONTENT_AUDIT.md
+MIGRATION_MATRIX.md
 ```
 
-Tasks:
+**Acceptance criteria**
 
-### I1 — Fonts and tokens
+- Website data and customer-owned local memory are distinct.
+- External provider behavior is accurately scoped.
+- Effective and updated dates exist.
+- Beta and future commercial terms are not conflated.
+- Unresolved legal decisions are explicit.
 
-- implement Golos Text and JetBrains Mono;
-- implement semantic token CSS;
-- map existing marketing surfaces without broad visual migration;
-- verify production font loading and CLS.
+**Validation**  
+Legal review, privacy/data-flow verification, claims review, readable-structure review.
 
-### I2 — Shared visual primitives
+**Rollback or migration concerns**  
+Do not publish unreviewed legal changes. Preserve current pages until replacements are approved.
 
-Move approved primitives from prototype to production components with typed props and accessibility states.
+**Commit boundary**  
+Legal copy and review records only.
 
-### I3 — Animation infrastructure
+## Task 3.9 — Navigation, footer, metadata, and social copy
 
-- isolated client leaves;
-- shared reduced-motion utility;
-- scoped GSAP registration and cleanup;
-- dynamic loading strategy;
-- deterministic visual-test hooks.
+**Purpose**  
+Approve all global shell labels, page metadata, sitemap intent, and social preview language.
 
-### I4 — Design-lab lifecycle
+**Dependencies**  
+Tasks 3.3–3.8.
 
-Retain the design-lab for development and testing while excluding it from navigation, sitemap, and indexing.
-
-Exit:
-
-- production foundation builds and passes targeted tests.
-
-## Batch J — production homepage chapters
-
-Status: after Batch I.
-
-Implement and commit in bounded chapter packets:
-
-1. Hero and premise
-2. Company and Memory definition
-3. Memory lifecycle and example record
-4. Trust, evidence, local ownership, Markdown, and Git
-5. Relevant context
-6. Value and measurement
-7. Memory for QA and beta
-8. Workbench and shared philosophy
-9. Boundaries, FAQ, final CTA
-10. Navigation, footer, metadata, and conversion destinations
-
-Each packet requires:
-
-- exact source read;
-- desktop, mobile, and reduced-motion implementation;
-- screenshot evidence;
-- targeted functional and visual tests;
-- design and product-truth review;
-- explicit-path commit.
-
-## Batch K — craft, QA, and release
-
-Status: after Batch J.
-
-Review sequence:
+**Exact inputs**
 
 ```text
-/impeccable shape
-/impeccable craft
-/impeccable typeset
-/impeccable layout
-/impeccable animate
-/design-review
-/impeccable polish
-/impeccable harden
+PAGE_ARCHITECTURE.md
+approved page copy
+current navigation/footer helpers
+metadata and sitemap sources
+asset audit
 ```
 
-Final validation:
+**Expected files**
 
-- Mind remains canonical;
-- this repo remains subordinate;
-- only current products are represented as products;
-- public claims match canonical boundaries;
-- five-second hero comprehension passes;
-- WCAG 2.2 AA passes;
-- Playwright functional and visual tests pass;
-- current Chrome, Safari, Firefox, and Edge pass;
-- LCP, INP, and CLS meet budgets;
-- design-lab and debug tools are excluded from public discovery;
-- no unrelated changes are staged or committed.
+```text
+navigation and footer copy specification
+metadata matrix
+social asset requirements
+CONTENT_AUDIT.md
+ROUTE_AUDIT.md
+```
 
-Required release evidence is defined in `docs/homepage-validation-plan.md`.
+**Acceptance criteria**  
+Labels, destinations, titles, descriptions, canonical URLs, indexing, and social text match the final page hierarchy.
 
-## Rule
+**Validation**  
+Duplicate-title review, route comparison, CTA review, footer completeness, social preview review.
 
-This implementation plan governs website-repo execution only. Product strategy lives in Mind.
+**Rollback or migration concerns**  
+No live metadata or navigation edit until Phase 10.
+
+**Commit boundary**  
+Specifications and audits only.
+
+# Phase 4 — Design-language foundation
+
+## Task 4.1 — Design documentation reconciliation
+
+**Status:** CURRENT DOCUMENTATION BATCH.
+
+**Purpose**  
+Verify that the design principles, visual grammar, product library, motion storyboard, component contract, responsive, accessibility, performance, and design-lab documents agree.
+
+**Dependencies**  
+Phases 1–3 canonical decisions.
+
+**Exact inputs**
+
+```text
+DESIGN.md
+brand-spec.md
+docs/design/*.md
+docs/platform/*.md
+docs/homepage-*.md
+```
+
+**Expected files**  
+Only the listed documentation paths.
+
+**Acceptance criteria**
+
+- Golos Text, JetBrains Mono, grayscale, and `#3158C7` remain consistent.
+- Native scrolling and GSAP boundary remain consistent.
+- Mobile and reduced motion are mandatory.
+- Product primitives and named states match copy and product truth.
+- GPT-5.6 Sol is the primary model for architecture, design, implementation, and reconciliation; external models are optional critics only.
+
+**Validation**  
+Cross-document term search, required-file check, security scan, exact diff.
+
+**Rollback or migration concerns**  
+Docs only.
+
+**Commit boundary**  
+Design and platform docs only.
+
+# Phase 5 — Foundational legacy sweep
+
+## Task 5.1 — Route and page inventory
+
+**Purpose**  
+Enumerate every route, page, layout, error, loading, metadata, redirect, sitemap, robots, and navigation entry.
+
+**Dependencies**  
+Phase 2 and route-audit specification.
+
+**Exact inputs**
+
+```text
+src/app/**
+next.config.*
+route helpers
+sitemap and robots files
+header/footer/navigation files
+```
+
+**Expected files**
+
+```text
+docs/migration/ROUTE_AUDIT.md
+docs/migration/MIGRATION_MATRIX.md
+```
+
+**Acceptance criteria**  
+Every route maps to a canonical responsibility or a decision-required row.
+
+**Validation**  
+App Router enumeration, navigation cross-check, sitemap comparison, no source edits.
+
+**Rollback or migration concerns**  
+Inventory only.
+
+**Commit boundary**  
+Route audit records only.
+
+## Task 5.2 — Component inventory
+
+**Purpose**  
+Map shared and page-local components, consumers, APIs, design assumptions, and lifecycle.
+
+**Dependencies**  
+Task 5.1 and component-audit specification.
+
+**Exact inputs**
+
+```text
+src/components/**
+src/app/**/_components/**
+marketing component directories
+UI wrappers and form components
+```
+
+**Expected files**
+
+```text
+docs/migration/COMPONENT_AUDIT.md
+docs/migration/MIGRATION_MATRIX.md
+```
+
+**Acceptance criteria**  
+Every component has purpose, consumers, status, disposition, canonical replacement, and risk.
+
+**Validation**  
+Import/consumer searches, duplicate-responsibility review, no production edits.
+
+**Rollback or migration concerns**  
+Inventory only; no component moves or deletions.
+
+**Commit boundary**  
+Component audit records only.
+
+## Task 5.3 — Style and motion inventory
+
+**Purpose**  
+Map all fonts, tokens, colors, themes, CSS technologies, responsive rules, animations, observers, and reduced-motion behavior.
+
+**Dependencies**  
+Tasks 5.1–5.2.
+
+**Exact inputs**
+
+```text
+src/assets/styles/**
+Tailwind and Sass configuration
+CSS Modules and page styles
+motion imports, keyframes, observers, and listeners
+```
+
+**Expected files**
+
+```text
+docs/migration/STYLE_AUDIT.md
+docs/migration/MOTION_AUDIT.md
+docs/migration/MIGRATION_MATRIX.md
+```
+
+**Acceptance criteria**  
+All visual and motion systems have consumers, status, disposition, risk, and migration destination.
+
+**Validation**  
+Raw color/font search, import graph, motion mechanism search, no production edits.
+
+**Rollback or migration concerns**  
+Inventory only.
+
+**Commit boundary**  
+Style and motion audit records only.
+
+## Task 5.4 — Asset and dependency inventory
+
+**Purpose**  
+Map assets, fonts, icons, packages, scripts, licences, consumers, costs, and risks.
+
+**Dependencies**  
+Tasks 5.1–5.3.
+
+**Exact inputs**
+
+```text
+public/**
+imported asset directories
+package.json
+lockfile
+configuration and scripts
+```
+
+**Expected files**
+
+```text
+docs/migration/ASSET_AUDIT.md
+docs/migration/DEPENDENCY_AUDIT.md
+docs/migration/MIGRATION_MATRIX.md
+```
+
+**Acceptance criteria**  
+Every active asset and direct dependency has purpose, consumer, status, disposition, validation, and removal boundary.
+
+**Validation**  
+Asset reference search, import search, package-script review, licence/security notes, no package changes.
+
+**Rollback or migration concerns**  
+Inventory only.
+
+**Commit boundary**  
+Asset and dependency audit records only.
+
+## Task 5.5 — Migration classification and wave plan
+
+**Purpose**  
+Turn inventories into an executable keep/refactor/rewrite/replace/archive/redirect/delete program.
+
+**Dependencies**  
+Tasks 5.1–5.4 and completed content audit.
+
+**Exact inputs**
+
+```text
+all docs/migration audits
+LEGACY_SWEEP_PLAN.md
+canonical page and design documents
+```
+
+**Expected files**
+
+```text
+docs/migration/MIGRATION_MATRIX.md
+docs/roadmap.md if dependency order changes
+docs/implementation-plan.md if tasks change
+```
+
+**Acceptance criteria**
+
+- Every row has disposition, canonical replacement, wave, risk, validation, rollback, and owner.
+- Deletion rows require explicit approval.
+- Critical rows have no ambiguous dependency.
+- Production implementation packets can be sequenced.
+
+**Validation**  
+Cross-audit completeness script, unresolved-status report, exact diff, security scan.
+
+**Rollback or migration concerns**  
+No production removals in classification task.
+
+**Commit boundary**  
+Migration decisions only.
+
+# Phase 6 — Design laboratory and static prototypes
+
+## Task 6.1 — Design-lab shell
+
+**Purpose**  
+Create an isolated, non-indexed browser environment for approved experiments.
+
+**Dependencies**  
+Task 5.5.
+
+**Exact inputs**
+
+```text
+docs/design/DESIGN_LAB.md
+current App Router structure
+robots and sitemap implementation
+canonical tokens and example data
+```
+
+**Expected files**  
+Exact route, layout, and local prototype files approved by the route audit; no production page files.
+
+**Acceptance criteria**  
+The lab is excluded from navigation, sitemap, and indexing and supports deterministic states.
+
+**Validation**  
+Route load, robots/sitemap check, mobile smoke test, no production navigation change.
+
+**Rollback or migration concerns**  
+Keep the lab isolated; revert its route packet without affecting production.
+
+**Commit boundary**  
+Design-lab shell only.
+
+## Task 6.2 — Foundation specimen
+
+**Purpose**  
+Prove typography, surfaces, cobalt usage, states, focus, spacing, radius, borders, shadows, and technical panels.
+
+**Dependencies**  
+Task 6.1.
+
+**Exact inputs**
+
+```text
+DESIGN.md
+brand-spec.md
+DESIGN_PRINCIPLES.md
+ACCESSIBILITY_STRATEGY.md
+homepage-example-data.md
+```
+
+**Expected files**  
+Design-lab specimen files and local styles only.
+
+**Acceptance criteria**  
+Desktop and mobile specimens demonstrate canonical tokens, contrast, hierarchy, and interaction states without new design decisions.
+
+**Validation**  
+Browser screenshots, contrast review, keyboard/focus review, 320–1728 width check.
+
+**Rollback or migration concerns**  
+Prototype only.
+
+**Commit boundary**  
+Foundation specimen only.
+
+## Task 6.3 — Static product visual primitives
+
+**Purpose**  
+Build realistic Memory, QA, Workbench, and shared visual objects before page composition.
+
+**Dependencies**  
+Task 6.2.
+
+**Exact inputs**
+
+```text
+PRODUCT_VISUAL_LIBRARY.md
+VISUAL_LANGUAGE.md
+homepage-example-data.md
+COMPONENT_LIBRARY.md
+```
+
+**Expected files**  
+Design-lab primitive files, schemas, fixtures, and tests only.
+
+**Acceptance criteria**  
+Every required state is visible, semantic, responsive, reduced-motion-safe, and specific to ProChat.
+
+**Validation**  
+State screenshots, keyboard and accessible-summary review, mobile review, type check where code exists.
+
+**Rollback or migration concerns**  
+No promotion to production until approved.
+
+**Commit boundary**  
+Static visual primitives only.
+
+## Task 6.4 — Three static homepage hero directions
+
+**Purpose**  
+Explore composition without changing fonts, palette, claims, or product mechanism.
+
+**Dependencies**  
+Tasks 6.2–6.3 and approved homepage copy.
+
+**Exact inputs**
+
+```text
+homepage-design-spec.md
+homepage-visual-storyboard.md
+COPY_VISUAL_MAP.md
+approved hero copy and fixtures
+```
+
+**Expected files**  
+Three design-lab hero variants and mobile variants.
+
+**Acceptance criteria**  
+Directions differ materially by composition and storytelling; one passes the five-second test and is selected with rationale.
+
+**Validation**  
+Desktop/mobile screenshots, comprehension test, accessibility review, static quality review.
+
+**Rollback or migration concerns**  
+Rejected directions remain archived in the lab, not production.
+
+**Commit boundary**  
+Hero directions and selection record only.
+
+## Task 6.5 — Static page patterns and full-page assembly
+
+**Purpose**  
+Prove page rhythm and reusable patterns across company, product, legal, contact, documentation, and error pages.
+
+**Dependencies**  
+Task 6.4 and approved page copy.
+
+**Exact inputs**
+
+```text
+PAGE_ARCHITECTURE.md
+approved page copy
+selected hero
+product primitives
+RESPONSIVE_STRATEGY.md
+```
+
+**Expected files**  
+Design-lab page patterns and full-page low-fidelity assemblies only.
+
+**Acceptance criteria**  
+All page types fit one system; mobile compositions exist; legal and utility pages remain restrained; full homepage pacing is coherent.
+
+**Validation**  
+Page screenshots, responsive review, content completeness, CTA flow review.
+
+**Rollback or migration concerns**  
+Prototype only.
+
+**Commit boundary**  
+Static page prototypes only.
+
+# Phase 7 — Motion and product-story prototypes
+
+## Task 7.1 — Motion and browser-test tooling
+
+**Purpose**  
+Add only the approved dependencies and minimal configuration for motion proofs and deterministic browser testing.
+
+**Dependencies**  
+Static hero approval and dependency audit decision.
+
+**Exact inputs**
+
+```text
+package.json
+lockfile
+homepage-technical-design.md
+PERFORMANCE_STRATEGY.md
+DEPENDENCY_AUDIT.md
+```
+
+**Expected files**
+
+```text
+package.json
+lockfile
+Playwright configuration
+motion registration utility
+related docs/tests
+```
+
+**Acceptance criteria**  
+GSAP, `@gsap/react`, Playwright, and axe are added at approved versions; no smooth-scroll or unapproved visual dependency is added.
+
+**Validation**  
+Install integrity, type check, build, licence/security review, bundle baseline.
+
+**Rollback or migration concerns**  
+One dependency/config commit; revert restores prior lockfile and package state.
+
+**Commit boundary**  
+Dependencies and minimal configuration only.
+
+## Task 7.2 — Hero motion proof
+
+**Purpose**  
+Animate the selected hero through named evidence, review, memory, and focused-context states.
+
+**Dependencies**  
+Task 7.1.
+
+**Exact inputs**
+
+```text
+selected static hero
+MOTION_STORYBOARD.md
+homepage-example-data.md
+ACCESSIBILITY_STRATEGY.md
+PERFORMANCE_STRATEGY.md
+```
+
+**Expected files**  
+Design-lab hero timeline, local styles, state definitions, tests, and screenshots.
+
+**Acceptance criteria**  
+Native scrolling, predictable reverse, stable text, clean pinning, mobile scenes, and reduced-motion panels.
+
+**Validation**  
+Forward/reverse tests, resize/orientation, cleanup, Playwright states, axe, performance trace.
+
+**Rollback or migration concerns**  
+Design-lab only; no production hero replacement.
+
+**Commit boundary**  
+Hero motion proof only.
+
+## Task 7.3 — Memory lifecycle and relevant-context proofs
+
+**Purpose**  
+Prove the two key Memory mechanisms using one persistent record and explicit task signals.
+
+**Dependencies**  
+Task 7.2 lessons.
+
+**Exact inputs**
+
+```text
+MOTION_STORYBOARD.md
+PRODUCT_VISUAL_LIBRARY.md
+homepage-example-data.md
+approved Memory copy
+```
+
+**Expected files**  
+Design-lab lifecycle and context stories, state models, tests, and evidence.
+
+**Acceptance criteria**  
+Trust is earned, current evidence can override memory, selection remains explainable, and mobile/reduced-motion forms are complete.
+
+**Validation**  
+Product-truth review, screenshots, reverse scroll, axe, performance trace.
+
+**Rollback or migration concerns**  
+Prototype only.
+
+**Commit boundary**  
+Memory proofs only.
+
+## Task 7.4 — QA investigation proof
+
+**Purpose**  
+Visualize one credible failure becoming a reviewed lesson and later reusable context.
+
+**Dependencies**  
+Task 7.3 and approved QA copy.
+
+**Exact inputs**
+
+```text
+QA scenario in homepage-example-data.md
+MOTION_STORYBOARD.md
+approved QA page copy
+```
+
+**Expected files**  
+Design-lab QA story, state model, fixtures, tests, and screenshots.
+
+**Acceptance criteria**  
+Evidence, hypotheses, root cause, review, approval, and later reuse are explicit; no automatic diagnosis is implied.
+
+**Validation**  
+QA credibility review, mobile/reduced-motion checks, Playwright, axe, performance trace.
+
+**Rollback or migration concerns**  
+Prototype only.
+
+**Commit boundary**  
+QA proof only.
+
+## Task 7.5 — Workbench control-plane proof
+
+**Purpose**  
+Show ChatGPT reasoning connected to exact local context through guarded operations, validation, and explicit Git.
+
+**Dependencies**  
+Task 7.1 and approved Workbench copy.
+
+**Exact inputs**
+
+```text
+Workbench scenario in homepage-example-data.md
+PRODUCT_VISUAL_LIBRARY.md
+approved Workbench copy
+```
+
+**Expected files**  
+Design-lab Workbench story, state model, fixtures, tests, and screenshots.
+
+**Acceptance criteria**  
+Paths, scope, confirmation, validation, and Git state are visible; unrelated files remain visibly untouched; no autonomy claim appears.
+
+**Validation**  
+Product-truth review, desktop/mobile screenshots, axe, performance check.
+
+**Rollback or migration concerns**  
+Prototype only.
+
+**Commit boundary**  
+Workbench proof only.
+
+## Task 7.6 — Motion system acceptance
+
+**Purpose**  
+Validate all motion stories as one coherent system.
+
+**Dependencies**  
+Tasks 7.2–7.5.
+
+**Exact inputs**  
+All prototype stories, motion audit, performance and accessibility strategies.
+
+**Expected files**  
+Motion review report, updated storyboard/specs, deterministic baseline images.
+
+**Acceptance criteria**  
+At most four pinned sequences; consistent timing; no redundant effects; complete mobile and reduced motion; budgets pass.
+
+**Validation**  
+Cross-story review, trigger count, bundle review, browser traces, current major browsers.
+
+**Rollback or migration concerns**  
+Reject or simplify individual stories before production promotion.
+
+**Commit boundary**  
+Review evidence and approved prototype changes only.
+
+# Phase 8 — Independent review
+
+## Task 8.1 — Full prototype review
+
+**Purpose**  
+Challenge product truth, design, motion, accessibility, performance, feasibility, conversion, and legal boundaries.
+
+**Dependencies**  
+Phases 3, 5, 6, and 7.
+
+**Exact inputs**  
+Full design lab, migration matrix, page copy, validation strategy, canonical documents.
+
+**Expected files**  
+Review report and issue list only.
+
+**Acceptance criteria**  
+Every dimension is scored; every finding names evidence, severity, recommended fix, and affected task.
+
+**Validation**  
+Independent browser review, product review, accessibility review, performance review.
+
+**Rollback or migration concerns**  
+No production edits.
+
+**Commit boundary**  
+Review report only.
+
+## Task 8.2 — Findings reconciliation and production packetization
+
+**Purpose**  
+Accept, reject, or defer each review finding and finalize bounded production tasks.
+
+**Dependencies**  
+Task 8.1.
+
+**Exact inputs**  
+Review report, canonical docs, prototypes, migration matrix.
+
+**Expected files**
+
+```text
+reconciled design/platform docs
+MIGRATION_MATRIX.md
+implementation-plan task updates
+```
+
+**Acceptance criteria**  
+No finding remains without disposition; production packets have exact paths, validation, rollback, and commit boundaries.
+
+**Validation**  
+Cross-document consistency, unresolved-findings query, security scan.
+
+**Rollback or migration concerns**  
+Docs and prototype changes only.
+
+**Commit boundary**  
+Reconciliation docs only.
+
+# Phase 9 — Production foundation
+
+## Task 9.1 — Fonts, tokens, and style containment
+
+**Purpose**  
+Implement canonical typography and semantic tokens while isolating legacy styles.
+
+**Dependencies**  
+Task 8.2 and approved style-migration rows.
+
+**Exact inputs**
+
+```text
+brand-spec.md
+STYLE_AUDIT.md
+MIGRATION_MATRIX.md
+current root layout and style entry points
+```
+
+**Expected files**  
+Exact font, token, root-layout, style-entry, tests, and docs paths listed in the approved matrix.
+
+**Acceptance criteria**  
+Golos and JetBrains load correctly; tokens are semantic; no broad legacy breakage; CLS and contrast pass.
+
+**Validation**  
+Type check, production build, font/network inspection, visual baselines, contrast, design lint.
+
+**Rollback or migration concerns**  
+Keep legacy styles contained until page consumers migrate.
+
+**Commit boundary**  
+Fonts/tokens/containment only.
+
+## Task 9.2 — Shared shell and form foundations
+
+**Purpose**  
+Implement header, mobile navigation, footer, links, buttons, surfaces, forms, TOC, legal metadata, and errors.
+
+**Dependencies**  
+Task 9.1 and component migration rows.
+
+**Exact inputs**  
+COMPONENT_LIBRARY.md, approved prototypes, component audit, page architecture.
+
+**Expected files**  
+Exact shared component, style, test, and documentation paths in the matrix.
+
+**Acceptance criteria**  
+All states, keyboard behavior, responsive behavior, and design tokens are complete; no arbitrary design props.
+
+**Validation**  
+Type check, component tests, Playwright, axe, mobile screenshots, build.
+
+**Rollback or migration concerns**  
+Migrate no page consumer beyond the approved shell packet.
+
+**Commit boundary**  
+Shared shell and forms only.
+
+## Task 9.3 — Product visuals and motion infrastructure
+
+**Purpose**  
+Promote approved Memory, QA, Workbench, and motion primitives to production components.
+
+**Dependencies**  
+Tasks 9.1–9.2 and Phase 7 acceptance.
+
+**Exact inputs**  
+Approved design-lab primitives, component contract, state schemas, motion proofs.
+
+**Expected files**  
+Exact production visual components, fixtures, motion utilities, tests, and docs named by the matrix.
+
+**Acceptance criteria**  
+Static states work without GSAP; motion is scoped; accessible summaries exist; mobile and reduced-motion variants exist.
+
+**Validation**  
+Type check, tests, visual regression, axe, cleanup tests, bundle review.
+
+**Rollback or migration concerns**  
+Do not attach to production pages in this task.
+
+**Commit boundary**  
+Product visual infrastructure only.
+
+## Task 9.4 — Browser, accessibility, visual, and performance test infrastructure
+
+**Purpose**  
+Create repeatable release gates before page implementation scales.
+
+**Dependencies**  
+Tasks 9.1–9.3.
+
+**Exact inputs**  
+Validation plan, accessibility strategy, performance strategy, current CI/package scripts.
+
+**Expected files**  
+Playwright tests/config, axe helpers, screenshot baselines, performance scripts/config, documentation.
+
+**Acceptance criteria**  
+Tests run deterministically locally and in approved CI; design-lab states are testable; budgets are reported.
+
+**Validation**  
+Run test suite, inspect artifacts, verify failure behavior, build.
+
+**Rollback or migration concerns**  
+Do not couple tests to unstable animation timing; use named states.
+
+**Commit boundary**  
+Test infrastructure only.
+
+# Phase 10 — Public pages
+
+## Standard page packet contract
+
+Every page task below uses:
+
+- approved copy;
+- page architecture;
+- approved visual story;
+- exact route and legacy rows;
+- production foundations;
+- mobile and reduced-motion design;
+- metadata and analytics specification;
+- page-specific tests.
+
+Every page commit contains only that page, directly required shared fixes, tests, metadata, and documentation. Shared changes affecting other pages require a separate foundation packet.
+
+## Task 10.1 — Homepage
+
+**Purpose**  
+Build the company-first public homepage with Memory dominance, QA conversion, and Workbench introduction.
+
+**Dependencies**  
+Phase 9 and approved homepage prototype.
+
+**Exact inputs**  
+Canonical homepage copy, homepage design/technical/storyboard docs, migration rows for the current homepage route.
+
+**Expected files**  
+Exact homepage route, sections, local styles, fixtures, tests, metadata, and affected navigation/footer files approved by the matrix.
+
+**Acceptance criteria**  
+Five-second understanding; four approved cinematic sequences maximum; mobile/reduced motion complete; CTA destinations correct; claims accurate.
+
+**Validation**  
+Type check, build, Playwright functional/visual, axe, browser trace, route and metadata review.
+
+**Rollback or migration concerns**  
+Keep prior route restorable until the new homepage passes; do not remove legacy components in this commit.
+
+**Commit boundary**  
+Homepage packet only.
+
+## Task 10.2 — ProChat Memory page
+
+**Purpose**  
+Build the flagship product page and route visitors to the current QA edition.
+
+**Dependencies**  
+Task 10.1 foundations and approved Memory copy/prototype.
+
+**Exact inputs**  
+Memory copy, visual map, route row, product visual components.
+
+**Expected files**  
+Exact Memory route, sections, tests, metadata, and approved redirect compatibility files.
+
+**Acceptance criteria**  
+General model is clear; availability is qualified; trust, local ownership, retrieval, correction, and QA path are accurate.
+
+**Validation**  
+Product-truth review, build, Playwright, axe, mobile, metadata, performance.
+
+**Rollback or migration concerns**  
+Do not remove old Memory routes until redirect task.
+
+**Commit boundary**  
+Memory page only.
+
+## Task 10.3 — ProChat Memory for QA page
+
+**Purpose**  
+Build the primary niche conversion page.
+
+**Dependencies**  
+Task 10.2 and approved QA copy/prototype.
+
+**Exact inputs**  
+QA copy, investigation proof, beta form specification, route and content audit rows.
+
+**Expected files**  
+Exact QA route, sections, form integration boundary, tests, metadata, and local assets.
+
+**Acceptance criteria**  
+QA credibility, evidence-first investigation, human review, later reuse, beta qualification, and primary CTA are clear.
+
+**Validation**  
+QA review, form smoke test, Playwright, axe, mobile, claims, performance.
+
+**Rollback or migration concerns**  
+Do not remove legacy QA routes or alter data collection outside approved form task.
+
+**Commit boundary**  
+QA page only.
+
+## Task 10.4 — ProChat Workbench page
+
+**Purpose**  
+Build the second-product page around guarded local execution.
+
+**Dependencies**  
+Phase 9 and approved Workbench copy/prototype.
+
+**Exact inputs**  
+Workbench copy, control-plane proof, route and legacy BuildFlow rows.
+
+**Expected files**  
+Exact Workbench route, sections, tests, metadata, and compatibility links approved by matrix.
+
+**Acceptance criteria**  
+Exact context, guarded changes, validation, run state, Git, and boundaries are visible; no autonomy or public BuildFlow-product confusion.
+
+**Validation**  
+Product review, legacy-name search, build, Playwright, axe, mobile, performance.
+
+**Rollback or migration concerns**  
+Preserve technical compatibility identifiers until their own migration row completes.
+
+**Commit boundary**  
+Workbench page only.
+
+## Task 10.5 — Philosophy page
+
+**Purpose**  
+Publish the durable company belief and operating principles.
+
+**Dependencies**  
+Approved philosophy copy and shared shell.
+
+**Exact inputs**  
+Mind company-principles.md, page architecture, editorial page pattern.
+
+**Expected files**  
+Exact Philosophy route, local components/styles, tests, metadata.
+
+**Acceptance criteria**  
+Readable, company-level, not a slogan wall, and linked toward Memory without aggressive conversion.
+
+**Validation**  
+Content review, heading/reading-order review, mobile, axe, metadata.
+
+**Rollback or migration concerns**  
+No product or legal claims beyond canonical philosophy.
+
+**Commit boundary**  
+Philosophy page only.
+
+## Task 10.6 — About page
+
+**Purpose**  
+Present ProChat as the company and Steve transparently as QA Engineer and Founder.
+
+**Dependencies**  
+Approved About copy and company positioning.
+
+**Exact inputs**  
+Public-platform strategy, founder copy, approved imagery decision.
+
+**Expected files**  
+Exact About route, tests, metadata, approved assets.
+
+**Acceptance criteria**  
+The page builds trust without becoming a freelancer portfolio or implying a larger team.
+
+**Validation**  
+Founder-positioning review, accessibility, mobile, metadata, asset rights.
+
+**Rollback or migration concerns**  
+Do not introduce freelance-service conversion into ProChat navigation.
+
+**Commit boundary**  
+About page only.
+
+## Task 10.7 — Contact and beta forms
+
+**Purpose**  
+Route QA beta, Workbench, partnership, and general contact intent while collecting minimal data.
+
+**Dependencies**  
+Approved form copy, privacy review, current backend/provider audit.
+
+**Exact inputs**  
+Contact copy, form/data-flow audit, legal notes, analytics specification.
+
+**Expected files**  
+Exact Contact route, form components, server/API actions, validation, tests, privacy notice, metadata.
+
+**Acceptance criteria**  
+Labels, required fields, purpose, success, error, privacy, keyboard, and mobile behavior are complete.
+
+**Validation**  
+Functional form tests, error/success tests, axe, privacy/data-flow review, no secret exposure.
+
+**Rollback or migration concerns**  
+Preserve existing working contact flow until replacement succeeds; avoid changing provider or data retention without approval.
+
+**Commit boundary**  
+Contact and beta flow only.
+
+## Task 10.8 — Privacy page
+
+**Purpose**  
+Publish accurate, readable, versioned privacy information.
+
+**Dependencies**  
+Approved legal copy and verified data flows.
+
+**Exact inputs**  
+Privacy copy, analytics/form/provider audit, route row.
+
+**Expected files**  
+Exact Privacy route, legal layout, metadata, tests.
+
+**Acceptance criteria**  
+Website data, local memory, external providers, contact, dates, and beta boundaries are accurate.
+
+**Validation**  
+Legal review, link check, readable structure, mobile, metadata.
+
+**Rollback or migration concerns**  
+Keep prior legal page accessible until approved replacement is live.
+
+**Commit boundary**  
+Privacy page only.
+
+## Task 10.9 — Terms page
+
+**Purpose**  
+Publish accurate, readable, versioned terms for the current stage.
+
+**Dependencies**  
+Approved legal copy and current product/licensing status.
+
+**Exact inputs**  
+Terms copy, product stage, repository licence facts, route row.
+
+**Expected files**  
+Exact Terms route, legal layout, metadata, tests.
+
+**Acceptance criteria**  
+Beta, website, repository, future commercial, liability, contact, and dates are correctly scoped.
+
+**Validation**  
+Legal review, link check, readable structure, mobile, metadata.
+
+**Rollback or migration concerns**  
+Do not imply final commercial terms before approval.
+
+**Commit boundary**  
+Terms page only.
+
+## Task 10.10 — Documentation entry points
+
+**Purpose**  
+Expose current product documentation and version status without surfacing legacy directions as current.
+
+**Dependencies**  
+Documentation content audit and route decisions.
+
+**Exact inputs**  
+Current docs routes/sources, approved documentation-entry copy, archive decisions.
+
+**Expected files**  
+Exact documentation entry routes, cards/links, metadata, tests, archive/noindex controls.
+
+**Acceptance criteria**  
+Current Memory/QA/Workbench docs are clear; beta/version status is visible; legacy docs are archived or labeled.
+
+**Validation**  
+Link crawl, route/indexing review, accessibility, metadata.
+
+**Rollback or migration concerns**  
+Do not delete historical docs in this page task.
+
+**Commit boundary**  
+Documentation entry only.
+
+## Task 10.11 — 404 and error states
+
+**Purpose**  
+Provide coherent recovery for missing pages, route errors, form errors, and unavailable states.
+
+**Dependencies**  
+Shared error primitive and approved copy.
+
+**Exact inputs**  
+Current not-found/error files, error copy, route architecture.
+
+**Expected files**  
+Exact global and nested error/not-found/loading files and tests.
+
+**Acceptance criteria**  
+States explain the problem, preserve company tone, expose safe recovery, and remain accessible.
+
+**Validation**  
+Forced error tests, keyboard, screen reader, mobile, analytics where approved.
+
+**Rollback or migration concerns**  
+Avoid exposing internal errors or stack data.
+
+**Commit boundary**  
+Error states only.
+
+## Task 10.12 — Navigation, footer, metadata, sitemap, robots, and social assets
+
+**Purpose**  
+Reconcile the complete platform shell after all pages exist.
+
+**Dependencies**  
+Tasks 10.1–10.11.
+
+**Exact inputs**  
+PAGE_ARCHITECTURE.md, route audit, metadata matrix, asset audit, all production routes.
+
+**Expected files**  
+Exact header/footer/navigation helpers, metadata sources, sitemap, robots, social assets, tests.
+
+**Acceptance criteria**  
+No dead or legacy links; all titles and canonical URLs are correct; indexing is deliberate; footer is complete; social previews are current.
+
+**Validation**  
+Route crawl, link check, sitemap/robots parse, metadata snapshot, social preview review, mobile navigation, axe.
+
+**Rollback or migration concerns**  
+Avoid redirect chains and accidental noindex/index changes.
+
+**Commit boundary**  
+Global shell and discovery files only.
+
+# Phase 11 — Legacy migration and removal
+
+## Task 11.1 — Redirects and archival
+
+**Purpose**  
+Preserve public and historical value before deleting legacy routes or guidance.
+
+**Dependencies**  
+Approved replacements and migration rows.
+
+**Exact inputs**  
+Redirect rows, archive rows, route audit, current inbound/public links.
+
+**Expected files**  
+Redirect configuration, archive destinations, route docs, tests.
+
+**Acceptance criteria**  
+No chains/loops; historical material is clearly non-current; public destinations are correct.
+
+**Validation**  
+Redirect tests, route crawl, sitemap and canonical review.
+
+**Rollback or migration concerns**  
+Use temporary redirects when destination stability is not proven.
+
+**Commit boundary**  
+Redirect/archive wave only.
+
+## Task 11.2 — Legacy pages, copy, and components
+
+**Purpose**  
+Remove superseded public pages, copy sources, and components after zero-consumer proof.
+
+**Dependencies**  
+Task 11.1 and replacement verification.
+
+**Exact inputs**  
+Approved DELETE/ARCHIVE rows, consumer searches, production tests.
+
+**Expected files**  
+Only exact removal paths and directly affected imports/tests/docs.
+
+**Acceptance criteria**  
+No consumers, no broken routes, no lost historical/legal value, no current legacy product exposure.
+
+**Validation**  
+Import search, route crawl, type check, build, Playwright, exact diff.
+
+**Rollback or migration concerns**  
+One removal concern per commit; preserve prior commit as rollback.
+
+**Commit boundary**  
+Bounded page/copy/component removal packet.
+
+## Task 11.3 — Legacy styles, motion, assets, and dependencies
+
+**Purpose**  
+Remove obsolete visual systems and package cost after all consumers migrate.
+
+**Dependencies**  
+Task 11.2 and zero-consumer audit rows.
+
+**Exact inputs**  
+STYLE, MOTION, ASSET, and DEPENDENCY audit rows approved for removal.
+
+**Expected files**  
+Exact styles, assets, package files, lockfile, imports, tests, and docs.
+
+**Acceptance criteria**  
+No active consumer; build and visuals remain correct; bundle or repository complexity improves.
+
+**Validation**  
+Search, type check, tests, build, visual regression, bundle report, security/licence check.
+
+**Rollback or migration concerns**  
+Separate package removals from unrelated visual polish; retain a clean lockfile rollback.
+
+**Commit boundary**  
+One coherent removal category per commit.
+
+## Task 11.4 — Legacy absence proof
+
+**Purpose**  
+Prove old names, routes, imports, tokens, themes, assets, and claims no longer drive current production.
+
+**Dependencies**  
+Tasks 11.1–11.3.
+
+**Exact inputs**  
+All audits, migration matrix, repository source, production route manifest.
+
+**Expected files**  
+Final migration report, matrix status updates, residual-exception list.
+
+**Acceptance criteria**  
+No unresolved migration row; every retained legacy reference is explicitly historical, technical, or compatibility-scoped.
+
+**Validation**  
+Search suite, route crawl, build, tests, visual regression, metadata review, dependency review.
+
+**Rollback or migration concerns**  
+No additional deletion in proof task unless a new bounded removal task is created.
+
+**Commit boundary**  
+Evidence and matrix closure only.
+
+# Phase 12 — Production craft and launch validation
+
+## Task 12.1 — Visual and interaction craft pass
+
+**Purpose**  
+Refine typography, composition, spacing, states, and motion without changing product truth or architecture.
+
+**Dependencies**  
+Phases 10–11.
+
+**Exact inputs**  
+Running public platform, visual baselines, design review findings.
+
+**Expected files**  
+Exact page/component/style/test paths tied to approved findings.
+
+**Acceptance criteria**  
+Premium consistency, clear hierarchy, complete states, no generic AI patterns, no unbudgeted effects.
+
+**Validation**  
+Before/after screenshots, responsive review, visual regression, exact diff.
+
+**Rollback or migration concerns**  
+Atomic finding-based commits; avoid broad reformatting.
+
+**Commit boundary**  
+One coherent craft concern per commit.
+
+## Task 12.2 — Accessibility acceptance
+
+**Purpose**  
+Verify WCAG 2.2 AA and complete manual accessibility behavior.
+
+**Dependencies**  
+Task 12.1.
+
+**Exact inputs**  
+All public routes, ACCESSIBILITY_STRATEGY.md, Playwright/axe suite.
+
+**Expected files**  
+Accessibility report and exact fixes/tests.
+
+**Acceptance criteria**  
+No critical/serious findings; keyboard, focus, screen reader, zoom, reflow, forms, product visuals, and reduced motion pass.
+
+**Validation**  
+Automated and manual matrix across target routes and browsers.
+
+**Rollback or migration concerns**  
+Accessibility fixes may require design change; canonical docs must be updated when behavior changes.
+
+**Commit boundary**  
+Finding-based accessibility packets.
+
+## Task 12.3 — Performance, browser, and visual-regression acceptance
+
+**Purpose**  
+Prove speed, smooth motion, browser compatibility, and stable rendering.
+
+**Dependencies**  
+Task 12.2.
+
+**Exact inputs**  
+All public routes, performance budgets, browser matrix, visual baselines.
+
+**Expected files**  
+Performance report, browser report, exact fixes, updated tests/budgets if approved.
+
+**Acceptance criteria**  
+LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1 under defined conditions; current major browsers and target viewports pass; no unexplained visual diff.
+
+**Validation**  
+Production build, Lighthouse, browser traces, field-ready Web Vitals instrumentation, Playwright, bundle report.
+
+**Rollback or migration concerns**  
+Simplify features before raising budgets; budget changes require documented evidence.
+
+**Commit boundary**  
+Performance/browser fixes grouped by root cause.
+
+## Task 12.4 — Launch, legal, conversion, analytics, and production-safety acceptance
+
+**Purpose**  
+Complete final public, legal, conversion, metadata, analytics, and security verification.
+
+**Dependencies**  
+Tasks 12.1–12.3.
+
+**Exact inputs**  
+All public routes, legal approvals, CTA/form matrix, metadata matrix, analytics plan, release checklist.
+
+**Expected files**  
+Launch report, exact fixes, release notes, monitoring plan.
+
+**Acceptance criteria**  
+Claims, legal pages, forms, CTAs, analytics, sitemap, social previews, security scans, and debug exclusions pass.
+
+**Validation**  
+End-to-end conversion flows, legal sign-off, metadata crawl, analytics event verification, security scan, production smoke test.
+
+**Rollback or migration concerns**  
+Define release rollback commit and monitoring triggers before launch.
+
+**Commit boundary**  
+Final launch fixes and release evidence only.
+
+# Phase 13 — Continuous governance
+
+## Task 13.1 — Quarterly public-platform review
+
+**Purpose**  
+Keep company truth, product stage, design system, content, accessibility, performance, dependencies, and legacy state current.
+
+**Dependencies**  
+Launched public platform.
+
+**Exact inputs**  
+Mind canonical docs, production telemetry, accessibility findings, content freshness, analytics, dependency/security reports, migration matrix.
+
+**Expected files**  
+Review report, canonical/doc updates, new bounded implementation tasks.
+
+**Acceptance criteria**  
+Every finding has owner, severity, decision, task, and review date; deprecated work follows lifecycle.
+
+**Validation**  
+Cross-repository reconciliation, field performance, accessibility audit, content and route review, security/dependency review.
+
+**Rollback or migration concerns**  
+Do not bundle quarterly findings into one broad implementation commit.
+
+**Commit boundary**  
+Review evidence and separately packetized fixes.
+
+# Current next task
+
+After this documentation set is validated and committed, execute **Task 5.1 — Route and page inventory**.
+
+Do not modify production code, delete legacy files, install dependencies, or start design-lab implementation in the documentation commit.

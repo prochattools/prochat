@@ -1,55 +1,70 @@
-# ProChat Homepage Design Preparation Handoff
+# ProChat Public Platform Foundation Handoff
 
-**Run:** `agent-47cee477-6778-4241-b587-ca478901d8f5`  
-**Status:** documentation preparation, validation, and commit complete  
-**Commit:** `c375f1a` — `docs(prochat): prepare canonical homepage design workflow`  
-**Source:** `prochat`
+**Run:** `agent-c2830f11-a2a0-4d49-b000-d5b5398e337a`  
+**Status:** public-platform documentation and validation complete; commit pending  
+**Source:** `prochat`  
+**Production code changed:** no  
+**Legacy files deleted:** no
 
 ## Goal
 
-Prepare all product, design, technical, orchestration, example-data, roadmap, implementation, and validation documentation required before building the premium ProChat homepage.
+Translate the canonical Mind public-platform foundation into a complete repository-local design, platform, migration, roadmap, and implementation program before production execution.
 
-Do not build the production homepage in this run.
+The program covers:
 
-## Completed
+- company and product hierarchy;
+- public page architecture;
+- content second pass;
+- design language;
+- product visuals;
+- motion;
+- design-lab prototypes;
+- accessibility;
+- performance;
+- legacy inventory and migration;
+- production foundations;
+- every required public page;
+- legacy removal;
+- launch validation;
+- continuous governance.
 
-### Canonical context
+## Canonical Mind state
 
-- Created `PRODUCT.md`.
-- Replaced the obsolete Memory-only `DESIGN.md` with the approved global nine-section system.
-- Created `brand-spec.md` with factual typography, color, spacing, radius, shadow, motion, layout, and product-expression tokens.
+Completed and committed in Mind:
 
-### Design specification
+```text
+1461678 — docs(prochat): establish public platform foundation
+7687bb8 — docs(prochat): finalize public platform foundation
+```
 
-- Created `docs/homepage-design-spec.md`.
-- Created `docs/homepage-visual-storyboard.md`.
-- Created `docs/homepage-example-data.md`.
+Canonical Mind additions and updates include:
 
-### Technical architecture
+```text
+wiki/organisations/prochat/brand/company-principles.md
+wiki/organisations/prochat/brand/public-platform-strategy.md
+wiki/organisations/prochat/brand/brand-governance.md
+wiki/organisations/prochat/brand/public-platform-roadmap.md
+wiki/organisations/prochat/brand/README.md
+wiki/organisations/prochat/brand/product-strategy.md
+wiki/organisations/prochat/brand/narrative.md
+wiki/organisations/prochat/brand/brand-ruleset.md
+```
 
-- Created `docs/homepage-technical-design.md`.
-- Defined the Next.js 14, React 18, TypeScript, Tailwind 3, SCSS, GSAP, native-scroll, DOM/SVG, Playwright, and accessibility architecture.
-- Deferred dependency installation until the hero-motion proof batch.
+Existing unrelated Mind changes remained unstaged and uncommitted.
 
-### Skill and AI orchestration
+## Approved company and product hierarchy
 
-- Created `docs/homepage-design-orchestration.md`.
-- Defined GPT-5.6 Sol as primary architect and implementer.
-- Defined Claude Opus with the Brain design profile as primary visual explorer and independent critic.
-- Defined the skill order from `/design-system` through prototypes, plan review, motion review, existing-code integration, Impeccable craft, and live design review.
+```text
+Company: ProChat
+Flagship: ProChat Memory
+Current edition and primary conversion path: ProChat Memory for QA
+Second product: ProChat Workbench
+Founder: Steve Westhoek — QA Engineer and Founder of ProChat
+```
 
-### Quality system
+The public website presents ProChat as the software company. It is not a freelancer portfolio and does not market Steve’s freelance QA work as a ProChat product.
 
-- Created `docs/homepage-validation-plan.md`.
-- Defined product-truth, comprehension, visual, responsive, motion, accessibility, performance, browser, conversion, metadata, and production-safety gates.
-
-### Repository planning
-
-- Expanded `docs/roadmap.md` through Phase J.
-- Expanded `docs/implementation-plan.md` through Batch K.
-- Replaced `docs/design-system.md` with an implementation bridge to the approved design truth.
-
-## Approved foundational decisions
+## Approved design and technical foundation
 
 ```yaml
 fonts:
@@ -60,101 +75,274 @@ color:
   strategy: "grayscale plus one global accent"
   accent: "#3158C7"
 motion:
-  cinematic: "GSAP ScrollTrigger"
+  cinematic: "GSAP + ScrollTrigger + @gsap/react"
   micro_interactions: "CSS"
   scroll: "native browser scrolling"
 visuals: "semantic HTML + CSS + SVG"
+website_default_mode: "light"
 major_pinned_sequences:
-  - hero
-  - memory lifecycle
+  - homepage hero
+  - Memory lifecycle
   - relevant context
   - QA investigation
 ```
 
-## Current repository facts
+GSAP is not yet installed. Playwright and axe are not yet installed. Their addition is authorized only after static hero approval and the dependency-audit decision.
 
-```yaml
-next: "14.2"
-react: "18.3"
-typescript: "5"
-tailwind: "3.4"
-scss: true
-framer_motion: "12.23"
-gsap_installed: false
-playwright_installed: false
-axe_playwright_installed: false
-```
+Framer Motion remains for existing surfaces until audited. One component must not mix Framer Motion and GSAP orchestration.
 
-Framer Motion remains for existing surfaces. It must not orchestrate the same component as GSAP.
+## AI and skill ownership
 
-## Existing unrelated constraints
+GPT-5.6 Sol is the single accountable model for:
 
-- The website contains multiple legacy themes and page-specific systems.
-- Existing styles are implementation inventory, not design authority.
-- Do not delete or broadly migrate legacy surfaces during prototype batches.
-- Do not upgrade Next.js, React, Tailwind, or the whole component system as part of the homepage work.
+- research;
+- architecture;
+- design exploration;
+- prototypes;
+- critique;
+- implementation;
+- validation;
+- reconciliation;
+- Git operations.
 
-## Validation still required in this run
-
-1. Review the exact diff for all documentation paths.
-2. Run a security scan on the changed documentation.
-3. Check headings and canonical references.
-4. Confirm no production source or package file changed.
-5. Commit only the intended documentation paths.
-6. Close the run with the commit hash and exact next task.
-
-## Remaining roadmap
-
-### Next: Batch D — foundation specimen
-
-Use:
+Brain design skills provide structured methods and review lenses:
 
 ```text
-Claude Opus + Brain design profile
 /design
+/design-system
 /web-design
 /taste-skill
 /huashu-design
+/plan-design-review
+/design-motion-principles
+/redesign-skill
+/code
+/impeccable
+/design-review
 ```
 
-Build:
+Independent challenge comes from multiple prototypes, explicit review criteria, browser evidence, human approval, accessibility review, performance traces, and visual regression rather than a required second model.
 
-1. typography and token specimen;
-2. Memory visual primitives;
-3. Workbench visual primitives;
-4. desktop and mobile foundation states.
+## Documentation created in the active ProChat run
 
-Do not install GSAP yet.
-
-### Then: Batch E — static hero directions
-
-Create three materially different static hero compositions using the same approved fonts, palette, copy, and product states.
-
-Run the five-second comprehension test and select one.
-
-### Then: Batch F — hero-motion proof
-
-Only after static hero approval:
-
-- add GSAP and `@gsap/react`;
-- add Playwright and axe tooling;
-- build the named hero states;
-- build mobile and reduced-motion variants;
-- run motion and performance review.
-
-## Validation expectations for the next task
-
-- visible browser artifact;
-- no production homepage mutation;
-- canonical tokens only;
-- realistic example data from `docs/homepage-example-data.md`;
-- desktop and mobile screenshots;
-- contrast and typography review;
-- no new palette, font, or product claim;
-- no commit unless the specimen and changed paths are explicitly reviewed.
-
-## Exact next task
+### Design language
 
 ```text
-Execute Batch D1 and D2 only: create a repository-local design-lab foundation specimen using the approved Golos Text, JetBrains Mono, grayscale, ProChat Cobalt, spacing, borders, radii, shadows, semantic states, and the approved Memory and Workbench visual primitives. Do not install GSAP, modify the production homepage, or introduce new design decisions. Use the Brain design orchestrator, web-design, taste-skill, and huashu-design workflow. Verify desktop and mobile in browser and return screenshots, findings, changed paths, and the exact next prototype task.
+docs/design/DESIGN_PRINCIPLES.md
+docs/design/VISUAL_LANGUAGE.md
+docs/design/PRODUCT_VISUAL_LIBRARY.md
+docs/design/COPY_VISUAL_MAP.md
+docs/design/MOTION_STORYBOARD.md
+docs/design/DESIGN_LAB.md
+docs/design/COMPONENT_LIBRARY.md
+```
+
+### Public platform
+
+```text
+docs/platform/PAGE_ARCHITECTURE.md
+docs/platform/RESPONSIVE_STRATEGY.md
+docs/platform/ACCESSIBILITY_STRATEGY.md
+docs/platform/PERFORMANCE_STRATEGY.md
+```
+
+### Foundational sweep and migration
+
+```text
+docs/migration/LEGACY_SWEEP_PLAN.md
+docs/migration/MIGRATION_MATRIX.md
+docs/migration/CONTENT_AUDIT.md
+docs/migration/ROUTE_AUDIT.md
+docs/migration/COMPONENT_AUDIT.md
+docs/migration/STYLE_AUDIT.md
+docs/migration/MOTION_AUDIT.md
+docs/migration/ASSET_AUDIT.md
+docs/migration/DEPENDENCY_AUDIT.md
+```
+
+## Documentation updated in the active ProChat run
+
+```text
+README.md
+docs/roadmap.md
+docs/implementation-plan.md
+docs/homepage-technical-design.md
+docs/homepage-design-orchestration.md
+docs/product/agent-mode-progress.md
+```
+
+## Roadmap state
+
+`docs/roadmap.md` now defines the canonical 13-phase program:
+
+```text
+1. Company foundation
+2. Public platform architecture
+3. Canonical content second pass
+4. Design-language foundation
+5. Foundational legacy sweep
+6. Design laboratory and static prototypes
+7. Motion and product-story prototypes
+8. Independent review
+9. Production foundation
+10. Public page implementation
+11. Legacy migration and removal
+12. Production craft and launch validation
+13. Continuous governance
+```
+
+Current position:
+
+```text
+Phases 1–2: complete
+Phase 3: ready
+Phase 4: documentation complete
+Phase 5: exact next execution phase
+Phases 6–13: planned and dependency-gated
+```
+
+## Implementation-plan coverage
+
+`docs/implementation-plan.md` now contains explicit tasks for:
+
+- company and repository authority reconciliation;
+- public page responsibilities;
+- public content inventory;
+- claims and terminology classification;
+- homepage second pass;
+- Memory page copy;
+- Memory for QA page copy;
+- Workbench page copy;
+- Philosophy, About, Contact, documentation, and error copy;
+- Privacy and Terms review;
+- navigation, footer, metadata, and social copy;
+- design-document reconciliation;
+- route, component, style, motion, asset, and dependency inventories;
+- migration classification;
+- design-lab shell and specimens;
+- three static hero directions;
+- product-mechanism prototypes;
+- motion tooling and proofs;
+- independent review;
+- fonts, tokens, shell, product visuals, tests, and performance infrastructure;
+- homepage;
+- ProChat Memory;
+- ProChat Memory for QA;
+- ProChat Workbench;
+- Philosophy;
+- About;
+- Contact and beta forms;
+- Privacy;
+- Terms;
+- documentation entry points;
+- 404 and error states;
+- navigation, footer, metadata, sitemap, robots, and social assets;
+- redirects, archival, and legacy removal;
+- accessibility, performance, browser, visual, legal, analytics, and launch acceptance;
+- quarterly governance.
+
+Every task defines:
+
+- purpose;
+- dependencies;
+- exact inputs;
+- expected files;
+- acceptance criteria;
+- validation;
+- rollback or migration concerns;
+- commit boundary.
+
+## Legacy-sweep policy
+
+Every legacy item must become one of:
+
+```text
+KEEP
+REFACTOR
+REWRITE
+REPLACE
+ARCHIVE
+REDIRECT
+DELETE
+```
+
+No production deletion is authorized until:
+
+- consumers are known;
+- a canonical replacement or archival decision exists;
+- dependency order and redirects are defined;
+- validation and rollback are documented;
+- deletion is explicitly approved where required.
+
+## Current validation evidence
+
+Completed:
+
+- all 20 required design, platform, and migration files exist;
+- no production source or package file is currently changed;
+- Claude-specific primary ownership was removed from active design and technical documentation;
+- README discoverability was updated;
+- roadmap and implementation plan were replaced with the complete program.
+
+Still required before commit:
+
+1. validate required headings and key invariants;
+2. validate canonical Mind references;
+3. check cross-document product hierarchy and design decisions;
+4. confirm no stale Claude ownership remains;
+5. run documentation security scan;
+6. inspect exact changed paths and diff size;
+7. commit only intended documentation paths;
+8. close the active run with commit hash and exact next task.
+
+## Restrictions for the next execution phase
+
+During Phase 5 inventory:
+
+- do not modify production code;
+- do not delete or move legacy files;
+- do not install dependencies;
+- do not start design-lab implementation;
+- do not change live routes, metadata, forms, or redirects;
+- record audit evidence and migration decisions only;
+- keep each audit category in a separate reviewable commit where practical.
+
+## Exact next task after documentation commit
+
+```text
+Execute Phase 5, Task 5.1 only: inventory all ProChat routes and page responsibilities.
+
+Read first:
+- docs/product/agent-mode-progress.md
+- docs/roadmap.md
+- docs/implementation-plan.md
+- docs/platform/PAGE_ARCHITECTURE.md
+- docs/migration/LEGACY_SWEEP_PLAN.md
+- docs/migration/MIGRATION_MATRIX.md
+- docs/migration/ROUTE_AUDIT.md
+- PRODUCT.md
+
+Inspect:
+- src/app/** route tree
+- layouts, loading, error, and not-found files
+- redirects and rewrites
+- navigation and footer route helpers
+- sitemap and robots sources
+- metadata exports
+- public form/API routes
+
+Output:
+- completed route inventory records in docs/migration/ROUTE_AUDIT.md
+- corresponding rows in docs/migration/MIGRATION_MATRIX.md
+- every route mapped to a canonical responsibility or DECISION_REQUIRED
+- initial route risk and redirect notes
+- validation evidence and exact changed paths
+
+Restrictions:
+- do not edit production code
+- do not delete or move routes
+- do not implement redirects
+- do not modify copy
+- do not install dependencies
+- do not commit unrelated changes
 ```
