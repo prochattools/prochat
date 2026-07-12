@@ -496,48 +496,110 @@ During Phase 5 inventory:
 - record audit evidence and migration decisions only;
 - keep each audit category in a separate reviewable commit where practical.
 
-## Exact next task after style-and-motion audit commit
+## Phase 5 Task 5.4 completion
+
+Completed asset and dependency inventory:
+
+```yaml
+asset_files: 75
+svg: 48
+png: 12
+ttf: 5
+pdf: 2
+xml: 2
+woff2: 1
+ico: 1
+scss: 2
+extensionless_or_system_files: 2
+dependencies: 49
+dev_dependencies: 22
+total_direct_packages: 71
+production_files_changed: 0
+assets_changed: 0
+package_or_lockfile_changes: 0
+```
+
+Changed documentation:
 
 ```text
-Execute Phase 5, Task 5.4 only: asset and dependency inventory.
+docs/migration/ASSET_AUDIT.md
+docs/migration/DEPENDENCY_AUDIT.md
+docs/migration/MIGRATION_MATRIX.md
+docs/product/agent-mode-progress.md
+```
+
+Highest-risk asset findings:
+
+- a 14.9 MB infrastructure PDF is publicly stored with zero detected consumers and requires privacy, content, and rights review;
+- the Material Symbols font is nearly 1 MB and used only by the legacy waitlist;
+- old Memory illustrations, kit/ProChat OS Open Graph images, SaaS social assets, global glow backgrounds, and obsolete fonts belong to archive-first migration waves;
+- brand marks, favicons, social assets, PDFs, fonts, AWS logos, and generated images lack complete provenance/licence evidence;
+- current social and OG assets mix current and obsolete product direction;
+- protected logo, font, sitemap, email, commerce, and purchaser assets cannot be removed until their workflows migrate.
+
+Highest-risk dependency findings:
+
+- 71 direct packages support a much broader legacy application than the new lean public platform;
+- Next 14 coexists with a Next 16 bundle analyzer and Next 13-era MDX packages;
+- individual Radix packages coexist with an umbrella Radix package;
+- Radix Tooltip and React Tooltip overlap;
+- several PDF/export packages overlap;
+- Framer Motion remains tied to legacy surfaces while GSAP is planned but not installed;
+- Nextra/MDX and extensive docs scripts are tied to legacy product documentation;
+- Stripe, Prisma, PostgreSQL, Resend, React Email, authentication, admin, and application packages are protected until obligations and internal scope are decided;
+- several zero-consumer packages require configuration, script, deployment, and lockfile proof before removal;
+- MailerLite, GitHub, n8n, and Make behavior may be raw HTTP/config integrations rather than direct packages.
+
+Validation evidence:
+
+- all 75 files under `public/**` and `src/assets/**` were enumerated and counted by type;
+- file sizes and largest assets were independently measured;
+- static asset consumers were mapped across source, styles, metadata, email, and configuration;
+- package.json independently confirmed 49 dependencies and 22 devDependencies;
+- all 71 packages have an exact consumer or explicit framework/build/tooling/deployment purpose recorded;
+- ASSET-001 through ASSET-075 and DEP-001 through DEP-071 are mirrored in the migration matrix;
+- no asset, import, configuration, source, package, or lockfile was changed;
+- no package was installed, updated, or removed;
+- GSAP, Playwright, and axe remain uninstalled.
+
+Unresolved decisions include archive location/build exclusion, PDF content and privacy, canonical brand/favicons, asset licences, purchaser obligations, internal application scope, Stripe/licensing retention, Nextra retention, future mailing-list provider, New Relic deployment use, package consolidation, and independently required security upgrades.
+
+## Exact next task after asset-and-dependency audit commit
+
+```text
+Execute Phase 5, Task 5.5 only: migration classification and wave plan.
 
 Read first:
 - docs/product/agent-mode-progress.md
+- docs/roadmap.md
 - docs/implementation-plan.md
 - docs/migration/LEGACY_SWEEP_PLAN.md
 - docs/migration/MIGRATION_MATRIX.md
-- docs/migration/ASSET_AUDIT.md
-- docs/migration/DEPENDENCY_AUDIT.md
+- docs/migration/CONTENT_AUDIT.md
 - docs/migration/ROUTE_AUDIT.md
 - docs/migration/COMPONENT_AUDIT.md
 - docs/migration/STYLE_AUDIT.md
 - docs/migration/MOTION_AUDIT.md
+- docs/migration/ASSET_AUDIT.md
+- docs/migration/DEPENDENCY_AUDIT.md
+- docs/platform/PAGE_ARCHITECTURE.md
+- PRODUCT.md
+- DESIGN.md
 - brand-spec.md
-- docs/platform/PERFORMANCE_STRATEGY.md
 
-Inspect read-only:
-- public/**
-- src/assets/**
-- image, SVG, video, font, favicon, manifest, OG, and social assets
-- imported asset references
-- package.json
-- lockfile
-- package scripts
-- framework, UI, motion, styling, icons, forms, analytics, content, testing, email, commerce, and integration dependencies
-- build and deployment configuration referencing packages or assets
-
-Outputs:
-- complete asset records in docs/migration/ASSET_AUDIT.md
-- complete dependency records in docs/migration/DEPENDENCY_AUDIT.md
-- matching ASSET-* and DEP-* rows in docs/migration/MIGRATION_MATRIX.md
-- provenance, licensing, privacy, legacy-brand, consumer, bundle, runtime, maintenance, and security findings
-- archive-first candidates and protected operational dependencies
-- exact evidence and unresolved decisions
+Goal:
+- turn every completed inventory into an executable archive-first migration program;
+- assign KEEP, REFACTOR, REWRITE, REPLACE, ARCHIVE, REDIRECT, or DELETE-LATER;
+- assign canonical destination, migration wave, dependencies, owner, validation, rollback, and approval state;
+- separate the new public platform from the protected legacy/internal archive;
+- define the archive directory and build/indexing exclusion strategy;
+- prioritize a lean homepage foundation before restoring optional functionality.
 
 Restrictions:
-- do not modify, optimize, move, archive, or delete assets
-- do not add, update, or remove packages
-- do not edit package.json or lockfiles
-- do not change imports, build config, routes, styles, copy, or production code
-- do not install GSAP, Playwright, axe, or any other dependency
+- documentation and migration decisions only;
+- do not move, archive, delete, or edit production files;
+- do not implement redirects;
+- do not change packages, assets, styles, routes, copy, or configuration;
+- do not begin the design lab;
+- destructive execution remains a later explicitly approved packet.
 ```

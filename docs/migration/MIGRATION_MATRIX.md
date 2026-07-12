@@ -200,6 +200,52 @@ Detailed evidence for MOTION-001 through MOTION-030 lives in `MOTION_AUDIT.md`.
 | MOTION-017–MOTION-024 | lazy loading, legacy observers, form RAF, navigation/copy timers | 8 | protected functional behavior or rebuilt current flows | KEEP/ARCHIVE/REFACTOR | 6/8/protected | HIGH | INVENTORIED |
 | MOTION-025–MOTION-030 | processing/admin/analytics timing, scaffolding parallax, static transform false positives | 6 | protected operations or owning component migration | KEEP/ARCHIVE/CLASSIFY | 2/8/protected | CRITICAL | INVENTORIED |
 
+### Asset systems — Phase 5 Task 5.4
+
+Detailed evidence for ASSET-001 through ASSET-075 lives in `ASSET_AUDIT.md`.
+
+| ID range | Asset group | Count | Canonical destination | Primary disposition | Wave | Highest risk | Status |
+|---|---|---:|---|---|---:|---|---|
+| ASSET-001–ASSET-002 | repository/system metadata files | 2 | repository hygiene | ARCHIVE/REMOVE after proof | 8 | LOW | INVENTORIED |
+| ASSET-003–ASSET-008 | legacy global hero-line backgrounds | 6 | no default atmospheric replacement | ARCHIVE | 1/8 | HIGH | INVENTORIED |
+| ASSET-009–ASSET-010 | public PDFs | 2 | repository archive after content/rights review | ARCHIVE/VERIFY | 8 | CRITICAL | INVENTORIED |
+| ASSET-011–ASSET-019 | email, favicon, touch, and font assets | 9 | canonical brand/font/email assets | KEEP/REPLACE/ARCHIVE | 1/6/8 | CRITICAL | INVENTORIED |
+| ASSET-020–ASSET-039 | system SVG icon library | 20 | Lucide/custom canonical icon system | ARCHIVE after proof | 2/8 | MEDIUM | INVENTORIED |
+| ASSET-040–ASSET-046 | company, email, favicon, and third-party logo assets | 7 | canonical company brand set | KEEP/REPLACE/ARCHIVE | 1/6/8 | HIGH | INVENTORIED |
+| ASSET-047–ASSET-049 | Open Graph images | 3 | canonical company/product social assets | REPLACE/ARCHIVE | 6/8 | HIGH | INVENTORIED |
+| ASSET-050–ASSET-064 | old Memory illustration set | 15 | new semantic HTML/CSS/SVG product visuals | ARCHIVE after `/memory` replacement | 4/8 | HIGH | INVENTORIED |
+| ASSET-065–ASSET-066 | sitemap XML files | 2 | generated canonical sitemap | REBUILD/VERIFY | 6/7 | HIGH | INVENTORIED |
+| ASSET-067–ASSET-071 | generic and historical social images | 5 | canonical social preview set | REPLACE/ARCHIVE | 6/8 | MEDIUM | INVENTORIED |
+| ASSET-072–ASSET-075 | local Host font and SCSS source assets | 4 | canonical fonts and style foundation | REPLACE/ARCHIVE | 1/8 | CRITICAL | INVENTORIED |
+
+### Dependency systems — Phase 5 Task 5.4
+
+Detailed evidence for DEP-001 through DEP-071 lives in `DEPENDENCY_AUDIT.md`.
+
+| ID range | Dependency group | Count | Canonical destination | Primary disposition | Wave | Highest risk | Status |
+|---|---|---:|---|---|---:|---|---|
+| DEP-001–DEP-005 | font, MDX, and Next helper packages | 5 | canonical font and simplified docs stack | VERIFY/REMOVE/REPLACE | 1/6/8 | HIGH | INVENTORIED |
+| DEP-006–DEP-016 | Prisma, Radix primitives, email, Stripe.js | 11 | protected operations and canonical UI primitives | KEEP/REVIEW | protected/1 | CRITICAL | INVENTORIED |
+| DEP-017–DEP-027 | API/forms/motion/PDF/icons/observability | 11 | protected app flows plus lean public runtime | KEEP/REMOVE/CONSOLIDATE | protected/8 | CRITICAL | INVENTORIED |
+| DEP-028–DEP-038 | framework, themes, docs, DB, Radix umbrella, email tooling | 11 | core framework plus simplified theme/docs/package boundaries | KEEP/REMOVE/CONSOLIDATE | protected/1/6/8 | CRITICAL | INVENTORIED |
+| DEP-039–DEP-049 | toast, masonry, syntax, print, tooltip, email, Sass, Stripe, validation | 11 | protected flows and lean public form/UI stack | KEEP/ARCHIVE/CONSOLIDATE | protected/6/8 | CRITICAL | INVENTORIED |
+| DEP-050–DEP-060 | analyzer, types, ESLint, Autoprefixer | 11 | aligned build and validation tooling | KEEP/ALIGN/REMOVE | 9 | HIGH | INVENTORIED |
+| DEP-061–DEP-071 | lint, Git hooks, PostCSS, Prisma, Tailwind, TS tooling | 11 | lean supported build/tooling stack | KEEP/VERIFY/REMOVE | 1/8/9/protected | CRITICAL | INVENTORIED |
+
+### Explicit Task 5.4 ID coverage
+
+Asset IDs represented in this matrix:
+
+```text
+ASSET-001, ASSET-002, ASSET-003, ASSET-004, ASSET-005, ASSET-006, ASSET-007, ASSET-008, ASSET-009, ASSET-010, ASSET-011, ASSET-012, ASSET-013, ASSET-014, ASSET-015, ASSET-016, ASSET-017, ASSET-018, ASSET-019, ASSET-020, ASSET-021, ASSET-022, ASSET-023, ASSET-024, ASSET-025, ASSET-026, ASSET-027, ASSET-028, ASSET-029, ASSET-030, ASSET-031, ASSET-032, ASSET-033, ASSET-034, ASSET-035, ASSET-036, ASSET-037, ASSET-038, ASSET-039, ASSET-040, ASSET-041, ASSET-042, ASSET-043, ASSET-044, ASSET-045, ASSET-046, ASSET-047, ASSET-048, ASSET-049, ASSET-050, ASSET-051, ASSET-052, ASSET-053, ASSET-054, ASSET-055, ASSET-056, ASSET-057, ASSET-058, ASSET-059, ASSET-060, ASSET-061, ASSET-062, ASSET-063, ASSET-064, ASSET-065, ASSET-066, ASSET-067, ASSET-068, ASSET-069, ASSET-070, ASSET-071, ASSET-072, ASSET-073, ASSET-074, ASSET-075
+```
+
+Dependency IDs represented in this matrix:
+
+```text
+DEP-001, DEP-002, DEP-003, DEP-004, DEP-005, DEP-006, DEP-007, DEP-008, DEP-009, DEP-010, DEP-011, DEP-012, DEP-013, DEP-014, DEP-015, DEP-016, DEP-017, DEP-018, DEP-019, DEP-020, DEP-021, DEP-022, DEP-023, DEP-024, DEP-025, DEP-026, DEP-027, DEP-028, DEP-029, DEP-030, DEP-031, DEP-032, DEP-033, DEP-034, DEP-035, DEP-036, DEP-037, DEP-038, DEP-039, DEP-040, DEP-041, DEP-042, DEP-043, DEP-044, DEP-045, DEP-046, DEP-047, DEP-048, DEP-049, DEP-050, DEP-051, DEP-052, DEP-053, DEP-054, DEP-055, DEP-056, DEP-057, DEP-058, DEP-059, DEP-060, DEP-061, DEP-062, DEP-063, DEP-064, DEP-065, DEP-066, DEP-067, DEP-068, DEP-069, DEP-070, DEP-071
+```
+
 ### Non-route migration rows retained for later audits
 
 | ID | Category | Current path | Canonical destination | Disposition | Wave | Risk | Status |
