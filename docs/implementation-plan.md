@@ -740,8 +740,10 @@ Asset and dependency audit records only.
 
 ## Task 5.5 — Migration classification and wave plan
 
+**Status:** COMPLETE FOR DOCUMENTATION AND PROVISIONAL DECISIONS.
+
 **Purpose**  
-Turn inventories into an executable keep/refactor/rewrite/replace/archive/redirect/delete program.
+Turn inventories into an executable keep/refactor/rewrite/replace/archive/redirect/protect/remove-later program with a non-runtime archive and ten dependency-gated waves.
 
 **Dependencies**  
 Tasks 5.1–5.4 and completed content audit.
@@ -758,8 +760,12 @@ canonical page and design documents
 
 ```text
 docs/migration/MIGRATION_MATRIX.md
-docs/roadmap.md if dependency order changes
-docs/implementation-plan.md if tasks change
+docs/migration/LEGACY_SWEEP_PLAN.md
+docs/migration/ARCHIVE_ARCHITECTURE.md
+docs/migration/MIGRATION_WAVES.md
+docs/roadmap.md
+docs/implementation-plan.md
+docs/product/agent-mode-progress.md
 ```
 
 **Acceptance criteria**
@@ -778,6 +784,74 @@ No production removals in classification task.
 **Commit boundary**  
 Migration decisions only.
 
+## Task 5.6 — Wave 0 archive-governance foundation
+
+**Purpose**  
+Create the repository archive boundary and enforcement without moving any production file.
+
+**Dependencies**  
+Task 5.5 committed and a clean worktree.
+
+**Exact inputs**
+
+```text
+docs/migration/ARCHIVE_ARCHITECTURE.md
+docs/migration/MIGRATION_WAVES.md
+docs/migration/MIGRATION_MATRIX.md
+TypeScript, Tailwind, ESLint, and build configuration read-only evidence
+```
+
+**Expected files**
+
+```text
+archive/legacy-public-platform/README.md
+archive/legacy-public-platform/manifest.yaml
+repository validation that rejects imports from archive/**
+docs/product/agent-mode-progress.md
+```
+
+**Acceptance criteria**
+
+- Archive root is outside application, public, route, and package roots.
+- Archive content cannot be imported, compiled, indexed, routed, or deployed.
+- README states that archive material is historical and non-authoritative.
+- Manifest validates and contains no moved production entries yet.
+- No existing production file moves, changes responsibility, or disappears.
+
+**Validation**  
+TypeScript and Tailwind scope review, restricted-import validation, security scan, exact diff, and clean build when the validation implementation requires it.
+
+**Rollback or migration concerns**  
+Additive and non-destructive. Revert the packet if build tooling unexpectedly scans the archive.
+
+**Commit boundary**  
+Archive README, empty manifest, archive-import validation, and handoff only.
+
+**Commit message**
+
+```text
+chore(prochat): establish legacy archive boundary
+```
+
+## Wave execution task map
+
+The detailed contract for every wave is canonical in `docs/migration/MIGRATION_WAVES.md`.
+
+| Task | Wave | Purpose | Destructive approval |
+|---|---:|---|---|
+| 5.6 | 0 | archive root, manifest, governance, and import exclusion | no |
+| 9.1A | 1 | canonical fonts, tokens, light-first root shell, and legacy-style containment | only for removing old imports |
+| 9.2A | 2 | canonical primitives, forms, system states, and product visuals | no while additive |
+| 6.1–6.5 | 3 | design lab, foundation specimen, static heroes, and page assembly | no |
+| 10.2–10.3 + migration packets | 4 | Memory and QA replacements, redirects, and old Memory archive | yes for moves/retirement |
+| 10.4 + migration packets | 5 | Workbench replacement and BuildFlow/ProChat OS public retirement | yes |
+| 10.5–10.12 + migration packets | 6 | company, Contact, mailing list, legal, docs, errors, metadata | yes for legacy retirement |
+| 11.1 | 7 | redirects, noindex, sitemap, and route retirement | yes for 404/410 or purchaser-sensitive changes |
+| 11.2–11.3 | 8 | archive/remove legacy code, styles, motion, assets, scripts, integrations, packages | yes per packet |
+| 11.4 + Phase 12 | 9 | absence proof, performance, security, accessibility, and simplification | finding-specific |
+
+No later task may bypass the prerequisites, protected exclusions, validation, rollback, or approval requirements in `MIGRATION_WAVES.md`.
+
 # Phase 6 — Design laboratory and static prototypes
 
 ## Task 6.1 — Design-lab shell
@@ -786,7 +860,7 @@ Migration decisions only.
 Create an isolated, non-indexed browser environment for approved experiments.
 
 **Dependencies**  
-Task 5.5.
+Task 5.6 and the approved additive Wave 1–2 font, token, shell-boundary, component, and product-visual foundation packets.
 
 **Exact inputs**
 

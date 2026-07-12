@@ -1,8 +1,8 @@
 # ProChat Public Platform Foundation Handoff
 
-**Run:** `agent-c2830f11-a2a0-4d49-b000-d5b5398e337a`  
-**Status:** public-platform documentation, validation, and commit complete  
-**Commit:** `8180a7d` — `docs(prochat): plan public platform foundation sweep`  
+**Run:** `agent-12ada4fb-1ec3-4b6f-bde5-4f0320418f59`  
+**Status:** Task 5.5 migration classification and wave planning complete; Wave 0 Packet 1 is next  
+**Latest committed audit:** `31bc501` — `docs(prochat): inventory assets and dependencies`  
 **Source:** `prochat`  
 **Production code changed:** no  
 **Legacy files deleted:** no
@@ -564,42 +564,140 @@ Validation evidence:
 
 Unresolved decisions include archive location/build exclusion, PDF content and privacy, canonical brand/favicons, asset licences, purchaser obligations, internal application scope, Stripe/licensing retention, Nextra retention, future mailing-list provider, New Relic deployment use, package consolidation, and independently required security upgrades.
 
-## Exact next task after asset-and-dependency audit commit
+## Phase 5 Task 5.5 completion
+
+Completed scope:
+
+```yaml
+route_records_classified: 84
+component_files_covered: 140
+style_records_classified: 12
+motion_records_classified: 30
+asset_records_classified: 75
+dependency_records_classified: 71
+archive_root: archive/legacy-public-platform
+migration_waves: 10
+production_files_changed: 0
+destructive_changes: 0
+```
+
+Changed documentation:
 
 ```text
-Execute Phase 5, Task 5.5 only: migration classification and wave plan.
+docs/migration/MIGRATION_MATRIX.md
+docs/migration/LEGACY_SWEEP_PLAN.md
+docs/migration/ARCHIVE_ARCHITECTURE.md
+docs/migration/MIGRATION_WAVES.md
+docs/roadmap.md
+docs/implementation-plan.md
+docs/product/agent-mode-progress.md
+```
+
+Final classification model:
+
+```text
+new canonical public platform
+protected internal or transactional application
+protected previous-purchaser or licence obligation
+temporary compatibility layer
+historical non-runtime archive
+remove-later after proof and approval
+```
+
+Archive architecture:
+
+- canonical root is `archive/legacy-public-platform/`;
+- archive content is outside application, public, route, package, TypeScript, Tailwind, sitemap, and runtime import boundaries;
+- the archive is never routed, deployed, indexed, or used as active guidance;
+- every moved path requires a `manifest.yaml` entry, source commit, migration commit, validation, rollback, owner, and approval state;
+- production imports from `archive/**` are prohibited;
+- restoration creates a new reviewed active implementation rather than importing archived code directly.
+
+Protected boundaries:
+
+- auth, admin, Prisma/PostgreSQL, Stripe, licences, purchaser claims, transactional email, Contact, unsubscribe, health, and required observability remain protected until their obligations close;
+- dashboard, chat, projects, preferences, Make, n8n, GitHub, social publishing, and debug functionality are isolated and archive-bound after consumer, credential, data, and API proof;
+- future mailing-list functionality is rebuilt cleanly and does not extend the legacy waitlist/newsletter/MailerLite implementation;
+- BuildFlow remains only as technical compatibility identifiers where required and is removed as a public product after `/workbench` launches;
+- ProChat OS is removed as a current public product and archived after obligation and inbound-link review.
+
+Final migration waves:
+
+```text
+Wave 0 — archive structure and governance
+Wave 1 — canonical root shell, fonts, tokens, and build boundary
+Wave 2 — canonical component and product-visual foundations
+Wave 3 — homepage design lab and static hero
+Wave 4 — Memory and QA replacements
+Wave 5 — Workbench replacement
+Wave 6 — company, Contact, mailing list, legal, docs, metadata, and errors
+Wave 7 — redirects, noindex, archive exposure, and route retirement
+Wave 8 — legacy components, styles, motion, assets, scripts, integrations, and dependencies
+Wave 9 — absence proof, performance, security, accessibility, and repository simplification
+```
+
+Every wave now defines purpose, prerequisites, included IDs, protected exclusions, expected paths, acceptance criteria, validation, rollback, commit boundaries, approval requirements, and blocking questions.
+
+Highest-risk migration items:
+
+- purchaser and legal obligations around Stripe, licences, kit claims, finish routes, invoices, and stored data;
+- root shell and provider separation while protected internal routes still depend on legacy styles;
+- BuildFlow technical compatibility versus public product removal;
+- ProChat OS route retirement and structured-data cleanup;
+- Contact and mailing-list privacy, consent, provider, migration, and unsubscribe behavior;
+- Nextra/MDX documentation replacement and legacy content indexing;
+- Make, n8n, GitHub, social, analytics, and observability credential/data-flow review;
+- package removals with lockfile, build, and protected-runtime impact;
+- public PDFs, asset rights, private infrastructure information, and old product claims.
+
+Unresolved execution questions are dependency gates rather than missing classifications:
+
+- which protected internal application functions remain active long-term;
+- exact previous-purchaser and legal obligations;
+- final mailing-list provider, consent, retention, and migration policy;
+- final docs technology;
+- New Relic and deployment integration use;
+- semantic redirect versus 404/410 for routes without replacements;
+- final brand/favicons and asset licence evidence;
+- exact package-security upgrades independent of redesign.
+
+## Exact next task
+
+```text
+Execute Wave 0 Packet 1 only: archive-governance-foundation.
 
 Read first:
 - docs/product/agent-mode-progress.md
-- docs/roadmap.md
-- docs/implementation-plan.md
-- docs/migration/LEGACY_SWEEP_PLAN.md
+- docs/migration/ARCHIVE_ARCHITECTURE.md
+- docs/migration/MIGRATION_WAVES.md
 - docs/migration/MIGRATION_MATRIX.md
-- docs/migration/CONTENT_AUDIT.md
-- docs/migration/ROUTE_AUDIT.md
-- docs/migration/COMPONENT_AUDIT.md
-- docs/migration/STYLE_AUDIT.md
-- docs/migration/MOTION_AUDIT.md
-- docs/migration/ASSET_AUDIT.md
-- docs/migration/DEPENDENCY_AUDIT.md
-- docs/platform/PAGE_ARCHITECTURE.md
-- PRODUCT.md
-- DESIGN.md
-- brand-spec.md
+- docs/implementation-plan.md
 
-Goal:
-- turn every completed inventory into an executable archive-first migration program;
-- assign KEEP, REFACTOR, REWRITE, REPLACE, ARCHIVE, REDIRECT, or DELETE-LATER;
-- assign canonical destination, migration wave, dependencies, owner, validation, rollback, and approval state;
-- separate the new public platform from the protected legacy/internal archive;
-- define the archive directory and build/indexing exclusion strategy;
-- prioritize a lean homepage foundation before restoring optional functionality.
+Create only:
+- archive/legacy-public-platform/README.md
+- archive/legacy-public-platform/manifest.yaml
+- the smallest repository validation needed to reject production imports from archive/**
+
+Update only:
+- docs/product/agent-mode-progress.md
+
+Validation:
+- confirm archive root is outside application, public, route, and package roots
+- confirm TypeScript and Tailwind do not scan the archive
+- confirm no import alias exposes archive content
+- validate manifest structure
+- run the relevant type/build or documentation validation required by the import guard
+- run security scan
+- review exact diff
+- confirm no production file moved, edited, archived, renamed, or deleted
+
+Commit:
+chore(prochat): establish legacy archive boundary
 
 Restrictions:
-- documentation and migration decisions only;
-- do not move, archive, delete, or edit production files;
-- do not implement redirects;
-- do not change packages, assets, styles, routes, copy, or configuration;
-- do not begin the design lab;
-- destructive execution remains a later explicitly approved packet.
+- do not move any existing file
+- do not add archived content yet
+- do not edit routes, components, styles, assets, copy, metadata, redirects, packages, or lockfiles
+- do not begin design-lab or production implementation
+- do not make destructive changes
 ```

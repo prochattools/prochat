@@ -10,6 +10,69 @@ The ProChat repository contains multiple historical product directions, themes, 
 
 This plan defines a controlled foundational sweep that inventories, classifies, replaces, migrates, validates, and only then removes legacy material.
 
+## Final clean-slate execution model
+
+The canonical execution model is archive-first and replacement-led.
+
+```text
+new canonical public platform
+protected internal or transactional application
+historical non-runtime archive
+compatibility-only identifiers and obligations
+```
+
+Authoritative execution documents:
+
+```text
+docs/migration/MIGRATION_MATRIX.md
+docs/migration/ARCHIVE_ARCHITECTURE.md
+docs/migration/MIGRATION_WAVES.md
+```
+
+Canonical archive root:
+
+```text
+archive/legacy-public-platform/
+```
+
+The archive is outside `src/`, `public/`, route roots, package workspaces, TypeScript application compilation, Tailwind content scanning, sitemap generation, and runtime imports. Archived files remain inspectable through Git and repository reads only. They are not deployed, indexed, imported, or treated as active guidance.
+
+### Approved default outcomes
+
+- anything contradicting current company, product, copy, design, accessibility, performance, or technical documentation is archived after its replacement or compatibility boundary is validated;
+- BuildFlow is removed as a public product after `/workbench` launches, while required technical identifiers remain compatibility-only;
+- ProChat OS is removed from the public platform after archival and obligation review;
+- legacy waitlist, newsletter, MailerLite, GitHub, Make, n8n, social-publishing, kit, proof, pricing, and documentation systems are archive/remove-later candidates unless explicitly re-approved;
+- future mailing-list functionality is rebuilt against the canonical form, privacy, consent, email, and data-retention contracts;
+- protected auth, admin, commerce, licence, purchaser, database, email, health, and required communication controls are isolated rather than removed blindly;
+- no historical page, component, style, motion, asset, script, or package becomes the foundation of the new website merely because it already exists.
+
+### Status semantics after classification
+
+```text
+DECIDED — final provisional outcome exists and may enter its named wave
+BLOCKED_BY_OBLIGATION — outcome is decided but execution waits for legal, purchaser, data, or operational closure
+REPLACEMENT_PLANNED — canonical replacement responsibility is approved but not implemented
+PROTECTED — remains active only inside an explicit protected boundary
+ARCHIVED — moved to the non-runtime archive and verified absent from build/public output
+REMOVE-LATER — may be deleted only after archive, zero-consumer proof, validation, and explicit destructive approval
+```
+
+### Destructive migration rule
+
+Task 5.5 authorizes decisions, not movement. Every archive, route retirement, package removal, or destructive cleanup is a later bounded packet with:
+
+- exact paths and IDs;
+- replacement or obligation prerequisite;
+- pre-change commit;
+- manifest entry;
+- validation commands;
+- protected exclusions;
+- rollback commit;
+- explicit approval state.
+
+The first executable packet is Wave 0 Packet 1 from `MIGRATION_WAVES.md`: create the archive README and manifest without moving production files.
+
 ## Governing rules
 
 1. Do not delete by intuition.

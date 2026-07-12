@@ -292,7 +292,7 @@ docs/platform/PERFORMANCE_STRATEGY.md
 
 # Phase 5 — Foundational legacy sweep
 
-**Status:** READY and next after documentation commit.
+**Status:** COMPLETE for inventory, classification, archive architecture, and wave planning. Wave 0 is the next executable packet.
 
 ## Goal
 
@@ -330,7 +330,9 @@ docs/migration/STYLE_AUDIT.md
 docs/migration/MOTION_AUDIT.md
 docs/migration/ASSET_AUDIT.md
 docs/migration/DEPENDENCY_AUDIT.md
-completed inventory records
+docs/migration/ARCHIVE_ARCHITECTURE.md
+docs/migration/MIGRATION_WAVES.md
+completed inventory records and final provisional classifications
 ```
 
 ## Dispositions
@@ -356,7 +358,7 @@ DELETE
 
 # Phase 6 — Design laboratory and static prototypes
 
-**Status:** PLANNED after Phase 5 decisions.
+**Status:** PLANNED as Migration Wave 3, after Wave 0 archive governance and the additive Wave 1–2 foundation packets.
 
 ## Goal
 
@@ -364,7 +366,7 @@ Prove the visual system and static page compositions in an isolated browser envi
 
 ## Dependencies
 
-Phases 3–5.
+Phases 3–5, Wave 0 archive governance, Wave 1 canonical root/font/token boundary, and Wave 2 additive component/product-visual foundations.
 
 ## Tasks
 
@@ -674,8 +676,9 @@ Phase 1 — COMPLETE
 Phase 2 — COMPLETE
 Phase 3 — READY
 Phase 4 — COMPLETE FOR DOCUMENTATION
-Phase 5 — NEXT EXECUTION PHASE
+Phase 5 — COMPLETE FOR INVENTORY, CLASSIFICATION, ARCHITECTURE, AND WAVE PLANNING
+Wave 0 Packet 1 — NEXT EXECUTABLE WORK
 Phases 6–13 — PLANNED AND DEPENDENCY-GATED
 ```
 
-The immediate next work after this documentation commit is Phase 5 inventory only. Do not delete legacy files or modify production implementation during the inventory batch.
+The immediate next work after this documentation commit is Wave 0 Packet 1: create the non-runtime archive README and manifest without moving, editing, or deleting production files.
