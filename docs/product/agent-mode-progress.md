@@ -1,8 +1,8 @@
 # ProChat Public Platform Foundation Handoff
 
-**Run:** `agent-762b7598-fd30-464b-a423-0f364ddcb1d5`  
-**Status:** Wave 1 Packet 1 complete; Wave 1 Packet 2 is next  
-**Previous foundation commit:** `dbdfc7a` — `chore(prochat): establish legacy archive boundary`  
+**Run:** `agent-738b7982-7cab-4d03-a3c8-1e93e2eaed61`  
+**Status:** Wave 1 Packet 2 complete; Wave 1 Packet 3 is next  
+**Previous foundation commit:** `20a55f9` — `feat(prochat): add canonical foundation baseline`  
 **Source:** `prochat`  
 **Live production behavior changed:** no  
 **Additive unconsumed foundation source created:** yes  
@@ -805,83 +805,176 @@ Unresolved Wave 1 decisions:
 6. How root metadata, selection, theme color, and hero preloads migrate.
 7. The screenshot and protected-flow baseline required before activating the new shell.
 
+## Wave 1 Packet 2 completion
+
+Created:
+
+```text
+docs/migration/WAVE1_SHELL_COMPATIBILITY_PLAN.md
+docs/migration/WAVE1_SHELL_RESPONSIBILITIES.json
+```
+
+Updated:
+
+```text
+docs/product/agent-mode-progress.md
+```
+
+Route shell classification:
+
+```yaml
+canonical_public_shell: 9
+protected_internal_shell: 16
+temporary_legacy_compatibility: 24
+no_shared_shell: 35
+total: 84
+```
+
+Provider ownership decisions:
+
+- structured data and public analytics move to the canonical public route boundary;
+- canonical public pages are light-first and do not mount `next-themes`;
+- theme switching remains temporary protected or legacy compatibility only;
+- React Hot Toast moves to protected application and transactional ownership;
+- public forms use local accessible status regions;
+- React Tooltip stops being a global public provider and is replaced by local canonical tooltip ownership;
+- authentication, Stripe, licences, purchaser flows, and processing remain route-local or protected-shell responsibilities;
+- documentation, errors, maintenance, unsubscribe, APIs, webhooks, redirects, health, and OG routes use no shared public shell.
+
+Compatibility aliases and expiry:
+
+```text
+ALIAS-001  root font variables                    Wave 8
+ALIAS-002  page gutter, button radius, header     Wave 8
+ALIAS-003  semantic RGB bridge                    Wave 8
+ALIAS-004  old blue and gray scales               Wave 8
+ALIAS-005  old surface/elevated shadows           Wave 8
+```
+
+Every alias group has exact direct consumers and a concrete expiry condition in `WAVE1_SHELL_RESPONSIBILITIES.json`.
+
+Current shell findings:
+
+- AppChrome applies the blob/line backdrop and shared Header/AppShell to every non-doc route;
+- AppShell contains hard-coded knowledge of legacy products, waitlists, kits, proof, studio, events, prompts, and Waas routes;
+- no active skip link was found;
+- Header owns legacy product URLs, theme switching, analytics, social links, mobile sheet state, and scroll-direction behavior;
+- Footer owns legacy product URLs, current legal/docs links, company GitHub/LinkedIn, a personal X account, and glass/backdrop styling;
+- Contact metadata still references SaaSKit and ProKit;
+- Admin, Chat, Processing, Docs, Contact, and Waiting List layouts provide limited or no isolation from the root shell.
+
+Packet 3 decision:
+
+- Packet 3 is a structural output-equivalence activation;
+- it creates explicit route-aware shell and provider boundaries;
+- no current production route adopts the canonical visual shell;
+- the current canonical route allowlist remains empty;
+- future `/memory`, `/memory/qa`, `/workbench`, `/philosophy`, and `/about` routes use the canonical shell when created;
+- `/`, Contact, Privacy, and Terms activate only in their approved page or design wave;
+- protected and legacy routes retain exact current output and providers;
+- BuildFlow remains non-public compatibility only.
+
+Validation and rollback requirements:
+
+- executable route classification must match all 84 manifest records;
+- current route output must remain equivalent;
+- protected auth, admin, application, purchaser, commerce, licence, Contact, email, analytics, toast, tooltip, and health flows must pass;
+- docs, redirects, errors, maintenance, unsubscribe, APIs, webhooks, health, and OG routes must bypass public chrome;
+- visual baselines cover 320, 768, 1024, 1440, and 1728 pixels;
+- accessibility covers skip link, landmarks, focus, keyboard, touch targets, reduced motion, and status messaging;
+- performance covers providers, fonts, AppChrome/Header client cost, background paint, bundles, and Core Web Vitals;
+- rollback reverts the single Packet 3 commit while leaving Packet 1 foundation files inert.
+
+Packet 2 validation evidence:
+
+- all 84 route records appear exactly once across four shell classes;
+- seven providers have one current owner, destination, and protected behavior;
+- five compatibility alias groups have exact direct consumers, expiry waves, and expiry conditions;
+- Packet 3 has 13 exact expected changed paths and an empty current canonical route allowlist;
+- BuildFlow remains public only as temporary legacy compatibility and technical identifiers remain non-public;
+- JSON parsing and documentation structure checks passed;
+- the security scan returned zero findings across all three changed paths;
+- no live source file changed.
+
+Unresolved decisions:
+
+1. Long-term protected internal application scope.
+2. First current route approved for canonical visual activation.
+3. Privacy and Terms activation timing.
+4. Contact activation timing relative to the canonical form system.
+5. Final public analytics and consent requirements.
+6. Remaining consumers of standalone `theme-provider.tsx` and global React Tooltip.
+7. Long-term theme switching for protected routes.
+8. Future docs shell technology and company chrome.
+
 ## Exact next task
 
 ```text
-Execute Wave 1 Packet 2 only: public-shell-compatibility-plan.
+Execute Wave 1 Packet 3 only: shell-routing-boundary.
 
 Goal:
-- design the exact live root-shell migration boundary before switching any production consumer;
-- separate canonical public-shell responsibilities from protected internal and transactional responsibilities;
-- define temporary compatibility aliases and the precise Wave 1 Packet 3 activation sequence.
+- activate explicit four-class shell routing and provider ownership while preserving output equivalence for every current route;
+- keep the canonical visual allowlist empty;
+- prepare future canonical routes without changing current page appearance.
 
 Read first:
 - docs/product/agent-mode-progress.md
+- docs/migration/WAVE1_SHELL_COMPATIBILITY_PLAN.md
+- docs/migration/WAVE1_SHELL_RESPONSIBILITIES.json
 - docs/migration/WAVE1_FOUNDATION_BASELINE.md
 - docs/migration/MIGRATION_WAVES.md
-- docs/migration/MIGRATION_MATRIX.md
-- docs/migration/STYLE_AUDIT.md
-- docs/migration/COMPONENT_AUDIT.md
-- docs/platform/PAGE_ARCHITECTURE.md
-- docs/platform/ACCESSIBILITY_STRATEGY.md
-- docs/platform/PERFORMANCE_STRATEGY.md
-- docs/design/COMPONENT_LIBRARY.md
 - src/app/layout.tsx
-- src/app/**/layout.tsx
 - src/components/AppChrome.tsx
 - src/components/AppShell.tsx
 - src/components/Header.tsx
 - src/app/(marketing)/components/layout/Footer.tsx
 - src/components/providers.tsx
-- src/components/theme-provider.tsx
 - src/helpers/chrome-routes.ts
-- src/assets/styles/globals.scss
-- tailwind.config.ts
 - src/assets/styles/prochat-foundation.css
 - src/lib/prochat-fonts.ts
+- scripts/design/lint-design-system.mjs
 
-Inspect read-only:
-- all routes that require AppChrome, auth, admin, commerce, purchaser, dashboard, chat, project, preference, Contact, email, analytics, toast, tooltip, or theme behavior;
-- all direct consumers of legacy global token aliases and root font variables;
-- current skip-link, focus, Header, mobile navigation, Footer, metadata, analytics, and provider behavior.
-
-Create only:
-- docs/migration/WAVE1_SHELL_COMPATIBILITY_PLAN.md
-- the smallest machine-readable shell responsibility manifest under docs/migration/ if useful
-
-Update only:
+Expected changed paths:
+- src/app/layout.tsx
+- src/components/AppChrome.tsx
+- src/components/providers.tsx
+- src/helpers/chrome-routes.ts
+- src/helpers/shell-routes.ts
+- src/components/shell/CanonicalPublicShell.tsx
+- src/components/shell/ProtectedInternalShell.tsx
+- src/components/shell/LegacyCompatibilityShell.tsx
+- src/components/shell/NoSharedShell.tsx
+- src/assets/styles/prochat-foundation.css
+- src/lib/prochat-fonts.ts
+- scripts/design/lint-design-system.mjs
 - docs/product/agent-mode-progress.md
 
-Required decisions:
-- canonical public-shell responsibility map;
-- protected internal-shell responsibility map;
-- routes staying on temporary legacy compatibility;
-- routes eligible for the first canonical shell activation;
-- provider placement for analytics, toast, tooltip, theme, auth, and commerce;
-- canonical root classes and font variables;
-- temporary token compatibility aliases and their expiry wave;
-- Header, Footer, AppChrome, and skip-link replacement order;
-- metadata, selection, theme color, and preload migration;
-- visual, accessibility, performance, and protected-flow baselines;
-- exact Packet 3 changed paths, validation, rollback, and approval gate.
+Implementation constraints:
+- mirror all 84 route classifications deterministically;
+- preserve current rendering for every existing route;
+- keep current canonical visual allowlist empty;
+- do not edit page content, Header, Footer, AppShell, globals.scss, Tailwind, metadata copy, assets, redirects, package.json, or lockfiles;
+- do not remove or archive anything;
+- do not add packages;
+- do not begin Wave 2 or the design lab.
 
 Validation:
-- every route classifies into canonical public shell, protected internal shell, temporary compatibility, or no shell;
-- every current provider has one owner and destination;
-- every temporary legacy alias has consumers and an expiry condition;
-- no live source file changes;
-- documentation structure validation;
+- route-class manifest parity;
+- provider ownership parity;
+- TypeScript and build;
+- current route screenshots at required widths;
+- protected-flow smoke tests;
+- accessibility and performance baselines;
+- archive-boundary and canonical-foundation validation;
 - security scan;
-- exact diff review.
+- exact diff and rollback verification.
 
-Restrictions:
-- documentation and decisions only;
-- do not import or activate the new foundation;
-- do not edit layout, globals, Tailwind, providers, Header, Footer, AppChrome, routes, pages, metadata, assets, packages, or lockfiles;
-- do not move anything into the archive;
-- do not begin Wave 2 or the design lab;
-- do not make destructive changes.
+Approval gate:
+- zero unexplained output drift;
+- protected flows remain functional;
+- no current route applies canonical visual variables or fonts;
+- explicit human approval before commit.
 
 Commit:
-docs(prochat): plan canonical shell compatibility
+refactor(prochat): establish shell routing boundary
 ```

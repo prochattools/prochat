@@ -1,0 +1,271 @@
+{
+  "version": 1,
+  "source_of_truth": "docs/migration/MIGRATION_MATRIX.md",
+  "shell_classes": {
+    "canonical_public_shell": {
+      "route_ids": [
+        "ROUTE-001",
+        "ROUTE-004",
+        "ROUTE-005",
+        "ROUTE-006",
+        "ROUTE-012",
+        "ROUTE-013",
+        "ROUTE-014",
+        "ROUTE-015",
+        "ROUTE-016"
+      ],
+      "activation_policy": "Canonical company and product routes. Existing retained routes remain visually unchanged until their approved activation packet; missing routes adopt this shell when created."
+    },
+    "protected_internal_shell": {
+      "route_ids": [
+        "ROUTE-025",
+        "ROUTE-027",
+        "ROUTE-045",
+        "ROUTE-046",
+        "ROUTE-047",
+        "ROUTE-048",
+        "ROUTE-049",
+        "ROUTE-050",
+        "ROUTE-051",
+        "ROUTE-052",
+        "ROUTE-053",
+        "ROUTE-054",
+        "ROUTE-055",
+        "ROUTE-057",
+        "ROUTE-080",
+        "ROUTE-084"
+      ],
+      "activation_policy": "Protected auth, admin, application, purchaser, transaction, diagnostic, and internal-tool routes retain isolated compatibility behavior until their obligations close."
+    },
+    "temporary_legacy_compatibility": {
+      "route_ids": [
+        "ROUTE-002",
+        "ROUTE-003",
+        "ROUTE-017",
+        "ROUTE-018",
+        "ROUTE-019",
+        "ROUTE-020",
+        "ROUTE-021",
+        "ROUTE-022",
+        "ROUTE-023",
+        "ROUTE-024",
+        "ROUTE-026",
+        "ROUTE-028",
+        "ROUTE-029",
+        "ROUTE-030",
+        "ROUTE-032",
+        "ROUTE-033",
+        "ROUTE-034",
+        "ROUTE-035",
+        "ROUTE-036",
+        "ROUTE-037",
+        "ROUTE-039",
+        "ROUTE-040",
+        "ROUTE-041",
+        "ROUTE-042"
+      ],
+      "activation_policy": "Legacy public pages retain current shell compatibility only until canonical replacement, redirect, archive, or retirement validation succeeds."
+    },
+    "no_shared_shell": {
+      "route_ids": [
+        "ROUTE-007",
+        "ROUTE-008",
+        "ROUTE-009",
+        "ROUTE-010",
+        "ROUTE-011",
+        "ROUTE-031",
+        "ROUTE-038",
+        "ROUTE-043",
+        "ROUTE-044",
+        "ROUTE-056",
+        "ROUTE-058",
+        "ROUTE-059",
+        "ROUTE-060",
+        "ROUTE-061",
+        "ROUTE-062",
+        "ROUTE-063",
+        "ROUTE-064",
+        "ROUTE-065",
+        "ROUTE-066",
+        "ROUTE-067",
+        "ROUTE-068",
+        "ROUTE-069",
+        "ROUTE-070",
+        "ROUTE-071",
+        "ROUTE-072",
+        "ROUTE-073",
+        "ROUTE-074",
+        "ROUTE-075",
+        "ROUTE-076",
+        "ROUTE-077",
+        "ROUTE-078",
+        "ROUTE-079",
+        "ROUTE-081",
+        "ROUTE-082",
+        "ROUTE-083"
+      ],
+      "activation_policy": "Documentation, error, maintenance, unsubscribe, redirect, API, webhook, health, OG, and compatibility-handler routes do not inherit the shared public chrome."
+    }
+  },
+  "providers": [
+    {
+      "id": "PROVIDER-001",
+      "capability": "structured_data",
+      "current_owner": "src/app/layout.tsx",
+      "destination": "canonical public shell metadata boundary",
+      "protected_behavior": "Protected and internal routes receive only route-specific metadata required for operation."
+    },
+    {
+      "id": "PROVIDER-002",
+      "capability": "analytics",
+      "current_owner": "src/app/layout.tsx via src/components/UmamiAnalytics.tsx",
+      "destination": "canonical public shell analytics boundary",
+      "protected_behavior": "Protected routes are excluded unless an explicit operational analytics requirement is approved."
+    },
+    {
+      "id": "PROVIDER-003",
+      "capability": "theme",
+      "current_owner": "src/components/providers.tsx",
+      "destination": "temporary legacy and protected compatibility shell",
+      "protected_behavior": "Canonical public shell is light-first and has no root theme provider; next-themes expires after legacy and protected consumers migrate."
+    },
+    {
+      "id": "PROVIDER-004",
+      "capability": "toast",
+      "current_owner": "src/components/providers.tsx",
+      "destination": "protected internal or transactional provider boundary",
+      "protected_behavior": "Canonical public forms use local accessible status regions; global React Hot Toast remains only for exact legacy consumers until migration."
+    },
+    {
+      "id": "PROVIDER-005",
+      "capability": "tooltip",
+      "current_owner": "src/components/providers.tsx",
+      "destination": "local component ownership using the canonical tooltip primitive",
+      "protected_behavior": "Global React Tooltip remains temporary compatibility only; new public shell does not mount a global tooltip registry."
+    },
+    {
+      "id": "PROVIDER-006",
+      "capability": "authentication",
+      "current_owner": "protected auth routes and components",
+      "destination": "protected internal shell or route-local boundary",
+      "protected_behavior": "No auth provider or sign-in affordance is required by the canonical public shell."
+    },
+    {
+      "id": "PROVIDER-007",
+      "capability": "commerce_and_licensing",
+      "current_owner": "protected commerce, licence, purchaser, processing, and success routes",
+      "destination": "protected transactional shell or route-local boundary",
+      "protected_behavior": "No Stripe, licence, purchaser, or portal provider is mounted by the canonical public shell."
+    }
+  ],
+  "compatibility_aliases": [
+    {
+      "id": "ALIAS-001",
+      "aliases": ["--font-sans", "--font-brand", "--font-mono"],
+      "direct_consumers": [
+        "src/app/layout.tsx",
+        "tailwind.config.ts",
+        "src/assets/styles/globals.scss",
+        "src/app/(marketing)/landing.module.css",
+        "src/app/(marketing)/contact/contact-page.css",
+        "src/app/waiting-list/waitlist-page.css"
+      ],
+      "expiry_wave": 8,
+      "expiry_condition": "All legacy and protected consumers use --font-prochat-sans and --font-prochat-mono or have been archived; Tailwind no longer maps font utilities to legacy variables."
+    },
+    {
+      "id": "ALIAS-002",
+      "aliases": ["--pc-page-gutter", "--pc-button-radius", "--pc-header-height"],
+      "direct_consumers": [
+        "tailwind.config.ts",
+        "src/assets/styles/globals.scss",
+        "src/assets/styles/backgrounds.scss",
+        "src/components/AppShell.tsx",
+        "src/components/Header.tsx",
+        "src/components/HeroStandard.tsx",
+        "src/components/content/SectionIndex.tsx",
+        "src/components/ui/button.tsx",
+        "src/app/starting-point/page.tsx",
+        "src/app/starting-point/_components/StartSignupForm.tsx",
+        "src/app/(marketing)/prochat-memory-theme.css"
+      ],
+      "expiry_wave": 8,
+      "expiry_condition": "Canonical Header, layout, button, section, and protected compatibility consumers no longer reference the legacy dimensions."
+    },
+    {
+      "id": "ALIAS-003",
+      "aliases": [
+        "--pc-bg-rgb",
+        "--pc-surface-rgb",
+        "--pc-surface-elevated-rgb",
+        "--pc-text-rgb",
+        "--pc-muted-rgb",
+        "--pc-border-rgb",
+        "--pc-ring-rgb"
+      ],
+      "direct_consumers": [
+        "tailwind.config.ts",
+        "src/assets/styles/globals.scss",
+        "src/assets/styles/backgrounds.scss",
+        "src/components/ui/ScrollHintWrapper.tsx",
+        "src/app/(marketing)/contact/contact-page.css"
+      ],
+      "expiry_wave": 8,
+      "expiry_condition": "Tailwind semantic utilities and all protected or route-local CSS consume canonical foundation tokens or have been archived."
+    },
+    {
+      "id": "ALIAS-004",
+      "aliases": ["--blue-*", "--pc-blue-*", "--pc-gray-*"],
+      "direct_consumers": [
+        "tailwind.config.ts",
+        "src/app/layout.tsx",
+        "src/assets/styles/globals.scss",
+        "src/assets/styles/backgrounds.scss",
+        "src/app/(marketing)/landing.module.css",
+        "src/app/(marketing)/contact/contact-page.css",
+        "src/icons/open-faq2.tsx",
+        "src/icons/quote.tsx",
+        "src/app/(marketing)/components/sections/ProofLive.tsx",
+        "src/app/(marketing)/components/sections/ProofTimeline.tsx",
+        "src/app/(marketing)/components/sections/ShipFast.tsx"
+      ],
+      "expiry_wave": 8,
+      "expiry_condition": "Legacy marketing, background, icon, and Tailwind color consumers are replaced or archived and no public metadata or inline style uses the old blue scale."
+    },
+    {
+      "id": "ALIAS-005",
+      "aliases": ["--pc-shadow-surface", "--pc-shadow-elevated"],
+      "direct_consumers": [
+        "tailwind.config.ts",
+        "src/assets/styles/globals.scss",
+        "src/app/(marketing)/contact/contact-page.css",
+        "src/components/providers.tsx"
+      ],
+      "expiry_wave": 8,
+      "expiry_condition": "Canonical neutral shadows replace legacy Tailwind, Contact, and toaster consumers, or protected consumers are isolated and documented."
+    }
+  ],
+  "packet_3": {
+    "name": "shell-routing-boundary",
+    "activation_type": "structural output-equivalence activation",
+    "current_canonical_route_allowlist": [],
+    "future_canonical_route_allowlist": ["/memory", "/memory/qa", "/workbench", "/philosophy", "/about"],
+    "rule": "Packet 3 creates live route-aware shell and provider boundaries while preserving current output for every existing route. No current page adopts the canonical visual shell until its page or design wave is approved.",
+    "expected_changed_paths": [
+      "src/app/layout.tsx",
+      "src/components/AppChrome.tsx",
+      "src/components/providers.tsx",
+      "src/helpers/chrome-routes.ts",
+      "src/helpers/shell-routes.ts",
+      "src/components/shell/CanonicalPublicShell.tsx",
+      "src/components/shell/ProtectedInternalShell.tsx",
+      "src/components/shell/LegacyCompatibilityShell.tsx",
+      "src/components/shell/NoSharedShell.tsx",
+      "src/assets/styles/prochat-foundation.css",
+      "src/lib/prochat-fonts.ts",
+      "scripts/design/lint-design-system.mjs",
+      "docs/product/agent-mode-progress.md"
+    ],
+    "approval_gate": "Approve only after route output equivalence, provider ownership, protected-flow smoke tests, accessibility checks, and rollback verification pass."
+  }
+}
