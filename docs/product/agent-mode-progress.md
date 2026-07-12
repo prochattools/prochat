@@ -1,10 +1,11 @@
 # ProChat Public Platform Foundation Handoff
 
-**Run:** `agent-1fc0da64-293e-46e5-8f10-8c8c4d223dd1`  
-**Status:** Wave 0 Packet 1 complete; Wave 1 Packet 1 is next  
-**Previous foundation commit:** `854d03e` — `docs(prochat): classify foundation migration waves`  
+**Run:** `agent-762b7598-fd30-464b-a423-0f364ddcb1d5`  
+**Status:** Wave 1 Packet 1 complete; Wave 1 Packet 2 is next  
+**Previous foundation commit:** `dbdfc7a` — `chore(prochat): establish legacy archive boundary`  
 **Source:** `prochat`  
-**Production code changed:** no  
+**Live production behavior changed:** no  
+**Additive unconsumed foundation source created:** yes  
 **Legacy files deleted:** no
 
 ## Goal
@@ -715,48 +716,172 @@ scripts/design/lint-design-system.mjs
 docs/product/agent-mode-progress.md
 ```
 
+## Wave 1 Packet 1 completion
+
+Created paths:
+
+```text
+docs/migration/WAVE1_FOUNDATION_BASELINE.md
+src/assets/styles/prochat-foundation.css
+src/lib/prochat-fonts.ts
+```
+
+Updated validation and handoff paths:
+
+```text
+scripts/design/lint-design-system.mjs
+docs/product/agent-mode-progress.md
+```
+
+The requested `prochat-tokens.css` filename was rejected by repository path policy as credential-like. `prochat-foundation.css` is the policy-safe equivalent and contains the same approved canonical token scope.
+
+Canonical token categories:
+
+- page, raised, inset, and strong surfaces;
+- primary, secondary, muted, and inverse text;
+- subtle, standard, and strong borders;
+- canonical ProChat Cobalt `#3158C7`, hover, pressed, soft, line, focus, and selection roles;
+- success, warning, error, and information semantic states;
+- 4px-based spacing;
+- page, content, and reading containers;
+- body and hero reading measures;
+- desktop, tablet, and mobile gutters and grid columns;
+- canonical radii;
+- restrained neutral shadows;
+- Golos Text and JetBrains Mono typography roles;
+- approved display, heading, body, label, weight, line-height, and tracking values;
+- CSS micro-interaction durations and easing curves.
+
+The new token file includes no old product palette, Host Grotesk, Inter, Playfair Display, Material Symbols, warm editorial theme, gradient, decorative glow, blob, glass treatment, smooth scrolling, universal transition, animation, or keyframe.
+
+Font-module decisions:
+
+- `Golos_Text` is the only primary public font;
+- `JetBrains_Mono` is the only technical font;
+- stable future variables are `--font-prochat-sans` and `--font-prochat-mono`;
+- the module uses `next/font/google` only;
+- no local Host font or Fontsource import was added;
+- each approved font is configured exactly once;
+- deterministic system and monospace fallbacks are documented;
+- the module has zero live consumers and creates no current runtime request.
+
+Current-shell baseline findings:
+
+- the live root forces the `dark` class;
+- current root font variables include Host Grotesk, Golos Text, and JetBrains Mono simultaneously;
+- JetBrains Mono and Host Grotesk have duplicate loading paths;
+- `globals.scss` imports `backgrounds.scss` and owns Tailwind layers, legacy tokens, themes, universal transitions, and root rules;
+- the global background layer includes fixed blurred shapes, old blue/purple/cyan values, blend modes, hero-line assets, and infinite keyframes;
+- `Providers` globally mounts `next-themes`, React Hot Toast, and React Tooltip;
+- public and protected routes share AppChrome, global providers, theme behavior, fonts, metadata, analytics, and legacy CSS;
+- Tailwind maps public utilities to the legacy `--pc-*`, blue, gray, surface, border, ring, and shadow systems;
+- protected auth, admin, application, commerce, licence, purchaser, Contact, database, email, analytics, toast, and tooltip behavior blocks a blind root-shell replacement.
+
+Validation evidence:
+
+- validator syntax passed with `node --check`;
+- scoped canonical-foundation validation passed;
+- required semantic token categories and canonical cobalt were verified;
+- forbidden legacy terms and visual effects were absent from the new foundation;
+- both font constructors and CSS variables were verified;
+- exact source search found no live consumer for either new file;
+- archive-boundary validation still passed;
+- the security scan returned zero findings across all five changed paths;
+- repository TypeScript validation passed with `pnpm exec tsc --noEmit --pretty false`;
+- the generic Workbench `type_check_web` command was inapplicable because it targets a nonexistent `apps/` directory;
+- the live root layout, globals, backgrounds, Tailwind configuration, providers, theme provider, routes, pages, Header, Footer, metadata, redirects, assets, package file, and lockfile remain unchanged;
+- no existing file was moved into the archive;
+- live production appearance and runtime behavior remain unchanged.
+
+Rollback remains limited to the five additive or validation/handoff paths listed above.
+
+Unresolved Wave 1 decisions:
+
+1. Whether protected routes keep a temporary legacy shell or receive a distinct internal shell.
+2. Which legacy token aliases must survive temporarily for protected consumers.
+3. Whether public theme switching is removed at the live switch or retained temporarily.
+4. Final Header, Footer, AppChrome, skip-link, analytics, toast, tooltip, and provider composition.
+5. When legacy font paths and global background assets can stop loading.
+6. How root metadata, selection, theme color, and hero preloads migrate.
+7. The screenshot and protected-flow baseline required before activating the new shell.
+
 ## Exact next task
 
 ```text
-Execute Wave 1 Packet 1 only: canonical-foundation-baseline.
+Execute Wave 1 Packet 2 only: public-shell-compatibility-plan.
 
 Goal:
-- establish the additive canonical token and font foundation without switching the live root shell;
-- capture exact current root-shell, font, global-style, provider, and protected-route dependencies;
-- create a clean static foundation that later shell work can adopt behind a bounded migration.
+- design the exact live root-shell migration boundary before switching any production consumer;
+- separate canonical public-shell responsibilities from protected internal and transactional responsibilities;
+- define temporary compatibility aliases and the precise Wave 1 Packet 3 activation sequence.
 
 Read first:
 - docs/product/agent-mode-progress.md
+- docs/migration/WAVE1_FOUNDATION_BASELINE.md
 - docs/migration/MIGRATION_WAVES.md
 - docs/migration/MIGRATION_MATRIX.md
 - docs/migration/STYLE_AUDIT.md
-- docs/migration/MOTION_AUDIT.md
-- docs/design/DESIGN_PRINCIPLES.md
-- docs/design/VISUAL_LANGUAGE.md
+- docs/migration/COMPONENT_AUDIT.md
+- docs/platform/PAGE_ARCHITECTURE.md
 - docs/platform/ACCESSIBILITY_STRATEGY.md
 - docs/platform/PERFORMANCE_STRATEGY.md
-- DESIGN.md
-- brand-spec.md
+- docs/design/COMPONENT_LIBRARY.md
 - src/app/layout.tsx
-- src/assets/styles/globals.scss
-- src/assets/styles/backgrounds.scss
-- tailwind.config.ts
+- src/app/**/layout.tsx
+- src/components/AppChrome.tsx
+- src/components/AppShell.tsx
+- src/components/Header.tsx
+- src/app/(marketing)/components/layout/Footer.tsx
 - src/components/providers.tsx
 - src/components/theme-provider.tsx
+- src/helpers/chrome-routes.ts
+- src/assets/styles/globals.scss
+- tailwind.config.ts
+- src/assets/styles/prochat-foundation.css
+- src/lib/prochat-fonts.ts
 
-Required outputs:
-- an exact Wave 1 baseline documenting current fonts, root classes, global imports, provider dependencies, protected-route dependencies, CSS entry points, and rollback boundary;
-- `src/assets/styles/prochat-tokens.css` containing canonical semantic tokens only;
-- an additive canonical font module using Golos Text and JetBrains Mono without changing the live root layout yet;
-- deterministic validation for token completeness, forbidden legacy colors/effects in the new foundation, and duplicate font loading inside the new files;
-- updated handoff with changed paths, validation, blockers, and Wave 1 Packet 2.
+Inspect read-only:
+- all routes that require AppChrome, auth, admin, commerce, purchaser, dashboard, chat, project, preference, Contact, email, analytics, toast, tooltip, or theme behavior;
+- all direct consumers of legacy global token aliases and root font variables;
+- current skip-link, focus, Header, mobile navigation, Footer, metadata, analytics, and provider behavior.
+
+Create only:
+- docs/migration/WAVE1_SHELL_COMPATIBILITY_PLAN.md
+- the smallest machine-readable shell responsibility manifest under docs/migration/ if useful
+
+Update only:
+- docs/product/agent-mode-progress.md
+
+Required decisions:
+- canonical public-shell responsibility map;
+- protected internal-shell responsibility map;
+- routes staying on temporary legacy compatibility;
+- routes eligible for the first canonical shell activation;
+- provider placement for analytics, toast, tooltip, theme, auth, and commerce;
+- canonical root classes and font variables;
+- temporary token compatibility aliases and their expiry wave;
+- Header, Footer, AppChrome, and skip-link replacement order;
+- metadata, selection, theme color, and preload migration;
+- visual, accessibility, performance, and protected-flow baselines;
+- exact Packet 3 changed paths, validation, rollback, and approval gate.
+
+Validation:
+- every route classifies into canonical public shell, protected internal shell, temporary compatibility, or no shell;
+- every current provider has one owner and destination;
+- every temporary legacy alias has consumers and an expiry condition;
+- no live source file changes;
+- documentation structure validation;
+- security scan;
+- exact diff review.
 
 Restrictions:
-- do not import the new token or font files into the live root layout yet;
-- do not remove Host Grotesk, Material Symbols, old global styles, blob backgrounds, theme providers, or Framer Motion yet;
-- do not change routes, pages, Header, Footer, providers, metadata, redirects, assets, package.json, or lockfiles;
+- documentation and decisions only;
+- do not import or activate the new foundation;
+- do not edit layout, globals, Tailwind, providers, Header, Footer, AppChrome, routes, pages, metadata, assets, packages, or lockfiles;
 - do not move anything into the archive;
-- do not add packages;
-- do not begin the design lab;
-- keep the packet additive and rollback-safe.
+- do not begin Wave 2 or the design lab;
+- do not make destructive changes.
+
+Commit:
+docs(prochat): plan canonical shell compatibility
 ```

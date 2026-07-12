@@ -1,0 +1,112 @@
+:root {
+  /* Color foundation */
+  --pc-foundation-color-page: #f7f8fa;
+  --pc-foundation-color-surface-raised: #ffffff;
+  --pc-foundation-color-surface-inset: #f1f3f6;
+  --pc-foundation-color-surface-strong: #e8ebf0;
+
+  --pc-foundation-color-text-primary: #111827;
+  --pc-foundation-color-text-secondary: #465363;
+  --pc-foundation-color-text-muted: #697586;
+  --pc-foundation-color-text-inverse: #ffffff;
+
+  --pc-foundation-color-border-subtle: #e2e6ec;
+  --pc-foundation-color-border: #d4dae3;
+  --pc-foundation-color-border-strong: #b8c1cd;
+
+  --pc-foundation-color-accent: #3158c7;
+  --pc-foundation-color-accent-hover: #274ab0;
+  --pc-foundation-color-accent-pressed: #1e3d95;
+  --pc-foundation-color-accent-soft: #eaf0ff;
+  --pc-foundation-color-accent-line: #bfcdf5;
+  --pc-foundation-color-focus-ring: #3158c7;
+  --pc-foundation-color-selection-background: #eaf0ff;
+  --pc-foundation-color-selection-text: #111827;
+
+  /* Semantic states */
+  --pc-foundation-color-success: #176b4a;
+  --pc-foundation-color-success-soft: #e9f6f0;
+  --pc-foundation-color-warning: #8a5200;
+  --pc-foundation-color-warning-soft: #fff3dd;
+  --pc-foundation-color-error: #a82a22;
+  --pc-foundation-color-error-soft: #fdedec;
+  --pc-foundation-color-information: #3158c7;
+  --pc-foundation-color-information-soft: #eaf0ff;
+
+  /* Spacing */
+  --pc-foundation-space-1: 0.25rem;
+  --pc-foundation-space-2: 0.5rem;
+  --pc-foundation-space-3: 0.75rem;
+  --pc-foundation-space-4: 1rem;
+  --pc-foundation-space-6: 1.5rem;
+  --pc-foundation-space-8: 2rem;
+  --pc-foundation-space-12: 3rem;
+  --pc-foundation-space-16: 4rem;
+  --pc-foundation-space-20: 5rem;
+  --pc-foundation-space-24: 6rem;
+  --pc-foundation-space-32: 8rem;
+  --pc-foundation-space-40: 10rem;
+
+  /* Layout */
+  --pc-foundation-container-page: 1440px;
+  --pc-foundation-container-content: 1280px;
+  --pc-foundation-container-reading: 800px;
+  --pc-foundation-measure-body: 66ch;
+  --pc-foundation-measure-hero: 50ch;
+  --pc-foundation-gutter-desktop: 32px;
+  --pc-foundation-gutter-tablet: 24px;
+  --pc-foundation-gutter-mobile: 20px;
+  --pc-foundation-grid-columns-desktop: 12;
+  --pc-foundation-grid-columns-tablet: 8;
+  --pc-foundation-grid-columns-mobile: 4;
+
+  /* Radius */
+  --pc-foundation-radius-xs: 4px;
+  --pc-foundation-radius-sm: 6px;
+  --pc-foundation-radius-md: 10px;
+  --pc-foundation-radius-lg: 16px;
+  --pc-foundation-radius-xl: 24px;
+  --pc-foundation-radius-pill: 999px;
+
+  /* Neutral elevation */
+  --pc-foundation-shadow-sm: 0 1px 2px rgb(17 24 39 / 0.05);
+  --pc-foundation-shadow-md: 0 12px 32px rgb(17 24 39 / 0.08);
+  --pc-foundation-shadow-lg: 0 24px 80px rgb(17 24 39 / 0.12);
+
+  /* Typography roles */
+  --pc-foundation-font-primary: var(--font-prochat-sans), system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --pc-foundation-font-technical: var(--font-prochat-mono), ui-monospace,
+    "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+
+  --pc-foundation-font-display-xl: clamp(4.5rem, 7vw, 7.5rem);
+  --pc-foundation-font-display-lg: clamp(3.5rem, 5.5vw, 6rem);
+  --pc-foundation-font-heading-1: clamp(2.75rem, 4vw, 4.75rem);
+  --pc-foundation-font-heading-2: clamp(2.1rem, 3vw, 3.5rem);
+  --pc-foundation-font-heading-3: clamp(1.5rem, 2vw, 2.25rem);
+  --pc-foundation-font-body-lg: clamp(1.125rem, 1.4vw, 1.375rem);
+  --pc-foundation-font-body-md: 1.0625rem;
+  --pc-foundation-font-body-sm: 0.9375rem;
+  --pc-foundation-font-label: 0.8125rem;
+
+  --pc-foundation-font-weight-regular: 400;
+  --pc-foundation-font-weight-medium: 500;
+  --pc-foundation-font-weight-semibold: 600;
+  --pc-foundation-font-weight-bold: 700;
+
+  --pc-foundation-line-height-display: 1;
+  --pc-foundation-line-height-heading: 1.1;
+  --pc-foundation-line-height-body: 1.6;
+  --pc-foundation-line-height-label: 1.4;
+  --pc-foundation-letter-spacing-display: -0.04em;
+  --pc-foundation-letter-spacing-heading: -0.025em;
+
+  /* CSS micro-interaction timing */
+  --pc-foundation-duration-instant: 120ms;
+  --pc-foundation-duration-fast: 180ms;
+  --pc-foundation-duration-standard: 280ms;
+  --pc-foundation-duration-deliberate: 450ms;
+  --pc-foundation-duration-chapter: 700ms;
+  --pc-foundation-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --pc-foundation-ease-chapter: cubic-bezier(0.65, 0, 0.35, 1);
+}

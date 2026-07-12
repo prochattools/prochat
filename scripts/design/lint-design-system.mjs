@@ -6,6 +6,14 @@ import path from 'node:path'
 const ROOT = process.cwd()
 const SRC_DIR = path.join(ROOT, 'src')
 const ARCHIVE_DIR = path.join(ROOT, 'archive', 'legacy-public-platform')
+const FOUNDATION_STYLE_PATH = path.join(
+  ROOT,
+  'src',
+  'assets',
+  'styles',
+  'prochat-foundation.css',
+)
+const FOUNDATION_FONT_PATH = path.join(ROOT, 'src', 'lib', 'prochat-fonts.ts')
 const BASELINE_PATH = path.join(
   ROOT,
   'scripts',
@@ -16,6 +24,48 @@ const BASELINE_PATH = path.join(
 const HEX_COLOR_REGEX = /#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b/g
 const SOURCE_FILE_REGEX = /\.(?:[cm]?[jt]sx?|css|scss)$/
 const ARCHIVE_GUARD_FILE_REGEX = /\.(?:[cm]?[jt]sx?|css|scss|sass|less|mdx)$/
+const REQUIRED_FOUNDATION_TOKENS = [
+  '--pc-foundation-color-page',
+  '--pc-foundation-color-surface-raised',
+  '--pc-foundation-color-surface-inset',
+  '--pc-foundation-color-text-primary',
+  '--pc-foundation-color-text-muted',
+  '--pc-foundation-color-border-subtle',
+  '--pc-foundation-color-border-strong',
+  '--pc-foundation-color-accent',
+  '--pc-foundation-color-focus-ring',
+  '--pc-foundation-color-selection-background',
+  '--pc-foundation-color-success',
+  '--pc-foundation-color-warning',
+  '--pc-foundation-color-error',
+  '--pc-foundation-space-4',
+  '--pc-foundation-container-page',
+  '--pc-foundation-container-content',
+  '--pc-foundation-container-reading',
+  '--pc-foundation-radius-md',
+  '--pc-foundation-shadow-sm',
+  '--pc-foundation-font-primary',
+  '--pc-foundation-font-technical',
+  '--pc-foundation-duration-fast',
+  '--pc-foundation-ease-standard',
+]
+const FORBIDDEN_FOUNDATION_PATTERNS = [
+  /host\s*grotesk/i,
+  /\binter\b/i,
+  /playfair/i,
+  /material\s*symbols/i,
+  /\bpaper\b/i,
+  /\bcoral\b/i,
+  /\bolive\b/i,
+  /gradient\s*\(/i,
+  /\bglow\b/i,
+  /\bblob\b/i,
+  /backdrop-filter/i,
+  /scroll-behavior\s*:\s*smooth/i,
+  /@keyframes/i,
+  /\banimation\s*:/i,
+  /(?:^|[,{])\s*\*\s*(?=[,{])/m,
+]
 const MARKETING_BUTTON_ALIAS = "@/app/(marketing)/components/ui/Button"
 const ARCHIVE_IMPORT_PATH = 'archive/legacy-public-platform'
 const ARCHIVE_IMPORT_PATTERNS = [
@@ -28,6 +78,9 @@ const ARCHIVE_IMPORT_PATTERNS = [
 const args = process.argv.slice(2)
 const shouldWriteBaseline = args.includes('--write-baseline')
 const shouldCheckArchiveImportsOnly = args.includes('--archive-imports-only')
+const shouldCheckCanonicalFoundationOnly = args.includes(
+  '--canonical-foundation-only',
+)
 
 async function walkFiles(directoryPath, fileRegex = SOURCE_FILE_REGEX) {
   const entries = await fs.readdir(directoryPath, { withFileTypes: true })
@@ -117,6 +170,87 @@ async function lintArchiveImportsOnly() {
   }
 
   console.error('[design-lint] Archive boundary violations detected:')
+  for (const violation of violations) {
+    console.error(`  - ${violation}`)
+  }
+  process.exit(1)
+}
+
+async function lintCanonicalFoundationOnly() {
+  const [styleContent, fontContent] = await Promise.all([
+    fs.readFile(FOUNDATION_STYLE_PATH, 'utf8'),
+    fs.readFile(FOUNDATION_FONT_PATH, 'utf8'),
+  ])
+  const violations = []
+
+  for (const token of REQUIRED_FOUNDATION_TOKENS) {
+    if (!styleContent.includes(`${token}:`)) {
+      violations.push(`missing required token ${token}`)
+    }
+  }
+
+  if (!styleContent.includes('--pc-foundation-color-accent: #3158c7;')) {
+    violations.push('canonical ProChat Cobalt must be #3158C7')
+  }
+
+  for (const pattern of FORBIDDEN_FOUNDATION_PATTERNS) {
+    if (pattern.test(styleContent)) {
+      violations.push(`forbidden legacy or effect pattern ${pattern}`)
+    }
+  }
+
+  const fontRequirements = [
+    "import { Golos_Text, JetBrains_Mono } from 'next/font/google'",
+    "variable: '--font-prochat-sans'",
+    "variable: '--font-prochat-mono'",
+  ]
+  for (const requirement of fontRequirements) {
+    if (!fontContent.includes(requirement)) {
+      violations.push(`font module missing ${requirement}`)
+    }
+  }
+
+  const forbiddenFontPatterns = [
+    /next\/font\/local/,
+    /@fontsource/,
+    /host\s*grotesk/i,
+    /playfair/i,
+    /material\s*symbols/i,
+    /\binter\b/i,
+  ]
+  for (const pattern of forbiddenFontPatterns) {
+    if (pattern.test(fontContent)) {
+      violations.push(`font module contains forbidden loading path ${pattern}`)
+    }
+  }
+
+  if ((fontContent.match(/Golos_Text\s*\(/g) ?? []).length !== 1) {
+    violations.push('font module must configure Golos Text exactly once')
+  }
+  if ((fontContent.match(/JetBrains_Mono\s*\(/g) ?? []).length !== 1) {
+    violations.push('font module must configure JetBrains Mono exactly once')
+  }
+
+  const sourceFiles = await walkFiles(SRC_DIR, ARCHIVE_GUARD_FILE_REGEX)
+  for (const file of sourceFiles) {
+    if (file === FOUNDATION_STYLE_PATH || file === FOUNDATION_FONT_PATH) continue
+    const content = await fs.readFile(file, 'utf8')
+    if (
+      content.includes('prochat-foundation.css') ||
+      content.includes('prochat-fonts')
+    ) {
+      violations.push(`${toRelativePath(file)} consumes the additive foundation`)
+    }
+  }
+
+  if (violations.length === 0) {
+    console.log(
+      '[design-lint] Canonical foundation passed: tokens, fonts, forbidden patterns, and zero live consumers.',
+    )
+    return
+  }
+
+  console.error('[design-lint] Canonical foundation violations detected:')
   for (const violation of violations) {
     console.error(`  - ${violation}`)
   }
@@ -257,6 +391,8 @@ if (shouldWriteBaseline) {
   await writeBaseline()
 } else if (shouldCheckArchiveImportsOnly) {
   await lintArchiveImportsOnly()
+} else if (shouldCheckCanonicalFoundationOnly) {
+  await lintCanonicalFoundationOnly()
 } else {
   await lintAgainstBaseline()
 }
