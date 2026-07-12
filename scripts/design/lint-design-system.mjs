@@ -14,6 +14,45 @@ const FOUNDATION_STYLE_PATH = path.join(
   'prochat-foundation.css',
 )
 const FOUNDATION_FONT_PATH = path.join(ROOT, 'src', 'lib', 'prochat-fonts.ts')
+const SHELL_MANIFEST_PATH = path.join(
+  ROOT,
+  'docs',
+  'migration',
+  'WAVE1_SHELL_RESPONSIBILITIES.json',
+)
+const SHELL_ROUTES_PATH = path.join(ROOT, 'src', 'helpers', 'shell-routes.ts')
+const APP_CHROME_PATH = path.join(ROOT, 'src', 'components', 'AppChrome.tsx')
+const PROVIDERS_PATH = path.join(ROOT, 'src', 'components', 'providers.tsx')
+const SHELL_COMPONENT_PATHS = {
+  canonical: path.join(
+    ROOT,
+    'src',
+    'components',
+    'shell',
+    'CanonicalPublicShell.tsx',
+  ),
+  protected: path.join(
+    ROOT,
+    'src',
+    'components',
+    'shell',
+    'ProtectedInternalShell.tsx',
+  ),
+  legacy: path.join(
+    ROOT,
+    'src',
+    'components',
+    'shell',
+    'LegacyCompatibilityShell.tsx',
+  ),
+  noShared: path.join(
+    ROOT,
+    'src',
+    'components',
+    'shell',
+    'NoSharedShell.tsx',
+  ),
+}
 const BASELINE_PATH = path.join(
   ROOT,
   'scripts',
@@ -81,6 +120,7 @@ const shouldCheckArchiveImportsOnly = args.includes('--archive-imports-only')
 const shouldCheckCanonicalFoundationOnly = args.includes(
   '--canonical-foundation-only',
 )
+const shouldCheckShellRoutingOnly = args.includes('--shell-routing-only')
 
 async function walkFiles(directoryPath, fileRegex = SOURCE_FILE_REGEX) {
   const entries = await fs.readdir(directoryPath, { withFileTypes: true })
@@ -257,6 +297,184 @@ async function lintCanonicalFoundationOnly() {
   process.exit(1)
 }
 
+async function lintShellRoutingOnly() {
+  const [
+    manifestRaw,
+    shellRoutes,
+    appChrome,
+    providers,
+    canonicalShell,
+    protectedShell,
+    legacyShell,
+    noSharedShell,
+    foundationStyle,
+  ] = await Promise.all([
+    fs.readFile(SHELL_MANIFEST_PATH, 'utf8'),
+    fs.readFile(SHELL_ROUTES_PATH, 'utf8'),
+    fs.readFile(APP_CHROME_PATH, 'utf8'),
+    fs.readFile(PROVIDERS_PATH, 'utf8'),
+    fs.readFile(SHELL_COMPONENT_PATHS.canonical, 'utf8'),
+    fs.readFile(SHELL_COMPONENT_PATHS.protected, 'utf8'),
+    fs.readFile(SHELL_COMPONENT_PATHS.legacy, 'utf8'),
+    fs.readFile(SHELL_COMPONENT_PATHS.noShared, 'utf8'),
+    fs.readFile(FOUNDATION_STYLE_PATH, 'utf8'),
+  ])
+
+  const manifest = JSON.parse(manifestRaw)
+  const manifestAssignments = new Map()
+  for (const [shellClass, definition] of Object.entries(
+    manifest.shell_classes ?? {},
+  )) {
+    for (const routeId of definition.route_ids ?? []) {
+      if (manifestAssignments.has(routeId)) {
+        throw new Error(`[design-lint] Duplicate manifest route ${routeId}.`)
+      }
+      manifestAssignments.set(routeId, shellClass)
+    }
+  }
+
+  const executableAssignments = new Map()
+  const routeDefinitionPattern =
+    /routeId: '(ROUTE-\d{3})'.*?shellClass: '([^']+)'/g
+  for (const match of shellRoutes.matchAll(routeDefinitionPattern)) {
+    const [, routeId, shellClass] = match
+    if (executableAssignments.has(routeId)) {
+      throw new Error(`[design-lint] Duplicate executable route ${routeId}.`)
+    }
+    executableAssignments.set(routeId, shellClass)
+  }
+
+  const violations = []
+  if (manifestAssignments.size !== 84) {
+    violations.push(`manifest must contain 84 routes, found ${manifestAssignments.size}`)
+  }
+  if (executableAssignments.size !== 84) {
+    violations.push(
+      `executable route map must contain 84 routes, found ${executableAssignments.size}`,
+    )
+  }
+
+  for (const [routeId, shellClass] of manifestAssignments) {
+    if (executableAssignments.get(routeId) !== shellClass) {
+      violations.push(
+        `${routeId} executable class ${executableAssignments.get(routeId) ?? 'missing'} does not match ${shellClass}`,
+      )
+    }
+  }
+
+  if (!shellRoutes.includes('CURRENT_CANONICAL_VISUAL_ROUTES = [] as const')) {
+    violations.push('current canonical visual route allowlist must remain empty')
+  }
+
+  for (const route of ['/memory', '/memory/qa', '/workbench', '/philosophy', '/about']) {
+    if (!shellRoutes.includes(`'${route}'`)) {
+      violations.push(`future canonical route ${route} is missing`)
+    }
+  }
+
+  const requiredAppChromeMarkers = [
+    'CanonicalPublicShell',
+    'ProtectedInternalShell',
+    'LegacyCompatibilityShell',
+    'NoSharedShell',
+    'getShellRouteClass',
+    'isCurrentCanonicalVisualShellPath',
+    'isCurrentDocsShellPath',
+  ]
+  for (const marker of requiredAppChromeMarkers) {
+    if (!appChrome.includes(marker)) {
+      violations.push(`AppChrome missing ${marker}`)
+    }
+  }
+
+  const requiredProviderMarkers = [
+    'CanonicalPublicProviders',
+    'LegacyCompatibilityProviders',
+    'isCurrentCanonicalVisualShellPath',
+    '<ThemeProvider',
+    '<Toaster',
+    '<Tooltip',
+  ]
+  for (const marker of requiredProviderMarkers) {
+    if (!providers.includes(marker)) {
+      violations.push(`Providers missing ${marker}`)
+    }
+  }
+
+  const legacyMarkers = [
+    'pc-site-surface',
+    'pc-site-surface__backdrop',
+    'pc-site-surface__lines',
+    'pc-site-surface__blob--hero',
+    'pc-site-surface__blob--mid',
+    'pc-site-surface__blob--lower',
+    'pc-site-surface__blob--accent',
+    'pc-site-surface__noise',
+    '<Header />',
+    '<AppShell>{children}</AppShell>',
+  ]
+  for (const marker of legacyMarkers) {
+    if (!legacyShell.includes(marker)) {
+      violations.push(`legacy compatibility shell missing ${marker}`)
+    }
+  }
+
+  if (!protectedShell.includes('<LegacyCompatibilityShell>')) {
+    violations.push('protected shell must preserve current legacy output')
+  }
+  if (noSharedShell.includes('<Header') || noSharedShell.includes('<AppShell')) {
+    violations.push('no-shared shell must not render public chrome')
+  }
+
+  const canonicalMarkers = [
+    "CANONICAL_MAIN_ID = 'main-content'",
+    "CANONICAL_FOUNDATION_CLASS = 'pc-foundation-scope'",
+    "'--font-prochat-sans'",
+    "'--font-prochat-mono'",
+    'Skip to content',
+    '<main id={CANONICAL_MAIN_ID}>',
+  ]
+  for (const marker of canonicalMarkers) {
+    if (!canonicalShell.includes(marker)) {
+      violations.push(`canonical shell missing ${marker}`)
+    }
+  }
+
+  if (
+    !foundationStyle.includes('.pc-foundation-scope') ||
+    !foundationStyle.includes('.pc-skip-link:focus-visible')
+  ) {
+    violations.push('canonical foundation scope or skip-link focus style missing')
+  }
+
+  if (
+    executableAssignments.get('ROUTE-017') !==
+    'temporary_legacy_compatibility'
+  ) {
+    violations.push('BuildFlow must remain temporary legacy compatibility')
+  }
+
+  if (violations.length === 0) {
+    const counts = Object.fromEntries(
+      Object.keys(manifest.shell_classes).map(shellClass => [
+        shellClass,
+        [...manifestAssignments.values()].filter(value => value === shellClass)
+          .length,
+      ]),
+    )
+    console.log(
+      `[design-lint] Shell routing passed: ${JSON.stringify(counts)}; current canonical allowlist empty.`,
+    )
+    return
+  }
+
+  console.error('[design-lint] Shell routing violations detected:')
+  for (const violation of violations) {
+    console.error(`  - ${violation}`)
+  }
+  process.exit(1)
+}
+
 async function collectCurrentHexCounts() {
   assertArchiveImportGuard()
   const files = await walkFiles(SRC_DIR)
@@ -393,6 +611,8 @@ if (shouldWriteBaseline) {
   await lintArchiveImportsOnly()
 } else if (shouldCheckCanonicalFoundationOnly) {
   await lintCanonicalFoundationOnly()
+} else if (shouldCheckShellRoutingOnly) {
+  await lintShellRoutingOnly()
 } else {
   await lintAgainstBaseline()
 }

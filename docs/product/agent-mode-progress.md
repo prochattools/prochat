@@ -1,8 +1,8 @@
 # ProChat Public Platform Foundation Handoff
 
-**Run:** `agent-738b7982-7cab-4d03-a3c8-1e93e2eaed61`  
-**Status:** Wave 1 Packet 2 complete; Wave 1 Packet 3 is next  
-**Previous foundation commit:** `20a55f9` — `feat(prochat): add canonical foundation baseline`  
+**Run:** `agent-3fd8a68d-ad9b-484a-b0fb-d5b204c94c8a`  
+**Status:** Wave 1 Packet 3 complete; browser equivalence verification and first visual activation approval are next  
+**Previous foundation commit:** `b3739ba` — `docs(prochat): plan canonical shell compatibility`  
 **Source:** `prochat`  
 **Live production behavior changed:** no  
 **Additive unconsumed foundation source created:** yes  
@@ -907,74 +907,131 @@ Unresolved decisions:
 7. Long-term theme switching for protected routes.
 8. Future docs shell technology and company chrome.
 
+## Wave 1 Packet 3 completion
+
+Implemented:
+
+```text
+src/helpers/shell-routes.ts
+src/components/shell/CanonicalPublicShell.tsx
+src/components/shell/ProtectedInternalShell.tsx
+src/components/shell/LegacyCompatibilityShell.tsx
+src/components/shell/NoSharedShell.tsx
+src/components/AppChrome.tsx
+src/components/providers.tsx
+src/assets/styles/prochat-foundation.css
+scripts/design/lint-design-system.mjs
+```
+
+Executable route-class counts:
+
+```yaml
+canonical_public_shell: 9
+protected_internal_shell: 16
+temporary_legacy_compatibility: 24
+no_shared_shell: 35
+total: 84
+```
+
+Shell responsibilities:
+
+- `CanonicalPublicShell` defines the future foundation scope, stable `#main-content` landmark, skip-link contract, and canonical font-variable contract;
+- `ProtectedInternalShell` explicitly owns protected routes while delegating to the exact legacy compatibility markup for output equivalence;
+- `LegacyCompatibilityShell` contains the previous AppChrome backdrop, Header, AppShell, Footer, and class structure unchanged;
+- `NoSharedShell` preserves the existing docs wrapper and contains no Header or AppShell;
+- AppChrome dispatches from one deterministic route classifier;
+- the current canonical visual allowlist remains empty;
+- future `/memory`, `/memory/qa`, `/workbench`, `/philosophy`, and `/about` patterns are prepared but not activated.
+
+Provider split:
+
+- `CanonicalPublicProviders` is defined without theme, toast, or tooltip dependencies;
+- `LegacyCompatibilityProviders` preserves `next-themes`, React Hot Toast, React Tooltip, classes, options, and output for every current route;
+- no current route enters the canonical provider boundary;
+- authentication, commerce, purchaser, licence, and transactional ownership remain protected or route-local.
+
+Output-equivalence evidence:
+
+- static shell validation confirms the legacy compatibility shell contains every previous backdrop, Header, AppShell, and wrapper marker;
+- protected routes delegate to the exact legacy compatibility shell;
+- docs retain the previous `relative z-10` wrapper without public chrome;
+- current canonical visual allowlist is empty;
+- canonical foundation validation confirms no live consumer imports the canonical font or foundation modules;
+- root layout, Header, Footer, AppShell, globals, Tailwind, page content, metadata, redirects, APIs, forms, assets, packages, lockfile, and archive content remain unchanged.
+
+Validation evidence:
+
+- validator syntax passed;
+- shell-routing validation passed for all 84 records;
+- TypeScript passed;
+- production build passed with all 106 static pages generated;
+- canonical-foundation validation passed;
+- archive-boundary validation passed;
+- BuildFlow remains temporary legacy compatibility;
+- temporary smoke scripts were deleted before commit;
+- browser screenshots were unavailable because no browser runtime is installed and adding one is prohibited;
+- cross-command HTTP smoke tests were unavailable because persisted validation jobs use isolated network namespaces;
+- both production and maintenance-disabled development servers started successfully in persisted jobs;
+- protected-flow evidence is therefore limited to successful compilation, static generation, shell parity, and unchanged protected source boundaries.
+
+Rollback:
+
+- revert the single Packet 3 commit;
+- Packet 1 foundation files remain inert;
+- no page content, route metadata, package, data migration, redirect, or archive movement requires separate rollback.
+
 ## Exact next task
 
 ```text
-Execute Wave 1 Packet 3 only: shell-routing-boundary.
+Execute Wave 1 Packet 4 only: browser-equivalence-and-activation-gate.
 
 Goal:
-- activate explicit four-class shell routing and provider ownership while preserving output equivalence for every current route;
-- keep the canonical visual allowlist empty;
-- prepare future canonical routes without changing current page appearance.
+- verify Packet 3 in a browser-capable environment;
+- capture visual, accessibility, performance, and protected-flow baselines;
+- decide the first current route eligible for canonical visual activation;
+- do not activate any route until evidence and explicit approval are recorded.
 
 Read first:
 - docs/product/agent-mode-progress.md
 - docs/migration/WAVE1_SHELL_COMPATIBILITY_PLAN.md
 - docs/migration/WAVE1_SHELL_RESPONSIBILITIES.json
 - docs/migration/WAVE1_FOUNDATION_BASELINE.md
-- docs/migration/MIGRATION_WAVES.md
-- src/app/layout.tsx
-- src/components/AppChrome.tsx
-- src/components/AppShell.tsx
-- src/components/Header.tsx
-- src/app/(marketing)/components/layout/Footer.tsx
-- src/components/providers.tsx
-- src/helpers/chrome-routes.ts
-- src/assets/styles/prochat-foundation.css
-- src/lib/prochat-fonts.ts
-- scripts/design/lint-design-system.mjs
-
-Expected changed paths:
-- src/app/layout.tsx
-- src/components/AppChrome.tsx
-- src/components/providers.tsx
-- src/helpers/chrome-routes.ts
 - src/helpers/shell-routes.ts
-- src/components/shell/CanonicalPublicShell.tsx
-- src/components/shell/ProtectedInternalShell.tsx
-- src/components/shell/LegacyCompatibilityShell.tsx
-- src/components/shell/NoSharedShell.tsx
+- src/components/AppChrome.tsx
+- src/components/providers.tsx
+- src/components/shell/**
 - src/assets/styles/prochat-foundation.css
 - src/lib/prochat-fonts.ts
-- scripts/design/lint-design-system.mjs
+
+Required browser evidence:
+- screenshots at 320, 768, 1024, 1440, and 1728 pixels;
+- representative canonical, protected, legacy, docs, maintenance, unsubscribe, auth, admin, purchaser, dashboard, chat, Contact, analytics, health, and OG routes;
+- zero unexplained output drift against the pre-Packet 3 baseline;
+- one main landmark and no duplicate landmarks;
+- skip-link contract verified on a controlled future canonical fixture only;
+- keyboard, focus, reduced-motion, and mobile navigation checks;
+- provider and hydration inspection;
+- protected auth/admin/application/commerce/purchaser smoke tests;
+- Core Web Vitals and bundle baseline.
+
+Create only:
+- docs/migration/WAVE1_BROWSER_EQUIVALENCE_REPORT.md
+- optional screenshot/evidence artifacts under docs/migration/evidence/wave1/ if repository policy permits
+
+Update only:
 - docs/product/agent-mode-progress.md
 
-Implementation constraints:
-- mirror all 84 route classifications deterministically;
-- preserve current rendering for every existing route;
-- keep current canonical visual allowlist empty;
-- do not edit page content, Header, Footer, AppShell, globals.scss, Tailwind, metadata copy, assets, redirects, package.json, or lockfiles;
-- do not remove or archive anything;
-- do not add packages;
+Restrictions:
+- documentation and evidence only;
+- do not change shell code, routes, pages, styles, providers, Header, Footer, AppShell, metadata, redirects, packages, lockfiles, assets, or archive content;
+- do not activate the canonical visual allowlist;
+- do not add browser packages unless separately approved;
 - do not begin Wave 2 or the design lab.
 
-Validation:
-- route-class manifest parity;
-- provider ownership parity;
-- TypeScript and build;
-- current route screenshots at required widths;
-- protected-flow smoke tests;
-- accessibility and performance baselines;
-- archive-boundary and canonical-foundation validation;
-- security scan;
-- exact diff and rollback verification.
-
-Approval gate:
-- zero unexplained output drift;
-- protected flows remain functional;
-- no current route applies canonical visual variables or fonts;
-- explicit human approval before commit.
+Decision output:
+- PASS: identify the first exact route and Packet 5 activation boundary;
+- BLOCKED: record exact visual, accessibility, performance, or protected-flow defects and the smallest repair packet.
 
 Commit:
-refactor(prochat): establish shell routing boundary
+docs(prochat): verify shell routing equivalence
 ```

@@ -110,3 +110,38 @@
   --pc-foundation-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
   --pc-foundation-ease-chapter: cubic-bezier(0.65, 0, 0.35, 1);
 }
+
+.pc-foundation-scope {
+  min-height: 100%;
+  background: var(--pc-foundation-color-page);
+  color: var(--pc-foundation-color-text-primary);
+  font-family: var(--pc-foundation-font-primary);
+}
+
+.pc-foundation-scope code,
+.pc-foundation-scope kbd,
+.pc-foundation-scope pre,
+.pc-foundation-scope samp {
+  font-family: var(--pc-foundation-font-technical);
+}
+
+.pc-skip-link {
+  position: fixed;
+  inset-block-start: var(--pc-foundation-space-3);
+  inset-inline-start: var(--pc-foundation-space-3);
+  z-index: 100;
+  padding: var(--pc-foundation-space-2) var(--pc-foundation-space-4);
+  border: 2px solid var(--pc-foundation-color-focus-ring);
+  border-radius: var(--pc-foundation-radius-sm);
+  background: var(--pc-foundation-color-surface-raised);
+  color: var(--pc-foundation-color-text-primary);
+  font-family: var(--pc-foundation-font-primary);
+  font-weight: var(--pc-foundation-font-weight-semibold);
+  transform: translateY(calc(-100% - var(--pc-foundation-space-6)));
+}
+
+.pc-skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 3px solid var(--pc-foundation-color-focus-ring);
+  outline-offset: 2px;
+}
