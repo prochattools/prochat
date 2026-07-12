@@ -412,63 +412,132 @@ Validation evidence:
 
 Unresolved component decisions include canonical button consolidation, shell replacement strategy, purchaser obligations, protected application scope, MDX/content retention, public theme behavior, Framer Motion retention, zero-consumer proof, email-safe design tokens, and the required product/error primitives.
 
+## Phase 5 Task 5.3 completion
+
+Completed style and motion inventory:
+
+```yaml
+stylesheet_files: 7
+configuration_and_root_style_sources: 5
+style_records: 12
+candidate_motion_source_files: 59
+actual_motion_or_visibility_sources: 24
+operational_timer_or_static_style_sources: 35
+motion_records: 30
+framer_motion_direct_sources: 6
+production_files_changed: 0
+```
+
+Changed documentation:
+
+```text
+docs/migration/STYLE_AUDIT.md
+docs/migration/MOTION_AUDIT.md
+docs/migration/MIGRATION_MATRIX.md
+docs/product/agent-mode-progress.md
+```
+
+Approved clean-slate direction recorded:
+
+- legacy styling, themes, scaffolding, integrations, pages, and functionality are archive-first by default;
+- the new platform must not be built on old visual or product systems;
+- useful historical implementation may remain in an archive for reference;
+- ProChat OS must be removed from the future public platform after archival and obligation checks;
+- BuildFlow must be removed from the public platform after `/workbench` is ready, while technical compatibility identifiers may remain only where required;
+- current waitlist, newsletter, MailerLite, GitHub, kit, proof, pricing, and historical integration implementations are legacy unless explicitly re-approved;
+- future mailing-list functionality will be rebuilt against the new form, privacy, and email architecture.
+
+Highest-risk style findings:
+
+- Host Grotesk, Golos Text, JetBrains Mono, Inter, Inter Tight, Playfair Display, Material Symbols, and duplicate font-loading paths coexist;
+- multiple token systems conflict with `brand-spec.md`;
+- the root forces dark mode despite the approved light-first platform;
+- global universal 650ms transitions affect every element and pseudo-element;
+- animated blur/blob/glow backgrounds run continuously;
+- the warm Memory theme is a separate paper/coral/olive brand system with broad `!important` overrides;
+- docs use a separate glassy blue theme coupled to third-party selectors;
+- containers, breakpoints, spacing, radii, shadows, and page gutters compete across systems;
+- the legacy Memory page contains approximately 69KB of embedded page CSS and additional font loading.
+
+Highest-risk motion findings:
+
+- Framer Motion powers generic reveal, proof, newsletter, maintenance, and 404 behavior;
+- global blob keyframes, global transitions, and smooth scrolling create default motion cost;
+- the old Memory page combines keyframes, observers, scroll listeners, transforms, and CSS/JS reduced-motion handling;
+- RotatingText animates width and maintains interval, resize, font-measurement, and timeout state;
+- the Header uses a global scroll/resize/requestAnimationFrame mechanism;
+- generic Reveal has no explicit reduced-motion branch;
+- several protected timers are operational and must not be removed as decorative motion;
+- old motion must be archived before GSAP is added so a clean static performance baseline exists.
+
+Validation evidence:
+
+- seven stylesheet files were independently enumerated;
+- five root/configuration style sources were inspected;
+- 59 motion-related candidate files were scanned and separated into actual motion versus static/operational false positives;
+- direct source reads verified the global styles, blob system, warm Memory theme, Contact, waitlist, docs, Tailwind, root fonts, old Memory page, Reveal, proof motion, rotating text, scroll hints, and Header scroll hook;
+- STYLE-001 through STYLE-012 and MOTION-001 through MOTION-030 are mirrored in the migration matrix;
+- no CSS, SCSS, Tailwind, PostCSS, font, token, theme, animation, component, route, copy, metadata, redirect, or package file changed;
+- Framer Motion remains installed and unchanged;
+- GSAP was not added;
+- no production file was moved, renamed, merged, archived, or deleted.
+
+Unresolved decisions include protected internal-shell styling, public dark-mode removal, docs launch scope, email-safe tokens, purchaser styling obligations, exact archive/build-exclusion structure, retained Framer Motion use, Header scroll behavior, and protected timer ownership.
+
 ## Restrictions for the next execution phase
 
 During Phase 5 inventory:
 
 - do not modify production code;
-- do not delete or move legacy files;
-- do not install dependencies;
+- do not delete, archive, or move files yet;
+- do not install or remove dependencies;
 - do not start design-lab implementation;
-- do not change live routes, metadata, forms, redirects, APIs, or styles;
+- do not change live routes, metadata, forms, redirects, APIs, styles, motion, or assets;
 - record audit evidence and migration decisions only;
 - keep each audit category in a separate reviewable commit where practical.
 
-## Exact next task after component-audit commit
+## Exact next task after style-and-motion audit commit
 
 ```text
-Execute Phase 5, Task 5.3 only: style and motion inventory.
+Execute Phase 5, Task 5.4 only: asset and dependency inventory.
 
 Read first:
 - docs/product/agent-mode-progress.md
 - docs/implementation-plan.md
-- DESIGN.md
-- brand-spec.md
-- docs/platform/RESPONSIVE_STRATEGY.md
-- docs/platform/ACCESSIBILITY_STRATEGY.md
-- docs/platform/PERFORMANCE_STRATEGY.md
-- docs/design/MOTION_STORYBOARD.md
 - docs/migration/LEGACY_SWEEP_PLAN.md
 - docs/migration/MIGRATION_MATRIX.md
+- docs/migration/ASSET_AUDIT.md
+- docs/migration/DEPENDENCY_AUDIT.md
+- docs/migration/ROUTE_AUDIT.md
+- docs/migration/COMPONENT_AUDIT.md
 - docs/migration/STYLE_AUDIT.md
 - docs/migration/MOTION_AUDIT.md
-- docs/migration/COMPONENT_AUDIT.md
+- brand-spec.md
+- docs/platform/PERFORMANCE_STRATEGY.md
 
 Inspect read-only:
-- src/assets/styles/**
-- global CSS and SCSS entry points
-- CSS Modules and page-local styles
-- Tailwind configuration and plugins
-- CSS variables and theme providers
-- font imports and next/font usage
-- raw colors, gradients, shadows, radii, spacing, breakpoints, and z-index systems
-- @keyframes, animation, transition, IntersectionObserver, scroll listeners, requestAnimationFrame, timers, and Framer Motion imports
-- reduced-motion media queries and runtime handling
-- style and motion imports from all 140 audited components
+- public/**
+- src/assets/**
+- image, SVG, video, font, favicon, manifest, OG, and social assets
+- imported asset references
+- package.json
+- lockfile
+- package scripts
+- framework, UI, motion, styling, icons, forms, analytics, content, testing, email, commerce, and integration dependencies
+- build and deployment configuration referencing packages or assets
 
 Outputs:
-- complete style records in docs/migration/STYLE_AUDIT.md
-- complete motion records in docs/migration/MOTION_AUDIT.md
-- matching STYLE-* and MOTION-* rows in docs/migration/MIGRATION_MATRIX.md
-- token, font, theme, cascade, responsive, and specificity findings
-- motion mechanism, purpose, cleanup, accessibility, and performance findings
-- zero-consumer candidates without deletion approval
+- complete asset records in docs/migration/ASSET_AUDIT.md
+- complete dependency records in docs/migration/DEPENDENCY_AUDIT.md
+- matching ASSET-* and DEP-* rows in docs/migration/MIGRATION_MATRIX.md
+- provenance, licensing, privacy, legacy-brand, consumer, bundle, runtime, maintenance, and security findings
+- archive-first candidates and protected operational dependencies
 - exact evidence and unresolved decisions
 
 Restrictions:
-- do not edit CSS, SCSS, Tailwind config, components, routes, or production code
-- do not change fonts, tokens, colors, themes, breakpoints, or animations
-- do not remove Framer Motion or add GSAP
-- do not move, rename, merge, or delete style or motion files
-- do not install dependencies
+- do not modify, optimize, move, archive, or delete assets
+- do not add, update, or remove packages
+- do not edit package.json or lockfiles
+- do not change imports, build config, routes, styles, copy, or production code
+- do not install GSAP, Playwright, axe, or any other dependency
 ```

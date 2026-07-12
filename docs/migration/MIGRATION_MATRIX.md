@@ -78,8 +78,8 @@ The route rows below were populated during Phase 5 Task 5.1. Detailed evidence, 
 
 | ID | Current path | Canonical destination | Disposition | Wave | Risk | Status | Redirect |
 |---|---|---|---|---:|---|---|---|
-| ROUTE-017 | `/buildflow` | `/workbench` | REDIRECT after replacement | 5/7 | CRITICAL | DECISION_REQUIRED | probable |
-| ROUTE-018 | `/systems/prochat-os` | TBD | ARCHIVE or REDIRECT | 7 | CRITICAL | DECISION_REQUIRED | probable |
+| ROUTE-017 | `/buildflow` | `/workbench` | REMOVE after Workbench replacement; preserve technical compatibility only where required | 5/7/8 | CRITICAL | DECIDED | required |
+| ROUTE-018 | `/systems/prochat-os` | archive record only; no current product destination | REMOVE from public platform after archival and obligation checks | 7/8 | CRITICAL | DECIDED | possible explanatory redirect |
 | ROUTE-019 | `/systems/events` | TBD | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | possible |
 | ROUTE-020 | `/ai-workflows` | TBD | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | possible |
 | ROUTE-021 | `/legal-ai-workflows` | TBD | ARCHIVE or REDIRECT | 7 | HIGH | DECISION_REQUIRED | possible |
@@ -177,6 +177,28 @@ Detailed evidence and per-file dispositions for all 140 component IDs live in `C
 | COMP-121–COMP-140 | shared UI primitives and visual scaffolding | 20 | canonical token-based component library | KEEP/REFACTOR/VERIFY | 1/2/8 | HIGH | INVENTORIED |
 
 Component-level migration cannot move from `INVENTORIED` to `DECIDED` until exact consumers, public APIs, accessibility, responsive behavior, runtime dependencies, and rollback are verified for the selected packet.
+
+### Style systems — Phase 5 Task 5.3
+
+Detailed evidence for STYLE-001 through STYLE-012 lives in `STYLE_AUDIT.md`.
+
+| ID range | System | Count | Canonical destination | Primary disposition | Wave | Highest risk | Status |
+|---|---|---:|---|---|---:|---|---|
+| STYLE-001–STYLE-004 | global SCSS, blob backgrounds, marketing shell, warm Memory theme | 4 | canonical token/base layer and approved page compositions | REPLACE then ARCHIVE | 1/3/8 | CRITICAL | INVENTORIED |
+| STYLE-005–STYLE-007 | Contact, waitlist, and docs route themes | 3 | canonical forms, mailing-list system, and current-product docs adapter | REWRITE/ARCHIVE | 6/8 | HIGH | INVENTORIED |
+| STYLE-008–STYLE-012 | Tailwind, PostCSS, root layout, theme provider, provider boundary | 5 | lean canonical configuration and protected runtime boundary | KEEP/REWRITE/ARCHIVE | 1/8/protected | CRITICAL | INVENTORIED |
+
+### Motion systems — Phase 5 Task 5.3
+
+Detailed evidence for MOTION-001 through MOTION-030 lives in `MOTION_AUDIT.md`.
+
+| ID range | System | Count | Canonical destination | Primary disposition | Wave | Highest risk | Status |
+|---|---|---:|---|---|---:|---|---|
+| MOTION-001–MOTION-005 | Framer Motion reveal, proof, newsletter, maintenance, 404 | 5 | canonical static/error states and approved micro-interactions | ARCHIVE/REPLACE | 3/6/8 | HIGH | INVENTORIED |
+| MOTION-006–MOTION-010 | blob keyframes, global transitions, Contact/docs transitions, Tailwind animations | 5 | local CSS micro-interactions and no default atmospheric loops | REPLACE/ARCHIVE | 1/6/8 | CRITICAL | INVENTORIED |
+| MOTION-011–MOTION-016 | legacy Memory motion, rotating text, theme motion, Header scroll, scroll hints | 6 | approved product stories, lean shell, and explicit affordances | ARCHIVE/REASSESS | 1/2/4/8 | CRITICAL | INVENTORIED |
+| MOTION-017–MOTION-024 | lazy loading, legacy observers, form RAF, navigation/copy timers | 8 | protected functional behavior or rebuilt current flows | KEEP/ARCHIVE/REFACTOR | 6/8/protected | HIGH | INVENTORIED |
+| MOTION-025–MOTION-030 | processing/admin/analytics timing, scaffolding parallax, static transform false positives | 6 | protected operations or owning component migration | KEEP/ARCHIVE/CLASSIFY | 2/8/protected | CRITICAL | INVENTORIED |
 
 ### Non-route migration rows retained for later audits
 
