@@ -1,8 +1,8 @@
 # ProChat Public Platform Foundation Handoff
 
-**Run:** `agent-12ada4fb-1ec3-4b6f-bde5-4f0320418f59`  
-**Status:** Task 5.5 migration classification and wave planning complete; Wave 0 Packet 1 is next  
-**Latest committed audit:** `31bc501` — `docs(prochat): inventory assets and dependencies`  
+**Run:** `agent-1fc0da64-293e-46e5-8f10-8c8c4d223dd1`  
+**Status:** Wave 0 Packet 1 complete; Wave 1 Packet 1 is next  
+**Previous foundation commit:** `854d03e` — `docs(prochat): classify foundation migration waves`  
 **Source:** `prochat`  
 **Production code changed:** no  
 **Legacy files deleted:** no
@@ -661,43 +661,102 @@ Unresolved execution questions are dependency gates rather than missing classifi
 - final brand/favicons and asset licence evidence;
 - exact package-security upgrades independent of redesign.
 
+## Wave 0 Packet 1 completion
+
+Created archive governance paths:
+
+```text
+archive/legacy-public-platform/README.md
+archive/legacy-public-platform/manifest.yaml
+```
+
+Selected import and build-boundary mechanism:
+
+```text
+scripts/design/lint-design-system.mjs
+node scripts/design/lint-design-system.mjs --archive-imports-only
+```
+
+The existing design validator now:
+
+- rejects literal static imports from `archive/legacy-public-platform`;
+- rejects re-exports from the archive;
+- rejects literal dynamic imports from the archive;
+- rejects literal `require` calls from the archive;
+- runs positive and negative fixtures entirely in memory;
+- scans active source for current violations;
+- rejects executable source extensions inside the archive, requiring historical implementation snapshots to use a non-compilable suffix such as `<original-name>.archive`.
+
+This storage convention prevents the root TypeScript glob from compiling future archived implementation without requiring a second configuration change. Tailwind and Next.js already scan only active application roots.
+
+Validation evidence:
+
+- Wave 0 started from a clean worktree after `854d03e`;
+- the archive root is outside `src`, `public`, `app`, `pages`, and package roots;
+- the archive currently contains only `README.md` and `manifest.yaml`;
+- `tsconfig.json` has no archive alias or explicit archive path;
+- Tailwind does not scan the archive;
+- Next.js configuration does not expose or discover archive routes;
+- the archive guard passed active-source scanning, in-memory forbidden fixtures, allowed fixtures, and non-compilable-storage checks;
+- the validator passed `node --check`;
+- `manifest.yaml` is YAML 1.2-compatible JSON and passed deterministic parsing and required-field checks;
+- the manifest contains zero movement entries;
+- the security scan returned zero findings across all four changed paths;
+- no temporary fixture file was created;
+- no existing file was moved, renamed, archived, deleted, or modified except the approved existing validation script;
+- no route, component, style, asset, product copy, metadata, redirect, package, lockfile, or dependency changed.
+
+Changed paths:
+
+```text
+archive/legacy-public-platform/README.md
+archive/legacy-public-platform/manifest.yaml
+scripts/design/lint-design-system.mjs
+docs/product/agent-mode-progress.md
+```
+
 ## Exact next task
 
 ```text
-Execute Wave 0 Packet 1 only: archive-governance-foundation.
+Execute Wave 1 Packet 1 only: canonical-foundation-baseline.
+
+Goal:
+- establish the additive canonical token and font foundation without switching the live root shell;
+- capture exact current root-shell, font, global-style, provider, and protected-route dependencies;
+- create a clean static foundation that later shell work can adopt behind a bounded migration.
 
 Read first:
 - docs/product/agent-mode-progress.md
-- docs/migration/ARCHIVE_ARCHITECTURE.md
 - docs/migration/MIGRATION_WAVES.md
 - docs/migration/MIGRATION_MATRIX.md
-- docs/implementation-plan.md
+- docs/migration/STYLE_AUDIT.md
+- docs/migration/MOTION_AUDIT.md
+- docs/design/DESIGN_PRINCIPLES.md
+- docs/design/VISUAL_LANGUAGE.md
+- docs/platform/ACCESSIBILITY_STRATEGY.md
+- docs/platform/PERFORMANCE_STRATEGY.md
+- DESIGN.md
+- brand-spec.md
+- src/app/layout.tsx
+- src/assets/styles/globals.scss
+- src/assets/styles/backgrounds.scss
+- tailwind.config.ts
+- src/components/providers.tsx
+- src/components/theme-provider.tsx
 
-Create only:
-- archive/legacy-public-platform/README.md
-- archive/legacy-public-platform/manifest.yaml
-- the smallest repository validation needed to reject production imports from archive/**
-
-Update only:
-- docs/product/agent-mode-progress.md
-
-Validation:
-- confirm archive root is outside application, public, route, and package roots
-- confirm TypeScript and Tailwind do not scan the archive
-- confirm no import alias exposes archive content
-- validate manifest structure
-- run the relevant type/build or documentation validation required by the import guard
-- run security scan
-- review exact diff
-- confirm no production file moved, edited, archived, renamed, or deleted
-
-Commit:
-chore(prochat): establish legacy archive boundary
+Required outputs:
+- an exact Wave 1 baseline documenting current fonts, root classes, global imports, provider dependencies, protected-route dependencies, CSS entry points, and rollback boundary;
+- `src/assets/styles/prochat-tokens.css` containing canonical semantic tokens only;
+- an additive canonical font module using Golos Text and JetBrains Mono without changing the live root layout yet;
+- deterministic validation for token completeness, forbidden legacy colors/effects in the new foundation, and duplicate font loading inside the new files;
+- updated handoff with changed paths, validation, blockers, and Wave 1 Packet 2.
 
 Restrictions:
-- do not move any existing file
-- do not add archived content yet
-- do not edit routes, components, styles, assets, copy, metadata, redirects, packages, or lockfiles
-- do not begin design-lab or production implementation
-- do not make destructive changes
+- do not import the new token or font files into the live root layout yet;
+- do not remove Host Grotesk, Material Symbols, old global styles, blob backgrounds, theme providers, or Framer Motion yet;
+- do not change routes, pages, Header, Footer, providers, metadata, redirects, assets, package.json, or lockfiles;
+- do not move anything into the archive;
+- do not add packages;
+- do not begin the design lab;
+- keep the packet additive and rollback-safe.
 ```

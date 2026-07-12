@@ -5,6 +5,7 @@ import path from 'node:path'
 
 const ROOT = process.cwd()
 const SRC_DIR = path.join(ROOT, 'src')
+const ARCHIVE_DIR = path.join(ROOT, 'archive', 'legacy-public-platform')
 const BASELINE_PATH = path.join(
   ROOT,
   'scripts',
@@ -14,12 +15,21 @@ const BASELINE_PATH = path.join(
 
 const HEX_COLOR_REGEX = /#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b/g
 const SOURCE_FILE_REGEX = /\.(?:[cm]?[jt]sx?|css|scss)$/
+const ARCHIVE_GUARD_FILE_REGEX = /\.(?:[cm]?[jt]sx?|css|scss|sass|less|mdx)$/
 const MARKETING_BUTTON_ALIAS = "@/app/(marketing)/components/ui/Button"
+const ARCHIVE_IMPORT_PATH = 'archive/legacy-public-platform'
+const ARCHIVE_IMPORT_PATTERNS = [
+  /\bimport\s+(?:[^'\"]+\s+from\s+)?['\"][^'\"]*archive\/legacy-public-platform[^'\"]*['\"]/, 
+  /\bexport\s+[^'\"]+\s+from\s+['\"][^'\"]*archive\/legacy-public-platform[^'\"]*['\"]/, 
+  /\bimport\s*\(\s*['\"][^'\"]*archive\/legacy-public-platform[^'\"]*['\"]\s*\)/,
+  /\brequire\s*\(\s*['\"][^'\"]*archive\/legacy-public-platform[^'\"]*['\"]\s*\)/,
+]
 
 const args = process.argv.slice(2)
 const shouldWriteBaseline = args.includes('--write-baseline')
+const shouldCheckArchiveImportsOnly = args.includes('--archive-imports-only')
 
-async function walkFiles(directoryPath) {
+async function walkFiles(directoryPath, fileRegex = SOURCE_FILE_REGEX) {
   const entries = await fs.readdir(directoryPath, { withFileTypes: true })
   const files = await Promise.all(
     entries.map(async entry => {
@@ -29,10 +39,10 @@ async function walkFiles(directoryPath) {
         if (entry.name === 'node_modules' || entry.name === '.next') {
           return []
         }
-        return walkFiles(fullPath)
+        return walkFiles(fullPath, fileRegex)
       }
 
-      if (!SOURCE_FILE_REGEX.test(entry.name)) return []
+      if (!fileRegex.test(entry.name)) return []
       return [fullPath]
     }),
   )
@@ -49,7 +59,72 @@ function countHexColors(content) {
   return matches ? matches.length : 0
 }
 
+function containsForbiddenArchiveImport(content) {
+  return ARCHIVE_IMPORT_PATTERNS.some(pattern => pattern.test(content))
+}
+
+function assertArchiveImportGuard() {
+  const forbiddenFixtures = [
+    "import legacy from '../../archive/legacy-public-platform/components/legacy.js'",
+    "export { legacy } from 'archive/legacy-public-platform/components/legacy.js'",
+    "const legacy = await import('../archive/legacy-public-platform/routes/legacy.js')",
+    "const legacy = require('../archive/legacy-public-platform/styles/legacy.js')",
+  ]
+  const allowedFixtures = [
+    "import current from '@/components/current'",
+    "const archiveReference = 'archive/legacy-public-platform'",
+  ]
+
+  if (
+    forbiddenFixtures.some(fixture => !containsForbiddenArchiveImport(fixture)) ||
+    allowedFixtures.some(fixture => containsForbiddenArchiveImport(fixture))
+  ) {
+    throw new Error('[design-lint] Archive import guard self-test failed.')
+  }
+}
+
+async function lintArchiveImportsOnly() {
+  assertArchiveImportGuard()
+  const files = await walkFiles(SRC_DIR, ARCHIVE_GUARD_FILE_REGEX)
+  const violations = []
+
+  for (const file of files) {
+    const content = await fs.readFile(file, 'utf8')
+    if (containsForbiddenArchiveImport(content)) {
+      violations.push(`${toRelativePath(file)} imports archived runtime source`)
+    }
+  }
+
+  const compilableArchiveFiles = await walkFiles(
+    ARCHIVE_DIR,
+    ARCHIVE_GUARD_FILE_REGEX,
+  ).catch(error => {
+    if (error?.code === 'ENOENT') return []
+    throw error
+  })
+
+  for (const file of compilableArchiveFiles) {
+    violations.push(
+      `${toRelativePath(file)} uses an executable source extension; store historical source as <original-name>.archive`,
+    )
+  }
+
+  if (violations.length === 0) {
+    console.log(
+      '[design-lint] Archive boundary passed: imports, in-memory fixtures, and non-compilable storage.',
+    )
+    return
+  }
+
+  console.error('[design-lint] Archive boundary violations detected:')
+  for (const violation of violations) {
+    console.error(`  - ${violation}`)
+  }
+  process.exit(1)
+}
+
 async function collectCurrentHexCounts() {
+  assertArchiveImportGuard()
   const files = await walkFiles(SRC_DIR)
   const hexByFile = {}
   const violations = []
@@ -69,6 +144,12 @@ async function collectCurrentHexCounts() {
     ) {
       violations.push(
         `${relativePath} imports ${MARKETING_BUTTON_ALIAS}; use @/components/ui/button`,
+      )
+    }
+
+    if (containsForbiddenArchiveImport(content)) {
+      violations.push(
+        `${relativePath} imports from ${ARCHIVE_IMPORT_PATH}; archived code is historical and non-runtime`,
       )
     }
   }
@@ -174,6 +255,8 @@ async function lintAgainstBaseline() {
 
 if (shouldWriteBaseline) {
   await writeBaseline()
+} else if (shouldCheckArchiveImportsOnly) {
+  await lintArchiveImportsOnly()
 } else {
   await lintAgainstBaseline()
 }

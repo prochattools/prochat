@@ -1,0 +1,47 @@
+{
+  "archive": {
+    "version": 1,
+    "root": "archive/legacy-public-platform",
+    "owner": "Steve Westhoek",
+    "created_in_commit": null,
+    "canonical_authority": [
+      "PRODUCT.md",
+      "DESIGN.md",
+      "brand-spec.md",
+      "docs/migration/MIGRATION_MATRIX.md",
+      "docs/migration/ARCHIVE_ARCHITECTURE.md",
+      "docs/migration/MIGRATION_WAVES.md"
+    ],
+    "runtime": {
+      "importable": false,
+      "routable": false,
+      "deployable": false,
+      "indexable": false,
+      "included_in_sitemap": false
+    },
+    "entries": [],
+    "entry_schema_example": {
+      "migration_id": "ROUTE-017",
+      "original_path": "src/app/buildflow",
+      "archive_path": "archive/legacy-public-platform/legacy-product-systems/buildflow/routes",
+      "disposition": "ARCHIVE",
+      "canonical_replacement": "src/app/workbench",
+      "public_redirect": "/workbench",
+      "noindex_before_retirement": true,
+      "obligations": [
+        "preserve compatibility-only identifiers required by persisted data"
+      ],
+      "source_commit": null,
+      "migration_commit": null,
+      "validation": [
+        "type check",
+        "production build",
+        "route and redirect verification",
+        "archive import and build exclusion"
+      ],
+      "rollback_commit": null,
+      "approval": "pending_execution",
+      "owner": "Steve Westhoek"
+    }
+  }
+}
