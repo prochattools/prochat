@@ -1,8 +1,8 @@
 # ProChat Public Platform Foundation Handoff
 
-**Run:** `agent-3fd8a68d-ad9b-484a-b0fb-d5b204c94c8a`  
-**Status:** Wave 1 Packet 3 complete; browser equivalence verification and first visual activation approval are next  
-**Previous foundation commit:** `b3739ba` — `docs(prochat): plan canonical shell compatibility`  
+**Run:** `agent-def5c249-a7a1-4a4d-82b9-39b69f99513c`  
+**Status:** Wave 1 Packet 4 complete with BLOCKED activation; external browser verification is next  
+**Previous foundation commit:** `4d12c05` — `refactor(prochat): establish shell routing boundary`  
 **Source:** `prochat`  
 **Live production behavior changed:** no  
 **Additive unconsumed foundation source created:** yes  
@@ -980,58 +980,126 @@ Rollback:
 - Packet 1 foundation files remain inert;
 - no page content, route metadata, package, data migration, redirect, or archive movement requires separate rollback.
 
+## Wave 1 Packet 4 completion
+
+Created:
+
+```text
+docs/migration/WAVE1_BROWSER_EQUIVALENCE_REPORT.md
+```
+
+Browser environment inspection:
+
+```yaml
+@playwright/test: not installed
+playwright: not installed
+playwright-core: not installed
+puppeteer: not installed
+puppeteer-core: not installed
+cypress: not installed
+selenium-webdriver: not installed
+@axe-core/playwright: not installed
+browser_test_script: absent
+package_changes: prohibited
+```
+
+Connected-environment limitation:
+
+- persisted server jobs run in isolated network namespaces;
+- production and maintenance-disabled development servers started successfully during Packet 3;
+- separate commands could not connect to those local ports;
+- no screenshot, viewport, DOM, accessibility-tree, keyboard, hydration, console, network-trace, or Web Vitals tooling is available without adding a browser dependency or using an external browser-capable runner.
+
+Retained Packet 3 evidence:
+
+```yaml
+route_records: 84
+canonical_public_shell: 9
+protected_internal_shell: 16
+temporary_legacy_compatibility: 24
+no_shared_shell: 35
+current_canonical_visual_allowlist: 0
+static_pages_generated: 106
+typescript: passed
+production_build: passed
+shell_parity: passed
+canonical_foundation: passed
+archive_boundary: passed
+security_findings: 0
+```
+
+Activation decision:
+
+```yaml
+result: BLOCKED
+current_route_activation: none
+first_route: null
+allowlist_change: none
+```
+
+No current route is approved for canonical visual activation. Static source and build evidence reduce risk but do not prove visual equivalence, accessibility, protected browser flows, hydration behavior, or runtime performance.
+
+Pending browser evidence is explicitly inventoried for:
+
+- 320, 768, 1024, 1440, and 1728 pixel viewports;
+- `/`, `/contact`, `/privacy`, `/docs`, `/prochat-memory`, `/buildflow`, `/admin/licenses`, `/dashboard`, `/chat/[projectID]`, `/sign-in`, `/processing-page`, `/maintenance`, `/unsubscribe`, `/api/health`, and `/og`;
+- visual drift, landmarks, keyboard, focus, mobile navigation, reduced motion, protected flows, provider hydration, console errors, network behavior, bundles, and Core Web Vitals.
+
+No live source, shell, route, page, provider, style, metadata, redirect, form, API, asset, package, lockfile, or archive content changed in Packet 4.
+
 ## Exact next task
 
 ```text
-Execute Wave 1 Packet 4 only: browser-equivalence-and-activation-gate.
+Execute Wave 1 Packet 4B only: external-browser-equivalence-verification.
 
 Goal:
-- verify Packet 3 in a browser-capable environment;
-- capture visual, accessibility, performance, and protected-flow baselines;
-- decide the first current route eligible for canonical visual activation;
-- do not activate any route until evidence and explicit approval are recorded.
+- run Packet 3 verification in a browser-capable environment;
+- capture the complete route and viewport evidence matrix;
+- retain an empty current canonical visual allowlist;
+- produce PASS or exact defects before any visual activation packet.
+
+Required environment:
+- an existing external browser-capable runner, preview environment, or separately approved browser-tool installation;
+- maintenance-disabled access to commit 4d12c05;
+- approved credentials and test data for protected flows;
+- screenshot, DOM, accessibility, network, console, trace, and Web Vitals capture.
 
 Read first:
 - docs/product/agent-mode-progress.md
+- docs/migration/WAVE1_BROWSER_EQUIVALENCE_REPORT.md
 - docs/migration/WAVE1_SHELL_COMPATIBILITY_PLAN.md
 - docs/migration/WAVE1_SHELL_RESPONSIBILITIES.json
-- docs/migration/WAVE1_FOUNDATION_BASELINE.md
 - src/helpers/shell-routes.ts
 - src/components/AppChrome.tsx
 - src/components/providers.tsx
 - src/components/shell/**
-- src/assets/styles/prochat-foundation.css
-- src/lib/prochat-fonts.ts
 
-Required browser evidence:
+Capture:
 - screenshots at 320, 768, 1024, 1440, and 1728 pixels;
-- representative canonical, protected, legacy, docs, maintenance, unsubscribe, auth, admin, purchaser, dashboard, chat, Contact, analytics, health, and OG routes;
-- zero unexplained output drift against the pre-Packet 3 baseline;
+- all required representative routes from WAVE1_BROWSER_EQUIVALENCE_REPORT.md;
+- pre-4d12c05 versus 4d12c05 visual comparison under identical conditions;
+- no pc-foundation-scope, canonical skip link, or canonical font activation on current routes;
 - one main landmark and no duplicate landmarks;
-- skip-link contract verified on a controlled future canonical fixture only;
 - keyboard, focus, reduced-motion, and mobile navigation checks;
-- provider and hydration inspection;
-- protected auth/admin/application/commerce/purchaser smoke tests;
-- Core Web Vitals and bundle baseline.
+- protected auth/admin/application/commerce/purchaser flows;
+- Contact, unsubscribe, analytics, health, and OG checks;
+- provider hydration, console, network, bundle, and Core Web Vitals evidence.
 
-Create only:
+Allowed repository changes:
 - docs/migration/WAVE1_BROWSER_EQUIVALENCE_REPORT.md
-- optional screenshot/evidence artifacts under docs/migration/evidence/wave1/ if repository policy permits
-
-Update only:
+- docs/migration/evidence/wave1/**
 - docs/product/agent-mode-progress.md
 
 Restrictions:
-- documentation and evidence only;
-- do not change shell code, routes, pages, styles, providers, Header, Footer, AppShell, metadata, redirects, packages, lockfiles, assets, or archive content;
-- do not activate the canonical visual allowlist;
-- do not add browser packages unless separately approved;
+- evidence and documentation only;
+- do not change shell code or activate any route;
+- do not edit routes, pages, providers, styles, metadata, redirects, APIs, assets, packages, lockfiles, or archive content;
 - do not begin Wave 2 or the design lab.
 
-Decision output:
-- PASS: identify the first exact route and Packet 5 activation boundary;
-- BLOCKED: record exact visual, accessibility, performance, or protected-flow defects and the smallest repair packet.
+Decision:
+- PASS: define the first exact activation route and Packet 5 boundary;
+- BLOCKED: record exact defects and the smallest repair packet.
 
 Commit:
-docs(prochat): verify shell routing equivalence
+docs(prochat): complete browser shell verification
 ```
