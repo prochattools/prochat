@@ -1,8 +1,10 @@
 # Wave 1 Browser Equivalence and Activation Gate
 
-**Status:** BLOCKED — browser-capable verification unavailable in the connected repository environment  
+**Status:** BLOCKED — Packet 4B found no usable browser runner, commit-specific preview pair, or protected-flow credentials  
 **Scope:** Wave 1 Packet 3 shell-routing equivalence and first visual activation decision  
 **Source commit under review:** `4d12c05` — `refactor(prochat): establish shell routing boundary`  
+**Baseline commit required:** `b3739ba` — `docs(prochat): plan canonical shell compatibility`  
+**Packet 4B evidence:** `docs/migration/evidence/wave1/packet4b-environment-audit.json`  
 **Live source changed by this report:** no
 
 ## Decision
@@ -12,7 +14,7 @@ equivalence_gate: BLOCKED
 canonical_visual_activation: NOT_APPROVED
 current_canonical_visual_allowlist: []
 first_current_route_eligible_for_activation: null
-reason: no installed browser runtime or automation package is available, and package installation is prohibited
+reason: no installed browser runtime, commit-specific target/baseline preview pair, or approved protected-flow credentials are available; no shell defect was identified
 ```
 
 Packet 3 passed static, type, build, route-parity, foundation, archive, and security validation. It cannot receive the required browser-equivalence approval without screenshots, DOM inspection, keyboard/focus testing, hydration inspection, protected-flow execution, and performance traces from a browser-capable environment.
@@ -38,6 +40,15 @@ installed:
 `package.json` contains no browser-test or accessibility-test script. No dependency or lockfile change was permitted by Packet 4.
 
 The connected Workbench command environment also cannot provide cross-command browser access to a persisted local server: persisted validation jobs run in isolated network namespaces. During Packet 3, both production and maintenance-disabled development servers started successfully, but separate commands could not connect to those ports.
+
+Packet 4B also audited repository workflows and deployment documentation:
+
+- `.github/workflows/main.yml` builds, pushes a Docker image, and triggers Dokploy, but it has no browser, screenshot, accessibility, trace, or Web Vitals job;
+- `.github/workflows/docs-preview.yml` uploads a `.next` artifact for documentation changes, but emits no browser-capable preview URL;
+- deployment documentation identifies Dokploy as the production target but documents no commit-specific preview mechanism;
+- the public origin `https://prochat.tools` is reachable, currently serves a maintenance surface, and exposes no attributable target or baseline commit provenance;
+- no maintenance-disabled URL pinned to `4d12c05` or baseline `b3739ba` was available;
+- no approved auth, admin, commerce, purchaser, or licence test credentials or data were supplied.
 
 Therefore the following required operations were not available:
 
@@ -191,16 +202,16 @@ The homepage is not selected as the first activation route because its canonical
 
 ## Smallest next packet
 
-### Wave 1 Packet 4B — external-browser-equivalence-verification
+### Wave 1 Packet 4C — browser-verification-environment-provisioning
 
-This is an evidence-only continuation, not a repair or activation packet.
+Packet 4B found no shell defect. The blocker is the absence of an attributable browser environment, baseline/target preview pair, and approved protected-flow inputs. Packet 4C is therefore an environment-and-evidence packet, not a shell repair or activation packet.
 
-Required environment:
+Required inputs:
 
-- a browser-capable runner already available outside this repository session, or separately approved installation of browser tooling;
-- access to a maintenance-disabled local or preview deployment;
-- any credentials and test data required for protected flows, supplied through approved secure mechanisms;
-- ability to capture screenshots, console logs, accessibility results, network traces, and Web Vitals.
+- maintenance-disabled URLs pinned to baseline commit `b3739ba` and target commit `4d12c05`, or one browser-capable runner able to check out and serve both commits under identical conditions;
+- a browser runtime capable of viewport screenshots, DOM and accessibility-tree inspection, keyboard/focus automation, reduced-motion emulation, console and network capture, traces, bundle inspection, and Core Web Vitals;
+- approved auth, admin, commerce, purchaser, licence, Contact, unsubscribe, analytics, health, and OG test data and credentials supplied through secure mechanisms;
+- a recorded browser version, operating system, server commit, environment identity, and test-data boundary.
 
 Allowed repository changes:
 
@@ -212,26 +223,27 @@ docs/product/agent-mode-progress.md
 
 Execution sequence:
 
-1. Record browser, version, operating system, server commit, environment, and test-data boundary.
-2. Capture the required 15-route evidence matrix at all required applicable viewports.
-3. Compare representative current-route screenshots against a pre-`4d12c05` baseline or render both commits under identical conditions.
-4. Verify that current routes contain no `pc-foundation-scope`, canonical skip link, or canonical font variables.
-5. Run keyboard, focus, landmark, reduced-motion, and mobile-navigation checks.
-6. Run protected auth, admin, application, commerce, purchaser, Contact, unsubscribe, analytics, health, and OG smoke checks.
-7. Record provider hydration, console errors, network requests, bundles, and Web Vitals.
-8. Update this report with PASS or exact defects.
-9. Keep the current canonical allowlist empty unless a later explicit activation packet is approved.
+1. Prove both served environments are pinned to `b3739ba` and `4d12c05`.
+2. Capture the required 15-route matrix at 320, 768, 1024, 1440, and 1728 pixels where applicable.
+3. Compare baseline and target screenshots, DOM, landmarks, computed font variables, provider hydration, console output, and network traces under identical conditions.
+4. Verify no current route contains `pc-foundation-scope`, the canonical skip link, or canonical font activation.
+5. Run keyboard, focus, landmark, reduced-motion, touch-target, and mobile-navigation checks.
+6. Run protected auth, admin, application, commerce, purchaser, licence, Contact, unsubscribe, analytics, health, and OG checks.
+7. Record route-specific bundles, paint/hydration cost, Core Web Vitals, and any material regression.
+8. Update this report with PASS or exact attributable defects.
+9. Keep the current canonical visual allowlist empty unless a later explicit activation packet is separately approved.
 
 Acceptance criteria:
 
+- both comparison environments expose attributable commit provenance;
 - zero unexplained visual drift;
-- no console or hydration errors caused by shell routing;
-- protected flows pass;
+- no shell-routing console or hydration errors;
+- protected flows pass with approved test data;
 - accessibility checks pass;
 - no material performance regression;
 - current canonical visual allowlist remains empty;
-- evidence files are complete and attributable to commit `4d12c05`.
+- evidence files are complete and attributable to `b3739ba` and `4d12c05`.
 
 Rollback:
 
-No runtime rollback is required for this evidence-only packet. If Packet 3 defects are found, define a separate smallest repair packet against `4d12c05`.
+No runtime rollback is required because Packet 4C changes only evidence and handoff documentation. If browser evidence identifies a Packet 3 defect, define a separate smallest source repair packet against `4d12c05` before any activation work.

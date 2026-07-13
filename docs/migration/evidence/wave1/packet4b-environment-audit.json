@@ -1,0 +1,109 @@
+{
+  "packet": "Wave 1 Packet 4B",
+  "target_commit": "4d12c05",
+  "baseline_commit": "b3739ba",
+  "repository_head_at_audit": "ce3df67",
+  "decision": "BLOCKED",
+  "defect_class": "verification_environment_unavailable",
+  "shell_defect_identified": false,
+  "canonical_visual_activation_approved": false,
+  "current_canonical_visual_allowlist": [],
+  "browser_runtime": {
+    "@playwright/test": false,
+    "playwright": false,
+    "playwright-core": false,
+    "puppeteer": false,
+    "puppeteer-core": false,
+    "cypress": false,
+    "selenium-webdriver": false,
+    "@axe-core/playwright": false
+  },
+  "browser_test_scripts": [],
+  "github_workflows": {
+    "main.yml": {
+      "build": true,
+      "docker_image": true,
+      "dokploy_redeploy": true,
+      "browser_equivalence_job": false,
+      "preview_url_output": false,
+      "screenshot_artifact": false,
+      "accessibility_artifact": false,
+      "trace_artifact": false
+    },
+    "docs-preview.yml": {
+      "next_build": true,
+      "next_artifact": true,
+      "browser_equivalence_job": false,
+      "preview_url_output": false
+    }
+  },
+  "deployment": {
+    "platform": "Dokploy",
+    "documented_public_origin": "https://prochat.tools",
+    "public_origin_observation": "reachable maintenance surface",
+    "target_commit_provenance_exposed": false,
+    "baseline_commit_provenance_exposed": false,
+    "maintenance_disabled_target_preview": null,
+    "maintenance_disabled_baseline_preview": null
+  },
+  "protected_flow_inputs": {
+    "approved_credentials_supplied": false,
+    "approved_test_data_supplied": false,
+    "auth_flow_executable": false,
+    "admin_flow_executable": false,
+    "commerce_flow_executable": false,
+    "purchaser_flow_executable": false,
+    "licence_flow_executable": false
+  },
+  "required_capture": {
+    "screenshots": false,
+    "viewport_control": false,
+    "dom_inspection": false,
+    "accessibility_tree": false,
+    "keyboard_focus": false,
+    "reduced_motion": false,
+    "mobile_navigation": false,
+    "console_logs": false,
+    "network_trace": false,
+    "provider_hydration": false,
+    "bundle_measurement": false,
+    "core_web_vitals": false
+  },
+  "retained_non_browser_evidence": {
+    "route_records": 84,
+    "canonical_public_shell": 9,
+    "protected_internal_shell": 16,
+    "temporary_legacy_compatibility": 24,
+    "no_shared_shell": 35,
+    "current_canonical_visual_allowlist": 0,
+    "static_pages_generated": 106,
+    "typescript": "passed",
+    "production_build": "passed",
+    "shell_manifest_parity": "passed",
+    "canonical_foundation_validation": "passed",
+    "archive_boundary_validation": "passed",
+    "security_scan": "zero findings"
+  },
+  "blocking_conditions": [
+    "No installed browser runtime or browser automation dependency.",
+    "No repository browser, E2E, accessibility, Lighthouse, or screenshot script.",
+    "No GitHub workflow captures browser equivalence evidence.",
+    "No commit-specific preview URL exists for target commit 4d12c05.",
+    "No commit-specific preview URL exists for baseline commit b3739ba.",
+    "The public origin exposes no attributable commit provenance and currently serves a maintenance surface.",
+    "No approved protected-flow credentials or test data were supplied."
+  ],
+  "smallest_next_packet": {
+    "id": "Wave 1 Packet 4C",
+    "name": "browser-verification-environment-provisioning",
+    "type": "environment and evidence only",
+    "shell_code_changes": false,
+    "requirements": [
+      "Provide maintenance-disabled URLs pinned to b3739ba and 4d12c05, or an existing runner capable of checking out and serving both commits.",
+      "Provide a browser runtime with screenshot, DOM, accessibility, console, network, trace, and Web Vitals capture.",
+      "Provide approved protected-flow credentials and test data through secure mechanisms.",
+      "Run the existing 15-route by 5-viewport matrix under identical conditions.",
+      "Keep the current canonical visual allowlist empty until the evidence gate passes."
+    ]
+  }
+}
