@@ -1,0 +1,77 @@
+{
+  "packet": "Wave 1 Packet 4C",
+  "repository_head_at_audit": "377bc91",
+  "baseline_commit": "b3739ba",
+  "target_commit": "4d12c05",
+  "decision": "BLOCKED",
+  "defect_class": "external_verification_inputs_unavailable",
+  "shell_defect_identified": false,
+  "canonical_visual_activation_approved": false,
+  "current_canonical_visual_allowlist": [],
+  "browser_runtime": {
+    "@playwright/test": false,
+    "playwright": false,
+    "playwright-core": false,
+    "puppeteer": false,
+    "puppeteer-core": false,
+    "cypress": false,
+    "selenium-webdriver": false,
+    "@axe-core/playwright": false
+  },
+  "browser_test_scripts": [],
+  "workflow_capability": {
+    "main.yml": {
+      "browser_capture": false,
+      "preview_url_output": false
+    },
+    "docs-preview.yml": {
+      "browser_capture": false,
+      "preview_url_output": false
+    }
+  },
+  "required_external_inputs": {
+    "baseline_preview_b3739ba": null,
+    "target_preview_4d12c05": null,
+    "browser_capable_runner": null,
+    "protected_credentials_supplied": false,
+    "protected_test_data_supplied": false
+  },
+  "verification_executed": {
+    "screenshots": false,
+    "dom": false,
+    "accessibility": false,
+    "keyboard_focus": false,
+    "reduced_motion": false,
+    "mobile_navigation": false,
+    "console_network": false,
+    "traces": false,
+    "web_vitals": false,
+    "protected_flows": false
+  },
+  "retained_evidence": {
+    "route_records": 84,
+    "shell_counts": {
+      "canonical_public_shell": 9,
+      "protected_internal_shell": 16,
+      "temporary_legacy_compatibility": 24,
+      "no_shared_shell": 35
+    },
+    "static_pages_generated": 106,
+    "typescript": "passed",
+    "production_build": "passed",
+    "shell_manifest_parity": "passed",
+    "canonical_foundation_validation": "passed",
+    "archive_boundary_validation": "passed",
+    "security_scan": "zero findings"
+  },
+  "next_action": {
+    "name": "external verification input handoff",
+    "requires_repository_source_change": false,
+    "required_before_resume": [
+      "Provide a maintenance-disabled URL pinned to b3739ba.",
+      "Provide a maintenance-disabled URL pinned to 4d12c05.",
+      "Alternatively provide an existing browser-capable runner that can serve both commits under identical conditions.",
+      "Provide approved protected-flow credentials and test data through a secure channel."
+    ]
+  }
+}

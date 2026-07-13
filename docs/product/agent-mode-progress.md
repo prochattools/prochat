@@ -1,8 +1,8 @@
 # ProChat Public Platform Foundation Handoff
 
-**Run:** `agent-fde385fb-b1c7-46c2-8686-71ce737e8b8a`  
-**Status:** Wave 1 Packet 4B complete with BLOCKED activation; Packet 4C environment provisioning is next  
-**Previous evidence commit:** `ce3df67` — `docs(prochat): verify shell routing equivalence`  
+**Run:** `agent-a62de640-f854-43ea-952e-3a06226d6ce6`  
+**Status:** Wave 1 Packet 4C complete with BLOCKED activation; external verification inputs are required before resume  
+**Previous evidence commit:** `377bc91` — `docs(prochat): complete browser shell verification`  
 **Source:** `prochat`  
 **Live production behavior changed:** no  
 **Additive unconsumed foundation source created:** yes  
@@ -1173,4 +1173,67 @@ Decision:
 
 Commit:
 docs(prochat): provision browser shell verification
+```
+
+
+
+
+## Wave 1 Packet 4C completion
+
+Packet 4C remained evidence-only and made no live source change.
+
+Created:
+
+```text
+docs/migration/evidence/wave1/packet4c-provisioning-audit.json
+```
+
+Updated:
+
+```text
+docs/migration/WAVE1_BROWSER_EQUIVALENCE_REPORT.md
+docs/product/agent-mode-progress.md
+```
+
+Decision:
+
+```yaml
+equivalence_gate: BLOCKED
+canonical_visual_activation: NOT_APPROVED
+current_canonical_visual_allowlist: []
+shell_defect_identified: false
+defect_class: external_verification_inputs_unavailable
+```
+
+Packet 4C confirmed:
+
+- no installed browser automation runtime;
+- no browser, E2E, accessibility, Lighthouse, screenshot, or trace package script;
+- no browser-capable GitHub workflow;
+- no workflow emits a commit-specific preview URL;
+- no maintenance-disabled baseline URL pinned to `b3739ba`;
+- no maintenance-disabled target URL pinned to `4d12c05`;
+- no approved protected-flow credentials or test data.
+
+Retained non-browser evidence remains passing. No shell repair or activation packet is authorized.
+
+## Exact next task
+
+```text
+Resume browser-equivalence verification only after the following external inputs exist:
+
+1. Maintenance-disabled URL pinned to baseline commit b3739ba.
+2. Maintenance-disabled URL pinned to target commit 4d12c05.
+3. Or one existing browser-capable runner able to check out and serve both commits under identical conditions.
+4. Approved protected auth, admin, application, commerce, purchaser, licence, Contact, unsubscribe, analytics, health, and OG credentials or test data through secure mechanisms.
+
+Then execute the existing 15-route by 5-viewport browser-equivalence matrix from WAVE1_BROWSER_EQUIVALENCE_REPORT.md.
+
+Restrictions:
+- evidence only;
+- do not change shell code;
+- do not activate any route;
+- keep current canonical visual allowlist empty;
+- do not add browser packages without separate explicit approval;
+- do not begin Wave 2 or the design lab.
 ```

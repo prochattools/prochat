@@ -247,3 +247,41 @@ Acceptance criteria:
 Rollback:
 
 No runtime rollback is required because Packet 4C changes only evidence and handoff documentation. If browser evidence identifies a Packet 3 defect, define a separate smallest source repair packet against `4d12c05` before any activation work.
+
+
+
+
+## Wave 1 Packet 4C provisioning result
+
+Packet 4C rechecked the repository and connected environment after commit `377bc91`.
+
+Decision:
+
+```yaml
+equivalence_gate: BLOCKED
+canonical_visual_activation: NOT_APPROVED
+current_canonical_visual_allowlist: []
+shell_defect_identified: false
+defect_class: external_verification_inputs_unavailable
+```
+
+Evidence:
+
+```text
+docs/migration/evidence/wave1/packet4c-provisioning-audit.json
+```
+
+No browser runtime, browser test script, browser-capable workflow, or preview URL output has appeared. No maintenance-disabled baseline URL pinned to `b3739ba`, target URL pinned to `4d12c05`, approved protected-flow credentials, or approved protected test data was supplied.
+
+Packet 4C therefore could not execute screenshots, DOM inspection, accessibility automation, keyboard/focus checks, reduced-motion checks, mobile navigation, console/network capture, traces, Web Vitals, or protected browser flows.
+
+The existing shell implementation remains unchanged. No source repair is authorized because no attributable shell defect was identified.
+
+### Exact external inputs required before resume
+
+1. A maintenance-disabled URL pinned to baseline commit `b3739ba`.
+2. A maintenance-disabled URL pinned to target commit `4d12c05`.
+3. Alternatively, an existing browser-capable runner able to check out and serve both commits under identical conditions.
+4. Approved protected auth, admin, application, commerce, purchaser, licence, Contact, unsubscribe, analytics, health, and OG credentials or test data supplied through secure mechanisms.
+
+Until those inputs exist, the current canonical visual allowlist remains empty and no activation packet may begin.
