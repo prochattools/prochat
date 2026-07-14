@@ -1,12 +1,25 @@
 # ProChat Public Platform Foundation Handoff
 
-**Run:** `agent-a62de640-f854-43ea-952e-3a06226d6ce6`  
-**Status:** Wave 1 Packet 4C complete with BLOCKED activation; external verification inputs are required before resume  
-**Previous evidence commit:** `377bc91` — `docs(prochat): complete browser shell verification`  
-**Source:** `prochat`  
-**Live production behavior changed:** no  
-**Additive unconsumed foundation source created:** yes  
+**Run:** `agent-c41afa81-19f4-415c-bbc6-66731c135a78`
+**Status:** R1B documentation reconciliation active; browser-runner provisioning run was closed before resume
+**Previous evidence commit:** `220e106` — `docs(prochat): provision browser shell verification`
+**Source:** `prochat`
+**Current HEAD:** `220e1063b4daae65edbdb62ffea697ed885b4fb2`
+**Live production behavior changed:** no
+**Additive unconsumed foundation source created:** yes
 **Legacy files deleted:** no
+
+## R1B verified state
+
+- stale browser-runner run: `agent-4305c4bd-7c9b-46df-bc91-9d82648626c9` closed successfully;
+- active reconciliation run: `agent-c41afa81-19f4-415c-bbc6-66731c135a78`;
+- modified documentation paths: `docs/roadmap.md`, `docs/implementation-plan.md`, `docs/migration/CONTENT_AUDIT.md`, `docs/product/agent-mode-progress.md`;
+- isolated browser-runner paths: `tests/evidence/wave1-shell-equivalence.spec.ts`, `tests/evidence/validate-wave1-browser-runner.mjs`, `.github/workflows/wave1-browser-equivalence.yml`;
+- current READY task: `PPF-001`;
+- current BLOCKED task family: browser-equivalence proof and canonical visual activation;
+- shell-contract decision status: `DECISION_REQUIRED`;
+- content-audit state: `seeded but incomplete`;
+- production source changed: `no`.
 
 ## Goal
 
@@ -1113,7 +1126,7 @@ Missing evidence remains:
 
 No shell repair packet is authorized because no attributable shell defect was identified. The smallest next packet provisions the missing verification environment and evidence inputs.
 
-## Exact next task
+## Historical next task
 
 ```text
 Execute Wave 1 Packet 4C only: browser-verification-environment-provisioning.
@@ -1217,23 +1230,10 @@ Packet 4C confirmed:
 
 Retained non-browser evidence remains passing. No shell repair or activation packet is authorized.
 
-## Exact next task
+## Historical next task
 
 ```text
-Resume browser-equivalence verification only after the following external inputs exist:
+PPF-001 — Browser-runner worktree isolation, stale-run disposition, and shell-contract decision.
 
-1. Maintenance-disabled URL pinned to baseline commit b3739ba.
-2. Maintenance-disabled URL pinned to target commit 4d12c05.
-3. Or one existing browser-capable runner able to check out and serve both commits under identical conditions.
-4. Approved protected auth, admin, application, commerce, purchaser, licence, Contact, unsubscribe, analytics, health, and OG credentials or test data through secure mechanisms.
-
-Then execute the existing 15-route by 5-viewport browser-equivalence matrix from WAVE1_BROWSER_EQUIVALENCE_REPORT.md.
-
-Restrictions:
-- evidence only;
-- do not change shell code;
-- do not activate any route;
-- keep current canonical visual allowlist empty;
-- do not add browser packages without separate explicit approval;
-- do not begin Wave 2 or the design lab.
+Do not execute browser-equivalence proof in this packet. The next work should first isolate the browser-runner artifacts, then decide the no_shared_shell runtime contract, and only then continue toward browser evidence in a separate packet.
 ```

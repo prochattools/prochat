@@ -3,7 +3,7 @@
 **Status:** canonical executable plan  
 **Owner:** Steve Westhoek  
 **Scope:** documentation, audits, prototypes, production foundation, public pages, migration, validation, launch, and maintenance  
-**Last updated:** 2026-07-11
+**Last updated:** 2026-07-14
 
 ## Authority and reading order
 
@@ -34,6 +34,615 @@ mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
 mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```
 
+## Verified current state
+
+```yaml
+verified_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
+verified_date: 2026-07-14
+current_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
+current_program_state: Phase 1 and Phase 2 are complete; the R1B reconciliation queue is active; browser-equivalence proof remains blocked outside the repo.
+current_phase: R1B reconciliation queue
+current_packet: PPF-001 — browser-runner worktree isolation and stale-run disposition
+canonical_visual_routes_active: 0
+production_visual_design_started: false
+legacy_implementation_archived_count: 0
+browser_equivalence: BLOCKED
+browser_runner_worktree: ISOLATED_UNCOMMITTED
+shell_contract: DECISION_REQUIRED
+```
+
+## Canonical executor queue
+
+Older long-form task detail remains below as supporting reference only. The queue below is the canonical execution order.
+
+```yaml
+- task_id: PPF-001
+  status: READY
+  purpose: Browser-runner worktree isolation, stale-run disposition, and shell-contract decision.
+  depends_on: []
+  exact_inputs:
+    - docs/product/agent-mode-progress.md
+    - docs/migration/ROUTE_AUDIT.md
+    - docs/migration/MIGRATION_MATRIX.md
+    - docs/migration/WAVE1_SHELL_RESPONSIBILITIES.json
+    - src/helpers/shell-routes.ts
+    - src/components/AppChrome.tsx
+    - tests/evidence/wave1-shell-equivalence.spec.ts
+    - tests/evidence/validate-wave1-browser-runner.mjs
+    - .github/workflows/wave1-browser-equivalence.yml
+  allowed_changed_paths:
+    - docs/product/agent-mode-progress.md
+    - tests/evidence/wave1-shell-equivalence.spec.ts
+    - tests/evidence/validate-wave1-browser-runner.mjs
+    - .github/workflows/wave1-browser-equivalence.yml
+  expected_output: Closed stale browser-runner run, isolated browser artifacts, and a recorded shell-contract decision scope.
+  acceptance_criteria:
+    - The stale run is checkpointed or closed.
+    - Browser-runner artifacts remain isolated from reconciliation docs.
+    - The no_shared_shell decision scope is documented without changing AppChrome in this packet.
+  validation:
+    - git status --short
+    - Workbench active-run query
+    - docs diff review
+  rollback: Restore the previous handoff text and reopen the prior run if needed.
+  approval: none for docs; workflow or artifact edits remain separate
+  commit_boundary: documentation and handoff only
+  evidence: closed run agent-4305c4bd-7c9b-46df-bc91-9d82648626c9; new reconciliation run agent-c41afa81-19f4-415c-bbc6-66731c135a78
+  next_task: PPF-002
+
+- task_id: PPF-002
+  status: NOT_READY
+  purpose: Complete the operational content audit and classify current copy, claims, metadata, and protected content.
+  depends_on:
+    - PPF-001
+  exact_inputs:
+    - docs/migration/CONTENT_AUDIT.md
+    - docs/migration/ROUTE_AUDIT.md
+    - docs/migration/MIGRATION_MATRIX.md
+    - docs/product/agent-mode-progress.md
+  allowed_changed_paths:
+    - docs/migration/CONTENT_AUDIT.md
+    - docs/migration/MIGRATION_MATRIX.md
+    - docs/product/agent-mode-progress.md
+  expected_output: Seeded content register with stable IDs, claim status, approval state, archive destination, and replacement dependency.
+  acceptance_criteria:
+    - The register distinguishes seeded records from incomplete coverage.
+    - Exact evidence and approval state are recorded per row.
+    - The completeness gate against ROUTE_AUDIT and MIGRATION_MATRIX is explicit.
+  validation:
+    - markdown link check
+    - route evidence cross-check
+    - diff review
+  rollback: Revert the content-audit block and restore the prior seed-only state.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: seeded rows for homepage, Memory, Memory for QA, Workbench/BuildFlow, and protected content
+  next_task: PPF-003
+
+- task_id: PPF-003
+  status: NOT_READY
+  purpose: Reconcile homepage and page copy against the operational content register.
+  depends_on:
+    - PPF-002
+  exact_inputs:
+    - docs/migration/CONTENT_AUDIT.md
+    - docs/homepage-design-spec.md
+    - docs/homepage-technical-design.md
+    - docs/homepage-design-orchestration.md
+  allowed_changed_paths:
+    - docs/migration/CONTENT_AUDIT.md
+    - docs/roadmap.md
+    - docs/implementation-plan.md
+  expected_output: Homepage and page-copy decisions aligned to the seeded content register.
+  acceptance_criteria:
+    - Page copy decisions match the canonical product hierarchy.
+    - No stale CTA or legacy product claim remains unclassified.
+  validation:
+    - copy comparison
+    - route/claim review
+  rollback: Restore the prior copy classification notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: homepage, Memory, Memory for QA, and Workbench copy classifications
+  next_task: PPF-004
+
+- task_id: PPF-004
+  status: NOT_READY
+  purpose: Finalize conversion architecture and CTA hierarchy.
+  depends_on:
+    - PPF-003
+  exact_inputs:
+    - docs/migration/CONTENT_AUDIT.md
+    - docs/roadmap.md
+    - docs/implementation-plan.md
+  allowed_changed_paths:
+    - docs/roadmap.md
+    - docs/implementation-plan.md
+    - docs/migration/CONTENT_AUDIT.md
+  expected_output: Deterministic conversion model with primary and secondary goals, visitor and buyer states, CTA hierarchy, and evidence mapping.
+  acceptance_criteria:
+    - Conversion tasks are separated from visual tasks.
+    - Unsupported-number claims are prohibited.
+    - Consent and data-minimization boundaries are explicit.
+  validation:
+    - conversion-logic review
+    - claim-to-evidence cross-check
+  rollback: Restore the prior conversion notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: conversion architecture notes and CTA hierarchy
+  next_task: PPF-005
+
+- task_id: PPF-005
+  status: NOT_READY
+  purpose: Complete archive destinations for legacy public content.
+  depends_on:
+    - PPF-004
+  exact_inputs:
+    - docs/migration/ARCHIVE_ARCHITECTURE.md
+    - docs/migration/MIGRATION_MATRIX.md
+    - docs/migration/ROUTE_AUDIT.md
+  allowed_changed_paths:
+    - docs/migration/ARCHIVE_ARCHITECTURE.md
+    - docs/migration/MIGRATION_MATRIX.md
+  expected_output: Archive destinations and restoration rules for routes, components, styles, motion, assets, docs, scripts, and legacy systems.
+  acceptance_criteria:
+    - No archive destination is missing.
+    - Protected purchaser and transactional boundaries remain explicit.
+  validation:
+    - archive-path review
+    - matrix cross-check
+  rollback: Restore the previous archive mapping notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: archive-root, manifest, and destination mapping notes
+  next_task: PPF-006
+
+- task_id: PPF-006
+  status: NOT_READY
+  purpose: Create the protected-obligation closure register.
+  depends_on:
+    - PPF-005
+  exact_inputs:
+    - docs/migration/MIGRATION_MATRIX.md
+    - docs/migration/ARCHIVE_ARCHITECTURE.md
+  allowed_changed_paths:
+    - docs/migration/MIGRATION_MATRIX.md
+  expected_output: Closure register for kits, claims, processing, success, subscriptions, portal, licences, transactional email, and prior-purchaser access.
+  acceptance_criteria:
+    - Each protected obligation has an owner, evidence, and exit condition.
+    - No destructive retirement is scheduled without closure.
+  validation:
+    - obligation-row review
+    - protected-flow review
+  rollback: Restore prior obligation status notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: blocked-by-obligation rows in the matrix
+  next_task: PPF-007
+
+- task_id: PPF-007
+  status: NOT_READY
+  purpose: Establish repository simplicity baselines.
+  depends_on:
+    - PPF-006
+  exact_inputs:
+    - docs/roadmap.md
+    - docs/implementation-plan.md
+    - docs/migration/ASSET_AUDIT.md
+    - docs/migration/DEPENDENCY_AUDIT.md
+  allowed_changed_paths:
+    - docs/roadmap.md
+    - docs/implementation-plan.md
+  expected_output: Baseline-and-target decision tasks for route count, component count, CSS size, font requests, bundle size, dependencies, and unowned analytics events.
+  acceptance_criteria:
+    - No invented target numbers are introduced.
+    - Every metric either has a baseline or an explicit decision task.
+  validation:
+    - metric inventory review
+    - path review
+  rollback: Restore the prior simplicity notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: simplicity metrics listed as decision tasks
+  next_task: PPF-008
+
+- task_id: PPF-008
+  status: NOT_READY
+  purpose: Run the design-lab readiness gate.
+  depends_on:
+    - PPF-007
+  exact_inputs:
+    - docs/design/DESIGN_LAB.md
+    - docs/design/DESIGN_PRINCIPLES.md
+    - docs/platform/ACCESSIBILITY_STRATEGY.md
+    - docs/platform/PERFORMANCE_STRATEGY.md
+  allowed_changed_paths:
+    - docs/design/DESIGN_LAB.md
+    - docs/implementation-plan.md
+  expected_output: Readiness gate stating whether the design lab can start safely.
+  acceptance_criteria:
+    - Content, conversion, archive, and simplicity prerequisites are checked.
+    - The gate is explicit and not implied.
+  validation:
+    - prerequisite checklist
+    - doc consistency review
+  rollback: Restore the prior gate notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: readiness gate result
+  next_task: PPF-009
+
+- task_id: PPF-009
+  status: NOT_READY
+  purpose: Build canonical component primitives.
+  depends_on:
+    - PPF-008
+  exact_inputs:
+    - docs/design/COMPONENT_LIBRARY.md
+    - docs/design/PRODUCT_VISUAL_LIBRARY.md
+  allowed_changed_paths:
+    - docs/design/COMPONENT_LIBRARY.md
+    - docs/design/PRODUCT_VISUAL_LIBRARY.md
+  expected_output: Canonical primitives for buttons, surfaces, forms, and system states.
+  acceptance_criteria:
+    - Components are described as bounded primitives.
+    - No production shell activation is implied.
+  validation:
+    - component map review
+  rollback: Restore the prior primitive notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: primitive definitions
+  next_task: PPF-010
+
+- task_id: PPF-010
+  status: NOT_READY
+  purpose: Build Memory visual primitives.
+  depends_on:
+    - PPF-009
+  exact_inputs:
+    - docs/design/PRODUCT_VISUAL_LIBRARY.md
+    - docs/design/COPY_VISUAL_MAP.md
+  allowed_changed_paths:
+    - docs/design/PRODUCT_VISUAL_LIBRARY.md
+  expected_output: Memory-specific visual primitives with static, responsive, and reduced-motion-safe states.
+  acceptance_criteria:
+    - Memory remains specific to ProChat.
+    - No motion activation is introduced.
+  validation:
+    - visual-state review
+  rollback: Restore the prior Memory visual notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: Memory primitive notes
+  next_task: PPF-011
+
+- task_id: PPF-011
+  status: NOT_READY
+  purpose: Build Workbench visual primitives.
+  depends_on:
+    - PPF-010
+  exact_inputs:
+    - docs/design/PRODUCT_VISUAL_LIBRARY.md
+    - docs/design/COPY_VISUAL_MAP.md
+  allowed_changed_paths:
+    - docs/design/PRODUCT_VISUAL_LIBRARY.md
+  expected_output: Workbench-specific visual primitives and guardrails for local execution.
+  acceptance_criteria:
+    - Guarded operations remain explicit.
+    - BuildFlow is not reintroduced as a current public product.
+  validation:
+    - product-truth review
+  rollback: Restore the prior Workbench visual notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: Workbench primitive notes
+  next_task: PPF-012
+
+- task_id: PPF-012
+  status: NOT_READY
+  purpose: Build the static desktop design-lab specimen.
+  depends_on:
+    - PPF-011
+  exact_inputs:
+    - docs/design/DESIGN_LAB.md
+    - docs/platform/RESPONSIVE_STRATEGY.md
+  allowed_changed_paths:
+    - docs/design/DESIGN_LAB.md
+  expected_output: Desktop specimen for the approved static direction.
+  acceptance_criteria:
+    - The specimen is static and non-production.
+    - It can be reviewed without motion dependencies.
+  validation:
+    - desktop composition review
+  rollback: Restore the prior desktop specimen notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: desktop specimen notes
+  next_task: PPF-013
+
+- task_id: PPF-013
+  status: NOT_READY
+  purpose: Build the static mobile design-lab specimen.
+  depends_on:
+    - PPF-012
+  exact_inputs:
+    - docs/design/DESIGN_LAB.md
+    - docs/platform/RESPONSIVE_STRATEGY.md
+  allowed_changed_paths:
+    - docs/design/DESIGN_LAB.md
+  expected_output: Mobile specimen that matches the approved static direction.
+  acceptance_criteria:
+    - Mobile composition is explicit.
+    - Reduced-motion and no-animation comprehension remain intact.
+  validation:
+    - mobile composition review
+  rollback: Restore the prior mobile specimen notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: mobile specimen notes
+  next_task: PPF-014
+
+- task_id: PPF-014
+  status: NOT_READY
+  purpose: Produce hero directions.
+  depends_on:
+    - PPF-013
+  exact_inputs:
+    - docs/homepage-design-spec.md
+    - docs/homepage-technical-design.md
+  allowed_changed_paths:
+    - docs/homepage-design-spec.md
+    - docs/homepage-technical-design.md
+  expected_output: Multiple static homepage hero directions with selection rationale.
+  acceptance_criteria:
+    - Directions differ materially.
+    - One direction is explicitly selected or rejected.
+  validation:
+    - hero-direction review
+  rollback: Restore the prior hero-direction notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: hero direction notes
+  next_task: PPF-015
+
+- task_id: PPF-015
+  status: NOT_READY
+  purpose: Produce Memory mechanism prototypes.
+  depends_on:
+    - PPF-014
+  exact_inputs:
+    - docs/design/PRODUCT_VISUAL_LIBRARY.md
+    - docs/homepage-design-spec.md
+  allowed_changed_paths:
+    - docs/design/PRODUCT_VISUAL_LIBRARY.md
+  expected_output: Memory mechanism prototypes and reviewer notes.
+  acceptance_criteria:
+    - Mechanisms are specific and evidence-led.
+    - No production activation is implied.
+  validation:
+    - mechanism review
+  rollback: Restore the prior Memory mechanism notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: Memory mechanism notes
+  next_task: PPF-016
+
+- task_id: PPF-016
+  status: NOT_READY
+  purpose: Produce Workbench mechanism prototypes.
+  depends_on:
+    - PPF-015
+  exact_inputs:
+    - docs/design/PRODUCT_VISUAL_LIBRARY.md
+    - docs/homepage-design-spec.md
+  allowed_changed_paths:
+    - docs/design/PRODUCT_VISUAL_LIBRARY.md
+  expected_output: Workbench mechanism prototypes and reviewer notes.
+  acceptance_criteria:
+    - Guarded local execution is clear.
+    - No autonomy claim is introduced.
+  validation:
+    - mechanism review
+  rollback: Restore the prior Workbench mechanism notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: Workbench mechanism notes
+  next_task: PPF-017
+
+- task_id: PPF-017
+  status: NOT_READY
+  purpose: Run strategy, conversion, accessibility, performance, asset-rights, and taste reviews.
+  depends_on:
+    - PPF-016
+  exact_inputs:
+    - docs/roadmap.md
+    - docs/migration/CONTENT_AUDIT.md
+    - docs/platform/ACCESSIBILITY_STRATEGY.md
+    - docs/platform/PERFORMANCE_STRATEGY.md
+    - docs/migration/ASSET_AUDIT.md
+  allowed_changed_paths:
+    - docs/roadmap.md
+    - docs/implementation-plan.md
+  expected_output: Review findings with explicit severity and disposition.
+  acceptance_criteria:
+    - Every finding has evidence and a next step.
+    - No finding is left as vague taste feedback.
+  validation:
+    - review synthesis
+  rollback: Restore the prior review notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: review findings summary
+  next_task: PPF-018
+
+- task_id: PPF-018
+  status: NOT_READY
+  purpose: Approve one static direction.
+  depends_on:
+    - PPF-017
+  exact_inputs:
+    - docs/design/DESIGN_LAB.md
+    - docs/homepage-design-spec.md
+  allowed_changed_paths:
+    - docs/design/DESIGN_LAB.md
+  expected_output: One approved static direction and a rejected-or-deferred set of alternatives.
+  acceptance_criteria:
+    - Approval is explicit and traceable.
+    - The approved direction is the only canonical static direction.
+  validation:
+    - approval review
+  rollback: Restore the prior selection notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: approved static direction note
+  next_task: PPF-019
+
+- task_id: PPF-019
+  status: NOT_READY
+  purpose: Finalize motion storyboard and motion budget.
+  depends_on:
+    - PPF-018
+  exact_inputs:
+    - docs/design/MOTION_STORYBOARD.md
+    - docs/platform/PERFORMANCE_STRATEGY.md
+  allowed_changed_paths:
+    - docs/design/MOTION_STORYBOARD.md
+    - docs/platform/PERFORMANCE_STRATEGY.md
+  expected_output: Motion storyboard, allowed motion properties, and budget guardrails.
+  acceptance_criteria:
+    - Motion implementation remains blocked until static composition is approved.
+    - Budgets are described without inventing numbers.
+  validation:
+    - motion-budget review
+  rollback: Restore the prior motion notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: motion storyboard and budget notes
+  next_task: PPF-020
+
+- task_id: PPF-020
+  status: NOT_READY
+  purpose: Prototype motion without production activation.
+  depends_on:
+    - PPF-019
+  exact_inputs:
+    - docs/design/MOTION_STORYBOARD.md
+    - docs/design/DESIGN_LAB.md
+  allowed_changed_paths:
+    - docs/design/MOTION_STORYBOARD.md
+  expected_output: Motion prototype notes that remain isolated from production routes.
+  acceptance_criteria:
+    - No canonical route activation occurs.
+    - Motion remains compatible with reduced-motion behavior.
+  validation:
+    - motion prototype review
+  rollback: Restore the prior motion prototype notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: prototype motion notes
+  next_task: PPF-021
+
+- task_id: PPF-021
+  status: BLOCKED
+  purpose: Run browser, accessibility, and performance proof.
+  depends_on:
+    - PPF-020
+  exact_inputs:
+    - docs/migration/WAVE1_BROWSER_EQUIVALENCE_REPORT.md
+    - docs/platform/ACCESSIBILITY_STRATEGY.md
+    - docs/platform/PERFORMANCE_STRATEGY.md
+  allowed_changed_paths:
+    - docs/migration/WAVE1_BROWSER_EQUIVALENCE_REPORT.md
+    - docs/product/agent-mode-progress.md
+  expected_output: Browser, accessibility, and performance proof or an attributable blocker.
+  acceptance_criteria:
+    - Attributable browser environment exists.
+    - Protected credentials and approved test data are available.
+  validation:
+    - browser matrix
+    - accessibility checks
+    - performance traces
+  rollback: Restore the prior evidence report if browser proof fails.
+  approval: blocked until browser environment and protected test data exist
+  commit_boundary: evidence only
+  evidence: browser-equivalence report with current blocked state
+  next_task: PPF-022
+
+- task_id: PPF-022
+  status: BLOCKED
+  purpose: Activate the canonical public visual shell through a separate approval packet.
+  depends_on:
+    - PPF-021
+  exact_inputs:
+    - docs/migration/WAVE1_SHELL_COMPATIBILITY_PLAN.md
+    - docs/migration/WAVE1_BROWSER_EQUIVALENCE_REPORT.md
+  allowed_changed_paths:
+    - docs/migration/WAVE1_BROWSER_EQUIVALENCE_REPORT.md
+  expected_output: Explicit approval or rejection of the first canonical visual activation packet.
+  acceptance_criteria:
+    - Activation is separated from evidence gathering.
+    - No route activates without proof.
+  validation:
+    - activation review
+  rollback: Restore the prior allowlist state.
+  approval: blocked until browser proof and approval exist
+  commit_boundary: evidence only
+  evidence: activation decision record
+  next_task: PPF-023
+
+- task_id: PPF-023
+  status: NOT_READY
+  purpose: Implement public pages and archive replaced legacy systems in bounded page/migration packets.
+  depends_on:
+    - PPF-022
+  exact_inputs:
+    - docs/roadmap.md
+    - docs/migration/MIGRATION_MATRIX.md
+    - docs/migration/ARCHIVE_ARCHITECTURE.md
+  allowed_changed_paths:
+    - docs/roadmap.md
+    - docs/implementation-plan.md
+  expected_output: Page-task sequence and legacy-system archive packets with exact rollback boundaries.
+  acceptance_criteria:
+    - Page tasks remain bounded.
+    - Archive movement is separate from deletion.
+  validation:
+    - packet boundary review
+  rollback: Restore the prior page-task breakdown.
+  approval: documentation-only until a source packet is approved
+  commit_boundary: docs only
+  evidence: page and archive packet outline
+  next_task: PPF-024
+
+- task_id: PPF-024
+  status: NOT_READY
+  purpose: Run absence proof, dependency cleanup, launch validation, and governance handoff.
+  depends_on:
+    - PPF-023
+  exact_inputs:
+    - docs/migration/MIGRATION_MATRIX.md
+    - docs/migration/DEPENDENCY_AUDIT.md
+    - docs/migration/ASSET_AUDIT.md
+  allowed_changed_paths:
+    - docs/migration/MIGRATION_MATRIX.md
+    - docs/product/agent-mode-progress.md
+  expected_output: Absence-proof, dependency-cleanup, launch-validation, and governance-handoff notes.
+  acceptance_criteria:
+    - No unresolved migration row remains.
+    - Launch validation and governance handoff are explicit.
+  validation:
+    - absence proof review
+    - dependency review
+    - launch checklist review
+  rollback: Restore the prior governance notes.
+  approval: documentation-only
+  commit_boundary: docs only
+  evidence: absence-proof and governance handoff summary
+  next_task: none
+```
+
 ## Current position
 
 ```text
@@ -41,7 +650,7 @@ Mind public-platform foundation: committed
 Repository design/platform/migration planning: current documentation batch
 Production code changes: not authorized in current batch
 Legacy deletion: not authorized in current batch
-Next execution after documentation commit: Phase 5 inventory tasks only
+Next execution after documentation commit: PPF-001 browser-runner worktree isolation and shell-contract decision
 ```
 
 ## Global safety rules
@@ -1953,6 +2562,6 @@ Review evidence and separately packetized fixes.
 
 # Current next task
 
-After this documentation set is validated and committed, execute **Task 5.1 — Route and page inventory**.
+After this documentation set is validated and committed, execute **PPF-001 — Browser-runner worktree isolation and stale-run disposition**.
 
 Do not modify production code, delete legacy files, install dependencies, or start design-lab implementation in the documentation commit.

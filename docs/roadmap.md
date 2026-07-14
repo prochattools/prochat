@@ -3,7 +3,7 @@
 **Status:** canonical repository-local execution roadmap  
 **Owner:** Steve Westhoek  
 **Scope:** ProChat public platform, design system, migration, public pages, validation, launch, and maintenance  
-**Last updated:** 2026-07-11
+**Last updated:** 2026-07-14
 
 ## Authority
 
@@ -27,6 +27,45 @@ mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```
 
 This repository translates that truth into design, migration, implementation, testing, and production behavior. It must not redefine the company or product family independently.
+
+## Verified current state
+
+```yaml
+verified_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
+verified_date: 2026-07-14
+current_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
+current_program_state: Phase 1 and Phase 2 are complete, Phase 3 is ready, the implementation queue starts with PPF-001 browser-runner isolation, Wave 1 browser-equivalence evidence remains blocked, and no canonical visual route is active.
+current_phase: Phase 3 — canonical content second pass
+current_packet: PPF-001 — browser-runner worktree isolation and stale-run disposition
+canonical_visual_routes_active: 0
+production_visual_design_started: false
+legacy_implementation_archived_count: 0
+browser_equivalence: BLOCKED
+browser_runner_worktree: ISOLATED_UNCOMMITTED
+shell_contract: DECISION_REQUIRED
+```
+
+## Operational phase summary
+
+Supporting detail below remains useful, but this phase summary is canonical for execution status.
+
+| Phase | Status | Purpose | Prerequisites | Completed evidence | Expected outputs | Exit gate | Next dependent phase |
+|---|---|---|---|---|---|---|---|
+| Phase 1 | DONE | Company truth and product hierarchy | none | Mind commits `1461678`, `7687bb8`; ProChat translation docs | repository authority alignment | canonical company/product docs and product hierarchy are consistent | Phase 2 |
+| Phase 2 | DONE | Public platform architecture | Phase 1 | current repo translation docs | page map, navigation, footer, legal paths | public platform responsibilities are defined | Phase 3 |
+| Phase 3 | READY | Canonical content second pass | Phases 1–2, canonical homepage copy | current repo docs and seeded register | operational content audit, claims register, metadata matrix | every claim and page has an approved or classified status | Phase 4 |
+| Phase 4 | DONE | Design-language foundation | Phases 1–3 | design and platform docs committed; repo translation complete | visual grammar, product visuals, motion language, component contract | design decisions are explicit and reviewable | Phase 5 |
+| Phase 5 | DONE | Foundational legacy sweep | Phases 1–4 | route, component, style, motion, asset, dependency, and migration audits | inventory and classification matrix | every legacy item has a provisional disposition and wave | Phase 6 |
+| Phase 6 | NOT_READY | Design laboratory and static prototypes | Phases 3–5, Wave 0, Wave 1, Wave 2 | none | isolated lab shell and static specimens | no lab work begins before prerequisite packets are complete | Phase 7 |
+| Phase 7 | NOT_READY | Motion and product-story prototypes | Phase 6 and approved static direction | none | motion proofs and browser tooling decisions | static direction and tooling decisions are approved | Phase 8 |
+| Phase 8 | NOT_READY | Independent review | Phases 3, 5, 6, 7 | none | review report and findings reconciliation | findings are accepted, rejected, or deferred with evidence | Phase 9 |
+| Phase 9 | NOT_READY | Production foundation | Phase 8 and approved migration rows | none | fonts, tokens, shells, primitives, tests, and infrastructure | foundation packets are approved before page implementation | Phase 10 |
+| Phase 10 | NOT_READY | Public pages | Phase 9 and approved page copy | none | canonical public pages and shell updates | each page packet passes its acceptance gate | Phase 11 |
+| Phase 11 | NOT_READY | Legacy migration and removal | Phase 10 and verified replacements | none | redirects, archives, and bounded removals | legacy retirement is proven safe and reversible | Phase 12 |
+| Phase 12 | NOT_READY | Production craft and launch validation | Phase 11 | none | visual, accessibility, performance, and launch acceptance | launch criteria pass without critical defects | Phase 13 |
+| Phase 13 | ONGOING | Continuous governance | launch | ongoing Mind and repo governance | review and maintenance cadence | this phase does not end | Phase 13 |
+
+The immediate repository-local next phase remains Phase 3, and the immediate implementation-plan queue must still begin with PPF-001 browser-runner isolation and disposition.
 
 ## Product and company boundary
 
@@ -79,10 +118,10 @@ Build a durable, fast, accessible, mobile-first, expandable public platform that
 ## Status legend
 
 ```text
-COMPLETE — canonical outputs exist and are committed
-ACTIVE — current documentation or execution phase
-READY — dependencies satisfied; may begin after current commit
-PLANNED — defined but blocked by prior phases
+DONE — canonical outputs exist and are committed
+READY — dependencies are satisfied and the task may begin
+BLOCKED — the task is decided but cannot start because of an external or prerequisite blocker
+NOT_READY — the task is defined but depends on earlier work
 ONGOING — recurring governance after launch
 ```
 
@@ -672,13 +711,14 @@ This phase does not end. Each review cycle ends with recorded findings, decision
 # Current position
 
 ```text
-Phase 1 — COMPLETE
-Phase 2 — COMPLETE
+Phase 1 — DONE
+Phase 2 — DONE
 Phase 3 — READY
-Phase 4 — COMPLETE FOR DOCUMENTATION
-Phase 5 — COMPLETE FOR INVENTORY, CLASSIFICATION, ARCHITECTURE, AND WAVE PLANNING
-Wave 0 Packet 1 — NEXT EXECUTABLE WORK
-Phases 6–13 — PLANNED AND DEPENDENCY-GATED
+Phase 4 — DONE
+Phase 5 — DONE
+Wave 1 browser equivalence — BLOCKED
+Phases 6–12 — NOT_READY
+Phase 13 — ONGOING
 ```
 
-The immediate next work after this documentation commit is Wave 0 Packet 1: create the non-runtime archive README and manifest without moving, editing, or deleting production files.
+The immediate next implementation packet after this documentation commit is PPF-001: browser-runner worktree isolation and stale-run disposition.
