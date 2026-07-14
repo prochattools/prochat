@@ -4,7 +4,7 @@
 **Status:** R1B documentation reconciliation active; browser-runner provisioning run was closed before resume
 **Previous evidence commit:** `220e106` — `docs(prochat): provision browser shell verification`
 **Source:** `prochat`
-**Current HEAD:** `220e1063b4daae65edbdb62ffea697ed885b4fb2`
+**Current HEAD:** `806ce4398b8065dfc004ed3bc3248a7bb711a746`
 **Live production behavior changed:** no
 **Additive unconsumed foundation source created:** yes
 **Legacy files deleted:** no

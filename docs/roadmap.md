@@ -33,7 +33,7 @@ This repository translates that truth into design, migration, implementation, te
 ```yaml
 verified_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
 verified_date: 2026-07-14
-current_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
+current_head: 806ce4398b8065dfc004ed3bc3248a7bb711a746
 current_program_state: Phase 1 and Phase 2 are complete, Phase 3 is ready, the implementation queue starts with PPF-001 browser-runner isolation, Wave 1 browser-equivalence evidence remains blocked, and no canonical visual route is active.
 current_phase: Phase 3 — canonical content second pass
 current_packet: PPF-001 — browser-runner worktree isolation and stale-run disposition

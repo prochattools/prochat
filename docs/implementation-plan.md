@@ -39,7 +39,7 @@ mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```yaml
 verified_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
 verified_date: 2026-07-14
-current_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
+current_head: 806ce4398b8065dfc004ed3bc3248a7bb711a746
 current_program_state: Phase 1 and Phase 2 are complete; the R1B reconciliation queue is active; browser-equivalence proof remains blocked outside the repo.
 current_phase: R1B reconciliation queue
 current_packet: PPF-001 — browser-runner worktree isolation and stale-run disposition
