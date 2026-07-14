@@ -39,8 +39,8 @@ mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```yaml
 verified_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
 verified_date: 2026-07-14
-current_head: 806ce4398b8065dfc004ed3bc3248a7bb711a746
-current_program_state: Phase 1 and Phase 2 are complete; the R1B reconciliation queue is active; browser-equivalence proof remains blocked outside the repo.
+current_head: 039d3bf0ae31072be1cd5300c5e1dbb4fd2f3a5b
+current_program_state: Phase 1 and Phase 2 are complete; the R1B reconciliation queue is active; browser-equivalence proof remains blocked outside the repo; the 039d3bf reconciliation commit updates handoff metadata only.
 current_phase: R1B reconciliation queue
 current_packet: PPF-001 — browser-runner worktree isolation and stale-run disposition
 canonical_visual_routes_active: 0
@@ -48,7 +48,8 @@ production_visual_design_started: false
 legacy_implementation_archived_count: 0
 browser_equivalence: BLOCKED
 browser_runner_worktree: ISOLATED_UNCOMMITTED
-shell_contract: DECISION_REQUIRED
+browser_runner_artifact_disposition: KEEP_ISOLATED_BLOCKED
+shell_contract: DECIDED_WITH_FUTURE_REPAIR
 ```
 
 ## Canonical executor queue
@@ -75,11 +76,12 @@ Older long-form task detail remains below as supporting reference only. The queu
     - tests/evidence/wave1-shell-equivalence.spec.ts
     - tests/evidence/validate-wave1-browser-runner.mjs
     - .github/workflows/wave1-browser-equivalence.yml
-  expected_output: Closed stale browser-runner run, isolated browser artifacts, and a recorded shell-contract decision scope.
+  expected_output: Closed stale browser-runner run or recorded why it remains open, isolated browser artifacts, and a recorded shell-contract decision scope.
   acceptance_criteria:
     - The stale run is checkpointed or closed.
     - Browser-runner artifacts remain isolated from reconciliation docs.
     - The no_shared_shell decision scope is documented without changing AppChrome in this packet.
+    - The browser-runner artifact disposition is explicitly KEEP_ISOLATED_BLOCKED.
   validation:
     - git status --short
     - Workbench active-run query

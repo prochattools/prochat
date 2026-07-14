@@ -4,7 +4,7 @@
 **Status:** R1B documentation reconciliation active; browser-runner provisioning run was closed before resume
 **Previous evidence commit:** `220e106` — `docs(prochat): provision browser shell verification`
 **Source:** `prochat`
-**Current HEAD:** `806ce4398b8065dfc004ed3bc3248a7bb711a746`
+**Current HEAD:** `039d3bf0ae31072be1cd5300c5e1dbb4fd2f3a5b`
 **Live production behavior changed:** no
 **Additive unconsumed foundation source created:** yes
 **Legacy files deleted:** no
@@ -15,9 +15,10 @@
 - active reconciliation run: `agent-c41afa81-19f4-415c-bbc6-66731c135a78`;
 - modified documentation paths: `docs/roadmap.md`, `docs/implementation-plan.md`, `docs/migration/CONTENT_AUDIT.md`, `docs/product/agent-mode-progress.md`;
 - isolated browser-runner paths: `tests/evidence/wave1-shell-equivalence.spec.ts`, `tests/evidence/validate-wave1-browser-runner.mjs`, `.github/workflows/wave1-browser-equivalence.yml`;
+- browser-runner artifact disposition: `KEEP_ISOLATED_BLOCKED`;
 - current READY task: `PPF-001`;
 - current BLOCKED task family: browser-equivalence proof and canonical visual activation;
-- shell-contract decision status: `DECISION_REQUIRED`;
+- shell-contract decision status: `DECIDED_WITH_FUTURE_REPAIR`;
 - content-audit state: `seeded but incomplete`;
 - production source changed: `no`.
 
@@ -1235,5 +1236,5 @@ Retained non-browser evidence remains passing. No shell repair or activation pac
 ```text
 PPF-001 — Browser-runner worktree isolation, stale-run disposition, and shell-contract decision.
 
-Do not execute browser-equivalence proof in this packet. The next work should first isolate the browser-runner artifacts, then decide the no_shared_shell runtime contract, and only then continue toward browser evidence in a separate packet.
+Do not execute browser-equivalence proof in this packet. The browser-runner artifacts remain isolated and blocked from commit; the no_shared_shell runtime contract is documented with a later AppChrome repair boundary, and browser evidence continues in a separate packet.
 ```
