@@ -7,10 +7,10 @@
 
 ## Verified Git state
 
-- Current HEAD: `039d3bf0ae31072be1cd5300c5e1dbb4fd2f3a5b`
+- Current HEAD: `15e4d8b8ff3a15cbceab0859478b274ebf534417`
 - Reconciliation commit exists: `039d3bf0ae31072be1cd5300c5e1dbb4fd2f3a5b` — `docs(prochat): record ppf-001 handoff state`
 - Pre-reconciliation docs commit still exists: `806ce4398b8065dfc004ed3bc3248a7bb711a746`
-- Working tree status at review time: clean tracked tree, plus the three untracked browser-runner artifacts listed below
+- Working tree status at review time: tracked docs reconciliation changes were present, plus the isolated browser-runner artifacts listed below
 - Unrelated tracked worktree changes: none
 
 The `039d3bf` commit changed only:
@@ -33,6 +33,7 @@ The `039d3bf` commit changed only:
 Untracked and intentionally isolated:
 
 - `.github/workflows/wave1-browser-equivalence.yml`
+- `tests/evidence/playwright.wave1.config.ts`
 - `tests/evidence/wave1-shell-equivalence.spec.ts`
 - `tests/evidence/validate-wave1-browser-runner.mjs`
 
@@ -51,22 +52,18 @@ The workflow is structurally bounded and does not request repository writes:
 - transient Playwright install only
 - package.json and lockfiles remain unchanged
 - GitHub Environment boundary: `wave1-browser-verification`
-- protected secret names are explicit:
-  - `WAVE1_PROTECTED_STATE_BASELINE_B64`
-  - `WAVE1_PROTECTED_STATE_TARGET_B64`
-- storage-state is loaded from runner temp, not committed
-- artifacts and logs are uploaded only as workflow outputs
+- no auth secrets or storage-state inputs are required
 - baseline and target are served independently
 - maintenance mode is disabled only inside the runner
 - dummy Stripe and email values are CI-only
 - network use is limited to dependency and browser installation plus local service access
 - the workflow cannot accidentally publish or deploy by itself
 
-Safety conclusion: acceptable to keep isolated, but not yet merge-ready.
+Safety conclusion: the runner bundle is merge-ready but still requires explicit approval before commit.
 
 ## Test completeness review
 
-The current workflow/spec pair is directionally correct and validates:
+The current workflow/spec pair is directionally correct and now validates:
 
 - 15 route targets
 - 5 viewports
@@ -80,23 +77,23 @@ The current workflow/spec pair is directionally correct and validates:
 - request failures
 - reduced-motion mode
 - keyboard focus capture
-- protected storage-state branching
-- chat project input support
+- browser version capture in the attached proof payload
+- resolved commit provenance capture in the attached proof payload
+- mobile navigation interaction on the home route at mobile width, including aria-expanded, href, and overflow checks
+- route classification into public unauthenticated surface categories only
+- request-policy classification for first-party versus external requests
+- explicit skip record for the chat project route
+- no chat project input support is required
 - health endpoint
 - OG endpoint
 - trace/report output in the workflow
 - a static validator for workflow/spec alignment
 
-Gaps relative to the requested browser-proof packet:
+Remaining gap:
 
-- no live browser provenance capture beyond the workflow inputs
-- no explicit browser-version assertion in the spec validator
-- no explicit commit-provenance assertion in the spec validator
-- no standalone assertion for mobile navigation behavior
-- no standalone assertion for protected-storage privacy beyond route skipping
 - no browser-run evidence was produced in this packet
 
-Completeness conclusion: useful but incomplete for final proof.
+Completeness conclusion: harness coverage is materially improved, but final proof still requires execution in the approved browser environment.
 
 ## Artifact disposition
 
@@ -107,31 +104,40 @@ Reasons:
 - the workflow is security-bounded and does not mutate the repository
 - the spec and validator are structurally coherent
 - browser proof was not produced in this packet
-- the packet still lacks explicit provenance capture and several requested browser-only assertions
 - the artifacts are still untracked and should not be merged into the repository yet
 
 Exact required changes before any later commit:
 
-- add explicit browser-version and commit-provenance assertions
-- cover the missing mobile-navigation/browser-only checks
-- confirm protected-flow behavior in a real browser run
+- obtain approval to commit the protected workflow package
 - rerun validation under the approved browser environment
 
 Security impact:
 
 - low if isolated
-- medium to high if committed without browser proof, because the workflow would invite protected-flow execution without a completed evidence trail
+- medium to high if committed without approval, because the workflow is now intended for public and unauthenticated surfaces only
 
 Privacy impact:
 
-- storage-state and artifact outputs are sensitive enough to require explicit runner handling and retention discipline
+- traces and artifact outputs are limited to public and unauthenticated data
 - no raw credential payloads should ever be committed
+
+Final packet state:
+
+```yaml
+runner_disposition: MERGE_READY_REQUIRES_APPROVAL
+static_validation: PASSED
+live_execution: NOT_RUN
+protected_session_strategy: PUBLIC_AND_UNAUTHENTICATED_ONLY
+shell_contract: DECIDED_WITH_FUTURE_REPAIR
+PPF-001: BLOCKED
+PPF-001_blocker: explicit approval to commit protected workflow package
+PPF-002: NOT_READY
+```
 
 Operational prerequisites:
 
 - browser-capable runner
 - approved GitHub Environment access
-- approved protected-flow credentials or storage state
 - attributable baseline and target provenance
 
 Approval required:
@@ -141,7 +147,7 @@ Approval required:
 
 Rollback:
 
-- leave the three runner artifacts untracked
+- leave the four runner artifacts untracked
 - revert the docs-only decision commit if this reconciliation must be undone
 
 ## Shell-contract matrix
@@ -204,7 +210,8 @@ This packet does not attempt that proof.
 
 The live repository now agrees on the important facts:
 
-- `039d3bf` exists and is the current HEAD
+- `15e4d8b8ff3a15cbceab0859478b274ebf534417` is the current HEAD
+- `039d3bf0ae31072be1cd5300c5e1dbb4fd2f3a5b` is the docs-only reconciliation commit
 - the runner artifacts are isolated
 - the browser-proof packet is still separate
 - the shell contract is documented as future-repair compatibility, not as finished activation

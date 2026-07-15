@@ -39,17 +39,23 @@ mind/wiki/organisations/prochat/brand/website-build-contract.md
 ```yaml
 verified_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
 verified_date: 2026-07-14
-current_head: 039d3bf0ae31072be1cd5300c5e1dbb4fd2f3a5b
-current_program_state: Phase 1 and Phase 2 are complete; the R1B reconciliation queue is active; browser-equivalence proof remains blocked outside the repo; the 039d3bf reconciliation commit updates handoff metadata only.
+current_head: 15e4d8b8ff3a15cbceab0859478b274ebf534417
+current_program_state: Phase 1 and Phase 2 are complete; the R1B reconciliation queue is active; the Wave 1 browser-runner bundle is merge-ready pending approval; live execution has not run; protected sessions are public and unauthenticated only; authenticated protected proof is reserved for a separate future runner; the 039d3bf reconciliation commit updates handoff metadata only.
 current_phase: R1B reconciliation queue
 current_packet: PPF-001 — browser-runner worktree isolation and stale-run disposition
 canonical_visual_routes_active: 0
 production_visual_design_started: false
 legacy_implementation_archived_count: 0
-browser_equivalence: BLOCKED
+runner_disposition: MERGE_READY_REQUIRES_APPROVAL
+static_validation: PASSED
+live_execution: NOT_RUN
+protected_session_strategy: PUBLIC_AND_UNAUTHENTICATED_ONLY
+authenticated_protected_proof: SEPARATE_FUTURE_RUNNER
 browser_runner_worktree: ISOLATED_UNCOMMITTED
 browser_runner_artifact_disposition: KEEP_ISOLATED_BLOCKED
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
+PPF-001: BLOCKED
+PPF-002: NOT_READY
 ```
 
 ## Canonical executor queue

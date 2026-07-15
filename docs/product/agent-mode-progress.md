@@ -1,23 +1,33 @@
 # ProChat Public Platform Foundation Handoff
 
 **Run:** `agent-c41afa81-19f4-415c-bbc6-66731c135a78`
-**Status:** R1B documentation reconciliation active; browser-runner provisioning run was closed before resume
+**Status:** R1B documentation reconciliation active; browser-runner bundle is merge-ready pending approval; browser-equivalence execution remains separate
 **Previous evidence commit:** `220e106` — `docs(prochat): provision browser shell verification`
 **Source:** `prochat`
-**Current HEAD:** `039d3bf0ae31072be1cd5300c5e1dbb4fd2f3a5b`
+**Current HEAD:** `15e4d8b8ff3a15cbceab0859478b274ebf534417`
 **Live production behavior changed:** no
 **Additive unconsumed foundation source created:** yes
 **Legacy files deleted:** no
 
 ## R1B verified state
 
+```yaml
+runner_disposition: MERGE_READY_REQUIRES_APPROVAL
+static_validation: PASSED
+live_execution: NOT_RUN
+PPF-001: BLOCKED
+PPF-001_blocker: explicit approval to commit protected workflow package
+PPF-002: NOT_READY
+```
+
 - stale browser-runner run: `agent-4305c4bd-7c9b-46df-bc91-9d82648626c9` closed successfully;
 - active reconciliation run: `agent-c41afa81-19f4-415c-bbc6-66731c135a78`;
-- modified documentation paths: `docs/roadmap.md`, `docs/implementation-plan.md`, `docs/migration/CONTENT_AUDIT.md`, `docs/product/agent-mode-progress.md`;
+- modified documentation paths: `docs/roadmap.md`, `docs/implementation-plan.md`, `docs/product/agent-mode-progress.md`, `docs/migration/PPF001_BROWSER_RUNNER_AND_SHELL_DECISION.md`;
 - isolated browser-runner paths: `tests/evidence/wave1-shell-equivalence.spec.ts`, `tests/evidence/validate-wave1-browser-runner.mjs`, `.github/workflows/wave1-browser-equivalence.yml`;
 - browser-runner artifact disposition: `KEEP_ISOLATED_BLOCKED`;
-- current READY task: `PPF-001`;
-- current BLOCKED task family: browser-equivalence proof and canonical visual activation;
+- browser-proof runner now records browser version, resolved commit provenance, mobile-navigation proof, route-access proof, and request-policy fields;
+- current READY task: none;
+- current BLOCKED task: `PPF-001` commit approval for the protected workflow package;
 - shell-contract decision status: `DECIDED_WITH_FUTURE_REPAIR`;
 - content-audit state: `seeded but incomplete`;
 - production source changed: `no`.
@@ -1236,5 +1246,5 @@ Retained non-browser evidence remains passing. No shell repair or activation pac
 ```text
 PPF-001 — Browser-runner worktree isolation, stale-run disposition, and shell-contract decision.
 
-Do not execute browser-equivalence proof in this packet. The browser-runner artifacts remain isolated and blocked from commit; the no_shared_shell runtime contract is documented with a later AppChrome repair boundary, and browser evidence continues in a separate packet.
+Do not execute browser-equivalence proof in this packet. The browser-runner artifacts remain isolated and blocked from commit until approval; the no_shared_shell runtime contract is documented with a later AppChrome repair boundary, and browser evidence continues in a separate approved packet.
 ```

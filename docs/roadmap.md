@@ -33,17 +33,23 @@ This repository translates that truth into design, migration, implementation, te
 ```yaml
 verified_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
 verified_date: 2026-07-14
-current_head: 039d3bf0ae31072be1cd5300c5e1dbb4fd2f3a5b
-current_program_state: Phase 1 and Phase 2 are complete, Phase 3 is ready, the implementation queue starts with PPF-001 browser-runner isolation, Wave 1 browser-equivalence evidence remains blocked, the browser-runner artifacts stay isolated, and no canonical visual route is active.
+current_head: 15e4d8b8ff3a15cbceab0859478b274ebf534417
+current_program_state: Phase 1 and Phase 2 are complete, Phase 3 is ready, the implementation queue starts with PPF-001 browser-runner verification, the Wave 1 browser-runner bundle is merge-ready pending approval, live execution has not run, protected sessions are public and unauthenticated only, and no canonical visual route is active.
 current_phase: Phase 3 — canonical content second pass
 current_packet: PPF-001 — browser-runner worktree isolation and stale-run disposition
 canonical_visual_routes_active: 0
 production_visual_design_started: false
 legacy_implementation_archived_count: 0
-browser_equivalence: BLOCKED
+runner_disposition: MERGE_READY_REQUIRES_APPROVAL
+static_validation: PASSED
+live_execution: NOT_RUN
+protected_session_strategy: PUBLIC_AND_UNAUTHENTICATED_ONLY
+authenticated_protected_proof: SEPARATE_FUTURE_RUNNER
 browser_runner_worktree: ISOLATED_UNCOMMITTED
 browser_runner_artifact_disposition: KEEP_ISOLATED_BLOCKED
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
+PPF-001: BLOCKED
+PPF-002: NOT_READY
 ```
 
 ## Operational phase summary
@@ -66,7 +72,7 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 | Phase 12 | NOT_READY | Production craft and launch validation | Phase 11 | none | visual, accessibility, performance, and launch acceptance | launch criteria pass without critical defects | Phase 13 |
 | Phase 13 | ONGOING | Continuous governance | launch | ongoing Mind and repo governance | review and maintenance cadence | this phase does not end | Phase 13 |
 
-The immediate repository-local next phase remains Phase 3, and the immediate implementation-plan queue still begins with PPF-001 browser-runner isolation and disposition. The 039d3bf reconciliation commit updates the handoff metadata but does not close the browser-proof packet.
+The immediate repository-local next phase remains Phase 3, and the immediate implementation-plan queue still begins with PPF-001 browser-runner verification and disposition. The 039d3bf reconciliation commit updates the handoff metadata, and the browser-proof packet remains separate until explicit approval and execution.
 
 ## Product and company boundary
 
