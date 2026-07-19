@@ -729,3 +729,333 @@ Phase 13 — ONGOING
 ```
 
 The immediate next implementation packet after this documentation commit is PPF-001: browser-runner worktree isolation and stale-run disposition.
+
+## Product Experience Foundation Program
+
+The six-deliverable discovery-to-design sequence is canonical repository-local execution work and is defined in:
+
+```text
+docs/product/PRODUCT_EXPERIENCE_FOUNDATION_PROGRAM.md
+```
+
+### Cross-repository authority
+
+The Mind repository is the sole authority for ProChat company philosophy, product strategy, naming, hierarchy, positioning, audience, offer, business stage, legal-policy direction, growth policy, and cross-product roadmap.
+
+Canonical Mind entry point:
+
+```text
+mind/organizations/prochat/README.md
+```
+
+This ProChat repository executes the marketing experience. It must link to Mind, must not duplicate or reinvent high-level business strategy, and must escalate new strategic conclusions to Mind before using them as website direction.
+
+This program clarifies the meaning of earlier design-foundation status:
+
+- product truth, brand character, and factual design tokens exist;
+- the design-language foundation is available for exploration;
+- production visual design has **not** started;
+- an applied visual direction has **not** been approved;
+- wireframes and high-fidelity page designs have **not** been approved;
+- existing tokens must not be mistaken for a finished website design.
+
+The required progression is:
+
+| Order | Deliverable | Current status | Primary gate |
+|---:|---|---|---|
+| 0 / 1 | Mind-grounded founder discovery | COMPLETE | founder synthesis confirmed and promoted to canonical Mind philosophy |
+| 2 | Homepage information architecture | TEMPLATE_STRUCTURE_APPROVED | Nexus section sequence adapted to ProChat responsibilities |
+| 3 | Applied design language | APPROVED_FOR_HOMEPAGE | Nexus-derived dark system with Golos Text |
+| 4 | Wireframe/template mapping | APPROVED_FOR_IMPLEMENTATION | supplied full-page template is the layout reference |
+| 5 | High-fidelity visual direction | APPROVED_AS_TEMPLATE_ADOPTION | reproduce template; calibrate measured values in browser |
+| 6 | Implementation plan | READY | `PXF-003A` bounded foundation packet |
+
+### Roadmap rule
+
+No broad production visual implementation may begin merely because tokens or legacy components exist. Production implementation follows approved discovery, information architecture, wireframes, and high-fidelity direction.
+
+### Immediate owner-input gate
+
+Founder discovery is complete. The next task is `PXF-002 — Mind-to-ProChat public-platform translation brief`.
+
+The remaining owner inputs are website-specific:
+
+1. three to five admired websites or product pages;
+2. the exact qualities admired in each reference;
+3. anti-references or patterns to avoid;
+4. the audience that should feel most directly addressed on first load;
+5. the preferred initial visual-intensity range.
+
+These inputs guide homepage information architecture and wireframing. They do not redefine Mind strategy or serve as final design tokens.
+
+
+
+
+## Homepage template cutover — 2026-07-18
+
+The active public-homepage direction is now:
+
+```text
+docs/product/HOMEPAGE_NEXUS_TEMPLATE_ADOPTION.md
+```
+
+Decision:
+
+- adopt the supplied Nexus automation landing-page template as the direct structural and visual implementation reference;
+- use Golos Text as the primary font;
+- recreate the template's dark theme, navigation, hero, background animation, cards, diagrams, arrows, offer block, CTA, footer, and motion character;
+- adapt symbols and diagrams to ProChat Memory concepts;
+- preserve Mind-controlled product hierarchy and claims;
+- replace pricing with truthful product/access paths while ProChat remains pre-revenue;
+- freeze the Seedance/video-scroll/frame-sequence direction as optional future research.
+
+### Current homepage execution status
+
+| Task | Status | Gate |
+|---|---|---|
+| Reference template adoption | COMPLETE | owner decision documented |
+| Template token extraction | INITIAL COMPLETE | provisional values calibrated in browser |
+| Homepage shell/navigation | NOT_STARTED | visual comparison to supplied template |
+| Hero animation and memory cards | NOT_STARTED | accessible reduced-motion prototype |
+| Benefits and memory diagrams | NOT_STARTED | semantic mapping approved |
+| System chapter | NOT_STARTED | capture/review/retrieve story implemented |
+| Product/access cards | NOT_STARTED | no unapproved pricing claims |
+| Closing CTA and footer | NOT_STARTED | responsive and accessible |
+| Full-page validation | NOT_STARTED | browser evidence and owner review |
+
+### Immediate implementation task
+
+```yaml
+task_id: PXF-003A
+name: Nexus-template homepage foundation
+first_scope:
+  - dark homepage tokens
+  - floating navigation shell
+  - hero layout and copy
+  - lightweight memory background animation
+  - asymmetrical memory-card cluster
+  - reduced-motion fallback
+implementation_paths:
+  - src/app/(marketing)/App.tsx
+  - src/app/(marketing)/prochat-memory-theme.css
+  - src/app/(marketing)/components/layout/Footer.tsx
+  - src/components/logo.tsx
+validation:
+  - type_check
+  - lint
+  - responsive_browser_review
+  - WCAG_2_2_AA_checks
+  - reduced_motion_check
+```
+
+
+
+
+## Public conversion strategy foundation — PXF-003B0
+
+Canonical execution guide:
+
+```text
+docs/product/PUBLIC_CONVERSION_STRATEGY.md
+```
+
+The public platform is now planned as a GitHub-first adoption engine, subject to reconciliation with Mind's canonical business, licensing, repository, and public-platform strategy.
+
+Primary lifecycle:
+
+```text
+Discover → Understand → Trust → Star → Install → Use → Learn → Feedback → Contribute → Advocate
+```
+
+Roadmap rules:
+
+- every page has one primary conversion;
+- every homepage section answers one visitor question;
+- product adoption remains primary;
+- managed implementation remains a secondary organizational path;
+- open-source, free, repository, license, download, and managed-service claims are release-gated until Mind authority is updated and verified;
+- PXF-003B may implement the trust strip, benefits chapter, and illustration system using this conversion model, but final CTA labels must respect the release gate.
+
+
+
+
+## Memory Illustration Architecture Approval — PXF-003B1A
+
+The owner approved the PXF-003B1 implementation architecture:
+
+```text
+primitive → composition → section → page → website
+```
+
+Canonical visual philosophy:
+
+```text
+docs/product/MEMORY_VISUAL_LANGUAGE.md
+```
+
+Approved implementation alphabet:
+
+```text
+docs/product/MEMORY_ILLUSTRATION_PRIMITIVES.md
+src/app/(marketing)/components/illustrations/
+```
+
+PXF-003B2 is ready to compose the existing primitives into:
+
+- Capture;
+- Review and Structure;
+- Retrieval;
+- the homepage trust strip;
+- the benefits chapter.
+
+No new illustration primitive may be introduced without semantic and API documentation.
+
+
+
+
+## Product hierarchy and canonical-route correction — PXF-003B2A
+
+Canonical authority:
+
+```text
+docs/product/PUBLIC_PAGE_ARCHITECTURE.md
+```
+
+Current state is not yet compliant:
+
+- the homepage is broadly Memory-first, but several hero cards are QA-specific;
+- navigation uses legacy `/prochat-memory` and `/qa-memory` paths;
+- Workbench points to a contact query instead of a product page;
+- `/memory-qa` and `/workbench` are not implemented as canonical dedicated pages;
+- `/prochat-memory` remains on an unrelated historical visual system.
+
+PXF-003B2A must be completed before PXF-003C.
+
+Required outcome:
+
+```text
+/           generic Memory-first homepage
+/memory     general flagship product page
+/memory-qa  QA-specific product page
+/workbench  Workbench-specific product page
+```
+
+Legacy inbound routes must remain functional through explicit redirects after canonical pages are verified.
+
+The homepage specificity sequence is:
+
+```text
+generic Memory
+→ generic trust and benefits
+→ generic system model
+→ Memory for QA
+→ Workbench
+```
+
+
+
+
+## Live Motion Fidelity and HyperFrames Decision — 2026-07-19
+
+Canonical evaluation:
+
+```text
+docs/product/HYPERFRAMES_AND_LIVE_MOTION_EVALUATION.md
+```
+
+Decision:
+
+- HyperFrames is approved as a future motion-content production system for deterministic videos, launch clips, social assets, and rendered motion studies.
+- HyperFrames is not approved as the live website animation runtime.
+- The Nexus reference hero uses a live WebGL-shader and GSAP/SVG motion language; the current CSS stream effect does not yet match that fidelity.
+- Insert `PXF-003C1 — Live Hero Motion Fidelity Spike` before `PXF-003D`.
+- Do not animate every section continuously; preserve a clear motion hierarchy.
+
+### PXF-003C1 — Live Hero Motion Fidelity Spike
+
+```yaml
+status: READY
+coding: true
+execution_tool: Codex_with_Playwright
+purpose: Compare original browser-native implementations for the Nexus-style narrow laser field and select one production approach.
+prototypes:
+  - enhanced CSS/SVG using existing dependencies
+  - raw Canvas/WebGL shader
+  - optional small WebGL helper only if justified by measured complexity
+constraints:
+  - no copied proprietary source or assets
+  - no HyperFrames runtime
+  - no new dependency before prototype evidence
+  - static fallback preserved
+  - reduced motion required
+  - mobile density reduction required
+  - no semantic meaning exclusively in animation
+exit_gate:
+  - owner-approved motion technique
+  - measured performance
+  - screenshots or recordings across target viewports
+  - no console or WebGL errors
+  - graceful fallback verified
+next_task: PXF-003D
+```
+
+### Future optional packet
+
+```yaml
+task_id: PXF-MOTION-VIDEO-001
+name: ProChat Motion Asset Pipeline with HyperFrames
+status: FUTURE_OPTIONAL
+blocking_launch: false
+outputs:
+  - frame.md derived from ProChat design authorities
+  - reusable ProChat video composition kit
+  - launch and social video capability
+  - deterministic rendered motion studies
+```
+
+
+
+
+## PXF-003E — Combined Adoption Chapter
+
+**Status:** READY
+**Authority:** `docs/product/PUBLIC_CONVERSION_STRATEGY.md` and reconciled Mind legal/public-platform authority
+**Decision date:** 2026-07-19
+
+The next homepage chapter is a product-specific combined adoption chapter.
+
+It must preserve two distinct public paths:
+
+```text
+Memory for QA
+→ view and star the public source-available repository
+→ apply for the selected beta
+→ approved testers evaluate locally
+→ report sanitized feedback through Issues or Discussions
+
+Workbench
+→ view and star the AGPL public repository
+→ clone and self-host locally
+→ open Issues or join Discussions
+→ propose contributions under the contributor-rights boundary
+```
+
+Canonical repositories:
+
+```text
+Memory for QA: https://github.com/prochattools/memory-qa
+Workbench:     https://github.com/prochattools/workbench
+```
+
+Required claim boundaries:
+
+- Memory for QA is source-available, not open source.
+- Memory for QA is free only for approved beta participants.
+- Memory for QA code contributions are not accepted during the current beta.
+- Workbench is free and open source under `AGPL-3.0-only`.
+- Workbench may invite contribution proposals, but must not promise merge before the contributor-rights workflow.
+- No standardized managed-service offer is approved.
+- No analytics implementation is approved.
+- Site clicks must not be reported as confirmed stars, installations, contributions, or deployments.
+
+PXF-003E may proceed after PXF-003E0 validation completes.

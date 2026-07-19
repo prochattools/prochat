@@ -2573,3 +2573,379 @@ Review evidence and separately packetized fixes.
 After this documentation set is validated and committed, execute **PPF-001 — Browser-runner worktree isolation and stale-run disposition**.
 
 Do not modify production code, delete legacy files, install dependencies, or start design-lab implementation in the documentation commit.
+
+## Product Experience Foundation execution
+
+Implementation of the public website is gated by the Product Experience Foundation Program.
+
+Reference:
+
+- docs/product/PRODUCT_EXPERIENCE_FOUNDATION_PROGRAM.md
+
+Authority and execution order:
+
+1. Read canonical ProChat business authority from `mind/organizations/prochat/README.md` and its directed strategy files.
+2. PXF-001 — Mind-grounded founder discovery interview (non-coding).
+3. Record any new philosophy, strategy, positioning, audience, offer, naming, category, business-stage, or cross-product decision in Mind.
+4. Approve a linked ProChat marketing-execution brief derived from Mind.
+5. Approve information architecture.
+6. Approve applied design language.
+7. Approve wireframes.
+8. Approve high-fidelity design.
+9. Create bounded component and page implementation packets.
+10. Implement production UI.
+11. Collect browser evidence and complete review.
+
+Rules:
+
+- Mind is the sole authority for high-level ProChat philosophy and business strategy.
+- This repository must not duplicate or independently redefine that authority.
+- Engineering tasks must consume approved Mind strategy and approved ProChat design artifacts rather than inventing product direction during implementation.
+
+
+
+## PXF-003A — Nexus-template homepage foundation
+
+**Status:** READY
+**Authority:** `docs/product/HOMEPAGE_NEXUS_TEMPLATE_ADOPTION.md`
+**Coding:** yes
+**Scope discipline:** reproduce and adapt the approved template; do not redesign it
+
+### First implementation batch
+
+1. Establish homepage-scoped dark tokens in `src/app/(marketing)/prochat-memory-theme.css`.
+2. Preserve Golos Text and JetBrains Mono roles.
+3. Rebuild the marketing shell and floating navigation to match the supplied template.
+4. Rebuild the hero hierarchy:
+   - status pill;
+   - oversized centered headline;
+   - short supporting copy;
+   - primary action;
+   - trust line;
+   - lower asymmetrical memory-card cluster.
+5. Create a lightweight memory-themed background animation using CSS/SVG/canvas only after choosing the smallest performant method.
+6. Add `prefers-reduced-motion` behavior from the start.
+7. Adapt card content to reviewed memory, sources, corrections, patterns, retrieval, and QA lessons.
+8. Preserve current route and product-truth boundaries.
+
+### Exact initial paths
+
+```text
+src/app/(marketing)/App.tsx
+src/app/(marketing)/prochat-memory-theme.css
+src/app/(marketing)/components/layout/Footer.tsx
+src/components/logo.tsx
+```
+
+Additional files may be introduced only when the first batch proves a reusable component boundary.
+
+### Acceptance criteria
+
+- The first desktop viewport is recognizably faithful to the supplied Nexus template.
+- The page uses Golos Text, not Inter.
+- The hero is understandable without motion.
+- The background motion communicates memory flow rather than generic AI particles.
+- The hero card cluster contains truthful ProChat Memory examples.
+- Navigation, CTA, and cards work with keyboard, pointer, and touch.
+- Focus-visible indicators are present and pass contrast checks.
+- Reduced-motion mode removes continuous background animation.
+- No generated video, frame sequence, scroll hijacking, invented pricing, or unsupported capability claim is introduced.
+- Mobile layout preserves hierarchy without simply shrinking desktop.
+
+### Validation
+
+```yaml
+required:
+  - TypeScript check
+  - targeted lint
+  - security scan on changed paths
+  - git diff --check
+  - desktop browser screenshot comparison
+  - mobile browser screenshot comparison
+  - keyboard navigation review
+  - focus-visible review
+  - contrast review
+  - reduced-motion review
+not_required_in_first_batch:
+  - pricing implementation
+  - full page completion
+  - video generation
+  - frame extraction
+  - scroll-scrub prototype
+```
+
+### Second batch after approval
+
+After the shell and hero are visually approved:
+
+1. trust strip;
+2. three-benefit memory chapter;
+3. custom memory diagrams and arrows;
+4. capture/review/retrieve system chapter;
+5. product/access cards;
+6. closing CTA;
+7. footer completion;
+8. full-page responsive and accessibility evidence.
+
+
+
+
+## PXF-003B0 — Public Conversion Strategy Foundation
+
+**Status:** COMPLETE
+**Authority:** `docs/product/PUBLIC_CONVERSION_STRATEGY.md`
+**Coding:** no
+
+Implementation consequences:
+
+1. Every page must declare one primary conversion before UI work begins.
+2. Every homepage section must answer one explicit visitor question.
+3. The homepage lifecycle is GitHub-first: understand, trust, star, install, use, feedback, contribute, advocate.
+4. Managed implementation is a secondary path for organizations.
+5. Final public copy for “free,” “open source,” repository, license, install, download, contribution, and managed services is blocked until Mind reconciliation and repository verification are complete.
+6. PXF-003B may proceed with the trust strip, benefits chapter, and illustration system using release-safe placeholder or verified CTA labels.
+7. No later packet may optimize only for visual completeness; conversion purpose and measurable outcome are acceptance criteria.
+
+
+
+
+## PXF-003B2A — Product Hierarchy and Canonical Route Foundation
+
+**Status:** READY
+**Authority:** `docs/product/PUBLIC_PAGE_ARCHITECTURE.md`
+**Coding:** yes
+**Execution tool:** Codex with Playwright visual review
+
+### Purpose
+
+Correct the public route and product hierarchy before adding the next major homepage chapter.
+
+### Scope
+
+1. Keep `/` generic ProChat Memory-first.
+2. Remove QA-specific examples from the hero card cluster.
+3. Update primary navigation to:
+   - `/memory`
+   - `/memory-qa`
+   - `/workbench`
+   - `/docs`
+4. Create canonical dedicated product-page routes:
+   - `/memory`
+   - `/memory-qa`
+   - `/workbench`
+5. Preserve inbound compatibility:
+   - `/prochat-memory` redirects to `/memory` after verification;
+   - `/qa-memory` redirects to `/memory-qa` after verification.
+6. Do not use a contact-query URL as the Workbench product destination.
+7. Keep the homepage hero, trust strip, benefits, and system story niche-agnostic.
+8. Introduce QA and Workbench only in lower product-specific sections or dedicated pages.
+9. Preserve the Nexus-derived visual system across all canonical product pages.
+10. Do not publish unverified repository, licensing, installation, free/open-source, or managed-service claims.
+
+### Canonical page responsibilities
+
+```text
+/           company + generic Memory story
+/memory     general flagship product page
+/memory-qa  QA-specific edition page
+/workbench  Workbench-specific product page
+```
+
+### Acceptance criteria
+
+- Homepage hero contains no QA-only terminology or browser-run evidence.
+- Homepage navigation uses canonical paths.
+- `/memory-qa` is fully QA-specific.
+- `/workbench` is fully Workbench-specific.
+- `/memory` explains the general flagship model without pretending every niche edition exists.
+- Legacy routes preserve inbound traffic.
+- Canonical metadata and URLs are correct.
+- Visual design remains coherent across pages.
+- No unrelated page or feature is changed.
+- PXF-003C does not begin in this packet.
+
+
+
+
+## PXF-003C1 — Live Hero Motion Fidelity Spike
+
+**Status:** READY
+**Authority:** `docs/product/HYPERFRAMES_AND_LIVE_MOTION_EVALUATION.md`
+**Coding:** yes
+**Execution tool:** Codex with Playwright and browser performance inspection
+
+### Purpose
+
+Determine and validate the best original live implementation for the Nexus-style narrow blue/teal laser field behind the homepage hero.
+
+### Required prototypes
+
+1. Enhanced CSS/SVG using existing project dependencies.
+2. Raw Canvas/WebGL shader with no added runtime dependency.
+3. Optional helper-library prototype only if the first two reveal a measurable engineering need.
+
+### Scope
+
+- preserve the approved hero content and card hierarchy;
+- replace or augment only the hero background animation layer;
+- reproduce the reference's perceived narrow luminous field, depth, flow, and restrained node/orbit behavior;
+- adapt the effect to ProChat Memory through evidence fragments and convergence toward structured memory;
+- maintain a semantic static fallback;
+- reduce motion and density on mobile;
+- pause work when off-screen;
+- preserve zero layout shift;
+- keep the implementation original.
+
+### Prohibited
+
+- copying proprietary template source, shaders, or assets without verified permission;
+- adding HyperFrames as a website runtime;
+- adding a dependency before prototype evidence;
+- replacing the hero with video;
+- scroll hijacking;
+- continuous animation behind every later section;
+- beginning PXF-003D.
+
+### Validation
+
+```yaml
+visual:
+  - 1440x1000
+  - 1024x900
+  - 390x844
+  - 320x800
+  - reduced_motion
+technical:
+  - no_console_errors
+  - no_webgl_errors
+  - static_fallback
+  - offscreen_pause
+  - zero_layout_shift
+  - no_horizontal_overflow
+  - scoped_typescript
+  - targeted_eslint
+  - security_scan
+  - git_diff_check
+performance_targets:
+  - additional_initial_js_gzip_lte_35kb
+  - lcp_regression_lte_150ms
+  - mobile_fps_gte_45_target
+  - desktop_fps_gte_55_target
+```
+
+### Exit gate
+
+- side-by-side evidence for each viable prototype;
+- measured bundle and runtime cost;
+- owner recommendation and selected approach;
+- production-quality implementation of only the selected approach;
+- documented fallback and reduced-motion behavior;
+- no commit unless explicitly authorized.
+
+### Follow-up
+
+After PXF-003C1 is reviewed, continue with:
+
+```text
+PXF-003D — Homepage Product Introduction: Memory for QA and Workbench
+```
+
+HyperFrames remains reserved for:
+
+```text
+PXF-MOTION-VIDEO-001 — future optional rendered motion-asset pipeline
+```
+
+
+
+
+## PXF-003E — Combined Adoption Chapter
+
+**Status:** READY
+**Authority:** reconciled Mind legal/public-platform authority and `docs/product/PUBLIC_CONVERSION_STRATEGY.md`
+**Coding:** yes
+**Execution tool:** Codex with Playwright
+
+### Purpose
+
+Add one homepage chapter after the current product-introduction chapter that converts visitors into the correct product-specific participation path without flattening legal, licensing, or availability differences.
+
+### Memory for QA path — primary
+
+Approved facts and actions:
+
+- public repository: `https://github.com/prochattools/memory-qa`;
+- public source-available selected beta;
+- free for approved beta participants;
+- view and star repository;
+- apply for selected beta;
+- approved participants may clone and evaluate locally under the beta license;
+- report sanitized feedback through GitHub Issues or Discussions.
+
+Prohibited:
+
+- calling Memory for QA open source;
+- general installation or unrestricted-use language;
+- code-contribution or pull-request invitation;
+- production-readiness claims;
+- commercial-use claims without a separate written agreement.
+
+### Workbench path — secondary
+
+Approved facts and actions:
+
+- public repository: `https://github.com/prochattools/workbench`;
+- free and self-hosted;
+- open source under `AGPL-3.0-only`;
+- view, star, fork, clone, and self-host;
+- open an issue or join a discussion;
+- propose a contribution;
+- separate commercial or OEM licensing may be requested.
+
+Required qualification:
+
+- external pull-request merge requires the contributor-rights workflow;
+- do not promise merge, support response time, or commercial/OEM rights under the public license.
+
+### Chapter requirements
+
+1. Insert after `#current-products`.
+2. Keep Memory for QA visually primary.
+3. Preserve Workbench as a separate second product.
+4. Use direct GitHub-native labels.
+5. Do not create a universal “open source” or “install now” message.
+6. Do not add managed-service packaging.
+7. Do not add analytics claims or counters.
+8. Do not display unverified star, install, issue, or contribution counts.
+9. Preserve Nexus-derived visual language, accessibility, reduced motion, and 320px responsiveness.
+10. Do not implement the closing CTA or footer redesign in this packet.
+
+### Validation
+
+```yaml
+static:
+  - scoped_typescript
+  - targeted_eslint
+  - design_lint_with_unrelated_findings_separated
+  - changed_path_security_scan
+  - git_diff_check
+browser:
+  - 1440x1000
+  - 1024x900
+  - 390x844
+  - 320x800
+  - full_page_desktop
+  - full_page_mobile
+  - reduced_motion
+behavior:
+  - repository_links_resolve
+  - memory_qa_claims_are_source_available_beta_only
+  - workbench_claims_include_AGPL_3_0_only
+  - no_horizontal_overflow
+  - visible_focus_states
+  - no_console_or_request_errors
+```
+
+### Stop condition
+
+Stop after the Combined Adoption Chapter and its responsive/browser validation. Do not begin closing CTA, managed implementation, analytics, footer redesign, or later work.

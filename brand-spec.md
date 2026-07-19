@@ -249,3 +249,29 @@ mind/wiki/organisations/prochat/brand/website-build-contract.md
 DESIGN.md
 PRODUCT.md
 ```
+
+
+
+
+## Public homepage token override — 2026-07-18
+
+The company landing page uses the owner-approved Nexus-derived dark template system defined in:
+
+```text
+docs/product/HOMEPAGE_NEXUS_TEMPLATE_ADOPTION.md
+```
+
+Scope:
+
+```yaml
+surface: public_company_homepage
+primary_font: Golos Text
+technical_font: JetBrains Mono
+default_mode: dark
+template_reference: nexus_automation_landing_page
+video_scroll: disabled_for_initial_implementation
+```
+
+The template-adoption document controls homepage-specific color, spacing, radius, border, grid, card, motion, and diagram tokens where it conflicts with the earlier light/cobalt homepage direction in this file.
+
+This override does not automatically change authenticated product interfaces, documentation, or application shells.

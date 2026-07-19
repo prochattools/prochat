@@ -6,6 +6,20 @@
 
 Existing themes, page-specific styles, gradients, fonts, and design experiments in this repository are historical implementation material. They are not design authority.
 
+## Public homepage template override — 2026-07-18
+
+The owner-approved public homepage direction is defined in:
+
+```text
+docs/product/HOMEPAGE_NEXUS_TEMPLATE_ADOPTION.md
+```
+
+For the company landing page, that document takes precedence over conflicting public-homepage guidance in this file. The homepage must use the supplied Nexus-derived dark template system, Golos Text, its page structure, card/grid language, diagrams, arrows, and motion character.
+
+This is a scoped public-homepage override. It does not automatically restyle authenticated product interfaces or documentation surfaces.
+
+The prior generated-video and frame-scrub homepage direction is frozen optional research.
+
 > ProChat should feel like a calm, trustworthy working system for structured knowledge—not like an AI spectacle.
 
 Operational rule:
@@ -536,3 +550,24 @@ docs/homepage-design-spec.md
 docs/homepage-technical-design.md
 docs/homepage-validation-plan.md
 ```
+
+
+
+
+## Conversion-purpose rule
+
+Public-page design must follow:
+
+```text
+docs/product/PUBLIC_CONVERSION_STRATEGY.md
+```
+
+Visual fidelity to the Nexus template is necessary but not sufficient. Every page and section must have one explicit visitor question, one primary conversion responsibility, and a measurable intended outcome.
+
+The design must support the lifecycle:
+
+```text
+Discover → Understand → Trust → Star → Install → Use → Learn → Feedback → Contribute → Advocate
+```
+
+Managed implementation remains a secondary organizational path. Open-source, free, repository, licensing, download, and service claims must not be published until the controlling Mind authority and repository facts are reconciled and verified.
