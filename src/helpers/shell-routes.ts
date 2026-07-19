@@ -15,7 +15,7 @@ export const CURRENT_CANONICAL_VISUAL_ROUTES = [] as const
 
 export const FUTURE_CANONICAL_VISUAL_ROUTES = [
   '/memory',
-  '/memory/qa',
+  '/memory-qa',
   '/workbench',
   '/philosophy',
   '/about',
@@ -33,9 +33,9 @@ export const SHELL_ROUTE_DEFINITIONS: readonly ShellRouteDefinition[] = [
   { routeId: 'ROUTE-009', sourcePattern: 'global 404', runtimePattern: null, shellClass: 'no_shared_shell' },
   { routeId: 'ROUTE-010', sourcePattern: 'global error', runtimePattern: null, shellClass: 'no_shared_shell' },
   { routeId: 'ROUTE-011', sourcePattern: 'docs 404', runtimePattern: null, shellClass: 'no_shared_shell' },
-  { routeId: 'ROUTE-012', sourcePattern: 'missing /memory', runtimePattern: '/memory', shellClass: 'canonical_public_shell' },
-  { routeId: 'ROUTE-013', sourcePattern: 'missing /memory/qa', runtimePattern: '/memory/qa', shellClass: 'canonical_public_shell' },
-  { routeId: 'ROUTE-014', sourcePattern: 'missing /workbench', runtimePattern: '/workbench', shellClass: 'canonical_public_shell' },
+  { routeId: 'ROUTE-012', sourcePattern: '/memory', runtimePattern: '/memory', shellClass: 'canonical_public_shell' },
+  { routeId: 'ROUTE-013', sourcePattern: '/memory-qa', runtimePattern: '/memory-qa', shellClass: 'canonical_public_shell' },
+  { routeId: 'ROUTE-014', sourcePattern: '/workbench', runtimePattern: '/workbench', shellClass: 'canonical_public_shell' },
   { routeId: 'ROUTE-015', sourcePattern: 'missing /philosophy', runtimePattern: '/philosophy', shellClass: 'canonical_public_shell' },
   { routeId: 'ROUTE-016', sourcePattern: 'missing /about', runtimePattern: '/about', shellClass: 'canonical_public_shell' },
   { routeId: 'ROUTE-017', sourcePattern: '/buildflow', runtimePattern: '/buildflow', shellClass: 'temporary_legacy_compatibility' },

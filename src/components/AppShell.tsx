@@ -8,6 +8,9 @@ import { isChromelessPath, isFooterlessPath, isFullscreenPath, isMarketingSurfac
 function hasIntrinsicHeaderSpacing(pathname: string) {
 	return (
 		pathname === '/' ||
+		pathname === '/memory' ||
+		pathname === '/memory-qa' ||
+		pathname === '/workbench' ||
 		pathname === '/contact' ||
 		pathname === '/learn' ||
 		pathname.startsWith('/learn/') ||

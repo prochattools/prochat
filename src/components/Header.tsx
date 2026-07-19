@@ -22,10 +22,10 @@ import { SocialIcon, type SocialIconName } from '@/components/ui/social-icons'
 import { useScrollDirection } from '@/hooks/useScrollDirection'
 
 const NAV_ITEMS = [
-  { label: 'Memory', href: '/prochat-memory' },
-  { label: 'Memory for QA', href: '/qa-memory' },
-  { label: 'Workbench', href: '/contact?topic=workbench' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Memory', href: '/memory' },
+  { label: 'Memory for QA', href: '/memory-qa' },
+  { label: 'Workbench', href: '/workbench' },
+  { label: 'Documentation', href: '/docs' },
 ] as const
 
 const MOBILE_SECONDARY_ITEMS = [
@@ -81,12 +81,12 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 			</ul>
 			<div className="justify-self-end">
 				<Link
-					href="/contact?topic=memory-qa"
+					href="/memory"
 					onClick={() =>
 						trackEvent('nav_cta_click', {
 							location: 'header_capsule',
-							product: 'prochat_memory_for_qa',
-							cta: 'memory_qa_tester_interest',
+							product: 'prochat_memory',
+							cta: 'explore_memory',
 							source_page: pathname,
 						})
 					}
@@ -95,7 +95,7 @@ function DesktopNavigation({ pathname }: { pathname: string }) {
 						'h-10 origin-center scale-[1.15] rounded-[var(--pc-button-radius)] px-5 font-mono text-[0.95rem] font-bold tracking-[0.04em] text-white [font-variant-ligatures:none]',
 					)}
 				>
-					<span>Become a tester</span>
+					<span>Explore Memory</span>
 				</Link>
 			</div>
 		</nav>
@@ -115,17 +115,17 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 					className="h-9 rounded-[var(--pc-button-radius)] px-2.5 text-[0.72rem] font-bold tracking-[0.05em] sm:px-3 sm:text-[0.7rem] sm:tracking-[0.08em]"
 				>
 					<Link
-						href="/contact"
+						href="/memory"
 						onClick={() =>
 							trackEvent('nav_cta_click', {
 								location: 'mobile_header_capsule',
-								product: 'prochat_memory_for_qa',
-								cta: 'memory_qa_tester_interest',
+								product: 'prochat_memory',
+								cta: 'explore_memory',
 								source_page: pathname,
 							})
 						}
 					>
-						<span className="whitespace-nowrap">Become a tester</span>
+						<span className="whitespace-nowrap">Explore Memory</span>
 					</Link>
 				</Button>
 				<Sheet open={open} onOpenChange={setOpen}>
@@ -213,18 +213,18 @@ function MobileNavigation({ pathname }: { pathname: string }) {
 									className="h-auto w-full rounded-[var(--pc-button-radius)] py-4 shadow-none hover:brightness-[1.03] [&_.pc-action-label]:text-base [&_.pc-action-label]:tracking-[0.14em]"
 								>
 									<Link
-										href="/contact"
+										href="/memory"
 										onClick={() => {
 											trackEvent('nav_cta_click', {
 												location: 'mobile_header_drawer',
-												product: 'prochat_memory_for_qa',
-												cta: 'memory_qa_tester_interest',
+												product: 'prochat_memory',
+												cta: 'explore_memory',
 												source_page: pathname,
 											})
 											setOpen(false)
 										}}
 									>
-										Become a tester
+										Explore Memory
 									</Link>
 								</Button>
 							</div>

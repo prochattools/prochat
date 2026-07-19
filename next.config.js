@@ -21,6 +21,16 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/prochat-memory',
+        destination: '/memory',
+        permanent: true,
+      },
+      {
+        source: '/qa-memory',
+        destination: '/memory-qa',
+        permanent: true,
+      },
+      {
         source: '/store',
         destination: '/kits',
         permanent: true,

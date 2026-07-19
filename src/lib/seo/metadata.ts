@@ -4,9 +4,9 @@ import config from '@/config'
 import { getSiteUrl } from '@/libs/site-url'
 import { sanitizeSocialHeadlineLine, sanitizeSocialSubtitle } from '@/lib/social-image'
 
-export const SITE_TITLE_SUFFIX = 'ProChat — Build SaaS with Structure, not Guesswork.'
+export const SITE_TITLE_SUFFIX = 'ProChat'
 export const DEFAULT_DESCRIPTION =
-  'ProChat helps founders build SaaS with structure, not guesswork. Structured systems, production-safe foundations, and AI-driven execution for non-technical founders.'
+  'ProChat builds local-first, review-first tools for reusable memory and safe AI-assisted project work.'
 
 const brandPattern = /\s*[|—-]\s*ProChat$/i
 
@@ -152,9 +152,9 @@ export const getSEOTags = ({
     keywords: keywords || [config.appName],
     applicationName: config.appName,
     icons: {
-      icon: '/favicon.ico',
-      shortcut: '/favicon.ico',
-      apple: '/favicon.ico',
+      icon: '/favicon.svg',
+      shortcut: '/favicon.svg',
+      apple: '/favicon.svg',
     },
     metadataBase: new URL(`${siteUrl}/`),
     openGraph: {

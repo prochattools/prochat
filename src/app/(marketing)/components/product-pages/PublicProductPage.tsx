@@ -1,0 +1,364 @@
+import type { CSSProperties, ReactNode } from 'react'
+import Link from 'next/link'
+
+import '../../prochat-memory-theme.css'
+import './product-pages.css'
+
+const navigation = [
+  { href: '/memory', label: 'Memory' },
+  { href: '/memory-qa', label: 'Memory for QA' },
+  { href: '/workbench', label: 'Workbench' },
+  { href: '/docs', label: 'Documentation' },
+] as const
+
+type CanonicalProductRoute = '/memory' | '/memory-qa' | '/workbench'
+
+export interface ProductAction {
+  href: string
+  label: string
+  external?: boolean
+}
+
+function ArrowIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 8h9" />
+      <path d="m9 4 4 4-4 4" />
+    </svg>
+  )
+}
+
+function ProductActionLink({
+  action,
+  className,
+}: {
+  action: ProductAction
+  className: string
+}) {
+  const content = (
+    <>
+      {action.label}
+      <ArrowIcon />
+    </>
+  )
+
+  if (action.external) {
+    return (
+      <a
+        href={action.href}
+        className={className}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {content}
+      </a>
+    )
+  }
+
+  return (
+    <Link href={action.href} className={className}>
+      {content}
+    </Link>
+  )
+}
+
+export function PublicProductNavigation({
+  activeRoute,
+}: {
+  activeRoute: CanonicalProductRoute
+}) {
+  return (
+    <header className="pm-site-header">
+      <nav className="pm-navbar" aria-label="Primary navigation">
+        <Link href="/" className="pm-wordmark" aria-label="ProChat home">
+          <span className="pm-wordmark-mark">P</span>
+          <span>prochat</span>
+        </Link>
+
+        <div className="pm-nav-links">
+          {navigation.map(item => (
+            <Link
+              key={item.href}
+              href={item.href}
+              aria-current={item.href === activeRoute ? 'page' : undefined}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+
+        <div className="pm-nav-actions">
+          <Link href="/contact" className="pm-nav-text-action">
+            Contact
+          </Link>
+          <Link href="/memory" className="pm-pill-button pm-pill-button--dark">
+            Explore Memory
+            <ArrowIcon />
+          </Link>
+        </div>
+
+        <details className="pm-mobile-nav">
+          <summary>Menu</summary>
+          <div className="pm-mobile-nav-panel">
+            {navigation.map(item => (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={item.href === activeRoute ? 'page' : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link href="/contact">Contact</Link>
+            <Link href="/memory">Explore Memory</Link>
+          </div>
+        </details>
+      </nav>
+    </header>
+  )
+}
+
+export interface PublicProductPageProps {
+  activeRoute: CanonicalProductRoute
+  eyebrow: string
+  title: string
+  description: string
+  primaryAction: ProductAction
+  secondaryAction: ProductAction
+  principles: readonly string[]
+  visual: ReactNode
+  children: ReactNode
+}
+
+export function PublicProductPage({
+  activeRoute,
+  eyebrow,
+  title,
+  description,
+  primaryAction,
+  secondaryAction,
+  principles,
+  visual,
+  children,
+}: PublicProductPageProps) {
+  const titleId = `pm-product-title-${activeRoute.slice(1)}`
+
+  return (
+    <div className="pm-marketing-page pm-public-product-page">
+      <section className="pm-product-hero" aria-labelledby={titleId}>
+        <div className="pm-grid-overlay" aria-hidden="true" />
+        <PublicProductNavigation activeRoute={activeRoute} />
+
+        <div className="pm-product-hero__layout">
+          <div className="pm-product-hero__copy">
+            <div className="pm-section-pill">
+              <span className="pm-section-pill__mark" aria-hidden="true" />
+              {eyebrow}
+            </div>
+            <h1 id={titleId}>{title}</h1>
+            <p>{description}</p>
+
+            <div className="pm-product-actions">
+              <ProductActionLink
+                action={primaryAction}
+                className="pm-pill-button pm-pill-button--light"
+              />
+              <ProductActionLink
+                action={secondaryAction}
+                className="pm-hero-secondary-link"
+              />
+            </div>
+
+            <ul className="pm-product-principles" aria-label="Product principles">
+              {principles.map(principle => (
+                <li key={principle}>{principle}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="pm-product-hero__visual">{visual}</div>
+        </div>
+      </section>
+
+      {children}
+    </div>
+  )
+}
+
+export interface ProductSectionProps {
+  id?: string
+  eyebrow: string
+  title: string
+  description?: string
+  tone?: 'default' | 'muted'
+  children: ReactNode
+}
+
+export function ProductSection({
+  id,
+  eyebrow,
+  title,
+  description,
+  tone = 'default',
+  children,
+}: ProductSectionProps) {
+  const headingId = id ? `${id}-title` : undefined
+
+  return (
+    <section
+      id={id}
+      className={`pm-product-section pm-product-section--${tone}`}
+      aria-labelledby={headingId}
+    >
+      <div className="pm-product-section__inner">
+        <header className="pm-product-section__header">
+          <span>{eyebrow}</span>
+          <h2 id={headingId}>{title}</h2>
+          {description ? <p>{description}</p> : null}
+        </header>
+        {children}
+      </div>
+    </section>
+  )
+}
+
+export function ProductCardGrid({
+  children,
+  columns = 3,
+}: {
+  children: ReactNode
+  columns?: 2 | 3 | 4
+}) {
+  return (
+    <div
+      className="pm-product-card-grid"
+      style={{ '--pm-product-columns': columns } as CSSProperties}
+    >
+      {children}
+    </div>
+  )
+}
+
+export function ProductCard({
+  index,
+  title,
+  children,
+}: {
+  index: string
+  title: string
+  children: ReactNode
+}) {
+  return (
+    <article className="pm-product-card">
+      <span className="pm-product-card__index">{index}</span>
+      <h3>{title}</h3>
+      <div className="pm-product-card__body">{children}</div>
+    </article>
+  )
+}
+
+export function ProductIllustrationCard({
+  index,
+  title,
+  description,
+  visual,
+}: {
+  index: string
+  title: string
+  description: string
+  visual: ReactNode
+}) {
+  return (
+    <article className="pm-product-illustration-card">
+      <div className="pm-product-illustration-card__visual">{visual}</div>
+      <span>{index}</span>
+      <h3>{title}</h3>
+      <p>{description}</p>
+    </article>
+  )
+}
+
+export function ProductFlow({
+  items,
+}: {
+  items: readonly { label: string; description: string }[]
+}) {
+  return (
+    <ol className="pm-product-flow">
+      {items.map((item, index) => (
+        <li key={item.label}>
+          <span className="pm-product-flow__index">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <div>
+            <h3>{item.label}</h3>
+            <p>{item.description}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+export function ProductBoundaryList({
+  title,
+  items,
+}: {
+  title: string
+  items: readonly string[]
+}) {
+  return (
+    <aside className="pm-product-boundary" aria-label={title}>
+      <div className="pm-product-boundary__title">{title}</div>
+      <ul>
+        {items.map(item => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </aside>
+  )
+}
+
+export function ProductPageAction({
+  eyebrow,
+  title,
+  description,
+  primaryAction,
+  secondaryAction,
+}: {
+  eyebrow: string
+  title: string
+  description: string
+  primaryAction: ProductAction
+  secondaryAction?: ProductAction
+}) {
+  return (
+    <section className="pm-product-close" aria-labelledby="pm-product-close-title">
+      <span>{eyebrow}</span>
+      <h2 id="pm-product-close-title">{title}</h2>
+      <p>{description}</p>
+      <div className="pm-product-actions">
+        <ProductActionLink
+          action={primaryAction}
+          className="pm-pill-button pm-pill-button--light"
+        />
+        {secondaryAction ? (
+          <ProductActionLink
+            action={secondaryAction}
+            className="pm-hero-secondary-link"
+          />
+        ) : null}
+      </div>
+    </section>
+  )
+}
