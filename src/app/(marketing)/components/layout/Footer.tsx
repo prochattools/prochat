@@ -4,44 +4,61 @@ import Logo from '@/components/logo'
 import { SocialIcon } from '@/components/ui/social-icons'
 
 const PRODUCT_LINKS = [
-  { href: '/prochat-memory', label: 'ProChat Memory' },
-  { href: '/qa-memory', label: 'ProChat Memory for QA' },
-  { href: '/contact?topic=workbench', label: 'ProChat Workbench' },
-] as const
-
-const USE_LINKS = [
-  { href: '/prochat-memory', label: 'Reusable memory' },
-  { href: '/qa-memory', label: 'QA memory' },
-  { href: '/contact', label: 'Contact ProChat' },
+  { href: '/memory', label: 'ProChat Memory' },
+  { href: '/memory-qa', label: 'ProChat Memory for QA' },
+  { href: '/workbench', label: 'ProChat Workbench' },
 ] as const
 
 const RESOURCE_LINKS = [
   { href: '/docs', label: 'Documentation' },
+  { href: '/contact', label: 'Contact' },
   { href: '/privacy', label: 'Privacy' },
   { href: '/terms', label: 'Terms' },
 ] as const
 
-const CONTACT_ACTIONS = [
-  { href: 'https://github.com/prochattools', label: 'GitHub', icon: 'github' },
-  { href: 'https://www.linkedin.com/company/prochattools', label: 'LinkedIn', icon: 'linkedin' },
-  { href: 'https://x.com/stevewesthoek', label: 'X', icon: 'x' },
+const PARTICIPATION_LINKS = [
+  { href: 'https://github.com/prochattools/memory-qa', label: 'Memory for QA repository', external: true },
+  { href: 'https://github.com/prochattools/workbench', label: 'Workbench repository', external: true },
+  { href: 'https://github.com/prochattools', label: 'ProChat on GitHub', external: true },
 ] as const
 
-function FooterColumn({ title, links }: { title: string; links: readonly { href: string; label: string }[] }) {
+const SOCIAL_LINKS = [
+  { href: 'https://github.com/prochattools', label: 'GitHub', icon: 'github' },
+  { href: 'https://www.linkedin.com/company/prochattools', label: 'LinkedIn', icon: 'linkedin' },
+] as const
+
+type FooterLink = {
+  href: string
+  label: string
+  external?: boolean
+}
+
+function FooterColumn({ title, links }: { title: string; links: readonly FooterLink[] }) {
   return (
-    <div className="space-y-4">
-      <h4 className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/85">
+    <div className="pc-footer-column">
+      <h4 className="pc-footer-column__title">
         {title}
       </h4>
-      <ul className="space-y-3">
+      <ul className="pc-footer-column__list">
         {links.map(link => (
           <li key={`${link.href}-${link.label}`}>
-            <Link
-              href={link.href}
-              className="text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground"
-            >
-              {link.label}
-            </Link>
+            {link.external ? (
+              <a
+                href={link.href}
+                className="pc-footer-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                href={link.href}
+                className="pc-footer-link"
+              >
+                {link.label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>
@@ -51,40 +68,35 @@ function FooterColumn({ title, links }: { title: string; links: readonly { href:
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="relative z-10 border-t border-border/60 bg-background/55 text-foreground backdrop-blur-xl">
-      <div className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.6fr)] lg:gap-16">
-          <div className="max-w-md space-y-6">
-            <Link href="/" className="inline-flex" aria-label="ProChat home">
+    <footer className="pc-footer" aria-labelledby="pc-footer-title">
+      <div className="pc-footer__inner">
+        <div className="pc-footer__grid">
+          <div className="pc-footer__brand">
+            <Link href="/" className="pc-footer__logo" aria-label="ProChat home">
               <Logo scale={1.02} />
             </Link>
-            <div className="space-y-3">
-              <p className="text-base leading-7 text-muted-foreground">
-                Private, persistent memory for AI-assisted work.
-              </p>
-              <p className="text-base font-medium leading-7 text-foreground">
-                Your files. Your memory. Under your control.
-              </p>
-            </div>
+            <h2 id="pc-footer-title">Local, durable memory for AI-assisted work.</h2>
+            <p>
+              ProChat keeps the public path simple: Memory first, Memory for QA as the selected beta,
+              and Workbench as guarded local project work.
+            </p>
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="pc-footer__links" aria-label="Footer navigation">
             <FooterColumn title="Product" links={PRODUCT_LINKS} />
-            <FooterColumn title="Use cases" links={USE_LINKS} />
             <FooterColumn title="Resources" links={RESOURCE_LINKS} />
-            <div className="space-y-4">
-              <h4 className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/85">
-                Contact
-              </h4>
-              <div className="space-y-3">
-                {CONTACT_ACTIONS.map(action => (
+            <FooterColumn title="Participate" links={PARTICIPATION_LINKS} />
+            <div className="pc-footer-column">
+              <h4 className="pc-footer-column__title">Social</h4>
+              <div className="pc-footer-social">
+                {SOCIAL_LINKS.map(action => (
                   <a
                     key={action.label}
                     href={action.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={action.label}
-                    className="inline-flex items-center gap-2 text-sm leading-6 text-muted-foreground transition-colors hover:text-foreground"
+                    className="pc-footer-social__link"
                   >
                     <SocialIcon icon={action.icon} className="h-4 w-4 fill-current" />
                     <span>{action.label}</span>
@@ -95,7 +107,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-border/60 pt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <div className="pc-footer__bottom">
           <span>© {new Date().getFullYear()} ProChat</span>
           <span>Local files · Human-reviewed · Portable memory</span>
         </div>

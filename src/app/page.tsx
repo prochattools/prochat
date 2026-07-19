@@ -2,7 +2,7 @@ import { getSEOTags } from '@/libs/seo'
 import MarketingApp from './(marketing)/App'
 
 export const metadata = getSEOTags({
-  title: 'ProChat | Memory for AI-Assisted Work',
+  title: 'Memory for AI-Assisted Work',
   description:
     'ProChat builds local-first, review-first tools for reusable memory and safe AI-assisted project work.',
   keywords: [
@@ -16,7 +16,7 @@ export const metadata = getSEOTags({
     'safe AI-assisted project work',
   ],
   openGraph: {
-    title: 'ProChat | Memory for AI-Assisted Work',
+    title: 'Memory for AI-Assisted Work',
     description:
       'Local-first, review-first tools for reusable memory and safe AI-assisted project work.',
     images: ['/og'],

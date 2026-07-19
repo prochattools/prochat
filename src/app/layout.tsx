@@ -14,7 +14,7 @@ import '@fontsource/jetbrains-mono'
 
 import '@/assets/styles/globals.scss'
 
-const ROOT_TITLE = 'ProChat — Memory for AI-Assisted Work'
+const ROOT_TITLE = 'Memory for AI-Assisted Work'
 const ROOT_DESCRIPTION =
   'ProChat builds local-first, review-first tools for reusable memory and safe AI-assisted project work.'
 
