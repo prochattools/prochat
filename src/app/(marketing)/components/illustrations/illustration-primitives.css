@@ -1,0 +1,485 @@
+.pm-illustration {
+  --pmi-canvas: var(--pm-illustration-canvas, var(--pm-canvas, rgb(0 0 0)));
+  --pmi-surface: var(--pm-illustration-surface, var(--pm-surface, rgb(10 10 10)));
+  --pmi-surface-raised: var(
+    --pm-illustration-surface-raised,
+    var(--pm-surface-raised, rgb(16 16 16))
+  );
+  --pmi-text: var(--pm-illustration-text, var(--pm-text, rgb(250 250 250)));
+  --pmi-text-secondary: var(
+    --pm-illustration-text-secondary,
+    var(--pm-text-secondary, rgb(163 163 163))
+  );
+  --pmi-text-muted: var(
+    --pm-illustration-text-muted,
+    var(--pm-text-muted, rgb(121 121 121))
+  );
+  --pmi-border: var(
+    --pm-illustration-border,
+    var(--pm-border, rgb(255 255 255 / 0.15))
+  );
+  --pmi-border-subtle: var(
+    --pm-illustration-border-subtle,
+    var(--pm-border-subtle, rgb(255 255 255 / 0.09))
+  );
+  --pmi-border-faint: var(
+    --pm-illustration-border-faint,
+    var(--pm-border-faint, rgb(255 255 255 / 0.055))
+  );
+  --pmi-accent: var(
+    --pm-illustration-accent,
+    var(--pm-accent, rgb(86 216 202))
+  );
+  --pmi-accent-soft: var(
+    --pm-illustration-accent-soft,
+    var(--pm-accent-soft, rgb(86 216 202 / 0.13))
+  );
+  --pmi-duration: 560ms;
+  --pmi-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  color: var(--pmi-text);
+  font-family: var(--font-brand), 'Golos Text', system-ui, sans-serif;
+}
+
+.pm-primitive {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.pm-illustration--reveal .pm-primitive {
+  animation: pm-illustration-reveal var(--pmi-duration) var(--pmi-ease) both;
+  animation-delay: calc(var(--pm-reveal-order, 0) * 75ms);
+}
+
+.pm-primitive__surface {
+  fill: var(--pmi-surface);
+  stroke: var(--pmi-border-subtle);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-primitive__surface-raised {
+  fill: var(--pmi-surface-raised);
+  stroke: var(--pmi-border);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-primitive__line {
+  fill: none;
+  stroke: var(--pmi-text-secondary);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-primitive__line-muted {
+  fill: none;
+  stroke: var(--pmi-border);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-primitive__line-accent {
+  fill: none;
+  stroke: var(--pmi-accent);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.35;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-primitive__fill-muted {
+  fill: var(--pmi-text-muted);
+}
+
+.pm-primitive__fill-secondary {
+  fill: var(--pmi-text-secondary);
+}
+
+.pm-primitive__fill-accent {
+  fill: var(--pmi-accent);
+}
+
+.pm-primitive__label {
+  fill: var(--pmi-text);
+  font-family: var(--font-brand), 'Golos Text', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.pm-primitive__meta {
+  fill: var(--pmi-text-muted);
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 7.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.pm-primitive__state {
+  fill: var(--pmi-text-secondary);
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 6.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.pm-def-arrow,
+.pm-def-arrow-muted {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.2;
+}
+
+.pm-def-arrow {
+  stroke: var(--pmi-text-secondary);
+}
+
+.pm-def-arrow-muted {
+  stroke: var(--pmi-text-muted);
+}
+
+.pm-def-dot {
+  fill: var(--pmi-border);
+}
+
+.pm-def-focus-start {
+  stop-color: var(--pmi-accent);
+  stop-opacity: 0.2;
+}
+
+.pm-def-focus-end {
+  stop-color: var(--pmi-accent);
+  stop-opacity: 0;
+}
+
+.pm-memory-record__rule {
+  fill: none;
+  stroke: var(--pmi-border);
+  stroke-linecap: round;
+  stroke-width: 2.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-memory-record__selection {
+  fill: none;
+  stroke: var(--pmi-accent);
+  stroke-opacity: 0.55;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-memory-record__strike,
+.pm-correction-marker__revision {
+  fill: none;
+  stroke: var(--pmi-text-muted);
+  stroke-linecap: round;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-memory-record--raw .pm-primitive__surface {
+  stroke-dasharray: 3 3;
+}
+
+.pm-memory-record--reviewed .pm-primitive__surface {
+  stroke: var(--pmi-border);
+}
+
+.pm-memory-record--historical .pm-primitive__surface {
+  stroke-dasharray: 8 3;
+}
+
+.pm-memory-record--superseded
+  :is(
+    .pm-primitive__surface,
+    .pm-memory-record__rule,
+    .pm-memory-record__strike,
+    .pm-primitive__label,
+    .pm-primitive__meta
+  ) {
+  opacity: 0.5;
+}
+
+.pm-memory-record--selected .pm-primitive__surface {
+  fill: var(--pmi-surface-raised);
+}
+
+.pm-memory-stack__back,
+.pm-memory-stack__middle {
+  fill: var(--pmi-surface);
+  stroke: var(--pmi-border-subtle);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-memory-stack__back {
+  opacity: 0.38;
+}
+
+.pm-memory-stack__middle {
+  opacity: 0.68;
+}
+
+.pm-evidence-node__halo {
+  fill: none;
+  stroke: var(--pmi-border);
+  stroke-dasharray: 1.5 2.5;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-evidence-node__symbol,
+.pm-memory-branch__question {
+  fill: var(--pmi-text-secondary);
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.pm-evidence-node--uncertain .pm-primitive__surface {
+  stroke-dasharray: 3 2;
+}
+
+.pm-evidence-node--excluded .pm-primitive__surface {
+  opacity: 0.5;
+  stroke-dasharray: 2 3;
+}
+
+.pm-evidence-node--excluded .pm-primitive__line-muted {
+  opacity: 0.72;
+}
+
+.pm-provenance-link__path {
+  fill: none;
+  stroke: var(--pmi-text-secondary);
+  stroke-linecap: round;
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-provenance-link--direct .pm-provenance-link__path {
+  stroke: var(--pmi-accent);
+}
+
+.pm-provenance-link--inferred .pm-provenance-link__path {
+  stroke-dasharray: 2 4;
+}
+
+.pm-provenance-link--historical .pm-provenance-link__path {
+  opacity: 0.68;
+  stroke-dasharray: 8 4;
+}
+
+.pm-provenance-link--superseded .pm-provenance-link__path {
+  opacity: 0.42;
+  stroke-dasharray: 2 5;
+}
+
+.pm-provenance-link--superseded .pm-primitive__line-muted {
+  opacity: 0.72;
+}
+
+.pm-provenance-link__history {
+  fill: var(--pmi-canvas);
+  stroke: var(--pmi-text-muted);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-memory-branch__path {
+  fill: none;
+  stroke: var(--pmi-text-secondary);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-memory-branch__node {
+  fill: var(--pmi-surface);
+  stroke: var(--pmi-text-secondary);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-memory-branch--active .pm-memory-branch__path--primary,
+.pm-memory-branch--active .pm-memory-branch__node--top {
+  stroke: var(--pmi-accent);
+}
+
+.pm-memory-branch--active .pm-memory-branch__node--top {
+  fill: var(--pmi-accent);
+}
+
+.pm-memory-branch--secondary .pm-memory-branch__path--secondary,
+.pm-memory-branch--secondary .pm-memory-branch__node--bottom {
+  stroke-dasharray: 2 4;
+}
+
+.pm-memory-branch--superseded .pm-memory-branch__path--secondary {
+  opacity: 0.46;
+  stroke-dasharray: 7 4;
+}
+
+.pm-memory-branch--superseded .pm-memory-branch__node--bottom {
+  opacity: 0.46;
+}
+
+.pm-memory-branch--unresolved .pm-memory-branch__path--secondary {
+  stroke-dasharray: 1.5 4;
+}
+
+.pm-review-checkpoint__gate {
+  fill: none;
+  stroke: var(--pmi-border);
+  stroke-dasharray: 1.5 2;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-review-checkpoint--pending .pm-primitive__surface-raised {
+  stroke-dasharray: 3 3;
+}
+
+.pm-review-checkpoint--approved .pm-primitive__surface-raised {
+  stroke: var(--pmi-border);
+}
+
+.pm-review-checkpoint--rejected .pm-primitive__surface-raised {
+  opacity: 0.68;
+}
+
+.pm-review-checkpoint--revision-required .pm-primitive__surface-raised {
+  stroke-dasharray: 8 3;
+}
+
+.pm-retrieval-focus__brackets {
+  fill: none;
+  stroke: var(--pmi-text-secondary);
+  stroke-linecap: round;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-retrieval-focus__glow {
+  fill: var(--pmi-accent);
+  opacity: 0.12;
+}
+
+.pm-relevance-filter .pm-primitive__surface {
+  stroke-dasharray: 2 3;
+}
+
+.pm-relevance-filter__field {
+  opacity: 0.28;
+}
+
+.pm-flow-arrow__path {
+  fill: none;
+  stroke: var(--pmi-text-secondary);
+  stroke-linecap: round;
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-flow-arrow--transformation .pm-flow-arrow__path {
+  stroke-dasharray: 2 4;
+}
+
+.pm-flow-arrow__transform {
+  fill: var(--pmi-surface-raised);
+  stroke: var(--pmi-accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-composition__field {
+  fill: rgb(255 255 255 / 0.012);
+  stroke: var(--pmi-border-faint);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-composition__boundary {
+  fill: none;
+  stroke: var(--pmi-border-subtle);
+  stroke-dasharray: 2 5;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pm-composition__meta,
+.pm-composition__note {
+  fill: var(--pmi-text-muted);
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 6.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.pm-composition__note {
+  fill: var(--pmi-text-secondary);
+  font-size: 6px;
+}
+
+.pm-system-composition__phase-index {
+  fill: var(--pmi-accent);
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.pm-system-composition__phase {
+  fill: var(--pmi-text);
+  font-family: var(--font-brand), 'Golos Text', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+}
+
+.pm-system-composition__question {
+  fill: var(--pmi-text-muted);
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 6.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.pm-system-composition__human-boundary .pm-primitive__surface-raised {
+  stroke: var(--pmi-accent);
+  stroke-dasharray: 2 3;
+}
+
+.pm-system-composition__return .pm-flow-arrow__path {
+  opacity: 0.72;
+  stroke-dasharray: 2 5;
+}
+
+@keyframes pm-illustration-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm-illustration--reveal .pm-primitive {
+    animation: none;
+  }
+}
