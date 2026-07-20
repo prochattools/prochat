@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 import { contactSubmissionSchema } from '@/lib/contact/schema'
 import { trackEvent } from '@/utils/analytics'
@@ -57,6 +58,14 @@ function normalizeFieldName(raw: string): ContactFieldName | null {
 
 export default function ContactPage() {
   const rootRef = useRef<HTMLElement>(null)
+  const searchParams = useSearchParams()
+  const topicParam = searchParams?.get('topic')
+  const initialTopic =
+    topicParam === 'memory-qa' || topicParam === 'memory-qa-beta'
+      ? 'ProChat Memory for QA beta'
+      : topicParam === 'workbench'
+        ? 'ProChat Workbench'
+        : 'ProChat Memory'
 
   useEffect(() => {
     const root = rootRef.current
@@ -287,7 +296,7 @@ export default function ContactPage() {
 
   return (
     <main ref={rootRef} className="contact-page-root pm-marketing-page">
-      <ContactPageMarkup />
+      <ContactPageMarkup initialTopic={initialTopic} />
     </main>
   )
 }

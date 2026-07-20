@@ -23,19 +23,52 @@ const nextSteps = [
   'We identify the smallest useful tester flow.',
 ] as const
 
-export default function ContactPageMarkup() {
+type ContactPageMarkupProps = {
+  initialTopic?: 'ProChat Memory' | 'ProChat Memory for QA beta' | 'ProChat Workbench'
+}
+
+export default function ContactPageMarkup({
+  initialTopic = 'ProChat Memory',
+}: ContactPageMarkupProps) {
+  const isMemoryQaBeta = initialTopic === 'ProChat Memory for QA beta'
+  const isWorkbench = initialTopic === 'ProChat Workbench'
+  const kicker = isMemoryQaBeta
+    ? 'CONTACT · MEMORY FOR QA BETA'
+    : isWorkbench
+      ? 'CONTACT · WORKBENCH'
+      : 'CONTACT · MEMORY'
+  const heading = isMemoryQaBeta ? (
+    <>
+      Apply for the selected <em>QA beta.</em>
+    </>
+  ) : isWorkbench ? (
+    <>
+      Start with one <em>guarded project flow.</em>
+    </>
+  ) : (
+    <>
+      Start with one <em>memory problem.</em>
+    </>
+  )
+  const intro = isMemoryQaBeta
+    ? 'Tell us about the repeated QA work you want to test with ProChat Memory for QA. We will use this note as selected beta application context.'
+    : isWorkbench
+      ? 'Tell us where guarded local project work would help. We will use this note to understand the smallest useful Workbench flow.'
+      : 'Tell us where your team keeps rebuilding context. We will help turn one repeated task into a focused ProChat Memory tester flow.'
+  const formIntro = isMemoryQaBeta
+    ? 'Share the QA workflow, evidence types, and evaluation context for the selected Memory for QA beta.'
+    : isWorkbench
+      ? 'Share the local project workflow, guardrails, or implementation blocker so we can understand the next useful step.'
+      : 'Share the product question, context problem, or implementation blocker so we can understand the next useful step.'
+
   return (
     <>
       <section className="pm-hero-section contact-memory-hero">
         <div className="pm-container pm-hero-grid">
           <div className="pm-hero-copy">
-            <p className="pm-kicker">CONTACT · MEMORY</p>
-            <h1>
-              Start with one <em>memory problem.</em>
-            </h1>
-            <p>
-              Tell us where your team keeps rebuilding context. We will help turn one repeated task into a focused ProChat Memory tester flow.
-            </p>
+            <p className="pm-kicker">{kicker}</p>
+            <h1>{heading}</h1>
+            <p>{intro}</p>
             <div className="pm-trust-line">Clear context · Human-reviewed · Focused reply</div>
           </div>
 
@@ -45,9 +78,7 @@ export default function ContactPageMarkup() {
               <span>PRIVATE</span>
             </div>
             <h2>Send a direct message</h2>
-            <p>
-              Share the product question, context problem, or implementation blocker so we can understand the next useful step.
-            </p>
+            <p>{formIntro}</p>
 
             <form
               data-contact-form=""
@@ -67,7 +98,7 @@ export default function ContactPageMarkup() {
                 />
               </div>
 
-              <input type="hidden" name="topic" value="ProChat Memory" />
+              <input type="hidden" name="topic" value={initialTopic} />
               <input type="hidden" name="companyOrProjectUrl" value="" />
 
               <div className="contact-memory-grid">
@@ -209,7 +240,7 @@ export default function ContactPageMarkup() {
               </a>
             </Button>
             <Button asChild variant="secondary" size="lg">
-              <Link href="/prochat-memory">
+              <Link href="/memory">
                 See ProChat Memory
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
