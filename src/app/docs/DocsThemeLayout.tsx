@@ -1,69 +1,73 @@
 import type { ReactNode } from 'react'
+import type { PageMapItem } from 'nextra'
 
 import { Layout, Navbar } from 'nextra-theme-docs'
-
-import { getPublicDocsPageMap } from '@/lib/docs/public-docs'
 
 import 'nextra-theme-docs/style-prefixed.css'
 import '../../../styles/docs.css'
 
-type DocsUtilityLinks = {
-  docsRepositoryBase: string
-  feedbackLink: string
-}
+const PUBLIC_DOCS_NAVIGATION = [
+  {
+    name: 'overview',
+    route: '/docs',
+    frontMatter: { title: 'Overview' },
+  },
+  {
+    name: 'memory',
+    route: '/memory',
+    frontMatter: { title: 'ProChat Memory' },
+  },
+  {
+    name: 'memory-qa',
+    route: '/memory-qa',
+    frontMatter: { title: 'Memory for QA' },
+  },
+  {
+    name: 'workbench',
+    route: '/workbench',
+    frontMatter: { title: 'ProChat Workbench' },
+  },
+  {
+    name: 'contributing',
+    route: 'https://github.com/prochattools/workbench/blob/main/CONTRIBUTING.md',
+    frontMatter: { title: 'Contributing' },
+  },
+  {
+    name: 'privacy',
+    route: '/privacy',
+    frontMatter: { title: 'Privacy' },
+  },
+  {
+    name: 'terms',
+    route: '/terms',
+    frontMatter: { title: 'Terms' },
+  },
+] satisfies PageMapItem[]
 
-const DEFAULT_DOCS_UTILITY_LINKS: DocsUtilityLinks = {
-  docsRepositoryBase: 'https://github.com/prochattools/prochat/blob/main',
-  feedbackLink: 'https://github.com/stevewesthoek/prochat/discussions',
-}
-
-function resolveDocsUtilityLinks(docsCategory?: string): DocsUtilityLinks {
-  const productSegment = docsCategory?.toLowerCase() ?? ''
-
-  if (productSegment === 'prokit') {
-    return {
-      docsRepositoryBase: 'https://github.com/stevewesthoek/prokit/blob/main',
-      feedbackLink: 'https://github.com/stevewesthoek/prokit/discussions',
-    }
-  }
-
-  if (productSegment === 'saaskit') {
-    return {
-      docsRepositoryBase: 'https://github.com/stevewesthoek/saaskit/blob/main',
-      feedbackLink: 'https://github.com/stevewesthoek/saaskit/discussions',
-    }
-  }
-
-  return DEFAULT_DOCS_UTILITY_LINKS
-}
+const DOCS_FEEDBACK_LINK = 'https://github.com/orgs/prochattools/discussions'
 
 export default async function DocsThemeLayout({
   children,
-  docsCategory,
 }: {
   children: ReactNode
   docsCategory?: string
 }) {
-  const pageMap = await getPublicDocsPageMap()
-  const { docsRepositoryBase, feedbackLink } = resolveDocsUtilityLinks(docsCategory)
-
   return (
     <div className="docs-shell flex min-h-screen flex-col">
       <div className="docs-shell-inner flex flex-1 flex-col">
         <Layout
-          pageMap={pageMap}
-          docsRepositoryBase={docsRepositoryBase}
-          editLink="View source on GitHub"
+          pageMap={PUBLIC_DOCS_NAVIGATION}
+          editLink={null}
           feedback={{
-            content: 'Question? Give us feedback →',
-            link: feedbackLink,
+            content: 'Question? Join the ProChat discussion →',
+            link: DOCS_FEEDBACK_LINK,
             labels: 'docs',
           }}
           search={null}
           nextThemes={{
             storageKey: 'theme',
             attribute: 'class',
-            defaultTheme: 'system',
+            defaultTheme: 'dark',
             disableTransitionOnChange: true,
           }}
           sidebar={{
