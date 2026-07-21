@@ -93,6 +93,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.1.6",
+    "@playwright/test": "1.55.0",
     "@types/jest": "^29.5.12",
     "@types/mdx": "^2.0.12",
     "@types/node": "^20",

@@ -16,7 +16,9 @@ export default defineConfig({
     locale: 'en-US',
     timezoneId: 'UTC',
     colorScheme: 'light',
-    reducedMotion: 'reduce',
+    contextOptions: {
+      reducedMotion: 'reduce',
+    },
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
     video: 'off',

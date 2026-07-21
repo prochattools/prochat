@@ -243,7 +243,7 @@ for (const route of htmlRoutes) {
           ),
           contentType: 'application/json',
         })
-        test.skip(route.skipReason)
+        test.skip(true, route.skipReason)
       }
 
       const context = await browser.newContext({
