@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, Suspense } from 'react'
 import { getSEOTags } from '@/libs/seo'
 import config from '@/config'
 
@@ -14,5 +14,5 @@ export default function ContactLayout({
 }: {
   children: ReactNode
 }) {
-  return children
+  return <Suspense fallback={null}>{children}</Suspense>
 }
