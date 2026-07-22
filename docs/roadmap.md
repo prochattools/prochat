@@ -3,7 +3,7 @@
 **Status:** canonical repository-local execution roadmap  
 **Owner:** Steve Westhoek  
 **Scope:** ProChat public platform, design system, migration, public pages, validation, launch, and maintenance  
-**Last updated:** 2026-07-14
+**Last updated:** 2026-07-22
 
 ## Authority
 
@@ -31,25 +31,33 @@ This repository translates that truth into design, migration, implementation, te
 ## Verified current state
 
 ```yaml
-verified_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
-verified_date: 2026-07-14
-current_head: 15e4d8b8ff3a15cbceab0859478b274ebf534417
-current_program_state: Phase 1 and Phase 2 are complete, Phase 3 is ready, the implementation queue starts with PPF-001 browser-runner verification, the Wave 1 browser-runner bundle is merge-ready pending approval, live execution has not run, protected sessions are public and unauthenticated only, and no canonical visual route is active.
-current_phase: Phase 3 — canonical content second pass
-current_packet: PPF-001 — browser-runner worktree isolation and stale-run disposition
-canonical_visual_routes_active: 0
-production_visual_design_started: false
-legacy_implementation_archived_count: 0
-runner_disposition: MERGE_READY_REQUIRES_APPROVAL
+verified_head: 6b37d60
+verified_date: 2026-07-22
+current_head: 6b37d60
+current_program_state: The PXF-003 public-platform implementation is complete and statically release-ready with minor deferred gaps. Canonical public routes, redirects, product surfaces, documentation, contact beta flow, repository validation, and production prerendering are active. Push and deployment await explicit owner authorization after this documentation closeout.
+current_phase: PXF-003 public-platform closeout
+current_packet: PXF-003M — public platform documentation closeout
+canonical_visual_routes_active: 8
+canonical_routes: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms
+legacy_redirects_active: /prochat-memory -> /memory; /qa-memory -> /memory-qa
+production_visual_design_started: true
+production_visual_implementation: COMPLETE_FOR_PXF-003_PUBLIC_SURFACE
+public_platform_code_status: READY_WITH_MINOR_GAPS
+runner_disposition: COMMITTED_STATICALLY_VALIDATED
 static_validation: PASSED
+full_typescript: PASSED
+production_build: PASSED
+static_pages_generated: 109
 live_execution: NOT_RUN
+wave1_execution: NOT_RUN
 protected_session_strategy: PUBLIC_AND_UNAUTHENTICATED_ONLY
 authenticated_protected_proof: SEPARATE_FUTURE_RUNNER
-browser_runner_worktree: ISOLATED_UNCOMMITTED
-browser_runner_artifact_disposition: KEEP_ISOLATED_BLOCKED
+browser_runner_worktree: COMMITTED
+browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
-PPF-001: BLOCKED
-PPF-002: NOT_READY
+development_labs: EXCLUDED_UNLINKED
+push_status: AWAITING_OWNER_AUTHORIZATION_AFTER_CLOSEOUT
+deployment_status: AWAITING_OWNER_AUTHORIZATION_AFTER_CLOSEOUT
 ```
 
 ## Operational phase summary
@@ -72,7 +80,7 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 | Phase 12 | NOT_READY | Production craft and launch validation | Phase 11 | none | visual, accessibility, performance, and launch acceptance | launch criteria pass without critical defects | Phase 13 |
 | Phase 13 | ONGOING | Continuous governance | launch | ongoing Mind and repo governance | review and maintenance cadence | this phase does not end | Phase 13 |
 
-The immediate repository-local next phase remains Phase 3, and the immediate implementation-plan queue still begins with PPF-001 browser-runner verification and disposition. The 039d3bf reconciliation commit updates the handoff metadata, and the browser-proof packet remains separate until explicit approval and execution.
+The PXF-003 public-platform implementation is complete. This documentation closeout is the final repository-local program step before separate owner authorization for push and deployment preparation. Live Wave 1 execution remains intentionally separate and `NOT_RUN`; the historical phase table below is retained as planning context rather than current execution status.
 
 ## Product and company boundary
 

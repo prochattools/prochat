@@ -25,6 +25,8 @@ The current verified operating model is product-specific:
 
 Mind remains authoritative. ProChat must publish only the reconciled repository, licensing, availability, contribution, support, and CTA language recorded in this document and the controlling Mind sources.
 
+> **Current execution note:** Lower sections that describe one universal open-source install/contribute funnel or a managed-service path are retained as historical strategy context. They are not current universal policy. Memory for QA follows the public source-available selected-beta path and is not open source; Workbench is the `AGPL-3.0-only`, free, self-hosted public prerelease path. Participation differs by product, and no standardized managed-service offer is approved.
+
 ## Conversion thesis
 
 The public platform is an **open-source adoption engine** and a trust-building product platform.

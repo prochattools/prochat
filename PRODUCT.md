@@ -51,8 +51,9 @@ The current primary user is an individual QA tester working with repeated failur
 
 The selected QA beta is:
 
-- free;
+- free only for approved beta participants;
 - manually selected;
+- public source-available, not open source;
 - without a fixed end date;
 - in active development;
 - focused on measured repeated value rather than broad sales.

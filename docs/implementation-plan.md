@@ -3,7 +3,7 @@
 **Status:** canonical executable plan  
 **Owner:** Steve Westhoek  
 **Scope:** documentation, audits, prototypes, production foundation, public pages, migration, validation, launch, and maintenance  
-**Last updated:** 2026-07-14
+**Last updated:** 2026-07-22
 
 ## Authority and reading order
 
@@ -37,30 +37,52 @@ mind/wiki/organisations/prochat/brand/website-build-contract.md
 ## Verified current state
 
 ```yaml
-verified_head: 220e1063b4daae65edbdb62ffea697ed885b4fb2
-verified_date: 2026-07-14
-current_head: 15e4d8b8ff3a15cbceab0859478b274ebf534417
-current_program_state: Phase 1 and Phase 2 are complete; the R1B reconciliation queue is active; the Wave 1 browser-runner bundle is merge-ready pending approval; live execution has not run; protected sessions are public and unauthenticated only; authenticated protected proof is reserved for a separate future runner; the 039d3bf reconciliation commit updates handoff metadata only.
-current_phase: R1B reconciliation queue
-current_packet: PPF-001 — browser-runner worktree isolation and stale-run disposition
-canonical_visual_routes_active: 0
-production_visual_design_started: false
-legacy_implementation_archived_count: 0
-runner_disposition: MERGE_READY_REQUIRES_APPROVAL
+verified_head: 6b37d60
+verified_date: 2026-07-22
+current_head: 6b37d60
+current_program_state: The PXF-003 public-platform sequence is complete. Canonical routes, documentation, beta contact flow, repository validation, and production prerendering are implemented and statically validated. Live Wave 1 execution remains separate and has not run. The next owner gate is documentation-closeout commit authorization, followed by separate push and deployment authorization.
+current_phase: PXF-003 public-platform closeout
+current_packet: PXF-003M — public platform documentation closeout
+canonical_visual_routes_active: 8
+canonical_route_implementation: COMPLETE
+public_docs_alignment: COMPLETE
+contact_beta_flow_alignment: COMPLETE
+repository_validation: RESTORED
+production_visual_design_started: true
+production_visual_implementation: COMPLETE_FOR_PXF-003_PUBLIC_SURFACE
+runner_disposition: COMMITTED_STATICALLY_VALIDATED
 static_validation: PASSED
+full_typescript: PASSED
+production_build: PASSED
+static_pages_generated: 109
 live_execution: NOT_RUN
+wave1_execution: NOT_RUN
 protected_session_strategy: PUBLIC_AND_UNAUTHENTICATED_ONLY
 authenticated_protected_proof: SEPARATE_FUTURE_RUNNER
-browser_runner_worktree: ISOLATED_UNCOMMITTED
-browser_runner_artifact_disposition: KEEP_ISOLATED_BLOCKED
+browser_runner_worktree: COMMITTED
+browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
-PPF-001: BLOCKED
-PPF-002: NOT_READY
+next_owner_gate: PUSH_AND_DEPLOYMENT_AUTHORIZATION_AFTER_CLOSEOUT
 ```
 
-## Canonical executor queue
+## Historical executor queue
 
-Older long-form task detail remains below as supporting reference only. The queue below is the canonical execution order.
+The PPF task definitions below are retained as historical execution context. They are no longer the current queue.
+
+The completed PXF-003 public-platform sequence is:
+
+```text
+a590bcb docs(prochat): define public experience and conversion system
+6a6fe07 feat(prochat): add memory illustration and hero motion system
+f979890 feat(prochat): build memory-first public homepage
+c1cbe73 feat(prochat): add canonical memory and workbench product pages
+504d27e feat(prochat): align beta contact and participation flows
+8b2bfba docs(prochat): align public documentation surface
+36bb061 fix(prochat): restore repository validation for evidence runner
+6b37d60 fix(prochat): add contact suspense boundary
+```
+
+Wave 1 live execution remains `NOT_RUN` and governed by its separate guarded workflow. The next current owner gate is push and deployment authorization after documentation closeout.
 
 ```yaml
 - task_id: PPF-001
