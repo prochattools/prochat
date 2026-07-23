@@ -1,31 +1,32 @@
 import fs from 'fs'
 import path from 'path'
 
+type ChangeFrequency = 'weekly' | 'monthly' | 'yearly'
+
 type UrlSitemapEntry = {
   loc: string
-  lastmod: string
-  changefreq: 'weekly'
+  changefreq: ChangeFrequency
   priority: string
 }
 
 type SitemapIndexEntry = {
   loc: string
-  lastmod: string
 }
 
-function getSiteUrl() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim()
+const SITE_URL = 'https://prochat.tools'
 
-  if (siteUrl) {
-    return siteUrl.replace(/\/+$/, '')
-  }
+const PAGE_PATHS = [
+  { path: '/', changefreq: 'weekly', priority: '1.0' },
+  { path: '/memory', changefreq: 'weekly', priority: '0.9' },
+  { path: '/memory-qa', changefreq: 'weekly', priority: '0.85' },
+  { path: '/workbench', changefreq: 'weekly', priority: '0.85' },
+  { path: '/docs', changefreq: 'weekly', priority: '0.8' },
+  { path: '/contact', changefreq: 'monthly', priority: '0.7' },
+  { path: '/privacy', changefreq: 'yearly', priority: '0.5' },
+  { path: '/terms', changefreq: 'yearly', priority: '0.5' },
+] as const
 
-  if (process.env.NODE_ENV === 'production') {
-    throw new Error('NEXT_PUBLIC_SITE_URL is required to generate sitemap.xml in production.')
-  }
-
-  return 'http://localhost:3056'
-}
+const NESTED_SITEMAP_PATHS = ['/learn/sitemap.xml', '/docs/sitemap.xml'] as const
 
 function escapeXml(value: string) {
   return value
@@ -40,7 +41,6 @@ function renderUrlEntry(entry: UrlSitemapEntry) {
   return [
     '  <url>',
     `    <loc>${escapeXml(entry.loc)}</loc>`,
-    `    <lastmod>${escapeXml(entry.lastmod)}</lastmod>`,
     `    <changefreq>${entry.changefreq}</changefreq>`,
     `    <priority>${entry.priority}</priority>`,
     '  </url>',
@@ -51,7 +51,6 @@ function renderSitemapIndexEntry(entry: SitemapIndexEntry) {
   return [
     '  <sitemap>',
     `    <loc>${escapeXml(entry.loc)}</loc>`,
-    `    <lastmod>${escapeXml(entry.lastmod)}</lastmod>`,
     '  </sitemap>',
   ].join('\n')
 }
@@ -60,22 +59,10 @@ function writeXmlFile(outputPath: string, xml: string) {
   fs.writeFileSync(outputPath, xml, 'utf8')
 }
 
-async function main() {
-  const baseUrl = getSiteUrl()
-  const generatedAt = new Date().toISOString()
-  const pagePaths = [
-    { path: '/', priority: '1.0' },
-    { path: '/systems/prochat-os', priority: '0.95' },
-    { path: '/ai-workflows', priority: '0.95' },
-    { path: '/book', priority: '0.8' },
-    { path: '/contact', priority: '0.7' },
-    { path: '/proof', priority: '0.5' },
-  ] as const
-
-  const pageEntries: UrlSitemapEntry[] = pagePaths.map(entry => ({
-    loc: `${baseUrl}${entry.path}`,
-    lastmod: generatedAt,
-    changefreq: 'weekly',
+function main() {
+  const pageEntries: UrlSitemapEntry[] = PAGE_PATHS.map(entry => ({
+    loc: `${SITE_URL}${entry.path}`,
+    changefreq: entry.changefreq,
     priority: entry.priority,
   }))
 
@@ -88,9 +75,8 @@ async function main() {
   ].join('\n')
 
   const sitemapEntries: SitemapIndexEntry[] = [
-    { loc: `${baseUrl}/sitemap-pages.xml`, lastmod: generatedAt },
-    { loc: `${baseUrl}/learn/sitemap.xml`, lastmod: generatedAt },
-    { loc: `${baseUrl}/docs/sitemap.xml`, lastmod: generatedAt },
+    { loc: `${SITE_URL}/sitemap-pages.xml` },
+    ...NESTED_SITEMAP_PATHS.map(sitemapPath => ({ loc: `${SITE_URL}${sitemapPath}` })),
   ]
 
   const sitemapIndexXml = [
@@ -106,8 +92,10 @@ async function main() {
   writeXmlFile(path.join(publicDir, 'sitemap.xml'), sitemapIndexXml)
 }
 
-main().catch(error => {
+try {
+  main()
+} catch (error) {
   console.error('[sitemap] Failed to generate sitemap.xml')
   console.error(error)
   process.exit(1)
-})
+}

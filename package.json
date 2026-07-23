@@ -10,11 +10,12 @@
   "author": "Steve Westhoek",
   "scripts": {
     "dev": "next dev -p 3056",
+    "prebuild": "npm run sitemap",
     "build": "next build",
     "analyze": "ANALYZE=true next build",
     "start": "sh scripts/start-production.sh",
     "generate:social": "tsx scripts/generate-social-images.ts",
-    "sitemap": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' -r tsconfig-paths/register scripts/generate-sitemap.ts",
+    "sitemap": "tsx scripts/generate-sitemap.ts",
     "provision:auto": "node scripts/provision-auto.js",
     "postinstall": "prisma generate --schema=prisma/system.prisma",
     "db:init": "node scripts/db/init-tenant.js",
