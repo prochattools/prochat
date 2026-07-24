@@ -21,6 +21,7 @@ These values are used by the tenant provisioning scripts, CLI helpers, and runti
 
 - `NEXT_PUBLIC_SITE_URL`
 - `NEXT_PUBLIC_APP_URL`
+- `PROCHAT_MAINTENANCE_MODE`
 - `NEXT_PUBLIC_STRAPI_BASE_URL`
 - `NEXT_PUBLIC_STRAPI_API_TOKEN`
 - `NEXT_PUBLIC_YOUTUBE_URL`
@@ -29,6 +30,8 @@ These values are used by the tenant provisioning scripts, CLI helpers, and runti
 
 `NEXT_PUBLIC_SITE_URL` is the canonical URL used for sitemap generation and canonical metadata (`scripts/generate-sitemap.ts`, `src/lib/seo/metadata.ts`). `NEXT_PUBLIC_APP_URL` is consumed by metadata and social image helpers (`src/lib/generateSocialImageUrl.ts` and other UI helpers). The Strapi helper (`src/utils/fetch.ts`) references the Strapi host and token. The YouTube URL is only used in marketing sections that expose an external video host.
 For local development, `NEXT_PUBLIC_APP_URL` should point at `http://localhost:3056`.
+
+`PROCHAT_MAINTENANCE_MODE` controls the temporary full-site maintenance redirect. It defaults to enabled when unset. Set it to `0`, `false`, `off`, or `no` to expose public routes; any other value keeps maintenance mode enabled. API routes, Next.js assets, favicon, robots, sitemap, manifests, and public files bypass the maintenance redirect.
 
 ## Auth (Ory)
 
