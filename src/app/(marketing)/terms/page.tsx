@@ -12,315 +12,306 @@ export const metadata = getSEOTags({
 	canonicalUrlRelative: '/terms',
 })
 
+const memoryQaLicenseUrl =
+	'https://github.com/prochattools/memory-qa/blob/main/LICENSE.md'
+const workbenchLicenseUrl =
+	'https://github.com/prochattools/workbench/blob/main/LICENSE'
+
+const listClass =
+	'mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600'
+const headingClass = 'mb-3 text-xl font-bold text-slate-900 dark:text-white'
+const linkClass =
+	'font-medium text-slate-900 underline decoration-slate-300 underline-offset-4 hover:decoration-slate-900 dark:text-white dark:decoration-slate-600 dark:hover:decoration-white'
+
 export default function TermsPage() {
 	return (
 		<section className="relative bg-transparent py-24">
-			<main className="mx-auto w-full max-w-3xl px-page">
+			<div className="mx-auto w-full max-w-3xl px-page">
 				<article className="space-y-10 leading-relaxed text-slate-600 dark:text-slate-300">
 					<header className="mb-12">
 						<h1 className="mb-4 text-3xl font-bold tracking-[-0.05em] text-slate-900 dark:text-white md:text-4xl">
 							TERMS OF SERVICE
 						</h1>
 						<p className="text-sm font-medium text-slate-500 dark:text-slate-400">
-							Last updated: 20 February 2026
+							Last updated: 25 July 2026
 						</p>
 					</header>
 
-					<div className="space-y-4">
-						<p>
-							These Terms of Service (&ldquo;Terms&rdquo;) govern your access to and
-							use of the ProChat website and all products and services provided
-							by:
-						</p>
-						<p className="font-medium text-slate-900 dark:text-white">
-							Steve Westhoek, trading as ProChat (ENI)
-							<br />
-							Porto, Portugal
-							<br />
-							Email: support@prochat.tools
-						</p>
-						<p>
-							By accessing the website or purchasing any product, you agree to
-							these Terms.
-						</p>
-					</div>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							1. OVERVIEW
+					<section aria-labelledby="terms-scope">
+						<h2 id="terms-scope" className={headingClass}>
+							1. SCOPE
 						</h2>
 						<p>
-							ProChat provides digital products, including but not limited to
-							software boilerplates such as SaaSKit and ProKit (the
-							&ldquo;Products&rdquo;).
+							These Terms govern your use of the ProChat public website,
+							documentation, Contact form, beta application process, and links to
+							public product repositories. ProChat is operated by Steve Westhoek,
+							trading as ProChat, Trabalhador Independente, A. dos Descobri. 40,
+							4E.
 						</p>
-						<p className="mt-4">These Terms apply to:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Website use</li>
-							<li>All digital products</li>
-							<li>All updates and versions</li>
-							<li>All related services</li>
+						<p className="mt-4">
+							Product-specific repository licenses or written beta agreements
+							control where they conflict with these website Terms.
+						</p>
+					</section>
+
+					<section aria-labelledby="terms-website">
+						<h2 id="terms-website" className={headingClass}>
+							2. WEBSITE AND CONTACT USE
+						</h2>
+						<p>
+							You may browse the public website and documentation for lawful
+							informational purposes. When you submit a Contact message or beta
+							application, provide accurate information that you are authorized to
+							share. Do not submit secrets, credentials, confidential client data,
+							private repository contents, unlawful content, or material that
+							violates another person's rights.
+						</p>
+						<p className="mt-4">
+							Submitting an enquiry does not create a customer relationship,
+							guarantee beta approval, or obligate ProChat to provide a product,
+							service, response, or support.
+						</p>
+					</section>
+
+					<section aria-labelledby="terms-memory-qa">
+						<h2 id="terms-memory-qa" className={headingClass}>
+							3. MEMORY FOR QA SELECTED BETA
+						</h2>
+						<p>
+							ProChat Memory for QA is a public source-available selected beta. It
+							is not open-source software. Only people or organizations approved
+							by ProChat may clone, evaluate, modify, or use it locally within the
+							approved beta scope.
+						</p>
+						<p className="mt-4">
+							The{' '}
+							<a
+								className={linkClass}
+								href={memoryQaLicenseUrl}
+								rel="noreferrer"
+								target="_blank"
+							>
+								Memory for QA Beta Evaluation License
+							</a>{' '}
+							is the binding license for the public beta snapshot and controls if
+							it conflicts with these Terms. It limits use to evaluation and
+							testing by approved participants and prohibits unauthorized
+							production use, redistribution, resale, hosted service use, and
+							commercial exploitation.
+						</p>
+					</section>
+
+					<section aria-labelledby="terms-workbench">
+						<h2 id="terms-workbench" className={headingClass}>
+							4. WORKBENCH AND OPEN-SOURCE SOFTWARE
+						</h2>
+						<p>
+							ProChat Workbench is free, self-hosted software distributed under
+							the GNU Affero General Public License version 3.0 only
+							(&ldquo;AGPL-3.0-only&rdquo;). The{' '}
+							<a
+								className={linkClass}
+								href={workbenchLicenseUrl}
+								rel="noreferrer"
+								target="_blank"
+							>
+								Workbench LICENSE
+							</a>{' '}
+							controls your rights and obligations for covered repository files.
+						</p>
+						<p className="mt-4">
+							Third-party dependencies and other repository materials may have
+							their own notices or licenses. Review the applicable repository
+							files before copying, modifying, deploying, or distributing software.
+							These website Terms do not reduce rights granted by the AGPL.
+						</p>
+					</section>
+
+					<section aria-labelledby="terms-contributions">
+						<h2 id="terms-contributions" className={headingClass}>
+							5. FEEDBACK AND CONTRIBUTIONS
+						</h2>
+						<p>
+							Public Issues, Discussions, pull requests, and other contributions
+							must follow the rules and contribution terms in the relevant
+							repository. Do not include secrets, personal data, confidential
+							logs, private URLs, or proprietary client material.
+						</p>
+						<p className="mt-4">
+							ProChat is not required to accept, merge, maintain, compensate, or
+							respond to feedback or contributions. Rights in accepted
+							contributions are governed by the applicable repository terms.
+						</p>
+					</section>
+
+					<section aria-labelledby="terms-prerelease">
+						<h2 id="terms-prerelease" className={headingClass}>
+							6. PRERELEASE STATUS AND SUPPORT
+						</h2>
+						<p>
+							Selected-beta and prerelease products may be incomplete, unavailable,
+							or changed without notice. Features, file formats, APIs, licenses,
+							and compatibility may change between versions.
+						</p>
+						<p className="mt-4">
+							Unless a separate written agreement says otherwise, ProChat provides
+							no service-level agreement, guaranteed response time, maintenance
+							period, compatibility promise, ongoing update commitment, or obligation to
+							continue any beta or prerelease.
+						</p>
+					</section>
+
+					<section aria-labelledby="terms-acceptable-use">
+						<h2 id="terms-acceptable-use" className={headingClass}>
+							7. ACCEPTABLE USE
+						</h2>
+						<p>You must not use the website or ProChat products to:</p>
+						<ul className={listClass}>
+							<li>Break applicable law or another person's rights</li>
+							<li>Probe, disrupt, overload, or bypass service security</li>
+							<li>Submit malware, abusive automation, spam, or deceptive content</li>
+							<li>Process data you are not authorized to use</li>
+							<li>Misrepresent affiliation, certification, or endorsement</li>
+							<li>Remove required copyright, license, or attribution notices</li>
 						</ul>
-						<p>
-							If you do not agree, do not use the website or purchase the
-							Products.
-						</p>
-					</article>
+					</section>
 
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							2. ELIGIBILITY
+					<section aria-labelledby="terms-ip">
+						<h2 id="terms-ip" className={headingClass}>
+							8. INTELLECTUAL PROPERTY AND TRADEMARKS
 						</h2>
 						<p>
-							You must be at least 18 years old and legally capable of entering
-							into binding contracts.
+							ProChat retains rights in its website content, product names,
+							branding, trademarks, and proprietary materials, except where a
+							repository license or third-party license grants specific rights.
+							Open-source and source-available licenses apply only to the material
+							they expressly cover.
 						</p>
 						<p className="mt-4">
-							If purchasing on behalf of a business, you confirm you have
-							authority to bind that entity.
+							Do not use ProChat names or branding in a way that suggests an
+							unapproved partnership, certification, sponsorship, or endorsement.
 						</p>
-					</article>
+					</section>
 
-					<article id="digital-product-license">
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							3. DIGITAL PRODUCT LICENSE (GENERAL)
-						</h2>
-						<p>Upon purchase, you are granted a:</p>
-						<p className="mt-3 font-medium text-slate-900 dark:text-white">
-							Non-exclusive, non-transferable, non-sublicensable license
-							<br />
-							to use the purchased Product under the conditions below.
-						</p>
-						<p className="mt-4">You may:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Use the Product for your own commercial activities</li>
-							<li>Build unlimited SaaS applications</li>
-							<li>Sell subscriptions to your SaaS products</li>
-							<li>Modify the source code for your internal business use</li>
-						</ul>
-						<p>You may NOT:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Resell, sublicense, distribute, or transfer the source code</li>
-							<li>
-								Share repository access outside your licensed organization
-							</li>
-							<li>Publish the source code publicly</li>
-							<li>
-								Sell the Product as a template, boilerplate, starter,
-								framework, or competing product
-							</li>
-							<li>
-								Create a competing boilerplate or derivative framework based
-								substantially on the Product
-							</li>
-							<li>
-								Include the source code inside client deliverables unless the
-								client has purchased their own license
-							</li>
-						</ul>
-						<p>
-							This license grants usage rights, not ownership. All intellectual
-							property remains with ProChat.
-						</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							4. INTERNAL TEAM ACCESS
+					<section aria-labelledby="terms-memory">
+						<h2 id="terms-memory" className={headingClass}>
+							9. MEMORY AND HUMAN REVIEW
 						</h2>
 						<p>
-							A license may be used internally by one business entity.
-						</p>
-						<p className="mt-4">Internal team members may access the code only if:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>
-								They are employees or contractors of the same business
-							</li>
-							<li>
-								They are working on the same SaaS project(s) under that business
-							</li>
-						</ul>
-						<p>
-							If a separate department, subsidiary, client, or separate legal
-							entity uses the Product, a separate license is required.
-						</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							5. BUSINESS SALE OR TRANSFER
-						</h2>
-						<p>
-							If you sell your SaaS business and transfer ownership of the
-							source code, the new owner must purchase a new license from
-							ProChat.
-						</p>
-						<p className="mt-4">The license is non-transferable.</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							6. PRODUCT-SPECIFIC TERMS
-						</h2>
-						<h3 className="mb-2 mt-4 text-base font-bold text-slate-900 dark:text-white">
-							6.1 SaaSKit License
-						</h3>
-						<p>SaaSKit is licensed for:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Unlimited SaaS projects under one business</li>
-							<li>Commercial deployment</li>
-							<li>Lifetime access to updates via GitHub</li>
-						</ul>
-						<p>You may not:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Resell SaaSKit as a development kit</li>
-							<li>Offer SaaSKit as a service to clients</li>
-							<li>Provide repo access to clients</li>
-						</ul>
-						<p>Clients must purchase their own license.</p>
-
-						<h3 className="mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white">
-							6.2 ProKit License
-						</h3>
-						<p>
-							ProKit is licensed under the same conditions as SaaSKit.
+							ProChat products help people capture, review, and retrieve project
+							context. Stored or generated memory may be incomplete, stale,
+							incorrect, or unsuitable for a later task. You remain responsible for
+							reviewing evidence, protecting local files, following organizational
+							and client rules, and making all professional, security, QA, legal,
+							and operational decisions.
 						</p>
 						<p className="mt-4">
-							Commercial usage is permitted for your own SaaS businesses only.
+							ProChat does not provide autonomous testing, professional advice, or
+							a guarantee that remembered information is accurate or current.
 						</p>
-						<p className="mt-4">
-							Resale, redistribution, and template repackaging are strictly
-							prohibited.
-						</p>
-					</article>
+					</section>
 
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							7. LIFETIME UPDATES
+					<section aria-labelledby="terms-warranty">
+						<h2 id="terms-warranty" className={headingClass}>
+							10. NO WARRANTY
 						</h2>
 						<p>
-							Your purchase includes lifetime access to future updates of the
-							Product.
+							To the maximum extent permitted by law, the website, documentation,
+							beta software, and prerelease software are provided &ldquo;as is&rdquo;
+							and &ldquo;as available,&rdquo; without warranties of availability,
+							accuracy, security, merchantability, fitness for a particular
+							purpose, title, non-infringement, or error-free operation. You use
+							them at your own risk.
 						</p>
-						<p className="mt-4">
-							Updates are provided at ProChat&rsquo;s discretion and may modify
-							structure, features, or dependencies.
-						</p>
-						<p className="mt-4">
-							No guarantee is made regarding frequency or scope of updates.
-						</p>
-					</article>
+					</section>
 
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							8. SUPPORT
-						</h2>
-						<p>Support is limited.</p>
-						<p className="mt-4">Documentation is provided.</p>
-						<p className="mt-4">
-							Questions may be submitted to: support@prochat.tools
-						</p>
-						<p className="mt-4">
-							There is no obligation to provide custom development, consulting,
-							or extended assistance.
-						</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							9. NO REFUNDS
+					<section aria-labelledby="terms-liability">
+						<h2 id="terms-liability" className={headingClass}>
+							11. LIMITATION OF LIABILITY
 						</h2>
 						<p>
-							Due to the digital and irreversible nature of source code access,
-							all sales are final.
+							To the maximum extent permitted by law, ProChat is not liable for
+							indirect, incidental, special, consequential, exemplary, or punitive
+							damages; lost profits or revenue; loss of data; business
+							interruption; security incidents; or reliance on inaccurate or stale
+							memory.
 						</p>
 						<p className="mt-4">
-							No refunds, cancellations, or chargebacks are permitted once
-							access is granted.
+							Where liability cannot lawfully be excluded, it is limited to direct,
+							reasonably foreseeable loss and, for any separately paid agreement,
+							no more than the amount paid under that agreement, except where
+							mandatory law requires otherwise.
 						</p>
-					</article>
+					</section>
 
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							10. INTELLECTUAL PROPERTY
+					<section aria-labelledby="terms-payments">
+						<h2 id="terms-payments" className={headingClass}>
+							12. PAYMENTS AND REFUNDS
 						</h2>
 						<p>
-							All Products, source code, branding, structure, architecture, and
-							related materials remain the exclusive intellectual property of
-							ProChat.
+							The current public Workbench path and Memory for QA selected beta do
+							not use a standardized purchase flow. No refund right arises merely
+							from accessing public repositories, documentation, or a free beta.
+							If ProChat and you later enter a separate paid written agreement, its
+							payment and refund terms control, subject to mandatory law.
 						</p>
-						<p className="mt-4">No ownership rights are transferred.</p>
-					</article>
+					</section>
 
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							11. DISCLAIMER
-						</h2>
-						<p>Products are provided &ldquo;as is&rdquo; without warranties of any kind.</p>
-						<p className="mt-4">ProChat does not guarantee:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Business success</li>
-							<li>Revenue</li>
-							<li>Compatibility with future technologies</li>
-							<li>Continuous availability</li>
-						</ul>
-						<p>Use is at your own risk.</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							12. LIMITATION OF LIABILITY
+					<section aria-labelledby="terms-suspension">
+						<h2 id="terms-suspension" className={headingClass}>
+							13. SUSPENSION AND TERMINATION
 						</h2>
 						<p>
-							To the maximum extent permitted by law, ProChat shall not be liable
-							for:
-						</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Indirect or consequential damages</li>
-							<li>Loss of profits</li>
-							<li>Business interruption</li>
-							<li>Data loss</li>
-						</ul>
-						<p>
-							Total liability shall not exceed the amount paid for the Product.
-						</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							13. TERMINATION
-						</h2>
-						<p>
-							Violation of these Terms results in immediate termination of your
-							license without refund.
+							ProChat may restrict website access, reject Contact submissions, or
+							end beta participation where reasonably necessary for security,
+							abuse prevention, legal compliance, service discontinuation, or a
+							breach of applicable terms.
 						</p>
 						<p className="mt-4">
-							Upon termination, you must cease using the Product and destroy all
-							copies.
+							Memory for QA termination is governed by its beta license. Rights in
+							Workbench are governed by the AGPL and cannot be withdrawn by these
+							website Terms where the AGPL grants them.
 						</p>
-					</article>
+					</section>
 
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							14. GOVERNING LAW
+					<section aria-labelledby="terms-law">
+						<h2 id="terms-law" className={headingClass}>
+							14. GOVERNING LAW AND CONSUMER RIGHTS
 						</h2>
-						<p>These Terms are governed by the laws of Portugal.</p>
-						<p className="mt-4">
-							Any disputes shall be resolved in Porto, Portugal.
+						<p>
+							These Terms are governed by Portuguese law. Courts in Porto,
+							Portugal, have jurisdiction where legally permitted. Nothing in
+							these Terms removes mandatory rights or protections that apply under
+							Portuguese, European Union, or other applicable consumer law.
 						</p>
-					</article>
+					</section>
 
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							15. CONTACT
+					<section aria-labelledby="terms-updates">
+						<h2 id="terms-updates" className={headingClass}>
+							15. CHANGES TO THESE TERMS
 						</h2>
-						<p>Support: support@prochat.tools</p>
-						<p className="mt-4">
-							Business: Steve Westhoek (ENI), Porto, Portugal
+						<p>
+							We may update these Terms when the website, product availability,
+							licenses, or legal requirements change. The date above identifies the
+							current website Terms. Repository licenses identify their own
+							applicable versions and terms.
 						</p>
-					</article>
+					</section>
+
+					<section aria-labelledby="terms-contact">
+						<h2 id="terms-contact" className={headingClass}>
+							16. CONTACT
+						</h2>
+						<p>
+							Questions about these Terms may be sent to{' '}
+							<a className={linkClass} href="mailto:info@prochat.tools">
+								info@prochat.tools
+							</a>
+							.
+						</p>
+					</section>
 				</article>
-			</main>
+			</div>
 		</section>
 	)
 }
