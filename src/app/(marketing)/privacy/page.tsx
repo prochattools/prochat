@@ -11,301 +11,239 @@ export const metadata = getSEOTags({
 	canonicalUrlRelative: '/privacy',
 })
 
+const listClass =
+	'mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600'
+const headingClass = 'mb-3 text-xl font-bold text-slate-900 dark:text-white'
+const subheadingClass =
+	'mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white'
+const linkClass =
+	'font-medium text-slate-900 underline decoration-slate-300 underline-offset-4 hover:decoration-slate-900 dark:text-white dark:decoration-slate-600 dark:hover:decoration-white'
+
 export default function PrivacyPage() {
 	return (
 		<section className="relative bg-transparent py-24">
-			<main className="mx-auto w-full max-w-3xl px-page">
+			<div className="mx-auto w-full max-w-3xl px-page">
 				<article className="space-y-10 leading-relaxed text-slate-600 dark:text-slate-300">
 					<header className="mb-12">
 						<h1 className="mb-4 text-3xl font-bold tracking-[-0.05em] text-slate-900 dark:text-white md:text-4xl">
 							PRIVACY POLICY
 						</h1>
 						<p className="text-sm font-medium text-slate-500 dark:text-slate-400">
-							Last updated: 20 February 2026
+							Last updated: 25 July 2026
 						</p>
 					</header>
 
-					<div className="space-y-4">
-						<p>
-							This Privacy Policy explains how personal data is collected and
-							processed by:
-						</p>
-						<p className="font-medium text-slate-900 dark:text-white">
-							Steve Westhoek, trading as ProChat (ENI)
-							<br />
-							Porto, Portugal
-							<br />
-							Email: support@prochat.tools
-						</p>
-						<p>
-							By using this website or purchasing any Product, you agree to this
-							Policy.
-						</p>
-					</div>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							1. DATA CONTROLLER
+					<section aria-labelledby="privacy-scope">
+						<h2 id="privacy-scope" className={headingClass}>
+							1. SCOPE AND CONTROLLER
 						</h2>
-						<p>The data controller is:</p>
-						<div className="mt-4">
-							<p className="font-medium text-slate-900 dark:text-white">Steve Westhoek (ENI)</p>
-							<p>Trading as ProChat</p>
-							<p>Porto, Portugal</p>
-							<p>support@prochat.tools</p>
+						<p>
+							This policy explains how ProChat handles personal data when you use
+							this website, contact us, or apply to participate in a selected beta.
+						</p>
+						<div className="mt-4 font-medium text-slate-900 dark:text-white">
+							<p>Steve Westhoek, trading as ProChat</p>
+							<p>Trabalhador Independente</p>
+							<p>A. dos Descobri. 40, 4E.</p>
+							<p>
+								Privacy contact:{' '}
+								<a className={linkClass} href="mailto:privacy@prochat.tools">
+									privacy@prochat.tools
+								</a>
+							</p>
 						</div>
-					</article>
+					</section>
 
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							2. DATA WE COLLECT
+					<section aria-labelledby="privacy-data">
+						<h2 id="privacy-data" className={headingClass}>
+							2. DATA WE HANDLE
 						</h2>
-						<p>
-							We collect only data necessary to operate our business and deliver
-							our digital products.
-						</p>
-
-						<h3 className="mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white">
-							A. Purchase &amp; Account Data
-						</h3>
-						<p>When you purchase a Product:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Name</li>
-							<li>Email address</li>
-							<li>Billing information</li>
-							<li>Company name (if provided)</li>
-							<li>Transaction details</li>
+						<h3 className={subheadingClass}>Contact and beta enquiries</h3>
+						<p>The Contact form may collect:</p>
+						<ul className={listClass}>
+							<li>Your name and email address</li>
+							<li>The topic you select</li>
+							<li>An optional company or project URL</li>
+							<li>Your message</li>
+							<li>A hidden honeypot value used to identify automated spam</li>
 						</ul>
 						<p>
-							Payments are processed securely by Stripe. We do not store full
-							credit card details.
-						</p>
-						<p className="mt-4">
-							Stripe may store transaction metadata necessary for licensing and
-							fraud prevention.
+							The Contact form does not accept file uploads. The website does not
+							store Contact submissions in its application database.
 						</p>
 
-						<h3 className="mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white">
-							B. GitHub Access
-						</h3>
-						<p>If Product access includes a private repository:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Your GitHub username</li>
-							<li>Associated email (via GitHub OAuth)</li>
+						<h3 className={subheadingClass}>Technical security data</h3>
+						<p>
+							For Contact-form security, the server reads the IP address supplied
+							by trusted proxy headers and uses it for a short-lived, in-memory
+							rate limit of six requests per minute. That rate-limit state is not
+							written to repository-backed storage.
+						</p>
+
+						<h3 className={subheadingClass}>Analytics</h3>
+						<p>
+							ProChat uses privacy-focused Umami analytics hosted in Europe.
+							Umami processes limited usage information and uses analytics cookies.
+							Analytics data is retained according to the operational retention
+							configured for the Umami installation. You may contact us for the
+							current setting.
+						</p>
+					</section>
+
+					<section aria-labelledby="privacy-use">
+						<h2 id="privacy-use" className={headingClass}>
+							3. HOW AND WHY WE USE DATA
+						</h2>
+						<ul className={listClass}>
+							<li>To respond to enquiries and beta applications</li>
+							<li>To send an acknowledgement or confirmation email</li>
+							<li>To prevent spam, abuse, and excessive automated requests</li>
+							<li>To operate, secure, and improve the public website</li>
+							<li>To understand privacy-focused website usage through Umami</li>
+							<li>To comply with applicable legal obligations</li>
 						</ul>
 						<p>
-							This is used solely to grant and manage repository access.
+							Depending on the activity, processing is based on our legitimate
+							interests in operating and securing the website, steps requested by
+							you before beta participation, consent for non-essential analytics
+							cookies, or compliance with legal obligations.
 						</p>
-						<p className="mt-4">
-							GitHub processes your data under its own Privacy Policy.
-						</p>
+					</section>
 
-						<h3 className="mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white">
-							C. Email Communications
-						</h3>
-						<p>We use:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
+					<section aria-labelledby="privacy-sharing">
+						<h2 id="privacy-sharing" className={headingClass}>
+							4. SERVICE PROVIDERS AND SHARING
+						</h2>
+						<p>We use a limited set of service providers:</p>
+						<ul className={listClass}>
 							<li>
-								Resend for transactional emails (receipts, product access,
-								system notifications)
+								<strong>Resend</strong> sends Contact notifications and confirmation
+								emails.
 							</li>
 							<li>
-								MailerLite for newsletters and marketing communications (if you
-								opt in)
-							</li>
-						</ul>
-						<p>You may unsubscribe from marketing emails at any time.</p>
-
-						<h3 className="mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white">
-							D. Technical &amp; Usage Data
-						</h3>
-						<p>We collect limited technical data:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>IP address</li>
-							<li>Browser type</li>
-							<li>Device information</li>
-							<li>Pages visited</li>
-							<li>Timestamps</li>
-						</ul>
-						<p>Used for security, fraud prevention, and analytics.</p>
-
-						<h3 className="mb-2 mt-6 text-base font-bold text-slate-900 dark:text-white">
-							E. Analytics
-						</h3>
-						<p>
-							We use Google Analytics to understand website performance and usage
-							trends.
-						</p>
-						<p className="mt-4">Analytics data may include:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Page interactions</li>
-							<li>Session duration</li>
-							<li>Approximate geographic location</li>
-							<li>Device type</li>
-						</ul>
-						<p>
-							Google may process data outside the EU in accordance with its own
-							safeguards.
-						</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							3. PURPOSE OF PROCESSING
-						</h2>
-						<p>We process personal data to:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Deliver digital products</li>
-							<li>Grant GitHub repository access</li>
-							<li>Process payments</li>
-							<li>Provide transactional communications</li>
-							<li>Send marketing communications (if consented)</li>
-							<li>Prevent fraud and abuse</li>
-							<li>Improve website performance</li>
-						</ul>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							4. LEGAL BASIS (GDPR)
-						</h2>
-						<p>We process personal data under:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>
-								Contractual necessity (product delivery and payment processing)
+								Our European hosting and deployment infrastructure serves the
+								website and related application systems.
 							</li>
 							<li>
-								Legitimate interest (security, fraud prevention, analytics)
-							</li>
-							<li>Consent (marketing emails and optional cookies)</li>
-							<li>
-								Legal obligations (tax and accounting compliance under Portuguese
-								law)
-							</li>
-						</ul>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							5. DATA SHARING
-						</h2>
-						<p>
-							We share personal data only with necessary service providers:
-						</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Stripe (payment processing)</li>
-							<li>GitHub (repository access)</li>
-							<li>MailerLite (email marketing)</li>
-							<li>Resend (transactional email)</li>
-							<li>Google Analytics (usage analytics)</li>
-							<li>Hosting providers (website infrastructure)</li>
-						</ul>
-						<p>We do not sell, rent, or trade personal data.</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							6. DATA RETENTION
-						</h2>
-						<p>We retain:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>
-								Purchase and invoice records as required by Portuguese tax law
+								Our European Umami installation processes privacy-focused analytics data.
 							</li>
 							<li>
-								License-related data while Product access is active
+								GitHub processes data when you choose to follow links to public
+								repositories or use GitHub features.
 							</li>
-							<li>Marketing data until consent is withdrawn</li>
-						</ul>
-						<p>You may request deletion where legally permissible.</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							7. INTERNATIONAL TRANSFERS
-						</h2>
-						<p>
-							Some service providers (Stripe, GitHub, Google, MailerLite,
-							Resend) may process data outside the EU.
-						</p>
-						<p className="mt-4">
-							Where required, appropriate safeguards such as Standard
-							Contractual Clauses are relied upon.
-						</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							8. SECURITY
-						</h2>
-						<p>
-							We implement reasonable technical and organizational safeguards to
-							protect personal data.
-						</p>
-						<p className="mt-4">
-							However, no online transmission can be guaranteed 100% secure.
-						</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							9. YOUR RIGHTS (GDPR)
-						</h2>
-						<p>You have the right to:</p>
-						<ul className="mb-4 mt-2 list-disc space-y-2 pl-5 marker:text-slate-300 dark:marker:text-slate-600">
-							<li>Access your personal data</li>
-							<li>Request correction</li>
-							<li>Request deletion (where legally permitted)</li>
-							<li>Withdraw consent for marketing</li>
-							<li>Object to certain processing</li>
-							<li>Request data portability</li>
-							<li>Lodge a complaint with a supervisory authority</li>
 						</ul>
 						<p>
-							To exercise your rights, contact:
-							<br />
-							support@prochat.tools
+							Contact messages are delivered to{' '}
+							<a className={linkClass} href="mailto:info@prochat.tools">
+								info@prochat.tools
+							</a>
+							. We do not sell personal data. We may disclose information where
+							required by law or necessary to protect users, ProChat, or the
+							public.
 						</p>
-					</article>
+					</section>
 
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							10. COOKIES
-						</h2>
-						<p>We use essential cookies for functionality.</p>
-						<p className="mt-4">
-							Analytics cookies may be used for performance analysis.
-						</p>
-						<p className="mt-4">
-							You may disable cookies in your browser settings.
-						</p>
-						<p className="mt-4">
-							If required by EU law, a cookie consent mechanism will be
-							provided.
-						</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							11. THIRD-PARTY LINKS
+					<section aria-labelledby="privacy-retention">
+						<h2 id="privacy-retention" className={headingClass}>
+							5. RETENTION, DELETION, AND BACKUPS
 						</h2>
 						<p>
-							We are not responsible for third-party websites or services linked
-							from our website.
+							Contact enquiries and related mailbox correspondence are normally
+							retained for up to 24 months after the last correspondence, unless a
+							longer period is reasonably required for legal compliance, security,
+							record-keeping, or dispute resolution.
 						</p>
-					</article>
-
-					<article>
-						<h2 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-							12. POLICY UPDATES
-						</h2>
-						<p>We may update this Policy periodically.</p>
 						<p className="mt-4">
-							The latest version will always be published on this page.
+							Delivery metadata and message processing performed by Resend are
+							retained according to Resend's operational policies and the relevant
+							account configuration.
 						</p>
-					</article>
+						<p className="mt-4">
+							You may request deletion at privacy@prochat.tools. We will apply the
+							request to data we control, subject to legal or security reasons for
+							continued retention. Deleted information may remain in encrypted
+							backups until those backups expire through the normal backup-rotation
+							process.
+						</p>
+					</section>
+
+					<section aria-labelledby="privacy-transfers">
+						<h2 id="privacy-transfers" className={headingClass}>
+							6. PROCESSING LOCATIONS
+						</h2>
+						<p>
+							ProChat's production hosting, deployment, database infrastructure,
+							and Umami analytics are configured in Europe. External providers
+							such as Resend and GitHub process data under their own terms and
+							privacy notices. Where applicable, we rely on the safeguards made
+							available by those providers and applicable data-protection law.
+						</p>
+					</section>
+
+					<section aria-labelledby="privacy-security">
+						<h2 id="privacy-security" className={headingClass}>
+							7. SECURITY
+						</h2>
+						<p>
+							We use measures including input validation, spam detection,
+							short-lived rate limiting, scoped environment secrets, and limited
+							data collection. No internet service can guarantee absolute
+							security.
+						</p>
+					</section>
+
+					<section aria-labelledby="privacy-rights">
+						<h2 id="privacy-rights" className={headingClass}>
+							8. YOUR DATA-PROTECTION RIGHTS
+						</h2>
+						<p>
+							Depending on applicable law, you may request access, correction,
+							deletion, restriction, portability, or objection, and may withdraw
+							consent where processing relies on consent. Contact
+							privacy@prochat.tools. We may need to verify your identity before
+							acting on a request. We aim to respond within one month, as required
+							by the GDPR, although complex requests may take longer where the law
+							allows.
+						</p>
+						<p className="mt-4">
+							You may also complain to the competent data-protection authority.
+						</p>
+					</section>
+
+					<section aria-labelledby="privacy-cookies">
+						<h2 id="privacy-cookies" className={headingClass}>
+							9. COOKIES
+						</h2>
+						<p>
+							The website may use essential cookies needed for security or basic
+							operation and analytics cookies associated with Umami. ProChat does
+							not use advertising cookies or third-party marketing trackers. You
+							can control cookies through your browser settings. Disabling
+							analytics cookies does not prevent access to the public website.
+						</p>
+					</section>
+
+					<section aria-labelledby="privacy-links">
+						<h2 id="privacy-links" className={headingClass}>
+							10. THIRD-PARTY LINKS
+						</h2>
+						<p>
+							The website links to GitHub and other third-party services. Their
+							privacy practices and terms apply when you use those services.
+						</p>
+					</section>
+
+					<section aria-labelledby="privacy-updates">
+						<h2 id="privacy-updates" className={headingClass}>
+							11. POLICY UPDATES
+						</h2>
+						<p>
+							We may update this policy when our products, providers, or legal
+							requirements change. The date above identifies the current version.
+						</p>
+					</section>
 				</article>
-			</main>
+			</div>
 		</section>
 	)
 }
