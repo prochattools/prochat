@@ -1,29 +1,19 @@
 import { MetadataRoute } from 'next'
 
-import { getSiteUrl } from '@/libs/site-url'
+const SITE_URL = 'https://prochat.tools'
+
+const LEARN_SITEMAP_ROUTES = [
+  { path: '/learn', priority: 0.8 },
+  { path: '/learn/production-guide', priority: 0.8 },
+] as const
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = getSiteUrl()
   const lastModified = new Date()
 
-  return [
-    {
-      url: `${baseUrl}/learn`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/learn/saas-starting-point`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/learn/production-guide`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-  ]
+  return LEARN_SITEMAP_ROUTES.map(route => ({
+    url: `${SITE_URL}${route.path}`,
+    lastModified,
+    changeFrequency: 'monthly',
+    priority: route.priority,
+  }))
 }
