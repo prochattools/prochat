@@ -124,7 +124,7 @@ export async function GET() {
                 opacity: 0.9,
               },
             },
-            'Production-Ready SaaS Infrastructure',
+            'ProChat',
           ),
         ),
         h(
@@ -153,7 +153,7 @@ export async function GET() {
                 color: brand.colors.white,
               },
             },
-            'Build SaaS',
+            'Local-first memory for AI-assisted work',
           ),
           h(
             'p',
@@ -169,7 +169,7 @@ export async function GET() {
                 color: brand.colors.subtleText,
               },
             },
-            'with Structure, not Guesswork.',
+            'Reviewed context. Guarded local tools.',
           ),
         ),
         h(

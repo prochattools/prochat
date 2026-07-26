@@ -1,19 +1,20 @@
-import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+
+import StructuredData from '@/components/StructuredData'
+import { getSEOTags } from '@/libs/seo'
+import { getDocsSchemas } from '@/libs/structured-data'
 
 import DocsThemeLayout from './DocsThemeLayout'
 import { getPublicDocEntry } from '@/lib/docs/public-docs'
 import { renderDocsMdxContent } from '@/lib/docs/nextra'
-import { getSiteUrl } from '@/libs/site-url'
 
 const DOCS_DESCRIPTION =
   'Documentation for ProChat Memory, the selected Memory for QA beta, and ProChat Workbench.'
 
-export async function generateMetadata(): Promise<Metadata> {
-  return {
+export async function generateMetadata() {
+  return getSEOTags({
     title: 'ProChat Documentation | Memory and Workbench',
     description: DOCS_DESCRIPTION,
-    applicationName: 'ProChat',
     keywords: [
       'ProChat Memory',
       'Memory for QA',
@@ -23,22 +24,23 @@ export async function generateMetadata(): Promise<Metadata> {
       'self-hosted Workbench',
       'QA memory',
     ],
-    metadataBase: new URL(`${getSiteUrl()}/`),
-    alternates: { canonical: '/docs' },
     openGraph: {
       title: 'ProChat Documentation',
       description: DOCS_DESCRIPTION,
-      url: '/docs',
-      images: ['/og'],
       type: 'website',
     },
     twitter: {
+      card: 'summary_large_image',
       title: 'ProChat Documentation',
       description: DOCS_DESCRIPTION,
-      images: ['/og'],
-      card: 'summary_large_image',
     },
-  }
+    socialImage: {
+      line1: 'ProChat Documentation',
+      line2: 'Memory and Workbench',
+      subtitle: 'Choose a product, understand the boundaries, and follow the current public path.',
+    },
+    canonicalUrlRelative: '/docs',
+  })
 }
 
 export default async function DocsIndexPage() {
@@ -47,8 +49,15 @@ export default async function DocsIndexPage() {
   if (!entry) notFound()
 
   const content = await renderDocsMdxContent(entry)
-  return DocsThemeLayout({
+  const page = await DocsThemeLayout({
     docsCategory: 'docs',
     children: content,
   })
+
+  return (
+    <>
+      <StructuredData id="schema-docs" data={getDocsSchemas()} />
+      {page}
+    </>
+  )
 }

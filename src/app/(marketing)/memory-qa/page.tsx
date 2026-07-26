@@ -1,4 +1,6 @@
-import type { Metadata } from 'next'
+import StructuredData from '@/components/StructuredData'
+import { getSEOTags } from '@/libs/seo'
+import { getMemoryQaSchema } from '@/libs/structured-data'
 
 import { QAMemoryComposition } from '../components/illustrations/compositions'
 import {
@@ -13,27 +15,29 @@ import {
 
 const memoryQaRepository = 'https://github.com/prochattools/memory-qa'
 
-export const metadata: Metadata = {
+export const metadata = getSEOTags({
   title: 'ProChat Memory for QA | Stop Solving the Same Failure Twice',
   description:
     'ProChat Memory for QA helps testers preserve reviewed lessons from failed tests, flaky behavior, selectors, environments, test data, and release decisions.',
-  alternates: { canonical: '/memory-qa' },
   openGraph: {
     title: 'ProChat Memory for QA | Stop Solving the Same Failure Twice',
     description:
       'Keep QA evidence, investigations, corrections, and reviewed lessons available for the next related failure.',
-    url: '/memory-qa',
     type: 'website',
-    images: ['/og'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ProChat Memory for QA | Stop Solving the Same Failure Twice',
     description:
       'A QA-specific edition of ProChat Memory for evidence-led, human-reviewed testing lessons.',
-    images: ['/og'],
   },
-}
+  socialImage: {
+    line1: 'Memory for QA',
+    line2: 'Reviewed testing lessons',
+    subtitle: 'Preserve evidence, corrections, and context for the next related failure.',
+  },
+  canonicalUrlRelative: '/memory-qa',
+})
 
 const qaWorkflow = [
   {
@@ -64,7 +68,9 @@ const qaBoundaries = [
 
 export default function MemoryQAPage() {
   return (
-    <PublicProductPage
+    <>
+      <StructuredData id="schema-memory-qa" data={getMemoryQaSchema()} />
+      <PublicProductPage
       activeRoute="/memory-qa"
       eyebrow="ProChat Memory / QA edition"
       title="Stop solving the same QA failure twice."
@@ -179,6 +185,7 @@ export default function MemoryQAPage() {
           external: true,
         }}
       />
-    </PublicProductPage>
+      </PublicProductPage>
+    </>
   )
 }

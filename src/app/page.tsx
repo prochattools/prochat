@@ -19,12 +19,15 @@ export const metadata = getSEOTags({
     title: 'Memory for AI-Assisted Work',
     description:
       'Local-first, review-first tools for reusable memory and safe AI-assisted project work.',
-    images: ['/og'],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    images: ['/og'],
+  },
+  socialImage: {
+    line1: 'ProChat Memory',
+    line2: 'AI-assisted work',
+    subtitle: 'Local-first memory. Reviewed context. Guarded local tools.',
   },
   canonicalUrlRelative: '/',
 })

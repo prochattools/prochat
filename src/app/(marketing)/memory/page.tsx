@@ -1,4 +1,6 @@
-import type { Metadata } from 'next'
+import StructuredData from '@/components/StructuredData'
+import { getSEOTags } from '@/libs/seo'
+import { getMemorySchema } from '@/libs/structured-data'
 
 import {
   CaptureComposition,
@@ -16,27 +18,29 @@ import {
   PublicProductPage,
 } from '../components/product-pages/PublicProductPage'
 
-export const metadata: Metadata = {
+export const metadata = getSEOTags({
   title: 'ProChat Memory | Durable, Reviewed Context',
   description:
     'ProChat Memory keeps useful evidence, decisions, corrections, and lessons available as local, reviewable, selectively retrieved context.',
-  alternates: { canonical: '/memory' },
   openGraph: {
     title: 'ProChat Memory | Durable, Reviewed Context',
     description:
       'Capture useful work, connect it to evidence, review it, correct it, and retrieve only what matters for the current task.',
-    url: '/memory',
     type: 'website',
-    images: ['/og'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ProChat Memory | Durable, Reviewed Context',
     description:
       'Local, Markdown-first memory shaped by evidence, human review, correction, and selective retrieval.',
-    images: ['/og'],
   },
-}
+  socialImage: {
+    line1: 'ProChat Memory',
+    line2: 'Durable reviewed context',
+    subtitle: 'Capture evidence. Review lessons. Retrieve only what matters.',
+  },
+  canonicalUrlRelative: '/memory',
+})
 
 const memoryFlow = [
   {
@@ -67,7 +71,9 @@ const boundaries = [
 
 export default function MemoryPage() {
   return (
-    <PublicProductPage
+    <>
+      <StructuredData id="schema-memory" data={getMemorySchema()} />
+      <PublicProductPage
       activeRoute="/memory"
       eyebrow="ProChat Memory / flagship"
       title="Keep useful work available as trusted context."
@@ -194,6 +200,7 @@ export default function MemoryPage() {
         primaryAction={{ href: '/memory-qa', label: 'Explore Memory for QA' }}
         secondaryAction={{ href: '/docs', label: 'Read documentation' }}
       />
-    </PublicProductPage>
+      </PublicProductPage>
+    </>
   )
 }

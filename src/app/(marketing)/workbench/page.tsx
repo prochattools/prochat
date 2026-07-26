@@ -1,4 +1,6 @@
-import type { Metadata } from 'next'
+import StructuredData from '@/components/StructuredData'
+import { getSEOTags } from '@/libs/seo'
+import { getWorkbenchSchema } from '@/libs/structured-data'
 
 import {
   ProductBoundaryList,
@@ -13,27 +15,29 @@ import { WorkbenchRunVisual } from '../components/product-pages/ProductVisuals'
 
 const workbenchRepository = 'https://github.com/prochattools/workbench'
 
-export const metadata: Metadata = {
+export const metadata = getSEOTags({
   title: 'ProChat Workbench | Build Apps Through ChatGPT Locally',
   description:
     'ProChat Workbench connects ChatGPT reasoning to exact local project context through bounded reads, guarded changes, confirmation, validation, and explicit Git boundaries.',
-  alternates: { canonical: '/workbench' },
   openGraph: {
     title: 'ProChat Workbench | Build Apps Through ChatGPT Locally',
     description:
       'Work with a real local project through exact context, guarded changes, targeted validation, and explicit Git actions.',
-    url: '/workbench',
     type: 'website',
-    images: ['/og'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ProChat Workbench | Build Apps Through ChatGPT Locally',
     description:
       'A controlled local workbench for bounded project context, guarded file changes, validation, and explicit Git boundaries.',
-    images: ['/og'],
   },
-}
+  socialImage: {
+    line1: 'ProChat Workbench',
+    line2: 'Guarded local project work',
+    subtitle: 'Bounded context. Explicit changes. Visible validation and Git boundaries.',
+  },
+  canonicalUrlRelative: '/workbench',
+})
 
 const guardedFlow = [
   {
@@ -64,7 +68,9 @@ const workbenchBoundaries = [
 
 export default function WorkbenchPage() {
   return (
-    <PublicProductPage
+    <>
+      <StructuredData id="schema-workbench" data={getWorkbenchSchema()} />
+      <PublicProductPage
       activeRoute="/workbench"
       eyebrow="ProChat Workbench / second product"
       title="Build apps through ChatGPT locally."
@@ -172,6 +178,7 @@ export default function WorkbenchPage() {
           external: true,
         }}
       />
-    </PublicProductPage>
+      </PublicProductPage>
+    </>
   )
 }
