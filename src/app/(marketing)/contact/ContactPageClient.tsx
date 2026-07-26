@@ -65,7 +65,7 @@ type ContactPageClientProps = {
 }
 
 export default function ContactPageClient({ initialTopic }: ContactPageClientProps) {
-  const rootRef = useRef<HTMLElement>(null)
+  const rootRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const root = rootRef.current
@@ -295,8 +295,8 @@ export default function ContactPageClient({ initialTopic }: ContactPageClientPro
   }, [])
 
   return (
-    <main ref={rootRef} className="contact-page-root pm-marketing-page">
+    <div ref={rootRef} className="contact-page-root pm-marketing-page">
       <ContactPageMarkup initialTopic={initialTopic} />
-    </main>
+    </div>
   )
 }
