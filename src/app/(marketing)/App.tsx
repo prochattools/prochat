@@ -320,7 +320,7 @@ function AdoptionActionLink({
 
 export default function App() {
   return (
-    <main className="pm-marketing-page pm-homepage">
+    <div className="pm-marketing-page pm-homepage">
       <section className="pm-hero-section" aria-labelledby="pm-hero-title">
         <MemoryLaserField />
         <div className="pm-grid-overlay" aria-hidden="true" />
@@ -843,6 +843,6 @@ export default function App() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   )
 }
