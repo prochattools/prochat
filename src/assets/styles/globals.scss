@@ -131,6 +131,19 @@ svg {
 	--pc-card-title-line-height: 1.14;
 	--pc-card-title-tracking: -0.025em;
 	--pc-body-muted-opacity: 0.82;
+
+	/* Canonical public design tokens shared by marketing, Contact, and Docs. */
+	--pc-public-bg-rgb: 0 0 0;
+	--pc-public-surface-rgb: 7 7 7;
+	--pc-public-surface-elevated-rgb: 14 14 14;
+	--pc-public-text-rgb: 250 250 250;
+	--pc-public-muted-rgb: 163 163 163;
+	--pc-public-border-rgb: 255 255 255;
+	--pc-public-accent-rgb: 86 216 202;
+	--pc-public-accent-strong-rgb: 79 124 255;
+	--pc-public-radius: 1.5rem;
+	--pc-public-container: 96rem;
+	--pc-public-shadow: 0 1px 0 rgb(255 255 255 / 0.05), 0 24px 80px rgb(0 0 0 / 0.38);
 	--blue-50: rgb(241 244 255);
 	--blue-500: rgb(91 124 255);
 	--blue-600: rgb(76 111 255);
@@ -1095,4 +1108,145 @@ html.light {
 			rgb(var(--pc-surface-rgb) / 0.82) 0%,
 			rgb(var(--pc-surface-elevated-rgb) / 0.92) 58%,
 			rgb(var(--pc-blue-600-rgb) / 0.08) 100%);
+}
+
+
+
+
+/* Canonical public chrome shared by marketing and Contact routes. */
+.pc-public-header {
+	position: relative;
+	z-index: 50;
+	width: 100%;
+	padding: clamp(1rem, 2vw, 2rem) var(--pc-page-gutter) 0;
+	background: rgb(var(--pc-public-bg-rgb));
+}
+
+.pc-public-navbar {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) auto;
+	align-items: center;
+	gap: clamp(1rem, 2vw, 2.5rem);
+	width: min(100%, var(--pc-public-container));
+	min-height: 5.5rem;
+	margin: 0 auto;
+	padding: 0.75rem 1rem 0.75rem 1.25rem;
+	border: 1px solid rgb(var(--pc-public-border-rgb) / 0.13);
+	border-radius: 999px;
+	background: rgb(var(--pc-public-surface-rgb) / 0.92);
+	box-shadow: var(--pc-public-shadow);
+	backdrop-filter: blur(20px);
+}
+
+.pc-public-navbar__brand,
+.pc-public-navbar__links,
+.pc-public-navbar__actions {
+	display: flex;
+	align-items: center;
+}
+
+.pc-public-navbar__brand {
+	min-width: max-content;
+}
+
+.pc-public-navbar__links {
+	justify-content: center;
+	gap: clamp(1.25rem, 2.8vw, 3rem);
+}
+
+.pc-public-navbar__links a,
+.pc-public-navbar__contact {
+	color: rgb(var(--pc-public-muted-rgb));
+	font-size: 0.98rem;
+	transition: color 160ms ease;
+}
+
+.pc-public-navbar__links a:hover,
+.pc-public-navbar__links a[aria-current='page'],
+.pc-public-navbar__contact:hover {
+	color: rgb(var(--pc-public-text-rgb));
+}
+
+.pc-public-navbar__actions {
+	justify-content: flex-end;
+	gap: 1rem;
+}
+
+.pc-public-navbar__primary {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+	min-height: 3rem;
+	padding: 0 1.25rem;
+	border: 1px solid rgb(var(--pc-public-border-rgb) / 0.18);
+	border-radius: 999px;
+	background: linear-gradient(180deg, rgb(var(--pc-public-surface-elevated-rgb)), rgb(var(--pc-public-surface-rgb)));
+	color: rgb(var(--pc-public-text-rgb));
+	font-weight: 700;
+	box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+.pc-public-navbar__mobile {
+	display: none;
+}
+
+@media (max-width: 960px) {
+	.pc-public-navbar {
+		grid-template-columns: auto auto;
+		justify-content: space-between;
+		min-height: 4.5rem;
+	}
+
+	.pc-public-navbar__links,
+	.pc-public-navbar__actions {
+		display: none;
+	}
+
+	.pc-public-navbar__mobile {
+		display: block;
+		position: relative;
+	}
+
+	.pc-public-navbar__mobile > summary {
+		list-style: none;
+		cursor: pointer;
+		padding: 0.65rem 0.9rem;
+		border: 1px solid rgb(var(--pc-public-border-rgb) / 0.14);
+		border-radius: 999px;
+		color: rgb(var(--pc-public-text-rgb));
+	}
+
+	.pc-public-navbar__mobile-panel {
+		position: absolute;
+		top: calc(100% + 0.75rem);
+		right: 0;
+		display: grid;
+		min-width: 15rem;
+		padding: 0.75rem;
+		border: 1px solid rgb(var(--pc-public-border-rgb) / 0.12);
+		border-radius: 1rem;
+		background: rgb(var(--pc-public-surface-elevated-rgb) / 0.98);
+		box-shadow: var(--pc-public-shadow);
+	}
+
+	.pc-public-navbar__mobile-panel a {
+		padding: 0.75rem;
+		border-radius: 0.7rem;
+		color: rgb(var(--pc-public-muted-rgb));
+	}
+
+	.pc-public-navbar__mobile-panel a:hover {
+		background: rgb(var(--pc-public-border-rgb) / 0.06);
+		color: rgb(var(--pc-public-text-rgb));
+	}
+}
+
+@media (max-width: 560px) {
+	.pc-public-header {
+		padding-inline: 0.75rem;
+	}
+
+	.pc-public-navbar {
+		padding-inline: 0.9rem;
+	}
 }

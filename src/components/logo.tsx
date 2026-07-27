@@ -1,51 +1,52 @@
-import { brand } from '@/lib/brand'
-
 type LogoProps = {
-	isLarge?: boolean
-	scale?: number
+  isLarge?: boolean
+  scale?: number
 }
 
-const LOGO_ASSET = '/logo/logo-wordmark.svg'
-
 const Logo = ({ isLarge = false, scale = 1 }: LogoProps) => {
-	const baseWidth = isLarge ? 200 : 160
-	const baseHeight = isLarge ? 61 : 49
-	const width = Math.round(baseWidth * scale)
-	const height = Math.round(baseHeight * scale)
-	const maskStyles = {
-		WebkitMaskImage: `url(${LOGO_ASSET})`,
-		maskImage: `url(${LOGO_ASSET})`,
-		WebkitMaskPosition: 'center',
-		maskPosition: 'center',
-		WebkitMaskRepeat: 'no-repeat',
-		maskRepeat: 'no-repeat',
-		WebkitMaskSize: 'contain',
-		maskSize: 'contain',
-	} as const
+  const baseHeight = isLarge ? 52 : 42
+  const height = Math.round(baseHeight * scale)
+  const markWidth = Math.round(height * 1.09)
+  const wordSize = Math.max(16, Math.round(height * 0.5))
 
-	return (
-		<span
-			role="img"
-			aria-label="ProChat logo"
-			className="pc-logo-wordmark relative inline-flex shrink-0"
-			style={{ width, height }}
-		>
-			<span
-				aria-hidden="true"
-				className="absolute inset-0 bg-white"
-				style={maskStyles}
-			/>
-			<span
-				aria-hidden="true"
-				className="absolute inset-0"
-				style={{
-					...maskStyles,
-					backgroundImage: `linear-gradient(135deg, ${brand.colors.primary}, ${brand.colors.primaryStrong})`,
-					clipPath: 'inset(0 69% 0 0)',
-				}}
-			/>
-		</span>
-	)
+  const markMask = {
+    WebkitMaskImage: 'url(/logo/logo-mark.svg)',
+    maskImage: 'url(/logo/logo-mark.svg)',
+    WebkitMaskPosition: 'center',
+    maskPosition: 'center',
+    WebkitMaskRepeat: 'no-repeat',
+    maskRepeat: 'no-repeat',
+    WebkitMaskSize: 'contain',
+    maskSize: 'contain',
+  } as const
+
+  return (
+    <span
+      role="img"
+      aria-label="ProChat logo"
+      className="pc-logo-wordmark inline-flex shrink-0 items-center"
+      style={{ gap: Math.max(8, Math.round(height * 0.18)), height }}
+    >
+      <span
+        aria-hidden="true"
+        className="pc-logo-wordmark__mark block shrink-0"
+        style={{
+          ...markMask,
+          width: markWidth,
+          height,
+          background:
+            'linear-gradient(135deg, rgb(var(--pc-public-accent-rgb)) 0%, rgb(var(--pc-public-accent-strong-rgb)) 100%)',
+        }}
+      />
+      <span
+        aria-hidden="true"
+        className="pc-logo-wordmark__text whitespace-nowrap font-brand font-bold lowercase tracking-[-0.045em] text-white"
+        style={{ fontSize: wordSize, lineHeight: 1 }}
+      >
+        prochat
+      </span>
+    </span>
+  )
 }
 
 export default Logo
