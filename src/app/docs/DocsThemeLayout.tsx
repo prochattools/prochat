@@ -1,7 +1,10 @@
 import type { ReactNode } from 'react'
 import type { PageMapItem } from 'nextra'
 
-import { Layout, Navbar } from 'nextra-theme-docs'
+import { Layout } from 'nextra-theme-docs'
+
+import Header from '@/components/Header'
+import { Footer } from '@/app/(marketing)/components/layout/Footer'
 
 import 'nextra-theme-docs/style-prefixed.css'
 import '../../../styles/docs.css'
@@ -54,6 +57,7 @@ export default async function DocsThemeLayout({
 }) {
   return (
     <div className="docs-shell flex min-h-screen flex-col">
+      <Header forceVisible />
       <div className="docs-shell-inner flex flex-1 flex-col">
         <Layout
           pageMap={PUBLIC_DOCS_NAVIGATION}
@@ -74,38 +78,13 @@ export default async function DocsThemeLayout({
             autoCollapse: true,
             defaultMenuCollapseLevel: 1,
           }}
-          navbar={
-            <Navbar
-              logoLink="/"
-              logo={
-                <span
-                  className="docs-logo-wordmark"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-end',
-                    gap: '8px',
-                    color: 'inherit',
-                  }}
-                >
-                  <img
-                    src="/logo/logo-wordmark.svg"
-                    height="24"
-                    width="120"
-                    alt="ProChat"
-                    style={{
-                      transform: 'translateY(2px)',
-                    }}
-                  />
-                </span>
-              }
-              projectLink="https://github.com/prochattools"
-            />
-          }
-          darkMode
+          navbar={null}
+          darkMode={false}
         >
           <div className="flex-1">{children}</div>
         </Layout>
       </div>
+      <Footer />
     </div>
   )
 }
