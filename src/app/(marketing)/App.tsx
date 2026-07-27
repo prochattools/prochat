@@ -1,15 +1,15 @@
 import Link from 'next/link'
 
+import Logo from '@/components/logo'
+
 import {
-  CaptureComposition,
   MemorySystemComposition,
   QABetaAdoptionComposition,
   QAMemoryFlowComposition,
-  RetrievalComposition,
-  ReviewStructureComposition,
   WorkbenchAdoptionComposition,
   WorkbenchGuardedFlowComposition,
 } from './components/illustrations/compositions'
+import HomepageTrackedLink from './components/HomepageTrackedLink'
 import { MemoryLaserField } from './components/motion/MemoryLaserField'
 import './prochat-memory-theme.css'
 
@@ -74,51 +74,57 @@ const trustPrinciples = [
 ] as const
 
 const qaProductPoints = [
-  'Preserve logs, screenshots, selectors, environments, data, and decisions together.',
-  'Keep stale lessons correctable instead of silently reusing old assumptions.',
-  'Retrieve reviewed QA context when a related failure appears later.',
+  'Selected source-available beta for approved participants.',
+  'For QA teams repeatedly investigating related failures.',
+  'Preserves reviewed evidence, corrections, and reusable testing lessons.',
 ] as const
 
 const workbenchProductPoints = [
-  'Admit exact local project context without widening source access by default.',
-  'Keep reads bounded, changes guarded, validation visible, and Git actions explicit.',
-  'Resume a run with the objective, evidence, file state, and next boundary intact.',
+  'Free self-hosted AGPL-3.0-only prerelease.',
+  'For developers who want guarded local project work through ChatGPT.',
+  'Keeps reads bounded, changes guarded, validation visible, and Git actions explicit.',
 ] as const
 
 const memoryQaRepository = 'https://github.com/prochattools/memory-qa'
 const workbenchRepository = 'https://github.com/prochattools/workbench'
-const prochatDiscussions = 'https://github.com/orgs/prochattools/discussions'
 const memoryQaBetaContactPath = '/contact?topic=memory-qa-beta#contact-form-card'
+const memoryContactPath = '/contact?topic=memory#contact-form-card'
 
 const memoryQaAdoptionActions = [
   {
     label: 'Apply for the selected beta',
     href: memoryQaBetaContactPath,
     kind: 'primary',
+    external: false,
+    eventName: 'product_cta_click',
+    cta: 'apply_selected_beta',
   },
   {
-    label: 'View the repository on GitHub',
+    label: 'View the public repository',
     href: memoryQaRepository,
     kind: 'secondary',
     external: true,
+    eventName: 'outbound_funnel_click',
+    cta: 'view_repository',
+  },
+] as const
+
+const workbenchAdoptionActions = [
+  {
+    label: 'Start with Workbench',
+    href: '/workbench',
+    kind: 'primary',
+    external: false,
+    eventName: 'product_cta_click',
+    cta: 'start_workbench',
   },
   {
-    label: 'Star Memory for QA on GitHub',
-    href: memoryQaRepository,
+    label: 'View the repository',
+    href: workbenchRepository,
     kind: 'secondary',
     external: true,
-  },
-  {
-    label: 'Report sanitized feedback in GitHub Issues',
-    href: `${memoryQaRepository}/issues`,
-    kind: 'secondary',
-    external: true,
-  },
-  {
-    label: 'Join ProChat discussions on GitHub',
-    href: prochatDiscussions,
-    kind: 'secondary',
-    external: true,
+    eventName: 'outbound_funnel_click',
+    cta: 'view_repository',
   },
 ] as const
 
@@ -127,58 +133,25 @@ const closingActions = [
     label: 'Apply for the Memory for QA beta',
     href: memoryQaBetaContactPath,
     kind: 'primary',
-    external: false,
+    product: 'memory-qa',
+    eventName: 'product_cta_click',
+    cta: 'apply_beta',
   },
   {
-    label: 'Explore ProChat Workbench',
+    label: 'Start with Workbench',
     href: '/workbench',
     kind: 'secondary',
-    external: false,
+    product: 'workbench',
+    eventName: 'product_cta_click',
+    cta: 'start_workbench',
   },
   {
-    label: 'View the Memory for QA repository',
-    href: memoryQaRepository,
+    label: 'Discuss a Memory workflow',
+    href: memoryContactPath,
     kind: 'text',
-    external: true,
-  },
-] as const
-
-const workbenchAdoptionActions = [
-  {
-    label: 'View ProChat Workbench on GitHub',
-    href: workbenchRepository,
-    kind: 'primary',
-    external: true,
-  },
-  {
-    label: 'Star Workbench on GitHub',
-    href: workbenchRepository,
-    kind: 'secondary',
-    external: true,
-  },
-  {
-    label: 'Clone and self-host from the repository README',
-    href: `${workbenchRepository}/blob/main/README.md`,
-    kind: 'secondary',
-    external: true,
-  },
-  {
-    label: 'Open a Workbench issue on GitHub',
-    href: `${workbenchRepository}/issues`,
-    kind: 'secondary',
-    external: true,
-  },
-  {
-    label: 'Join a Workbench discussion on GitHub',
-    href: `${workbenchRepository}/discussions`,
-    kind: 'secondary',
-    external: true,
-  },
-  {
-    label: 'Propose a contribution through CONTRIBUTING.md',
-    href: `${workbenchRepository}/blob/main/CONTRIBUTING.md`,
-    kind: 'secondary',
-    external: true,
+    product: 'memory',
+    eventName: 'product_cta_click',
+    cta: 'discuss_memory_workflow',
   },
 ] as const
 
@@ -220,8 +193,8 @@ function MemoryIcon({ name }: { name: IconName }) {
   if (name === 'source') {
     return (
       <svg {...common}>
-        <rect x="5" y="4" width="14" height="16" rx="2" />
-        <path d="M8.5 8h7M8.5 12h7M8.5 16h4" />
+        <path d="M7 3.5h7l3 3V20H7z" />
+        <path d="M14 3.5V7h3M9.5 11h5M9.5 14h5M9.5 17H13" />
       </svg>
     )
   }
@@ -229,8 +202,8 @@ function MemoryIcon({ name }: { name: IconName }) {
   if (name === 'rotate') {
     return (
       <svg {...common}>
-        <path d="M4 11a8 8 0 1 1 2.3 5.7" />
-        <path d="M4 5v6h6" />
+        <path d="M4.5 8A8 8 0 1 1 6 17.5" />
+        <path d="M4 4v4h4" />
       </svg>
     )
   }
@@ -275,7 +248,9 @@ type AdoptionAction = {
   readonly label: string
   readonly href: string
   readonly kind: 'primary' | 'secondary'
-  readonly external?: boolean
+  readonly external: boolean
+  readonly eventName: 'product_cta_click' | 'outbound_funnel_click'
+  readonly cta: string
 }
 
 function AdoptionActionLink({
@@ -283,38 +258,27 @@ function AdoptionActionLink({
   product,
 }: {
   action: AdoptionAction
-  product: 'qa' | 'workbench'
+  product: 'memory-qa' | 'workbench'
 }) {
   const className = [
     'pm-adoption-action',
     `pm-adoption-action--${action.kind}`,
-    `pm-adoption-action--${product}`,
+    `pm-adoption-action--${product === 'memory-qa' ? 'qa' : 'workbench'}`,
   ].join(' ')
 
-  const content = (
-    <>
+  return (
+    <HomepageTrackedLink
+      href={action.href}
+      className={className}
+      eventName={action.eventName}
+      location="participation"
+      product={product}
+      cta={action.cta}
+      external={action.external}
+    >
       <span>{action.label}</span>
       <ArrowIcon />
-    </>
-  )
-
-  if (action.external) {
-    return (
-      <a
-        href={action.href}
-        className={className}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {content}
-      </a>
-    )
-  }
-
-  return (
-    <Link href={action.href} className={className}>
-      {content}
-    </Link>
+    </HomepageTrackedLink>
   )
 }
 
@@ -328,8 +292,7 @@ export default function App() {
         <header className="pm-site-header">
           <nav className="pm-navbar" aria-label="Primary navigation">
             <Link href="/" className="pm-wordmark" aria-label="ProChat home">
-              <span className="pm-wordmark-mark">P</span>
-              <span>prochat</span>
+              <Logo scale={0.62} />
             </Link>
 
             <div className="pm-nav-links">
@@ -344,8 +307,8 @@ export default function App() {
               <Link href="/contact" className="pm-nav-text-action">
                 Contact
               </Link>
-              <Link href="/memory" className="pm-pill-button pm-pill-button--dark">
-                Explore Memory
+              <Link href="#current-products" className="pm-pill-button pm-pill-button--dark">
+                Choose a product
                 <ArrowIcon />
               </Link>
             </div>
@@ -359,7 +322,7 @@ export default function App() {
                   </Link>
                 ))}
                 <Link href="/contact">Contact</Link>
-                <Link href="/memory">Explore Memory</Link>
+                <Link href="#current-products">Choose a product</Link>
               </div>
             </details>
           </nav>
@@ -377,14 +340,28 @@ export default function App() {
           </p>
 
           <div className="pm-hero-actions">
-            <Link href="/memory" className="pm-pill-button pm-pill-button--light">
-              Explore ProChat Memory
+            <HomepageTrackedLink
+              href="#current-products"
+              className="pm-pill-button pm-pill-button--light"
+              eventName="product_cta_click"
+              location="hero"
+              product="memory"
+              cta="choose_product_path"
+            >
+              Choose a product path
               <ArrowIcon />
-            </Link>
-            <Link href="/docs" className="pm-hero-secondary-link">
-              Read the documentation
+            </HomepageTrackedLink>
+            <HomepageTrackedLink
+              href="/memory"
+              className="pm-hero-secondary-link"
+              eventName="product_cta_click"
+              location="hero"
+              product="memory"
+              cta="understand_memory_model"
+            >
+              Understand the Memory model
               <ArrowIcon />
-            </Link>
+            </HomepageTrackedLink>
           </div>
 
           <div className="pm-trust-line" aria-label="Product trust principles">
@@ -428,338 +405,215 @@ export default function App() {
       </section>
 
       <section
-        id="memory-benefits"
-        className="pm-benefits-section"
-        aria-labelledby="pm-benefits-title"
-      >
-        <div className="pm-benefits-header">
-          <div className="pm-section-pill">
-            <span className="pm-section-pill__mark" aria-hidden="true" />
-            Why memory matters
-          </div>
-          <h2 id="pm-benefits-title">Turn repeated work into trusted memory.</h2>
-          <p>
-            ProChat Memory keeps useful evidence, decisions, corrections, and
-            lessons available, so future work starts with context instead of
-            repetition.
-          </p>
-        </div>
-
-        <div className="pm-benefits-grid">
-          <article className="pm-benefit">
-            <div className="pm-benefit-visual">
-              <CaptureComposition
-                motion="reveal"
-                className="pm-benefit-illustration"
-              />
-            </div>
-            <div className="pm-benefit-copy">
-              <span className="pm-benefit-number">01 / CAPTURE</span>
-              <h3>Capture what the work already taught you.</h3>
-              <p>
-                Keep the evidence, decisions, and lessons that would otherwise
-                disappear across tools and conversations.
-              </p>
-            </div>
-          </article>
-
-          <article className="pm-benefit">
-            <div className="pm-benefit-visual">
-              <ReviewStructureComposition
-                motion="reveal"
-                className="pm-benefit-illustration"
-              />
-            </div>
-            <div className="pm-benefit-copy">
-              <span className="pm-benefit-number">02 / REVIEW</span>
-              <h3>Review before memory becomes truth.</h3>
-              <p>
-                Every trusted memory remains connected to evidence, correction
-                history, and explicit human judgment.
-              </p>
-            </div>
-          </article>
-
-          <article className="pm-benefit">
-            <div className="pm-benefit-visual">
-              <RetrievalComposition
-                motion="reveal"
-                className="pm-benefit-illustration"
-              />
-            </div>
-            <div className="pm-benefit-copy">
-              <span className="pm-benefit-number">03 / RETRIEVE</span>
-              <h3>Bring back only what matters now.</h3>
-              <p>
-                Retrieve the smallest trusted context for the current task
-                instead of sending an entire history to the model.
-              </p>
-            </div>
-          </article>
-        </div>
-
-        <div className="pm-benefits-action">
-          <Link
-            href="/memory"
-            className="pm-pill-button pm-pill-button--light"
-          >
-            See how ProChat Memory works
-            <ArrowIcon />
-          </Link>
-        </div>
-      </section>
-
-      <section
-        id="memory-system"
-        className="pm-system-section"
-        aria-labelledby="pm-system-title"
-      >
-        <div className="pm-system-section__inner">
-          <header className="pm-system-header">
-            <div className="pm-system-meta" aria-label="Chapter 3, The Memory System">
-              <span>03</span>
-              <span>THE MEMORY SYSTEM</span>
-              <span>ONE CONTINUOUS LIFECYCLE</span>
-            </div>
-            <h2 id="pm-system-title">
-              <span>From useful fragments</span>
-              {' '}
-              <span>to trusted context.</span>
-            </h2>
-            <p>
-              Capture what the work produced, review what deserves to last,
-              and retrieve only the context that matters for the task in
-              front of you.
-            </p>
-          </header>
-
-          <div className="pm-system-diagram-field">
-            <div className="pm-system-diagram-field__grid" aria-hidden="true" />
-            <MemorySystemComposition
-              motion="reveal"
-              className="pm-system-diagram"
-            />
-          </div>
-
-          <ol className="pm-system-phases" aria-label="The three phases of ProChat Memory">
-            <li>
-              <span>01 / CAPTURE &amp; DETECT</span>
-              <h3>Make the work inspectable.</h3>
-              <p>
-                Conversations, notes, evidence, decisions, results, and
-                observations stay raw while ProChat forms candidate records
-                and detects possible patterns.
-              </p>
-            </li>
-            <li>
-              <span>02 / REVIEW &amp; STRUCTURE</span>
-              <h3>Decide what deserves to last.</h3>
-              <p>
-                Evidence stays connected to conclusions. Human review can
-                approve, reject, correct, or supersede a candidate before it
-                joins durable memory.
-              </p>
-            </li>
-            <li>
-              <span>03 / RETRIEVE &amp; APPLY</span>
-              <h3>Use only what matters now.</h3>
-              <p>
-                Current intent filters a wider reviewed memory field into a
-                small context set. ProChat supplies context; the person still
-                decides what to do.
-              </p>
-            </li>
-          </ol>
-
-          <div className="pm-system-action">
-            <Link href="/memory" className="pm-pill-button pm-pill-button--light">
-              Explore the Memory model
-              <ArrowIcon />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section
         id="current-products"
         className="pm-products-section"
         aria-labelledby="pm-products-title"
       >
         <div className="pm-products-section__inner">
           <header className="pm-products-header">
-            <div className="pm-system-meta" aria-label="Chapter 4, Current products">
-              <span>04</span>
+            <div className="pm-system-meta" aria-label="Chapter 2, Current products">
+              <span>02</span>
               <span>CURRENT PRODUCTS</span>
-              <span>TWO VERIFIED PATHS</span>
+              <span>TWO DISTINCT PATHS</span>
             </div>
             <h2 id="pm-products-title">
-              <span>Start with a real workflow.</span>
-              {' '}
-              <span>Build from trusted memory.</span>
+              <span>Choose the product</span>{' '}<span>that matches your work.</span>
             </h2>
             <p>
-              ProChat Memory begins with a focused QA edition, while ProChat
-              Workbench gives ChatGPT a guarded way to work with local
-              projects. They share a design language, but they are not the
-              same product path.
+              Memory for QA preserves reviewed testing lessons. Workbench gives ChatGPT a guarded way to work with local projects. Each has a different audience, status, and next step.
             </p>
           </header>
 
           <div className="pm-products-layout">
-            <article
-              className="pm-product-path pm-product-path--qa"
-              aria-labelledby="pm-product-qa-title"
-            >
+            <article className="pm-product-path pm-product-path--qa" aria-labelledby="pm-product-qa-title">
               <div className="pm-product-path__visual">
-                <QAMemoryFlowComposition
-                  motion="reveal"
-                  className="pm-product-path__illustration"
-                />
+                <QAMemoryFlowComposition motion="reveal" className="pm-product-path__illustration" />
               </div>
-
               <div className="pm-product-path__body">
                 <div className="pm-product-path__meta">
-                  <span>Memory edition</span>
-                  <span>Primary path</span>
+                  <span>Selected source-available beta</span>
+                  <span>For repeated QA investigations</span>
                 </div>
                 <h3 id="pm-product-qa-title">ProChat Memory for QA</h3>
-                <p className="pm-product-path__promise">
-                  Stop solving the same QA failure twice.
-                </p>
+                <p className="pm-product-path__promise">Stop solving the same QA failure twice.</p>
                 <p>
-                  Preserve investigation evidence, reviewed conclusions, and
-                  corrected lessons from failures so future QA work starts
-                  with current evidence and usable history.
+                  Preserve investigation evidence, reviewed conclusions, and corrected lessons so related failures start with usable history.
                 </p>
                 <ul>
-                  {qaProductPoints.map(point => (
-                    <li key={point}>{point}</li>
-                  ))}
+                  {qaProductPoints.map(point => <li key={point}>{point}</li>)}
                 </ul>
-                <Link href="/memory-qa" className="pm-pill-button pm-pill-button--light">
-                  Explore Memory for QA
-                  <ArrowIcon />
-                </Link>
+                <div className="pm-product-choice-actions">
+                  <HomepageTrackedLink
+                    href={memoryQaBetaContactPath}
+                    className="pm-pill-button pm-pill-button--light"
+                    eventName="product_cta_click"
+                    location="product_card"
+                    product="memory-qa"
+                    cta="apply_selected_beta"
+                  >
+                    Apply for the selected beta
+                    <ArrowIcon />
+                  </HomepageTrackedLink>
+                  <HomepageTrackedLink
+                    href="/memory-qa"
+                    className="pm-product-path__secondary-action"
+                    eventName="product_cta_click"
+                    location="product_card"
+                    product="memory-qa"
+                    cta="explore_memory_qa"
+                  >
+                    Explore Memory for QA
+                    <ArrowIcon />
+                  </HomepageTrackedLink>
+                </div>
               </div>
             </article>
 
-            <article
-              className="pm-product-path pm-product-path--workbench"
-              aria-labelledby="pm-product-workbench-title"
-            >
+            <article className="pm-product-path pm-product-path--workbench" aria-labelledby="pm-product-workbench-title">
               <div className="pm-product-path__visual">
-                <WorkbenchGuardedFlowComposition
-                  motion="reveal"
-                  className="pm-product-path__illustration"
-                />
+                <WorkbenchGuardedFlowComposition motion="reveal" className="pm-product-path__illustration" />
               </div>
-
               <div className="pm-product-path__body">
                 <div className="pm-product-path__meta">
-                  <span>Second product</span>
-                  <span>Guarded local work</span>
+                  <span>Free self-hosted AGPL prerelease</span>
+                  <span>For guarded local project work</span>
                 </div>
                 <h3 id="pm-product-workbench-title">ProChat Workbench</h3>
-                <p className="pm-product-path__promise">
-                  Build apps through ChatGPT locally.
-                </p>
+                <p className="pm-product-path__promise">Build apps through ChatGPT locally.</p>
                 <p>
-                  Bring exact project context into a bounded workflow where
-                  source reads, file changes, validation, run continuity, and
-                  Git boundaries remain visible.
+                  Bring exact project context into a bounded workflow where reads, changes, validation, continuity, and Git boundaries remain visible.
                 </p>
                 <ul>
-                  {workbenchProductPoints.map(point => (
-                    <li key={point}>{point}</li>
-                  ))}
+                  {workbenchProductPoints.map(point => <li key={point}>{point}</li>)}
                 </ul>
-                <Link href="/workbench" className="pm-product-path__secondary-action">
-                  Explore ProChat Workbench
-                  <ArrowIcon />
-                </Link>
+                <div className="pm-product-choice-actions">
+                  <HomepageTrackedLink
+                    href="/workbench"
+                    className="pm-pill-button pm-pill-button--light"
+                    eventName="product_cta_click"
+                    location="product_card"
+                    product="workbench"
+                    cta="start_workbench"
+                  >
+                    Start with Workbench
+                    <ArrowIcon />
+                  </HomepageTrackedLink>
+                  <HomepageTrackedLink
+                    href={workbenchRepository}
+                    className="pm-product-path__secondary-action"
+                    eventName="outbound_funnel_click"
+                    location="product_card"
+                    product="workbench"
+                    cta="view_repository"
+                    external
+                  >
+                    View the repository
+                    <ArrowIcon />
+                  </HomepageTrackedLink>
+                </div>
               </div>
             </article>
           </div>
         </div>
       </section>
 
-      <section
-        id="participate"
-        className="pm-adoption-section"
-        aria-labelledby="pm-adoption-title"
-      >
-        <div className="pm-adoption-section__inner">
-          <header className="pm-adoption-header">
-            <div className="pm-system-meta" aria-label="Chapter 5, Participate">
-              <span>05</span>
-              <span>PARTICIPATE</span>
-              <span>PRODUCT-SPECIFIC PATHS</span>
+      <section id="memory-system" className="pm-system-section" aria-labelledby="pm-system-title">
+        <div className="pm-system-section__inner">
+          <header className="pm-system-header">
+            <div className="pm-system-meta" aria-label="Chapter 3, The Memory model">
+              <span>03</span>
+              <span>THE MEMORY MODEL</span>
+              <span>CAPTURE · REVIEW · RETRIEVE</span>
             </div>
-            <h2 id="pm-adoption-title">
-              <span>Use it.</span>
-              {' '}
-              <span>Test it.</span>
-              {' '}
-              <span>Help shape what comes next.</span>
+            <h2 id="pm-system-title">
+              <span>Turn repeated work</span>{' '}<span>into trusted context.</span>
             </h2>
             <p>
-              ProChat’s current products have different participation paths.
-              Memory for QA is a selected source-available beta. Workbench is
-              a free self-hosted AGPL prerelease.
+              Capture what the work produced, review what deserves to last, and retrieve only the context that matters for the task in front of you.
+            </p>
+          </header>
+
+          <div className="pm-system-diagram-field">
+            <div className="pm-system-diagram-field__grid" aria-hidden="true" />
+            <MemorySystemComposition motion="reveal" className="pm-system-diagram" />
+          </div>
+
+          <ol className="pm-system-phases" aria-label="The three phases of ProChat Memory">
+            <li>
+              <span>01 / CAPTURE</span>
+              <h3>Make the work inspectable.</h3>
+              <p>Keep the evidence, decisions, and lessons that would otherwise disappear across tools and conversations.</p>
+            </li>
+            <li>
+              <span>02 / REVIEW</span>
+              <h3>Decide what deserves to last.</h3>
+              <p>Human review can approve, reject, correct, or supersede a candidate before it becomes durable memory.</p>
+            </li>
+            <li>
+              <span>03 / RETRIEVE</span>
+              <h3>Use only what matters now.</h3>
+              <p>Current intent filters reviewed memory into the smallest useful context set for the task at hand.</p>
+            </li>
+          </ol>
+
+          <div className="pm-system-action">
+            <HomepageTrackedLink
+              href="/memory"
+              className="pm-pill-button pm-pill-button--light"
+              eventName="product_cta_click"
+              location="memory_model"
+              product="memory"
+              cta="explore_memory_model"
+            >
+              Explore the Memory model
+              <ArrowIcon />
+            </HomepageTrackedLink>
+          </div>
+        </div>
+      </section>
+
+      <section id="participate" className="pm-adoption-section" aria-labelledby="pm-adoption-title">
+        <div className="pm-adoption-section__inner">
+          <header className="pm-adoption-header">
+            <div className="pm-system-meta" aria-label="Chapter 4, Participate">
+              <span>04</span>
+              <span>PARTICIPATE</span>
+              <span>ONE CLEAR NEXT STEP</span>
+            </div>
+            <h2 id="pm-adoption-title">
+              <span>Choose a focused path.</span>{' '}<span>Keep the boundaries clear.</span>
+            </h2>
+            <p>
+              Memory for QA is a selected source-available beta. Workbench is a free self-hosted AGPL prerelease. Each product has one direct start and one public repository path.
             </p>
           </header>
 
           <div className="pm-adoption-layout">
-            <article
-              className="pm-adoption-path pm-adoption-path--qa"
-              aria-labelledby="pm-adoption-qa-title"
-            >
+            <article className="pm-adoption-path pm-adoption-path--qa" aria-labelledby="pm-adoption-qa-title">
               <div className="pm-adoption-path__visual">
-                <QABetaAdoptionComposition
-                  motion="reveal"
-                  className="pm-adoption-path__illustration"
-                />
+                <QABetaAdoptionComposition motion="reveal" className="pm-adoption-path__illustration" />
               </div>
-
               <div className="pm-adoption-path__body">
                 <div className="pm-adoption-path__meta">
-                  <span>Public source-available QA beta</span>
-                  <span>Free for approved beta testers</span>
+                  <span>Selected source-available beta</span>
+                  <span>Approved participants only</span>
                 </div>
                 <h3 id="pm-adoption-qa-title">ProChat Memory for QA</h3>
                 <p className="pm-adoption-path__lead">
-                  Inspect the public repository, apply for the selected beta,
-                  evaluate locally only after approval, then return sanitized
-                  feedback through GitHub.
+                  Apply with one repeated QA workflow, or inspect the public repository before deciding whether the beta fits your evaluation context.
                 </p>
-                <ul className="pm-adoption-claims">
-                  <li>Public repository may be viewed and starred.</li>
-                  <li>Approved participants may clone and evaluate locally under the beta license.</li>
-                  <li>Code contributions and source-code pull requests are not accepted during the current beta.</li>
-                </ul>
                 <div className="pm-adoption-actions" aria-label="Memory for QA participation actions">
                   {memoryQaAdoptionActions.map(action => (
-                    <AdoptionActionLink
-                      key={action.label}
-                      action={action}
-                      product="qa"
-                    />
+                    <AdoptionActionLink key={action.label} action={action} product="memory-qa" />
                   ))}
                 </div>
               </div>
             </article>
 
-            <article
-              className="pm-adoption-path pm-adoption-path--workbench"
-              aria-labelledby="pm-adoption-workbench-title"
-            >
+            <article className="pm-adoption-path pm-adoption-path--workbench" aria-labelledby="pm-adoption-workbench-title">
               <div className="pm-adoption-path__visual">
-                <WorkbenchAdoptionComposition
-                  motion="reveal"
-                  className="pm-adoption-path__illustration"
-                />
+                <WorkbenchAdoptionComposition motion="reveal" className="pm-adoption-path__illustration" />
               </div>
-
               <div className="pm-adoption-path__body">
                 <div className="pm-adoption-path__meta">
                   <span>Free and open source under AGPL-3.0-only</span>
@@ -767,21 +621,11 @@ export default function App() {
                 </div>
                 <h3 id="pm-adoption-workbench-title">ProChat Workbench</h3>
                 <p className="pm-adoption-path__lead">
-                  View, star, fork, or clone the repository; self-host ProChat
-                  Workbench locally; open an issue, join a discussion, or
-                  propose a contribution.
+                  Start with the product guide, or inspect the repository before setting up a guarded local project workflow.
                 </p>
-                <ul className="pm-adoption-claims">
-                  <li>External pull-request merge requires the contributor-rights process.</li>
-                  <li>Separate commercial or OEM licensing may be requested.</li>
-                </ul>
                 <div className="pm-adoption-actions" aria-label="Workbench participation actions">
                   {workbenchAdoptionActions.map(action => (
-                    <AdoptionActionLink
-                      key={action.label}
-                      action={action}
-                      product="workbench"
-                    />
+                    <AdoptionActionLink key={action.label} action={action} product="workbench" />
                   ))}
                 </div>
               </div>
@@ -790,56 +634,32 @@ export default function App() {
         </div>
       </section>
 
-      <section
-        id="conversion-close"
-        className="pm-closing-section"
-        aria-labelledby="pm-closing-title"
-      >
+      <section id="conversion-close" className="pm-closing-section" aria-labelledby="pm-closing-title">
         <div className="pm-closing-panel">
-          <div className="pm-system-meta" aria-label="Chapter 6, Closing action">
-            <span>06</span>
+          <div className="pm-system-meta" aria-label="Chapter 5, Closing action">
+            <span>05</span>
             <span>NEXT STEP</span>
-            <span>CONVERSION CLOSURE</span>
+            <span>CHOOSE YOUR PATH</span>
           </div>
           <h2 id="pm-closing-title">Put trusted memory to work.</h2>
           <p>
-            Start with the selected Memory for QA beta or explore Workbench
-            for guarded local project work. Both paths keep context,
-            evidence, and control visible.
+            Apply for the selected QA beta, begin with Workbench, or discuss one repeated workflow that should become durable Memory.
           </p>
           <div className="pm-closing-actions" aria-label="ProChat next steps">
-            {closingActions.map(action => {
-              const className = [
-                'pm-closing-action',
-                `pm-closing-action--${action.kind}`,
-              ].join(' ')
-              const content = (
-                <>
-                  <span>{action.label}</span>
-                  <ArrowIcon />
-                </>
-              )
-
-              if (action.external) {
-                return (
-                  <a
-                    key={action.label}
-                    href={action.href}
-                    className={className}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {content}
-                  </a>
-                )
-              }
-
-              return (
-                <Link key={action.label} href={action.href} className={className}>
-                  {content}
-                </Link>
-              )
-            })}
+            {closingActions.map(action => (
+              <HomepageTrackedLink
+                key={action.label}
+                href={action.href}
+                className={`pm-closing-action pm-closing-action--${action.kind}`}
+                eventName={action.eventName}
+                location="closing"
+                product={action.product}
+                cta={action.cta}
+              >
+                <span>{action.label}</span>
+                <ArrowIcon />
+              </HomepageTrackedLink>
+            ))}
           </div>
         </div>
       </section>
