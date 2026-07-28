@@ -78,9 +78,14 @@ export default function WorkbenchPage() {
       primaryAction={{
         href: workbenchRepository,
         label: 'View Workbench repository',
+        cta: 'view_repository',
         external: true,
       }}
-      secondaryAction={{ href: '#guarded-workflow', label: 'See the guarded workflow' }}
+      secondaryAction={{
+        href: '#guarded-workflow',
+        label: 'See the guarded workflow',
+        cta: 'see_guarded_workflow',
+      }}
       principles={[
         'Exact context',
         'Bounded reads',
@@ -96,6 +101,38 @@ export default function WorkbenchPage() {
         description="Workbench separates project admission, local context, requested change, validation, and Git action so each boundary remains understandable."
       >
         <ProductFlow items={guardedFlow} />
+      </ProductSection>
+
+      <ProductSection
+        eyebrow="First guarded workflow"
+        title="Start with one local project and one small, reviewable change."
+        description="Evaluation requires a self-hosted Workbench setup, a local project you are allowed to inspect, ChatGPT, and a willingness to review every requested change and validation result. Exact installation requirements remain in the public repository README."
+        tone="muted"
+      >
+        <ProductFlow
+          items={[
+            {
+              label: 'Connect one local project',
+              description: 'Admit the intended repository, documentation, or project folder instead of treating the wider computer as available context.',
+            },
+            {
+              label: 'Request one bounded read',
+              description: 'Ask for exact files, symbols, or documentation needed to understand one small task.',
+            },
+            {
+              label: 'Make one guarded change',
+              description: 'Apply only the approved edit and keep unrelated files outside the change set.',
+            },
+            {
+              label: 'Run one targeted validation',
+              description: 'Check the changed behavior and keep failures distinct from completion.',
+            },
+            {
+              label: 'Inspect the exact Git diff',
+              description: 'Review what changed before any separate staging, commit, or push decision.',
+            },
+          ]}
+        />
       </ProductSection>
 
       <ProductSection
@@ -164,17 +201,20 @@ export default function WorkbenchPage() {
       </ProductSection>
 
       <ProductPageAction
+        activeRoute="/workbench"
         eyebrow="Release-safe next step"
         title="Understand the boundaries before choosing a workflow."
         description="Workbench can be viewed, cloned, and self-hosted from the public AGPL repository. Contribution proposals still require the contributor-rights boundary."
         primaryAction={{
           href: `${workbenchRepository}/blob/main/README.md`,
           label: 'Read the Workbench README',
+          cta: 'read_readme',
           external: true,
         }}
         secondaryAction={{
           href: `${workbenchRepository}/blob/main/CONTRIBUTING.md`,
           label: 'Review contribution boundary',
+          cta: 'review_contribution_boundary',
           external: true,
         }}
       />

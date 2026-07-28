@@ -78,10 +78,12 @@ export default function MemoryQAPage() {
       primaryAction={{
         href: '/contact?topic=memory-qa-beta#contact-form-card',
         label: 'Apply for the selected beta',
+        cta: 'apply_selected_beta',
       }}
       secondaryAction={{
         href: memoryQaRepository,
         label: 'View source-available repository',
+        cta: 'view_repository',
         external: true,
       }}
       principles={[
@@ -138,6 +140,52 @@ export default function MemoryQAPage() {
       </ProductSection>
 
       <ProductSection
+        eyebrow="Selected beta fit"
+        title="Bring one repeated QA workflow that can be reviewed honestly."
+        description="A strong evaluation starts with a concrete investigation pattern and a team willing to inspect, correct, and scope the resulting memory under the applicable beta terms."
+        tone="muted"
+      >
+        <ProductCardGrid columns={2}>
+          <ProductCard index="01 / FIT" title="A useful beta candidate">
+            <ul>
+              <li>Investigates repeated or closely related QA failures</li>
+              <li>Can provide one concrete evaluation workflow</li>
+              <li>Can review, correct, or reject generated memory</li>
+              <li>Accepts the repository&apos;s applicable beta terms</li>
+            </ul>
+          </ProductCard>
+          <ProductCard index="02 / APPLICATION" title="What to include">
+            <ul>
+              <li>The repeated failure class you want to evaluate</li>
+              <li>Your current investigation workflow</li>
+              <li>Evidence or context that is commonly lost</li>
+              <li>The outcome that would make the evaluation useful</li>
+            </ul>
+          </ProductCard>
+        </ProductCardGrid>
+        <ProductFlow
+          items={[
+            {
+              label: 'Capture one completed investigation',
+              description: 'Keep the current evidence, conclusion, and relevant project context together as the first candidate lesson.',
+            },
+            {
+              label: 'Review the candidate lesson',
+              description: 'Approve, edit, reject, or narrow it before future work can rely on it.',
+            },
+            {
+              label: 'Test reuse on a related failure',
+              description: 'Check whether the reviewed lesson helps a new investigation without overriding current evidence.',
+            },
+            {
+              label: 'Record corrections',
+              description: 'Update or retire the lesson when the product, environment, or original conclusion changes.',
+            },
+          ]}
+        />
+      </ProductSection>
+
+      <ProductSection
         eyebrow="Inspectable QA memory"
         title="Keep the lesson connected to what produced it."
         description="A useful QA record should make its evidence, scope, review state, and correction history understandable to the next tester."
@@ -172,16 +220,19 @@ export default function MemoryQAPage() {
       </ProductSection>
 
       <ProductPageAction
+        activeRoute="/memory-qa"
         eyebrow="Selected QA path"
         title="Use real investigations to test whether the memory helps."
         description="Memory for QA is a public source-available selected beta. Approved participants may clone and evaluate locally under the beta license."
         primaryAction={{
           href: '/contact?topic=memory-qa-beta#contact-form-card',
           label: 'Apply for the selected beta',
+          cta: 'apply_selected_beta',
         }}
         secondaryAction={{
           href: `${memoryQaRepository}/issues`,
           label: 'Report sanitized feedback',
+          cta: 'report_sanitized_feedback',
           external: true,
         }}
       />

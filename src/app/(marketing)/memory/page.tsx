@@ -42,6 +42,24 @@ export const metadata = getSEOTags({
   canonicalUrlRelative: '/memory',
 })
 
+const firstMemoryWorkflow = [
+  {
+    label: 'Capture one decision with its evidence',
+    description:
+      'Keep the decision, the source material that informed it, and the current outcome together as one inspectable candidate record.',
+  },
+  {
+    label: 'Review what deserves to last',
+    description:
+      'Approve, reject, correct, or supersede the candidate so the durable record reflects human judgment rather than an automatic summary.',
+  },
+  {
+    label: 'Retrieve it for one related task',
+    description:
+      'Use the approved record when a related task appears so the work begins with reviewed context instead of starting from zero.',
+  },
+] as const
+
 const memoryFlow = [
   {
     label: 'Capture useful fragments',
@@ -78,8 +96,16 @@ export default function MemoryPage() {
       eyebrow="ProChat Memory / flagship"
       title="Keep useful work available as trusted context."
       description="ProChat Memory turns fragmented evidence, decisions, corrections, and lessons into local, reviewable records that can return when the current task needs them."
-      primaryAction={{ href: '#memory-model', label: 'Explore the Memory model' }}
-      secondaryAction={{ href: '/memory-qa', label: 'See Memory for QA' }}
+      primaryAction={{
+        href: '#memory-model',
+        label: 'Explore the Memory model',
+        cta: 'explore_memory_model',
+      }}
+      secondaryAction={{
+        href: '/memory-qa',
+        label: 'See Memory for QA',
+        cta: 'see_memory_qa',
+      }}
       principles={[
         'Local files',
         'Markdown-first',
@@ -151,6 +177,15 @@ export default function MemoryPage() {
       </ProductSection>
 
       <ProductSection
+        eyebrow="First successful workflow"
+        title="Start with one decision that should not be rediscovered."
+        description="The first useful result is simple: a related task begins with reviewed context instead of starting from zero."
+        tone="muted"
+      >
+        <ProductFlow items={firstMemoryWorkflow} />
+      </ProductSection>
+
+      <ProductSection
         eyebrow="Ownership and portability"
         title="Memory stays readable beyond any one model."
         description="The durable asset is the reviewed record and its history, not a specific chat interface or model response."
@@ -194,11 +229,20 @@ export default function MemoryPage() {
       </ProductSection>
 
       <ProductPageAction
+        activeRoute="/memory"
         eyebrow="Current edition"
         title="See the Memory model applied to QA."
         description="ProChat Memory for QA is the first niche-specific edition, focused on preserving reviewed lessons from repeated software-testing investigations."
-        primaryAction={{ href: '/memory-qa', label: 'Explore Memory for QA' }}
-        secondaryAction={{ href: '/docs', label: 'Read documentation' }}
+        primaryAction={{
+          href: '/memory-qa',
+          label: 'Explore Memory for QA',
+          cta: 'explore_memory_qa',
+        }}
+        secondaryAction={{
+          href: '/docs',
+          label: 'Read documentation',
+          cta: 'read_documentation',
+        }}
       />
       </PublicProductPage>
     </>
