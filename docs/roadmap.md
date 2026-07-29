@@ -31,12 +31,12 @@ This repository translates that truth into design, migration, implementation, te
 ## Verified current state
 
 ```yaml
-verified_head: 4b423fb
+verified_head: 0f1a85e
 verified_date: 2026-07-29
-current_head: 4b423fb
-current_program_state: The Product Experience Foundation program is complete. All canonical public routes are implemented, deployed, and production-verified. PXF-003 through PXF-006F delivered the public homepage, product pages, design system, contact, privacy, terms, documentation, metadata, accessibility repairs, and product-page onboarding analytics. The platform is live and in continuous governance.
-current_phase: PXF-006G — roadmap reconciliation and program closure
-current_packet: PXF-006G — documentation closeout
+current_head: 0f1a85e
+current_program_state: The Product Experience Foundation program is complete. All canonical public routes are implemented, deployed, and production-verified. PXF-003 through PXF-009 delivered the public homepage, product pages, design system, contact, privacy, terms, documentation, metadata, accessibility repairs, product-page onboarding analytics, and docs mobile layout fixes. The platform is live and in continuous governance.
+current_phase: PXF-010 — design-system governance and launch hardening
+current_packet: PXF-010 — token architecture reconciliation, enforcement, and repository hardening
 canonical_visual_routes_active: 8
 canonical_routes: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms
 legacy_redirects_active: /prochat-memory -> /memory; /qa-memory -> /memory-qa
@@ -78,10 +78,11 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 | Phase 9 | DONE | Production foundation | Phase 8 and approved migration rows | Nexus-derived dark tokens, Golos Text, shared marketing layout, canonical routes | fonts, tokens, shells, primitives, tests, and infrastructure | production foundation deployed | Phase 10 |
 | Phase 10 | DONE | Public pages | Phase 9 and approved page copy | all 8 canonical routes deployed: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms | canonical public pages and shell updates | all required public responsibilities implemented and production-verified | Phase 11 |
 | Phase 11 | PARTIAL | Legacy migration and removal | Phase 10 and verified replacements | legacy redirects active; legacy code and styles deferred to future cleanup wave | redirects, archives, and bounded removals | legacy redirects implemented; full style/component removal deferred to future wave | Phase 12 |
-| Phase 12 | PARTIAL | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking deployed | visual, accessibility, performance, and launch acceptance | site is live and passing CI; formal performance and WCAG audit deferred to next governance cycle | Phase 13 |
-| Phase 13 | ONGOING | Continuous governance | launch | platform live and deployed | review and maintenance cadence | this phase does not end | Phase 13 |
+| Phase 12 | COMPLETE | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking, docs mobile TOC overlap fix deployed | visual, accessibility, and launch acceptance verified | site is live and passing CI at HEAD 0f1a85e; WCAG audit complete, performance baseline established | Phase 13 |
+| Phase 13 | ONGOING | Continuous governance | launch | platform live and deployed | review and maintenance cadence | — | Phase 13 |
+| Phase 14 | IN PROGRESS | Design-system governance and launch hardening | Phase 12 | token architecture documentation, enforcement linting, docs migration, repository classification, accessibility hardening | canonical design authority established, token drift prevented, artifact classification complete | system is hardened and governance is documented | Phase 15 |
 
-The Product Experience Foundation program is complete. All canonical public routes are implemented, deployed, and production-verified at HEAD `4b423fb`. The historical phase table above reflects the reconciled final status.
+The Product Experience Foundation program is complete. All canonical public routes are implemented, deployed, and production-verified at HEAD `0f1a85e`. Phase 14 (PXF-010) is establishing design-system governance. The historical phase table above reflects the reconciled status.
 
 ## Product and company boundary
 
