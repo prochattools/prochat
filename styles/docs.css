@@ -379,3 +379,9 @@ html.dark .docs-logo-wordmark img {
     padding-inline: 1rem !important;
   }
 }
+
+@media (max-width: 430px) {
+  .docs-shell {
+    --nextra-navbar-height: 5.5rem;
+  }
+}
