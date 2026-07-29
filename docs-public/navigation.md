@@ -9,6 +9,11 @@ This component is used in three entry points:
 - **Homepage** (`App.tsx`) — with a custom CTA pointing to `#current-products`
 - **Product pages** (`PublicProductPage.tsx`) — with the default "Explore Memory" CTA
 - **Contact, Privacy, Terms** (`Header.tsx`) — via `LegacyCompatibilityShell`
+- **Docs** (`DocsThemeLayout.tsx`) — via `<Header forceVisible />`
+
+The CSS required by `MarketingNav` (`pm-navbar`, `pm-site-header`, `pm-pill-button`, etc.) is loaded via two entry points:
+- `src/app/(marketing)/layout.tsx` — covers all `(marketing)` route group pages (homepage, product pages, contact, privacy, terms)
+- `src/app/docs/DocsThemeLayout.tsx` — covers the docs shell which sits outside the `(marketing)` group
 
 ### Component API
 
@@ -51,3 +56,29 @@ Uses the shared `Logo` component at `scale={0.62}`. The logo mark and wordmark i
 ## Contact page
 
 The contact form is the sole content of `/contact` — no supplementary sections. The submit button uses `pm-pill-button pm-pill-button--light` class.
+
+## Design system token layer
+
+All marketing pages are scoped under `.pm-marketing-page`. The canonical token set is defined inside that scope in `prochat-memory-theme.css`:
+
+| Token | Purpose |
+|-------|---------|
+| `--pm-canvas` | Page background |
+| `--pm-surface` | Card/surface background |
+| `--pm-surface-raised` | Elevated surface (form panels) |
+| `--pm-text` | Primary text |
+| `--pm-text-secondary` | Secondary/muted text |
+| `--pm-text-muted` | Further-muted text |
+| `--pm-text-faint` | Faintest text (index numbers, decorative) |
+| `--pm-border` | Standard border |
+| `--pm-border-subtle` | Slightly softer border |
+| `--pm-border-faint` | Faintest border |
+| `--pm-accent` | Brand accent (teal) |
+| `--pm-accent-soft` | Semi-transparent accent for glows |
+| `--pm-radius-card` | Card border-radius |
+| `--pm-radius-panel` | Panel border-radius |
+| `--pm-page-gutter` | Horizontal page padding |
+| `--pm-content-max` | Maximum content width |
+| `--pm-ease` | Standard easing curve |
+
+All these tokens resolve from the canonical `--pc-public-*` raw color values defined in `:root` in `globals.scss`. Component-local CSS that targets marketing surfaces must use `pm-*` aliases, not raw `pc-public-*` tokens directly (except for alpha-variant expressions like `rgb(var(--pc-public-accent-rgb) / 0.75)` where no `pm-*` alias provides the correct alpha).
