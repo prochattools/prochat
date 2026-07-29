@@ -11,9 +11,10 @@ This component is used in three entry points:
 - **Contact, Privacy, Terms** (`Header.tsx`) — via `LegacyCompatibilityShell`
 - **Docs** (`DocsThemeLayout.tsx`) — via `<Header forceVisible />`
 
-The CSS required by `MarketingNav` (`pm-navbar`, `pm-site-header`, `pm-pill-button`, etc.) is loaded via two entry points:
+The CSS required by `MarketingNav` (`pm-navbar`, `pm-site-header`, `pm-pill-button`, etc.) is loaded via three entry points:
 - `src/app/(marketing)/layout.tsx` — covers all `(marketing)` route group pages (homepage, product pages, contact, privacy, terms)
-- `src/app/docs/DocsThemeLayout.tsx` — covers the docs shell which sits outside the `(marketing)` group
+- `src/app/docs/layout.tsx` — ensures Next.js attaches the CSS to the docs route module graph (required for correct CSS chunk splitting)
+- `src/app/docs/DocsThemeLayout.tsx` — secondary import for the docs shell; redundant with the layout import but kept for explicitness
 
 ### Component API
 
