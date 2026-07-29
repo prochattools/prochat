@@ -1,27 +1,6 @@
-import Link from 'next/link'
-import { ArrowUpRight, Send, ShieldCheck } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-const CONTACT_SUBMIT_IDLE_HTML = `
-  <span class="pc-action-label">
-    <span class="text-current">SEND MESSAGE</span>
-  </span>
-`
-
-const contactReasons = [
-  'Become a ProChat Memory tester',
-  'Discuss a repeated workflow',
-  'Ask about local Markdown memory',
-  'Plan a ProChat Memory for QA use case',
-] as const
-
-const nextSteps = [
-  'Share one repeated task or context problem.',
-  'Describe what useful memory should preserve.',
-  'We identify the smallest useful tester flow.',
-] as const
+const CONTACT_SUBMIT_IDLE_HTML = 'SEND MESSAGE'
 
 type ContactPageMarkupProps = {
   initialTopic?: 'ProChat Memory' | 'ProChat Memory for QA beta' | 'ProChat Workbench'
@@ -167,88 +146,17 @@ export default function ContactPageMarkup({
                 tabIndex={-1}
               ></p>
 
-              <Button
+              <button
                 data-contact-submit=""
                 type="submit"
-                className="contact-submit-button h-11 w-full justify-center gap-2 rounded-lg text-[13px] shadow-surface hover:bg-primary/92 active:scale-[0.98] md:text-[13px]"
+                className="pm-pill-button pm-pill-button--light w-full justify-center"
               >
                 <span
                   data-contact-submit-label=""
                   dangerouslySetInnerHTML={{ __html: CONTACT_SUBMIT_IDLE_HTML }}
                 />
-                <Send className="h-4 w-4" />
-              </Button>
+              </button>
             </form>
-          </div>
-        </div>
-      </section>
-
-      <section className="pm-editorial-section pm-section-rule contact-memory-section">
-        <div className="pm-container pm-visual-split">
-          <div>
-            <p className="pm-kicker">WHAT TO SEND</p>
-            <h2>Useful context starts messy.</h2>
-            <p>
-              A short note is enough. Describe the work your team repeats, the context that keeps disappearing, and what a good answer should respect.
-            </p>
-          </div>
-          <div className="pm-record-grid contact-reason-grid">
-            {contactReasons.map(reason => (
-              <article key={reason} className="pm-record-card">
-                <div className="pm-record-meta">
-                  <span>Reason</span>
-                  <span>DRAFT</span>
-                </div>
-                <h3>{reason}</h3>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="pm-editorial-section contact-memory-section">
-        <div className="pm-container pm-method-grid">
-          <div>
-            <p className="pm-kicker">NEXT STEP</p>
-            <h2>We turn one repeated task into a tester flow.</h2>
-            <p>
-              The goal is not a broad rollout. It is one concrete place where persistent memory can reduce repeated explanation.
-            </p>
-          </div>
-          <div className="pm-step-list">
-            {nextSteps.map((step, index) => (
-              <article key={step} className="pm-step-card">
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <h3>{step}</h3>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="pm-final-cta contact-memory-footer-cta">
-        <div className="pm-container pm-final-panel">
-          <p className="pm-kicker">CONTACT FORM</p>
-          <h2>Send one focused note.</h2>
-          <p>
-            Use the form above and include any links or examples that help explain the repeated context problem.
-          </p>
-          <div className="pm-actions pm-actions-center">
-            <Button asChild variant="primary" size="lg">
-              <a href="#contact-form-card">
-                Use the form
-              </a>
-            </Button>
-            <Button asChild variant="secondary" size="lg">
-              <Link href="/memory">
-                See ProChat Memory
-                <ArrowUpRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-          <div className="mt-8 inline-flex items-center gap-2 text-sm text-muted-foreground">
-            <ShieldCheck className="h-4 w-4 text-primary" />
-            <span>We use your message to understand and respond to your request.</span>
           </div>
         </div>
       </section>

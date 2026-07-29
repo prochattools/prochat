@@ -1,7 +1,5 @@
 import Link from 'next/link'
 
-import Logo from '@/components/logo'
-
 import {
   MemorySystemComposition,
   QABetaAdoptionComposition,
@@ -10,15 +8,9 @@ import {
   WorkbenchGuardedFlowComposition,
 } from './components/illustrations/compositions'
 import HomepageTrackedLink from './components/HomepageTrackedLink'
+import { MarketingNav } from './components/layout/MarketingNav'
 import { MemoryLaserField } from './components/motion/MemoryLaserField'
 import './prochat-memory-theme.css'
-
-const navigation = [
-  { href: '/memory', label: 'Memory' },
-  { href: '/memory-qa', label: 'Memory for QA' },
-  { href: '/workbench', label: 'Workbench' },
-  { href: '/docs', label: 'Documentation' },
-] as const
 
 const memoryCards = [
   {
@@ -289,44 +281,7 @@ export default function App() {
         <MemoryLaserField />
         <div className="pm-grid-overlay" aria-hidden="true" />
 
-        <header className="pm-site-header">
-          <nav className="pm-navbar" aria-label="Primary navigation">
-            <Link href="/" className="pm-wordmark" aria-label="ProChat home">
-              <Logo scale={0.62} />
-            </Link>
-
-            <div className="pm-nav-links">
-              {navigation.map(item => (
-                <Link key={item.href} href={item.href}>
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-
-            <div className="pm-nav-actions">
-              <Link href="/contact" className="pm-nav-text-action">
-                Contact
-              </Link>
-              <Link href="#current-products" className="pm-pill-button pm-pill-button--dark">
-                Choose a product
-                <ArrowIcon />
-              </Link>
-            </div>
-
-            <details className="pm-mobile-nav">
-              <summary>Menu</summary>
-              <div className="pm-mobile-nav-panel">
-                {navigation.map(item => (
-                  <Link key={item.href} href={item.href}>
-                    {item.label}
-                  </Link>
-                ))}
-                <Link href="/contact">Contact</Link>
-                <Link href="#current-products">Choose a product</Link>
-              </div>
-            </details>
-          </nav>
-        </header>
+        <MarketingNav cta={{ label: 'Choose a product', href: '#current-products', trackingCta: 'choose_product_path' }} />
 
         <div className="pm-hero-content">
           <div className="pm-status-pill">

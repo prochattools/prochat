@@ -134,6 +134,7 @@
 
 .pm-wordmark {
   display: inline-flex;
+  color: rgb(var(--pc-public-accent-rgb));
   align-items: center;
   gap: 0.65rem;
   min-width: max-content;
@@ -1786,7 +1787,7 @@
 
 .pc-footer__logo {
   display: inline-flex;
-  color: var(--pc-footer-text);
+  color: var(--pm-accent);
 }
 
 .pc-footer__brand h2 {

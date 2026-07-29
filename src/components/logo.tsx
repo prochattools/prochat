@@ -34,13 +34,12 @@ const Logo = ({ isLarge = false, scale = 1 }: LogoProps) => {
           ...markMask,
           width: markWidth,
           height,
-          background:
-            'linear-gradient(135deg, rgb(var(--pc-public-accent-rgb)) 0%, rgb(var(--pc-public-accent-strong-rgb)) 100%)',
+          background: 'currentColor',
         }}
       />
       <span
         aria-hidden="true"
-        className="pc-logo-wordmark__text whitespace-nowrap font-brand font-bold lowercase tracking-[-0.045em] text-white"
+        className="pc-logo-wordmark__text whitespace-nowrap font-brand font-bold lowercase tracking-[-0.045em]"
         style={{ fontSize: wordSize, lineHeight: 1 }}
       >
         prochat
