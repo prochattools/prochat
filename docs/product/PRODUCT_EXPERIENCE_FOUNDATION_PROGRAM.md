@@ -280,65 +280,41 @@ mind_founder_discovery_session_1: COMPLETE
 mind_public_platform_strategy: EXISTS
 product_truth: EXISTS
 brand_character: EXISTS
-design_tokens: EXISTS_AS_FOUNDATION
-prochat_marketing_execution_brief: NOT_STARTED
-reference_site_analysis: NOT_STARTED
-homepage_information_architecture: NOT_STARTED
-applied_visual_direction: NOT_APPROVED
-wireframes: NOT_STARTED
-high_fidelity_design: NOT_STARTED
-implementation_packetization: NOT_STARTED
-production_visual_design: NOT_STARTED
+design_tokens: EXISTS_DEPLOYED
+prochat_marketing_execution_brief: COMPLETE
+reference_site_analysis: COMPLETE
+homepage_information_architecture: COMPLETE
+applied_visual_direction: APPROVED_AND_DEPLOYED
+wireframes: SUPERSEDED_BY_TEMPLATE_ADOPTION
+high_fidelity_design: APPROVED_AND_DEPLOYED
+implementation_packetization: COMPLETE
+production_visual_design: COMPLETE
+public_pages_deployed: COMPLETE
+analytics_tracking: COMPLETE
+program_status: COMPLETE
 ```
 
-## Next executable task
+## Program completion
 
-```yaml
-task_id: PXF-002
-name: Mind-to-ProChat public-platform translation brief
-coding: false
-authority:
-  mind:
-    - system/infinite-brain-philosophy.md
-    - organizations/prochat/README.md
-    - wiki/organisations/prochat/brand/company-principles.md
-    - wiki/organisations/prochat/brand/product-strategy.md
-    - wiki/organisations/prochat/brand/public-platform-strategy.md
-  prochat:
-    - PRODUCT.md
-    - DESIGN.md
-    - brand-spec.md
-inputs:
-  - approved Mind strategy and founder philosophy
-  - current ProChat route and content inventory
-  - owner website references and precise reasons
-  - visual and interaction anti-patterns
-outputs:
-  - docs/product/PRODUCT_EXPERIENCE_BRIEF.md
-  - homepage audience, promise, CTA, and evidence hierarchy
-  - reference-site analysis
-  - emotional attributes and anti-attributes
-  - homepage information-architecture packet
-  - open-question register
-acceptance:
-  - no business philosophy or strategy is duplicated from Mind
-  - every marketing conclusion cites a controlling Mind authority
-  - owner approves homepage role, primary CTA, narrative sequence, and visual benchmark interpretation
-  - the next task is low-fidelity homepage wireframing
-blocking: high-fidelity public website design and broad production UI work
-```
+The Product Experience Foundation program is complete as of 2026-07-29 at HEAD `4b423fb`.
 
-## Focus guardrail
+All six deliverables were executed through an approved Nexus-template-adoption path (PXF-003A through PXF-006F). The public platform is live and in continuous governance.
 
-Foundational work must converge on the public website. After `PXF-002`, the required sequence is:
+Completed PXF sequence:
 
 ```text
-homepage information architecture
-→ low-fidelity homepage wireframe
-→ owner review
-→ applied visual direction
-→ high-fidelity homepage design
-→ bounded production implementation
+PXF-003A — Nexus-template homepage foundation
+PXF-003B0 — Public conversion strategy foundation
+PXF-003B1A — Memory illustration architecture
+PXF-003B2A — Product hierarchy and canonical routes
+PXF-003C1 — Live hero motion fidelity
+PXF-003E — Combined adoption chapter
+PXF-004 — Production refinements
+PXF-005 — Responsive, docs, contact, and design alignment
+PXF-006A–F — Metadata, a11y, sitemap, privacy, terms, onboarding, analytics
+PXF-006G — Roadmap reconciliation and program closure
 ```
 
-Do not open additional philosophy phases unless a concrete contradiction blocks the website brief.
+## Continuous governance
+
+The program is in Phase 13 (continuous governance). No further PXF packets are pending. Future work follows the Phase 13 quarterly review cadence defined in `docs/roadmap.md`.

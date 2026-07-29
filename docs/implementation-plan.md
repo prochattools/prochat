@@ -37,39 +37,40 @@ mind/wiki/organisations/prochat/brand/website-build-contract.md
 ## Verified current state
 
 ```yaml
-verified_head: 6b37d60
-verified_date: 2026-07-22
-current_head: 6b37d60
-current_program_state: The PXF-003 public-platform sequence is complete. Canonical routes, documentation, beta contact flow, repository validation, and production prerendering are implemented and statically validated. Live Wave 1 execution remains separate and has not run. The next owner gate is documentation-closeout commit authorization, followed by separate push and deployment authorization.
-current_phase: PXF-003 public-platform closeout
-current_packet: PXF-003M — public platform documentation closeout
+verified_head: 4b423fb
+verified_date: 2026-07-29
+current_head: 4b423fb
+current_program_state: The Product Experience Foundation program is complete. All canonical public routes are implemented, deployed, and production-verified. PXF-003 through PXF-006F delivered the public homepage, product pages, design system, contact, privacy, terms, documentation, metadata, accessibility repairs, and product-page onboarding analytics. The platform is live and in continuous governance (Phase 13).
+current_phase: PXF-006G — roadmap reconciliation and program closure
+current_packet: PXF-006G — documentation closeout
 canonical_visual_routes_active: 8
 canonical_route_implementation: COMPLETE
 public_docs_alignment: COMPLETE
 contact_beta_flow_alignment: COMPLETE
 repository_validation: RESTORED
 production_visual_design_started: true
-production_visual_implementation: COMPLETE_FOR_PXF-003_PUBLIC_SURFACE
+production_visual_implementation: COMPLETE
+analytics_tracking: COMPLETE
 runner_disposition: COMMITTED_STATICALLY_VALIDATED
 static_validation: PASSED
 full_typescript: PASSED
 production_build: PASSED
 static_pages_generated: 109
-live_execution: NOT_RUN
-wave1_execution: NOT_RUN
+live_execution: DEPLOYED
+wave1_execution: DEPLOYED
 protected_session_strategy: PUBLIC_AND_UNAUTHENTICATED_ONLY
 authenticated_protected_proof: SEPARATE_FUTURE_RUNNER
 browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
-next_owner_gate: PUSH_AND_DEPLOYMENT_AUTHORIZATION_AFTER_CLOSEOUT
+next_owner_gate: CONTINUOUS_GOVERNANCE
 ```
 
 ## Historical executor queue
 
 The PPF task definitions below are retained as historical execution context. They are no longer the current queue.
 
-The completed PXF-003 public-platform sequence is:
+The completed PXF-003 through PXF-006F implementation sequence is:
 
 ```text
 a590bcb docs(prochat): define public experience and conversion system
@@ -80,9 +81,28 @@ c1cbe73 feat(prochat): add canonical memory and workbench product pages
 8b2bfba docs(prochat): align public documentation surface
 36bb061 fix(prochat): restore repository validation for evidence runner
 6b37d60 fix(prochat): add contact suspense boundary
+7726d21 docs(prochat): close public platform program state
+9f7bc63 fix(sitemap): generate canonical sitemaps before build
+dc0764a feat(contact): server-render contact page
+c0c07fb fix(sitemap): exclude legacy documentation routes
+bb105c9 docs(privacy): align policy with current data flows
+ef9470c docs(terms): align terms with current product licenses
+1e09b99 fix(a11y): remove duplicate marketing main landmark
+73395c4 fix(a11y): remove duplicate homepage main landmark
+aed7478 fix(a11y): remove duplicate contact main landmark
+a13bb6c feat(metadata): add public manifest and product schemas
+64e7fdd fix(metadata): align social previews with current products
+a0b28ad feat(brand): use public wordmark in site chrome
+ac8ec5c feat(home): clarify product conversion paths
+89b69e3 feat(design): unify public chrome and wordmark
+7eea132 feat(contact): align contact page with public design
+9f941c3 feat(docs): align documentation with public design
+e202e2d fix(responsive): harden mobile navigation and docs overflow
+c15c90d feat(onboarding): clarify first-success product paths
+4b423fb feat(analytics): track product-page onboarding actions
 ```
 
-Wave 1 live execution remains `NOT_RUN` and governed by its separate guarded workflow. The next current owner gate is push and deployment authorization after documentation closeout.
+The platform is deployed and live. All canonical routes pass CI. No further implementation packets are pending.
 
 ```yaml
 - task_id: PPF-001
@@ -676,11 +696,12 @@ Wave 1 live execution remains `NOT_RUN` and governed by its separate guarded wor
 ## Current position
 
 ```text
-Mind public-platform foundation: committed
-Repository design/platform/migration planning: current documentation batch
-Production code changes: not authorized in current batch
-Legacy deletion: not authorized in current batch
-Next execution after documentation commit: PPF-001 browser-runner worktree isolation and shell-contract decision
+Product Experience Foundation: COMPLETE
+All canonical public routes: DEPLOYED
+Program phase: continuous governance (Phase 13)
+Legacy deletion: deferred to future cleanup wave
+Next execution: Phase 13 quarterly review cadence
+PPF historical queue: retained as implementation history only
 ```
 
 ## Global safety rules

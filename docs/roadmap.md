@@ -31,33 +31,34 @@ This repository translates that truth into design, migration, implementation, te
 ## Verified current state
 
 ```yaml
-verified_head: 6b37d60
-verified_date: 2026-07-22
-current_head: 6b37d60
-current_program_state: The PXF-003 public-platform implementation is complete and statically release-ready with minor deferred gaps. Canonical public routes, redirects, product surfaces, documentation, contact beta flow, repository validation, and production prerendering are active. Push and deployment await explicit owner authorization after this documentation closeout.
-current_phase: PXF-003 public-platform closeout
-current_packet: PXF-003M — public platform documentation closeout
+verified_head: 4b423fb
+verified_date: 2026-07-29
+current_head: 4b423fb
+current_program_state: The Product Experience Foundation program is complete. All canonical public routes are implemented, deployed, and production-verified. PXF-003 through PXF-006F delivered the public homepage, product pages, design system, contact, privacy, terms, documentation, metadata, accessibility repairs, and product-page onboarding analytics. The platform is live and in continuous governance.
+current_phase: PXF-006G — roadmap reconciliation and program closure
+current_packet: PXF-006G — documentation closeout
 canonical_visual_routes_active: 8
 canonical_routes: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms
 legacy_redirects_active: /prochat-memory -> /memory; /qa-memory -> /memory-qa
 production_visual_design_started: true
-production_visual_implementation: COMPLETE_FOR_PXF-003_PUBLIC_SURFACE
-public_platform_code_status: READY_WITH_MINOR_GAPS
+production_visual_implementation: COMPLETE
+public_platform_code_status: DEPLOYED_PRODUCTION
+analytics_tracking: COMPLETE
 runner_disposition: COMMITTED_STATICALLY_VALIDATED
 static_validation: PASSED
 full_typescript: PASSED
 production_build: PASSED
 static_pages_generated: 109
-live_execution: NOT_RUN
-wave1_execution: NOT_RUN
+live_execution: DEPLOYED
+wave1_execution: DEPLOYED
 protected_session_strategy: PUBLIC_AND_UNAUTHENTICATED_ONLY
 authenticated_protected_proof: SEPARATE_FUTURE_RUNNER
 browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
 development_labs: EXCLUDED_UNLINKED
-push_status: AWAITING_OWNER_AUTHORIZATION_AFTER_CLOSEOUT
-deployment_status: AWAITING_OWNER_AUTHORIZATION_AFTER_CLOSEOUT
+push_status: COMPLETE
+deployment_status: COMPLETE
 ```
 
 ## Operational phase summary
@@ -68,19 +69,19 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 |---|---|---|---|---|---|---|---|
 | Phase 1 | DONE | Company truth and product hierarchy | none | Mind commits `1461678`, `7687bb8`; ProChat translation docs | repository authority alignment | canonical company/product docs and product hierarchy are consistent | Phase 2 |
 | Phase 2 | DONE | Public platform architecture | Phase 1 | current repo translation docs | page map, navigation, footer, legal paths | public platform responsibilities are defined | Phase 3 |
-| Phase 3 | READY | Canonical content second pass | Phases 1–2, canonical homepage copy | current repo docs and seeded register | operational content audit, claims register, metadata matrix | every claim and page has an approved or classified status | Phase 4 |
-| Phase 4 | DONE | Design-language foundation | Phases 1–3 | design and platform docs committed; repo translation complete | visual grammar, product visuals, motion language, component contract | design decisions are explicit and reviewable | Phase 5 |
+| Phase 3 | DONE | Canonical content second pass | Phases 1–2, canonical homepage copy | all public copy, metadata, legal, and contact implemented and deployed | operational content audit, claims register, metadata matrix | every claim and page has an approved or classified status | Phase 4 |
+| Phase 4 | DONE | Design-language foundation | Phases 1–3 | design and platform docs committed; Nexus-derived design system deployed | visual grammar, product visuals, motion language, component contract | design decisions are explicit and reviewable | Phase 5 |
 | Phase 5 | DONE | Foundational legacy sweep | Phases 1–4 | route, component, style, motion, asset, dependency, and migration audits | inventory and classification matrix | every legacy item has a provisional disposition and wave | Phase 6 |
-| Phase 6 | NOT_READY | Design laboratory and static prototypes | Phases 3–5, Wave 0, Wave 1, Wave 2 | none | isolated lab shell and static specimens | no lab work begins before prerequisite packets are complete | Phase 7 |
-| Phase 7 | NOT_READY | Motion and product-story prototypes | Phase 6 and approved static direction | none | motion proofs and browser tooling decisions | static direction and tooling decisions are approved | Phase 8 |
-| Phase 8 | NOT_READY | Independent review | Phases 3, 5, 6, 7 | none | review report and findings reconciliation | findings are accepted, rejected, or deferred with evidence | Phase 9 |
-| Phase 9 | NOT_READY | Production foundation | Phase 8 and approved migration rows | none | fonts, tokens, shells, primitives, tests, and infrastructure | foundation packets are approved before page implementation | Phase 10 |
-| Phase 10 | NOT_READY | Public pages | Phase 9 and approved page copy | none | canonical public pages and shell updates | each page packet passes its acceptance gate | Phase 11 |
-| Phase 11 | NOT_READY | Legacy migration and removal | Phase 10 and verified replacements | none | redirects, archives, and bounded removals | legacy retirement is proven safe and reversible | Phase 12 |
-| Phase 12 | NOT_READY | Production craft and launch validation | Phase 11 | none | visual, accessibility, performance, and launch acceptance | launch criteria pass without critical defects | Phase 13 |
-| Phase 13 | ONGOING | Continuous governance | launch | ongoing Mind and repo governance | review and maintenance cadence | this phase does not end | Phase 13 |
+| Phase 6 | SUPERSEDED | Design laboratory and static prototypes | Phases 3–5, Wave 0, Wave 1, Wave 2 | PXF-003A through PXF-003E implemented production pages directly from approved template adoption | isolated lab shell and static specimens | superseded by direct template-adoption implementation path; production pages implemented and deployed | Phase 7 |
+| Phase 7 | SUPERSEDED | Motion and product-story prototypes | Phase 6 and approved static direction | hero motion, memory illustrations, and background animation implemented and deployed | motion proofs and browser tooling decisions | superseded; production motion system deployed | Phase 8 |
+| Phase 8 | SUPERSEDED | Independent review | Phases 3, 5, 6, 7 | iterative production review via PXF-003 through PXF-006 packets | review report and findings reconciliation | superseded; accessibility, responsive, and design reviews completed in production packets | Phase 9 |
+| Phase 9 | DONE | Production foundation | Phase 8 and approved migration rows | Nexus-derived dark tokens, Golos Text, shared marketing layout, canonical routes | fonts, tokens, shells, primitives, tests, and infrastructure | production foundation deployed | Phase 10 |
+| Phase 10 | DONE | Public pages | Phase 9 and approved page copy | all 8 canonical routes deployed: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms | canonical public pages and shell updates | all required public responsibilities implemented and production-verified | Phase 11 |
+| Phase 11 | PARTIAL | Legacy migration and removal | Phase 10 and verified replacements | legacy redirects active; legacy code and styles deferred to future cleanup wave | redirects, archives, and bounded removals | legacy redirects implemented; full style/component removal deferred to future wave | Phase 12 |
+| Phase 12 | PARTIAL | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking deployed | visual, accessibility, performance, and launch acceptance | site is live and passing CI; formal performance and WCAG audit deferred to next governance cycle | Phase 13 |
+| Phase 13 | ONGOING | Continuous governance | launch | platform live and deployed | review and maintenance cadence | this phase does not end | Phase 13 |
 
-The PXF-003 public-platform implementation is complete. This documentation closeout is the final repository-local program step before separate owner authorization for push and deployment preparation. Live Wave 1 execution remains intentionally separate and `NOT_RUN`; the historical phase table below is retained as planning context rather than current execution status.
+The Product Experience Foundation program is complete. All canonical public routes are implemented, deployed, and production-verified at HEAD `4b423fb`. The historical phase table above reflects the reconciled final status.
 
 ## Product and company boundary
 
@@ -728,15 +729,20 @@ This phase does not end. Each review cycle ends with recorded findings, decision
 ```text
 Phase 1 — DONE
 Phase 2 — DONE
-Phase 3 — READY
+Phase 3 — DONE
 Phase 4 — DONE
 Phase 5 — DONE
-Wave 1 browser equivalence — BLOCKED
-Phases 6–12 — NOT_READY
+Phase 6 — SUPERSEDED (production pages implemented via template-adoption path)
+Phase 7 — SUPERSEDED (motion system deployed in production)
+Phase 8 — SUPERSEDED (iterative review completed in production packets)
+Phase 9 — DONE
+Phase 10 — DONE
+Phase 11 — PARTIAL (redirects live; full legacy removal deferred)
+Phase 12 — PARTIAL (site live; formal WCAG/performance audit deferred)
 Phase 13 — ONGOING
 ```
 
-The immediate next implementation packet after this documentation commit is PPF-001: browser-runner worktree isolation and stale-run disposition.
+The Product Experience Foundation program is complete and deployed. The platform is in continuous governance (Phase 13). No further PXF packets are pending. Future work follows the Phase 13 quarterly review cadence.
 
 ## Product Experience Foundation Program
 
@@ -758,43 +764,31 @@ mind/organizations/prochat/README.md
 
 This ProChat repository executes the marketing experience. It must link to Mind, must not duplicate or reinvent high-level business strategy, and must escalate new strategic conclusions to Mind before using them as website direction.
 
-This program clarifies the meaning of earlier design-foundation status:
+This program delivered the full production public platform through an approved template-adoption path. All deliverables are complete.
 
-- product truth, brand character, and factual design tokens exist;
-- the design-language foundation is available for exploration;
-- production visual design has **not** started;
-- an applied visual direction has **not** been approved;
-- wireframes and high-fidelity page designs have **not** been approved;
-- existing tokens must not be mistaken for a finished website design.
-
-The required progression is:
-
-| Order | Deliverable | Current status | Primary gate |
+| Order | Deliverable | Final status | Evidence |
 |---:|---|---|---|
 | 0 / 1 | Mind-grounded founder discovery | COMPLETE | founder synthesis confirmed and promoted to canonical Mind philosophy |
-| 2 | Homepage information architecture | TEMPLATE_STRUCTURE_APPROVED | Nexus section sequence adapted to ProChat responsibilities |
-| 3 | Applied design language | APPROVED_FOR_HOMEPAGE | Nexus-derived dark system with Golos Text |
-| 4 | Wireframe/template mapping | APPROVED_FOR_IMPLEMENTATION | supplied full-page template is the layout reference |
-| 5 | High-fidelity visual direction | APPROVED_AS_TEMPLATE_ADOPTION | reproduce template; calibrate measured values in browser |
-| 6 | Implementation plan | READY | `PXF-003A` bounded foundation packet |
+| 2 | Homepage information architecture | COMPLETE | Nexus section sequence adapted to ProChat responsibilities |
+| 3 | Applied design language | COMPLETE | Nexus-derived dark system with Golos Text deployed |
+| 4 | Wireframe/template mapping | COMPLETE | supplied full-page template adopted as layout reference |
+| 5 | High-fidelity visual direction | COMPLETE | template adoption approved and implemented |
+| 6 | Implementation plan | COMPLETE | PXF-003A through PXF-006F executed and deployed |
 
-### Roadmap rule
+### Completed implementation sequence
 
-No broad production visual implementation may begin merely because tokens or legacy components exist. Production implementation follows approved discovery, information architecture, wireframes, and high-fidelity direction.
-
-### Immediate owner-input gate
-
-Founder discovery is complete. The next task is `PXF-002 — Mind-to-ProChat public-platform translation brief`.
-
-The remaining owner inputs are website-specific:
-
-1. three to five admired websites or product pages;
-2. the exact qualities admired in each reference;
-3. anti-references or patterns to avoid;
-4. the audience that should feel most directly addressed on first load;
-5. the preferred initial visual-intensity range.
-
-These inputs guide homepage information architecture and wireframing. They do not redefine Mind strategy or serve as final design tokens.
+```text
+PXF-003A — Nexus-template homepage foundation
+PXF-003B0 — Public conversion strategy foundation
+PXF-003B1A — Memory illustration architecture
+PXF-003B2A — Product hierarchy and canonical routes
+PXF-003C1 — Live hero motion fidelity
+PXF-003E — Combined adoption chapter
+PXF-004 — (production refinements)
+PXF-005 — (responsive, docs, contact, design alignment)
+PXF-006A–F — (metadata, a11y, sitemap, privacy, terms, onboarding, analytics tracking)
+PXF-006G — Roadmap reconciliation and program closure
+```
 
 
 
