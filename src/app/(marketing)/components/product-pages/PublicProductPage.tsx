@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react'
 import Link from 'next/link'
 
+import ProductTrackedAction from './ProductTrackedAction'
 import '../../prochat-memory-theme.css'
 import './product-pages.css'
 
@@ -16,6 +17,7 @@ type CanonicalProductRoute = '/memory' | '/memory-qa' | '/workbench'
 export interface ProductAction {
   href: string
   label: string
+  cta: string
   external?: boolean
 }
 
@@ -41,10 +43,15 @@ function ArrowIcon() {
 function ProductActionLink({
   action,
   className,
+  activeRoute,
+  location,
 }: {
   action: ProductAction
   className: string
+  activeRoute: CanonicalProductRoute
+  location: 'hero' | 'closing'
 }) {
+  const product = activeRoute.slice(1) as 'memory' | 'memory-qa' | 'workbench'
   const content = (
     <>
       {action.label}
@@ -52,23 +59,19 @@ function ProductActionLink({
     </>
   )
 
-  if (action.external) {
-    return (
-      <a
-        href={action.href}
-        className={className}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {content}
-      </a>
-    )
-  }
-
   return (
-    <Link href={action.href} className={className}>
+    <ProductTrackedAction
+      href={action.href}
+      className={className}
+      eventName={action.external ? 'outbound_funnel_click' : 'product_cta_click'}
+      location={location}
+      product={product}
+      cta={action.cta}
+      sourcePage={activeRoute}
+      external={action.external}
+    >
       {content}
-    </Link>
+    </ProductTrackedAction>
   )
 }
 
@@ -172,10 +175,14 @@ export function PublicProductPage({
               <ProductActionLink
                 action={primaryAction}
                 className="pm-pill-button pm-pill-button--light"
+                activeRoute={activeRoute}
+                location="hero"
               />
               <ProductActionLink
                 action={secondaryAction}
                 className="pm-hero-secondary-link"
+                activeRoute={activeRoute}
+                location="hero"
               />
             </div>
 
@@ -330,12 +337,14 @@ export function ProductBoundaryList({
 }
 
 export function ProductPageAction({
+  activeRoute,
   eyebrow,
   title,
   description,
   primaryAction,
   secondaryAction,
 }: {
+  activeRoute: CanonicalProductRoute
   eyebrow: string
   title: string
   description: string
@@ -351,11 +360,15 @@ export function ProductPageAction({
         <ProductActionLink
           action={primaryAction}
           className="pm-pill-button pm-pill-button--light"
+          activeRoute={activeRoute}
+          location="closing"
         />
         {secondaryAction ? (
           <ProductActionLink
             action={secondaryAction}
             className="pm-hero-secondary-link"
+            activeRoute={activeRoute}
+            location="closing"
           />
         ) : null}
       </div>
