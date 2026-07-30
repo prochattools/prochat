@@ -1,286 +1,129 @@
-# Design System Linting Enforcement
+# Design-system lint enforcement
 
-**Status:** enforcement rules for production design governance  
-**Applied:** Phase 14 (PXF-010) and beyond  
-**Baseline:** scripts/design/lint-design-system.mjs
+**Status:** enforced in repository CI
+**Program:** PXF-010 governance repair
+**Implementation:** `scripts/design/lint-design-system.mjs`
+**Baseline:** `scripts/design/design-lint-baseline.json`
 
-## Enforcement goals
-
-1. **Prevent raw hex colors** outside canonical token definitions
-2. **Enforce semantic token consumption** where high-level aliases exist
-3. **Guard against duplicate systems** (button, navigation, typography)
-4. **Prevent legacy selector reintroduction** (removed patterns must not return)
-5. **Restrict unauthorized styling** (glows, special animations, unofficial gradients)
-
-All violations are CI-fatal for production branches. Baseline violations are documented and exempted only if actively being migrated.
-
-## Rule 1: No raw hex colors outside foundation
-
-### Violation
-
-Direct hex color codes in component, page, theme, or style files (src/):
-
-```css
-/* ✗ VIOLATES */
-.card { background: #141a24; }
-.text { color: #f5f7fa; }
-```
-
-```tsx
-// ✗ VIOLATES
-const bgColor = '#0B1220';
-```
-
-### Exception
-
-Only canonical definitions are permitted hex colors:
-
-- `src/assets/styles/prochat-foundation.css` — allowed
-- `brand-spec.md` — reference values (not code)
-- `.storybook/` or design-lab specimens — explicitly non-production
-
-### Enforcement
+## Commands
 
 ```bash
 npm run lint:design
+npm run lint:design:baseline
 ```
 
-Checks:
-1. `HEX_COLOR_REGEX = /#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b/g`
-2. Search in: `.ts`, `.tsx`, `.css`, `.scss` files in `src/`
-3. Exclude: `prochat-foundation.css`, `prochat-public.css`, `prochat-memory-theme.css`
-4. Match exceptions: only allow in files matching `^src/assets/styles/prochat-foundation\.css$`
+- `lint:design` scans production source and fails when a violation is new or exceeds its explicit baseline count.
+- Intentional rule failures are exercised directly with `node scripts/design/lint-design-system.mjs --fixture-rule=<rule>`. Each invocation must exit `1` and emit the rule, file, pattern, and remediation.
+- `lint:design:baseline` regenerates the machine-readable debt baseline. Baseline changes require review and must not be used to conceal new violations.
 
-### Failure: Example
+There are no separate `--check-semantic-aliases` or `--check-duplication` modes. The default `lint:design` command runs every governance rule together.
 
-```
-Design lint error: Unauthorized hex color found
-File: src/app/(marketing)/components/Card.tsx:42
-Pattern: #141a24
-Guidance: Use rgb(var(--pc-public-surface-rgb)) instead
-```
+## Canonical authority
 
-## Rule 2: Semantic alias enforcement
+The authority order is:
 
-### Violation
+1. Mind: `wiki/organisations/prochat/brand/global-design-foundation.md`
+2. repository translation: `brand-spec.md`
+3. operational rules: `DESIGN.md`
+4. token implementation:
+   - `src/assets/styles/prochat-foundation.css`
+   - `src/assets/styles/prochat-public.css`
+   - `src/app/(marketing)/prochat-memory-theme.css`
 
-Direct use of lower-level tokens when a higher-level semantic alias exists.
+The global default is light, grayscale-led, and uses cobalt `#3158C7` as its one accent. Dark mode is optional. A dark or teal treatment is not a replacement global authority unless Mind is changed first.
 
-**Pattern violations:**
+## Enforced rules
 
-```css
-/* ✗ VIOLATES — foundation use in component */
-.element { color: rgb(var(--pc-foundation-color-text-primary)); }
+### `hardcoded-hex`
 
-/* ✗ VIOLATES — component should use public layer */
-.button { background: rgb(var(--pc-foundation-color-page)); }
+Production TypeScript and stylesheet files may not add unapproved raw hex colors. Canonical token-definition files and explicitly baselined existing debt are exceptions.
 
-/* ✓ CORRECT */
-.button { background: rgb(var(--pc-public-bg-rgb)); }
-```
+Remediation: define or consume an appropriate semantic token.
 
-### Enforcement
+### `semantic-token-layer`
 
-```bash
-npm run lint:design --check-semantic-aliases
-```
+Token consumption must respect surface boundaries:
 
-Checks:
-1. Files in `src/app/(marketing)/` must consume `--pm-*` or `--pc-public-*`, never `--pc-foundation-*`
-2. Files in `src/app/docs/` must consume `--pc-public-*`, never `--pm-*` or `--pc-foundation-*`
-3. Authenticated routes (future) must consume only their dedicated layer, never public or foundation
-4. Baseline exceptions: documented in `scripts/design/design-lint-baseline.json`
+- marketing components may consume `--pm-*` and `--pc-public-*`, not `--pc-foundation-*`;
+- Docs components and `styles/docs.css` may consume `--pc-public-*`, not `--pm-*` or `--pc-foundation-*`;
+- token-definition files may map lower layers into higher layers.
 
-### Failure: Example
+Remediation: replace the lower-level or cross-surface token with the correct semantic alias.
 
-```
-Design lint error: Direct foundation token in component
-File: src/components/Button.tsx:15
-Pattern: --pc-foundation-color-accent
-Replacement: --pc-public-accent-rgb
-Context: Button component in marketing surface should consume semantic layer
-```
+### `duplicate-system`
 
-## Rule 3: Duplicate systems prevention
+The lint checks that canonical button/navigation implementations remain present and rejects known parallel navigation component names. The canonical paths are defined in the lint script.
 
-### Violation
+This is a bounded structural guard, not a semantic AST proof that no visually similar component exists. Code review remains required for newly introduced UI primitives.
 
-New button, navigation, or typography implementations when canonical versions exist.
+### `legacy-selector`
 
-**Forbidden:**
-- Two distinct button component systems in the same codebase
-- Multiple navigation patterns with different semantics
-- Custom typography scale when foundation scale exists
-- Unofficial focus indicators when canonical ring exists
+Removed presentation systems may not return. Guarded selectors include:
 
-### Enforcement
+- `.hero--old`
+- `.button--glass`
+- `.pm-wordmark-mark`
+- `.pc-action-label`
 
-```bash
-npm run lint:design --check-duplication
-```
+Remediation: use the canonical navigation, logo, button, and typography systems.
 
-Checks:
-1. Button components: verify only `src/components/Button.tsx` and `src/components/ui/Button.tsx` exist and are aliased to one canonical
-2. Navigation: verify only one primary navigation component is exported
-3. Typography: verify only `--pc-foundation-font-*` and family declarations exist
-4. Focus indicators: verify only `--pc-public-ring-rgb` is used for focus
+### `unauthorized-style`
 
-### Failure: Example
+The lint rejects specifically defined named-color glow patterns, including purple, cyan, and magenta drop-shadow or box-shadow treatments.
 
-```
-Design lint error: Duplicate button system detected
-File: src/app/(marketing)/components/SecondaryButton.tsx
-Guidance: Use the canonical Button component with variant prop instead
-```
+This rule deliberately does not prohibit every gradient, shadow, or animation. Existing approved visual systems remain governed by `DESIGN.md`, semantic tokens, the baseline, and review.
 
-## Rule 4: Legacy selector guarding
+## Baseline format
 
-### Violation
+The baseline is JSON schema version `2`:
 
-Reintroduction of removed or deprecated selector patterns.
-
-**Forbidden selectors (explicitly removed, must not return):**
-
-```
-.hero--old
-.card-v1
-.button--glass
-.text-gradient-purple
-.neon-glow
-.material-icon
-```
-
-### Enforcement
-
-```bash
-npm run lint:design --check-legacy
-```
-
-Checks:
-1. Maintain list in `scripts/design/forbidden-selectors.json`
-2. Scan src/ for any matching patterns
-3. Fail if any forbidden selector is introduced
-4. Log: file, line, guidance to migrate
-
-### Failure: Example
-
-```
-Design lint error: Forbidden legacy selector reintroduced
-File: src/components/OldButton.tsx:8
-Pattern: .button--glass
-Status: This pattern was removed in PXF-009
-Replacement: Use --pc-public-accent-rgb with semantic styling
-```
-
-## Rule 5: Unauthorized styling restrictions
-
-### Violation
-
-New animations, glows, gradients, or decorative effects outside canonical motion and effect systems.
-
-**Forbidden:**
-- Custom gradient definitions (not in prochat-memory-theme.css)
-- Colored glows (only neutral shadows permitted)
-- Unauthorized animations (not via Framer Motion / GSAP / CSS standard)
-- Purple, neon, or product-specific accents
-
-### Enforcement
-
-```bash
-npm run lint:design --check-styling
-```
-
-Patterns:
-1. `gradient\s*\(` — fail on new gradients outside `prochat-memory-theme.css`
-2. `glow|bloom|halo` — fail on new glows (existing in baseline only)
-3. `@keyframes\s+(?!fade|pulse|bounce)` — fail on custom animations without justification
-4. `#[0-9a-f]{6}.*(?:ff00ff|00ffff|ffff00)` — fail on neon-like colors
-
-### Baseline exceptions
-
-Existing styles in `prochat-memory-theme.css` are approved and grandfathered.
-
-## Rule implementation
-
-### Baseline file
-
-```
-scripts/design/design-lint-baseline.json
-```
-
-Structure:
 ```json
 {
-  "version": "1.0",
-  "date": "2026-07-29",
-  "phase": "PXF-010",
-  "exceptions": [
+  "version": 2,
+  "generatedAt": "ISO-8601 timestamp",
+  "authority": {
+    "source": "Mind path",
+    "defaultMode": "light",
+    "accent": "#3158C7"
+  },
+  "exemptions": [
     {
-      "rule": "hex-color",
-      "file": "src/assets/styles/prochat-public.css",
-      "reason": "Canonical token definition layer",
-      "status": "permanent_exception"
-    },
-    {
-      "rule": "custom-gradient",
-      "file": "src/app/(marketing)/prochat-memory-theme.css",
-      "line": 38,
-      "pattern": "pm-laser-field",
-      "reason": "Approved marketing visual system (DESIGN.md memo section)",
-      "status": "approved_baseline",
-      "migration_target": "future token system",
-      "reviewed_by": "Steve Westhoek",
-      "date": "2026-07-18"
+      "rule": "hardcoded-hex",
+      "file": "relative/path.css",
+      "pattern": "#123456",
+      "count": 1,
+      "reason": "Specific existing debt and migration rationale"
     }
-  ],
-  "forbidden_selectors": [
-    ".hero--old",
-    ".card-v1",
-    ".button--glass",
-    ".text-gradient-purple"
   ]
 }
 ```
 
-### CI integration
+Validation requires a known rule, repository-relative file, nonempty pattern, positive integer count, and substantive reason. There are no decorative reviewer-signature fields.
 
-In `.github/workflows/ci.yml`:
+An exemption permits only the recorded count for the exact rule, file, and pattern. Increasing the count or adding a new pattern fails linting.
 
-```yaml
-- name: Design system lint
-  run: npm run lint:design
-  # Fails CI if:
-  # - New hex colors in src/ (outside foundation)
-  # - Foundation token use in component code
-  # - Duplicate systems detected
-  # - Legacy selectors reintroduced
-  # - Unauthorized styling added
-  # Unless explicitly in baseline with status: approved_baseline
+## Diagnostics
+
+Failures use this shape:
+
+```text
+[rule] path/to/file.css:42 | pattern="..." count=2 baseline=1 | remediation=...
 ```
 
-### Local development
+Every failure identifies the rule, file and line, matched pattern, current/baseline counts, and remediation.
 
-Before committing:
+## CI behavior
 
-```bash
-npm run lint:design
-npm run lint:design:baseline  # Show exemptions
-npm run lint:design --fix    # Attempt automatic fixes (token replacement)
-```
+`.github/workflows/main.yml` runs `npm run lint:design` in the `ci` job for pushes and pull requests targeting `main`.
 
-## Current violations (baseline, 2026-07-29)
+The production `build-and-deploy` job depends on both `ci` and `docs-integrity`. A governance or documentation failure therefore blocks image publication and deployment.
 
-None. The production site has been actively refactored and aligns with canonical tokens.
+Direct fixture checks are required during governance implementation. The production lint itself is the deployment gate.
 
-### Previous violations (historical record)
+## Maintenance rules
 
-- `brand.ts` — outdated hex colors; migrated to token references by PXF-010
-- Duplicate button systems — consolidated by PXF-005
-- Custom hero gradients — approved by DESIGN.md memo; preserved in `prochat-memory-theme.css`
-
-## Roadmap: Future hardening
-
-- **Phase 15:** Performance-critical font metrics (CLS checks for Golos loading)
-- **Phase 16:** Animation performance auditing (reduced-motion coverage)
-- **Phase 17:** Full Lighthouse and WCAG automation in CI
-
+- Prefer reducing baseline debt rather than regenerating it.
+- Never regenerate the baseline merely to make CI pass.
+- Add a new rule only with a deterministic detector, actionable diagnostic, and intentional failure fixture.
+- Keep rule documentation aligned with implemented behavior.
+- Broad visual judgement remains a review responsibility; lint rules must not claim guarantees they cannot mechanically prove.

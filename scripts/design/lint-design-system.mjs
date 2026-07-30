@@ -113,7 +113,16 @@ const ARCHIVE_IMPORT_PATTERNS = [
   /\bimport\s*\(\s*['\"][^'\"]*archive\/legacy-public-platform[^'\"]*['\"]\s*\)/,
   /\brequire\s*\(\s*['\"][^'\"]*archive\/legacy-public-platform[^'\"]*['\"]\s*\)/,
 ]
-
+const LEGACY_SELECTOR_PATTERNS = [
+  /\.hero--old\b/,
+  /\.button--glass\b/,
+  /\.pm-wordmark-mark\b/,
+  /\.pc-action-label\b/,
+]
+const UNAUTHORIZED_STYLE_PATTERNS = [
+  { pattern: /filter\s*:\s*drop-shadow\([^)]*(?:cyan|magenta|purple)/i, label: 'colored drop-shadow glow' },
+  { pattern: /box-shadow\s*:[^;]*(?:cyan|magenta|purple)/i, label: 'named-color glow' },
+]
 const args = process.argv.slice(2)
 const shouldWriteBaseline = args.includes('--write-baseline')
 const shouldCheckArchiveImportsOnly = args.includes('--archive-imports-only')
@@ -475,137 +484,313 @@ async function lintShellRoutingOnly() {
   process.exit(1)
 }
 
-async function collectCurrentHexCounts() {
+const GOVERNANCE_RULES = [
+  'hardcoded-hex',
+  'semantic-token-layer',
+  'duplicate-system',
+  'legacy-selector',
+  'unauthorized-style',
+]
+const CANONICAL_COMPONENT_PATHS = {
+  marketingNav: 'src/app/(marketing)/components/layout/MarketingNav.tsx',
+  sharedButton: 'src/components/ui/button.tsx',
+  marketingButton: 'src/app/(marketing)/components/ui/Button.tsx',
+}
+const ALLOWED_BUTTON_COMPONENTS = new Set([
+  CANONICAL_COMPONENT_PATHS.sharedButton,
+  CANONICAL_COMPONENT_PATHS.marketingButton,
+])
+
+function lineNumberFor(content, index) {
+  return content.slice(0, index).split('\n').length
+}
+
+function pushAllPatternViolations(violations, rule, relativePath, content, pattern, remediation) {
+  const flags = pattern.flags.includes('g') ? pattern.flags : `${pattern.flags}g`
+  const matcher = new RegExp(pattern.source, flags)
+  for (const match of content.matchAll(matcher)) {
+    violations.push({
+      rule,
+      file: relativePath,
+      line: lineNumberFor(content, match.index ?? 0),
+      pattern: match[0],
+      remediation,
+    })
+  }
+}
+
+function collectContentViolations(relativePath, content) {
+  const violations = []
+  pushAllPatternViolations(
+    violations,
+    'hardcoded-hex',
+    relativePath,
+    content,
+    HEX_COLOR_REGEX,
+    'Replace the literal with an approved semantic token; update the baseline only for documented legacy debt.',
+  )
+
+  const isMarketingComponent =
+    relativePath.startsWith('src/app/(marketing)/') &&
+    relativePath !== 'src/app/(marketing)/prochat-memory-theme.css'
+  const isDocsSurface =
+    relativePath.startsWith('src/app/docs/') || relativePath === 'styles/docs.css'
+
+  if (isMarketingComponent) {
+    pushAllPatternViolations(
+      violations,
+      'semantic-token-layer',
+      relativePath,
+      content,
+      /--pc-foundation-[a-z0-9-]+/i,
+      'Marketing code must consume --pm-* or --pc-public-* semantic tokens.',
+    )
+  }
+  if (isDocsSurface) {
+    pushAllPatternViolations(
+      violations,
+      'semantic-token-layer',
+      relativePath,
+      content,
+      /--(?:pm|pc-foundation)-[a-z0-9-]+/i,
+      'Docs code must consume --pc-public-* semantic tokens.',
+    )
+  }
+
+  for (const pattern of LEGACY_SELECTOR_PATTERNS) {
+    pushAllPatternViolations(
+      violations,
+      'legacy-selector',
+      relativePath,
+      content,
+      pattern,
+      'Use the canonical navigation, logo, button, and typography systems.',
+    )
+  }
+
+  for (const { pattern, label } of UNAUTHORIZED_STYLE_PATTERNS) {
+    pushAllPatternViolations(
+      violations,
+      'unauthorized-style',
+      relativePath,
+      content,
+      pattern,
+      `Remove ${label}; use approved semantic shadows and the cobalt accent.`,
+    )
+  }
+
+  if (!relativePath.startsWith('src/app/(marketing)/') && content.includes(MARKETING_BUTTON_ALIAS)) {
+    violations.push({
+      rule: 'duplicate-system',
+      file: relativePath,
+      line: lineNumberFor(content, content.indexOf(MARKETING_BUTTON_ALIAS)),
+      pattern: MARKETING_BUTTON_ALIAS,
+      remediation: 'Import @/components/ui/button outside the marketing surface.',
+    })
+  }
+  if (containsForbiddenArchiveImport(content)) {
+    violations.push({
+      rule: 'legacy-selector',
+      file: relativePath,
+      line: 1,
+      pattern: ARCHIVE_IMPORT_PATH,
+      remediation: 'Archived code is historical evidence and must not be imported at runtime.',
+    })
+  }
+  return violations
+}
+
+function collectDuplicatePathViolations(relativePaths) {
+  const violations = []
+  for (const relativePath of relativePaths) {
+    if (/(?:^|\/)(?:PublicProductNavigation|Navbar|NavBar)\.tsx$/.test(relativePath)) {
+      violations.push({
+        rule: 'duplicate-system',
+        file: relativePath,
+        line: 1,
+        pattern: path.posix.basename(relativePath),
+        remediation: `Use ${CANONICAL_COMPONENT_PATHS.marketingNav}.`,
+      })
+    }
+    if (/(?:^|\/)Button\.tsx$/.test(relativePath) && !ALLOWED_BUTTON_COMPONENTS.has(relativePath)) {
+      violations.push({
+        rule: 'duplicate-system',
+        file: relativePath,
+        line: 1,
+        pattern: 'Button.tsx',
+        remediation: `Use ${CANONICAL_COMPONENT_PATHS.sharedButton} or the approved marketing wrapper.`,
+      })
+    }
+  }
+  return violations
+}
+
+async function collectGovernanceViolations() {
   assertArchiveImportGuard()
   const files = await walkFiles(SRC_DIR)
-  const hexByFile = {}
+  const relativePaths = files.map(toRelativePath)
   const violations = []
 
   for (const file of files) {
     const relativePath = toRelativePath(file)
-    const content = await fs.readFile(file, 'utf8')
-    const count = countHexColors(content)
-
-    if (count > 0) {
-      hexByFile[relativePath] = count
-    }
-
-    if (
-      !relativePath.startsWith('src/app/(marketing)/') &&
-      content.includes(MARKETING_BUTTON_ALIAS)
-    ) {
-      violations.push(
-        `${relativePath} imports ${MARKETING_BUTTON_ALIAS}; use @/components/ui/button`,
-      )
-    }
-
-    if (containsForbiddenArchiveImport(content)) {
-      violations.push(
-        `${relativePath} imports from ${ARCHIVE_IMPORT_PATH}; archived code is historical and non-runtime`,
-      )
-    }
+    violations.push(...collectContentViolations(relativePath, await fs.readFile(file, 'utf8')))
   }
 
-  const marketingButtonFilePath = path.join(
-    ROOT,
-    'src',
-    'app',
-    '(marketing)',
-    'components',
-    'ui',
-    'Button.tsx',
-  )
-  const marketingButtonFile = await fs.readFile(marketingButtonFilePath, 'utf8')
-
-  if (!marketingButtonFile.includes("from '@/components/ui/button'")) {
-    violations.push(
-      'src/app/(marketing)/components/ui/Button.tsx must be a wrapper around @/components/ui/button',
-    )
+  const docsStylePath = path.join(ROOT, 'styles', 'docs.css')
+  const docsStyleContent = await fs.readFile(docsStylePath, 'utf8').catch(error => {
+    if (error?.code === 'ENOENT') return ''
+    throw error
+  })
+  if (docsStyleContent) {
+    violations.push(...collectContentViolations('styles/docs.css', docsStyleContent))
   }
 
-  return { hexByFile, violations }
-}
+  violations.push(...collectDuplicatePathViolations(relativePaths))
 
-function sortObjectKeys(objectValue) {
-  return Object.fromEntries(
-    Object.entries(objectValue).sort((a, b) => a[0].localeCompare(b[0])),
-  )
-}
-
-async function writeBaseline() {
-  const { hexByFile } = await collectCurrentHexCounts()
-  const payload = {
-    generatedAt: new Date().toISOString(),
-    rule: 'No new hardcoded hex colors in src/ (baseline lock)',
-    hexByFile: sortObjectKeys(hexByFile),
-  }
-
-  await fs.mkdir(path.dirname(BASELINE_PATH), { recursive: true })
-  await fs.writeFile(BASELINE_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8')
-
-  const total = Object.values(hexByFile).reduce((sum, count) => sum + count, 0)
-  console.log(
-    `[design-lint] Baseline updated at ${toRelativePath(BASELINE_PATH)} with ${total} hex occurrences.`,
-  )
-}
-
-async function lintAgainstBaseline() {
-  const baselineRaw = await fs.readFile(BASELINE_PATH, 'utf8').catch(() => null)
-
-  if (!baselineRaw) {
-    console.error(
-      `[design-lint] Missing baseline file at ${toRelativePath(BASELINE_PATH)}.`,
-    )
-    console.error('[design-lint] Run: npm run lint:design:baseline')
-    process.exit(1)
-  }
-
-  const baseline = JSON.parse(baselineRaw)
-  const baselineMap = baseline.hexByFile || {}
-
-  const { hexByFile: currentHexByFile, violations } = await collectCurrentHexCounts()
-  const newHexViolations = []
-
-  for (const [filePath, count] of Object.entries(currentHexByFile)) {
-    const baselineCount = baselineMap[filePath] || 0
-    if (count > baselineCount) {
-      newHexViolations.push({
-        filePath,
-        baselineCount,
-        currentCount: count,
-        delta: count - baselineCount,
+  for (const [role, relativePath] of Object.entries(CANONICAL_COMPONENT_PATHS)) {
+    const exists = await fs.access(path.join(ROOT, relativePath)).then(() => true).catch(() => false)
+    if (!exists) {
+      violations.push({
+        rule: 'duplicate-system',
+        file: relativePath,
+        line: 1,
+        pattern: `missing canonical ${role}`,
+        remediation: 'Restore the canonical component instead of introducing a parallel system.',
       })
     }
   }
 
-  if (violations.length === 0 && newHexViolations.length === 0) {
-    console.log('[design-lint] Passed. No new token violations.')
+  const marketingButton = await fs.readFile(path.join(ROOT, CANONICAL_COMPONENT_PATHS.marketingButton), 'utf8')
+  if (!marketingButton.includes("from '@/components/ui/button'")) {
+    violations.push({
+      rule: 'duplicate-system',
+      file: CANONICAL_COMPONENT_PATHS.marketingButton,
+      line: 1,
+      pattern: 'independent marketing button implementation',
+      remediation: `Wrap ${CANONICAL_COMPONENT_PATHS.sharedButton}.`,
+    })
+  }
+
+  return violations.sort((a, b) =>
+    [a.rule, a.file, a.pattern, a.line].join('\0').localeCompare([b.rule, b.file, b.pattern, b.line].join('\0')),
+  )
+}
+
+function exemptionKey({ rule, file, pattern }) {
+  return JSON.stringify([rule, file, pattern])
+}
+
+function groupViolations(violations) {
+  const groups = new Map()
+  for (const violation of violations) {
+    const key = exemptionKey(violation)
+    const existing = groups.get(key) ?? { ...violation, count: 0 }
+    existing.count += 1
+    groups.set(key, existing)
+  }
+  return [...groups.values()].sort((a, b) => exemptionKey(a).localeCompare(exemptionKey(b)))
+}
+
+function validateBaseline(baseline) {
+  if (baseline?.version !== 2 || !Array.isArray(baseline.exemptions)) {
+    throw new Error('[design-lint] Baseline must use version 2 with an exemptions array.')
+  }
+  for (const exemption of baseline.exemptions) {
+    if (
+      !GOVERNANCE_RULES.includes(exemption.rule) ||
+      typeof exemption.file !== 'string' ||
+      typeof exemption.pattern !== 'string' ||
+      !Number.isInteger(exemption.count) ||
+      exemption.count < 1 ||
+      typeof exemption.reason !== 'string' ||
+      exemption.reason.trim().length < 10
+    ) {
+      throw new Error(`[design-lint] Invalid baseline exemption: ${JSON.stringify(exemption)}`)
+    }
+  }
+}
+
+async function writeBaseline() {
+  const groups = groupViolations(await collectGovernanceViolations())
+  const payload = {
+    version: 2,
+    generatedAt: new Date().toISOString(),
+    authority: {
+      source: 'Mind: wiki/organisations/prochat/brand/global-design-foundation.md',
+      defaultMode: 'light',
+      accent: '#3158C7',
+    },
+    exemptions: groups.map(({ rule, file, pattern, count }) => ({
+      rule,
+      file,
+      pattern,
+      count,
+      reason: 'Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase.',
+    })),
+  }
+  await fs.writeFile(BASELINE_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8')
+  console.log(`[design-lint] Wrote ${payload.exemptions.length} explicit exemptions to ${toRelativePath(BASELINE_PATH)}.`)
+}
+
+function formatViolation(violation, allowedCount = 0, currentCount = 1) {
+  return [
+    `[${violation.rule}] ${violation.file}:${violation.line}`,
+    `pattern=${JSON.stringify(violation.pattern)} count=${currentCount} baseline=${allowedCount}`,
+    `remediation=${violation.remediation}`,
+  ].join(' | ')
+}
+
+async function lintAgainstBaseline() {
+  const baselineRaw = await fs.readFile(BASELINE_PATH, 'utf8').catch(() => null)
+  if (!baselineRaw) throw new Error(`[design-lint] Missing baseline at ${toRelativePath(BASELINE_PATH)}.`)
+  const baseline = JSON.parse(baselineRaw)
+  validateBaseline(baseline)
+
+  const groups = groupViolations(await collectGovernanceViolations())
+  const exemptions = new Map(baseline.exemptions.map(item => [exemptionKey(item), item]))
+  const failures = groups.filter(group => group.count > (exemptions.get(exemptionKey(group))?.count ?? 0))
+
+  if (failures.length === 0) {
+    console.log(`[design-lint] Passed ${GOVERNANCE_RULES.length} governance rules with ${baseline.exemptions.length} explicit debt exemptions.`)
     return
   }
 
-  if (violations.length > 0) {
-    console.error('\n[design-lint] Import governance violations:')
-    for (const violation of violations) {
-      console.error(`  - ${violation}`)
-    }
+  console.error('[design-lint] New or increased governance violations:')
+  for (const failure of failures) {
+    const allowed = exemptions.get(exemptionKey(failure))?.count ?? 0
+    console.error(`  - ${formatViolation(failure, allowed, failure.count)}`)
   }
-
-  if (newHexViolations.length > 0) {
-    console.error('\n[design-lint] New hardcoded hex colors detected:')
-    for (const violation of newHexViolations) {
-      console.error(
-        `  - ${violation.filePath}: ${violation.currentCount} (baseline ${violation.baselineCount}, +${violation.delta})`,
-      )
-    }
-  }
-
-  console.error(
-    '\n[design-lint] Migrate to tokenized colors. If intentional, regenerate baseline with npm run lint:design:baseline.',
-  )
   process.exit(1)
 }
 
-if (shouldWriteBaseline) {
+function fixtureViolations(rule) {
+  switch (rule) {
+    case 'hardcoded-hex':
+      return collectContentViolations('src/fixtures/hex.css', '.x { color: #123456; }').filter(item => item.rule === rule)
+    case 'semantic-token-layer':
+      return collectContentViolations('src/app/docs/fixture.css', '.x { color: var(--pm-text); }').filter(item => item.rule === rule)
+    case 'duplicate-system':
+      return collectDuplicatePathViolations(['src/fixtures/Navbar.tsx'])
+    case 'legacy-selector':
+      return collectContentViolations('src/fixtures/legacy.css', '.pm-wordmark-mark {}').filter(item => item.rule === rule)
+    case 'unauthorized-style':
+      return collectContentViolations('src/fixtures/glow.css', '.x { box-shadow: 0 0 1rem purple; }').filter(item => item.rule === rule)
+    default:
+      throw new Error(`[design-lint] Unknown fixture rule ${rule}.`)
+  }
+}
+
+const fixtureRuleArg = args.find(arg => arg.startsWith('--fixture-rule='))
+if (fixtureRuleArg) {
+  const rule = fixtureRuleArg.slice('--fixture-rule='.length)
+  const violations = fixtureViolations(rule)
+  if (violations.length === 0) {
+    console.error(`[design-lint] Fixture for ${rule} did not trigger.`)
+    process.exit(2)
+  }
+  console.error(`[design-lint] Intentional fixture failure: ${formatViolation(violations[0])}`)
+  process.exit(1)
+} else if (shouldWriteBaseline) {
   await writeBaseline()
 } else if (shouldCheckArchiveImportsOnly) {
   await lintArchiveImportsOnly()

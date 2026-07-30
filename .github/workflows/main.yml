@@ -65,6 +65,9 @@ jobs:
       - name: Run migrations
         run: npm run db:migrate:dev
 
+      - name: Lint design-system governance
+        run: npm run lint:design
+
       - name: Build
         run: npm run build
 
@@ -87,6 +90,7 @@ jobs:
         run: npm run docs:validate
 
   build-and-deploy:
+    needs: [ci, docs-integrity]
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     permissions:

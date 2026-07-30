@@ -1,8 +1,8 @@
 # ProChat Token Architecture
 
-**Status:** canonical repository-local token governance  
-**Canonical design source:** `brand-spec.md`, `DESIGN.md`  
-**Date:** 2026-07-29  
+**Status:** canonical repository-local token governance
+**Canonical design source:** Mind `wiki/organisations/prochat/brand/global-design-foundation.md`, translated by `brand-spec.md`, operationalized by `DESIGN.md`
+**Date:** 2026-07-29
 **Phase:** PXF-010 — Design-system governance and launch hardening
 
 ## Token layers
@@ -168,7 +168,7 @@ Safe removals occur when:
 
 Only then: remove from CSS, update this file, commit with evidence.
 
-## Current state (2026-07-29, HEAD 0f1a85e)
+## Current state (2026-07-30, verified base HEAD 25a17c7ce8fc22c19a4c761ac98ec7e7d1fe9540)
 
 ### Canonical tokens (in use)
 
@@ -194,11 +194,14 @@ Only then: remove from CSS, update this file, commit with evidence.
 
 **Canonical source of truth for token values:**
 
-1. `brand-spec.md` — brand color, typography, spacing definitions
-2. `DESIGN.md` — operational rules and constraints
-3. `prochat-foundation.css` — actual implemented values
-4. `prochat-public.css` — semantic layer definitions
-5. `prochat-memory-theme.css` — convenience layer definitions
+1. Mind: `wiki/organisations/prochat/brand/global-design-foundation.md`
+2. `brand-spec.md` — repository translation of the canonical design foundation
+3. `DESIGN.md` — operational rules and constraints
+4. `prochat-foundation.css` — actual implemented values
+5. `prochat-public.css` — semantic layer definitions
+6. `prochat-memory-theme.css` — convenience layer definitions
+
+The global default is light and grayscale-led, with cobalt `#3158C7` as the single global accent. Dark mode is optional and explicitly scoped. Existing dark or teal presentation is scoped presentation and does not redefine the global system.
 
 **Modifications to tokens require:**
 

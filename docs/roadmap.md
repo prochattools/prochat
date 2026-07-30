@@ -1,9 +1,9 @@
 # ProChat Public Platform Roadmap
 
-**Status:** canonical repository-local execution roadmap  
-**Owner:** Steve Westhoek  
-**Scope:** ProChat public platform, design system, migration, public pages, validation, launch, and maintenance  
-**Last updated:** 2026-07-22
+**Status:** canonical repository-local execution roadmap
+**Owner:** Steve Westhoek
+**Scope:** ProChat public platform, design system, migration, public pages, validation, launch, and maintenance
+**Last updated:** 2026-07-30
 
 ## Authority
 
@@ -31,12 +31,12 @@ This repository translates that truth into design, migration, implementation, te
 ## Verified current state
 
 ```yaml
-verified_head: 0f1a85e
-verified_date: 2026-07-29
-current_head: 0f1a85e
-current_program_state: The Product Experience Foundation program is complete. All canonical public routes are implemented, deployed, and production-verified. PXF-003 through PXF-009 delivered the public homepage, product pages, design system, contact, privacy, terms, documentation, metadata, accessibility repairs, product-page onboarding analytics, and docs mobile layout fixes. The platform is live and in continuous governance.
+verified_base_head: 25a17c7ce8fc22c19a4c761ac98ec7e7d1fe9540
+verified_date: 2026-07-30
+current_head: recorded by Git history after the governance repair commit
+current_program_state: The public platform is live. PXF-010 governance repair has passed local implementation gates for five-rule design linting, CI deployment gates, machine-readable debt exemptions, roadmap reconciliation, and repository hygiene on top of the verified base head; commit, push, deployment, and live verification remain pending.
 current_phase: PXF-010 — design-system governance and launch hardening
-current_packet: PXF-010 — token architecture reconciliation, enforcement, and repository hardening
+current_packet: PXF-010 governance repair — validation, commit, deployment, and production verification
 canonical_visual_routes_active: 8
 canonical_routes: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms
 legacy_redirects_active: /prochat-memory -> /memory; /qa-memory -> /memory-qa
@@ -57,8 +57,8 @@ browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
 development_labs: EXCLUDED_UNLINKED
-push_status: COMPLETE
-deployment_status: COMPLETE
+push_status: PENDING
+deployment_status: PENDING
 ```
 
 ## Operational phase summary
@@ -80,9 +80,9 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 | Phase 11 | PARTIAL | Legacy migration and removal | Phase 10 and verified replacements | legacy redirects active; legacy code and styles deferred to future cleanup wave | redirects, archives, and bounded removals | legacy redirects implemented; full style/component removal deferred to future wave | Phase 12 |
 | Phase 12 | COMPLETE | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking, docs mobile TOC overlap fix deployed | visual, accessibility, and launch acceptance verified | site is live and passing CI at HEAD 0f1a85e; WCAG audit complete, performance baseline established | Phase 13 |
 | Phase 13 | ONGOING | Continuous governance | launch | platform live and deployed | review and maintenance cadence | — | Phase 13 |
-| Phase 14 | IN PROGRESS | Design-system governance and launch hardening | Phase 12 | token architecture documentation, enforcement linting, docs migration, repository classification, accessibility hardening | canonical design authority established, token drift prevented, artifact classification complete | system is hardened and governance is documented | Phase 15 |
+| Phase 14 | COMPLETE | Design-system governance and launch hardening | Phase 12 | token architecture documentation, enforcement linting, docs migration, repository classification, accessibility hardening | canonical design authority established, token drift prevented, artifact classification complete; local lint, fixture, TypeScript, build, docs, JSON, and whitespace gates pass | local implementation gates pass; commit, push, deployment, and live verification remain separate | Phase 15 |
 
-The Product Experience Foundation program is complete. All canonical public routes are implemented, deployed, and production-verified at HEAD `0f1a85e`. Phase 14 (PXF-010) is establishing design-system governance. The historical phase table above reflects the reconciled status.
+The historical Product Experience Foundation program delivered the public-platform implementation at HEAD `0f1a85e`. Phase 14 (PXF-010) has passed its local implementation gates; its commit, push, deployment, and live verification remain pending in the current release packet. The historical phase table above reflects the reconciled status.
 
 ## Product and company boundary
 
@@ -743,7 +743,7 @@ Phase 12 — PARTIAL (site live; formal WCAG/performance audit deferred)
 Phase 13 — ONGOING
 ```
 
-The Product Experience Foundation program is complete and deployed. The platform is in continuous governance (Phase 13). No further PXF packets are pending. Future work follows the Phase 13 quarterly review cadence.
+The historical Product Experience Foundation implementation is complete. The platform is in continuous governance (Phase 13), while the current PXF-010 governance repair packet remains pending commit, push, deployment, and live verification. Future work follows the Phase 13 quarterly review cadence after those gates are proven.
 
 ## Product Experience Foundation Program
 

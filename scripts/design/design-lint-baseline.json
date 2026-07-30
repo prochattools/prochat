@@ -1,5 +1,284 @@
 {
-  "generatedAt": "2026-03-06T09:46:59.002Z",
-  "rule": "No new hardcoded hex colors in src/ (baseline lock)",
-  "hexByFile": {}
+  "version": 2,
+  "generatedAt": "2026-07-30T09:21:17.184Z",
+  "authority": {
+    "source": "Mind: wiki/organisations/prochat/brand/global-design-foundation.md",
+    "defaultMode": "light",
+    "accent": "#3158C7"
+  },
+  "exemptions": [
+    {
+      "rule": "duplicate-system",
+      "file": "src/components/Button.tsx",
+      "pattern": "Button.tsx",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/app/starting-point/page.tsx",
+      "pattern": "#fff",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#111827",
+      "count": 2,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#176b4a",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#1e3d95",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#274ab0",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#3158c7",
+      "count": 3,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#465363",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#697586",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#8a5200",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#a82a22",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#b8c1cd",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#bfcdf5",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#d4dae3",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#e2e6ec",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#e8ebf0",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#e9f6f0",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#eaf0ff",
+      "count": 3,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#f1f3f6",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#f7f8fa",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#fdedec",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#fff3dd",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/assets/styles/prochat-foundation.css",
+      "pattern": "#ffffff",
+      "count": 2,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/auth-ui.ts",
+      "pattern": "#3B82F6",
+      "count": 2,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/auth-ui.ts",
+      "pattern": "#C0392B",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#0B1220",
+      "count": 4,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#0F1629",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#0F172A",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#111827",
+      "count": 3,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#141C2F",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#1E293B",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#3B82F6",
+      "count": 3,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#6366F1",
+      "count": 3,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#94A3B8",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#CBD5E1",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#E2E8F0",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#F8FAFC",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
+      "pattern": "#FFFFFF",
+      "count": 2,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    },
+    {
+      "rule": "legacy-selector",
+      "file": "src/assets/styles/globals.scss",
+      "pattern": ".pc-action-label",
+      "count": 1,
+      "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
+    }
+  ]
 }
