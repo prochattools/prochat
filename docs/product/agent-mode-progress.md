@@ -1,81 +1,79 @@
 # ProChat Release Identity Hardening Handoff
 
 **Run:** `agent-a8aa423b-bb30-4622-b129-c749573e3ca5`
-**Status:** Phase 15 implementation in progress
+**Status:** Phase 15 complete
 **Source:** `prochat`
 **Branch:** `main`
-**Verified release base:** `54b6de4957039d37f8e7331d07d3475b64db9737`
+**Release commit:** `20295c59e51872244a6e859fa1adb764436105aa`
 **Date:** 2026-07-30
 
-## Objective
+## Outcome
 
-Close the remaining production-attestation gap without depending on authenticated Dokploy access. The deployed service must expose a non-secret release identity that can be correlated to the Git commit and immutable GHCR image.
+Phase 15 closed the production-attestation gap without requiring authenticated Dokploy access. Production now exposes non-secret release identity that correlates the running service to the Git commit and immutable GHCR image.
 
-## Verified starting state
+## Implemented
 
-- PXF-010 governance implementation is committed and pushed at `54b6de4`.
-- GitHub Actions workflow `30555031503` completed successfully.
-- `ci`, `docs-integrity`, and `build-and-deploy` all succeeded.
-- immutable and `latest` GHCR tags resolved to index digest `sha256:46ee9390d22f86e603e2395f9f62ca096d32468767b888c3ff0cf46b9d484d2d`.
-- production routes `/`, `/docs`, `/contact`, `/privacy`, and `/terms` returned HTTP 200 with expected styled content.
-- Dokploy terminal deployment status and running-image identity were unavailable because no authenticated UI or production runtime access existed.
-- the worktree was clean before this Phase 15 hardening packet began.
+- `GET /api/version` returns service, revision, immutable image reference, and UTC build timestamp.
+- The response includes `Cache-Control: no-store` and `X-ProChat-Revision`.
+- Docker build arguments and runtime environment variables carry the same release metadata.
+- OCI revision and creation labels are embedded in the production image.
+- GitHub Actions passes the immutable commit, image reference, and one build timestamp into the image build.
+- Public environment documentation and the canonical roadmap describe the contract.
 
-## Implementation plan
-
-1. Add a read-only `/api/version` endpoint returning service, revision, immutable image reference, and build timestamp.
-2. Return `Cache-Control: no-store` and `X-ProChat-Revision` so external checks can attest the revision without parsing page content.
-3. Inject `PROCHAT_GIT_SHA`, `PROCHAT_IMAGE_REF`, and `PROCHAT_BUILD_TIMESTAMP` into both Docker build and runtime stages.
-4. Add OCI revision and creation labels to the production image.
-5. Pass immutable release values from GitHub Actions into `docker/build-push-action`.
-6. Document the environment contract and reconcile the roadmap.
-7. Run targeted security, TypeScript, design-lint, docs, JSON/YAML, whitespace, and production-build validation.
-8. Commit and push only the reviewed Phase 15 paths, then monitor CI and verify `/api/version` in production.
-
-## Risks and controls
-
-- Public metadata must contain no secrets or internal credentials.
-- Local builds default to `unknown`; production verification must reject `unknown` as unattested.
-- Image index and Linux/amd64 platform digests may differ legitimately; the endpoint exposes the immutable image reference, while registry inspection proves the digest.
-- A successful Dokploy trigger is not terminal deployment proof. Production completion is proven only when `/api/version` reports the new commit after the workflow succeeds.
-- No manual redeploy, restart, rollback, or infrastructure mutation is required outside the existing push-triggered workflow.
-
-## Changed paths
-
-- `.github/workflows/main.yml`
-- `Dockerfile`
-- `src/app/api/version/route.ts`
-- `docs-public/environment.md`
-- `docs/roadmap.md`
-- `docs/product/agent-mode-progress.md`
-
-## Current validation state
+## Validation and release evidence
 
 ```yaml
-implementation_review: IN_PROGRESS
-security_scan: PENDING
-typescript: PENDING
-design_lint: PENDING
-docs_validation: PENDING
-json_yaml_validation: PENDING
-whitespace: PENDING
-production_build: PENDING
-commit: PENDING
-push: PENDING
-workflow: PENDING
-production_version_attestation: PENDING
+local_validation:
+  typescript: PASSED
+  design_lint: PASSED
+  docs_validation: PASSED
+  json_validation: PASSED
+  whitespace: PASSED
+  production_build: PASSED
+commit: 20295c59e51872244a6e859fa1adb764436105aa
+push: COMPLETE
+workflow:
+  id: 30575270024
+  name: Main
+  conclusion: SUCCESS
+  completed_at: 2026-07-30T19:41:10Z
+jobs:
+  ci: SUCCESS
+  docs-integrity: SUCCESS
+  build-and-deploy: SUCCESS
+ghcr:
+  immutable_tag: ghcr.io/prochattools/prochat:20295c59e51872244a6e859fa1adb764436105aa
+  latest_tag: ghcr.io/prochattools/prochat:latest
+  index_digest: sha256:97bc2cc9ba6464ddec8d927b12a83a443c16e3dcb6eee67c5582fe50c11f57d3
+  linux_amd64_digest: sha256:9354d1f03cc12202a39e27d5a54a7c53db03630e604d7ae2c9bde684c1154adb
+  tags_share_index_digest: true
+production_version:
+  checked_at: 2026-07-30T19:43:26Z
+  http_status: 200
+  revision: 20295c59e51872244a6e859fa1adb764436105aa
+  image: ghcr.io/prochattools/prochat:20295c59e51872244a6e859fa1adb764436105aa
+  built_at: 2026-07-30T19:36:11Z
+  cache_control: no-store
+  revision_header_match: true
+production_routes:
+  homepage: PASSED
+  docs: PASSED
+  contact: PASSED
+  privacy: PASSED
+  terms: PASSED
 ```
 
-## Completion gate
+## Security posture
 
-Phase 15 is complete only when:
+The endpoint exposes only non-secret release metadata. It does not expose credentials, environment secrets, deployment IDs, private hostnames, runtime internals, or configuration values.
 
-- all local and CI gates pass;
-- the reviewed changes are committed and pushed;
-- the production workflow succeeds;
-- `https://prochat.tools/api/version` returns the new commit SHA, immutable GHCR image reference, and non-unknown build timestamp;
-- the revision response header matches the JSON revision.
+## Current program state
 
-## Exact next task
+- Phase 14 design-system governance: COMPLETE.
+- Phase 15 externally verifiable release identity: COMPLETE.
+- Active execution state: Phase 13 continuous governance and bounded maintenance.
+- No deployment, migration, or implementation blocker remains.
 
-Review the six changed paths, run the smallest meaningful validation set, repair at most one clear failure, then commit and push only after every local gate passes.
+## Next task
+
+No active implementation packet. Follow the Phase 13 governance cadence and open a new bounded packet only for a concrete defect, maintenance item, or approved roadmap addition.

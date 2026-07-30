@@ -31,12 +31,12 @@ This repository translates that truth into design, migration, implementation, te
 ## Verified current state
 
 ```yaml
-verified_base_head: 54b6de4957039d37f8e7331d07d3475b64db9737
+verified_base_head: 20295c59e51872244a6e859fa1adb764436105aa
 verified_date: 2026-07-30
-current_head: recorded by Git history after the release-identity hardening commit
-current_program_state: The public platform and PXF-010 governance repair are committed, pushed, CI-validated, published to GHCR, and production-health checked. Dokploy terminal deployment identity remains externally unproven, so Phase 15 adds immutable release metadata for future attestation.
-current_phase: Phase 15 — externally verifiable release identity
-current_packet: release metadata endpoint, OCI labels, CI build arguments, validation, commit, push, and production verification
+current_head: 20295c59e51872244a6e859fa1adb764436105aa
+current_program_state: The public platform, PXF-010 governance repair, and Phase 15 release-identity hardening are committed, pushed, CI-validated, published to GHCR, and production-verified through the public version endpoint.
+current_phase: Phase 13 — continuous governance
+current_packet: no active implementation packet; quarterly governance and bounded maintenance only
 canonical_visual_routes_active: 8
 canonical_routes: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms
 legacy_redirects_active: /prochat-memory -> /memory; /qa-memory -> /memory-qa
@@ -57,8 +57,8 @@ browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
 development_labs: EXCLUDED_UNLINKED
-push_status: PENDING
-deployment_status: PENDING
+push_status: COMPLETE — commit 20295c59e51872244a6e859fa1adb764436105aa pushed to origin/main
+deployment_status: VERIFIED — workflow 30575270024 succeeded and /api/version matched the release
 ```
 
 ## Operational phase summary
@@ -81,9 +81,9 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 | Phase 12 | COMPLETE | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking, docs mobile TOC overlap fix deployed | visual, accessibility, and launch acceptance verified | site is live and passing CI at HEAD 0f1a85e; WCAG audit complete, performance baseline established | Phase 13 |
 | Phase 13 | ONGOING | Continuous governance | launch | platform live and deployed | review and maintenance cadence | — | Phase 13 |
 | Phase 14 | COMPLETE | Design-system governance and launch hardening | Phase 12 | token architecture documentation, enforcement linting, docs migration, repository classification, accessibility hardening | canonical design authority established, token drift prevented, artifact classification complete; commit `54b6de4`, successful CI workflow `30555031503`, matching immutable/latest GHCR digest, and production route checks | governance implementation and release gates complete; Dokploy terminal identity remained unavailable | Phase 15 |
-| Phase 15 | IN PROGRESS | Externally verifiable release identity | Phase 14 | `/api/version`, revision response header, immutable image reference, build timestamp, OCI revision labels, CI build arguments | public release metadata correlated to commit and image; production verification no longer depends on Dokploy UI access | endpoint returns the deployed commit and immutable image reference after successful CI and deployment | Phase 13 continuous governance |
+| Phase 15 | COMPLETE | Externally verifiable release identity | Phase 14 | `/api/version`, revision response header, immutable image reference, build timestamp, OCI revision labels, CI build arguments | commit `20295c5`, successful workflow `30575270024`, matching immutable/latest GHCR index digest `sha256:97bc2cc9ba6464ddec8d927b12a83a443c16e3dcb6eee67c5582fe50c11f57d3`, and production `/api/version` attestation | deployed endpoint returned the full release commit, immutable image reference, and UTC build timestamp after CI success | Phase 13 continuous governance |
 
-The historical Product Experience Foundation program delivered the public-platform implementation at HEAD `0f1a85e`. Phase 14 (PXF-010) is complete through commit, push, CI, image publication, and production route verification at `54b6de4`. Phase 15 closes the remaining observability gap by making future production revisions externally attestable without privileged Dokploy access.
+The historical Product Experience Foundation program delivered the public-platform implementation at HEAD `0f1a85e`. Phase 14 (PXF-010) completed governance hardening at `54b6de4`. Phase 15 completed externally verifiable release identity at `20295c5`; production now exposes the deployed commit and immutable image reference without requiring privileged Dokploy access.
 
 ## Product and company boundary
 
