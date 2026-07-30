@@ -89,10 +89,61 @@ jobs:
       - name: Validate docs pipeline
         run: npm run docs:validate
 
-  build-and-deploy:
-    needs: [ci, docs-integrity]
+  detect-deployment-changes:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    outputs:
+      deploy: ${{ steps.changed-paths.outputs.deploy }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: changed-paths
+        name: Detect deployment-relevant changes
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          CURRENT_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          if [ "$BEFORE_SHA" = "0000000000000000000000000000000000000000" ] || [ -z "$BEFORE_SHA" ]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+            echo "No usable push base SHA; enabling deployment fail-safe."
+            exit 0
+          fi
+
+          mapfile -t changed_paths < <(git diff --name-only "$BEFORE_SHA" "$CURRENT_SHA")
+          if [ "${#changed_paths[@]}" -eq 0 ]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+            echo "No changed paths detected; enabling deployment fail-safe."
+            exit 0
+          fi
+
+          docs_only=true
+          for path in "${changed_paths[@]}"; do
+            case "$path" in
+              docs/*|docs-public/*|README.md)
+                ;;
+              *)
+                docs_only=false
+                break
+                ;;
+            esac
+          done
+
+          if [ "$docs_only" = true ]; then
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+            echo "Documentation-only change; deployment disabled."
+          else
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+            echo "Runtime or unclassified change detected; deployment enabled."
+          fi
+
+          printf '%s\n' "${changed_paths[@]}"
+
+  build-and-deploy:
+    needs: [ci, docs-integrity, detect-deployment-changes]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && needs.detect-deployment-changes.outputs.deploy == 'true'
     permissions:
       contents: read
       packages: write
