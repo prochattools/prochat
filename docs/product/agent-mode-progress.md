@@ -1,94 +1,81 @@
-# ProChat Public Platform Foundation Handoff
+# ProChat Release Identity Hardening Handoff
 
-**Run:** `agent-1ed36132-be9b-4890-b8ee-64d9781a817f`
-**Status:** PXF-010 local implementation gates complete; external release gates pending
+**Run:** `agent-a8aa423b-bb30-4622-b129-c749573e3ca5`
+**Status:** Phase 15 implementation in progress
 **Source:** `prochat`
 **Branch:** `main`
-**Verified base HEAD:** `25a17c7ce8fc22c19a4c761ac98ec7e7d1fe9540`
+**Verified release base:** `54b6de4957039d37f8e7331d07d3475b64db9737`
 **Date:** 2026-07-30
 
-## Current objective
+## Objective
 
-Repair the incomplete PXF-010 governance implementation and validate it. Local implementation gates are complete; commit, push, deployment, and production verification remain pending.
+Close the remaining production-attestation gap without depending on authenticated Dokploy access. The deployed service must expose a non-secret release identity that can be correlated to the Git commit and immutable GHCR image.
 
-## Verified authority
+## Verified starting state
 
-Canonical authority is Mind:
+- PXF-010 governance implementation is committed and pushed at `54b6de4`.
+- GitHub Actions workflow `30555031503` completed successfully.
+- `ci`, `docs-integrity`, and `build-and-deploy` all succeeded.
+- immutable and `latest` GHCR tags resolved to index digest `sha256:46ee9390d22f86e603e2395f9f62ca096d32468767b888c3ff0cf46b9d484d2d`.
+- production routes `/`, `/docs`, `/contact`, `/privacy`, and `/terms` returned HTTP 200 with expected styled content.
+- Dokploy terminal deployment status and running-image identity were unavailable because no authenticated UI or production runtime access existed.
+- the worktree was clean before this Phase 15 hardening packet began.
 
-```text
-wiki/organisations/prochat/brand/global-design-foundation.md
-```
+## Implementation plan
 
-Decision:
+1. Add a read-only `/api/version` endpoint returning service, revision, immutable image reference, and build timestamp.
+2. Return `Cache-Control: no-store` and `X-ProChat-Revision` so external checks can attest the revision without parsing page content.
+3. Inject `PROCHAT_GIT_SHA`, `PROCHAT_IMAGE_REF`, and `PROCHAT_BUILD_TIMESTAMP` into both Docker build and runtime stages.
+4. Add OCI revision and creation labels to the production image.
+5. Pass immutable release values from GitHub Actions into `docker/build-push-action`.
+6. Document the environment contract and reconcile the roadmap.
+7. Run targeted security, TypeScript, design-lint, docs, JSON/YAML, whitespace, and production-build validation.
+8. Commit and push only the reviewed Phase 15 paths, then monitor CI and verify `/api/version` in production.
 
-```yaml
-website_default_mode: light
-color_strategy: grayscale plus one global accent
-global_accent: cobalt #3158C7
-dark_mode: optional and explicitly scoped
-teal_global_authority: false
-```
+## Risks and controls
 
-Repository translations are `brand-spec.md` and `DESIGN.md`. Existing scoped dark presentation is not permission to redefine the global brand system.
+- Public metadata must contain no secrets or internal credentials.
+- Local builds default to `unknown`; production verification must reject `unknown` as unattested.
+- Image index and Linux/amd64 platform digests may differ legitimately; the endpoint exposes the immutable image reference, while registry inspection proves the digest.
+- A successful Dokploy trigger is not terminal deployment proof. Production completion is proven only when `/api/version` reports the new commit after the workflow succeeds.
+- No manual redeploy, restart, rollback, or infrastructure mutation is required outside the existing push-triggered workflow.
 
-## Root causes confirmed
+## Changed paths
 
-- `.github/workflows/main.yml` did not run `npm run lint:design`.
-- deployment did not depend on the validation jobs.
-- governance documentation described CLI modes that were not implemented.
-- the design-lint baseline was raw-hex-only and lacked rule-aware machine-readable exemptions.
-- roadmap and handoff files referenced stale commits and program state.
-- `tmp/contact-mobile-lighthouse.json` remained as a tracked deletion after `/tmp/` became intentionally ignored.
-- production propagation for the previous governance commit was reported before final verification.
-
-## Work completed in the active repair
-
-- implemented five rule families in `scripts/design/lint-design-system.mjs`:
-  - `hardcoded-hex`
-  - `semantic-token-layer`
-  - `duplicate-system`
-  - `legacy-selector`
-  - `unauthorized-style`
-- diagnostics include rule, file, line, pattern, baseline/current counts, and remediation;
-- generated baseline schema version 2 with explicit rule/file/pattern/count/reason exemptions;
-- defined direct `--fixture-rule=<rule>` checks, proving each intentional fixture exits `1` with actionable diagnostics;
-- wired `npm run lint:design` into the main CI job;
-- made `build-and-deploy` depend on `ci` and `docs-integrity`;
-- reconciled `docs/design-lint-enforcement.md` with actual behavior;
-- updated roadmap base-state evidence;
-- classified `tmp/contact-mobile-lighthouse.json` as disposable temporary evidence whose tracked deletion belongs in this repair.
-
-## Known blocker
-
-Workbench currently rejects writes to `docs/token-architecture.md` because its path triggers the guarded secret-path heuristic. The file was read successfully, but its authority header could not yet be updated through the guarded write endpoint.
-
-This is a tooling-path false positive, not a repository content or design-authority ambiguity.
+- `.github/workflows/main.yml`
+- `Dockerfile`
+- `src/app/api/version/route.ts`
+- `docs-public/environment.md`
+- `docs/roadmap.md`
+- `docs/product/agent-mode-progress.md`
 
 ## Current validation state
 
 ```yaml
-  design_lint: PASS
-  direct_fixture_checks: PASS
-  ci_workflow_edit: APPLIED_WITH_USER_CONFIRMATION
-  deployment_gate: APPLIED_WITH_USER_CONFIRMATION
-  typescript: PASS
-  production_build: PASS
-  docs_validation: PASS
-  json_validation: PASS
-  full_validation: PASS
+implementation_review: IN_PROGRESS
+security_scan: PENDING
+typescript: PENDING
+design_lint: PENDING
+docs_validation: PENDING
+json_yaml_validation: PENDING
+whitespace: PENDING
+production_build: PENDING
 commit: PENDING
 push: PENDING
-deployment: PENDING
-production_verification: PENDING
+workflow: PENDING
+production_version_attestation: PENDING
 ```
 
-## Repository hygiene decision
+## Completion gate
 
-`/tmp/` is explicitly ignored in `.gitignore`. The tracked file `tmp/contact-mobile-lighthouse.json` is generated Lighthouse evidence and has no canonical documentation role. Preserve its deletion in the final reviewed commit; future reports must be written outside tracked `/tmp/` or attached to an intentional evidence path.
+Phase 15 is complete only when:
 
-## Exact next steps
+- all local and CI gates pass;
+- the reviewed changes are committed and pushed;
+- the production workflow succeeds;
+- `https://prochat.tools/api/version` returns the new commit SHA, immutable GHCR image reference, and non-unknown build timestamp;
+- the revision response header matches the JSON revision.
 
-1. review and commit the explicit paths with an approved message;
-2. push `main` without force after release authorization;
-3. monitor CI and deployment to terminal success;
-4. verify image digests and production routes.
+## Exact next task
+
+Review the six changed paths, run the smallest meaningful validation set, repair at most one clear failure, then commit and push only after every local gate passes.

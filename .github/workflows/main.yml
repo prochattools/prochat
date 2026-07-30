@@ -108,6 +108,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Capture release metadata
+        id: release
+        run: echo "built_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -117,6 +121,10 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:${{ github.sha }}
+          build-args: |
+            PROCHAT_GIT_SHA=${{ github.sha }}
+            PROCHAT_IMAGE_REF=ghcr.io/${{ github.repository }}:${{ github.sha }}
+            PROCHAT_BUILD_TIMESTAMP=${{ steps.release.outputs.built_at }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

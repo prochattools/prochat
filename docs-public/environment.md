@@ -17,6 +17,14 @@ Other docs should link here instead of duplicating the contract. The list below 
 These values are used by the tenant provisioning scripts, CLI helpers, and runtime startup. `APP_SLUG` determines the tenant schema (`tenant_<slug>`); the three database URLs keep runtime, provisioning, and Prisma shadow workloads separate. `TENANT_DB_PASSWORD` is required in production.
 `PORT` is reserved for the local app server and should be set to `3056` in this workspace to avoid collisions with other applications.
 
+## Release identity
+
+- `PROCHAT_GIT_SHA`
+- `PROCHAT_IMAGE_REF`
+- `PROCHAT_BUILD_TIMESTAMP`
+
+The production image build injects these non-secret values from GitHub Actions. `/api/version` returns them with `Cache-Control: no-store`, and the same revision is exposed through `X-ProChat-Revision`. Local builds default to `unknown`; production verification must treat `unknown` as an unattested build rather than a successful identity match.
+
 ## Site URLs and public hosts
 
 - `NEXT_PUBLIC_SITE_URL`
