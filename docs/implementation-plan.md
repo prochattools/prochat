@@ -3,7 +3,7 @@
 **Status:** canonical executable plan  
 **Owner:** Steve Westhoek  
 **Scope:** documentation, audits, prototypes, production foundation, public pages, migration, validation, launch, and maintenance  
-**Last updated:** 2026-07-22
+**Last updated:** 2026-07-31
 
 ## Authority and reading order
 
@@ -37,12 +37,12 @@ mind/wiki/organisations/prochat/brand/website-build-contract.md
 ## Verified current state
 
 ```yaml
-verified_head: 4b423fb
-verified_date: 2026-07-29
-current_head: 4b423fb
-current_program_state: The Product Experience Foundation program is complete. All canonical public routes are implemented, deployed, and production-verified. PXF-003 through PXF-006F delivered the public homepage, product pages, design system, contact, privacy, terms, documentation, metadata, accessibility repairs, and product-page onboarding analytics. The platform is live and in continuous governance (Phase 13).
+verified_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
+verified_date: 2026-07-31
+current_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
+current_program_state: The Product Experience Foundation program is complete. The local docs-hardening closeout is committed and validated at ada06665f5944fc988f4dad4a5fed47cee471d8b; production remains separately verified at 91436457e4d3aa8a5d9782ff671ce49e10d7ef07 and the local closeout has not been pushed.
 current_phase: PXF-006G — roadmap reconciliation and program closure
-current_packet: PXF-006G — documentation closeout
+current_packet: PXF-006G — final documentation and browser-evidence closeout
 canonical_visual_routes_active: 8
 canonical_route_implementation: COMPLETE
 public_docs_alignment: COMPLETE

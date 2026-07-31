@@ -3,7 +3,7 @@
 **Status:** canonical repository-local execution roadmap
 **Owner:** Steve Westhoek
 **Scope:** ProChat public platform, design system, migration, public pages, validation, launch, and maintenance
-**Last updated:** 2026-07-30
+**Last updated:** 2026-07-31
 
 ## Authority
 
@@ -32,9 +32,9 @@ This repository translates that truth into design, migration, implementation, te
 
 ```yaml
 verified_base_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-verified_date: 2026-07-30
-current_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-current_program_state: The public platform, PXF-010 governance repair, and Phase 15 release-identity hardening are committed, pushed, CI-validated, published to GHCR, and production-verified through the public version endpoint.
+verified_date: 2026-07-31
+current_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
+current_program_state: The public platform, PXF-010 governance repair, Phase 15 release identity, and local docs-hardening closeout are committed and locally validated; production remains on the separately verified release identity 91436457e4d3aa8a5d9782ff671ce49e10d7ef07.
 current_phase: Phase 13 — continuous governance
 current_packet: no active implementation packet; quarterly governance and bounded maintenance only
 canonical_visual_routes_active: 8
@@ -57,7 +57,7 @@ browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
 development_labs: EXCLUDED_UNLINKED
-push_status: COMPLETE — commit 91436457e4d3aa8a5d9782ff671ce49e10d7ef07 pushed to origin/main
+push_status: COMPLETE through 91436457e4d3aa8a5d9782ff671ce49e10d7ef07; local docs-hardening commit ada06665f5944fc988f4dad4a5fed47cee471d8b is NOT pushed
 deployment_status: VERIFIED — /api/version matched the current release identity 91436457e4d3aa8a5d9782ff671ce49e10d7ef07; this is a verified descendant of the Phase 15 implementation commit 20295c59e51872244a6e859fa1adb764436105aa
 ```
 
@@ -748,10 +748,10 @@ The historical Product Experience Foundation implementation and PXF-010 governan
 
 ## Final design-hardening closeout
 
-- Screenshot-based audit: 40/40 canonical route/viewport combinations pass after the `/docs` mobile layout correction. The tested widths are 1440, 1024, 768, 390, and 320 pixels; the seven non-docs canonical routes retained contained document widths in the representative regression sample.
+- Screenshot-based audit: 40/40 canonical route/viewport combinations pass against the local docs-hardening HEAD `ada06665f5944fc988f4dad4a5fed47cee471d8b`; production remains separately verified at `91436457e4d3aa8a5d9782ff671ce49e10d7ef07`. The tested widths are 1440, 1024, 768, 390, and 320 pixels; the seven non-docs canonical routes retained contained document widths in the representative regression sample.
 - `/docs` root cause and fix: the imported prefixed Nextra responsive utilities left the desktop sidebar and table of contents in the mobile flex row, producing a 544px intrinsic document width and collapsing the article heading. `styles/docs.css` now establishes a single mobile content column, constrains grid/flex children and article content with `min-width: 0`/`max-width: 100%`, and removes the desktop sidebar and TOC below 768px while preserving internal code/table scrolling.
-- Focus validation: separate from the screenshot count. A fresh Playwright page reached a non-body element on Tab with visible focus styling at 390px; the existing shell keyboard coverage remains responsible for header navigation, Escape close, focus return, content links, and footer links.
-- Reduced motion: verified under `prefers-reduced-motion: reduce`.
+- Focus validation: separate from the screenshot count. A fresh 390px Playwright page traversed the skip link, shared mobile Menu summary, docs links, and footer links with visible outline/box-shadow evidence. Nextra exposes no mobile docs drawer trigger in this integration; the desktop sidebar/TOC are intentionally hidden below 768px, so drawer Escape/focus restoration is not applicable. The available Menu path was opened by keyboard and Escape left focus non-body.
+- Reduced motion: explicitly emulated with `page.emulateMedia({ reducedMotion: 'reduce' })`; `matchMedia('(prefers-reduced-motion: reduce)')` returned true and the global document transition duration was `0s`.
 - Design governance debt: all 39 exemption entries remain controlled continuous-governance debt; none were removed by this packet.
 - Shell boundary: the canonical marketing, docs, protected, and legacy shells remain intentionally distinct.
 

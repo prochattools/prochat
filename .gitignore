@@ -7,6 +7,7 @@
 
 # testing
 /coverage
+/tests/evidence/test-results/
 
 # next.js
 /.next/

@@ -63,24 +63,59 @@ test.describe('/docs responsive layout', () => {
 
 test('mobile docs page exposes keyboard focus and reduced-motion behavior', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 900 })
+  await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto(new URL('/docs', baseUrl).toString(), { waitUntil: 'networkidle' })
 
-  await page.keyboard.press('Tab')
+  const traversal = [] as Array<{
+    tag: string
+    href: string
+    inFooter: boolean
+    isSkipLink: boolean
+    isMenu: boolean
+    focusStyle: boolean
+  }>
+  for (let index = 0; index < 100; index += 1) {
+    await page.keyboard.press('Tab')
+    traversal.push(
+      await page.evaluate(() => {
+        const element = document.activeElement as HTMLElement | null
+        const styles = element ? getComputedStyle(element) : null
+        return {
+          tag: element?.tagName ?? '',
+          href: element?.getAttribute('href') ?? '',
+          inFooter: !!element?.closest('footer'),
+          isSkipLink: element?.textContent?.trim() === 'Skip to Content',
+          isMenu: element?.tagName === 'SUMMARY' && element.textContent?.trim() === 'Menu',
+          focusStyle: !!styles && (styles.outlineStyle !== 'none' || styles.boxShadow !== 'none'),
+        }
+      }),
+    )
+  }
+
+  expect(traversal.some((item) => item.isSkipLink)).toBe(true)
+  expect(traversal.some((item) => item.isMenu)).toBe(true)
+  expect(traversal.some((item) => item.href === '/docs' || item.href.startsWith('/docs/'))).toBe(true)
+  expect(traversal.some((item) => item.inFooter && item.href)).toBe(true)
+  expect(traversal.some((item) => item.focusStyle)).toBe(true)
+
+  const mobileDocsDrawer = await page.locator('.nextra-mobile-nav').count()
+  expect(mobileDocsDrawer).toBeGreaterThan(0)
+  expect(await page.getByRole('button', { name: /open navigation menu/i }).count()).toBe(0)
+  // The custom Nextra integration intentionally has no mobile drawer trigger:
+  // the desktop sidebar and TOC are removed below 768px, while the shared
+  // header's semantic Menu summary remains the available mobile navigation.
+  await page.getByText('Menu', { exact: true }).focus()
+  await page.keyboard.press('Enter')
+  await expect(page.locator('details.pm-mobile-nav')).toHaveAttribute('open', '')
+  await page.keyboard.press('Escape')
   await expect
     .poll(() => page.evaluate(() => document.activeElement?.tagName ?? ''))
     .not.toBe('BODY')
 
-  const focused = await page.evaluate(() => {
-    const element = document.activeElement
-    return {
-      tag: element?.tagName ?? '',
-      outline: element ? getComputedStyle(element).outlineStyle : 'none',
-    }
-  })
-  expect(focused.tag).not.toBe('BODY')
-  expect(focused.outline).not.toBe('none')
-
   await expect
     .poll(() => page.evaluate(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches))
     .toBe(true)
+  await expect
+    .poll(() => page.evaluate(() => getComputedStyle(document.documentElement).transitionDuration))
+    .toBe('0s')
 })
