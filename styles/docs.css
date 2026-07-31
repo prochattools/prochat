@@ -385,3 +385,45 @@ html.dark .docs-logo-wordmark img {
     --nextra-navbar-height: 5.5rem;
   }
 }
+
+/* Nextra's prefixed responsive utilities do not collapse this flex layout
+ * reliably when the marketing header owns the navbar. Keep the mobile docs
+ * surface single-column without changing the desktop/tablet shell. */
+@media (max-width: 767px) {
+  .docs-shell .nextra-sidebar,
+  .docs-shell .nextra-sidebar-container,
+  .docs-shell .nextra-toc {
+    display: none !important;
+  }
+
+  .docs-shell div:has(> .nextra-toc) {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .docs-shell .nextra-content,
+  .docs-shell main,
+  .docs-shell article {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .docs-shell article h1,
+  .docs-shell article h2,
+  .docs-shell article h3,
+  .docs-shell article h4,
+  .docs-shell article p,
+  .docs-shell article li {
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  .docs-shell .nextra-mobile-nav {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
