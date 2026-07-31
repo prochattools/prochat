@@ -31,10 +31,13 @@ This repository translates that truth into design, migration, implementation, te
 ## Verified current state
 
 ```yaml
-verified_base_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-verified_date: 2026-07-31
-current_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
-current_program_state: The public platform, PXF-010 governance repair, Phase 15 release identity, and local docs-hardening closeout are committed and locally validated; production remains on the separately verified release identity 91436457e4d3aa8a5d9782ff671ce49e10d7ef07.
+validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
+validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
+validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
+production_release_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
+validated_date: 2026-07-31
+documentation_sync_status: Planning documents record immutable validation anchors rather than a mutable live repository HEAD, so later documentation-only commits do not invalidate this closeout.
+current_program_state: The public platform, PXF-010 governance repair, Phase 15 release identity, docs mobile hardening, and evidence closeout are complete and locally validated. Production remains separately verified at the production release head.
 current_phase: Phase 13 — continuous governance
 current_packet: no active implementation packet; quarterly governance and bounded maintenance only
 canonical_visual_routes_active: 8
@@ -57,8 +60,8 @@ browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
 development_labs: EXCLUDED_UNLINKED
-push_status: COMPLETE through 91436457e4d3aa8a5d9782ff671ce49e10d7ef07; local docs-hardening commit ada06665f5944fc988f4dad4a5fed47cee471d8b is NOT pushed
-deployment_status: VERIFIED — /api/version matched the current release identity 91436457e4d3aa8a5d9782ff671ce49e10d7ef07; this is a verified descendant of the Phase 15 implementation commit 20295c59e51872244a6e859fa1adb764436105aa
+push_status: COMPLETE through 91436457e4d3aa8a5d9782ff671ce49e10d7ef07; local commits ada06665f5944fc988f4dad4a5fed47cee471d8b and 29854de09b04792c377d0bba7528297acb14c155 are NOT pushed
+deployment_status: VERIFIED — /api/version matched production release 91436457e4d3aa8a5d9782ff671ce49e10d7ef07, a verified descendant of Phase 15 implementation commit 20295c59e51872244a6e859fa1adb764436105aa; neither local closeout commit is claimed deployed
 ```
 
 ## Operational phase summary
@@ -81,9 +84,9 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 | Phase 12 | COMPLETE | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking, docs mobile TOC overlap fix deployed | visual, accessibility, and launch acceptance verified | site is live and passing CI at HEAD 0f1a85e; WCAG audit complete, performance baseline established | Phase 13 |
 | Phase 13 | ONGOING | Continuous governance | launch | platform live and deployed | review and maintenance cadence | — | Phase 13 |
 | Phase 14 | COMPLETE | Design-system governance and launch hardening | Phase 12 | token architecture documentation, enforcement linting, docs migration, repository classification, accessibility hardening | canonical design authority established, token drift prevented, artifact classification complete; commit `54b6de4`, successful CI workflow `30555031503`, matching immutable/latest GHCR digest, and production route checks | governance implementation and release gates complete; Dokploy terminal identity remained unavailable | Phase 15 |
-| Phase 15 | COMPLETE | Externally verifiable release identity | Phase 14 | `/api/version`, revision response header, immutable image reference, build timestamp, OCI revision labels, CI build arguments | implementation commit `20295c5`; current verified release identity `91436457`, matching production `/api/version` response, and the later CI/runtime descendant retained the release metadata | deployed endpoint returned the full current release commit, immutable image reference, and UTC build timestamp | Phase 13 continuous governance |
+| Phase 15 | COMPLETE | Externally verifiable release identity | Phase 14 | `/api/version`, revision response header, immutable image reference, build timestamp, OCI revision labels, CI build arguments | implementation commit `20295c5`; verified production release identity `91436457`, matching production `/api/version` response, and the later CI/runtime descendant retained the release metadata | deployed endpoint returned the full production release commit, immutable image reference, and UTC build timestamp | Phase 13 continuous governance |
 
-The historical Product Experience Foundation program delivered the public-platform implementation at HEAD `0f1a85e`. Phase 14 (PXF-010) completed governance hardening at `54b6de4`. Phase 15 established externally verifiable release identity at `20295c5`; the verified current descendant is `91436457`, and production exposes that deployed commit and immutable image reference without requiring privileged Dokploy access.
+The historical Product Experience Foundation program delivered the public-platform implementation at HEAD `0f1a85e`. Phase 14 (PXF-010) completed governance hardening at `54b6de4`. Phase 15 established externally verifiable release identity at `20295c5`; the verified production descendant is `91436457`, and production exposes that deployed commit and immutable image reference without requiring privileged Dokploy access.
 
 ## Product and company boundary
 
@@ -748,7 +751,7 @@ The historical Product Experience Foundation implementation and PXF-010 governan
 
 ## Final design-hardening closeout
 
-- Screenshot-based audit: 40/40 canonical route/viewport combinations pass against the local docs-hardening HEAD `ada06665f5944fc988f4dad4a5fed47cee471d8b`; production remains separately verified at `91436457e4d3aa8a5d9782ff671ce49e10d7ef07`. The tested widths are 1440, 1024, 768, 390, and 320 pixels; the seven non-docs canonical routes retained contained document widths in the representative regression sample.
+- Screenshot-based audit: 40/40 canonical route/viewport combinations pass for the immutable local closeout chain: docs-mobile implementation commit `ada06665f5944fc988f4dad4a5fed47cee471d8b` and evidence/metadata closeout commit `29854de09b04792c377d0bba7528297acb14c155`. Production remains separately verified at `91436457e4d3aa8a5d9782ff671ce49e10d7ef07`. The tested widths are 1440, 1024, 768, 390, and 320 pixels; the seven non-docs canonical routes retained contained document widths in the representative regression sample.
 - `/docs` root cause and fix: the imported prefixed Nextra responsive utilities left the desktop sidebar and table of contents in the mobile flex row, producing a 544px intrinsic document width and collapsing the article heading. `styles/docs.css` now establishes a single mobile content column, constrains grid/flex children and article content with `min-width: 0`/`max-width: 100%`, and removes the desktop sidebar and TOC below 768px while preserving internal code/table scrolling.
 - Focus validation: separate from the screenshot count. A fresh 390px Playwright page traversed the skip link, shared mobile Menu summary, docs links, and footer links with visible outline/box-shadow evidence. Nextra exposes no mobile docs drawer trigger in this integration; the desktop sidebar/TOC are intentionally hidden below 768px, so drawer Escape/focus restoration is not applicable. The available Menu path was opened by keyboard and Escape left focus non-body.
 - Reduced motion: explicitly emulated with `page.emulateMedia({ reducedMotion: 'reduce' })`; `matchMedia('(prefers-reduced-motion: reduce)')` returned true and the global document transition duration was `0s`.

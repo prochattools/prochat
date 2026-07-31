@@ -37,12 +37,15 @@ mind/wiki/organisations/prochat/brand/website-build-contract.md
 ## Verified current state
 
 ```yaml
-verified_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-verified_date: 2026-07-31
-current_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
-current_program_state: The Product Experience Foundation program is complete. The local docs-hardening closeout is committed and validated at ada06665f5944fc988f4dad4a5fed47cee471d8b; production remains separately verified at 91436457e4d3aa8a5d9782ff671ce49e10d7ef07 and the local closeout has not been pushed.
-current_phase: PXF-006G — roadmap reconciliation and program closure
-current_packet: PXF-006G — final documentation and browser-evidence closeout
+validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
+validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
+validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
+production_release_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
+validated_date: 2026-07-31
+documentation_sync_status: Planning documents record immutable validation anchors rather than a mutable live repository HEAD, so later documentation-only commits do not invalidate this closeout.
+current_program_state: The Product Experience Foundation program, docs mobile hardening, and evidence closeout are complete and locally validated. Production remains separately verified at the production release head.
+current_phase: Phase 13 — continuous governance
+current_packet: no active implementation packet; bounded maintenance only
 canonical_visual_routes_active: 8
 canonical_route_implementation: COMPLETE
 public_docs_alignment: COMPLETE
@@ -63,6 +66,8 @@ authenticated_protected_proof: SEPARATE_FUTURE_RUNNER
 browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
+push_status: COMPLETE through 91436457e4d3aa8a5d9782ff671ce49e10d7ef07; local commits ada06665f5944fc988f4dad4a5fed47cee471d8b and 29854de09b04792c377d0bba7528297acb14c155 are NOT pushed
+deployment_status: VERIFIED — /api/version matched production release 91436457e4d3aa8a5d9782ff671ce49e10d7ef07; neither local closeout commit is claimed deployed
 next_owner_gate: CONTINUOUS_GOVERNANCE
 ```
 
