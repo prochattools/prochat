@@ -112,8 +112,11 @@ jobs:
           PROCHAT_MAINTENANCE_MODE: '0'
 
       - name: Wait for server readiness
+        timeout-minutes: 3
         run: |
-          MAX_ATTEMPTS=30
+          # Strict maximum: 20 × 5s requests + 19 × 2s sleeps = 138s.
+          # The timeout-minutes: 3 step limit (180s) is the hard outer boundary.
+          MAX_ATTEMPTS=20
           INTERVAL=2
           CONNECT_TIMEOUT=2
           REQUEST_TIMEOUT=5
@@ -121,15 +124,17 @@ jobs:
             STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
               --connect-timeout "$CONNECT_TIMEOUT" \
               --max-time "$REQUEST_TIMEOUT" \
-              http://localhost:3000/api/health || echo "000")
+              http://localhost:3000/api/health 2>/dev/null) || STATUS="000"
             echo "Attempt $i/$MAX_ATTEMPTS — HTTP $STATUS"
             if [ "$STATUS" = "200" ]; then
               echo "Server is ready."
               exit 0
             fi
-            sleep $INTERVAL
+            if [ "$i" -lt "$MAX_ATTEMPTS" ]; then
+              sleep $INTERVAL
+            fi
           done
-          echo "Server did not become ready after $((MAX_ATTEMPTS * INTERVAL))s."
+          echo "Server did not respond with HTTP 200 after $MAX_ATTEMPTS attempts (max ~$((MAX_ATTEMPTS * REQUEST_TIMEOUT + (MAX_ATTEMPTS - 1) * INTERVAL))s)."
           echo "--- server log tail ---"
           tail -n 50 "${{ steps.server.outputs.server_log }}" 2>/dev/null || true
           exit 1

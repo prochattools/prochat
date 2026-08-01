@@ -42,7 +42,6 @@ test.describe('/docs responsive layout', () => {
             ? (Number.parseFloat(getComputedStyle(heading).lineHeight) ||
                Number.parseFloat(getComputedStyle(heading).fontSize) * 1.2)
             : 0,
-          tocVisible: !!toc && getComputedStyle(toc).display !== 'none',
           tocRight: tocRect?.right ?? 0,
           horizontallyScrollable,
         }
@@ -56,8 +55,14 @@ test.describe('/docs responsive layout', () => {
       }
 
       if (viewport.width < 768) {
-        expect(layout.tocVisible).toBe(false)
+        // Assert no TOC is visibly rendered at mobile widths.
+        // Uses Playwright visibility semantics (non-zero geometry + no hidden ancestor)
+        // rather than computed display alone, which is insufficient when the server
+        // fails to deliver stylesheets or an ancestor hides the element.
+        await expect(page.locator('.nextra-toc:visible')).toHaveCount(0)
       } else {
+        // Assert the intended desktop TOC is visible and within the viewport.
+        await expect(page.locator('.nextra-toc').first()).toBeVisible()
         expect(layout.tocRight).toBeLessThanOrEqual(viewport.width)
       }
     })
