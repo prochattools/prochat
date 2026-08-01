@@ -4,7 +4,7 @@
 **Branch:** `main`  
 **Audit date:** 2026-07-31  
 **Reconciliation date:** 2026-08-01  
-**Status:** PXF-016A reconciliation complete and validated
+**Status:** PXF-016B2 CI and browser-evidence hardening complete and validated; ready for push verification
 
 ## Purpose
 
@@ -57,7 +57,7 @@ The reconciliation packet updates repository truth without redesigning the produ
 
 ## Remaining work after reconciliation
 
-The next recommended packet is CI and release-gate hardening: explicit lint and type gates, browser evidence in CI, post-deployment health/version attestation, accessibility and performance proof, and security/runtime hardening. Legacy cleanup and design-debt reduction remain separate bounded maintenance waves.
+CI and release-gate hardening was completed in PXF-016B and PXF-016B1. Browser-evidence diagnosis and readiness correction were completed in PXF-016B2. The next operation is to push the completed PXF-016A/B/B1/B2 chain, observe GitHub Actions, and verify the production deployment. After that push is confirmed, the next recommended packet is PXF-016C accessibility proof: bounded `@axe-core/playwright` integration and canonical-route WCAG checks, without yet claiming full manual WCAG 2.2 AA certification. Legacy cleanup and design-debt reduction remain separate bounded maintenance waves.
 
 ## Validation evidence
 
