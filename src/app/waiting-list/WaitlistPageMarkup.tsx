@@ -55,7 +55,7 @@ export default function WaitlistPageMarkup() {
         </div>
         <fieldset className="px-1 pt-1 pb-0">
           <legend className="mb-3 text-left text-[13px] font-medium text-slate-600 dark:text-slate-300">
-            Select products you're interested in:
+            Select products you&apos;re interested in:
           </legend>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
             {WAITLIST_PRODUCT_OPTIONS.map(option => (

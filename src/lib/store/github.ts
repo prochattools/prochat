@@ -130,13 +130,13 @@ async function requestInstallationAccessToken(
 			token: string
 			expiresAtMs: number
 			githubRequestId: string | null
-	  }
+		}
 	| {
 			ok: false
 			statusCode: number
 			githubRequestId: string | null
 			bodyText: string
-	  }
+		}
 > {
 	const response = await fetch(
 		`https://api.github.com/app/installations/${installationId}/access_tokens`,
@@ -184,13 +184,13 @@ async function discoverInstallationIdForRepository(
 			ok: true
 			installationId: string
 			githubRequestId: string | null
-	  }
+		}
 	| {
 			ok: false
 			statusCode: number
 			githubRequestId: string | null
 			bodyText: string
-	  }
+		}
 > {
 	const response = await fetch(
 		`https://api.github.com/repos/${repoOwner}/${repoName}/installation`,

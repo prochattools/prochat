@@ -129,7 +129,7 @@ const WaitlistConfirmationEmail: React.FC<Readonly<WaitlistConfirmationEmailProp
   return (
     <Html>
       <Head />
-      <Preview>You're on the ProChat waitlist</Preview>
+      <Preview>You&apos;re on the ProChat waitlist</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.shell}>

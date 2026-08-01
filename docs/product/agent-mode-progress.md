@@ -72,3 +72,114 @@ The next recommended packet is CI and release-gate hardening: explicit lint and 
 - Exact six-file diff review: passed.
 - Generated artifacts: none.
 - Commit scope: explicit paths only; no push in this packet.
+
+
+
+## PXF-016B CI and release-gate hardening
+
+**Started:** 2026-08-01  
+**Completed:** 2026-08-01  
+**Status:** complete — committed, not pushed
+
+### Discovery
+
+At packet start, required workflow gates were: database provisioning, Prisma generation and migration, design-system governance, production build, documentation integrity, deployment-change classification, image build/push, and Dokploy trigger acceptance.
+
+Gates not enforced in CI before this packet:
+
+- TypeScript `--noEmit` validation;
+- repository ESLint configuration;
+- committed docs-mobile Playwright evidence;
+- representative canonical-route smoke checks;
+- post-deployment `/api/health`, `/api/version`, expected-revision, and `/docs` attestation.
+
+ESLint baseline at packet start: 12 errors, 7 warnings. All 12 errors were resolved by narrow source repairs (entity escaping, one reserved variable rename, indentation alignment). 7 warnings remain as visible non-fatal output; all are `import/no-anonymous-default-export` in `postcss.config.js` and Nextra `_meta.js` config files that cannot be named exports.
+
+### Changes made
+
+**`package.json`** — three new scripts:
+- `"typecheck": "tsc --noEmit"` — TypeScript validation gate
+- `"lint": "eslint ."` — ESLint gate
+- `"test:evidence:ci"` — combined browser evidence gate running docs-mobile and canonical-route-smoke specs
+
+**`tests/evidence/canonical-route-smoke.spec.ts`** — new Playwright spec covering `/`, `/memory`, `/workbench`, `/docs` at desktop (1440px) and mobile (390px); verifies HTTP < 400, visible `main`, and no horizontal document overflow.
+
+**`tests/evidence/playwright.wave1.config.ts`** — CI-aware updates: `retries: isCI ? 1 : 0`, line reporter in CI vs HTML locally, `trace: retain-on-failure` in CI.
+
+**`.gitignore`** — adds `/tests/evidence/playwright-report/`.
+
+**Source ESLint repairs (six files, behavior-preserving):**
+- `src/app/(marketing)/privacy/page.tsx` — two apostrophe entity escapes
+- `src/app/(marketing)/terms/page.tsx` — two apostrophe entity escapes
+- `src/app/waiting-list/WaitlistPageMarkup.tsx` — one apostrophe entity escape
+- `src/components/email-templates/WaitlistConfirmationEmail.tsx` — one apostrophe entity escape
+- `src/components/login-payment.tsx` — one apostrophe entity escape
+- `src/components/content/MDXRenderer.tsx` — reserved variable `module` renamed to `evaluatedModule`
+- `src/lib/store/github.ts` — indentation alignment (mixed spaces→tabs)
+
+**`.github/workflows/main.yml`** — extended with:
+
+New required steps in `ci` job (after migrations, before existing design lint):
+- `Typecheck` — `npm run typecheck`
+- `Lint` — `npm run lint`
+
+Existing step renamed from `Lint design-system governance` (unchanged).
+
+New steps in `ci` job after build:
+- `Install Playwright browser` — `npx playwright install chromium --with-deps`
+- `Start production server` — `sh scripts/start-production.sh &` with all required env vars; captures PID to step output
+- `Wait for server readiness` — 30 × 2s poll of `http://localhost:3000/`; accepts 200/301/302/307; prints attempt/status; fails with log tail on timeout
+- `Run browser evidence` — `npm run test:evidence:ci` with `WAVE1_BASE_URL=http://localhost:3000` and `CI=true`
+- `Stop production server` — `if: always()`, kills captured PID
+- `Upload browser failure artifacts` — `if: failure()`, uploads `tests/evidence/test-results/`, `retention-days: 7`
+
+New steps in `build-and-deploy` job:
+- `Verify production deployment` — polls `https://prochat.tools/api/health`, `https://prochat.tools/api/version`, `https://prochat.tools/docs`; requires HTTP 200 on health and docs, and revision field equal to `github.sha`; bounded to 20 × 15s = 300s; prints only safe operational fields
+
+Workflow permission model:
+- Global: `permissions: contents: read`
+- `ci` job: inherits global (no secrets, no package write)
+- `docs-integrity` job: inherits global
+- `detect-deployment-changes` job: inherits global
+- `build-and-deploy` job: overrides to `contents: read, packages: write` (scoped to image push)
+- GHCR login and Dokploy secrets used only in `build-and-deploy`; never in `ci` or `docs` jobs
+
+### CI boundaries not reproducible locally
+
+The browser evidence suite (`npm run test:evidence:ci`) targets a locally started production build and requires a live provisioned database. On a developer machine without a local PostgreSQL instance, the server starts but redirects all routes to `/maintenance`. The browser gate must be verified in CI where the full database stack is provisioned. YAML syntax, control flow, step logic, permission model, and all static quality gates are fully verified locally.
+
+### Security-gate classification
+
+Implemented:
+- Least-privilege workflow permissions (global `contents: read`, `packages: write` scoped to deploy job)
+- Safe secret handling (secrets referenced only in `build-and-deploy`, never printed)
+- Bounded post-deployment attestation (300s max, revision equality required)
+- Existing changed-path security scan preserved
+
+Deferred with reasons:
+- Dependency vulnerability enforcement: deferred until current dependency baseline is reviewed and an acceptable severity policy is defined
+- CodeQL: deferred to a dedicated repository security packet or organization-level setup
+- Secret scanning: deferred to repository or organization security policy
+- Container image scanning and SBOM/provenance: deferred to a supply-chain hardening packet
+- No broad `continue-on-error` security steps added
+
+### Validation results
+
+- TypeScript: clean (0 errors)
+- ESLint: 0 errors, 7 warnings (all `import/no-anonymous-default-export` in config files; non-fatal)
+- Design governance: passed 5 rules with 39 explicit debt exemptions (unchanged from PXF-010 baseline)
+- Production build: pass
+- Docs validation: pass
+- YAML syntax: valid (python3 yaml.safe_load)
+- Browser evidence: CI-only boundary; local run blocked by absent database (documented above)
+
+### Remaining Phase 12 work
+
+Phase 12 accessibility and performance proof is outside PXF-016B scope:
+
+- Automated WCAG AA contrast verification in CI (Axe/WAVE integration)
+- Lighthouse performance budget enforcement in CI
+- Reduced-motion coverage audit beyond docs-mobile focus-traversal evidence
+- Font CLS metrics baseline
+
+Recommended next packet: PXF-016C or Phase 12 — add Axe-core integration to the Playwright browser evidence suite to enforce WCAG AA programmatically in CI, without broadening the scope of this hardening work.

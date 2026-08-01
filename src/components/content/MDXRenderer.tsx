@@ -44,13 +44,13 @@ type EvaluatedMdxModule = {
 }
 
 async function getMdxComponent(source: string, title?: string) {
-  const module = (await evaluate(normalizeMdxSource(source, title), {
+  const evaluatedModule = (await evaluate(normalizeMdxSource(source, title), {
     ...(isDevelopment ? { ...runtime, ...devRuntime } : runtime),
     development: isDevelopment,
     useMDXComponents: () => contentMdxComponents,
   })) as EvaluatedMdxModule
 
-  return module.default
+  return evaluatedModule.default
 }
 
 export async function renderMdxContent(source: string, title?: string) {

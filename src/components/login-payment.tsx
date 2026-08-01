@@ -171,7 +171,7 @@ const LoginPayment = ({ user }: any) => {
                           </div>
                           <div>
                             <p className="text-black1 dark:text-white text-[20px] leading-[20px] font-medium text-center sm:whitespace-nowrap mb-1">
-                              It's your username “
+                              It&apos;s your username “
                               <span className="text-bold">{username}</span>”
                             </p>
                             <p className="text-base font-medium text-muted-foreground text-center">

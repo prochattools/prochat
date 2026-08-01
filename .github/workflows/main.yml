@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -65,11 +68,81 @@ jobs:
       - name: Run migrations
         run: npm run db:migrate:dev
 
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
       - name: Lint design-system governance
         run: npm run lint:design
 
       - name: Build
         run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Install Playwright browser
+        run: npx playwright install chromium --with-deps
+
+      - name: Start production server
+        id: server
+        run: |
+          sh scripts/start-production.sh &
+          echo "app_pid=$!" >> "$GITHUB_OUTPUT"
+        env:
+          NODE_ENV: production
+          HOSTNAME: 0.0.0.0
+          PORT: 3000
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+          SYSTEM_DATABASE_URL: ${{ env.SYSTEM_DATABASE_URL }}
+          SHADOW_DATABASE_URL: ${{ env.SHADOW_DATABASE_URL }}
+          APP_SLUG: ${{ env.APP_SLUG }}
+          TENANT_DB_PASSWORD: ${{ env.TENANT_DB_PASSWORD }}
+          STRIPE_MODE: test
+          NEXT_PUBLIC_STRIPE_MODE: test
+          STRIPE_SECRET_KEY_TEST: sk_test_ci_dummy
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST: pk_test_ci_dummy
+          STRIPE_WEBHOOK_SECRET_TEST: whsec_ci_dummy
+          RESEND_API_KEY: dummy-ci-key
+
+      - name: Wait for server readiness
+        run: |
+          MAX_ATTEMPTS=30
+          INTERVAL=2
+          for i in $(seq 1 $MAX_ATTEMPTS); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/ || echo "000")
+            echo "Attempt $i/$MAX_ATTEMPTS — HTTP $STATUS"
+            if [ "$STATUS" = "200" ] || [ "$STATUS" = "301" ] || [ "$STATUS" = "302" ] || [ "$STATUS" = "307" ]; then
+              echo "Server is ready."
+              exit 0
+            fi
+            sleep $INTERVAL
+          done
+          echo "Server did not become ready after $((MAX_ATTEMPTS * INTERVAL))s."
+          echo "--- server log tail ---"
+          journalctl --no-pager -n 40 2>/dev/null || true
+          exit 1
+
+      - name: Run browser evidence
+        env:
+          WAVE1_BASE_URL: http://localhost:3000
+          CI: 'true'
+        run: npm run test:evidence:ci
+
+      - name: Stop production server
+        if: always()
+        run: kill "${{ steps.server.outputs.app_pid }}" 2>/dev/null || true
+
+      - name: Upload browser failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failure-evidence
+          path: |
+            tests/evidence/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
 
   docs-integrity:
     runs-on: ubuntu-latest
@@ -180,6 +253,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Trigger Dokploy redeploy
+        id: dokploy
         run: |
           DOKPLOY_URL="${{ secrets.DOKPLOY_URL || 'https://dokploy.prochat.tools' }}"
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
@@ -196,3 +270,34 @@ jobs:
           fi
 
           echo "Deployment triggered successfully."
+
+      - name: Verify production deployment
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+        run: |
+          MAX_ATTEMPTS=20
+          INTERVAL=15
+          echo "Polling production for revision=$EXPECTED_SHA (max ${MAX_ATTEMPTS} attempts, ${INTERVAL}s interval)"
+
+          for i in $(seq 1 $MAX_ATTEMPTS); do
+            HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://prochat.tools/api/health || echo "000")
+            VERSION_BODY=$(curl -s https://prochat.tools/api/version 2>/dev/null || echo "{}")
+            OBSERVED_SHA=$(echo "$VERSION_BODY" | grep -o '"revision":"[^"]*"' | cut -d'"' -f4 || echo "")
+            DOCS_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://prochat.tools/docs || echo "000")
+
+            echo "Attempt $i/$MAX_ATTEMPTS — health=$HEALTH_STATUS docs=$DOCS_STATUS revision=$OBSERVED_SHA expected=$EXPECTED_SHA"
+
+            if [ "$HEALTH_STATUS" = "200" ] && [ "$DOCS_STATUS" = "200" ] && [ "$OBSERVED_SHA" = "$EXPECTED_SHA" ]; then
+              echo "Production verified: health OK, docs OK, revision matches."
+              exit 0
+            fi
+
+            sleep $INTERVAL
+          done
+
+          echo "Production verification failed after $((MAX_ATTEMPTS * INTERVAL))s."
+          echo "Expected revision: $EXPECTED_SHA"
+          echo "Last observed revision: $OBSERVED_SHA"
+          echo "Last health status: $HEALTH_STATUS"
+          echo "Last docs status: $DOCS_STATUS"
+          exit 1

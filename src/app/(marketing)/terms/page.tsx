@@ -64,7 +64,7 @@ export default function TermsPage() {
 							application, provide accurate information that you are authorized to
 							share. Do not submit secrets, credentials, confidential client data,
 							private repository contents, unlawful content, or material that
-							violates another person's rights.
+							violates another person&apos;s rights.
 						</p>
 						<p className="mt-4">
 							Submitting an enquiry does not create a customer relationship,
@@ -167,7 +167,7 @@ export default function TermsPage() {
 						</h2>
 						<p>You must not use the website or ProChat products to:</p>
 						<ul className={listClass}>
-							<li>Break applicable law or another person's rights</li>
+							<li>Break applicable law or another person&apos;s rights</li>
 							<li>Probe, disrupt, overload, or bypass service security</li>
 							<li>Submit malware, abusive automation, spam, or deceptive content</li>
 							<li>Process data you are not authorized to use</li>

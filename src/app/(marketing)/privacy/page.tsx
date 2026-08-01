@@ -155,7 +155,7 @@ export default function PrivacyPage() {
 						</p>
 						<p className="mt-4">
 							Delivery metadata and message processing performed by Resend are
-							retained according to Resend's operational policies and the relevant
+							retained according to Resend&apos;s operational policies and the relevant
 							account configuration.
 						</p>
 						<p className="mt-4">
@@ -172,7 +172,7 @@ export default function PrivacyPage() {
 							6. PROCESSING LOCATIONS
 						</h2>
 						<p>
-							ProChat's production hosting, deployment, database infrastructure,
+							ProChat&apos;s production hosting, deployment, database infrastructure,
 							and Umami analytics are configured in Europe. External providers
 							such as Resend and GitHub process data under their own terms and
 							privacy notices. Where applicable, we rely on the safeguards made

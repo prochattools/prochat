@@ -1,5 +1,7 @@
 import { defineConfig } from '@playwright/test'
 
+const isCI = process.env.CI === 'true'
+
 export default defineConfig({
   testDir: '.',
   outputDir: './test-results',
@@ -7,10 +9,12 @@ export default defineConfig({
   expect: {
     timeout: 10_000,
   },
-  retries: 0,
+  retries: isCI ? 1 : 0,
   workers: 1,
   fullyParallel: false,
-  reporter: [['html', { outputFolder: './playwright-report', open: 'never' }]],
+  reporter: isCI
+    ? [['line']]
+    : [['html', { outputFolder: './playwright-report', open: 'never' }]],
   use: {
     browserName: 'chromium',
     locale: 'en-US',
@@ -20,7 +24,7 @@ export default defineConfig({
       reducedMotion: 'reduce',
     },
     screenshot: 'only-on-failure',
-    trace: 'on-first-retry',
+    trace: isCI ? 'retain-on-failure' : 'on-first-retry',
     video: 'off',
     actionTimeout: 10_000,
     navigationTimeout: 30_000,
