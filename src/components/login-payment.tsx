@@ -23,7 +23,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { validateGithubUsername } from "@/utils/validate_github";
-import ProfileImage from "@/assets/images/profile.svg";
 import Image from "next/image";
 import { ACTION_LABEL_CLASS_NAME, renderActionLabel } from "@/helpers/action-label";
 
@@ -302,11 +301,6 @@ const LoginPayment = ({ user }: any) => {
               </a>
             </div>
             <div className="my-8 flex gap-4">
-              <Image
-                src={ProfileImage}
-                alt="ProChat"
-                className="w-[77px] h-[77px] rounded-full"
-              />
               <div className="min-h-full flex flex-col justify-between gap-4">
                 <p className="text-lg text-black1 dark:text-white font-medium">
                   Please! Please! Please!

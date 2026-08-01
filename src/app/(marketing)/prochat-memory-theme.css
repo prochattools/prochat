@@ -743,7 +743,7 @@
 }
 
 .pm-trust-principle__index {
-  color: var(--pm-text-faint);
+  color: var(--pm-text-muted);
   font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-size: 0.56rem;
   letter-spacing: 0.06em;

@@ -24,11 +24,12 @@
     "db:migrate:prod": "prisma migrate deploy --schema=prisma/system.prisma",
     "predev": "node scripts/dev/bootstrap-env.js && npm run db:init && npm run db:migrate:dev",
     "db:provision:local": "NODE_ENV=development npm run provision:auto",
+    "validate:assets": "node scripts/validate-static-asset-imports.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
     "lint:design": "node scripts/design/lint-design-system.mjs",
     "test:evidence:docs-mobile": "WAVE1_BASE_URL=${WAVE1_BASE_URL:?WAVE1_BASE_URL is required} npx playwright test tests/evidence/docs-mobile-layout.spec.ts --config=tests/evidence/playwright.wave1.config.ts --project=wave1-chromium",
-    "test:evidence:ci": "WAVE1_BASE_URL=${WAVE1_BASE_URL:?WAVE1_BASE_URL is required} npx playwright test tests/evidence/docs-mobile-layout.spec.ts tests/evidence/canonical-route-smoke.spec.ts --config=tests/evidence/playwright.wave1.config.ts --project=wave1-chromium",
+    "test:evidence:ci": "WAVE1_BASE_URL=${WAVE1_BASE_URL:?WAVE1_BASE_URL is required} npx playwright test tests/evidence/docs-mobile-layout.spec.ts tests/evidence/canonical-route-smoke.spec.ts tests/evidence/canonical-accessibility.spec.ts --config=tests/evidence/playwright.wave1.config.ts --project=wave1-chromium",
     "lint:design:baseline": "node scripts/design/lint-design-system.mjs --write-baseline",
     "docs:generate": "tsx scripts/docs/generate-docs.ts",
     "docs:clean": "node -e \"const {rm} = require('fs/promises'); const targets = ['src/content/docs/prokit','src/content/docs/saaskit','src/content/docs/waaskit','src/content/docs/future']; Promise.all(targets.map(t => rm(t, { recursive: true, force: true }))).catch(() => {});\"",
@@ -97,6 +98,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@next/bundle-analyzer": "^16.1.6",
     "@playwright/test": "1.55.0",
     "@types/jest": "^29.5.12",

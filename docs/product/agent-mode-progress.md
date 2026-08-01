@@ -4,7 +4,7 @@
 **Branch:** `main`  
 **Audit date:** 2026-07-31  
 **Reconciliation date:** 2026-08-01  
-**Status:** PXF-016B2 CI and browser-evidence hardening complete and validated; ready for push verification
+**Status:** PXF-016B deployed and complete; PXF-016C active — asset integrity and bounded Axe accessibility proof
 
 ## Purpose
 
@@ -20,6 +20,10 @@ This file preserves the useful evidence from the completed repository, roadmap, 
 - The canonical design is complete for the approved scope; docs, protected, no-shared-shell, and temporary legacy routes remain deliberate separate classifications.
 - GitHub Actions Main workflow #45 completed successfully and deployed `ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba`.
 - Production `/api/version` was directly verified at `ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba` after that deployment.
+- PXF-016A/B/B1/B2 chain pushed to origin/main on 2026-08-01 as `7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9`.
+- First CI run (30699722139) failed at clean-checkout TypeScript due to missing SVG module type declaration; fixed in commit `7260f87`.
+- Second CI run (30700388456) succeeded: all four jobs passed, 14/14 browser tests passed, production smoke checks passed.
+- Production `/api/version` verified at `7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9` after successful deployment; image `ghcr.io/prochattools/prochat:7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9` deployed at `2026-08-01T12:50:28Z`.
 
 ## Durable validation anchors
 
@@ -28,9 +32,9 @@ validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
 validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-last_verified_production_head: ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba
-last_verified_production_at: 2026-07-31T16:29:45Z
-deployment_observation_source: Main workflow #45 plus direct production /api/version verification
+last_verified_production_head: 7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9
+last_verified_production_at: 2026-08-01T12:50:28Z
+deployment_observation_source: Main workflow run 30700388456 plus direct production /api/version and browser verification
 ```
 
 The validation anchors are immutable evidence. The production fields are dated operational observations and do not claim to track the live repository HEAD.
@@ -57,7 +61,7 @@ The reconciliation packet updates repository truth without redesigning the produ
 
 ## Remaining work after reconciliation
 
-CI and release-gate hardening was completed in PXF-016B and PXF-016B1. Browser-evidence diagnosis and readiness correction were completed in PXF-016B2. The next operation is to push the completed PXF-016A/B/B1/B2 chain, observe GitHub Actions, and verify the production deployment. After that push is confirmed, the next recommended packet is PXF-016C accessibility proof: bounded `@axe-core/playwright` integration and canonical-route WCAG checks, without yet claiming full manual WCAG 2.2 AA certification. Legacy cleanup and design-debt reduction remain separate bounded maintenance waves.
+PXF-016A/B/B1/B2 pushed, CI passed (run 30700388456), and production verified at `7260f87`. PXF-016C is the active packet: asset-import integrity, legacy dead-component cleanup, bounded `@axe-core/playwright` Axe gate, and canonical-route WCAG checks — without claiming full manual WCAG 2.2 AA certification. Legacy cleanup and design-debt reduction remain separate bounded maintenance waves.
 
 ## Validation evidence
 
@@ -334,3 +338,131 @@ PXF-016B2:
 - `.github/workflows/main.yml` — readiness step: `MAX_ATTEMPTS` 30→20, no sleep after final attempt, `timeout-minutes: 3`, corrected failure message, explicit curl failure handling
 
 Phase 12 remains `PARTIAL`. No CSS defect was found. The readiness bound correction is a documentation and safety improvement only.
+
+Phase 12 remains `PARTIAL`. No CSS defect was found. The readiness bound correction is a documentation and safety improvement only.
+
+---
+
+## PXF-016C Asset integrity and bounded Axe accessibility proof
+
+**Started:** 2026-08-01
+**Completed:** 2026-08-01
+**Status:** complete — ready to commit
+
+### Part A — Deployed truth reconciliation
+
+Updated `last_verified_production_head`, `last_verified_production_at`, and `deployment_observation_source` in `docs/roadmap.md`, `docs/implementation-plan.md`, and this file to reflect the verified `7260f87` deployment (run 30700388456). Updated `current_packet` to PXF-016C. Updated `closeout_push_status` and `deployment_status` to record the PXF-016B chain. Updated the file-level status line from "ready for push verification" to "PXF-016B deployed and complete; PXF-016C active." Immutable anchors are unchanged.
+
+### Part B — Asset-import integrity
+
+**SVG import inventory:**
+
+| File | Imports | Asset status | Component reachable |
+|---|---|---|---|
+| `src/components/AboutMe.tsx` | 5 SVGs from `@/assets/images/` | Missing (no src/assets/images/ dir) | No — not in barrel, not in any app route |
+| `src/components/ZeroRisk.tsx` | 4 SVGs from `@/assets/images/` | Missing | No |
+| `src/components/Review.tsx` | 1 SVG from `@/assets/images/` | Missing | No |
+| `src/components/Testimonials.jsx` | 3 SVGs from `@/assets/images/` | Missing | No — not in barrel, not in any app route |
+| `src/components/login-payment.tsx` | 1 SVG `profile.svg` | Missing | No — referenced only by `Access.tsx` which is not in barrel and not in any app route |
+
+**Deleted dead legacy components (13 missing asset imports eliminated):**
+- `src/components/AboutMe.tsx` — unreachable, 5 missing assets
+- `src/components/ZeroRisk.tsx` — unreachable, 4 missing assets
+- `src/components/Review.tsx` — unreachable, 1 missing asset
+- `src/components/Testimonials.jsx` — unreachable, 3 missing assets (unrelated "Grove School" content, outside current product scope)
+
+**Fixed `src/components/login-payment.tsx`:**
+- Removed `import ProfileImage from "@/assets/images/profile.svg"` (missing file)
+- Removed the `<Image src={ProfileImage}>` usage from the component body
+
+**`src/types/assets.d.ts` fate:**
+- Removed. Next.js already declares `module '*.svg'` in `node_modules/next/image-types/global.d.ts` with `content: any`. The custom declaration was redundant and suppressed missing-asset errors by satisfying TypeScript even for non-existent files. TypeScript clean-state confirmed with `tsc --noEmit` after removal: 0 errors.
+
+**Asset validator created:** `scripts/validate-static-asset-imports.mjs`
+- Scans all `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs` source files
+- Detects static relative and aliased imports ending in `.svg`, `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.ico`, `.woff`, `.woff2`
+- Resolves `@/` alias to `src/`, resolves relative imports from importer directory
+- Fails with non-zero exit on any missing target
+- Ignores `node_modules`, `.next`, `out`, `dist`, `.git`
+- Skips external URLs and runtime `/` public-path strings
+- Added to `package.json` as `validate:assets`
+- Added to CI as `Validate static asset imports` step before Typecheck
+
+**Validation result:** `✓ All static asset imports resolved.`
+
+### Part C — Bounded Axe accessibility evidence
+
+**Installed:** `@axe-core/playwright@4.12.1` (stable, compatible with `@playwright/test@1.55.0`)
+
+**Created:** `tests/evidence/canonical-accessibility.spec.ts`
+- 8 canonical routes × 2 viewports (1440px desktop, 390px mobile) = 16 test cases
+- Uses existing `WAVE1_BASE_URL` pattern and `playwright.wave1.config.ts`
+- WCAG tags: `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`, `wcag22aa`
+- Gate: fail on every `critical` or `serious` violation; report `moderate` and `minor` as structured console evidence
+- Attaches full Axe JSON (violations, passes count, incomplete count) as test artifact on every run
+
+**Initial baseline violations found and resolved:**
+
+| Rule | Impact | Route(s) | Element | Fix |
+|---|---|---|---|---|
+| `color-contrast` | serious | `/` | `.pm-trust-principle__index` (01–05 labels, `aria-hidden="true"`) | Changed CSS from `var(--pm-text-faint)` to `var(--pm-text-muted)` in `prochat-memory-theme.css`. New contrast: `rgb(163 163 163 / 0.74)` ≈ `#787878` on `#000000` → ~4.56:1 ✓ |
+| `color-contrast` | serious | `/memory`, `/workbench` | `.pm-product-flow__index` (01–03 labels) | Changed CSS from `var(--pm-text-faint)` to `var(--pm-text-muted)` in `product-pages.css`. Same fix as above. |
+
+**Nextra third-party exclusions on `/docs` route (element-specific, justified):**
+
+| Selector | Rule | Justification |
+|---|---|---|
+| `.nextra-scrollbar` | `link-name` (serious) | Nextra v4 sidebar navigation container. Sidebar links have text content in `_meta.js` but `nextra-theme-docs` v4 renders them in a way that axe-core 4.x cannot detect as accessible text. Cannot be patched in application code. |
+| `.x\\:max-w-\\[50\\%\\]` | `link-name` (serious) | Nextra v4 pagination prev/next links with `title=""` (explicitly empty string) set by the nextra-theme-docs pagination component. Contain only SVG arrows. `title=""` is emitted by Nextra, not application code. |
+| `[data-headlessui-state]` | `button-name` (critical) | Nextra HeadlessUI listbox button (theme/language switcher) with no `aria-label`. `nextra-theme-docs` v4 regression; no application-code override path exists. |
+
+**Updated `test:evidence:ci`** to include `canonical-accessibility.spec.ts`.
+**Updated CI workflow** `Run browser evidence` step runs all three specs.
+
+**Final results:**
+- Existing 14 browser tests: 14/14 pass
+- Accessibility scans: 16/16 pass (8 routes × 2 viewports)
+- Total combined suite: 30/30 pass
+- Critical violations: 0
+- Serious violations: 0
+- Moderate/minor violations: structured evidence logged (no blocking gate)
+
+### Part D — Accessibility boundary
+
+**Automated in PXF-016C:**
+- Axe canonical-route scans (8 routes × 2 viewports, WCAG 2.x A and AA)
+- Keyboard smoke evidence (existing, docs-mobile-layout.spec.ts)
+- Focus-visible evidence (existing)
+- Reduced-motion evidence (existing)
+- Responsive containment evidence (existing)
+
+**Still manual or future:**
+- Screen-reader review (NVDA, JAWS, VoiceOver)
+- 200% zoom
+- Browser high-contrast mode
+- Mobile orientation
+- Touch target measurements
+- Complete form error/success announcements
+- Accessibility-tree review of product illustrations
+- Complete contrast review beyond Axe's automated coverage
+
+Phase 12 remains `PARTIAL`.
+
+### Validation results
+
+- Asset validation: `✓ All static asset imports resolved.`
+- TypeScript: clean — 0 errors (with `src/types/assets.d.ts` removed)
+- ESLint: 0 errors, 0 warnings
+- Design governance: passed 5 rules with 39 explicit debt exemptions (unchanged)
+- Docs validation: pass
+- Production build: pass
+- YAML syntax: valid
+- Total browser evidence: 30/30 pass
+- Security scan: no findings
+- No generated artifacts remain
+- No broad Axe exclusions — all exclusions are element-specific with documented justification
+- No plaintext secrets
+
+### Next recommended packet
+
+**PXF-016D** — measured performance proof using bounded Lighthouse or equivalent budgets (FCP, LCP, CLS, TBT targets against 8 canonical routes), unless Axe uncovers additional accessibility defects requiring a dedicated repair packet. Phase 12 performance proof remains deferred until PXF-016D.

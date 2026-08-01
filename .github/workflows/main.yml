@@ -69,6 +69,9 @@ jobs:
       - name: Run migrations
         run: npm run db:migrate:dev
 
+      - name: Validate static asset imports
+        run: npm run validate:assets
+
       - name: Typecheck
         run: npm run typecheck
 
