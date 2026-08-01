@@ -5,34 +5,45 @@
 
 ## Global hierarchy
 
+Active canonical visual routes:
+
 ```text
 /
 /memory
-/memory/qa
+/memory-qa
 /workbench
-/philosophy
-/about
+/docs
 /contact
 /privacy
 /terms
-/docs or documentation entry
-/not-found and error states
 ```
 
-Existing route names may remain temporarily for compatibility, but every active route must map to one canonical page responsibility.
+System routes such as not-found and error states remain outside the canonical visual-route count. `/docs` is canonical content with a deliberately specialized documentation shell.
+
+Future candidate responsibilities, not currently implemented routes:
+
+```text
+/philosophy
+/about
+```
+
+Existing route names may remain temporarily for compatibility, but every active route must map to one canonical page responsibility. Future candidates must not be linked as live destinations until implemented and approved.
 
 ## Shared shell
 
-Every public page uses:
+Canonical marketing, product, contact, and legal pages use the shared company shell. `/docs` uses a specialized documentation shell while preserving the same brand foundation, accessibility expectations, responsive behavior, canonical metadata, and return paths to the public platform.
 
-- company header;
-- stable product navigation;
-- one primary CTA;
+Shared public expectations are:
+
+- company identity and stable product navigation;
 - semantic main content;
-- global footer;
+- appropriate primary action for the page responsibility;
+- global or docs-appropriate footer and legal paths;
 - canonical metadata;
 - responsive and reduced-motion behavior;
 - analytics events where approved.
+
+Protected, no-shared-shell, and temporary legacy routes remain separate classifications and are not evidence of canonical-shell inconsistency.
 
 ## Page contracts
 
@@ -93,17 +104,17 @@ Primary job: explain what happened, preserve company tone, and route visitors to
 
 ## Navigation
 
-Recommended top-level items:
+Current top-level destinations:
 
 ```text
 Memory
 Memory for QA
 Workbench
-Philosophy
 Documentation
+Contact
 ```
 
-Use the footer for About, Contact, Privacy, Terms, GitHub, LinkedIn, and deeper resources.
+`Philosophy` and `About` remain future candidate responsibilities and must not appear as live destinations until their routes are implemented and approved. Use the footer for Contact, Privacy, Terms, GitHub, LinkedIn, and deeper resources that resolve to active destinations.
 
 ## Footer architecture
 

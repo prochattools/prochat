@@ -70,7 +70,7 @@ Use these docs for website implementation only:
 9. `docs/homepage-visual-storyboard.md` and `docs/homepage-example-data.md` — visual states and sanitized prototype content.
 10. `docs/homepage-technical-design.md` and `docs/homepage-design-orchestration.md` — build architecture, Brain skill methods, tooling, and GPT-5.6 Sol workflow.
 11. `docs/homepage-validation-plan.md` — visual, motion, accessibility, performance, and release gates.
-12. `docs/roadmap.md` — canonical 13-phase public-platform roadmap.
+12. `docs/roadmap.md` — canonical 15-phase public-platform roadmap and continuous-governance status.
 13. `docs/implementation-plan.md` — dependency-gated implementation tasks with validation, rollback, and commit boundaries.
 14. `docs/auth-status.md`, `docs/deployment.md`, `docs/content-platform.md`, and related implementation docs — runtime and deployment facts.
 

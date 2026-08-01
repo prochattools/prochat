@@ -3,7 +3,7 @@
 **Status:** canonical repository-local execution roadmap
 **Owner:** Steve Westhoek
 **Scope:** ProChat public platform, design system, migration, public pages, validation, launch, and maintenance
-**Last updated:** 2026-07-31
+**Last updated:** 2026-08-01
 
 ## Authority
 
@@ -34,10 +34,13 @@ This repository translates that truth into design, migration, implementation, te
 validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
-production_release_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
+validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
+last_verified_production_head: ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba
+last_verified_production_at: 2026-07-31T16:29:45Z
+deployment_observation_source: Main workflow #45 (run 30646639949) plus direct production /api/version verification
 validated_date: 2026-07-31
-documentation_sync_status: Planning documents record immutable validation anchors rather than a mutable live repository HEAD, so later documentation-only commits do not invalidate this closeout.
-current_program_state: The public platform, PXF-010 governance repair, Phase 15 release identity, docs mobile hardening, and evidence closeout are complete and locally validated. Production remains separately verified at the production release head.
+documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
+current_program_state: The public platform, PXF-010 governance repair, Phase 15 release identity, docs mobile hardening, and evidence closeout are complete. Production was last verified at the recorded production observation; formal Phase 12 WCAG and performance proof remains bounded continuous-governance work.
 current_phase: Phase 13 — continuous governance
 current_packet: no active implementation packet; quarterly governance and bounded maintenance only
 canonical_visual_routes_active: 8
@@ -60,8 +63,8 @@ browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
 development_labs: EXCLUDED_UNLINKED
-push_status: COMPLETE through 91436457e4d3aa8a5d9782ff671ce49e10d7ef07; local commits ada06665f5944fc988f4dad4a5fed47cee471d8b and 29854de09b04792c377d0bba7528297acb14c155 are NOT pushed
-deployment_status: VERIFIED — /api/version matched production release 91436457e4d3aa8a5d9782ff671ce49e10d7ef07, a verified descendant of Phase 15 implementation commit 20295c59e51872244a6e859fa1adb764436105aa; neither local closeout commit is claimed deployed
+closeout_push_status: COMPLETE — ada06665f5944fc988f4dad4a5fed47cee471d8b, 29854de09b04792c377d0bba7528297acb14c155, and ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba reached origin/main on 2026-07-31
+deployment_status: VERIFIED — production /api/version matched ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba after successful Main workflow #45; this is an operational observation, not a mutable repository-HEAD field
 ```
 
 ## Operational phase summary
@@ -81,12 +84,12 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 | Phase 9 | DONE | Production foundation | Phase 8 and approved migration rows | Nexus-derived dark tokens, Golos Text, shared marketing layout, canonical routes | fonts, tokens, shells, primitives, tests, and infrastructure | production foundation deployed | Phase 10 |
 | Phase 10 | DONE | Public pages | Phase 9 and approved page copy | all 8 canonical routes deployed: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms | canonical public pages and shell updates | all required public responsibilities implemented and production-verified | Phase 11 |
 | Phase 11 | PARTIAL | Legacy migration and removal | Phase 10 and verified replacements | legacy redirects active; legacy code and styles deferred to future cleanup wave | redirects, archives, and bounded removals | legacy redirects implemented; full style/component removal deferred to future wave | Phase 12 |
-| Phase 12 | COMPLETE | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking, docs mobile TOC overlap fix deployed | visual, accessibility, and launch acceptance verified | site is live and passing CI at HEAD 0f1a85e; WCAG audit complete, performance baseline established | Phase 13 |
+| Phase 12 | PARTIAL | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking, docs mobile TOC overlap fix deployed, and 40/40 canonical viewport audit completed | visual and launch acceptance verified; formal accessibility and performance evidence remains | site is live and passing CI; responsive, focus, reduced-motion, metadata, analytics, and docs-mobile evidence pass, while formal WCAG 2.2 AA audit and measured performance baseline remain deferred | Phase 13 |
 | Phase 13 | ONGOING | Continuous governance | launch | platform live and deployed | review and maintenance cadence | — | Phase 13 |
 | Phase 14 | COMPLETE | Design-system governance and launch hardening | Phase 12 | token architecture documentation, enforcement linting, docs migration, repository classification, accessibility hardening | canonical design authority established, token drift prevented, artifact classification complete; commit `54b6de4`, successful CI workflow `30555031503`, matching immutable/latest GHCR digest, and production route checks | governance implementation and release gates complete; Dokploy terminal identity remained unavailable | Phase 15 |
-| Phase 15 | COMPLETE | Externally verifiable release identity | Phase 14 | `/api/version`, revision response header, immutable image reference, build timestamp, OCI revision labels, CI build arguments | implementation commit `20295c5`; verified production release identity `91436457`, matching production `/api/version` response, and the later CI/runtime descendant retained the release metadata | deployed endpoint returned the full production release commit, immutable image reference, and UTC build timestamp | Phase 13 continuous governance |
+| Phase 15 | COMPLETE | Externally verifiable release identity | Phase 14 | `/api/version`, revision response header, immutable image reference, build timestamp, OCI revision labels, CI build arguments | implementation commit `20295c5`; validated production baseline `91436457` matched `/api/version`; later deployment observation `ecc0fdf` retained the release metadata contract | deployed endpoint returned the full production release commit, immutable image reference, and UTC build timestamp | Phase 13 continuous governance |
 
-The historical Product Experience Foundation program delivered the public-platform implementation at HEAD `0f1a85e`. Phase 14 (PXF-010) completed governance hardening at `54b6de4`. Phase 15 established externally verifiable release identity at `20295c5`; the verified production descendant is `91436457`, and production exposes that deployed commit and immutable image reference without requiring privileged Dokploy access.
+The historical Product Experience Foundation program delivered the public-platform implementation at HEAD `0f1a85e`. Phase 14 (PXF-010) completed governance hardening at `54b6de4`. Phase 15 established externally verifiable release identity at `20295c5`; `91436457` remains the immutable validated production baseline, while the latest dated production observation verified `ecc0fdf` through the same public release-identity contract.
 
 ## Product and company boundary
 

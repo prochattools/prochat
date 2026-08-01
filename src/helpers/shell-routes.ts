@@ -11,15 +11,18 @@ type ShellRouteDefinition = {
   shellClass: ShellRouteClass
 }
 
-export const CURRENT_CANONICAL_VISUAL_ROUTES = [] as const
-
-export const FUTURE_CANONICAL_VISUAL_ROUTES = [
+export const CURRENT_CANONICAL_VISUAL_ROUTES = [
+  '/',
   '/memory',
   '/memory-qa',
   '/workbench',
-  '/philosophy',
-  '/about',
+  '/docs',
+  '/contact',
+  '/privacy',
+  '/terms',
 ] as const
+
+export const FUTURE_CANONICAL_VISUAL_ROUTES = ['/philosophy', '/about'] as const
 
 export const SHELL_ROUTE_DEFINITIONS: readonly ShellRouteDefinition[] = [
   { routeId: 'ROUTE-001', sourcePattern: '/', runtimePattern: '/', shellClass: 'canonical_public_shell' },

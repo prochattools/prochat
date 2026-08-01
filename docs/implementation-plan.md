@@ -3,7 +3,7 @@
 **Status:** canonical executable plan  
 **Owner:** Steve Westhoek  
 **Scope:** documentation, audits, prototypes, production foundation, public pages, migration, validation, launch, and maintenance  
-**Last updated:** 2026-07-31
+**Last updated:** 2026-08-01
 
 ## Authority and reading order
 
@@ -40,10 +40,13 @@ mind/wiki/organisations/prochat/brand/website-build-contract.md
 validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
-production_release_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
+validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
+last_verified_production_head: ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba
+last_verified_production_at: 2026-07-31T16:29:45Z
+deployment_observation_source: Main workflow #45 (run 30646639949) plus direct production /api/version verification
 validated_date: 2026-07-31
-documentation_sync_status: Planning documents record immutable validation anchors rather than a mutable live repository HEAD, so later documentation-only commits do not invalidate this closeout.
-current_program_state: The Product Experience Foundation program, docs mobile hardening, and evidence closeout are complete and locally validated. Production remains separately verified at the production release head.
+documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
+current_program_state: The Product Experience Foundation program, docs mobile hardening, and evidence closeout are complete. Production was last verified at the recorded production observation; formal Phase 12 WCAG and performance proof remains bounded continuous-governance work.
 current_phase: Phase 13 — continuous governance
 current_packet: no active implementation packet; bounded maintenance only
 canonical_visual_routes_active: 8
@@ -66,8 +69,8 @@ authenticated_protected_proof: SEPARATE_FUTURE_RUNNER
 browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DECIDED_WITH_FUTURE_REPAIR
-push_status: COMPLETE through 91436457e4d3aa8a5d9782ff671ce49e10d7ef07; local commits ada06665f5944fc988f4dad4a5fed47cee471d8b and 29854de09b04792c377d0bba7528297acb14c155 are NOT pushed
-deployment_status: VERIFIED — /api/version matched production release 91436457e4d3aa8a5d9782ff671ce49e10d7ef07; neither local closeout commit is claimed deployed
+closeout_push_status: COMPLETE — ada06665f5944fc988f4dad4a5fed47cee471d8b, 29854de09b04792c377d0bba7528297acb14c155, and ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba reached origin/main on 2026-07-31
+deployment_status: VERIFIED — production /api/version matched ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba after successful Main workflow #45; this is an operational observation, not a mutable repository-HEAD field
 next_owner_gate: CONTINUOUS_GOVERNANCE
 ```
 
