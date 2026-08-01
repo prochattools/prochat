@@ -93,22 +93,22 @@ Gates not enforced in CI before this packet:
 - representative canonical-route smoke checks;
 - post-deployment `/api/health`, `/api/version`, expected-revision, and `/docs` attestation.
 
-ESLint baseline at packet start: 12 errors, 7 warnings. All 12 errors were resolved by narrow source repairs (entity escaping, one reserved variable rename, indentation alignment). 7 warnings remain as visible non-fatal output; all are `import/no-anonymous-default-export` in `postcss.config.js` and Nextra `_meta.js` config files that cannot be named exports.
+ESLint baseline at packet start: 12 errors, 7 warnings. All 12 errors were resolved by narrow source repairs (entity escaping, one reserved variable rename, indentation alignment). 7 warnings were in `postcss.config.js` and six Nextra `_meta.js` files; all were resolved in PXF-016B1 by assigning each object to a named constant before export. Final ESLint result: 0 errors, 0 warnings.
 
 ### Changes made
 
 **`package.json`** — three new scripts:
 - `"typecheck": "tsc --noEmit"` — TypeScript validation gate
-- `"lint": "eslint ."` — ESLint gate
+- `"lint": "eslint . --max-warnings=0"` — ESLint gate (zero warnings enforced)
 - `"test:evidence:ci"` — combined browser evidence gate running docs-mobile and canonical-route-smoke specs
 
-**`tests/evidence/canonical-route-smoke.spec.ts`** — new Playwright spec covering `/`, `/memory`, `/workbench`, `/docs` at desktop (1440px) and mobile (390px); verifies HTTP < 400, visible `main`, and no horizontal document overflow.
+**`tests/evidence/canonical-route-smoke.spec.ts`** — new Playwright spec covering `/`, `/memory`, `/workbench`, `/docs` at desktop (1440px) and mobile (390px); verifies HTTP < 400, final URL pathname equals expected path (rejects `/maintenance` and other blocked redirects), visible `main`, non-empty h1 (length > 5 chars), and no horizontal document overflow.
 
 **`tests/evidence/playwright.wave1.config.ts`** — CI-aware updates: `retries: isCI ? 1 : 0`, line reporter in CI vs HTML locally, `trace: retain-on-failure` in CI.
 
 **`.gitignore`** — adds `/tests/evidence/playwright-report/`.
 
-**Source ESLint repairs (six files, behavior-preserving):**
+**Source ESLint repairs (seven files, behavior-preserving):**
 - `src/app/(marketing)/privacy/page.tsx` — two apostrophe entity escapes
 - `src/app/(marketing)/terms/page.tsx` — two apostrophe entity escapes
 - `src/app/waiting-list/WaitlistPageMarkup.tsx` — one apostrophe entity escape
@@ -127,14 +127,14 @@ Existing step renamed from `Lint design-system governance` (unchanged).
 
 New steps in `ci` job after build:
 - `Install Playwright browser` — `npx playwright install chromium --with-deps`
-- `Start production server` — `sh scripts/start-production.sh &` with all required env vars; captures PID to step output
-- `Wait for server readiness` — 30 × 2s poll of `http://localhost:3000/`; accepts 200/301/302/307; prints attempt/status; fails with log tail on timeout
+- `Start production server` — `sh scripts/start-production.sh &` with all required env vars including `PROCHAT_MAINTENANCE_MODE=0`; stdout/stderr captured to `${RUNNER_TEMP}/prochat-server.log`; wrapper PID and log path captured to step outputs
+- `Wait for server readiness` — 30 × 2s poll of `http://localhost:3000/api/health` with `--connect-timeout 2 --max-time 5`; requires exactly HTTP 200; prints attempt/status; on failure, tails `${RUNNER_TEMP}/prochat-server.log` (no journalctl)
 - `Run browser evidence` — `npm run test:evidence:ci` with `WAVE1_BASE_URL=http://localhost:3000` and `CI=true`
-- `Stop production server` — `if: always()`, kills captured PID
-- `Upload browser failure artifacts` — `if: failure()`, uploads `tests/evidence/test-results/`, `retention-days: 7`
+- `Stop production server` — `if: always()`; `pkill -TERM -P $WRAPPER_PID` to terminate child processes first, then `kill -TERM $WRAPPER_PID`; `sleep 3`; escalates to `SIGKILL` if still running; does not kill all Node processes
+- `Upload browser failure artifacts` — `if: failure()`, uploads `tests/evidence/test-results/` and `${steps.server.outputs.server_log}`, `retention-days: 7`
 
 New steps in `build-and-deploy` job:
-- `Verify production deployment` — polls `https://prochat.tools/api/health`, `https://prochat.tools/api/version`, `https://prochat.tools/docs`; requires HTTP 200 on health and docs, and revision field equal to `github.sha`; bounded to 20 × 15s = 300s; prints only safe operational fields
+- `Verify production deployment` — `timeout-minutes: 6` hard outer limit; polls `https://prochat.tools/api/health`, `https://prochat.tools/api/version`, `https://prochat.tools/docs` with `--connect-timeout 2 --max-time 5` on each request; captures `/api/version` HTTP status separately from body; requires health=200, version=200, docs=200, and revision field equal to `github.sha`; bounded to 12 × 10s interval; truthful maximum: (12-1)×10 + 12×3×5 = 110+180 = 290s; no sleep after final attempt; prints only safe operational fields (attempt, statuses, observed/expected revision)
 
 Workflow permission model:
 - Global: `permissions: contents: read`
@@ -144,9 +144,17 @@ Workflow permission model:
 - `build-and-deploy` job: overrides to `contents: read, packages: write` (scoped to image push)
 - GHCR login and Dokploy secrets used only in `build-and-deploy`; never in `ci` or `docs` jobs
 
-### CI boundaries not reproducible locally
+### CI boundaries and local browser evidence
 
-The browser evidence suite (`npm run test:evidence:ci`) targets a locally started production build and requires a live provisioned database. On a developer machine without a local PostgreSQL instance, the server starts but redirects all routes to `/maintenance`. The browser gate must be verified in CI where the full database stack is provisioned. YAML syntax, control flow, step logic, permission model, and all static quality gates are fully verified locally.
+The browser evidence suite (`npm run test:evidence:ci`) targets a locally started production build and requires both a live provisioned database and `PROCHAT_MAINTENANCE_MODE=0` (the middleware defaults maintenance mode to `1`). PXF-016B1 verified the full browser suite locally using a disposable Docker PostgreSQL 16 container (`postgres:16` on port 5433) with the same CI tenant provisioning and migration commands.
+
+Results:
+- All 8 canonical route smoke tests passed: `/`, `/memory`, `/workbench`, `/docs` at desktop and mobile. Each test confirmed: HTTP < 400, final pathname matches expected path (not `/maintenance`), visible `main`, and non-empty h1.
+- Docs layout tests at 1440px, 1024px, 768px: passed.
+- Focus traversal and reduced-motion test: passed.
+- Docs layout at 390px and 320px: failed with `tocVisible=true` (expected `false`).
+
+The 390px/320px failures are real: the `.nextra-toc` element has a Nextra utility class `x:max-xl:hidden` that should hide it, but `getComputedStyle` returns `display: block` despite the `.docs-shell .nextra-toc { display: none !important }` media query being present in the compiled CSS. This is a genuine docs mobile layout regression where the CSS specificity/ordering is not applying the hide rule in the standalone build. The gate is correctly surfacing a real defect. This is not a PXF-016B1 scope item; it is an outstanding Phase 12 issue.
 
 ### Security-gate classification
 
@@ -165,13 +173,24 @@ Deferred with reasons:
 
 ### Validation results
 
+PXF-016B as committed:
 - TypeScript: clean (0 errors)
-- ESLint: 0 errors, 7 warnings (all `import/no-anonymous-default-export` in config files; non-fatal)
+- ESLint: 0 errors, 7 warnings (all `import/no-anonymous-default-export`; non-fatal at time of commit)
 - Design governance: passed 5 rules with 39 explicit debt exemptions (unchanged from PXF-010 baseline)
 - Production build: pass
 - Docs validation: pass
 - YAML syntax: valid (python3 yaml.safe_load)
-- Browser evidence: CI-only boundary; local run blocked by absent database (documented above)
+- Browser evidence: CI-only boundary at time of commit (documented as limitation)
+
+PXF-016B1 corrected results (after pre-push correctness pass):
+- TypeScript: clean (0 errors)
+- ESLint: 0 errors, **0 warnings** (`--max-warnings=0` enforced; all 7 anonymous-export warnings resolved)
+- Design governance: passed 5 rules with 39 explicit debt exemptions (unchanged)
+- Production build: pass
+- Docs validation: pass
+- YAML syntax: valid (python3 yaml.safe_load)
+- Browser evidence (local with Docker PostgreSQL 16): 12/14 pass; 2 failures are real docs mobile TOC visibility regression (390px, 320px) that is a Phase 12 open item
+- Workflow YAML static analysis: all security, permission, and timeout properties verified (see Changes section)
 
 ### Remaining Phase 12 work
 
@@ -182,4 +201,7 @@ Phase 12 accessibility and performance proof is outside PXF-016B scope:
 - Reduced-motion coverage audit beyond docs-mobile focus-traversal evidence
 - Font CLS metrics baseline
 
-Recommended next packet: PXF-016C or Phase 12 — add Axe-core integration to the Playwright browser evidence suite to enforce WCAG AA programmatically in CI, without broadening the scope of this hardening work.
+Outstanding Phase 12 open items surfaced by browser evidence:
+- Docs mobile TOC visibility at 390px/320px: `.nextra-toc { display: none !important }` CSS rule is present in the compiled bundle but not applied by `getComputedStyle` in the standalone build. Root cause is Nextra utility class specificity (`x:max-xl:hidden`) overriding the `.docs-shell` scoped media query. Needs CSS load-order investigation or specificity increase.
+
+Recommended next packet: fix the docs mobile TOC CSS regression (Phase 12 open item), then push the full PXF-016A + PXF-016B + PXF-016B1 commit range. After push, verify CI passes (the docs-mobile 390/320 tests will fail until the CSS regression is fixed).

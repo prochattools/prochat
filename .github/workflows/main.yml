@@ -45,6 +45,7 @@ jobs:
       STRIPE_PRICE_SAASKIT_TEST: price_ci_saaskit
       STRIPE_PRODUCT_SAASKIT_TEST: prod_ci_saaskit
       RESEND_API_KEY: dummy-ci-key
+      PROCHAT_MAINTENANCE_MODE: '0'
 
     steps:
       - name: Checkout
@@ -88,8 +89,11 @@ jobs:
       - name: Start production server
         id: server
         run: |
-          sh scripts/start-production.sh &
-          echo "app_pid=$!" >> "$GITHUB_OUTPUT"
+          SERVER_LOG="${RUNNER_TEMP}/prochat-server.log"
+          sh scripts/start-production.sh >"$SERVER_LOG" 2>&1 &
+          WRAPPER_PID=$!
+          echo "wrapper_pid=$WRAPPER_PID" >> "$GITHUB_OUTPUT"
+          echo "server_log=$SERVER_LOG" >> "$GITHUB_OUTPUT"
         env:
           NODE_ENV: production
           HOSTNAME: 0.0.0.0
@@ -105,15 +109,21 @@ jobs:
           NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST: pk_test_ci_dummy
           STRIPE_WEBHOOK_SECRET_TEST: whsec_ci_dummy
           RESEND_API_KEY: dummy-ci-key
+          PROCHAT_MAINTENANCE_MODE: '0'
 
       - name: Wait for server readiness
         run: |
           MAX_ATTEMPTS=30
           INTERVAL=2
+          CONNECT_TIMEOUT=2
+          REQUEST_TIMEOUT=5
           for i in $(seq 1 $MAX_ATTEMPTS); do
-            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/ || echo "000")
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              --connect-timeout "$CONNECT_TIMEOUT" \
+              --max-time "$REQUEST_TIMEOUT" \
+              http://localhost:3000/api/health || echo "000")
             echo "Attempt $i/$MAX_ATTEMPTS — HTTP $STATUS"
-            if [ "$STATUS" = "200" ] || [ "$STATUS" = "301" ] || [ "$STATUS" = "302" ] || [ "$STATUS" = "307" ]; then
+            if [ "$STATUS" = "200" ]; then
               echo "Server is ready."
               exit 0
             fi
@@ -121,7 +131,7 @@ jobs:
           done
           echo "Server did not become ready after $((MAX_ATTEMPTS * INTERVAL))s."
           echo "--- server log tail ---"
-          journalctl --no-pager -n 40 2>/dev/null || true
+          tail -n 50 "${{ steps.server.outputs.server_log }}" 2>/dev/null || true
           exit 1
 
       - name: Run browser evidence
@@ -132,7 +142,18 @@ jobs:
 
       - name: Stop production server
         if: always()
-        run: kill "${{ steps.server.outputs.app_pid }}" 2>/dev/null || true
+        run: |
+          WRAPPER_PID="${{ steps.server.outputs.wrapper_pid }}"
+          if [ -n "$WRAPPER_PID" ] && kill -0 "$WRAPPER_PID" 2>/dev/null; then
+            # Terminate direct children of the wrapper shell first.
+            pkill -TERM -P "$WRAPPER_PID" 2>/dev/null || true
+            kill -TERM "$WRAPPER_PID" 2>/dev/null || true
+            sleep 3
+            # Escalate to SIGKILL if still running.
+            pkill -KILL -P "$WRAPPER_PID" 2>/dev/null || true
+            kill -KILL "$WRAPPER_PID" 2>/dev/null || true
+          fi
+          true
 
       - name: Upload browser failure artifacts
         if: failure()
@@ -141,6 +162,7 @@ jobs:
           name: playwright-failure-evidence
           path: |
             tests/evidence/test-results/
+            ${{ steps.server.outputs.server_log }}
           if-no-files-found: ignore
           retention-days: 7
 
@@ -257,6 +279,8 @@ jobs:
         run: |
           DOKPLOY_URL="${{ secrets.DOKPLOY_URL || 'https://dokploy.prochat.tools' }}"
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+            --connect-timeout 5 \
+            --max-time 15 \
             -X POST "$DOKPLOY_URL/api/application.deploy" \
             -H "x-api-key: ${{ secrets.DOKPLOY_API_KEY }}" \
             -H "Content-Type: application/json" \
@@ -272,32 +296,52 @@ jobs:
           echo "Deployment triggered successfully."
 
       - name: Verify production deployment
+        timeout-minutes: 6
         env:
           EXPECTED_SHA: ${{ github.sha }}
         run: |
-          MAX_ATTEMPTS=20
-          INTERVAL=15
+          # Bounds: 12 attempts × 10s interval + 3 requests × 5s max-time each = ~155s worst case per loop.
+          # With no sleep after the final attempt: (12-1)×10 + 12×3×5 = 110 + 180 = 290s maximum.
+          # The timeout-minutes: 6 step limit (360s) is the hard outer boundary.
+          MAX_ATTEMPTS=12
+          INTERVAL=10
+          CONNECT_TIMEOUT=2
+          REQUEST_TIMEOUT=5
           echo "Polling production for revision=$EXPECTED_SHA (max ${MAX_ATTEMPTS} attempts, ${INTERVAL}s interval)"
 
           for i in $(seq 1 $MAX_ATTEMPTS); do
-            HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://prochat.tools/api/health || echo "000")
-            VERSION_BODY=$(curl -s https://prochat.tools/api/version 2>/dev/null || echo "{}")
-            OBSERVED_SHA=$(echo "$VERSION_BODY" | grep -o '"revision":"[^"]*"' | cut -d'"' -f4 || echo "")
-            DOCS_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://prochat.tools/docs || echo "000")
+            HEALTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              --connect-timeout "$CONNECT_TIMEOUT" \
+              --max-time "$REQUEST_TIMEOUT" \
+              https://prochat.tools/api/health || echo "000")
 
-            echo "Attempt $i/$MAX_ATTEMPTS — health=$HEALTH_STATUS docs=$DOCS_STATUS revision=$OBSERVED_SHA expected=$EXPECTED_SHA"
+            VERSION_STATUS=$(curl -s -o /tmp/version_body.json -w "%{http_code}" \
+              --connect-timeout "$CONNECT_TIMEOUT" \
+              --max-time "$REQUEST_TIMEOUT" \
+              https://prochat.tools/api/version 2>/dev/null || echo "000")
+            OBSERVED_SHA=$(grep -o '"revision":"[^"]*"' /tmp/version_body.json 2>/dev/null | cut -d'"' -f4 || echo "")
 
-            if [ "$HEALTH_STATUS" = "200" ] && [ "$DOCS_STATUS" = "200" ] && [ "$OBSERVED_SHA" = "$EXPECTED_SHA" ]; then
-              echo "Production verified: health OK, docs OK, revision matches."
+            DOCS_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              --connect-timeout "$CONNECT_TIMEOUT" \
+              --max-time "$REQUEST_TIMEOUT" \
+              https://prochat.tools/docs || echo "000")
+
+            echo "Attempt $i/$MAX_ATTEMPTS — health=$HEALTH_STATUS version=$VERSION_STATUS docs=$DOCS_STATUS revision=$OBSERVED_SHA expected=$EXPECTED_SHA"
+
+            if [ "$HEALTH_STATUS" = "200" ] && [ "$VERSION_STATUS" = "200" ] && [ "$DOCS_STATUS" = "200" ] && [ "$OBSERVED_SHA" = "$EXPECTED_SHA" ]; then
+              echo "Production verified: health OK, version OK, docs OK, revision matches."
               exit 0
             fi
 
-            sleep $INTERVAL
+            if [ "$i" -lt "$MAX_ATTEMPTS" ]; then
+              sleep $INTERVAL
+            fi
           done
 
-          echo "Production verification failed after $((MAX_ATTEMPTS * INTERVAL))s."
+          echo "Production verification failed after $((MAX_ATTEMPTS * INTERVAL))s interval budget."
           echo "Expected revision: $EXPECTED_SHA"
           echo "Last observed revision: $OBSERVED_SHA"
           echo "Last health status: $HEALTH_STATUS"
+          echo "Last version status: $VERSION_STATUS"
           echo "Last docs status: $DOCS_STATUS"
           exit 1

@@ -38,7 +38,10 @@ test.describe('/docs responsive layout', () => {
           headingWidth: headingRect?.width ?? 0,
           headingHeight: headingRect?.height ?? 0,
           headingText: heading?.textContent ?? '',
-          headingLineHeight: heading ? Number.parseFloat(getComputedStyle(heading).lineHeight) : 0,
+          headingLineHeight: heading
+            ? (Number.parseFloat(getComputedStyle(heading).lineHeight) ||
+               Number.parseFloat(getComputedStyle(heading).fontSize) * 1.2)
+            : 0,
           tocVisible: !!toc && getComputedStyle(toc).display !== 'none',
           tocRight: tocRect?.right ?? 0,
           horizontallyScrollable,

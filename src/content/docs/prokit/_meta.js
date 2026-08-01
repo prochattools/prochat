@@ -1,4 +1,4 @@
-export default {
+const meta = {
   '*': {
     title: 'ProKit',
     display: 'hidden',
@@ -44,3 +44,5 @@ export default {
     order: 100,
   },
 }
+
+export default meta

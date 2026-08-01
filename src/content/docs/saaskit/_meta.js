@@ -1,4 +1,4 @@
-export default {
+const meta = {
   '*': {
     title: 'SaaSKit',
     display: 'hidden',
@@ -40,3 +40,5 @@ export default {
     order: 100,
   },
 }
+
+export default meta

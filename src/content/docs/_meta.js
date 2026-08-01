@@ -1,4 +1,4 @@
-export default {
+const meta = {
   index: {
     title: 'Overview',
   },
@@ -15,3 +15,5 @@ export default {
     title: 'WaaSKit',
   },
 }
+
+export default meta
