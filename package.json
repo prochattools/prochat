@@ -25,6 +25,7 @@
     "predev": "node scripts/dev/bootstrap-env.js && npm run db:init && npm run db:migrate:dev",
     "db:provision:local": "NODE_ENV=development npm run provision:auto",
     "validate:assets": "node scripts/validate-static-asset-imports.mjs",
+    "test:asset-validator": "node --test scripts/validate-static-asset-imports.test.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
     "lint:design": "node scripts/design/lint-design-system.mjs",

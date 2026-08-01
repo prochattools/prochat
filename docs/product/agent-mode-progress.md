@@ -4,7 +4,7 @@
 **Branch:** `main`  
 **Audit date:** 2026-07-31  
 **Reconciliation date:** 2026-08-01  
-**Status:** PXF-016B deployed and complete; PXF-016C active — asset integrity and bounded Axe accessibility proof
+**Status:** PXF-016B deployed and complete; PXF-016C committed (not pushed); PXF-016C1 active — exception policy tightening and asset validator hardening
 
 ## Purpose
 
@@ -365,7 +365,7 @@ Updated `last_verified_production_head`, `last_verified_production_at`, and `dep
 | `src/components/Testimonials.jsx` | 3 SVGs from `@/assets/images/` | Missing | No — not in barrel, not in any app route |
 | `src/components/login-payment.tsx` | 1 SVG `profile.svg` | Missing | No — referenced only by `Access.tsx` which is not in barrel and not in any app route |
 
-**Deleted dead legacy components (13 missing asset imports eliminated):**
+**Deleted dead legacy components (13 of 14 missing asset imports eliminated):**
 - `src/components/AboutMe.tsx` — unreachable, 5 missing assets
 - `src/components/ZeroRisk.tsx` — unreachable, 4 missing assets
 - `src/components/Review.tsx` — unreachable, 1 missing asset
@@ -466,3 +466,73 @@ Phase 12 remains `PARTIAL`.
 ### Next recommended packet
 
 **PXF-016D** — measured performance proof using bounded Lighthouse or equivalent budgets (FCP, LCP, CLS, TBT targets against 8 canonical routes), unless Axe uncovers additional accessibility defects requiring a dedicated repair packet. Phase 12 performance proof remains deferred until PXF-016D.
+
+---
+
+## PXF-016C1 Accessibility exception policy and asset validator hardening
+
+**Started:** 2026-08-01
+**Status:** committed, not pushed
+
+### Part A — Correct Axe exception model
+
+Replaced broad `.exclude()` subtree exclusions with a reviewed-violation-exception model:
+
+- **No subtree exclusions** — the Axe scan now runs against the full page DOM without `.exclude()` calls.
+- **Exact matching** — each exception matches by `ruleId` + `route` + `viewport` + target CSS selector substring.
+- **Type-safe** — `ReviewedAxeException` interface enforces required fields including `justification`.
+- **Non-blocking baseline** — `INCOMPLETE_BASELINES` record per route/viewport; increases above baseline fail the gate.
+
+**Application-level fix investigation:**
+
+Reviewed `nextra-theme-docs` v4 Layout schema (`LayoutPropsSchema` in `schemas.d.mts`):
+- `darkMode={false}` already set — does NOT remove the HeadlessUI listbox button (v4 bug)
+- `navigation` prop accepts `boolean | {next, prev}` — could disable pagination but has product value
+- No prop exists to add `aria-label` to sidebar links or HeadlessUI button
+- All three Nextra finding categories are confirmed unfixable at the application level
+
+**Reviewed exceptions (7 entries):**
+
+| ruleId | target pattern | viewport | nodes |
+|---|---|---|---|
+| `button-name` | `headlessui-listbox-button` | both | 1 |
+| `target-size` | `headlessui-listbox-button` | both | 1 |
+| `link-name` | `nextra-scrollbar` | both | 7 |
+| `link-name` | `transform-gpu` | both | 7 |
+| `link-name` | `max-w-` (pagination) | both | 1 |
+
+**WCAG tag note:** axe-core 4.12.1 has no aggregate `wcag22a` tag. WCAG 2.2 Level A criteria are tagged individually (e.g., `wcag258`, `wcag325`). The `wcag22aa` tag covers 2.2 AA criteria. Current tag set covers all available WCAG levels.
+
+### Part B — Asset validator hardening
+
+Rewrote `scripts/validate-static-asset-imports.mjs`:
+
+- **AST-based parsing** — uses `ts.createSourceFile` (syntax-only, no type resolution) instead of regex
+- **All import forms covered:** default, named, namespace, side-effect, multiline, dynamic `import()`, `require()`, `export { x } from`, `export * from`, `new URL('./asset', import.meta.url)`
+- **CSS `url()` scanning** — regex-based scan of `.css` files for `url(./path)`, `url('./path')`, `url("./path")`
+- **No shell dependency** — replaced `execSync('find ...')` with `fs.readdirSync({ recursive: true })` (Node 20+)
+- **Exported functions** for testability while preserving CLI interface
+
+**Self-tests:** `scripts/validate-static-asset-imports.test.mjs`
+- 44 tests across 24 describe blocks
+- Uses Node.js built-in `node:test` runner (no extra dependencies)
+- Covers all import forms, resolution logic, exclusion rules, and integration scenarios
+- `"test:asset-validator": "node --test scripts/validate-static-asset-imports.test.mjs"` added to package.json
+
+### Part C — Documentation reconciliation
+
+- Corrected "13 missing asset imports eliminated" → "13 of 14 missing asset imports eliminated" (13 from deletions + 1 from login-payment fix = 14 total)
+- Updated file status to reflect PXF-016C committed state
+- Recorded reviewed exception policy and baseline counts
+- Deleted temporary `tests/evidence/_raw-axe-scan.mjs` scan script
+
+### Validation results
+
+- Asset validation: `✓ All static asset imports resolved.`
+- Asset validator self-tests: 44/44 pass
+- TypeScript: clean — 0 errors
+- ESLint: 0 errors, 0 warnings
+- Browser evidence: 30/30 pass (14 existing + 16 accessibility)
+- Accessibility gate: 0 unreviewed critical/serious violations
+- Incomplete baselines: all routes within reviewed limits
+- No broad subtree exclusions remain
