@@ -19,9 +19,13 @@ import {
   collectFiles,
   extractImportsFromAST,
   extractImportsFromCSS,
+  extractReferencesFromAST,
+  extractReferencesFromStylesheet,
+  normalizeReference,
   validate,
   ASSET_EXTENSIONS,
   SCAN_EXTENSIONS,
+  STYLESHEET_EXTENSIONS,
   EXCLUDE_DIRS,
 } from './validate-static-asset-imports.mjs'
 
@@ -635,5 +639,131 @@ describe('validate - relative path resolution', () => {
   it('resolves deeply nested relative paths correctly', () => {
     const missing = validate(root, src)
     assert.equal(missing.length, 0)
+  })
+})
+
+
+
+// --- PXF-016C2 coverage: stylesheet types, suffixes, assets, diagnostics ---
+
+describe('PXF-016C2 reference normalization and coverage', () => {
+  it('scans CSS, SCSS, and Sass files', () => {
+    assert.deepEqual(STYLESHEET_EXTENSIONS, ['.css', '.scss', '.sass'])
+  })
+
+  it('normalizes query suffixes', () => {
+    assert.deepEqual(normalizeReference('./icon.svg?url'), {
+      reference: './icon.svg?url',
+      normalizedPath: './icon.svg',
+    })
+  })
+
+  it('normalizes fragment suffixes', () => {
+    assert.equal(normalizeReference('../document.pdf#page=1').normalizedPath, '../document.pdf')
+  })
+
+  it('normalizes query and fragment suffixes together', () => {
+    assert.equal(normalizeReference('./font.woff2?#iefix').normalizedPath, './font.woff2')
+  })
+
+  it('recognizes AVIF, TTF, and PDF assets', () => {
+    assert.ok(isAssetPath('./image.avif'))
+    assert.ok(isAssetPath('./font.ttf'))
+    assert.ok(isAssetPath('./document.pdf'))
+  })
+
+  it('classifies every supported AST reference syntax', () => {
+    const source = `
+      import icon from './import.svg'
+      import './side-effect.svg'
+      const dynamic = import('./dynamic.svg')
+      const required = require('./required.svg')
+      export { default as exported } from './exported.svg'
+      const url = new URL('./new-url.svg', import.meta.url)
+    `
+    const syntaxes = extractReferencesFromAST(source, 'fixture.ts').map((entry) => entry.syntax)
+    assert.deepEqual(syntaxes.sort(), [
+      'dynamic-import',
+      'export-from',
+      'import',
+      'new-url',
+      'require',
+      'side-effect-import',
+    ])
+  })
+
+  it('classifies stylesheet url() references as css-url', () => {
+    const references = extractReferencesFromStylesheet(`$asset: url('./font.ttf?#iefix');`)
+    assert.deepEqual(references, [
+      {
+        reference: './font.ttf?#iefix',
+        normalizedPath: './font.ttf',
+        syntax: 'css-url',
+      },
+    ])
+  })
+})
+
+describe('PXF-016C2 validator integration', () => {
+  let root, src
+
+  beforeEach(() => {
+    const project = createTempProject()
+    root = project.root
+    src = project.src
+    mkdirSync(join(src, 'assets'), { recursive: true })
+    writeFileSync(join(src, 'assets', 'font.ttf'), 'font')
+    writeFileSync(join(src, 'assets', 'document.pdf'), 'pdf')
+    writeFileSync(join(src, 'assets', 'image.avif'), 'avif')
+  })
+
+  afterEach(() => cleanTempProject(root))
+
+  it('validates existing query- and fragment-suffixed assets', () => {
+    writeFileSync(
+      join(src, 'index.ts'),
+      `
+        import font from './assets/font.ttf?url'
+        import document from './assets/document.pdf#page=1'
+        import image from './assets/image.avif?optimized#hero'
+      `,
+    )
+    assert.deepEqual(validate(root, src), [])
+  })
+
+  it('reports a missing SCSS reference with structured diagnostics', () => {
+    writeFileSync(join(src, 'styles.scss'), `.hero { background: url('./assets/missing.avif?url'); }`)
+    const [missing] = validate(root, src)
+    assert.equal(missing.syntax, 'css-url')
+    assert.equal(missing.reference, './assets/missing.avif?url')
+    assert.equal(missing.normalizedPath, './assets/missing.avif')
+    assert.ok(missing.resolved.endsWith('src/assets/missing.avif'))
+  })
+
+  it('reports a missing Sass reference', () => {
+    writeFileSync(join(src, 'styles.sass'), `.hero\n  background: url('./assets/missing.pdf')`)
+    const [missing] = validate(root, src)
+    assert.equal(missing.syntax, 'css-url')
+    assert.equal(missing.normalizedPath, './assets/missing.pdf')
+  })
+
+  it('reports a missing query-suffixed import using its syntax category', () => {
+    writeFileSync(join(src, 'index.ts'), `import icon from './assets/missing.svg?url'`)
+    const [missing] = validate(root, src)
+    assert.equal(missing.syntax, 'import')
+    assert.equal(missing.reference, './assets/missing.svg?url')
+    assert.equal(missing.normalizedPath, './assets/missing.svg')
+  })
+
+  it('continues to exclude public-root, external, and data URLs', () => {
+    writeFileSync(
+      join(src, 'styles.css'),
+      `
+        .public { background: url('/images/public.svg'); }
+        .external { background: url('https://example.com/image.svg'); }
+        .data { background: url('data:image/svg+xml;base64,AAAA'); }
+      `,
+    )
+    assert.deepEqual(validate(root, src), [])
   })
 })

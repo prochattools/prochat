@@ -1,25 +1,13 @@
 #!/usr/bin/env node
 /**
- * Validates that every static asset import in repository-owned source files
- * resolves to an existing file on disk.
+ * Validate repository-owned static asset references without executing source.
  *
- * Uses the TypeScript compiler API (ts.createSourceFile) for syntax-only AST
- * parsing to detect all import forms:
- *   - Static imports (default, named, namespace, side-effect)
- *   - Dynamic imports: import('./foo.svg')
- *   - Require calls: require('./foo.svg')
- *   - Export-from: export { x } from './foo.svg', export * from './foo.svg'
- *   - new URL('./foo.svg', import.meta.url)
- *
- * Also scans .css files for url() references using regex.
- *
- * Resolves @/ alias to src/ and validates existence.
- * Ignores node_modules, .next, build output, and public/ path-based imports.
- * Fails with a non-zero exit code if any missing assets are found.
+ * JavaScript and TypeScript are parsed with the TypeScript compiler API.
+ * CSS, SCSS, and Sass files are scanned for local url() references.
  */
 
-import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs'
-import { join, dirname, resolve, extname } from 'node:path'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
+import { dirname, extname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import ts from 'typescript'
 
@@ -28,201 +16,208 @@ const __dirname = dirname(__filename)
 const ROOT = resolve(__dirname, '..')
 const SRC_DIR = join(ROOT, 'src')
 
-const ASSET_EXTENSIONS = ['.svg', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico', '.woff', '.woff2']
+const ASSET_EXTENSIONS = [
+  '.svg',
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.gif',
+  '.webp',
+  '.avif',
+  '.ico',
+  '.woff',
+  '.woff2',
+  '.ttf',
+  '.otf',
+  '.eot',
+  '.pdf',
+]
 
 const SCAN_EXTENSIONS = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs']
-
-const CSS_EXTENSIONS = ['.css']
-
+const STYLESHEET_EXTENSIONS = ['.css', '.scss', '.sass']
+const CSS_EXTENSIONS = STYLESHEET_EXTENSIONS
 const EXCLUDE_DIRS = ['node_modules', '.next', 'out', 'dist', '.git']
 
-/**
- * Check if a path refers to a static asset based on extension.
- */
-function isAssetPath(p) {
-  return ASSET_EXTENSIONS.some(ext => p.toLowerCase().endsWith(ext))
-}
+/** @typedef {'import'|'side-effect-import'|'dynamic-import'|'require'|'export-from'|'new-url'|'css-url'} ReferenceSyntax */
 
 /**
- * Check if a path is external (http, https, node:) or public-root (starts with /).
+ * @typedef {Object} StaticAssetReference
+ * @property {string} reference
+ * @property {string} normalizedPath
+ * @property {ReferenceSyntax} syntax
  */
-function isExternalOrPublic(p) {
-  if (p.startsWith('http://') || p.startsWith('https://') || p.startsWith('node:')) return true
-  if (p.startsWith('/') && !p.startsWith('/@')) return true
+
+function normalizeReference(reference) {
+  const suffixIndex = reference.search(/[?#]/)
+  return {
+    reference,
+    normalizedPath: suffixIndex === -1 ? reference : reference.slice(0, suffixIndex),
+  }
+}
+
+function isAssetPath(reference) {
+  const { normalizedPath } = normalizeReference(reference)
+  return ASSET_EXTENSIONS.includes(extname(normalizedPath).toLowerCase())
+}
+
+function isExternalOrPublic(reference) {
+  const trimmed = reference.trim()
+  if (/^(?:https?:|data:|blob:|node:|\/\/)/i.test(trimmed)) return true
+  if (trimmed.startsWith('/') && !trimmed.startsWith('/@')) return true
   return false
 }
 
-/**
- * Resolve an import path to an absolute filesystem path.
- * Returns null if the path cannot be resolved (e.g. bare specifiers).
- */
-function resolveImportPath(importPath, importerFile, srcDir) {
-  if (importPath.startsWith('@/')) {
-    return join(srcDir, importPath.slice(2))
+function resolveImportPath(reference, importerFile, srcDir) {
+  const { normalizedPath } = normalizeReference(reference)
+  if (normalizedPath.startsWith('@/')) {
+    return join(srcDir, normalizedPath.slice(2))
   }
-  if (importPath.startsWith('.')) {
-    return resolve(dirname(importerFile), importPath)
+  if (normalizedPath.startsWith('.')) {
+    return resolve(dirname(importerFile), normalizedPath)
   }
   return null
 }
 
-/**
- * Recursively collect files using fs.readdirSync with { recursive: true } (Node 20+).
- * Filters by allowed extensions and excludes specified directories.
- */
-function collectFiles(dir, extensions, excludeDirs) {
+function collectFiles(dir, extensions, excludeDirs = EXCLUDE_DIRS) {
   const files = []
-  let entries
-  try {
-    entries = readdirSync(dir, { recursive: true, withFileTypes: false })
-  } catch {
-    return files
-  }
+  if (!existsSync(dir)) return files
 
-  for (const relPath of entries) {
-    // Check exclusion: any path segment matches an excluded dir
-    const parts = relPath.split('/')
-    const isExcluded = parts.some(part => excludeDirs.includes(part))
-    if (isExcluded) continue
-
-    const fullPath = join(dir, relPath)
-    const ext = extname(relPath)
-    if (extensions.includes(ext)) {
-      // Verify it's a file, not a directory
-      try {
-        const stat = statSync(fullPath)
-        if (stat.isFile()) {
-          files.push(fullPath)
-        }
-      } catch {
-        // Skip inaccessible entries
+  function walk(current) {
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+      if (entry.isDirectory() && excludeDirs.includes(entry.name)) continue
+      const fullPath = join(current, entry.name)
+      if (entry.isDirectory()) {
+        walk(fullPath)
+        continue
+      }
+      if (entry.isFile() && extensions.includes(extname(entry.name).toLowerCase())) {
+        files.push(fullPath)
       }
     }
   }
-  return files
+
+  walk(dir)
+  return files.sort()
 }
 
-/**
- * Extract string literal value from an AST node (StringLiteral or NoSubstitutionTemplateLiteral).
- */
 function getStringValue(node) {
-  if (!node) return null
   if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
     return node.text
   }
   return null
 }
 
-/**
- * Walk the AST to extract all asset import paths from a TypeScript/JavaScript source file.
- */
-function extractImportsFromAST(sourceText, fileName) {
-  const imports = []
+function makeReference(reference, syntax) {
+  return { ...normalizeReference(reference), syntax }
+}
+
+function extractReferencesFromAST(sourceText, fileName) {
+  /** @type {StaticAssetReference[]} */
+  const references = []
   const sourceFile = ts.createSourceFile(
     fileName,
     sourceText,
     ts.ScriptTarget.Latest,
-    /* setParentNodes */ true,
-    ts.ScriptKind.TSX
+    true,
+    ts.ScriptKind.TSX,
   )
 
+  function add(node, syntax) {
+    const reference = node ? getStringValue(node) : null
+    if (reference) references.push(makeReference(reference, syntax))
+  }
+
   function visit(node) {
-    // 1. Static imports: import ... from '...' and import '...'
     if (ts.isImportDeclaration(node)) {
-      const specifier = getStringValue(node.moduleSpecifier)
-      if (specifier) {
-        imports.push(specifier)
-      }
+      add(node.moduleSpecifier, node.importClause ? 'import' : 'side-effect-import')
     }
 
-    // 2. Export-from: export { ... } from '...' and export * from '...'
     if (ts.isExportDeclaration(node) && node.moduleSpecifier) {
-      const specifier = getStringValue(node.moduleSpecifier)
-      if (specifier) {
-        imports.push(specifier)
-      }
+      add(node.moduleSpecifier, 'export-from')
     }
 
-    // 3. Dynamic import: import('...')
     if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) {
-      if (node.arguments.length > 0) {
-        const specifier = getStringValue(node.arguments[0])
-        if (specifier) {
-          imports.push(specifier)
-        }
-      }
+      add(node.arguments[0], 'dynamic-import')
     }
 
-    // 4. Require: require('...')
     if (
       ts.isCallExpression(node) &&
       ts.isIdentifier(node.expression) &&
       node.expression.text === 'require'
     ) {
-      if (node.arguments.length > 0) {
-        const specifier = getStringValue(node.arguments[0])
-        if (specifier) {
-          imports.push(specifier)
-        }
-      }
+      add(node.arguments[0], 'require')
     }
 
-    // 5. new URL('...', import.meta.url) pattern
-    if (ts.isNewExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'URL') {
-      if (node.arguments && node.arguments.length >= 2) {
-        const firstArg = getStringValue(node.arguments[0])
-        if (firstArg) {
-          // Verify second arg is import.meta.url
-          const secondArg = node.arguments[1]
-          if (
-            ts.isPropertyAccessExpression(secondArg) &&
-            secondArg.name.text === 'url' &&
-            ts.isMetaProperty(secondArg.expression) &&
-            secondArg.expression.name.text === 'meta'
-          ) {
-            imports.push(firstArg)
-          }
-        }
-      }
+    if (
+      ts.isNewExpression(node) &&
+      ts.isIdentifier(node.expression) &&
+      node.expression.text === 'URL' &&
+      node.arguments?.length >= 2
+    ) {
+      const secondArg = node.arguments[1]
+      const usesImportMetaUrl =
+        ts.isPropertyAccessExpression(secondArg) &&
+        secondArg.name.text === 'url' &&
+        ts.isMetaProperty(secondArg.expression) &&
+        secondArg.expression.name.text === 'meta'
+      if (usesImportMetaUrl) add(node.arguments[0], 'new-url')
     }
 
     ts.forEachChild(node, visit)
   }
 
   visit(sourceFile)
-  return imports
+  return references
 }
 
-/**
- * Extract asset paths from CSS url() references.
- * Matches: url(./path), url('./path'), url("./path")
- */
-function extractImportsFromCSS(sourceText) {
-  const imports = []
-  const CSS_URL_RE = /url\(\s*['"]?([^'")\s]+)['"]?\s*\)/g
+function extractImportsFromAST(sourceText, fileName) {
+  return extractReferencesFromAST(sourceText, fileName).map((entry) => entry.reference)
+}
+
+function extractReferencesFromStylesheet(sourceText) {
+  /** @type {StaticAssetReference[]} */
+  const references = []
+  const cssUrlPattern = /url\(\s*(['"]?)(.*?)\1\s*\)/g
   let match
-  while ((match = CSS_URL_RE.exec(sourceText)) !== null) {
-    imports.push(match[1])
+  while ((match = cssUrlPattern.exec(sourceText)) !== null) {
+    const reference = match[2].trim()
+    if (reference) references.push(makeReference(reference, 'css-url'))
   }
-  return imports
+  return references
 }
 
-/**
- * Main validation logic. Exported for testability.
- */
-export function validate(rootDir, srcDir) {
-  const root = rootDir || ROOT
-  const src = srcDir || SRC_DIR
+function extractImportsFromCSS(sourceText) {
+  return extractReferencesFromStylesheet(sourceText).map((entry) => entry.reference)
+}
 
-  // Collect source files (JS/TS)
-  const sourceFiles = collectFiles(root, SCAN_EXTENSIONS, EXCLUDE_DIRS)
+function toRepositoryPath(root, file) {
+  return relative(root, file).split(sep).join('/')
+}
 
-  // Collect CSS files
-  const cssFiles = collectFiles(root, CSS_EXTENSIONS, EXCLUDE_DIRS)
-
+function validate(rootDir = ROOT, srcDir = SRC_DIR) {
+  const sourceFiles = collectFiles(rootDir, SCAN_EXTENSIONS, EXCLUDE_DIRS)
+  const stylesheetFiles = collectFiles(rootDir, STYLESHEET_EXTENSIONS, EXCLUDE_DIRS)
   const missing = []
 
-  // Process JS/TS files with AST parsing
+  const processReferences = (file, references) => {
+    for (const entry of references) {
+      if (!isAssetPath(entry.reference)) continue
+      if (isExternalOrPublic(entry.reference)) continue
+
+      const resolved = resolveImportPath(entry.reference, file, srcDir)
+      if (!resolved || existsSync(resolved)) continue
+
+      missing.push({
+        importer: toRepositoryPath(rootDir, file),
+        importPath: entry.reference,
+        reference: entry.reference,
+        normalizedPath: entry.normalizedPath,
+        resolved: toRepositoryPath(rootDir, resolved),
+        syntax: entry.syntax,
+      })
+    }
+  }
+
   for (const file of sourceFiles) {
     let source
     try {
@@ -230,83 +225,60 @@ export function validate(rootDir, srcDir) {
     } catch {
       continue
     }
-
-    const imports = extractImportsFromAST(source, file)
-
-    for (const importPath of imports) {
-      if (!isAssetPath(importPath)) continue
-      if (isExternalOrPublic(importPath)) continue
-
-      const resolved = resolveImportPath(importPath, file, src)
-      if (resolved === null) continue
-
-      if (!existsSync(resolved)) {
-        const relFile = file.replace(root + '/', '')
-        const relResolved = resolved.replace(root + '/', '')
-        missing.push({ importer: relFile, importPath, resolved: relResolved })
-      }
-    }
+    processReferences(file, extractReferencesFromAST(source, file))
   }
 
-  // Process CSS files with regex
-  for (const file of cssFiles) {
+  for (const file of stylesheetFiles) {
     let source
     try {
       source = readFileSync(file, 'utf8')
     } catch {
       continue
     }
-
-    const imports = extractImportsFromCSS(source)
-
-    for (const importPath of imports) {
-      if (!isAssetPath(importPath)) continue
-      if (isExternalOrPublic(importPath)) continue
-
-      const resolved = resolveImportPath(importPath, file, src)
-      if (resolved === null) continue
-
-      if (!existsSync(resolved)) {
-        const relFile = file.replace(root + '/', '')
-        const relResolved = resolved.replace(root + '/', '')
-        missing.push({ importer: relFile, importPath, resolved: relResolved })
-      }
-    }
+    processReferences(file, extractReferencesFromStylesheet(source))
   }
 
-  return missing
+  return missing.sort((a, b) =>
+    `${a.importer}:${a.reference}:${a.syntax}`.localeCompare(
+      `${b.importer}:${b.reference}:${b.syntax}`,
+    ),
+  )
 }
 
-// Export internals for testing
 export {
-  isAssetPath,
-  isExternalOrPublic,
-  resolveImportPath,
+  ASSET_EXTENSIONS,
+  CSS_EXTENSIONS,
+  EXCLUDE_DIRS,
+  SCAN_EXTENSIONS,
+  STYLESHEET_EXTENSIONS,
   collectFiles,
   extractImportsFromAST,
   extractImportsFromCSS,
-  ASSET_EXTENSIONS,
-  SCAN_EXTENSIONS,
-  CSS_EXTENSIONS,
-  EXCLUDE_DIRS,
+  extractReferencesFromAST,
+  extractReferencesFromStylesheet,
+  isAssetPath,
+  isExternalOrPublic,
+  normalizeReference,
+  resolveImportPath,
+  validate,
 }
 
-// CLI entry point — only run when executed directly
 const isMain = process.argv[1] && resolve(process.argv[1]) === resolve(__filename)
 if (isMain) {
   const missing = validate(ROOT, SRC_DIR)
-
   if (missing.length === 0) {
     console.log('✓ All static asset imports resolved.')
     process.exit(0)
-  } else {
-    console.error(`✗ ${missing.length} unresolved static asset import(s):`)
-    for (const { importer, importPath, resolved } of missing) {
-      console.error(`  ${importer}`)
-      console.error(`    imports: ${importPath}`)
-      console.error(`    resolved: ${resolved}`)
-      console.error('')
-    }
-    process.exit(1)
   }
+
+  console.error(`✗ ${missing.length} unresolved static asset reference(s):`)
+  for (const entry of missing) {
+    console.error(`  importer: ${entry.importer}`)
+    console.error(`  syntax: ${entry.syntax}`)
+    console.error(`  reference: ${entry.reference}`)
+    console.error(`  normalized: ${entry.normalizedPath}`)
+    console.error(`  resolved: ${entry.resolved}`)
+    console.error('')
+  }
+  process.exit(1)
 }

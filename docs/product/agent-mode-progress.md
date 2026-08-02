@@ -4,7 +4,7 @@
 **Branch:** `main`  
 **Audit date:** 2026-07-31  
 **Reconciliation date:** 2026-08-01  
-**Status:** PXF-016B deployed and complete; PXF-016C committed (not pushed); PXF-016C1 active — exception policy tightening and asset validator hardening
+**Status:** PXF-016B deployed and complete; PXF-016C/C1 committed (not pushed); PXF-016C2 complete, validated, and not pushed
 
 ## Purpose
 
@@ -460,7 +460,7 @@ Phase 12 remains `PARTIAL`.
 - Total browser evidence: 30/30 pass
 - Security scan: no findings
 - No generated artifacts remain
-- No broad Axe exclusions — all exclusions are element-specific with documented justification
+- No Axe subtree exclusions remain; reviewed critical and serious findings are matched after a full-document scan
 - No plaintext secrets
 
 ### Next recommended packet
@@ -479,9 +479,10 @@ Phase 12 remains `PARTIAL`.
 Replaced broad `.exclude()` subtree exclusions with a reviewed-violation-exception model:
 
 - **No subtree exclusions** — the Axe scan now runs against the full page DOM without `.exclude()` calls.
-- **Exact matching** — each exception matches by `ruleId` + `route` + `viewport` + target CSS selector substring.
-- **Type-safe** — `ReviewedAxeException` interface enforces required fields including `justification`.
-- **Non-blocking baseline** — `INCOMPLETE_BASELINES` record per route/viewport; increases above baseline fail the gate.
+- **Deterministic matching** — each exception matches by exact normalized target identity plus `ruleId`, `impact`, `route`, and explicit desktop or mobile viewport.
+- **Cardinality enforcement** — expected targets and node counts are exact; duplicate, additional, and stale nodes fail the gate.
+- **Type-safe** — `ReviewedAxeException` requires an ID, justification, upstream owner, review date, exact targets, and expected node count.
+- **Non-blocking baseline** — route- and viewport-specific moderate, minor, unknown-impact, and incomplete evidence is compared by rule ID, impact, and node count; new or increased findings fail while decreases are reported.
 
 **Application-level fix investigation:**
 
@@ -491,15 +492,16 @@ Reviewed `nextra-theme-docs` v4 Layout schema (`LayoutPropsSchema` in `schemas.d
 - No prop exists to add `aria-label` to sidebar links or HeadlessUI button
 - All three Nextra finding categories are confirmed unfixable at the application level
 
-**Reviewed exceptions (7 entries):**
+**Reviewed exceptions (6 entries; 27 expected node instances across both viewports):**
 
-| ruleId | target pattern | viewport | nodes |
-|---|---|---|---|
-| `button-name` | `headlessui-listbox-button` | both | 1 |
-| `target-size` | `headlessui-listbox-button` | both | 1 |
-| `link-name` | `nextra-scrollbar` | both | 7 |
-| `link-name` | `transform-gpu` | both | 7 |
-| `link-name` | `max-w-` (pagination) | both | 1 |
+| exception | ruleId | viewport | expected nodes |
+|---|---|---|---:|
+| `docs-desktop-button-name-listbox` | `button-name` | desktop | 1 |
+| `docs-mobile-button-name-listbox` | `button-name` | mobile | 1 |
+| `docs-desktop-target-size-listbox` | `target-size` | desktop | 1 |
+| `docs-mobile-target-size-listbox` | `target-size` | mobile | 1 |
+| `docs-desktop-link-name-navigation` | `link-name` | desktop | 15 |
+| `docs-mobile-link-name-navigation` | `link-name` | mobile | 8 |
 
 **WCAG tag note:** axe-core 4.12.1 has no aggregate `wcag22a` tag. WCAG 2.2 Level A criteria are tagged individually (e.g., `wcag258`, `wcag325`). The `wcag22aa` tag covers 2.2 AA criteria. Current tag set covers all available WCAG levels.
 
@@ -509,15 +511,17 @@ Rewrote `scripts/validate-static-asset-imports.mjs`:
 
 - **AST-based parsing** — uses `ts.createSourceFile` (syntax-only, no type resolution) instead of regex
 - **All import forms covered:** default, named, namespace, side-effect, multiline, dynamic `import()`, `require()`, `export { x } from`, `export * from`, `new URL('./asset', import.meta.url)`
-- **CSS `url()` scanning** — regex-based scan of `.css` files for `url(./path)`, `url('./path')`, `url("./path")`
-- **No shell dependency** — replaced `execSync('find ...')` with `fs.readdirSync({ recursive: true })` (Node 20+)
-- **Exported functions** for testability while preserving CLI interface
+- **Stylesheet `url()` scanning** — scans `.css`, `.scss`, and `.sass` files for local `url()` references.
+- **Reference normalization** — strips query and fragment suffixes before filesystem resolution while preserving the original diagnostic reference.
+- **Asset coverage** — validates SVG, raster images, AVIF, icons, web fonts including TTF/OTF/EOT, and PDF references.
+- **Structured diagnostics** — reports importer, original reference, normalized path, resolved target, and syntax category.
+- **No shell dependency** — repository traversal uses Node filesystem APIs only.
+- **Exported functions** for testability while preserving the CLI interface.
 
 **Self-tests:** `scripts/validate-static-asset-imports.test.mjs`
-- 44 tests across 24 describe blocks
-- Uses Node.js built-in `node:test` runner (no extra dependencies)
-- Covers all import forms, resolution logic, exclusion rules, and integration scenarios
-- `"test:asset-validator": "node --test scripts/validate-static-asset-imports.test.mjs"` added to package.json
+- 56 tests pass with the Node.js built-in `node:test` runner.
+- Covers TypeScript/JavaScript import forms, stylesheet references, suffix normalization, repository-relevant extensions, diagnostics, exclusion rules, and integration scenarios.
+- `"test:asset-validator": "node --test scripts/validate-static-asset-imports.test.mjs"` is a required CI step before repository asset validation.
 
 ### Part C — Documentation reconciliation
 
@@ -529,10 +533,64 @@ Rewrote `scripts/validate-static-asset-imports.mjs`:
 ### Validation results
 
 - Asset validation: `✓ All static asset imports resolved.`
-- Asset validator self-tests: 44/44 pass
+- Asset validator self-tests: 56/56 pass
 - TypeScript: clean — 0 errors
 - ESLint: 0 errors, 0 warnings
 - Browser evidence: 30/30 pass (14 existing + 16 accessibility)
 - Accessibility gate: 0 unreviewed critical/serious violations
 - Incomplete baselines: all routes within reviewed limits
 - No broad subtree exclusions remain
+
+
+## PXF-016C2 final completion evidence
+
+### Accessibility policy integrity
+
+- Six explicit reviewed exception definitions cover 27 expected node instances across `/docs` desktop and mobile scans.
+- Exception matching requires exact normalized target identity plus route, viewport, rule ID, and impact.
+- Expected target and node cardinality are enforced; duplicate, additional, ambiguous, and stale matches fail.
+- No Axe subtree exclusions remain.
+- Moderate violations: 0.
+- Minor violations: 0.
+- Unknown-impact violations: 0.
+- Incomplete evidence: 18 route/rule entries covering 1,024 reviewed nodes.
+- Accessibility-policy unit tests: 13/13 passed.
+
+### Asset validation integrity
+
+- Static source references are parsed through the TypeScript AST for import, side-effect import, dynamic import, require, export-from, and `new URL(..., import.meta.url)` forms.
+- Local stylesheet references are scanned in CSS, SCSS, and Sass.
+- Query and fragment suffixes are normalized before filesystem resolution.
+- Repository-relevant images, icons, fonts, and PDF references are covered.
+- Diagnostics include importer, original reference, normalized path, resolved target, and syntax category.
+- Asset-validator self-tests: 56/56 passed.
+- Repository asset validation: passed with zero unresolved static assets.
+- Both policy test suites are required CI steps before the browser evidence gate.
+
+### Browser evidence boundary
+
+- The CI-equivalent local browser environment previously passed 30/30 tests: 14 docs-mobile and route-smoke tests plus 16 canonical Axe scans.
+- After the final duplicate-target cardinality repair, the pure accessibility-policy suite passed 13/13 and focused production `/docs` Axe scans passed at desktop and mobile.
+- A full production-targeted 30-test rerun exceeded Workbench's bounded synchronous command window; no claim is made that this final full run completed inside Workbench.
+
+### Final validation
+
+- TypeScript: passed with zero errors.
+- ESLint: passed with zero warnings.
+- Design governance: five rules passed with 39 controlled exemptions.
+- Documentation validation: passed.
+- Production build: passed.
+- Workflow YAML: parsed successfully with the installed `yaml` package; jobs found were `ci`, `docs-integrity`, `detect-deployment-changes`, and `build-and-deploy`.
+- Changed-path security scan: accessibility paths had no findings; remaining heuristic findings were expected bounded workflow network calls, failure-only artifact upload, GitHub/Dokploy secret references, the existing Axios dependency, documentation mentions, and the validator's regular-expression `.exec()` call. No plaintext secret or new prohibited behavior was found.
+- Focused production accessibility verification: `/docs` desktop and mobile passed with the expected reviewed exception IDs.
+- Generated Playwright artifacts: removed; test-results and report directories are absent or empty.
+- Production observation remains `7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9`; no deployment metadata was advanced in this unpushed packet.
+
+### Commit state
+
+PXF-016C2 is complete, validated, and not pushed. The intended commits are:
+
+1. `test: enforce deterministic accessibility baselines`
+2. `chore: complete asset validator and CI coverage`
+
+Phase 11 remains `PARTIAL`, Phase 12 remains `PARTIAL`, and Phase 13 remains `ONGOING`.

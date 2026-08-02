@@ -26,6 +26,7 @@
     "db:provision:local": "NODE_ENV=development npm run provision:auto",
     "validate:assets": "node scripts/validate-static-asset-imports.mjs",
     "test:asset-validator": "node --test scripts/validate-static-asset-imports.test.mjs",
+    "test:accessibility-policy": "node --import tsx --test tests/evidence/accessibility-policy.test.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
     "lint:design": "node scripts/design/lint-design-system.mjs",
