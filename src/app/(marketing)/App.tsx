@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 
 import {
@@ -9,8 +10,12 @@ import {
 } from './components/illustrations/compositions'
 import HomepageTrackedLink from './components/HomepageTrackedLink'
 import { MarketingNav } from './components/layout/MarketingNav'
-import { MemoryLaserField } from './components/motion/MemoryLaserField'
 import './prochat-memory-theme.css'
+
+const MemoryLaserField = dynamic(
+  () => import('./components/motion/MemoryLaserField').then((m) => m.MemoryLaserField),
+  { ssr: false, loading: () => <div className="pm-laser-field pm-laser-field--webgl pm-laser-field--static" aria-hidden="true"><div className="pm-laser-fallback" /></div> },
+)
 
 const memoryCards = [
   {

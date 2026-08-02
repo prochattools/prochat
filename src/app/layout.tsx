@@ -10,7 +10,6 @@ import { Golos_Text, JetBrains_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
 import { Viewport } from 'next'
 import { ReactNode } from 'react'
-import '@fontsource/jetbrains-mono'
 
 import '@/assets/styles/globals.scss'
 

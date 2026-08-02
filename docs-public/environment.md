@@ -160,8 +160,11 @@ The marketing analytics helper (`src/components/UmamiAnalytics.tsx`) uses the Um
 - `GITHUB_ACTIONS`
 - `ANALYZE`
 - `NEXT_PUBLIC_STRAPI_BASE_URL`
+- `WAVE1_BASE_URL`
 
 `NODE_ENV`, `CI`, and `GITHUB_ACTIONS` are used in runtime and scripts to gate behavior (middleware, docs pipeline, bootstrap scripts). `ANALYZE` is only read by `next.config.js` when enabling bundle analysis; it is considered a build-time or debugging toggle.
+
+`WAVE1_BASE_URL` is the local production server URL used by `scripts/run-canonical-performance.mjs` during CI performance evidence collection. It must point to a locally running server (e.g. `http://localhost:3000`) and must never be set to a production or staging host. It is not used at runtime.
 
 ## Legacy traces
 

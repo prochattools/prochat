@@ -361,8 +361,7 @@ async function main() {
     if (!allPass) {
       console.log('\nOne or more routes have target gaps or failed to complete.')
       console.log('See target gap entries in the results JSON for bounded repair recommendations.')
-      // Exit with non-zero to signal gaps but do not prevent informational CI collection
-      // CI step is informational-only until baselines are established
+      process.exitCode = 1
     }
   } finally {
     if (chrome) {

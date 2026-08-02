@@ -217,13 +217,24 @@ export function MemoryLaserField({ variant = 'webgl', reviewLabel }: MemoryLaser
       }
     }
 
-    webglRef.current = createProgram()
-    if (!webglRef.current) {
-      fallback()
-      return
+    let idleHandle: number | null = null
+
+    const initWebgl = () => {
+      if (disposed) return
+      webglRef.current = createProgram()
+      if (!webglRef.current) {
+        fallback()
+        return
+      }
+      root.dataset.webgl = 'active'
+      start()
     }
 
-    root.dataset.webgl = 'active'
+    if (typeof window.requestIdleCallback === 'function') {
+      idleHandle = window.requestIdleCallback(initWebgl, { timeout: 2000 })
+    } else {
+      setTimeout(initWebgl, 0)
+    }
 
     const draw = (now: number) => {
       if (disposed || hidden || !inView || !webglRef.current || contextLost) {
@@ -295,10 +306,12 @@ export function MemoryLaserField({ variant = 'webgl', reviewLabel }: MemoryLaser
     document.addEventListener('visibilitychange', sync)
     canvas.addEventListener('webglcontextlost', onLost)
     canvas.addEventListener('webglcontextrestored', onRestored)
-    start()
 
     return () => {
       disposed = true
+      if (idleHandle !== null && typeof window.cancelIdleCallback === 'function') {
+        window.cancelIdleCallback(idleHandle)
+      }
       observer.disconnect()
       document.removeEventListener('visibilitychange', sync)
       canvas.removeEventListener('webglcontextlost', onLost)
