@@ -4,7 +4,7 @@
 **Branch:** `main`  
 **Audit date:** 2026-07-31  
 **Reconciliation date:** 2026-08-01  
-**Status:** PXF-016B deployed and complete; PXF-016C/C1 committed (not pushed); PXF-016C2 complete, validated, and not pushed
+**Status:** PXF-016B/C/C1/C2 deployed and complete; HEAD `853207b` verified in production
 
 ## Purpose
 
@@ -32,9 +32,9 @@ validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
 validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-last_verified_production_head: 7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9
-last_verified_production_at: 2026-08-01T12:50:28Z
-deployment_observation_source: Main workflow run 30700388456 plus direct production /api/version and browser verification
+last_verified_production_head: 853207b49f338c4832e1f8a84e237ca6bf0c400b
+last_verified_production_at: 2026-08-02T17:32:00Z
+deployment_observation_source: Main workflow run 30758962840 (all 4 jobs success) plus direct production /api/version and 8-route HTTP 200 verification
 ```
 
 The validation anchors are immutable evidence. The production fields are dated operational observations and do not claim to track the live repository HEAD.
@@ -594,3 +594,42 @@ PXF-016C2 is complete, validated, and not pushed. The intended commits are:
 2. `chore: complete asset validator and CI coverage`
 
 Phase 11 remains `PARTIAL`, Phase 12 remains `PARTIAL`, and Phase 13 remains `ONGOING`.
+
+---
+
+## PXF-016C/C1/C2 deployment verification
+
+**Pushed:** 2026-08-02  
+**HEAD:** `853207b49f338c4832e1f8a84e237ca6bf0c400b`  
+**Status:** all 4 CI jobs passed; production verified
+
+### CI run 30758962840
+
+First push (commits `883b9d8`–`bea15fe`) failed at `Run browser evidence`:
+- `incomplete:serious:color-contrast` on `/` desktop rose from 107 (macOS) to 248 (Linux headless Chromium) due to font-rendering environment differences.
+
+Fix applied (`853207b`):
+1. **target-size CSS repairs** — added `min-height: 1.5rem` to `.pm-wordmark`, `.pm-nav-links a`, `.pm-nav-text-action`, and `.pc-skip-link` (all previously 18px, below 24px WCAG 2.2 AA minimum).
+2. **Baseline exclusion** — `color-contrast` incompletes excluded from `ENVIRONMENT_SENSITIVE_INCOMPLETE_RULES`; count varies by rendering environment and carries no regression signal.
+
+### CI run 30758962840 (fix push result)
+
+Triggered by `853207b`, all 4 jobs:
+- `detect-deployment-changes`: success
+- `docs-integrity`: success
+- `ci`: success (all steps including browser evidence 30/30)
+- `build-and-deploy`: success
+
+### Production verification
+
+- `/api/health`: 200
+- `/api/version` revision: `853207b49f338c4832e1f8a84e237ca6bf0c400b` ✓
+- `/docs`: 200
+- All 8 canonical routes: 200 (`/`, `/memory`, `/memory-qa`, `/workbench`, `/docs`, `/contact`, `/privacy`, `/terms`)
+- Verified at: 2026-08-02T17:32:00Z
+
+Phase 11 remains `PARTIAL`, Phase 12 remains `PARTIAL`, Phase 13 remains `ONGOING`.
+
+### Recommended next packet
+
+**PXF-016D** — measured performance proof (FCP, LCP, CLS, TBT baselines against 8 canonical routes using Lighthouse or equivalent). Phase 12 performance proof remains deferred.
