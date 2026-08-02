@@ -130,6 +130,7 @@
   inset-block-start: var(--pc-foundation-space-3);
   inset-inline-start: var(--pc-foundation-space-3);
   z-index: 100;
+  min-height: 1.5rem;
   padding: var(--pc-foundation-space-2) var(--pc-foundation-space-4);
   border: 2px solid var(--pc-foundation-color-focus-ring);
   border-radius: var(--pc-foundation-radius-sm);

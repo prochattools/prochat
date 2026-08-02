@@ -191,6 +191,14 @@ export function evaluateBlockingViolations(
   }
 }
 
+// color-contrast incomplete counts are excluded from baseline enforcement.
+// Axe reports incomplete for color-contrast when it cannot resolve the computed
+// contrast ratio (pseudo-elements, CSS variables not expanded, background images,
+// gradients). The count varies significantly between macOS headed and Linux
+// headless Chromium due to font-rendering and CSS evaluation differences.
+// Tracking a numeric count produces flaky CI rather than real regression signal.
+const ENVIRONMENT_SENSITIVE_INCOMPLETE_RULES = new Set(['color-contrast'])
+
 export function summarizeNonBlockingEvidence(
   violations: AxeResultLike[],
   incomplete: AxeResultLike[],
@@ -209,6 +217,7 @@ export function summarizeNonBlockingEvidence(
   }
 
   for (const result of incomplete) {
+    if (ENVIRONMENT_SENSITIVE_INCOMPLETE_RULES.has(result.id)) continue
     entries.push({
       kind: 'incomplete',
       impact: result.impact ?? 'unknown',

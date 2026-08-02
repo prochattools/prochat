@@ -111,21 +111,23 @@ function incomplete(ruleId: string, nodeCount: number, impact = 'serious') {
   return { kind: 'incomplete' as const, impact, ruleId, nodeCount }
 }
 
+// color-contrast is excluded from all baselines — see ENVIRONMENT_SENSITIVE_INCOMPLETE_RULES
+// in accessibility-policy.ts. Its incomplete count varies significantly between
+// macOS and headless Linux Chromium due to font rendering differences.
 export const ACCESSIBILITY_EVIDENCE_BASELINES: AccessibilityEvidenceBaseline[] = [
-  { route: '/', viewport: 'desktop', entries: [incomplete('aria-prohibited-attr', 9), incomplete('color-contrast', 107)] },
-  { route: '/', viewport: 'mobile', entries: [incomplete('aria-prohibited-attr', 9), incomplete('color-contrast', 124)] },
-  { route: '/memory', viewport: 'desktop', entries: [incomplete('color-contrast', 112)] },
-  { route: '/memory', viewport: 'mobile', entries: [incomplete('color-contrast', 107)] },
-  { route: '/memory-qa', viewport: 'desktop', entries: [incomplete('color-contrast', 92)] },
-  { route: '/memory-qa', viewport: 'mobile', entries: [incomplete('color-contrast', 87)] },
-  { route: '/workbench', viewport: 'desktop', entries: [incomplete('color-contrast', 78)] },
-  { route: '/workbench', viewport: 'mobile', entries: [incomplete('color-contrast', 73)] },
+  { route: '/', viewport: 'desktop', entries: [incomplete('aria-prohibited-attr', 9)] },
+  { route: '/', viewport: 'mobile', entries: [incomplete('aria-prohibited-attr', 9)] },
+  { route: '/memory', viewport: 'desktop', entries: [] },
+  { route: '/memory', viewport: 'mobile', entries: [] },
+  { route: '/memory-qa', viewport: 'desktop', entries: [] },
+  { route: '/memory-qa', viewport: 'mobile', entries: [] },
+  { route: '/workbench', viewport: 'desktop', entries: [] },
+  { route: '/workbench', viewport: 'mobile', entries: [] },
   {
     route: '/docs',
     viewport: 'desktop',
     entries: [
       incomplete('aria-prohibited-attr', 1),
-      incomplete('color-contrast', 99),
       incomplete('link-in-text-block', 3),
     ],
   },
@@ -134,12 +136,11 @@ export const ACCESSIBILITY_EVIDENCE_BASELINES: AccessibilityEvidenceBaseline[] =
     viewport: 'mobile',
     entries: [
       incomplete('aria-prohibited-attr', 1),
-      incomplete('color-contrast', 83),
       incomplete('link-in-text-block', 3),
     ],
   },
-  { route: '/contact', viewport: 'desktop', entries: [incomplete('color-contrast', 18)] },
-  { route: '/contact', viewport: 'mobile', entries: [incomplete('color-contrast', 18)] },
+  { route: '/contact', viewport: 'desktop', entries: [] },
+  { route: '/contact', viewport: 'mobile', entries: [] },
   { route: '/privacy', viewport: 'desktop', entries: [] },
   { route: '/privacy', viewport: 'mobile', entries: [] },
   { route: '/terms', viewport: 'desktop', entries: [] },

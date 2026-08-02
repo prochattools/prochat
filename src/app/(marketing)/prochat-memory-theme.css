@@ -134,6 +134,7 @@
 
 .pm-wordmark {
   display: inline-flex;
+  min-height: 1.5rem;
   color: rgb(var(--pc-public-accent-rgb));
   align-items: center;
   gap: 0.65rem;
@@ -152,6 +153,9 @@
 
 .pm-nav-links a,
 .pm-nav-text-action {
+  min-height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
   color: var(--pm-text-secondary);
   font-size: 0.79rem;
   transition: color 180ms ease;
