@@ -92,6 +92,9 @@ jobs:
       - name: Test accessibility policy
         run: npm run test:accessibility-policy
 
+      - name: Test performance policy
+        run: npm run test:performance-policy
+
       - name: Install Playwright browser
         run: npx playwright install chromium --with-deps
 
@@ -154,6 +157,13 @@ jobs:
           CI: 'true'
         run: npm run test:evidence:ci
 
+      - name: Run canonical performance evidence
+        timeout-minutes: 25
+        env:
+          WAVE1_BASE_URL: http://localhost:3000
+          PROCHAT_MAINTENANCE_MODE: '0'
+        run: node scripts/run-canonical-performance.mjs
+
       - name: Stop production server
         if: always()
         run: |
@@ -176,6 +186,7 @@ jobs:
           name: playwright-failure-evidence
           path: |
             tests/evidence/test-results/
+            tests/performance/results/
             ${{ steps.server.outputs.server_log }}
           if-no-files-found: ignore
           retention-days: 7

@@ -9,6 +9,7 @@
 /coverage
 /tests/evidence/test-results/
 /tests/evidence/playwright-report/
+/tests/performance/results/
 
 # next.js
 /.next/

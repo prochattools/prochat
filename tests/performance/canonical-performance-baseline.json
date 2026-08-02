@@ -1,0 +1,15 @@
+{
+  "_comment": "Local macOS baseline collected 2026-08-02. Lighthouse 12.4.0, Chrome 150, Node v25.9.0, mobile simulation. CI Linux headless measurements will differ due to rendering environment. These are informational anchors; the enforced gate is in checkThresholds() in canonical-performance-policy.ts.",
+  "_status": "local — CI baseline pending first successful CI run",
+  "_environment": "macOS, local server at http://localhost:3000, Moto G Power 2022 mobile simulation, slow-4G, 3-run median",
+  "routes": {
+    "/":          { "FCP_seconds": 1.06, "LCP_seconds": 1.52, "CLS": 0.000, "TBT_ms": 0, "SI_seconds": 1.06, "performance_score": 100, "total_kb": 31, "request_count": 26 },
+    "/memory":    { "FCP_seconds": 0.91, "LCP_seconds": 1.37, "CLS": 0.000, "TBT_ms": 0, "SI_seconds": 0.91, "performance_score": 100, "total_kb": 24, "request_count": 27 },
+    "/memory-qa": { "FCP_seconds": 0.91, "LCP_seconds": 1.37, "CLS": 0.000, "TBT_ms": 0, "SI_seconds": 0.91, "performance_score": 100, "total_kb": 22, "request_count": 27 },
+    "/workbench": { "FCP_seconds": 0.91, "LCP_seconds": 1.37, "CLS": 0.000, "TBT_ms": 0, "SI_seconds": 0.91, "performance_score": 100, "total_kb": 20, "request_count": 25 },
+    "/docs":      { "FCP_seconds": 1.06, "LCP_seconds": 1.67, "CLS": 0.000, "TBT_ms": 0, "SI_seconds": 1.06, "performance_score": 100, "total_kb": 29, "request_count": 32 },
+    "/contact":   { "FCP_seconds": 0.91, "LCP_seconds": 1.37, "CLS": 0.000, "TBT_ms": 0, "SI_seconds": 0.91, "performance_score": 100, "total_kb": 17, "request_count": 25 },
+    "/privacy":   { "FCP_seconds": 0.91, "LCP_seconds": 1.37, "CLS": 0.000, "TBT_ms": 0, "SI_seconds": 0.91, "performance_score": 100, "total_kb": 16, "request_count": 22 },
+    "/terms":     { "FCP_seconds": 0.91, "LCP_seconds": 1.37, "CLS": 0.000, "TBT_ms": 0, "SI_seconds": 0.91, "performance_score": 100, "total_kb": 17, "request_count": 22 }
+  }
+}
