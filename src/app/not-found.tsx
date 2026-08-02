@@ -2,7 +2,6 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { Home, Triangle } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -11,6 +10,14 @@ import { Scaffolding } from '@/components/ui/Scaffolding'
 export default function NotFound() {
   return (
     <main className="min-h-screen bg-transparent text-foreground dark:text-slate-50 font-sans relative overflow-hidden flex flex-col items-center justify-center selection:bg-primary selection:text-primary-foreground dark:selection:bg-primary/80 dark:selection:text-primary-foreground">
+      <style>{`
+        @keyframes notfound-float {
+          0%, 100% { transform: rotate(0deg) translateY(0px); }
+          25% { transform: rotate(2deg) translateY(2px); }
+          75% { transform: rotate(-2deg) translateY(2px); }
+        }
+        .notfound-float { animation: notfound-float 6s ease-in-out infinite; }
+      `}</style>
       <div className="absolute inset-0 pointer-events-none z-0">
         <Scaffolding opacity={0.5} />
       </div>
@@ -29,17 +36,8 @@ export default function NotFound() {
             <div className="w-px h-full bg-slate-200" />
           </div>
 
-          <motion.div
-            animate={{
-              rotate: [0, 2, 0, -2, 0],
-              y: [0, 2, 0, 2, 0],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className="absolute top-[70px] left-[140px] flex flex-col items-center origin-top"
+          <div
+            className="notfound-float absolute top-[70px] left-[140px] flex flex-col items-center origin-top"
           >
             <div className="w-px h-16 bg-slate-400" />
             <div className="w-20 h-20 bg-white dark:bg-slate-900 border-2 border-dashed border-primary dark:border-primary/80 rounded-xl flex items-center justify-center shadow-xl shadow-blue-500/10">
@@ -47,7 +45,7 @@ export default function NotFound() {
                 404
               </span>
             </div>
-          </motion.div>
+          </div>
 
           <div className="absolute bottom-0 right-0 w-16 h-16 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg translate-y-2 opacity-50" />
           <div className="absolute bottom-0 right-8 w-16 h-16 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg z-20 flex items-center justify-center">
