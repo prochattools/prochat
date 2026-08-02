@@ -4,7 +4,9 @@ import { describe, it } from 'node:test'
 import {
   compareEvidenceBaseline,
   evaluateBlockingViolations,
+  summarizeNonBlockingEvidence,
   type AxeNodeLike,
+  type AxeResultLike,
   type ReviewedAxeException,
 } from './accessibility-policy'
 
@@ -139,5 +141,91 @@ describe('compareEvidenceBaseline', () => {
     )
     assert.equal(result.regressions.length, 0)
     assert.equal(result.decreases.length, 1)
+  })
+})
+
+describe('summarizeNonBlockingEvidence — environment-sensitive rule exclusion', () => {
+  function incompleteResult(id: string, nodes: AxeNodeLike[]): AxeResultLike {
+    return { id, impact: 'serious', nodes }
+  }
+
+  function violationResult(id: string, impact: string, nodes: AxeNodeLike[]): AxeResultLike {
+    return { id, impact, nodes }
+  }
+
+  it('omits a color-contrast incomplete result from non-blocking baseline evidence', () => {
+    const result = summarizeNonBlockingEvidence(
+      [],
+      [incompleteResult('color-contrast', [node('#el1'), node('#el2')])],
+    )
+    assert.equal(result.length, 0, 'color-contrast incomplete should be omitted entirely')
+  })
+
+  it('does not omit a color-contrast serious violation', () => {
+    const result = summarizeNonBlockingEvidence(
+      [violationResult('color-contrast', 'serious', [node('#el1')])],
+      [],
+    )
+    assert.equal(result.length, 0, 'serious violation is blocking scope, not non-blocking evidence')
+  })
+
+  it('a serious color-contrast violation is unreviewed and blocking unless an exact exception exists', () => {
+    const result = evaluateBlockingViolations(
+      [{ id: 'color-contrast', impact: 'serious', nodes: [node('#any-element')] }],
+      '/memory',
+      'desktop',
+      [],
+    )
+    assert.equal(result.unreviewed.length, 1)
+    assert.equal(result.unreviewed[0].ruleId, 'color-contrast')
+    assert.equal(result.unreviewed[0].impact, 'serious')
+  })
+
+  it('a serious color-contrast violation passes only when an exact reviewed exception matches', () => {
+    const contrastException: ReviewedAxeException = exception({
+      id: 'contrast-exception-1',
+      ruleId: 'color-contrast',
+      impact: 'serious',
+      route: '/docs',
+      viewport: 'desktop',
+      expectedTargets: ['#any-element'],
+      expectedNodeCount: 1,
+    })
+    const result = evaluateBlockingViolations(
+      [{ id: 'color-contrast', impact: 'serious', nodes: [node('#any-element')] }],
+      '/docs',
+      'desktop',
+      [contrastException],
+    )
+    assert.equal(result.unreviewed.length, 0)
+    assert.deepEqual(result.appliedExceptionIds, ['contrast-exception-1'])
+  })
+
+  it('other incomplete rules are recorded in non-blocking evidence', () => {
+    const result = summarizeNonBlockingEvidence(
+      [],
+      [
+        incompleteResult('aria-prohibited-attr', [node('#el1'), node('#el2')]),
+        incompleteResult('color-contrast', [node('#el3')]),
+        incompleteResult('link-in-text-block', [node('#el4')]),
+      ],
+    )
+    assert.equal(result.length, 2)
+    const ruleIds = result.map((entry) => entry.ruleId)
+    assert.ok(ruleIds.includes('aria-prohibited-attr'))
+    assert.ok(ruleIds.includes('link-in-text-block'))
+    assert.ok(!ruleIds.includes('color-contrast'), 'color-contrast must remain excluded')
+  })
+
+  it('only the color-contrast rule is excluded from incomplete baselines', () => {
+    const otherRules = ['aria-prohibited-attr', 'link-in-text-block', 'scrollable-region-focusable']
+    for (const ruleId of otherRules) {
+      const result = summarizeNonBlockingEvidence(
+        [],
+        [incompleteResult(ruleId, [node('#el1')])],
+      )
+      assert.equal(result.length, 1, `${ruleId} should be recorded, not excluded`)
+      assert.equal(result[0].ruleId, ruleId)
+    }
   })
 })

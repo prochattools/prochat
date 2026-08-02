@@ -4,7 +4,7 @@
 **Branch:** `main`  
 **Audit date:** 2026-07-31  
 **Reconciliation date:** 2026-08-01  
-**Status:** PXF-016B/C/C1/C2 deployed and complete; HEAD `853207b` verified in production
+**Status:** PXF-016C/C1/C2 deployed and complete; PXF-016D active; HEAD `853207b` verified in production
 
 ## Purpose
 
@@ -34,7 +34,7 @@ validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
 validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 last_verified_production_head: 853207b49f338c4832e1f8a84e237ca6bf0c400b
 last_verified_production_at: 2026-08-02T17:32:00Z
-deployment_observation_source: Main workflow run 30758962840 (all 4 jobs success) plus direct production /api/version and 8-route HTTP 200 verification
+deployment_observation_source: Main workflow run 30758962840 plus direct production /api/version, /api/health, /docs, and eight-route verification
 ```
 
 The validation anchors are immutable evidence. The production fields are dated operational observations and do not claim to track the live repository HEAD.
@@ -59,9 +59,9 @@ The reconciliation packet updates repository truth without redesigning the produ
 - update README roadmap wording from 13 to 15 phases;
 - preserve this file as a completed audit record rather than a stale active-run handoff.
 
-## Remaining work after reconciliation
+## Remaining work after PXF-016C/C1/C2
 
-PXF-016A/B/B1/B2 pushed, CI passed (run 30700388456), and production verified at `7260f87`. PXF-016C is the active packet: asset-import integrity, legacy dead-component cleanup, bounded `@axe-core/playwright` Axe gate, and canonical-route WCAG checks — without claiming full manual WCAG 2.2 AA certification. Legacy cleanup and design-debt reduction remain separate bounded maintenance waves.
+PXF-016C/C1/C2 pushed, all 4 CI jobs passed (run 30758962840), and production verified at `853207b`. PXF-016D is the active packet: measured mobile performance proof using Lighthouse against eight canonical routes. Legacy cleanup and design-debt reduction remain separate bounded maintenance waves. Manual accessibility evidence (screen reader, 200% zoom, high contrast, touch targets) remains deferred.
 
 ## Validation evidence
 
@@ -630,6 +630,142 @@ Triggered by `853207b`, all 4 jobs:
 
 Phase 11 remains `PARTIAL`, Phase 12 remains `PARTIAL`, Phase 13 remains `ONGOING`.
 
-### Recommended next packet
+---
 
-**PXF-016D** — measured performance proof (FCP, LCP, CLS, TBT baselines against 8 canonical routes using Lighthouse or equivalent). Phase 12 performance proof remains deferred.
+## PXF-016D — Measured mobile performance proof
+
+**Started:** 2026-08-02
+**Status:** active — policy, tooling, runner, and local measurement complete; CI run pending
+
+### Tooling and versions
+
+```yaml
+lighthouse: 12.4.0
+chrome-launcher: 1.1.2
+node_requirement: ">=20"
+selection_reason: >
+  lighthouse 12.4.0 is the latest stable release compatible with Node 20 LTS.
+  chrome-launcher 1.1.2 is the recommended companion. Both are pinned in
+  package.json devDependencies. No transient npx install. No third-party
+  Lighthouse CI upload service. Chrome/Chromium resolved from CI runner.
+```
+
+### Canonical routes
+
+Eight canonical routes measured:
+
+```text
+/  /memory  /memory-qa  /workbench  /docs  /contact  /privacy  /terms
+```
+
+### Mobile laboratory configuration
+
+```yaml
+form_factor: mobile
+viewport: 390x844
+device_scale_factor: 2.625
+cpu_throttling: 4x
+network: Slow 4G (rtt=150ms, dl=1474.56kbps, ul=675kbps)
+throttling_method: simulate
+user_agent: Moto G Power (2022) Android 11 Chrome 119
+run_count: 3 per route
+total_audits: 24
+```
+
+### Raw-run and median policy
+
+- Exactly 3 cold Lighthouse audits per route (no warm-up).
+- All three raw values retained.
+- Median calculated from sorted valid values.
+- Values that are missing, non-finite, or negative are rejected.
+- If fewer than 3 valid runs complete, the route fails.
+
+### Thresholds
+
+| Metric | Threshold | Basis |
+|---|---|---|
+| LCP | ≤ 2.5s | Canonical strategy target |
+| CLS | ≤ 0.1 | Canonical strategy target |
+| FCP | ≤ 1.8s | Provisional laboratory target |
+| TBT | ≤ 200ms | Provisional laboratory target — lab diagnostic only, NOT field INP |
+
+**INP note:** Lighthouse cannot provide field INP. The strategy target of 200ms for INP remains a future field-data or approved RUM requirement. TBT is not INP.
+
+### Route-by-route results (local macOS, 2026-08-02)
+
+| Route | FCP(s) | LCP(s) | CLS | TBT(ms) | SI(s) | Score | Total(KB) | Req |
+|---|---|---|---|---|---|---|---|---|
+| / | 1.06 | 1.52 | 0.000 | 0 | 1.06 | 100 | 31 | 26 |
+| /memory | 0.91 | 1.37 | 0.000 | 0 | 0.91 | 100 | 24 | 27 |
+| /memory-qa | 0.91 | 1.37 | 0.000 | 0 | 0.91 | 100 | 22 | 27 |
+| /workbench | 0.91 | 1.37 | 0.000 | 0 | 0.91 | 100 | 20 | 25 |
+| /docs | 1.06 | 1.67 | 0.000 | 0 | 1.06 | 100 | 29 | 32 |
+| /contact | 0.91 | 1.37 | 0.000 | 0 | 0.91 | 100 | 17 | 25 |
+| /privacy | 0.91 | 1.37 | 0.000 | 0 | 0.91 | 100 | 16 | 22 |
+| /terms | 0.91 | 1.37 | 0.000 | 0 | 0.91 | 100 | 17 | 22 |
+
+All 8 routes pass all thresholds in local measurement. CI Linux headless Chromium measurements will differ due to font rendering and throttling differences.
+
+### Target gaps
+
+None in local measurement. CI measurement may surface gaps under Linux headless throttling.
+
+### Fixes made
+
+None required for threshold compliance in this packet.
+
+### CI design
+
+```yaml
+step: Run canonical performance evidence
+timeout_minutes: 25
+runs_per_route: 3
+target: http://localhost:3000 (local CI server, not production)
+exit_behavior: informational — reports gaps but does not block CI while CI baseline is being established
+artifact: tests/performance/results/ — uploaded on failure only, retention 7 days
+```
+
+### Artifact policy
+
+- Generated raw Lighthouse reports: not committed.
+- Results JSON: generated at runtime, stored in `tests/performance/results/`, gitignored.
+- Committed: policy, configuration, runner, baseline JSON, unit tests, documentation.
+
+### Limitations (remaining Phase 12 work)
+
+The following items require field or manual evidence not available from Lighthouse:
+
+- INP (Interaction to Next Paint) — requires RUM or field data.
+- Real-user device distribution across platforms.
+- Long-session route-transition memory leaks.
+- Real mobile-network behavior (operator latency, congestion).
+- Production cache variability (CDN warm vs cold).
+- Hero-media-specific transfer bytes (total-byte-weight covers full navigation, not above-fold only).
+
+### Deferred security observation
+
+CI run 30758962840 reported two Dockerfile build annotations concerning Stripe live-secret names in Docker `ARG`/`ENV` directives. These are classified as deferred container and secret-handling hardening. No plaintext secrets are committed. No action is required in PXF-016D.
+
+### Accessibility policy tests
+
+19 tests pass (13 original + 6 new environment-sensitive rule exclusion tests):
+
+1. omits color-contrast incomplete from baseline evidence
+2. does not omit a color-contrast serious violation (blocking scope)
+3. a serious color-contrast violation is unreviewed unless an exact exception exists
+4. a serious color-contrast violation passes only when an exact reviewed exception matches
+5. other incomplete rules continue to be recorded
+6. only the color-contrast rule is excluded from incomplete baselines
+
+### Performance policy tests
+
+29 tests pass (6 describe blocks):
+
+1. median() — 10 cases including unsorted, NaN, negative, empty, insufficient count
+2. computeMedians() — 2 cases
+3. checkThresholds() — 8 cases covering all four metric boundaries
+4. checkRegressionAgainstBaseline() — 4 cases including noise tolerance
+5. validateAllCanonicalRoutesPresent() — 4 cases
+6. tbtIsLabMetricNotINP() — 1 case verifying TBT labeling
+
+Phase 11 remains `PARTIAL`, Phase 12 remains `PARTIAL`, Phase 13 remains `ONGOING`.
