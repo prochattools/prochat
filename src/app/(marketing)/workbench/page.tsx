@@ -2,6 +2,7 @@ import StructuredData from '@/components/StructuredData'
 import { getSEOTags } from '@/libs/seo'
 import { getWorkbenchSchema } from '@/libs/structured-data'
 
+import '../prochat-memory-theme.css'
 import {
   ProductBoundaryList,
   ProductCard,

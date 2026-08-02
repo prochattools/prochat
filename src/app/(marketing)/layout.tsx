@@ -1,5 +1,4 @@
 import React from 'react';
-import './prochat-memory-theme.css'
 
 export default function MarketingLayout({
   children,

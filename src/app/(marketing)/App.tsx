@@ -283,7 +283,7 @@ export default function App() {
   return (
     <div className="pm-marketing-page pm-homepage">
       <section className="pm-hero-section" aria-labelledby="pm-hero-title">
-        <MemoryLaserField />
+        <MemoryLaserField variant="css" />
         <div className="pm-grid-overlay" aria-hidden="true" />
 
         <MarketingNav cta={{ label: 'Choose a product', href: '#current-products', trackingCta: 'choose_product_path' }} />
