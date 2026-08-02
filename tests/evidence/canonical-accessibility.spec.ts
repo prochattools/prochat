@@ -1,6 +1,18 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
 
+import {
+  REVIEWED_AXE_EXCEPTIONS,
+  getAccessibilityBaseline,
+} from './accessibility-evidence'
+import {
+  compareEvidenceBaseline,
+  evaluateBlockingViolations,
+  summarizeNonBlockingEvidence,
+  type AccessibilityViewport,
+  type AxeResultLike,
+} from './accessibility-policy'
+
 const baseUrl = process.env.WAVE1_BASE_URL
 
 if (!baseUrl) {
@@ -25,151 +37,13 @@ const VIEWPORTS = [
 
 const BLOCKED_PATHS = ['/maintenance', '/error', '/404', '/500', '/not-found']
 
-// WCAG 2.x A and AA rule tags supported by axe-core 4.x.
-// wcag22aa covers WCAG 2.2 AA criteria (e.g. target-size via wcag258).
-// There is no aggregate "wcag22a" tag in axe-core; individual 2.2 Level A
-// criteria are tagged by their specific success criterion number.
+// Axe 4.12.1 has no aggregate wcag22a tag. Applicable WCAG 2.2 Level A
+// criteria remain represented by Axe's individual success-criterion tags;
+// wcag22aa adds the supported aggregate WCAG 2.2 AA rules.
 const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']
 
-// ─── Reviewed Violation Exception Model ───────────────────────────────────────
-//
-// Each entry documents a specific axe-core finding that has been reviewed and
-// determined to be unfixable at the application level. Exceptions match by
-// exact ruleId + route + viewport + CSS target selector.
-//
-// Policy:
-// - Exceptions are element-specific; they never suppress an entire subtree.
-// - Each exception requires a justification explaining why it cannot be fixed.
-// - New violations that do not match a reviewed exception FAIL the gate.
-// - Baseline counts per route/viewport are enforced; unreviewed increases fail.
-
-interface ReviewedAxeException {
-  ruleId: string
-  route: string
-  viewport: 'desktop' | 'mobile' | 'both'
-  target: string
-  justification: string
-}
-
-const REVIEWED_EXCEPTIONS: ReviewedAxeException[] = [
-  // ── HeadlessUI listbox button (theme/language switcher) ──
-  // nextra-theme-docs v4 renders a HeadlessUI listbox button with no aria-label.
-  // darkMode={false} is already set in DocsThemeLayout but the button persists.
-  // No Layout prop exists to disable or label this control.
-  {
-    ruleId: 'button-name',
-    route: '/docs',
-    viewport: 'both',
-    target: 'headlessui-listbox-button',
-    justification:
-      'nextra-theme-docs v4 HeadlessUI listbox button has no aria-label. No application-code override path exists. darkMode={false} does not remove the control.',
-  },
-  {
-    ruleId: 'target-size',
-    route: '/docs',
-    viewport: 'both',
-    target: 'headlessui-listbox-button',
-    justification:
-      'Same HeadlessUI listbox button (12x28px). Cannot resize or remove via application configuration.',
-  },
-
-  // ── Nextra sidebar navigation links ──
-  // nextra-theme-docs v4 wraps sidebar link text in spans that axe-core cannot
-  // resolve as accessible names. The text IS present in the DOM (_meta.js content)
-  // but axe reports link-name violations due to rendering technique.
-  // Reported under .nextra-scrollbar container (desktop sidebar) and
-  // .x:transform-gpu container (mobile nav overlay, present in DOM at all viewports).
-  {
-    ruleId: 'link-name',
-    route: '/docs',
-    viewport: 'both',
-    target: 'nextra-scrollbar',
-    justification:
-      'nextra-theme-docs v4 sidebar links. Text content exists in _meta.js but axe cannot resolve accessible name due to Nextra rendering technique.',
-  },
-  {
-    ruleId: 'link-name',
-    route: '/docs',
-    viewport: 'both',
-    target: 'transform-gpu',
-    justification:
-      'Same sidebar links in mobile nav overlay (.x:transform-gpu). Present in DOM at all viewports. Same Nextra v4 rendering issue.',
-  },
-
-  // ── Nextra pagination links ──
-  // nextra-theme-docs v4 pagination component sets title="" (empty string)
-  // on prev/next links containing only SVG arrows. Application code cannot
-  // override this attribute. Reported target: .x\:max-w-\[50%\].
-  {
-    ruleId: 'link-name',
-    route: '/docs',
-    viewport: 'both',
-    target: 'max-w-',
-    justification:
-      'nextra-theme-docs v4 pagination links with explicitly empty title="". Contains only SVG arrows. No override path. Target selector contains .x:max-w-[50%].',
-  },
-]
-
-// Baseline: maximum expected non-blocking (incomplete) count per route/viewport.
-// If the actual count exceeds this baseline, the test fails to catch regressions.
-const INCOMPLETE_BASELINES: Record<string, number> = {
-  '/:desktop': 2,
-  '/:mobile': 2,
-  '/memory:desktop': 1,
-  '/memory:mobile': 1,
-  '/memory-qa:desktop': 1,
-  '/memory-qa:mobile': 1,
-  '/workbench:desktop': 0,
-  '/workbench:mobile': 0,
-  '/docs:desktop': 3,
-  '/docs:mobile': 3,
-  '/contact:desktop': 1,
-  '/contact:mobile': 1,
-  '/privacy:desktop': 0,
-  '/privacy:mobile': 0,
-  '/terms:desktop': 0,
-  '/terms:mobile': 0,
-}
-
-interface AxeNode {
-  target: Array<string | string[]>
-  html: string
-  failureSummary?: string
-}
-
-interface AxeViolation {
-  id: string
-  impact?: string | null
-  help: string
-  helpUrl: string
-  nodes: AxeNode[]
-}
-
-function matchesException(
-  violation: AxeViolation,
-  route: string,
-  viewport: 'desktop' | 'mobile',
-): { matched: AxeNode[]; unmatched: AxeNode[] } {
-  const matched: AxeNode[] = []
-  const unmatched: AxeNode[] = []
-
-  for (const node of violation.nodes) {
-    const nodeTarget = node.target.flat().join(' ')
-    const isExcepted = REVIEWED_EXCEPTIONS.some(
-      (ex) =>
-        ex.ruleId === violation.id &&
-        ex.route === route &&
-        (ex.viewport === 'both' || ex.viewport === viewport) &&
-        nodeTarget.includes(ex.target),
-    )
-    if (isExcepted) {
-      matched.push(node)
-    } else {
-      unmatched.push(node)
-    }
-  }
-
-  return { matched, unmatched }
+function formatPolicyErrors(label: string, errors: string[]): string {
+  return `${label}:\n${errors.map((error) => `- ${error}`).join('\n')}`
 }
 
 test.describe('canonical accessibility evidence', () => {
@@ -205,13 +79,46 @@ test.describe('canonical accessibility evidence', () => {
 
         await expect(page.locator('main')).toBeVisible()
 
-        // Run full Axe scan with no subtree exclusions.
+        // Scan the complete application document. Reviewed exceptions are
+        // applied after Axe analysis so no subtree or unrelated rule is hidden.
         const accessibilityScanResults = await new AxeBuilder({ page })
           .withTags(WCAG_TAGS)
-          .exclude('#axe-overlay')
           .analyze()
 
-        // Attach full JSON evidence on every run.
+        const viewportName = viewport.name as AccessibilityViewport
+        const blockingEvaluation = evaluateBlockingViolations(
+          accessibilityScanResults.violations as AxeResultLike[],
+          route,
+          viewportName,
+          REVIEWED_AXE_EXCEPTIONS,
+        )
+
+        const actualEvidence = summarizeNonBlockingEvidence(
+          accessibilityScanResults.violations as AxeResultLike[],
+          accessibilityScanResults.incomplete as AxeResultLike[],
+        )
+        const reviewedBaseline = getAccessibilityBaseline(route, viewportName)
+        const baselineEvaluation = compareEvidenceBaseline(actualEvidence, reviewedBaseline)
+
+        const policyErrors = [
+          ...blockingEvaluation.unreviewed.map(
+            (entry) =>
+              `unreviewed ${entry.impact} ${entry.ruleId} at ${entry.target}`,
+          ),
+          ...blockingEvaluation.staleExceptionIds.map(
+            (entry) => `stale exception ${entry}`,
+          ),
+          ...blockingEvaluation.cardinalityErrors.map(
+            (entry) => `exception cardinality ${entry}`,
+          ),
+          ...blockingEvaluation.duplicateMatches.map(
+            (entry) => `duplicate exception ${entry}`,
+          ),
+          ...baselineEvaluation.regressions.map(
+            (entry) => `evidence baseline ${entry}`,
+          ),
+        ]
+
         await testInfo.attach(
           `axe-results-${route.replace(/\//g, '_') || 'root'}-${viewport.name}.json`,
           {
@@ -220,10 +127,17 @@ test.describe('canonical accessibility evidence', () => {
               {
                 route,
                 viewport: viewport.name,
+                tags: WCAG_TAGS,
                 violations: accessibilityScanResults.violations,
-                passes: accessibilityScanResults.passes.length,
-                incomplete: accessibilityScanResults.incomplete.length,
-                inapplicable: accessibilityScanResults.inapplicable.length,
+                incomplete: accessibilityScanResults.incomplete,
+                appliedReviewedExceptions: blockingEvaluation.appliedExceptionIds,
+                staleExceptions: blockingEvaluation.staleExceptionIds,
+                duplicateMatches: blockingEvaluation.duplicateMatches,
+                cardinalityErrors: blockingEvaluation.cardinalityErrors,
+                actualNonBlockingEvidence: actualEvidence,
+                reviewedNonBlockingBaseline: reviewedBaseline,
+                baselineDecreases: baselineEvaluation.decreases,
+                policyErrors,
               },
               null,
               2,
@@ -231,76 +145,19 @@ test.describe('canonical accessibility evidence', () => {
           },
         )
 
-        // Separate violations by impact.
-        const critical = accessibilityScanResults.violations.filter(
-          (v) => v.impact === 'critical',
-        )
-        const serious = accessibilityScanResults.violations.filter(
-          (v) => v.impact === 'serious',
-        )
-        const moderate = accessibilityScanResults.violations.filter(
-          (v) => v.impact === 'moderate',
-        )
-        const minor = accessibilityScanResults.violations.filter(
-          (v) => v.impact === 'minor',
-        )
-
-        // Report moderate and minor as structured evidence.
-        if (moderate.length > 0 || minor.length > 0) {
-          const lowerImpact = [...moderate, ...minor]
-          console.log(
-            `[${route} ${viewport.name}] moderate=${moderate.length} minor=${minor.length}:`,
-            lowerImpact.map((v) => ({
-              rule: v.id,
-              impact: v.impact,
-              help: v.help,
-              nodes: v.nodes.map((n) => n.target),
-            })),
-          )
+        for (const exceptionId of blockingEvaluation.appliedExceptionIds) {
+          console.log(`[${route} ${viewport.name}] applied reviewed exception ${exceptionId}`)
+        }
+        for (const decrease of baselineEvaluation.decreases) {
+          console.log(`[${route} ${viewport.name}] baseline decrease: ${decrease}`)
         }
 
-        // Apply reviewed exception model to critical/serious violations.
-        const blocking = [...critical, ...serious] as AxeViolation[]
-        const unreviewedViolations: Array<{
-          ruleId: string
-          impact: string | null | undefined
-          help: string
-          helpUrl: string
-          nodes: AxeNode[]
-        }> = []
-
-        for (const violation of blocking) {
-          const { unmatched } = matchesException(violation, route, viewport.name as 'desktop' | 'mobile')
-          if (unmatched.length > 0) {
-            unreviewedViolations.push({
-              ruleId: violation.id,
-              impact: violation.impact,
-              help: violation.help,
-              helpUrl: violation.helpUrl,
-              nodes: unmatched,
-            })
-          }
-        }
-
-        if (unreviewedViolations.length > 0) {
+        if (policyErrors.length > 0) {
           throw new Error(
-            `${unreviewedViolations.length} unreviewed critical/serious Axe violation(s) on ${route} at ${viewport.name}:\n${JSON.stringify(
-              unreviewedViolations.map((v) => ({ route, viewport: viewport.name, ...v })),
-              null,
-              2,
-            )}`,
-          )
-        }
-
-        // Baseline enforcement: fail if incomplete count exceeds reviewed baseline.
-        const baselineKey = `${route}:${viewport.name}`
-        const baselineMax = INCOMPLETE_BASELINES[baselineKey] ?? 0
-        const incompleteCount = accessibilityScanResults.incomplete.length
-        if (incompleteCount > baselineMax) {
-          throw new Error(
-            `Incomplete findings regression on ${route} at ${viewport.name}: ` +
-              `found ${incompleteCount}, baseline allows ${baselineMax}. ` +
-              `Review new incomplete findings and update INCOMPLETE_BASELINES if justified.`,
+            formatPolicyErrors(
+              `Accessibility policy failed on ${route} at ${viewport.name}`,
+              policyErrors,
+            ),
           )
         }
       })

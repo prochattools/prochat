@@ -4,6 +4,7 @@ const isCI = process.env.CI === 'true'
 
 export default defineConfig({
   testDir: '.',
+  testMatch: '**/*.spec.ts',
   outputDir: './test-results',
   timeout: 60_000,
   expect: {
