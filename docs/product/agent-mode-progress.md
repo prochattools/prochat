@@ -4,7 +4,7 @@
 **Branch:** `main`  
 **Audit date:** 2026-07-31  
 **Reconciliation date:** 2026-08-01  
-**Status:** PXF-016C/C1/C2 deployed and complete; PXF-016D active; HEAD `853207b` verified in production
+**Status:** PXF-016C/C1/C2 deployed and complete; PXF-016D remains active and blocked on six canonical Linux-simulated LCP thresholds; HEAD `853207b` remains the last verified production revision
 
 ## Purpose
 
@@ -635,7 +635,7 @@ Phase 11 remains `PARTIAL`, Phase 12 remains `PARTIAL`, Phase 13 remains `ONGOIN
 ## PXF-016D — Measured mobile performance proof
 
 **Started:** 2026-08-02
-**Status:** active — policy, tooling, runner, and local measurement complete; CI run pending
+**Status:** active — attribution complete; two bounded font-loading repairs exhausted; six canonical routes still fail the blocking LCP gate
 
 ### Tooling and versions
 
@@ -721,7 +721,7 @@ step: Run canonical performance evidence
 timeout_minutes: 25
 runs_per_route: 3
 target: http://localhost:3000 (local CI server, not production)
-exit_behavior: informational — reports gaps but does not block CI while CI baseline is being established
+exit_behavior: required — missing routes, incomplete audits, or threshold gaps return a nonzero exit code and block deployment
 artifact: tests/performance/results/ — uploaded on failure only, retention 7 days
 ```
 
@@ -769,3 +769,77 @@ CI run 30758962840 reported two Dockerfile build annotations concerning Stripe l
 6. tbtIsLabMetricNotINP() — 1 case verifying TBT labeling
 
 Phase 11 remains `PARTIAL`, Phase 12 remains `PARTIAL`, Phase 13 remains `ONGOING`.
+
+
+## PXF-016D2 — LCP attribution and bounded repair result
+
+**Measured:** 2026-08-03  
+**Starting head:** `70fe808`  
+**Status:** attribution implementation retained locally; two bounded repair attempts exhausted; no font repair retained; not pushed
+
+### Attribution implementation
+
+The canonical Lighthouse runner now supports a separate one-run diagnostic mode and records:
+
+- the outermost main-frame navigation;
+- LCP candidates matched by `navigationId`;
+- final candidate identity, candidate count, replacement evidence, DOM node ID, node name, selector, type, and size;
+- raw navigation-to-FCP, navigation-to-LCP, and FCP-to-LCP trace timing;
+- public Lighthouse LCP audit availability without fabricating unsupported fields;
+- main-thread work, boot-up and script execution, long tasks, network requests, top scripts, and CSS/JavaScript request inventories;
+- exact per-route client JavaScript and CSS files parsed from Next.js client-reference manifests.
+
+Performance policy and attribution tests: **49/49 passed** (29 policy tests plus 20 attribution tests).
+
+### Diagnostic evidence
+
+| Route | Simulated LCP | Final LCP element | Type | Raw nav→LCP | Raw FCP→LCP | Candidates | JS transfer |
+|---|---:|---|---|---:|---:|---:|---:|
+| `/` | 3.07s | `h1#pm-hero-title` | text | 176ms | 0ms | 1 | 137KB |
+| `/memory` | 2.86s | `h1#pm-product-title-memory` | text | 83ms | 0ms | 1 | 137KB |
+| `/memory-qa` | 2.86s | `h1#pm-product-title-memory-qa` | text | 70ms | 0ms | 1 | 137KB |
+| `/workbench` | 2.71s | `h1#pm-product-title-workbench` | text | 57ms | 0ms | 1 | 137KB |
+| `/docs` | 3.46s | paragraph text | text | 65ms | 14ms | 2 | 214KB |
+| `/contact` | 2.90s | paragraph text | text | 65ms | 0ms | 1 | 152KB |
+
+For the focused `/memory` trace, observed FCP and observed LCP were both approximately 167ms, while Lighthouse's simulated values were approximately 1.21s FCP and 2.94s LCP. The main document server-response audit was approximately 16ms. The final H1 was the first and final LCP candidate.
+
+**Rejected hypothesis:** a 1.7–2.0 second React hydration delay is not supported. The measured text candidate appears at FCP in the raw trace. The larger reported LCP is produced by Lighthouse's simulated dependency model, not a directly observed wait for React reconciliation.
+
+### Bounded repair attempts
+
+Two evidence-backed font-loading experiments were tested because every failing LCP element was text:
+
+1. Disable only the JetBrains Mono preload. None of the measured LCP elements uses JetBrains Mono.
+2. Use `font-display: optional` for Golos Text and Host Grotesk while retaining the noncritical Mono preload change.
+
+Both attempts completed a production build and a full eight-route, three-run Lighthouse gate. Neither produced a consistent material improvement, so all font changes were reverted.
+
+| Route | CI Run 5 | Attempt 1 | Attempt 2 | Final outcome |
+|---|---:|---:|---:|---|
+| `/` | 3.14s | 3.01s | 3.01s | fails |
+| `/memory` | 2.98s | 2.86s | 2.86s | fails |
+| `/memory-qa` | 2.99s | 2.86s | 2.86s | fails |
+| `/workbench` | 2.82s | 2.71s | 2.71s | fails |
+| `/docs` | 3.28s | 3.61s | 3.61s | fails |
+| `/contact` | 2.99s | 2.85s | 2.86s | fails |
+| `/privacy` | 2.63s | 2.50s | 2.41s | passes |
+| `/terms` | 2.65s | 2.40s | 2.41s | passes |
+
+CI Run 5 and local macOS values are not treated as controlled A/B results because their environments differ. Attempt one and attempt two used the same local environment and were effectively unchanged on the six failing routes.
+
+### Architectural repair boundary
+
+No further automatic repair is authorized in PXF-016D2. The next performance packet requires a broader measured critical-path change rather than another provider, hydration, or font guess.
+
+Evidence-backed candidates are:
+
+1. Split the approximately 132KB shared render-blocking stylesheet so canonical public routes do not pay for legacy and protected-route CSS.
+2. Preserve only measured above-the-fold canonical styles in the critical path and load route-specific or legacy styles from their owning route groups.
+3. Treat `/docs` separately: it has a two-candidate text LCP, approximately 420KB total transfer, approximately 214KB JavaScript transfer, and a large Nextra/HeadlessUI client bundle.
+4. Keep root provider or shell restructuring out of scope unless a later trace proves it affects the observed paint; current trace evidence does not.
+
+The canonical threshold remains unchanged at LCP ≤ 2.5s. Phase 12 remains `PARTIAL`, CI remains blocked on six routes, and production remains at the last verified revision.
+
+Security review: the secret-material scan found no findings. The broad changed-path scan reported only expected bounded localhost readiness and Chrome DevTools fetch calls plus historical documentation/upload terminology and the pre-existing Axios dependency; no remote Lighthouse upload or plaintext secret was introduced.
+

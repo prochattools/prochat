@@ -22,6 +22,14 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
+import {
+  diagnosticSummary,
+  extractPerformanceAttribution,
+  extractRouteChunkInventory,
+  parseClientReferenceManifest,
+  selectRepresentativeAttribution,
+} from '../tests/performance/canonical-performance-attribution.mjs'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const require = createRequire(import.meta.url)
@@ -41,7 +49,22 @@ if (BASE_URL.includes('prochat.tools') || BASE_URL.includes('staging')) {
 }
 
 const CANONICAL_ROUTES = ['/', '/memory', '/memory-qa', '/workbench', '/docs', '/contact', '/privacy', '/terms']
-const RUNS_PER_ROUTE = 3
+const DIAGNOSTIC_MODE = process.env.PERF_DIAGNOSTIC_MODE === '1'
+const requestedDiagnosticRoutes = (process.env.PERF_DIAGNOSTIC_ROUTES ?? '')
+  .split(',')
+  .map((route) => route.trim())
+  .filter(Boolean)
+const unknownDiagnosticRoutes = requestedDiagnosticRoutes.filter((route) => !CANONICAL_ROUTES.includes(route))
+if (unknownDiagnosticRoutes.length > 0) {
+  console.error(`Unknown diagnostic routes: ${unknownDiagnosticRoutes.join(', ')}`)
+  process.exit(1)
+}
+const ROUTES_TO_RUN = DIAGNOSTIC_MODE
+  ? requestedDiagnosticRoutes.length > 0
+    ? requestedDiagnosticRoutes
+    : CANONICAL_ROUTES
+  : CANONICAL_ROUTES
+const RUNS_PER_ROUTE = DIAGNOSTIC_MODE ? 1 : 3
 const TIMEOUT_MS = 25 * 60 * 1000
 const BLOCKED_PATHS = ['/maintenance', '/error', '/404', '/500', '/not-found']
 const RESULTS_DIR = join(__dirname, '..', 'tests', 'performance', 'results')
@@ -148,6 +171,31 @@ function checkThresholds(medians) {
   ]
 }
 
+function loadRouteChunkInventory() {
+  const root = join(__dirname, '..')
+  const routeManifestPaths = {
+    '/': '.next/server/app/(marketing)/page_client-reference-manifest.js',
+    '/memory': '.next/server/app/(marketing)/memory/page_client-reference-manifest.js',
+    '/memory-qa': '.next/server/app/(marketing)/memory-qa/page_client-reference-manifest.js',
+    '/workbench': '.next/server/app/(marketing)/workbench/page_client-reference-manifest.js',
+    '/docs': '.next/server/app/docs/page_client-reference-manifest.js',
+    '/contact': '.next/server/app/(marketing)/contact/page_client-reference-manifest.js',
+    '/privacy': '.next/server/app/(marketing)/privacy/page_client-reference-manifest.js',
+    '/terms': '.next/server/app/(marketing)/terms/page_client-reference-manifest.js',
+  }
+  const manifests = {}
+  for (const route of ROUTES_TO_RUN) {
+    const relativePath = routeManifestPaths[route]
+    const manifestPath = relativePath ? join(root, relativePath) : null
+    if (!manifestPath || !existsSync(manifestPath)) {
+      manifests[route] = null
+      continue
+    }
+    manifests[route] = parseClientReferenceManifest(readFileSync(manifestPath, 'utf8'))
+  }
+  return extractRouteChunkInventory(manifests, ROUTES_TO_RUN)
+}
+
 async function runLighthouse(url, chromePort) {
   const result = await lighthouse(url, {
     port: chromePort,
@@ -169,14 +217,14 @@ async function runLighthouse(url, chromePort) {
     emulatedUserAgent: 'Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36',
     disableFullPageScreenshot: true,
   })
-  return result.lhr
+  return result
 }
 
 async function main() {
   const startTime = Date.now()
-  console.log('Starting canonical performance evidence collection')
+  console.log(DIAGNOSTIC_MODE ? 'Starting canonical performance diagnostic attribution' : 'Starting canonical performance evidence collection')
   console.log(`Base URL: ${BASE_URL}`)
-  console.log(`Routes: ${CANONICAL_ROUTES.length}, runs per route: ${RUNS_PER_ROUTE}, total audits: ${CANONICAL_ROUTES.length * RUNS_PER_ROUTE}`)
+  console.log(`Routes: ${ROUTES_TO_RUN.length}, runs per route: ${RUNS_PER_ROUTE}, total audits: ${ROUTES_TO_RUN.length * RUNS_PER_ROUTE}`)
 
   mkdirSync(RESULTS_DIR, { recursive: true })
 
@@ -216,11 +264,14 @@ async function main() {
       throttlingMethod: 'simulate',
       userAgent: 'Moto G Power (2022) Android 11',
       runCount: RUNS_PER_ROUTE,
+      mode: DIAGNOSTIC_MODE ? 'diagnostic' : 'canonical-gate',
+      routes: ROUTES_TO_RUN,
       timestamp: new Date().toISOString(),
       applicationRevision: process.env.GITHUB_SHA ?? process.env.PROCHAT_GIT_SHA ?? 'local',
       tbtNote: 'TBT is a laboratory interactivity diagnostic. It is not field INP.',
       inpNote: 'INP (Interaction to Next Paint) requires field measurement or an approved RUM tool and is not provided by Lighthouse.',
     }
+    const routeChunkInventory = loadRouteChunkInventory()
 
     console.log(`\nEnvironment:`)
     console.log(`  Lighthouse: ${environment.lighthouseVersion}`)
@@ -234,7 +285,7 @@ async function main() {
     const routeResults = []
     const failedRoutes = []
 
-    for (const route of CANONICAL_ROUTES) {
+    for (const route of ROUTES_TO_RUN) {
       if (Date.now() - startTime > TIMEOUT_MS) {
         console.error(`Timeout exceeded (${TIMEOUT_MS}ms). Stopping.`)
         process.exitCode = 1
@@ -242,7 +293,7 @@ async function main() {
       }
 
       const url = new URL(route, BASE_URL).toString()
-      console.log(`\n[${CANONICAL_ROUTES.indexOf(route) + 1}/${CANONICAL_ROUTES.length}] ${route}`)
+      console.log(`\n[${ROUTES_TO_RUN.indexOf(route) + 1}/${ROUTES_TO_RUN.length}] ${route}`)
 
       try {
         await verifyRouteReady(url, route)
@@ -258,9 +309,11 @@ async function main() {
       for (let run = 1; run <= RUNS_PER_ROUTE; run++) {
         console.log(`  Run ${run}/${RUNS_PER_ROUTE}...`)
         try {
-          const lhr = await runLighthouse(url, chrome.port)
+          const lighthouseResult = await runLighthouse(url, chrome.port)
+          const lhr = lighthouseResult.lhr
           const metrics = extractMetrics(lhr)
-          rawRuns.push(metrics)
+          const attribution = extractPerformanceAttribution(lhr, lighthouseResult.artifacts)
+          rawRuns.push({ ...metrics, attribution })
           console.log(`    LCP: ${metrics.LCP_seconds.toFixed(2)}s  CLS: ${metrics.CLS.toFixed(3)}  TBT: ${metrics.TBT_ms.toFixed(0)}ms  FCP: ${metrics.FCP_seconds.toFixed(2)}s  score: ${metrics.performance_score}`)
         } catch (err) {
           console.error(`  Run ${run} failed: ${err.message}`)
@@ -274,7 +327,19 @@ async function main() {
         continue
       }
 
-      const computedMedians = computeMedians(rawRuns)
+      const computedMedians = DIAGNOSTIC_MODE
+        ? {
+            FCP_seconds: rawRuns[0].FCP_seconds,
+            LCP_seconds: rawRuns[0].LCP_seconds,
+            CLS: rawRuns[0].CLS,
+            TBT_ms: rawRuns[0].TBT_ms,
+            SI_seconds: rawRuns[0].SI_seconds,
+            performance_score: rawRuns[0].performance_score,
+            total_bytes: rawRuns[0].total_bytes,
+            js_bytes: rawRuns[0].js_bytes,
+            request_count: rawRuns[0].request_count,
+          }
+        : computeMedians(rawRuns)
       if (!computedMedians) {
         console.error(`  Median computation failed — one or more metrics have insufficient valid values`)
         failedRoutes.push({ route, error: 'Median computation failed' })
@@ -292,6 +357,7 @@ async function main() {
         console.log(`  All thresholds pass`)
       }
 
+      const attribution = selectRepresentativeAttribution(rawRuns, computedMedians.LCP_seconds)
       routeResults.push({
         route,
         rawRuns,
@@ -299,38 +365,50 @@ async function main() {
         thresholdResults,
         passes,
         targetGaps,
+        attribution,
+        routeChunks: routeChunkInventory[route] ?? { manifestKey: 'unavailable', files: [] },
         failedRequests: [],
       })
     }
 
-    const allPass = routeResults.length === CANONICAL_ROUTES.length &&
+    const allThresholdsMet = routeResults.length === ROUTES_TO_RUN.length &&
       routeResults.every((r) => r.passes) &&
       failedRoutes.length === 0
+    const runSucceeded = routeResults.length === ROUTES_TO_RUN.length &&
+      failedRoutes.length === 0 &&
+      (DIAGNOSTIC_MODE || allThresholdsMet)
+    const diagnostics = routeResults.map((result) => diagnosticSummary(result, routeChunkInventory))
 
     const output = {
       environment,
+      routeChunkInventory,
       routeResults,
+      diagnostics,
       failedRoutes,
       summary: {
-        totalRoutes: CANONICAL_ROUTES.length,
+        mode: DIAGNOSTIC_MODE ? 'diagnostic' : 'canonical-gate',
+        totalRoutes: ROUTES_TO_RUN.length,
         completedRoutes: routeResults.length,
         failedRoutes: failedRoutes.length,
         routesPassing: routeResults.filter((r) => r.passes).length,
         routesWithTargetGaps: routeResults.filter((r) => !r.passes).map((r) => r.route),
-        allThresholdsMet: allPass,
+        allThresholdsMet,
+        runSucceeded,
       },
     }
 
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)
-    const timestampedPath = join(RESULTS_DIR, `canonical-performance-${timestamp}.json`)
-    const latestPath = join(RESULTS_DIR, 'canonical-performance-latest.json')
+    const outputPrefix = DIAGNOSTIC_MODE ? 'canonical-performance-diagnostic' : 'canonical-performance'
+    const timestampedPath = join(RESULTS_DIR, `${outputPrefix}-${timestamp}.json`)
+    const latestPath = join(RESULTS_DIR, `${outputPrefix}-latest.json`)
 
     writeFileSync(timestampedPath, JSON.stringify(output, null, 2))
     writeFileSync(latestPath, JSON.stringify(output, null, 2))
 
     console.log(`\n=== Summary ===`)
-    console.log(`Routes completed: ${routeResults.length}/${CANONICAL_ROUTES.length}`)
-    console.log(`Routes passing all thresholds: ${output.summary.routesPassing}/${CANONICAL_ROUTES.length}`)
+    console.log(`Mode: ${output.summary.mode}`)
+    console.log(`Routes completed: ${routeResults.length}/${ROUTES_TO_RUN.length}`)
+    console.log(`Routes passing all thresholds: ${output.summary.routesPassing}/${ROUTES_TO_RUN.length}`)
     if (output.summary.routesWithTargetGaps.length > 0) {
       console.log(`Routes with target gaps: ${output.summary.routesWithTargetGaps.join(', ')}`)
     }
@@ -339,8 +417,7 @@ async function main() {
     }
     console.log(`Results: ${latestPath}`)
 
-    // Print route-by-route medians table
-    console.log('\n=== Route-by-route medians (mobile simulated, 3-run median) ===')
+    console.log(`\n=== Route-by-route ${DIAGNOSTIC_MODE ? 'observations' : 'medians'} (mobile simulated) ===`)
     console.log('Route'.padEnd(15), 'FCP(s)'.padEnd(8), 'LCP(s)'.padEnd(8), 'CLS'.padEnd(7), 'TBT(ms)'.padEnd(9), 'SI(s)'.padEnd(7), 'Score'.padEnd(7), 'Total(KB)'.padEnd(11), 'JS(KB)')
     for (const r of routeResults) {
       const m = r.medians
@@ -358,10 +435,28 @@ async function main() {
       )
     }
 
-    if (!allPass) {
+    console.log('\n=== LCP attribution summary ===')
+    for (const item of diagnostics.filter(Boolean)) {
+      const trace = item.rawTraceTimings
+      const topTransfer = item.topScriptByTransfer?.filename ?? 'unavailable'
+      const topExecution = item.topScriptByExecution?.filename ?? 'unavailable'
+      console.log(
+        `${item.route}: LCP ${item.LCP_seconds.toFixed(2)}s; ` +
+          `${item.lcpElement.elementType} ${item.lcpElement.selector}; ` +
+          `trace nav→FCP ${trace.navigationToFcpMs ?? 'n/a'}ms; ` +
+          `nav→LCP ${trace.navigationToLcpMs ?? 'n/a'}ms; FCP→LCP ${trace.fcpToLcpMs ?? 'n/a'}ms; ` +
+          `candidates ${item.lcpCandidateCount}; replacement ${item.lcpReplacementObserved}; ` +
+          `top transfer ${topTransfer}; top execution ${topExecution}; ` +
+          `JS ${(item.totalJavaScriptTransferBytes / 1024).toFixed(0)}KB; long tasks ${item.longTaskCount}`,
+      )
+    }
+
+    if (!runSucceeded) {
       console.log('\nOne or more routes have target gaps or failed to complete.')
-      console.log('See target gap entries in the results JSON for bounded repair recommendations.')
+      console.log('See target gap and attribution entries in the results JSON for bounded repair recommendations.')
       process.exitCode = 1
+    } else if (DIAGNOSTIC_MODE && !allThresholdsMet) {
+      console.log('\nDiagnostic attribution completed; threshold gaps are recorded without changing canonical gate behavior.')
     }
   } finally {
     if (chrome) {

@@ -65,11 +65,11 @@ The following items cannot be verified by Lighthouse and require field data or m
 
 ## Fonts
 
-- Golos Text and JetBrains Mono only.
-- Load necessary subsets and weights.
-- Use `font-display: swap`.
+- Host Grotesk is the body/system sans, Golos Text is the public brand/display face, and JetBrains Mono is reserved for code and technical labels.
+- Load only necessary subsets and weights.
+- Use `font-display: swap` unless a measured, approved exception proves a better result.
 - Reserve metrics to reduce layout shift.
-- Verify production font output and caching.
+- Verify production font output, preload behavior, and caching.
 
 ## Motion
 
@@ -147,3 +147,30 @@ selection_reason: >
 ## Deferred security observation (PXF-016D)
 
 CI run 30758962840 reported two Dockerfile build annotations concerning Stripe live-secret names in Docker `ARG`/`ENV` directives. These are classified as deferred container and secret-handling hardening work. They do not represent plaintext secrets committed to the repository. No action is required in PXF-016D.
+
+
+## LCP attribution semantics (PXF-016D2)
+
+Lighthouse's simulated LCP value and the browser's raw observed LCP candidate timing are related but not interchangeable.
+
+The canonical runner therefore records both:
+
+- the simulated Lighthouse FCP/LCP values used by the release threshold;
+- the outermost main-frame navigation and LCP candidate trace events;
+- final candidate identity and replacement count;
+- raw navigation-to-FCP, navigation-to-LCP, and FCP-to-LCP timing;
+- main-thread, script, network, and route-chunk attribution.
+
+Do not claim a hydration delay merely because simulated LCP is later than simulated FCP. PXF-016D2 measured the failing public text candidates at or within approximately 17ms of raw FCP, rejecting the earlier 1.7–2.0 second hydration-floor hypothesis.
+
+The current blocking result is six canonical routes above the unchanged 2.5-second simulated LCP threshold. Two bounded font-loading experiments were completed and reverted because they produced no consistent material improvement.
+
+The next approved repair boundary is architectural critical-path reduction:
+
+1. separate canonical public CSS from legacy and protected-route CSS now carried by the shared render-blocking bundle;
+2. preserve only measured above-the-fold canonical styles in the initial route path;
+3. address the `/docs` Nextra/HeadlessUI transfer and two-candidate LCP separately;
+4. avoid root provider or shell rewrites unless later trace evidence proves they delay observed paint.
+
+Phase 12 remains partial until all eight canonical routes pass the unchanged Linux CI laboratory thresholds. Field INP and manual accessibility remain separate evidence requirements.
+
