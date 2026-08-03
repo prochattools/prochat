@@ -7,8 +7,8 @@ import Header from '@/components/Header'
 import { Footer } from '@/app/(marketing)/components/layout/Footer'
 
 import 'nextra-theme-docs/style-prefixed.css'
-import '../(marketing)/prochat-memory-theme.css'
 import '../../../styles/docs.css'
+import './docs-public-chrome.css'
 
 const PUBLIC_DOCS_NAVIGATION = [
   {

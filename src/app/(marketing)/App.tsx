@@ -11,6 +11,7 @@ import {
 import HomepageTrackedLink from './components/HomepageTrackedLink'
 import { MarketingNav } from './components/layout/MarketingNav'
 import './prochat-memory-theme.css'
+import './prochat-home.css'
 
 const MemoryLaserField = dynamic(
   () => import('./components/motion/MemoryLaserField').then((m) => m.MemoryLaserField),
