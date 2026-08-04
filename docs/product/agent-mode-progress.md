@@ -4,7 +4,7 @@
 **Branch:** `main`  
 **Audit date:** 2026-07-31  
 **Reconciliation date:** 2026-08-04  
-**Status:** PXF-016E canonical public chrome closeout deployed; PXF-017A legacy cleanup deployed; SHA `7cfa126` verified in production
+**Status:** PXF-017B inventory correction and auth-boundary audit (in progress); PXF-016E canonical public chrome closeout deployed; PXF-017A legacy cleanup deployed; SHA `7cfa126` verified in production
 
 ## Purpose
 

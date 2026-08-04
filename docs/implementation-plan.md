@@ -48,7 +48,7 @@ validated_date: 2026-08-04
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
 current_program_state: The canonical public platform is deployed to production (SHA 7cfa126). All eight canonical routes serve with unified navigation, footer, and neutral design. Contact page centered in neutral viewport. 12 verified-unused legacy components removed (src/components cleanup). All CI checks pass (TypeScript, ESLint, design governance, 40/40 browser/accessibility). Owner-directed benchmark tuning closed. Phase 11 PARTIAL: redirects active, first cleanup deployed, inventory created, protected-route hardening design pending.
 current_phase: Phase 13 — continuous governance
-current_packet: PXF-016E — canonical public chrome closeout pending deployment
+current_packet: PXF-017B — inventory correction and auth-boundary audit
 canonical_visual_routes_active: 8
 canonical_route_implementation: COMPLETE
 public_docs_alignment: COMPLETE
@@ -68,10 +68,9 @@ protected_session_strategy: PUBLIC_AND_UNAUTHENTICATED_ONLY
 authenticated_protected_proof: SEPARATE_FUTURE_RUNNER
 browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
-shell_contract: COMPLETE_PENDING_DEPLOYMENT
+shell_contract: DEPLOYED
 closeout_push_status: COMPLETE — ada06665f5944fc988f4dad4a5fed47cee471d8b, 29854de09b04792c377d0bba7528297acb14c155, and ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba reached origin/main on 2026-07-31; PXF-016A/B/B1/B2 chain (7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9) pushed and deployed 2026-08-01; PXF-016C/C1/C2 chain pushed 2026-08-02 and deployed as 853207b49f338c4832e1f8a84e237ca6bf0c400b
-deployment_status: VERIFIED — production /api/version matched 853207b49f338c4832e1f8a84e237ca6bf0c400b after successful Main workflow run 30758962840 (all 4 jobs passed); CI 30/30 browser tests passed; target-size and env-sensitive baseline repairs deployed; this is an operational observation, not a mutable repository-HEAD field
-next_owner_gate: CONTINUOUS_GOVERNANCE
+deployment_status: VERIFIED — production /api/version matched 7cfa1261de651dbb1ba602e3f7df4f8d8d5f9343 after successful Main workflow run 30939864855 (all 4 jobs passed); all 8 canonical routes HTTP 200; 40/40 browser tests passed; accessibility policy passed; this is an operational observation, not a mutable repository-HEAD field
 ```
 
 ## Historical executor queue
@@ -110,10 +109,7 @@ c15c90d feat(onboarding): clarify first-success product paths
 4b423fb feat(analytics): track product-page onboarding actions
 ```
 
-The platform is deployed and live. All canonical routes pass CI. No further implementation packets are pending.
-
-```yaml
-- task_id: PPF-001
+The platform is deployed and live. All canonical routes pass CI. Phase 11 inventory and auth-boundary audit are the current work packets (PXF-017B).
   status: READY
   purpose: Browser-runner worktree isolation, stale-run disposition, and shell-contract decision.
   depends_on: []

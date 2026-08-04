@@ -42,7 +42,7 @@ validated_date: 2026-08-04
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
 current_program_state: The canonical public chrome closeout is deployed to production (SHA 7cfa126). All eight canonical routes serve with unified navigation and footer. Contact page centered in neutral dark viewport. 12 verified-unused legacy components removed (ButtonGradient, BetterIcon, ButtonSignin, HeroStandard, HowToUse, SaveMoney, StripePortalButton, Testimonial1Small, TestimonialRating, Testimonials1, TestimonialsAvatars, theme-provider). All checks passed (TypeScript, ESLint, design governance, 40/40 browser/accessibility). Owner-directed benchmark tuning remains closed. Phase 11 PARTIAL (legacy inventory created, first cleanup deployed); Phase 11 protected-route hardening not yet started.
 current_phase: Phase 13 — continuous governance
-current_packet: PXF-017A — legacy surface inventory and first cleanup deployed
+current_packet: PXF-017B — inventory correction and auth-boundary audit
 canonical_visual_routes_active: 8
 canonical_routes: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms
 legacy_redirects_active: /prochat-memory -> /memory; /qa-memory -> /memory-qa
@@ -633,7 +633,7 @@ Build the complete company public platform in bounded page packets.
 
 # Phase 11 — Legacy migration and removal
 
-**Status:** PLANNED after replacements pass.
+**Status:** PARTIAL (redirects active, inventory created, first cleanup deployed; protected-route hardening design pending).
 
 ## Goal
 
@@ -671,7 +671,7 @@ Phase 10 replacements and Phase 5 migration decisions.
 
 # Phase 12 — Production craft and launch validation
 
-**Status:** PLANNED after Phase 11.
+**Status:** PARTIAL (40/40 browser/accessibility evidence passed; formal WCAG 2.2 AA audit and measured performance baseline remain deferred).
 
 ## Goal
 

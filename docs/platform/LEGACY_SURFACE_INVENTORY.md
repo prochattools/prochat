@@ -12,8 +12,8 @@
 |----------|-------|--------|-------|
 | Canonical Active | 8 | DEPLOYED | Core public chrome, unified nav/footer, all HTTP 200 |
 | Redirect-Only | 4 | ACTIVE | Legacy aliases → canonical routes |
-| Historical Marketing | 12 | PUBLIC | Blog, guides, playbooks, prompts, learning paths |
-| Purchaser/Commerce | 7 | ACTIVE | Kits, studio, branded variant, link shortener |
+| Historical Marketing | 16 | PUBLIC | Blog, guides, playbooks, prompts, learning paths, kits, glossary |
+| Purchaser/Commerce | 3 | ACTIVE | Studio, branded variant, link shortener |
 | Protected/Authenticated | 6 | ACTIVE | Chat, dashboard, preferences, waitlist, success, unsubscribe |
 | Admin-Only | 4 | PROTECTED | Admin panel, licenses, waitlist admin, OG generation |
 | Internal/System/Debug | 15 | INTERNAL | Auth, debugging, maintenance, event system, OS kernel |
@@ -22,7 +22,7 @@
 | Integration APIs | 9 | ACTIVE | Contact, email, social, preferences, projects, tenants, webhooks |
 | Automation APIs | 2 | ACTIVE | Make.com, n8n |
 | Unused Component Files (removed) | 12 | DELETED | PXF-017A cleanup: ButtonGradient, BetterIcon, ButtonSignin, etc. |
-| **Total Inventory Rows** | **86** | **Catalogued** | See detailed table below |
+| **Total Inventory Rows** | **85** | **Catalogued** | See detailed table below |
 
 ## Detailed Inventory Table
 
@@ -31,9 +31,9 @@
 | Path | Category | Current Consumer | Auth/Data Dependency | Redirect/Replacement | Production Status | Disposition | Evidence | Risk | Owner Decision |
 |------|----------|------------------|----------------------|----------------------|-------------------|-------------|----------|------|-----------------|
 | `/` | canonical-active | Homepage nav, search engines, direct links | None (public) | None | HTTP 200 ✓ | RETAIN | Canonical public chrome, deployment verified, 40/40 browser tests pass | Low | Keep as canonical entry point |
-| `/memory` | canonical-active | Nav link, external referrals | Protected by app-level session (TODO: Ory enforcement) | None | HTTP 200 ✓ | RETAIN | Deployed in PXF-016E, listed in CANONICAL_ROUTES | Medium | Keep as protected active route |
-| `/memory-qa` | canonical-active | Nav link, external referrals | Protected by app-level session (TODO: Ory enforcement) | None | HTTP 200 ✓ | RETAIN | Deployed in PXF-016E, listed in CANONICAL_ROUTES | Medium | Keep as protected active route |
-| `/workbench` | canonical-active | Nav link, external referrals | Protected by app-level session (TODO: Ory enforcement) | None | HTTP 200 ✓ | RETAIN | Deployed in PXF-016E, listed in CANONICAL_ROUTES | Medium | Keep as protected active route |
+| `/memory` | canonical-active | Nav link, external referrals | None (public; Ory enforcement not yet implemented) | None | HTTP 200 ✓ | RETAIN | Deployed in PXF-016E, listed in CANONICAL_ROUTES; public route without session guard | Low | Keep as canonical public route |
+| `/memory-qa` | canonical-active | Nav link, external referrals | None (public; Ory enforcement not yet implemented) | None | HTTP 200 ✓ | RETAIN | Deployed in PXF-016E, listed in CANONICAL_ROUTES; public route without session guard | Low | Keep as canonical public route |
+| `/workbench` | canonical-active | Nav link, external referrals | None (public; Ory enforcement not yet implemented) | None | HTTP 200 ✓ | RETAIN | Deployed in PXF-016E, listed in CANONICAL_ROUTES; public route without session guard | Low | Keep as canonical public route |
 | `/docs` | canonical-active | Nav link, search engines, internal docs link | None (public) | None | HTTP 200 ✓ | RETAIN | Canonical public chrome, deployment verified, 40/40 tests pass | Low | Keep as canonical documentation hub |
 | `/contact` | canonical-active | Nav link (footer), external referrals | None (public form) | None | HTTP 200 ✓ | RETAIN | Deployed in PXF-016E, contact form API active (POST /api/contact) | Low | Keep as canonical contact surface |
 | `/privacy` | canonical-active | Footer link, legal requirement, search engines | None (public) | None | HTTP 200 ✓ | RETAIN | Deployed in canonical public chrome, legal page | Low | Keep as canonical legal page |
@@ -48,7 +48,7 @@
 | `/privacy-policy` | redirect-only | Possibly cached links | None (redirect) | → /privacy | Redirect 307 ✓ | RETAIN | Configured in route handlers | Low | Keep active redirect |
 | `/tos` | redirect-only | Possibly cached links | None (redirect) | → /terms | Redirect 307 ✓ | RETAIN | Configured in route handlers | Low | Keep active redirect |
 
-### Historical Marketing/Learning Routes (12)
+### Historical Marketing/Learning Routes (16)
 
 | Path | Category | Current Consumer | Auth/Data Dependency | Redirect/Replacement | Production Status | Disposition | Evidence | Risk | Owner Decision |
 |------|----------|------------------|----------------------|----------------------|-------------------|-------------|----------|------|-----------------|
@@ -64,16 +64,16 @@
 | `/starting-point/*` | historical-public | Onboarding flows, possibly email links | None (public, possibly temporary redirect) | Possibly replace with direct product routes | HTTP 200 ✓ | OWNER DECISION | Onboarding variant; unclear if active | Medium | Keep, redirect, or remove? |
 | `/waas/accountants` | historical-public | Product-specific landing page | None (public) | Possibly consolidate under /kits or /products | HTTP 200 ✓ | OWNER DECISION | WaaS product variant, specific audience | Low | Keep or archive? |
 | `/glossary/[term]` | historical-public | Search engines, internal doc links | None (public) | Could merge into /docs or maintain | HTTP 200 ✓ | OWNER DECISION | Terminology hub, exists | Low | Maintain or consolidate? |
+| `/kits/prokit` | historical-public | Purchase flow entry point, marketing nav | None (public landing page) | None | HTTP 200 ✓ | RETAIN | Product landing page, public entry to purchase flow | Low | Keep as public product landing |
+| `/kits/saaskit` | historical-public | Purchase flow entry point, marketing nav | None (public landing page) | None | HTTP 200 ✓ | RETAIN | Product landing page, public entry to purchase flow | Low | Keep as public product landing |
+| `/kits/uxkit` | historical-public | Purchase flow entry point, marketing nav | None (public landing page) | None | HTTP 200 ✓ | RETAIN | Product landing page, public entry to purchase flow | Low | Keep as public product landing |
+| `/kits/waaskit` | historical-public | Purchase flow entry point, marketing nav | None (public landing page) | None | HTTP 200 ✓ | RETAIN | Product landing page, public entry to purchase flow | Low | Keep as public product landing |
 
-### Purchaser & Commerce Surfaces (7)
+### Purchaser & Commerce Surfaces (3)
 
 | Path | Category | Current Consumer | Auth/Data Dependency | Redirect/Replacement | Production Status | Disposition | Evidence | Risk | Owner Decision |
 |------|----------|------------------|----------------------|----------------------|-------------------|-------------|----------|------|-----------------|
 | `/studio` | protected-active | Internal product link, purchaser flows | Protected by app-level session (Ory integration TODO) | None | HTTP 200 ✓ | RETAIN | Active studio interface, consumer of /api/projects and auth middleware | Medium | Keep as purchaser surface |
-| `/kits/prokit` | protected-active | Purchase flow, marketing nav | None (public landing) | None | HTTP 200 ✓ | RETAIN | Product landing page, public entry to purchase flow | Low | Keep as product landing |
-| `/kits/saaskit` | protected-active | Purchase flow, marketing nav | None (public landing) | None | HTTP 200 ✓ | RETAIN | Product landing page, public entry to purchase flow | Low | Keep as product landing |
-| `/kits/uxkit` | protected-active | Purchase flow, marketing nav | None (public landing) | None | HTTP 200 ✓ | RETAIN | Product landing page, public entry to purchase flow | Low | Keep as product landing |
-| `/kits/waaskit` | protected-active | Purchase flow, marketing nav | None (public landing) | None | HTTP 200 ✓ | RETAIN | Product landing page, public entry to purchase flow | Low | Keep as product landing |
 | `/bb` | historical-public | Unknown (possibly archived product variant) | None (public) | Unknown | HTTP 200 ✓ | UNKNOWN OWNER DECISION | Branded variant page, unclear current purpose | Medium | Keep, redirect, or remove? |
 | `/go/[source]` | protected-active | Internal link shortener/redirector | None (public redirect) | None | HTTP 200 ✓ | RETAIN | Used for tracking and link management | Low | Keep as internal utility |
 
@@ -115,7 +115,6 @@
 | `/social` | internal-active | Social media integration handler | Possibly: API key authorization | None | HTTP 200 ✓ | OWNER DECISION | Social automation endpoint, unclear consumer | Medium | Owner classification needed |
 | `/systems/events` | zero-consumer-candidate | Unknown (possibly unused kernel subsystem) | Unknown | Consider deletion | HTTP 200 ✓ | CANDIDATE FOR REMOVAL | No current references found (grep search); unused event system | Low | Delete or archive? |
 | `/systems/prochat-os` | zero-consumer-candidate | Unknown (possibly unused OS/kernel subsystem) | Unknown | Consider deletion | HTTP 200 ✓ | CANDIDATE FOR REMOVAL | No current references found (grep search); unused kernel system | Low | Delete or archive? |
-| `/legal-ai-workflows` | internal-active | Unknown consumer | Unclear | Unknown | HTTP 200 ✓ | OWNER DECISION | Legal document generation, scope and consumer unclear | Medium | Owner classification needed |
 
 ### APIs - Health & Versioning (2) — ALWAYS ACTIVE
 
@@ -186,14 +185,18 @@
 - **12 components** → DELETED (PXF-017A cleanup)
 
 ### Pending Owner Classification
-- **12 historical marketing routes** → blog, guides, playbooks, prompts, learning, proof, snippets, starting-point, waas, glossary: OWNER DECISION on consolidation vs. archive
-- **7 internal system routes** → ai-workflows, debug, legal-ai-workflows, processing-page, social, systems/events, systems/prochat-os: OWNER DECISION on activation, gating, or removal
-- **1 legacy duplicate API** → /api/waiting-list vs /api/waitlist: OWNER DECISION on consolidation
-- **1 unknown product variant** → /bb: OWNER DECISION on redirect or archive
+
+**23 unique unresolved decisions:**
+
+- **12 historical marketing routes** → blog, guides, playbooks, prompts, learning, proof, snippets, starting-point, waas, glossary, brainbridge, book: OWNER DECISION on consolidation vs. archive
+- **8 internal system routes** → ai-workflows, debug, debug/analytics, legal-ai-workflows, processing-page, social, systems/events, systems/prochat-os: OWNER DECISION on activation, gating, or removal
+- **1 product variant** → /bb: OWNER DECISION on redirect or archive
+- **1 API consolidation** → /api/waiting-list vs /api/waitlist: OWNER DECISION on merge or keep separate
+- **1 unknown webhook** → /api/webhook: OWNER DECISION on API consumer and auth model
 
 ## Next Phase 11 Work
 
-1. **Owner classification decision** → 23 routes listed above requiring explicit owner choice (consolidate, redirect, archive, keep, or remove)
+1. **Owner classification decision** → 23 routes/APIs listed above requiring explicit owner choice (consolidate, redirect, archive, keep, remove, or merge)
 2. **Protected-route boundary hardening** → Ory integration audit, session validation, authorization checks for /memory, /memory-qa, /workbench, /chat, /dashboard, /preferences, all /api/*, all /admin/*
 3. **Cleanup waves 2–4** (dependent on 1 and 2)
    - Wave 2: Redirect historical marketing routes (after owner decides consolidation target)
