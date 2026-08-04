@@ -161,10 +161,14 @@ The marketing analytics helper (`src/components/UmamiAnalytics.tsx`) uses the Um
 - `ANALYZE`
 - `NEXT_PUBLIC_STRAPI_BASE_URL`
 - `WAVE1_BASE_URL`
+- `PERF_DIAGNOSTIC_MODE`
+- `PERF_DIAGNOSTIC_ROUTES`
 
 `NODE_ENV`, `CI`, and `GITHUB_ACTIONS` are used in runtime and scripts to gate behavior (middleware, docs pipeline, bootstrap scripts). `ANALYZE` is only read by `next.config.js` when enabling bundle analysis; it is considered a build-time or debugging toggle.
 
 `WAVE1_BASE_URL` is the local production server URL used by `scripts/run-canonical-performance.mjs` during CI performance evidence collection. It must point to a locally running server (e.g. `http://localhost:3000`) and must never be set to a production or staging host. It is not used at runtime.
+
+`PERF_DIAGNOSTIC_MODE` is a debugging flag used by the canonical performance evidence script (`scripts/run-canonical-performance.mjs`). Set to `1` to enable diagnostic mode, which runs a single Lighthouse audit per route instead of three. `PERF_DIAGNOSTIC_ROUTES` is a comma-separated list of specific routes to audit in diagnostic mode (e.g., `"/,/memory,/docs"`); if omitted, all canonical routes are tested. These are only used during development and CI performance testing, not at runtime.
 
 ## Legacy traces
 
