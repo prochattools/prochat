@@ -3,8 +3,8 @@
 **Source:** `prochat`  
 **Branch:** `main`  
 **Audit date:** 2026-07-31  
-**Reconciliation date:** 2026-08-01  
-**Status:** PXF-016E canonical public chrome closeout is implemented and locally validated 40/40; deployment is pending; `853207b` remains the last verified production revision
+**Reconciliation date:** 2026-08-04  
+**Status:** PXF-016E canonical public chrome closeout deployed; PXF-017A legacy cleanup deployed; SHA `7cfa126` verified in production
 
 ## Purpose
 
@@ -32,16 +32,16 @@ validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
 validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-last_verified_production_head: 853207b49f338c4832e1f8a84e237ca6bf0c400b
-last_verified_production_at: 2026-08-02T17:32:00Z
-deployment_observation_source: Main workflow run 30758962840 plus direct production /api/version, /api/health, /docs, and eight-route verification
+last_verified_production_head: 7cfa1261de651dbb1ba602e3f7df4f8d8d5f9343
+last_verified_production_at: 2026-08-04T19:15:00Z
+deployment_observation_source: Main workflow run 30939864855 + PXF-017A cleanup; direct production /api/version, /api/health, /docs, and eight-route verification (all 8 routes HTTP 200)
 ```
 
 The validation anchors are immutable evidence. The production fields are dated operational observations and do not claim to track the live repository HEAD.
 
 ## Truthful program status
 
-- Phase 11 remains `PARTIAL`: redirects are active, while legacy component and style removal is deferred.
+- Phase 11 is `PARTIAL`: redirects active, legacy surface inventory created (docs/platform/LEGACY_SURFACE_INVENTORY.md), first cleanup deployed (12 components, 687 lines removed, PXF-017A 7cfa126). Protected-route boundary hardening design not yet started.
 - Phase 12 remains `PARTIAL`: responsive, focus, reduced-motion, metadata, analytics, and 40/40 viewport evidence pass, while formal WCAG 2.2 AA and measured performance proof remain deferred.
 - Phase 13 remains `ONGOING`: continuous governance and bounded maintenance.
 - Phases 14 and 15 are complete.

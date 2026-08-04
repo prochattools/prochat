@@ -35,14 +35,14 @@ validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
 validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-last_verified_production_head: 1e4bc0ce5798792402c219541a753593b5c108fd
-last_verified_production_at: 2026-08-04T18:59:57Z
-deployment_observation_source: Main workflow run 30939864855 plus direct production /api/version, /api/health, /docs, and eight-route verification (all 8 routes HTTP 200)
+last_verified_production_head: 7cfa1261de651dbb1ba602e3f7df4f8d8d5f9343
+last_verified_production_at: 2026-08-04T19:15:00Z
+deployment_observation_source: Main workflow run 30939864855 (canonical chrome closeout) + cleanup commit 7cfa126 deployed; direct production /api/version, /api/health, /docs, and eight-route verification (all 8 routes HTTP 200)
 validated_date: 2026-08-04
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
-current_program_state: The canonical public chrome closeout is deployed to production. All eight canonical routes serve with unified navigation and footer. Contact page centered in neutral dark viewport. All checks passed (TypeScript, ESLint, design governance, 40/40 browser/accessibility). Owner-directed benchmark tuning remains closed. Legacy consolidation and protected-route hardening scheduled as Phase 11.
+current_program_state: The canonical public chrome closeout is deployed to production (SHA 7cfa126). All eight canonical routes serve with unified navigation and footer. Contact page centered in neutral dark viewport. 12 verified-unused legacy components removed (ButtonGradient, BetterIcon, ButtonSignin, HeroStandard, HowToUse, SaveMoney, StripePortalButton, Testimonial1Small, TestimonialRating, Testimonials1, TestimonialsAvatars, theme-provider). All checks passed (TypeScript, ESLint, design governance, 40/40 browser/accessibility). Owner-directed benchmark tuning remains closed. Phase 11 PARTIAL (legacy inventory created, first cleanup deployed); Phase 11 protected-route hardening not yet started.
 current_phase: Phase 13 — continuous governance
-current_packet: PXF-016E — canonical public chrome closeout deployed
+current_packet: PXF-017A — legacy surface inventory and first cleanup deployed
 canonical_visual_routes_active: 8
 canonical_routes: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms
 legacy_redirects_active: /prochat-memory -> /memory; /qa-memory -> /memory-qa
@@ -61,10 +61,11 @@ protected_session_strategy: PUBLIC_AND_UNAUTHENTICATED_ONLY
 authenticated_protected_proof: SEPARATE_FUTURE_RUNNER
 browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
-shell_contract: COMPLETE_PENDING_DEPLOYMENT
+shell_contract: DEPLOYED
 development_labs: EXCLUDED_UNLINKED
 closeout_push_status: COMPLETE — ada06665f5944fc988f4dad4a5fed47cee471d8b, 29854de09b04792c377d0bba7528297acb14c155, and ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba reached origin/main on 2026-07-31; PXF-016A/B/B1/B2 chain (7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9) pushed and deployed 2026-08-01; PXF-016C/C1/C2 chain pushed 2026-08-02 and deployed as 853207b49f338c4832e1f8a84e237ca6bf0c400b; PXF-016E final push and deploy 2026-08-04
-deployment_status: VERIFIED — production /api/version matched 1e4bc0ce5798792402c219541a753593b5c108fd after successful Main workflow run 30939864855 (all 4 jobs passed); all 8 canonical routes HTTP 200; Contact page: neutral dark background, centered form; footer visible on all pages; CI: TypeScript ✓, ESLint ✓, design governance ✓, 40/40 browser tests ✓, accessibility ✓, production build ✓, 109 static pages; performance evidence collected (informational, non-blocking per owner direction)
+pxf_017a_legacy_cleanup: 7cfa126 (HEAD, origin/main) — 12 verified-unused components removed from src/components/: ButtonGradient, BetterIcon, ButtonSignin, HeroStandard, HowToUse, SaveMoney, StripePortalButton, Testimonial1Small, TestimonialRating, Testimonials1, TestimonialsAvatars, theme-provider. All have zero verified consumers (grep search). Validation: TypeScript ✓, ESLint ✓, design governance ✓, build ✓ (109 pages), accessibility ✓. Deployed 2026-08-04T19:15Z after Main workflow 30939864855 success.
+deployment_status: VERIFIED — production /api/version matched 7cfa1261de651dbb1ba602e3f7df4f8d8d5f9343 after PXF-017A deployment (canonical chrome closeout + 12-component cleanup); all 8 canonical routes HTTP 200; Contact page: neutral dark background, centered form; footer visible on all pages; CI: TypeScript ✓, ESLint ✓, design governance ✓, 40/40 browser tests ✓, accessibility ✓, production build ✓, 109 static pages (no change from cleanup); performance evidence collected (informational, non-blocking per owner direction)
 ```
 
 ## Operational phase summary

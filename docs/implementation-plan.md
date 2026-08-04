@@ -41,12 +41,12 @@ validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
 validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-last_verified_production_head: 853207b49f338c4832e1f8a84e237ca6bf0c400b
-last_verified_production_at: 2026-08-02T17:32:00Z
-deployment_observation_source: Main workflow run 30758962840 plus direct production /api/version, /api/health, /docs, and eight-route verification
-validated_date: 2026-07-31
+last_verified_production_head: 7cfa1261de651dbb1ba602e3f7df4f8d8d5f9343
+last_verified_production_at: 2026-08-04T19:15:00Z
+deployment_observation_source: Main workflow run 30939864855 (canonical chrome closeout) + PXF-017A cleanup deployed; direct production /api/version, /api/health, /docs, and eight-route verification
+validated_date: 2026-08-04
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
-current_program_state: The canonical public platform is complete for the approved scope. The public chrome closeout now gives all eight canonical routes one visible navigation and footer, centers the Contact experience in a neutral full-viewport shell, and passes 40/40 local browser and accessibility checks. Owner-directed benchmark tuning is closed; formal manual accessibility and field-performance evidence remain maintenance work. Production deployment of the closeout commit is pending.
+current_program_state: The canonical public platform is deployed to production (SHA 7cfa126). All eight canonical routes serve with unified navigation, footer, and neutral design. Contact page centered in neutral viewport. 12 verified-unused legacy components removed (src/components cleanup). All CI checks pass (TypeScript, ESLint, design governance, 40/40 browser/accessibility). Owner-directed benchmark tuning closed. Phase 11 PARTIAL: redirects active, first cleanup deployed, inventory created, protected-route hardening design pending.
 current_phase: Phase 13 — continuous governance
 current_packet: PXF-016E — canonical public chrome closeout pending deployment
 canonical_visual_routes_active: 8
