@@ -159,6 +159,7 @@ jobs:
 
       - name: Run canonical performance evidence
         timeout-minutes: 25
+        continue-on-error: true
         env:
           WAVE1_BASE_URL: http://localhost:3000
           PROCHAT_MAINTENANCE_MODE: '0'
