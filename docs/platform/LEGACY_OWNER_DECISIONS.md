@@ -282,32 +282,20 @@ This register tracks the 23 unresolved surface items that require explicit owner
 | **Owner Decision** | **PENDING** |
 | **Implementation Dependency** | API consolidation + redirect setup + consumer update |
 
-### 23. `/api/webhook`
-| Property | Value |
-|----------|-------|
-| **Current Evidence** | Generic webhook handler; purpose and consumer unknown; no documentation |
-| **Known Consumers** | Unknown (could be Make, n8n, external integrations, or unused) |
-| **SEO/External-Link Risk** | N/A (API) |
-| **Data/Auth Dependency** | Unknown (potentially sensitive) |
-| **Options** | 1. Document purpose and consumer; 2. Gate behind API key authorization; 3. Merge into specific integration endpoints; 4. Remove if unused |
-| **Recommended Default** | Clarify purpose and consumer; implement proper auth |
-| **Owner Decision** | **PENDING** |
-| **Implementation Dependency** | PXF-017C: Clarification packet + PXF-018D: Auth hardening |
 
 ---
 
 ## Summary
 
-**Total Unresolved:** 23 items  
+**Total Unresolved:** 22 items  
 **By Category:**
 - Historical marketing: 12 items (blog, book, brainbridge, guides, learn, playbooks, prompts, proof, snippets, starting-point, waas, glossary)
 - Internal system: 8 items (ai-workflows, debug, debug/analytics, legal-ai-workflows, processing-page, social, systems/events, systems/prochat-os)
 - Product variants: 1 item (/bb)
 - API consolidation: 1 item (/api/waiting-list vs /api/waitlist)
-- Unknown webhook: 1 item (/api/webhook)
 
 **Recommended Action:** Owner to review and provide explicit decisions for each item using the "Owner Decision" column. No removal or consolidation should proceed without explicit owner approval.
 
 ---
 
-**Status:** All 23 items documented. Ready for owner review and decision-making in next work packet.
+**Status:** All 22 items documented (removed 1 nonexistent /api/webhook entry; /api/webhook/stripe is implemented with signature verification). Ready for owner review and decision-making in next work packet.

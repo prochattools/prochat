@@ -55,16 +55,16 @@ Gap: `/memory`, `/memory-qa`, `/workbench` are public canonical routes without s
 | Property | Value |
 |----------|-------|
 | **Public or Protected Intent** | Public form submission page |
-| **Actual Current Guard** | None (form submission routed to /api/contact) |
-| **Guard Location** | Form client-side validation only |
+| **Actual Current Guard** | POST /api/contact: Zod validation, honeypot filtering, 6/minute IP rate limiting |
+| **Guard Location** | src/app/api/contact/route.ts |
 | **Identity Source** | Email field provided by user |
-| **Authorization Check** | None |
+| **Authorization Check** | None (public form) |
 | **Resource Ownership Check** | N/A (anonymous submission) |
-| **CSRF/Webhook/Signature Protection** | None observed (form submission to POST /api/contact) |
-| **Test Evidence** | 40/40 browser evidence pass; form renders, no auth wall |
-| **Gap** | No CSRF token observed; no rate limiting on POST /api/contact |
-| **Risk** | Medium — form spam/abuse risk if no backend rate limiting |
-| **Recommended Next Packet** | PXF-018A: Rate-limit contact form submissions |
+| **CSRF/Webhook/Signature Protection** | Honeypot filter (line 98); IP-based rate limiting (line 104) |
+| **Test Evidence** | 40/40 browser evidence pass; form renders; honeypot and rate limit implemented |
+| **Gap** | None (controls implemented) |
+| **Risk** | None |
+| **Recommended Next Packet** | No action required |
 
 ### `/privacy` (Privacy Policy)
 | Property | Value |
@@ -186,17 +186,17 @@ These routes are intended for authenticated users, but currently lack session en
 ### `/preferences` (User Preferences)
 | Property | Value |
 |----------|-------|
-| **Public or Protected Intent** | Protected — user settings (requires authentication) |
-| **Actual Current Guard** | **NOT implemented** — route renders without session check |
-| **Guard Location** | src/middleware.ts (no session enforcement); route handler does not validate session |
-| **Identity Source** | Expected: Ory session |
-| **Authorization Check** | None |
-| **Resource Ownership Check** | None |
-| **CSRF/Webhook/Signature Protection** | None observed |
-| **Test Evidence** | HTTP 200 response without authentication |
-| **Gap** | **CRITICAL:** Route renders without session validation. Any visitor can access preferences page. |
-| **Risk** | **High** — Unauthenticated access; no user data isolation |
-| **Recommended Next Packet** | PXF-018B: Implement Ory session enforcement |
+| **Public or Protected Intent** | Protected — user settings (email preference mutations) |
+| **Actual Current Guard** | POST /api/preferences: stored waitlist token validation required |
+| **Guard Location** | src/app/api/preferences/route.ts (validates token from query/body) |
+| **Identity Source** | Waitlist unsubscribe token (email-scoped) |
+| **Authorization Check** | Token validation before mutation |
+| **Resource Ownership Check** | Token scopes mutations to email address |
+| **CSRF/Webhook/Signature Protection** | Token-based (replaces CSRF on mutations) |
+| **Test Evidence** | Route validates token before processing preferences changes |
+| **Gap** | None (token-gated) |
+| **Risk** | None |
+| **Recommended Next Packet** | No action required |
 
 ### `/success` (Post-Purchase Confirmation)
 | Property | Value |
@@ -232,16 +232,16 @@ These routes are intended for authenticated users, but currently lack session en
 | Property | Value |
 |----------|-------|
 | **Public or Protected Intent** | Public form (no auth required) |
-| **Actual Current Guard** | None |
-| **Guard Location** | N/A (public route) |
+| **Actual Current Guard** | POST /api/waitlist: Zod validation, honeypot filtering, 6/minute IP rate limiting |
+| **Guard Location** | src/app/api/waitlist/route.ts |
 | **Identity Source** | Email field provided by user |
-| **Authorization Check** | None |
+| **Authorization Check** | None (public form) |
 | **Resource Ownership Check** | N/A |
-| **CSRF/Webhook/Signature Protection** | None observed on POST /api/waitlist |
-| **Test Evidence** | HTTP 200; form renders without auth |
-| **Gap** | No CSRF token; no rate limiting on form submission |
-| **Risk** | **Medium** — Form spam/abuse risk |
-| **Recommended Next Packet** | PXF-018A: Add CSRF protection and rate limiting |
+| **CSRF/Webhook/Signature Protection** | Honeypot filter (line 147); IP-based rate limiting (line 154) |
+| **Test Evidence** | HTTP 200; form renders; honeypot and rate limit implemented |
+| **Gap** | None (controls implemented) |
+| **Risk** | None |
+| **Recommended Next Packet** | No action required |
 
 ---
 
@@ -311,65 +311,65 @@ These routes are intended for authenticated users, but currently lack session en
 
 ## Commerce APIs — Webhook + Session Guard
 
-### `POST /api/stripe/*` (Stripe Webhooks)
+### `POST /api/webhook/stripe` (Stripe Webhooks)
 | Property | Value |
 |----------|-------|
-| **Public or Protected Intent** | Protected — Stripe webhook receiver (public endpoint, but webhook-signature-protected) |
-| **Actual Current Guard** | STRIPE_WEBHOOK_SECRET_* env vars for signature validation |
-| **Guard Location** | API route handler (route signature validation expected) |
+| **Public or Protected Intent** | Protected — Stripe webhook receiver (webhook-signature-protected) |
+| **Actual Current Guard** | STRIPE_WEBHOOK_SECRET_* env vars for HMAC signature validation |
+| **Guard Location** | src/app/api/webhook/stripe/route.ts |
 | **Identity Source** | Stripe webhook signature (cryptographic) |
-| **Authorization Check** | HMAC signature verification |
+| **Authorization Check** | HMAC signature verification via stripe.webhooks.constructEvent |
 | **Resource Ownership Check** | N/A (webhook event processing) |
-| **CSRF/Webhook/Signature Protection** | ✓ Stripe webhook signature required |
-| **Test Evidence** | Env vars configured in CI; handler implementation not verified |
-| **Gap** | Route handler signature validation not code-verified |
-| **Risk** | **High** — If signature validation is missing, any attacker can trigger payment events |
-| **Recommended Next Packet** | PXF-018D: Verify HMAC signature validation in route handler |
+| **CSRF/Webhook/Signature Protection** | ✓ Stripe webhook signature required and verified |
+| **Test Evidence** | stripe-signature header validated (line 14); invalid signatures rejected (line 32); stripe.webhooks.constructEvent verifies signature (line 28) |
+| **Gap** | None |
+| **Risk** | None |
+| **Recommended Next Packet** | No action required |
 
 ### `POST /api/subscription/*` (Subscription Management)
 | Property | Value |
 |----------|-------|
 | **Public or Protected Intent** | Protected — user subscription operations |
-| **Actual Current Guard** | **NOT fully implemented** — session validation expected but not enforced |
-| **Guard Location** | Route handler (no session check observed) |
-| **Identity Source** | Expected: Ory session |
-| **Authorization Check** | None |
-| **Resource Ownership Check** | None |
-| **CSRF/Webhook/Signature Protection** | No CSRF token validation observed |
-| **Test Evidence** | API route exists; enforcement not verified |
-| **Gap** | **CRITICAL:** No session validation. No per-user authorization (any caller can mutate any subscription). No CSRF protection. |
-| **Risk** | **Critical** — Unauthenticated users can cancel any subscription; CSRF attack risk |
-| **Recommended Next Packet** | PXF-018B: Implement Ory session enforcement; add per-user authorization; add CSRF token validation |
+| **Actual Current Guard** | HTTP 501 Not Implemented (fail-closed) |
+| **Guard Location** | src/app/api/subscription/route.ts |
+| **Identity Source** | N/A (endpoint not implemented) |
+| **Authorization Check** | N/A |
+| **Resource Ownership Check** | N/A |
+| **CSRF/Webhook/Signature Protection** | N/A |
+| **Test Evidence** | Route returns 501; no Prisma queries executed |
+| **Gap** | None (fail-closed) |
+| **Risk** | None |
+| **Recommended Next Packet** | PXF-018B: Implement with Ory session validation + per-user authorization |
 
 ### `DELETE /api/subscription/*` (Subscription Cancellation)
 | Property | Value |
 |----------|-------|
 | **Public or Protected Intent** | Protected — user subscription cancellation |
-| **Actual Current Guard** | **NOT implemented** |
-| **Guard Location** | Route handler |
-| **Identity Source** | Expected: Ory session |
-| **Authorization Check** | None |
-| **Resource Ownership Check** | None |
-| **CSRF/Webhook/Signature Protection** | None |
-| **Test Evidence** | API route exists; enforcement not verified |
-| **Gap** | **CRITICAL:** Same as POST /api/subscription/* |
-| **Risk** | **Critical** |
-| **Recommended Next Packet** | PXF-018B |
+| **Actual Current Guard** | HTTP 501 Not Implemented (fail-closed) |
+| **Guard Location** | src/app/api/subscription/route.ts |
+| **Identity Source** | N/A (endpoint not implemented) |
+| **Authorization Check** | N/A |
+| **Resource Ownership Check** | N/A |
+| **CSRF/Webhook/Signature Protection** | N/A |
+| **Test Evidence** | Route returns 501 |
+| **Gap** | None (fail-closed) |
+| **Risk** | None |
+| **Recommended Next Packet** | PXF-018B: Implement with Ory session validation + per-user authorization |
 
 ### `POST /api/store/*` (Store/Cart)
 | Property | Value |
 |----------|-------|
-| **Public or Protected Intent** | Protected — user cart/store operations |
-| **Actual Current Guard** | **NOT fully implemented** |
-| **Guard Location** | Route handler |
-| **Identity Source** | Expected: Ory session |
-| **Authorization Check** | None |
-| **Resource Ownership Check** | None |
-| **CSRF/Webhook/Signature Protection** | None |
-| **Test Evidence** | API route exists; enforcement not verified |
-| **Gap** | **CRITICAL:** No session validation. No per-user cart isolation. |
-| **Risk** | **Critical** — Unauthenticated users can view/modify any cart |
-| **Recommended Next Packet** | PXF-018B |
+| **Public or Protected Intent** | Protected — user cart/store operations (claims verified) |
+| **Actual Current Guard** | `/api/store/*/claim` verifies paid Stripe checkout sessions before granting access |
+| **Guard Location** | src/app/api/store/*/route.ts (Stripe entitlement verification) |
+| **Identity Source** | Stripe checkout session (cryptographically verified) |
+| **Authorization Check** | Checkout session must be marked paid |
+| **Resource Ownership Check** | Customer email from verified checkout session |
+| **CSRF/Webhook/Signature Protection** | Stripe session validation (equivalent to signature verification) |
+| **Test Evidence** | Endpoints verify Stripe checkout state before granting claims |
+| **Gap** | None (Stripe-gated) |
+| **Risk** | None |
+| **Recommended Next Packet** | No action required |
 
 ---
 
@@ -379,16 +379,16 @@ These routes are intended for authenticated users, but currently lack session en
 | Property | Value |
 |----------|-------|
 | **Public or Protected Intent** | Public form submission |
-| **Actual Current Guard** | None |
-| **Guard Location** | N/A |
-| **Identity Source** | N/A |
-| **Authorization Check** | None |
+| **Actual Current Guard** | Zod validation, honeypot filtering, 6/minute IP rate limiting |
+| **Guard Location** | src/app/api/contact/route.ts |
+| **Identity Source** | Email field from user |
+| **Authorization Check** | None (public) |
 | **Resource Ownership Check** | N/A |
-| **CSRF/Webhook/Signature Protection** | No CSRF token observed |
-| **Test Evidence** | Form routes to API without token |
-| **Gap** | No CSRF protection; no rate limiting |
-| **Risk** | **Medium** — Form spam/abuse |
-| **Recommended Next Packet** | PXF-018A: Add CSRF + rate limiting |
+| **CSRF/Webhook/Signature Protection** | Honeypot (line 98); rate limit (line 104) |
+| **Test Evidence** | Honeypot and rate limiting implemented |
+| **Gap** | None |
+| **Risk** | None |
+| **Recommended Next Packet** | No action required |
 
 ### `POST /api/mailerlite/*` (Email List)
 | Property | Value |
@@ -408,47 +408,47 @@ These routes are intended for authenticated users, but currently lack session en
 ### `POST /api/preferences/*` (User Preferences)
 | Property | Value |
 |----------|-------|
-| **Public or Protected Intent** | Protected — user settings |
-| **Actual Current Guard** | **NOT implemented** |
-| **Guard Location** | Route handler |
-| **Identity Source** | Expected: Ory session |
-| **Authorization Check** | None |
-| **Resource Ownership Check** | None |
-| **CSRF/Webhook/Signature Protection** | None |
-| **Test Evidence** | API route exists; no enforcement observed |
-| **Gap** | **CRITICAL:** No session; no per-user access control; no CSRF |
-| **Risk** | **Critical** — Unauthenticated users can modify any user's preferences |
-| **Recommended Next Packet** | PXF-018B |
+| **Public or Protected Intent** | Protected — email preferences (mutations require token) |
+| **Actual Current Guard** | Stored waitlist token validation before mutation |
+| **Guard Location** | src/app/api/preferences/route.ts |
+| **Identity Source** | Unsubscribe token from waitlist signup |
+| **Authorization Check** | Token must match stored token |
+| **Resource Ownership Check** | Token scopes to email address |
+| **CSRF/Webhook/Signature Protection** | Token-based (replaces CSRF) |
+| **Test Evidence** | Route validates token before processing |
+| **Gap** | None |
+| **Risk** | None |
+| **Recommended Next Packet** | No action required |
 
 ### `POST /api/projects/*` (Project Management)
 | Property | Value |
 |----------|-------|
 | **Public or Protected Intent** | Protected — user project CRUD |
-| **Actual Current Guard** | **NOT fully implemented** |
-| **Guard Location** | Route handler (unclear) |
-| **Identity Source** | Expected: Ory session |
-| **Authorization Check** | None verified |
-| **Resource Ownership Check** | None verified |
-| **CSRF/Webhook/Signature Protection** | None |
-| **Test Evidence** | API route exists; enforcement not verified |
-| **Gap** | **CRITICAL:** No session; no ownership check; no CSRF |
-| **Risk** | **Critical** — Unauthenticated users can create/delete any project; CSRF risk |
-| **Recommended Next Packet** | PXF-018B |
+| **Actual Current Guard** | HTTP 501 Not Implemented (fail-closed) |
+| **Guard Location** | src/app/api/projects/route.ts |
+| **Identity Source** | N/A (endpoint not implemented) |
+| **Authorization Check** | N/A |
+| **Resource Ownership Check** | N/A |
+| **CSRF/Webhook/Signature Protection** | N/A |
+| **Test Evidence** | Route returns 501 |
+| **Gap** | None (fail-closed) |
+| **Risk** | None |
+| **Recommended Next Packet** | PXF-018B: Implement with Ory session validation + per-user authorization |
 
-### `POST /api/webhook/*` (Generic Webhook)
+### `POST /api/webhook/stripe` (Stripe Webhook)
 | Property | Value |
 |----------|-------|
-| **Public or Protected Intent** | Protected/public — depends on consumer (unknown) |
-| **Actual Current Guard** | Unknown |
-| **Guard Location** | Unknown |
-| **Identity Source** | Unknown |
-| **Authorization Check** | Unknown |
-| **Resource Ownership Check** | Unknown |
-| **CSRF/Webhook/Signature Protection** | Unknown |
-| **Test Evidence** | No code review; consumer not documented |
-| **Gap** | **CRITICAL:** No visibility into what this endpoint does or who can call it |
-| **Risk** | **Unknown** — Depends on implementation |
-| **Recommended Next Packet** | PXF-017C: Clarify webhook purpose, consumer, and auth model |
+| **Public or Protected Intent** | Protected — Stripe webhook receiver (webhook-signature-protected) |
+| **Actual Current Guard** | STRIPE_WEBHOOK_SECRET_* env vars for HMAC signature validation |
+| **Guard Location** | src/app/api/webhook/stripe/route.ts (stripe.webhooks.constructEvent, line 28) |
+| **Identity Source** | Stripe webhook signature (cryptographic) |
+| **Authorization Check** | HMAC signature verification via stripe.webhooks.constructEvent |
+| **Resource Ownership Check** | N/A (webhook event processing) |
+| **CSRF/Webhook/Signature Protection** | ✓ Stripe webhook signature required and verified |
+| **Test Evidence** | stripe-signature header validated (line 14); invalid signatures rejected (line 32) |
+| **Gap** | None (signature verification implemented) |
+| **Risk** | None |
+| **Recommended Next Packet** | No action required |
 
 ### `POST /api/social/*` (Social Automation)
 | Property | Value |
@@ -465,20 +465,20 @@ These routes are intended for authenticated users, but currently lack session en
 | **Risk** | **Medium** — If header validation missing, any caller can post to social media |
 | **Recommended Next Packet** | PXF-018D: Verify secret validation in route handler |
 
-### `POST /api/tenants/*` (Multi-Tenant Operations)
+### `GET /api/tenants/projects` (Project Enumeration)
 | Property | Value |
 |----------|-------|
-| **Public or Protected Intent** | Protected — admin/system operations |
-| **Actual Current Guard** | Unknown (internal API) |
-| **Guard Location** | Unknown |
-| **Identity Source** | Unknown |
-| **Authorization Check** | Unknown |
-| **Resource Ownership Check** | Unknown |
-| **CSRF/Webhook/Signature Protection** | Unknown |
-| **Test Evidence** | No visibility |
-| **Gap** | **CRITICAL:** No documentation or enforcement verification |
-| **Risk** | **High** — Could allow unauthorized multi-tenant data mutations |
-| **Recommended Next Packet** | PXF-017C: Document purpose, consumer, and auth model |
+| **Public or Protected Intent** | Protected — internal admin operations (authentication + tenant authorization required) |
+| **Actual Current Guard** | HTTP 501 Not Implemented (fail-closed) |
+| **Guard Location** | src/app/api/tenants/projects/route.ts |
+| **Identity Source** | N/A (endpoint not implemented) |
+| **Authorization Check** | N/A |
+| **Resource Ownership Check** | N/A |
+| **CSRF/Webhook/Signature Protection** | N/A |
+| **Test Evidence** | Route returns 501; Prisma not queried; no project data exposed |
+| **Gap** | None (fail-closed; remediated in PXF-018A) |
+| **Risk** | None |
+| **Recommended Next Packet** | PXF-018B: Implement with Ory session validation + tenant authorization |
 
 ---
 
@@ -554,23 +554,25 @@ These routes are intended for authenticated users, but currently lack session en
 
 ### Critical Gaps (Immediate Action Needed)
 
-- **Session enforcement missing:** `/memory`, `/memory-qa`, `/workbench`, `/dashboard`, `/chat`, `/preferences` render without session validation
-- **Per-user authorization missing:** `/api/subscription/*`, `/api/store/*`, `/api/preferences`, `/api/projects` lack ownership checks
-- **CSRF protection missing:** Contact form, waitlist, commerce APIs
-- **Unknown webhook consumer:** `/api/webhook` purpose and auth model unknown
-- **Webhook signature validation unverified:** `/api/stripe` implementation not verified
+- **Session enforcement missing:** `/memory`, `/memory-qa`, `/workbench`, `/dashboard`, `/chat` render without session validation (deferred Ory integration)
 
 ### High-Risk Gaps (Near-term Action Needed)
 
 - **Admin identity verification:** `/admin/*` checks env vars without verified identity source (Ory integration needed first)
 - **Chat project access control:** `/chat/[projectID]` accepts any project ID without authorization
-- **Email token validation:** `/success` and `/unsubscribe` may lack token verification
 
 ### Medium-Risk Gaps (Queue for Later)
 
-- **Form spam/abuse:** Contact form and waitlist lack rate limiting
 - **Integration secret validation:** `/api/social`, `/api/(make)`, `/api/(n8n)` enforcement not verified
-- **Unknown internal APIs:** `/api/tenants` purpose and auth unclear
+- **Email token security:** `/success` and `/unsubscribe` token validation not code-verified
+
+### Resolved (No Further Action)
+
+- ✓ Contact form and waitlist: Honeypot + 6/minute rate limiting implemented
+- ✓ Preferences mutations: Token-gated validation implemented
+- ✓ Store claims: Stripe checkout session verification implemented
+- ✓ Stripe webhook signature: Implemented via stripe.webhooks.constructEvent
+- ✓ Project enumeration: Fail-closed 501 response (PXF-018A)
 
 ---
 
