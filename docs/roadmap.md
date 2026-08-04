@@ -35,14 +35,14 @@ validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
 validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-last_verified_production_head: 853207b49f338c4832e1f8a84e237ca6bf0c400b
-last_verified_production_at: 2026-08-02T17:32:00Z
-deployment_observation_source: Main workflow run 30758962840 plus direct production /api/version, /api/health, /docs, and eight-route verification
-validated_date: 2026-07-31
+last_verified_production_head: 1e4bc0ce5798792402c219541a753593b5c108fd
+last_verified_production_at: 2026-08-04T18:59:57Z
+deployment_observation_source: Main workflow run 30939864855 plus direct production /api/version, /api/health, /docs, and eight-route verification (all 8 routes HTTP 200)
+validated_date: 2026-08-04
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
-current_program_state: The canonical public platform is complete for the approved scope. The public chrome closeout now gives all eight canonical routes one visible navigation and footer, centers the Contact experience in a neutral full-viewport shell, and passes 40/40 local browser and accessibility checks. Owner-directed benchmark tuning is closed; formal manual accessibility and field-performance evidence remain maintenance work. Production deployment of the closeout commit is pending.
+current_program_state: The canonical public chrome closeout is deployed to production. All eight canonical routes serve with unified navigation and footer. Contact page centered in neutral dark viewport. All checks passed (TypeScript, ESLint, design governance, 40/40 browser/accessibility). Owner-directed benchmark tuning remains closed. Legacy consolidation and protected-route hardening scheduled as Phase 11.
 current_phase: Phase 13 — continuous governance
-current_packet: PXF-016E — canonical public chrome closeout pending deployment
+current_packet: PXF-016E — canonical public chrome closeout deployed
 canonical_visual_routes_active: 8
 canonical_routes: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms
 legacy_redirects_active: /prochat-memory -> /memory; /qa-memory -> /memory-qa
@@ -63,8 +63,8 @@ browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: COMPLETE_PENDING_DEPLOYMENT
 development_labs: EXCLUDED_UNLINKED
-closeout_push_status: COMPLETE — ada06665f5944fc988f4dad4a5fed47cee471d8b, 29854de09b04792c377d0bba7528297acb14c155, and ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba reached origin/main on 2026-07-31; PXF-016A/B/B1/B2 chain (7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9) pushed and deployed 2026-08-01; PXF-016C/C1/C2 chain pushed 2026-08-02 and deployed as 853207b49f338c4832e1f8a84e237ca6bf0c400b
-deployment_status: VERIFIED — production /api/version matched 853207b49f338c4832e1f8a84e237ca6bf0c400b after successful Main workflow run 30758962840 (all 4 jobs passed); CI 30/30 browser tests passed; target-size and env-sensitive baseline repairs deployed; this is an operational observation, not a mutable repository-HEAD field
+closeout_push_status: COMPLETE — ada06665f5944fc988f4dad4a5fed47cee471d8b, 29854de09b04792c377d0bba7528297acb14c155, and ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba reached origin/main on 2026-07-31; PXF-016A/B/B1/B2 chain (7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9) pushed and deployed 2026-08-01; PXF-016C/C1/C2 chain pushed 2026-08-02 and deployed as 853207b49f338c4832e1f8a84e237ca6bf0c400b; PXF-016E final push and deploy 2026-08-04
+deployment_status: VERIFIED — production /api/version matched 1e4bc0ce5798792402c219541a753593b5c108fd after successful Main workflow run 30939864855 (all 4 jobs passed); all 8 canonical routes HTTP 200; Contact page: neutral dark background, centered form; footer visible on all pages; CI: TypeScript ✓, ESLint ✓, design governance ✓, 40/40 browser tests ✓, accessibility ✓, production build ✓, 109 static pages; performance evidence collected (informational, non-blocking per owner direction)
 ```
 
 ## Operational phase summary
