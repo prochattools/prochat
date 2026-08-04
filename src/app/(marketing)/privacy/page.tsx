@@ -1,5 +1,7 @@
 import { getSEOTags } from '@/libs/seo'
 
+import { PublicLegalPage } from '../components/layout/PublicLegalPage'
+
 export const metadata = getSEOTags({
 	title: 'Privacy Policy | ProChat',
 	description: 'Privacy Policy for ProChat and the use of https://prochat.tools.',
@@ -21,7 +23,8 @@ const linkClass =
 
 export default function PrivacyPage() {
 	return (
-		<section className="relative bg-transparent py-24">
+		<PublicLegalPage>
+			<section className="relative bg-transparent py-24">
 			<div className="mx-auto w-full max-w-3xl px-page">
 				<article className="space-y-10 leading-relaxed text-slate-600 dark:text-slate-300">
 					<header className="mb-12">
@@ -244,6 +247,7 @@ export default function PrivacyPage() {
 					</section>
 				</article>
 			</div>
-		</section>
+			</section>
+		</PublicLegalPage>
 	)
 }

@@ -3,12 +3,12 @@ import type { PageMapItem } from 'nextra'
 
 import { Layout } from 'nextra-theme-docs'
 
-import Header from '@/components/Header'
 import { Footer } from '@/app/(marketing)/components/layout/Footer'
+import { MarketingNav } from '@/app/(marketing)/components/layout/MarketingNav'
 
 import 'nextra-theme-docs/style-prefixed.css'
 import '../../../styles/docs.css'
-import './docs-public-chrome.css'
+import '@/assets/styles/prochat-public-chrome.css'
 
 const PUBLIC_DOCS_NAVIGATION = [
   {
@@ -58,7 +58,7 @@ export default async function DocsThemeLayout({
 }) {
   return (
     <div className="docs-shell flex min-h-screen flex-col">
-      <Header forceVisible />
+      <MarketingNav />
       <div className="docs-shell-inner flex flex-1 flex-col">
         <Layout
           pageMap={PUBLIC_DOCS_NAVIGATION}

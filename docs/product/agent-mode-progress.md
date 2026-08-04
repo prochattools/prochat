@@ -4,7 +4,7 @@
 **Branch:** `main`  
 **Audit date:** 2026-07-31  
 **Reconciliation date:** 2026-08-01  
-**Status:** PXF-016C/C1/C2 deployed and complete; PXF-016D remains active and blocked on six canonical Linux-simulated LCP thresholds; HEAD `853207b` remains the last verified production revision
+**Status:** PXF-016E canonical public chrome closeout is implemented and locally validated 40/40; deployment is pending; `853207b` remains the last verified production revision
 
 ## Purpose
 
@@ -843,3 +843,52 @@ The canonical threshold remains unchanged at LCP ≤ 2.5s. Phase 12 remains `PAR
 
 Security review: the secret-material scan found no findings. The broad changed-path scan reported only expected bounded localhost readiness and Chrome DevTools fetch calls plus historical documentation/upload terminology and the pre-existing Axios dependency; no remote Lighthouse upload or plaintext secret was introduced.
 
+
+
+
+## PXF-016E — Canonical public chrome closeout
+
+**Implemented:** 2026-08-04  
+**Status:** locally complete; deployment pending
+
+Owner direction closed further benchmark tuning and prioritized a lean, consistent, production-ready public platform.
+
+### Implemented
+
+- Promoted the docs-only chrome bridge to `src/assets/styles/prochat-public-chrome.css`.
+- Added one canonical visible navigation and footer across all eight public routes.
+- Added the shared footer to the homepage and all three product pages.
+- Switched `/docs` to the canonical `MarketingNav` and retained its lightweight public-chrome CSS bridge instead of the full marketing theme.
+- Added `PublicLegalPage` so `/privacy` and `/terms` share the same public navigation, footer, neutral background, and full-height shell.
+- Added canonical navigation and footer to `/contact`.
+- Removed the obsolete Contact accent/blue radial background.
+- Changed Contact to a neutral `100svh` flex shell and centered the contact copy/form grid vertically.
+- Repaired footer semantics by removing unsupported ARIA from the footer landmark and converting the footer links to a labelled `<nav>`.
+- Extended permanent browser smoke evidence from four to all eight canonical routes and added Contact background, centering, and mobile-containment assertions.
+
+### Local validation
+
+- TypeScript: passed.
+- ESLint: passed with zero warnings.
+- Design governance: passed 5 rules with 39 controlled exemptions.
+- Documentation validation: passed.
+- Production build: passed; 109 pages generated.
+- Browser and accessibility evidence: **40/40 passed**.
+  - 16 Axe desktop/mobile checks across all eight routes.
+  - 16 desktop/mobile canonical route smoke checks.
+  - 2 Contact visual-closeout checks.
+  - 6 docs responsive/focus/reduced-motion checks, including 320px.
+- Every canonical route has one visible `.pm-navbar`, visible main content, one visible `.pc-footer`, correct pathname, and no horizontal overflow.
+- Contact has no background image, uses a neutral dark background, fills at least the viewport height, centers its grid/form, and remains contained at 390px.
+
+### Release boundary
+
+The code and documents are ready for the closeout commit and normal push to `main`. Production observation fields remain unchanged until the resulting workflow and deployed revision are verified. The intentional `archive/content-heavy-site` branch remains untouched.
+
+### Remaining program work after deployment
+
+- Phase 11 remains partial: bounded legacy component/style and protected-route cleanup.
+- Phase 12 remains partial maintenance: manual screen-reader, zoom, high-contrast, orientation, touch-target, field INP/RUM, and long-session evidence.
+- Phase 13 remains ongoing: continuous governance and bounded maintenance.
+- Authenticated/protected application flows remain a separate future implementation scope.
+- Future `/philosophy` and `/about` routes remain roadmap candidates, not current release gaps.

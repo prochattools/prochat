@@ -68,7 +68,7 @@ function FooterColumn({ title, links }: { title: string; links: readonly FooterL
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="pc-footer" aria-labelledby="pc-footer-title">
+    <footer className="pc-footer">
       <div className="pc-footer__inner">
         <div className="pc-footer__grid">
           <div className="pc-footer__brand">
@@ -82,7 +82,7 @@ export const Footer: React.FC = () => {
             </p>
           </div>
 
-          <div className="pc-footer__links" aria-label="Footer navigation">
+          <nav className="pc-footer__links" aria-label="Footer navigation">
             <FooterColumn title="Product" links={PRODUCT_LINKS} />
             <FooterColumn title="Resources" links={RESOURCE_LINKS} />
             <FooterColumn title="Participate" links={PARTICIPATION_LINKS} />
@@ -104,7 +104,7 @@ export const Footer: React.FC = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </nav>
         </div>
 
         <div className="pc-footer__bottom">

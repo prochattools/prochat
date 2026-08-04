@@ -5,6 +5,8 @@ import { useEffect, useRef } from 'react'
 import { contactSubmissionSchema } from '@/lib/contact/schema'
 import { trackEvent } from '@/utils/analytics'
 
+import { Footer } from '../components/layout/Footer'
+import { MarketingNav } from '../components/layout/MarketingNav'
 import '../prochat-memory-theme.css'
 import './contact-page.css'
 import ContactPageMarkup from './ContactPageMarkup'
@@ -296,7 +298,11 @@ export default function ContactPageClient({ initialTopic }: ContactPageClientPro
 
   return (
     <div ref={rootRef} className="contact-page-root pm-marketing-page">
-      <ContactPageMarkup initialTopic={initialTopic} />
+      <MarketingNav />
+      <div className="contact-page-main">
+        <ContactPageMarkup initialTopic={initialTopic} />
+      </div>
+      <Footer />
     </div>
   )
 }

@@ -9,6 +9,7 @@ import {
   WorkbenchGuardedFlowComposition,
 } from './components/illustrations/compositions'
 import HomepageTrackedLink from './components/HomepageTrackedLink'
+import { Footer } from './components/layout/Footer'
 import { MarketingNav } from './components/layout/MarketingNav'
 import './prochat-memory-theme.css'
 import './prochat-home.css'
@@ -624,6 +625,7 @@ export default function App() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   )
 }

@@ -3,7 +3,7 @@
 **Status:** canonical executable plan  
 **Owner:** Steve Westhoek  
 **Scope:** documentation, audits, prototypes, production foundation, public pages, migration, validation, launch, and maintenance  
-**Last updated:** 2026-08-01
+**Last updated:** 2026-08-04
 
 ## Authority and reading order
 
@@ -46,9 +46,9 @@ last_verified_production_at: 2026-08-02T17:32:00Z
 deployment_observation_source: Main workflow run 30758962840 plus direct production /api/version, /api/health, /docs, and eight-route verification
 validated_date: 2026-07-31
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
-current_program_state: The Product Experience Foundation program, docs mobile hardening, evidence closeout, PXF-016A/B/B1/B2 chain, and PXF-016C/C1/C2 are complete and deployed. All 30 browser tests passed in CI run 30758962840. Target-size repairs are deployed. PXF-016D measured mobile performance proof is active. Manual accessibility work and performance proof remain. Phase 12 remains partial.
+current_program_state: The canonical public platform is complete for the approved scope. The public chrome closeout now gives all eight canonical routes one visible navigation and footer, centers the Contact experience in a neutral full-viewport shell, and passes 40/40 local browser and accessibility checks. Owner-directed benchmark tuning is closed; formal manual accessibility and field-performance evidence remain maintenance work. Production deployment of the closeout commit is pending.
 current_phase: Phase 13 — continuous governance
-current_packet: PXF-016D — measured mobile performance proof
+current_packet: PXF-016E — canonical public chrome closeout pending deployment
 canonical_visual_routes_active: 8
 canonical_route_implementation: COMPLETE
 public_docs_alignment: COMPLETE
@@ -68,7 +68,7 @@ protected_session_strategy: PUBLIC_AND_UNAUTHENTICATED_ONLY
 authenticated_protected_proof: SEPARATE_FUTURE_RUNNER
 browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
-shell_contract: DECIDED_WITH_FUTURE_REPAIR
+shell_contract: COMPLETE_PENDING_DEPLOYMENT
 closeout_push_status: COMPLETE — ada06665f5944fc988f4dad4a5fed47cee471d8b, 29854de09b04792c377d0bba7528297acb14c155, and ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba reached origin/main on 2026-07-31; PXF-016A/B/B1/B2 chain (7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9) pushed and deployed 2026-08-01; PXF-016C/C1/C2 chain pushed 2026-08-02 and deployed as 853207b49f338c4832e1f8a84e237ca6bf0c400b
 deployment_status: VERIFIED — production /api/version matched 853207b49f338c4832e1f8a84e237ca6bf0c400b after successful Main workflow run 30758962840 (all 4 jobs passed); CI 30/30 browser tests passed; target-size and env-sensitive baseline repairs deployed; this is an operational observation, not a mutable repository-HEAD field
 next_owner_gate: CONTINUOUS_GOVERNANCE

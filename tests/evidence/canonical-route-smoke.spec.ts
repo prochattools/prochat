@@ -6,7 +6,7 @@ if (!baseUrl) {
   throw new Error('WAVE1_BASE_URL is required')
 }
 
-const routes = ['/', '/memory', '/workbench', '/docs'] as const
+const routes = ['/', '/memory', '/memory-qa', '/workbench', '/docs', '/contact', '/privacy', '/terms'] as const
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
@@ -46,6 +46,15 @@ test.describe('canonical route smoke evidence', () => {
 
         await expect(page.locator('main')).toBeVisible()
 
+        const navigation = page.locator('nav.pm-navbar')
+        await expect(navigation, `${route} is missing the canonical public navigation`).toHaveCount(1)
+        await expect(navigation).toBeVisible()
+
+        const footer = page.locator('footer.pc-footer')
+        await expect(footer, `${route} is missing the canonical public footer`).toHaveCount(1)
+        await expect(footer).toBeVisible()
+        await expect(footer.getByRole('link', { name: 'ProChat home' })).toBeVisible()
+
         // A non-empty primary heading must be present — proves the page rendered.
         // Pattern is intentionally loose: any word characters suffice to avoid coupling to marketing copy.
         const h1 = page.locator('main h1').first()
@@ -69,4 +78,60 @@ test.describe('canonical route smoke evidence', () => {
       })
     }
   }
+})
+
+test.describe('contact page visual closeout', () => {
+  test('desktop contact form is centered on a neutral full-height background', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 1000 })
+    await page.goto(new URL('/contact', baseUrl).toString(), { waitUntil: 'networkidle' })
+
+    const evidence = await page.evaluate(() => {
+      const root = document.querySelector('.contact-page-root') as HTMLElement | null
+      const main = document.querySelector('.contact-page-main') as HTMLElement | null
+      const panel = document.querySelector('.contact-form-panel') as HTMLElement | null
+      const rootStyle = root ? getComputedStyle(root) : null
+      const mainStyle = main ? getComputedStyle(main) : null
+      const panelRect = panel?.getBoundingClientRect()
+
+      return {
+        rootBackgroundImage: rootStyle?.backgroundImage ?? '',
+        rootBackgroundColor: rootStyle?.backgroundColor ?? '',
+        rootHeight: root?.getBoundingClientRect().height ?? 0,
+        mainDisplay: mainStyle?.display ?? '',
+        mainAlignItems: mainStyle?.alignItems ?? '',
+        mainJustifyItems: mainStyle?.justifyItems ?? '',
+        formCenterY: panelRect ? panelRect.top + panelRect.height / 2 : 0,
+        viewportCenterY: window.innerHeight / 2,
+        viewportHeight: window.innerHeight,
+      }
+    })
+
+    expect(evidence.rootBackgroundImage).toBe('none')
+    const backgroundChannels = evidence.rootBackgroundColor.match(/\d+/g)?.map(Number) ?? []
+    expect(backgroundChannels).toHaveLength(3)
+    expect(Math.max(...backgroundChannels)).toBeLessThanOrEqual(16)
+    expect(Math.max(...backgroundChannels) - Math.min(...backgroundChannels)).toBeLessThanOrEqual(2)
+    expect(evidence.rootHeight).toBeGreaterThanOrEqual(evidence.viewportHeight)
+    expect(evidence.mainDisplay).toBe('grid')
+    expect(evidence.mainAlignItems).toBe('center')
+    expect(evidence.mainJustifyItems).toBe('center')
+    expect(Math.abs(evidence.formCenterY - evidence.viewportCenterY)).toBeLessThan(
+      evidence.viewportHeight * 0.3,
+    )
+  })
+
+  test('mobile contact layout remains contained with shared chrome', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 900 })
+    await page.goto(new URL('/contact', baseUrl).toString(), { waitUntil: 'networkidle' })
+
+    await expect(page.locator('nav.pm-navbar')).toBeVisible()
+    await expect(page.locator('.contact-form-panel')).toBeVisible()
+    await expect(page.locator('footer.pc-footer')).toBeVisible()
+
+    const layout = await page.evaluate(() => ({
+      documentWidth: document.documentElement.scrollWidth,
+      viewportWidth: window.innerWidth,
+    }))
+    expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth)
+  })
 })

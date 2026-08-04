@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react'
 
+import { Footer } from '../layout/Footer'
 import { MarketingNav } from '../layout/MarketingNav'
 import ProductTrackedAction from './ProductTrackedAction'
 import '../../prochat-memory-theme.css'
@@ -136,6 +137,7 @@ export function PublicProductPage({
       </section>
 
       {children}
+      <Footer />
     </div>
   )
 }
