@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const BASE_URL =
   process.env.MAILERLITE_API_BASE_URL || 'https://connect.mailerlite.com/api'
-const GROUP_ID = process.env.MAILERLITE_GROUP_ID || '179224742687934207'
-const API_KEY = process.env.MAILERLITE_API_KEY || process.env.MAILERLITE
+const GROUP_ID = process.env.MAILERLITE_GROUP_ID
+const API_KEY = process.env.MAILERLITE_API_KEY
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -22,9 +22,9 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  if (!API_KEY) {
+  if (!API_KEY || !GROUP_ID) {
     return NextResponse.json(
-      { error: 'Server is missing MailerLite API configuration.' },
+      { error: 'Server is missing required configuration.' },
       { status: 500 }
     )
   }
