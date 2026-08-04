@@ -4,70 +4,143 @@ import { describe, it } from 'node:test'
 describe('API Security Protections', () => {
   const baseUrl = process.env.TEST_BASE_URL || 'http://localhost:3000'
 
-  describe('POST /api/tenants/projects', () => {
-    it('returns 501 without authentication', async () => {
+  describe('GET /api/tenants/projects', () => {
+    it('returns exactly 501 without authentication', async () => {
       const response = await fetch(`${baseUrl}/api/tenants/projects`, {
         method: 'GET',
       })
-      assert.equal(response.status, 501, 'Expected 501 Not Implemented')
+      assert.equal(response.status, 501, 'Expected exactly 501 Not Implemented')
+    })
+
+    it('returns JSON error message (not project data)', async () => {
+      const response = await fetch(`${baseUrl}/api/tenants/projects`, {
+        method: 'GET',
+      })
 
       const body = await response.json()
-      assert(body.error, 'Response should contain error message')
-      assert.match(
-        body.error,
-        /authentication|authorization/i,
-        'Error should mention authentication or authorization'
+      assert(body.error, 'Response must contain error property')
+      assert.strictEqual(
+        typeof body.projects,
+        'undefined',
+        'Response must not contain projects property'
       )
     })
 
-    it('does not query database (no project data exposed)', async () => {
+    it('does not contain project metadata in response', async () => {
       const response = await fetch(`${baseUrl}/api/tenants/projects`, {
         method: 'GET',
       })
 
       const body = await response.json()
-      assert(!body.projects, 'Response should not contain projects array')
-      assert.equal(
-        typeof body.projects,
-        'undefined',
-        'Projects data should not be exposed'
+      const bodyStr = JSON.stringify(body)
+      assert(
+        !bodyStr.includes('id') || body.error,
+        'Response body should not contain project identifiers'
       )
     })
   })
 
-  describe('POST /api/contact (honeypot)', () => {
-    it('rejects requests with honeypot field filled', async () => {
+  describe('POST /api/contact', () => {
+    it('rejects honeypot field violations with 400', async () => {
       const response = await fetch(`${baseUrl}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          name: 'Test User',
           email: 'test@example.com',
+          topic: 'General',
           message: 'Test message',
-          website: 'https://malicious.com', // honeypot field
+          honeypot: 'filled', // honeypot field (should be empty)
         }),
       })
 
-      assert.equal(response.status, 400, 'Honeypot violation should return 400')
+      assert.equal(response.status, 400, 'Honeypot violation must return 400')
+    })
+
+    it('blocks requests exceeding rate limit (6 per minute per IP)', async () => {
+      const payload = {
+        name: 'Rate Test',
+        email: 'ratetest@example.com',
+        topic: 'General',
+        message: 'Test',
+        honeypot: '',
+      }
+
+      const requests = []
+      for (let i = 0; i < 8; i++) {
+        requests.push(
+          fetch(`${baseUrl}/api/contact`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          })
+        )
+      }
+
+      const responses = await Promise.all(requests)
+      const statusCodes = responses.map((r) => r.status)
+
+      // First 6 should succeed (200), remaining should be rate-limited (429)
+      const successCount = statusCodes.filter((s) => s === 200).length
+      const blockedCount = statusCodes.filter((s) => s === 429).length
+
+      assert(
+        successCount >= 6,
+        `Expected at least 6 successful requests, got ${successCount}`
+      )
+      assert(blockedCount > 0, `Expected rate-limit blocks (429), got none`)
     })
   })
 
-  describe('POST /api/waitlist (honeypot)', () => {
-    it('rejects requests with honeypot field filled', async () => {
+  describe('POST /api/waitlist', () => {
+    it('rejects honeypot field violations with 400', async () => {
       const response = await fetch(`${baseUrl}/api/waitlist`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: 'test@example.com',
-          website: 'https://malicious.com', // honeypot field
+          products: [],
+          honeypot: 'filled', // honeypot field (should be empty)
         }),
       })
 
-      assert.equal(response.status, 400, 'Honeypot violation should return 400')
+      assert.equal(response.status, 400, 'Honeypot violation must return 400')
+    })
+
+    it('blocks requests exceeding rate limit (6 per minute per IP)', async () => {
+      const payload = {
+        email: 'ratetest-waitlist@example.com',
+        products: [],
+        honeypot: '',
+      }
+
+      const requests = []
+      for (let i = 0; i < 8; i++) {
+        requests.push(
+          fetch(`${baseUrl}/api/waitlist`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          })
+        )
+      }
+
+      const responses = await Promise.all(requests)
+      const statusCodes = responses.map((r) => r.status)
+
+      const successCount = statusCodes.filter((s) => [200, 409].includes(s)).length
+      const blockedCount = statusCodes.filter((s) => s === 429).length
+
+      assert(
+        successCount >= 6,
+        `Expected at least 6 successful requests, got ${successCount}`
+      )
+      assert(blockedCount > 0, `Expected rate-limit blocks (429), got none`)
     })
   })
 
-  describe('POST /api/preferences (token validation)', () => {
-    it('rejects requests without valid token', async () => {
+  describe('POST /api/preferences', () => {
+    it('rejects mutation without valid token', async () => {
       const response = await fetch(`${baseUrl}/api/preferences`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -77,16 +150,16 @@ describe('API Security Protections', () => {
         }),
       })
 
-      // Should either reject (401/400) or require a valid token
+      // Must reject — token is required
       assert(
         [400, 401, 403].includes(response.status),
-        'Unauthenticated preferences update should be rejected'
+        `Preferences without token must be rejected (got ${response.status})`
       )
     })
   })
 
-  describe('POST /api/webhook/stripe (signature validation)', () => {
-    it('rejects requests without valid stripe signature', async () => {
+  describe('POST /api/webhook/stripe', () => {
+    it('rejects requests with invalid stripe-signature header', async () => {
       const response = await fetch(`${baseUrl}/api/webhook/stripe`, {
         method: 'POST',
         headers: {
@@ -102,32 +175,47 @@ describe('API Security Protections', () => {
       assert.equal(
         response.status,
         400,
-        'Invalid Stripe signature should return 400'
+        'Invalid Stripe signature must return exactly 400'
+      )
+    })
+
+    it('rejects requests missing stripe-signature header', async () => {
+      const response = await fetch(`${baseUrl}/api/webhook/stripe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'payment_intent.succeeded',
+          data: { object: {} },
+        }),
+      })
+
+      assert.equal(
+        response.status,
+        400,
+        'Missing Stripe signature must return exactly 400'
       )
     })
   })
 
-  describe('Fail-closed API routes', () => {
+  describe('Fail-closed protected API routes', () => {
     const failClosedRoutes = [
-      '/api/projects',
-      '/api/subscription',
-      '/api/(make)/link',
-      '/api/(make)/active',
-      '/api/(make)/scenarios',
+      { method: 'GET', path: '/api/projects' },
+      { method: 'GET', path: '/api/subscription' },
+      { method: 'GET', path: '/api/link' },
+      { method: 'GET', path: '/api/active' },
+      { method: 'GET', path: '/api/scenarios' },
     ]
 
-    failClosedRoutes.forEach((route) => {
-      it(`${route} returns 501`, async () => {
-        const response = await fetch(`${baseUrl}${route}`, {
-          method: 'GET',
-        }).catch(() => {
-          // Route may not exist in test environment
-          return { status: 404 }
+    failClosedRoutes.forEach(({ method, path }) => {
+      it(`${method} ${path} returns exactly 501`, async () => {
+        const response = await fetch(`${baseUrl}${path}`, {
+          method,
         })
 
-        assert(
-          [501, 404].includes(response.status),
-          `${route} should return 501 (not implemented) or 404 (route not found)`
+        assert.equal(
+          response.status,
+          501,
+          `${method} ${path} must return exactly 501 (got ${response.status})`
         )
       })
     })
