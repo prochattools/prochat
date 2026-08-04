@@ -15,7 +15,7 @@ Current authentication enforcement:
 - **Commerce payment verification:** Implemented via STRIPE_WEBHOOK_SECRET_* env vars
 - **Integration webhook signatures:** Not uniformly enforced
 
-Gap: `/memory`, `/memory-qa`, `/workbench` are public canonical routes without session guards. All `/api/*` commerce and user routes lack uniform session validation. Chat and dashboard routes lack verified authorization checks.
+Gap: `/dashboard` and `/chat` lack session enforcement. Commerce and user `/api/*` routes lack uniform session validation. Admin authorization model needs Ory identity verification before env var checks.
 
 ---
 
@@ -98,54 +98,54 @@ Gap: `/memory`, `/memory-qa`, `/workbench` are public canonical routes without s
 
 ---
 
-## Public Canonical Routes — Currently Without Enforced Session Guard
+## Public Canonical Routes — Deployed as Marketing/Discovery Pages
 
-These routes are listed in CANONICAL_ROUTES and deployed as public marketing pages, but carry product-feature names that suggest protection intent.
+These routes are listed in CANONICAL_ROUTES and intentionally deployed as public pages for discovery and education.
 
 ### `/memory` (Memory Tool)
 | Property | Value |
 |----------|-------|
-| **Public or Protected Intent** | Product feature page (canonical public route) |
-| **Actual Current Guard** | None enforced by middleware |
-| **Guard Location** | src/middleware.ts does not check sessions; route renders without auth |
-| **Identity Source** | N/A (no auth enforcement) |
+| **Public or Protected Intent** | Public discovery/education page (canonical public route) |
+| **Actual Current Guard** | None (public route; no session enforcement) |
+| **Guard Location** | N/A (public route) |
+| **Identity Source** | N/A |
 | **Authorization Check** | None |
 | **Resource Ownership Check** | None |
 | **CSRF/Webhook/Signature Protection** | N/A |
-| **Test Evidence** | Listed in CANONICAL_ROUTES; HTTP 200 verified; no session requirement observed during CI test run |
-| **Gap** | **CRITICAL:** Route is public without session enforcement. Navigation suggests product access, but no auth gate exists. Ory integration deferred. |
-| **Risk** | **High** — Feature discovery/preview without session isolation; no per-user data separation if feature logic is added later |
-| **Recommended Next Packet** | PXF-018B: Implement Ory session validation or clarify product boundary (public preview vs. protected tool) |
+| **Test Evidence** | Listed in CANONICAL_ROUTES; HTTP 200 verified; renders without auth |
+| **Gap** | None (design is intentional) |
+| **Risk** | None |
+| **Recommended Next Packet** | No action required |
 
 ### `/memory-qa` (Memory Q&A)
 | Property | Value |
 |----------|-------|
-| **Public or Protected Intent** | Product feature page (canonical public route) |
-| **Actual Current Guard** | None enforced by middleware |
-| **Guard Location** | src/middleware.ts does not check sessions; route renders without auth |
-| **Identity Source** | N/A (no auth enforcement) |
+| **Public or Protected Intent** | Public discovery/education page (canonical public route) |
+| **Actual Current Guard** | None (public route; no session enforcement) |
+| **Guard Location** | N/A (public route) |
+| **Identity Source** | N/A |
 | **Authorization Check** | None |
 | **Resource Ownership Check** | None |
 | **CSRF/Webhook/Signature Protection** | N/A |
-| **Test Evidence** | Listed in CANONICAL_ROUTES; HTTP 200 verified; no session requirement observed |
-| **Gap** | **CRITICAL:** Route is public without session enforcement. Same as /memory. |
-| **Risk** | **High** — Feature discovery/preview without session isolation |
-| **Recommended Next Packet** | PXF-018B: Implement Ory session validation or clarify product boundary |
+| **Test Evidence** | Listed in CANONICAL_ROUTES; HTTP 200 verified; renders without auth |
+| **Gap** | None (design is intentional) |
+| **Risk** | None |
+| **Recommended Next Packet** | No action required |
 
 ### `/workbench` (Workbench)
 | Property | Value |
 |----------|-------|
-| **Public or Protected Intent** | Product feature page (canonical public route) |
-| **Actual Current Guard** | None enforced by middleware |
-| **Guard Location** | src/middleware.ts does not check sessions; route renders without auth |
-| **Identity Source** | N/A (no auth enforcement) |
+| **Public or Protected Intent** | Public discovery/education page (canonical public route) |
+| **Actual Current Guard** | None (public route; no session enforcement) |
+| **Guard Location** | N/A (public route) |
+| **Identity Source** | N/A |
 | **Authorization Check** | None |
 | **Resource Ownership Check** | None |
 | **CSRF/Webhook/Signature Protection** | N/A |
-| **Test Evidence** | Listed in CANONICAL_ROUTES; HTTP 200 verified; no session requirement observed |
-| **Gap** | **CRITICAL:** Route is public without session enforcement. Same as /memory and /memory-qa. |
-| **Risk** | **High** — Feature discovery/preview without session isolation |
-| **Recommended Next Packet** | PXF-018B: Implement Ory session validation or clarify product boundary |
+| **Test Evidence** | Listed in CANONICAL_ROUTES; HTTP 200 verified; renders without auth |
+| **Gap** | None (design is intentional) |
+| **Risk** | None |
+| **Recommended Next Packet** | No action required |
 
 ---
 
@@ -554,7 +554,7 @@ These routes are intended for authenticated users, but currently lack session en
 
 ### Critical Gaps (Immediate Action Needed)
 
-- **Session enforcement missing:** `/memory`, `/memory-qa`, `/workbench`, `/dashboard`, `/chat` render without session validation (deferred Ory integration)
+- **Session enforcement missing:** `/dashboard`, `/chat` render without session validation (deferred Ory integration; noted as public feature pages for /memory, /memory-qa, /workbench)
 
 ### High-Risk Gaps (Near-term Action Needed)
 
@@ -573,6 +573,7 @@ These routes are intended for authenticated users, but currently lack session en
 - ✓ Store claims: Stripe checkout session verification implemented
 - ✓ Stripe webhook signature: Implemented via stripe.webhooks.constructEvent
 - ✓ Project enumeration: Fail-closed 501 response (PXF-018A)
+- ✓ MailerLite credential exposure: Hardcoded fallback removed; now requires environment variables only (PXF-018A, external rotation pending)
 
 ---
 

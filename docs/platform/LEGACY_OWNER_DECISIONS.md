@@ -1,10 +1,10 @@
 # Legacy Owner Decision Register — PXF-017B
 
 **Created:** 2026-08-04  
-**Status:** All 23 items pending explicit owner decision  
+**Status:** All 22 items pending explicit owner decision  
 **Scope:** Phase 11 legacy surface classification decisions  
 
-This register tracks the 23 unresolved surface items that require explicit owner classification before proceeding with Phase 11 consolidation and removal work.
+This register tracks the 22 unresolved surface items that require explicit owner classification before proceeding with Phase 11 consolidation and removal work.
 
 ---
 

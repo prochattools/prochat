@@ -30,13 +30,13 @@ Current behavior:
 
 Canonical env documentation lives in [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md).
 
-Current values used by the route:
+Current values used by the route (required):
 
-- `MAILERLITE_API_KEY`
-- `MAILERLITE_GROUP_ID`
-- `MAILERLITE_API_BASE_URL`
+- `MAILERLITE_API_KEY` — MailerLite API key (required; no fallback)
+- `MAILERLITE_GROUP_ID` — Subscriber group ID (required; no fallback)
+- `MAILERLITE_API_BASE_URL` — (optional; defaults to `https://connect.mailerlite.com/api`)
 
-There is also a legacy fallback to `MAILERLITE` if `MAILERLITE_API_KEY` is absent.
+Security note: The legacy `MAILERLITE` fallback has been removed (PXF-018A). The API key must now be provided explicitly via `MAILERLITE_API_KEY`. **External action required: Rotate the exposed MailerLite API credential** (status: pending verification).
 
 ## Request and response behavior
 
@@ -48,7 +48,7 @@ Successful path:
 Error handling:
 
 - invalid or missing email returns HTTP 400
-- missing MailerLite configuration returns HTTP 500
+- missing `MAILERLITE_API_KEY` or `MAILERLITE_GROUP_ID` returns HTTP 500 with generic configuration error
 - upstream MailerLite failures return HTTP 502 when the API responds with an error payload
 - uncaught runtime failures return HTTP 500
 
