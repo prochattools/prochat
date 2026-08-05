@@ -55,7 +55,7 @@ This register tracks the 22 unresolved surface items that require explicit owner
 | **Data/Auth Dependency** | None |
 | **Options** | Delete (zero consumers, never populated) |
 | **Recommended Default** | DELETED (PXF-017B no-regret removal) |
-| **Owner Decision** | **COMPLETED** — Removed in commit [TBD] |
+| **Owner Decision** | **COMPLETED** — Removed in commit c0b2dee |
 | **Implementation Dependency** | None — zero-risk removal complete |
 
 ### 5. `/learn/*`
@@ -79,7 +79,7 @@ This register tracks the 22 unresolved surface items that require explicit owner
 | **Data/Auth Dependency** | None |
 | **Options** | Delete (zero consumers, never populated) |
 | **Recommended Default** | DELETED (PXF-017B no-regret removal) |
-| **Owner Decision** | **COMPLETED** — Removed in commit [TBD] |
+| **Owner Decision** | **COMPLETED** — Removed in commit c0b2dee |
 | **Implementation Dependency** | None — zero-risk removal complete |
 
 ### 7. `/prompts/[category]/[slug]`
@@ -115,7 +115,7 @@ This register tracks the 22 unresolved surface items that require explicit owner
 | **Data/Auth Dependency** | None |
 | **Options** | Delete (zero consumers, never populated) |
 | **Recommended Default** | DELETED (PXF-017B no-regret removal) |
-| **Owner Decision** | **COMPLETED** — Removed in commit [TBD] |
+| **Owner Decision** | **COMPLETED** — Removed in commit c0b2dee |
 | **Implementation Dependency** | None — zero-risk removal complete |
 
 ### 10. `/starting-point/*`
@@ -151,7 +151,7 @@ This register tracks the 22 unresolved surface items that require explicit owner
 | **Data/Auth Dependency** | None |
 | **Options** | Delete (zero consumers, content previously removed) |
 | **Recommended Default** | DELETED (PXF-017B no-regret removal) |
-| **Owner Decision** | **COMPLETED** — Removed in commit [TBD] |
+| **Owner Decision** | **COMPLETED** — Removed in commit c0b2dee |
 | **Implementation Dependency** | None — zero-risk removal complete |
 
 ---
@@ -267,7 +267,7 @@ This register tracks the 22 unresolved surface items that require explicit owner
 | **Data/Auth Dependency** | None |
 | **Options** | Delete (zero consumers, never populated) |
 | **Recommended Default** | DELETED (PXF-017B no-regret removal) |
-| **Owner Decision** | **COMPLETED** — Removed in commit [TBD] |
+| **Owner Decision** | **COMPLETED** — Removed in commit c0b2dee |
 | **Implementation Dependency** | None — zero-risk removal complete |
 
 ### 22. `/api/waiting-list` vs `/api/waitlist`
