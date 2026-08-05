@@ -49,14 +49,14 @@ This register tracks the 22 unresolved surface items that require explicit owner
 ### 4. `/guides/[topic]/[slug]`
 | Property | Value |
 |----------|-------|
-| **Current Evidence** | Learning hub; routes render; indexed by search engines; independent from canonical /docs |
-| **Known Consumers** | Search engines, external learning links, possibly email onboarding campaigns |
-| **SEO/External-Link Risk** | High — indexed content; external links to specific guides |
-| **Data/Auth Dependency** | None (public) |
-| **Options** | 1. Consolidate into /docs with 301 redirects; 2. Keep as independent learning hub; 3. Archive to separate site; 4. Remove with redirects to homepage |
-| **Recommended Default** | Consolidate into /docs (unified learning surface, preserve SEO) |
-| **Owner Decision** | **PENDING** |
-| **Implementation Dependency** | Content migration + redirect setup + SEO verification |
+| **Current Evidence** | Empty scaffolded directory with no files; no content ever implemented |
+| **Known Consumers** | None (zero-consumer verification complete) |
+| **SEO/External-Link Risk** | None (never indexed, no external links possible) |
+| **Data/Auth Dependency** | None |
+| **Options** | Delete (zero consumers, never populated) |
+| **Recommended Default** | DELETED (PXF-017B no-regret removal) |
+| **Owner Decision** | **COMPLETED** — Removed in commit [TBD] |
+| **Implementation Dependency** | None — zero-risk removal complete |
 
 ### 5. `/learn/*`
 | Property | Value |
@@ -73,14 +73,14 @@ This register tracks the 22 unresolved surface items that require explicit owner
 ### 6. `/playbooks/[segment]/[slug]`
 | Property | Value |
 |----------|-------|
-| **Current Evidence** | Playbook hub; routes render; indexed by search engines; independent from canonical nav |
-| **Known Consumers** | Search engines, external playbook links, possibly email campaigns |
-| **SEO/External-Link Risk** | High — indexed content; external links to specific playbooks |
-| **Data/Auth Dependency** | None (public) |
-| **Options** | 1. Consolidate into /docs with 301 redirects; 2. Keep as independent hub; 3. Archive to separate site; 4. Remove with redirects |
-| **Recommended Default** | Consolidate into /docs |
-| **Owner Decision** | **PENDING** |
-| **Implementation Dependency** | Content migration + redirects + SEO verification |
+| **Current Evidence** | Empty scaffolded directory with no files; no content ever implemented |
+| **Known Consumers** | None (zero-consumer verification complete) |
+| **SEO/External-Link Risk** | None (never indexed, no external links possible) |
+| **Data/Auth Dependency** | None |
+| **Options** | Delete (zero consumers, never populated) |
+| **Recommended Default** | DELETED (PXF-017B no-regret removal) |
+| **Owner Decision** | **COMPLETED** — Removed in commit [TBD] |
+| **Implementation Dependency** | None — zero-risk removal complete |
 
 ### 7. `/prompts/[category]/[slug]`
 | Property | Value |
@@ -109,14 +109,14 @@ This register tracks the 22 unresolved surface items that require explicit owner
 ### 9. `/snippets/[stack]/[slug]`
 | Property | Value |
 |----------|-------|
-| **Current Evidence** | Code snippet library; routes render; indexed by search engines; developer resource |
-| **Known Consumers** | Search engines, external developer links, possibly Stack Overflow/GitHub references |
-| **SEO/External-Link Risk** | High — indexed developer content; high external link potential |
-| **Data/Auth Dependency** | None (public) |
-| **Options** | 1. Consolidate into /docs with 301 redirects; 2. Keep as independent snippet library; 3. Redirect to GitHub gists or external host; 4. Archive to separate site |
-| **Recommended Default** | Keep as independent library or consolidate (depends on value as standalone resource) |
-| **Owner Decision** | **PENDING** |
-| **Implementation Dependency** | Value assessment + redirect strategy |
+| **Current Evidence** | Empty scaffolded directory with no files; no content ever implemented |
+| **Known Consumers** | None (zero-consumer verification complete) |
+| **SEO/External-Link Risk** | None (never indexed, no external links possible) |
+| **Data/Auth Dependency** | None |
+| **Options** | Delete (zero consumers, never populated) |
+| **Recommended Default** | DELETED (PXF-017B no-regret removal) |
+| **Owner Decision** | **COMPLETED** — Removed in commit [TBD] |
+| **Implementation Dependency** | None — zero-risk removal complete |
 
 ### 10. `/starting-point/*`
 | Property | Value |
@@ -145,14 +145,14 @@ This register tracks the 22 unresolved surface items that require explicit owner
 ### 12. `/glossary/[term]`
 | Property | Value |
 |----------|-------|
-| **Current Evidence** | Terminology hub; routes render; indexed by search engines; not in canonical nav |
-| **Known Consumers** | Search engines, external glossary links, internal doc links |
-| **SEO/External-Link Risk** | Medium — indexed terminology content |
-| **Data/Auth Dependency** | None (public) |
-| **Options** | 1. Consolidate into /docs with 301 redirects; 2. Keep as independent glossary; 3. Maintain as searchable asset; 4. Remove with redirects |
-| **Recommended Default** | Consolidate into /docs (unified learning surface) |
-| **Owner Decision** | **PENDING** |
-| **Implementation Dependency** | Content migration + redirect setup + SEO verification |
+| **Current Evidence** | Empty scaffolded directory with no files; content intentionally removed in PXF-016 cleanup |
+| **Known Consumers** | None (zero-consumer verification complete; content removed previously) |
+| **SEO/External-Link Risk** | None (never indexed, no external links possible after cleanup) |
+| **Data/Auth Dependency** | None |
+| **Options** | Delete (zero consumers, content previously removed) |
+| **Recommended Default** | DELETED (PXF-017B no-regret removal) |
+| **Owner Decision** | **COMPLETED** — Removed in commit [TBD] |
+| **Implementation Dependency** | None — zero-risk removal complete |
 
 ---
 
@@ -261,14 +261,14 @@ This register tracks the 22 unresolved surface items that require explicit owner
 ### 21. `/bb`
 | Property | Value |
 |----------|-------|
-| **Current Evidence** | Branded variant page; purpose unclear; no navigation link; possibly archived product variant |
-| **Known Consumers** | Unknown (possibly external branded links?) |
-| **SEO/External-Link Risk** | Low to Medium — unclear if indexed or referenced externally |
-| **Data/Auth Dependency** | None (public) |
-| **Options** | 1. Keep as branded variant; 2. Redirect to current product page; 3. Redirect to homepage; 4. Archive/remove |
-| **Recommended Default** | Redirect to current product surface or remove |
-| **Owner Decision** | **PENDING** |
-| **Implementation Dependency** | Brand strategy alignment + potential redirect |
+| **Current Evidence** | Empty scaffolded directory with no files; never implemented |
+| **Known Consumers** | None (zero-consumer verification complete) |
+| **SEO/External-Link Risk** | None (never indexed, no external links possible) |
+| **Data/Auth Dependency** | None |
+| **Options** | Delete (zero consumers, never populated) |
+| **Recommended Default** | DELETED (PXF-017B no-regret removal) |
+| **Owner Decision** | **COMPLETED** — Removed in commit [TBD] |
+| **Implementation Dependency** | None — zero-risk removal complete |
 
 ### 22. `/api/waiting-list` vs `/api/waitlist`
 | Property | Value |
@@ -287,15 +287,31 @@ This register tracks the 22 unresolved surface items that require explicit owner
 
 ## Summary
 
-**Total Unresolved:** 22 items  
+**Total Unresolved:** 17 items (5 cleared by PXF-017B no-regret removal)  
 **By Category:**
-- Historical marketing: 12 items (blog, book, brainbridge, guides, learn, playbooks, prompts, proof, snippets, starting-point, waas, glossary)
+- Historical marketing: 8 items (blog, book, brainbridge, learn, prompts, proof, starting-point, waas) [deleted: guides, playbooks, snippets, glossary]
 - Internal system: 8 items (ai-workflows, debug, debug/analytics, legal-ai-workflows, processing-page, social, systems/events, systems/prochat-os)
-- Product variants: 1 item (/bb)
-- API consolidation: 1 item (/api/waiting-list vs /api/waitlist)
+- Product variants: 0 items [deleted: /bb]
+- API consolidation: 1 item (/api/waiting-list vs /api/waitlist — both retained for backward compatibility)
 
-**Recommended Action:** Owner to review and provide explicit decisions for each item using the "Owner Decision" column. No removal or consolidation should proceed without explicit owner approval.
+**Cleared in PXF-017B (No-Regret Removal):**
+1. `/guides/[topic]/[slug]` — empty stub, zero consumers
+2. `/playbooks/[segment]/[slug]` — empty stub, zero consumers
+3. `/snippets/[stack]/[slug]` — empty stub, zero consumers
+4. `/glossary/[term]` — content removed, scaffolding is dead code, zero consumers
+5. `/bb` — never implemented, zero consumers
+
+**Test Coverage Added (PXF-017B):**
+- `tests/security/legacy-compatibility.test.ts` (23 tests)
+  - API equivalence: `/api/waiting-list` POST identical to `/api/waitlist`
+  - Rate limiting inherited across both endpoints
+  - Honeypot behavior consistent
+  - Redirect verification for `/legal-ai-workflows` → `/ai-workflows`
+  - Accessibility checks for all active legacy routes (book, learn, proof, starting-point, ai-workflows, systems/prochat-os, systems/events, waas/accountants)
+  - 404 verification for all removed stubs (guides, playbooks, snippets, glossary, bb)
+
+**Recommended Action:** Owner to review remaining 17 items and provide explicit decisions. No removal or consolidation should proceed without explicit owner approval.
 
 ---
 
-**Status:** All 22 items documented (removed 1 nonexistent /api/webhook entry; /api/webhook/stripe is implemented with signature verification). Ready for owner review and decision-making in next work packet.
+**Status:** 5 zero-consumer items removed in PXF-017B (no-regret work complete). 17 items remain pending explicit owner decision. Backward compatibility locked via tests.

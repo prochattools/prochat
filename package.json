@@ -29,7 +29,7 @@
     "test:accessibility-policy": "node --import tsx --test tests/evidence/accessibility-policy.test.ts",
     "test:performance-policy": "node --import tsx --test tests/performance/canonical-performance-policy.test.ts tests/performance/canonical-performance-attribution.test.mjs",
     "test:secret-sources": "node --test scripts/security/validate-secret-sources.test.mjs && node scripts/security/validate-secret-sources.mjs",
-    "test:security-api": "TEST_BASE_URL=${TEST_BASE_URL:?TEST_BASE_URL is required} node --import tsx --test tests/security/fixed-window-rate-limit.test.ts tests/security/api-protection.test.ts",
+    "test:security-api": "TEST_BASE_URL=${TEST_BASE_URL:?TEST_BASE_URL is required} node --import tsx --test tests/security/fixed-window-rate-limit.test.ts tests/security/api-protection.test.ts tests/security/legacy-compatibility.test.ts",
     "perf:canonical": "node scripts/run-canonical-performance.mjs",
     "perf:diagnostic": "PERF_DIAGNOSTIC_MODE=1 PERF_DIAGNOSTIC_ROUTES=/,/memory,/memory-qa,/workbench,/docs,/contact node scripts/run-canonical-performance.mjs",
     "typecheck": "tsc --noEmit",
