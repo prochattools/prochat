@@ -185,8 +185,15 @@
     {
       "rule": "hardcoded-hex",
       "file": "src/lib/brand.ts",
+      "pattern": "#000000",
+      "count": 1,
+      "reason": "Canonical first-paint black for viewport themeColor; replaces legacy navy darkBackground token."
+    },
+    {
+      "rule": "hardcoded-hex",
+      "file": "src/lib/brand.ts",
       "pattern": "#0B1220",
-      "count": 4,
+      "count": 3,
       "reason": "Existing production debt at PXF-010 baseline; migration remains tracked and this count may not increase."
     },
     {

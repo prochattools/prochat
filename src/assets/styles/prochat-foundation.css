@@ -124,25 +124,3 @@
 .pc-foundation-scope samp {
   font-family: var(--pc-foundation-font-technical);
 }
-
-.pc-skip-link {
-  position: fixed;
-  inset-block-start: var(--pc-foundation-space-3);
-  inset-inline-start: var(--pc-foundation-space-3);
-  z-index: 100;
-  min-height: 1.5rem;
-  padding: var(--pc-foundation-space-2) var(--pc-foundation-space-4);
-  border: 2px solid var(--pc-foundation-color-focus-ring);
-  border-radius: var(--pc-foundation-radius-sm);
-  background: var(--pc-foundation-color-surface-raised);
-  color: var(--pc-foundation-color-text-primary);
-  font-family: var(--pc-foundation-font-primary);
-  font-weight: var(--pc-foundation-font-weight-semibold);
-  transform: translateY(calc(-100% - var(--pc-foundation-space-6)));
-}
-
-.pc-skip-link:focus-visible {
-  transform: translateY(0);
-  outline: 3px solid var(--pc-foundation-color-focus-ring);
-  outline-offset: 2px;
-}

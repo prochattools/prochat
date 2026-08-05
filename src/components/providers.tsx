@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { ThemeProvider } from 'next-themes'
 
-import { isCurrentCanonicalVisualShellPath } from '@/helpers/shell-routes'
+import { getShellRouteClass } from '@/helpers/shell-routes'
 
 const Toaster = dynamic(
   () => import('react-hot-toast').then(module => module.Toaster),
@@ -56,7 +56,7 @@ function LegacyCompatibilityProviders({ children }: { children: ReactNode }) {
 export function Providers({ children }: { children: ReactNode }) {
   const pathname = usePathname() || ''
 
-  if (isCurrentCanonicalVisualShellPath(pathname)) {
+  if (getShellRouteClass(pathname) === 'canonical_public_shell') {
     return <CanonicalPublicProviders>{children}</CanonicalPublicProviders>
   }
 

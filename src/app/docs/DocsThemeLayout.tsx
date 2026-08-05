@@ -54,7 +54,7 @@ export default async function DocsThemeLayout({
   docsCategory?: string
 }) {
   return (
-    <div className="docs-shell-inner flex flex-1 flex-col">
+    <div className="docs-shell docs-shell-inner flex flex-1 flex-col">
       <Layout
         pageMap={PUBLIC_DOCS_NAVIGATION}
         editLink={null}

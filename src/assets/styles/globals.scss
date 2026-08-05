@@ -8,29 +8,12 @@ html,
 body {
 	max-width: 100%;
 	overflow-x: hidden;
-	transition:
-		background-color 650ms cubic-bezier(0.22, 1, 0.36, 1),
-		color 650ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 *,
 *::before,
 *::after {
 	box-sizing: border-box;
-	transition:
-		background-color 650ms cubic-bezier(0.22, 1, 0.36, 1),
-		color 650ms cubic-bezier(0.22, 1, 0.36, 1),
-		border-color 650ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Suppress theme-switch transitions inside the canonical public shell.
-   These routes don't have a theme toggle, so the 650ms bg transitions
-   only cause a visible flash on first paint and navigation. */
-.pc-canonical-shell,
-.pc-canonical-shell *,
-.pc-canonical-shell *::before,
-.pc-canonical-shell *::after {
-	transition: none;
 }
 
 img,

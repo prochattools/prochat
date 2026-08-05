@@ -9,18 +9,13 @@ import { NoSharedShell } from '@/components/shell/NoSharedShell'
 import { ProtectedInternalShell } from '@/components/shell/ProtectedInternalShell'
 import {
   getShellRouteClass,
-  isCurrentCanonicalVisualShellPath,
-  isCurrentDocsShellPath,
 } from '@/helpers/shell-routes'
 
 export default function AppChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname() || ''
   const shellClass = getShellRouteClass(pathname)
 
-  if (
-    shellClass === 'canonical_public_shell' &&
-    isCurrentCanonicalVisualShellPath(pathname)
-  ) {
+  if (shellClass === 'canonical_public_shell') {
     return <CanonicalPublicShell>{children}</CanonicalPublicShell>
   }
 
@@ -28,7 +23,7 @@ export default function AppChrome({ children }: { children: ReactNode }) {
     return <ProtectedInternalShell>{children}</ProtectedInternalShell>
   }
 
-  if (shellClass === 'no_shared_shell' && isCurrentDocsShellPath(pathname)) {
+  if (shellClass === 'no_shared_shell') {
     return <NoSharedShell>{children}</NoSharedShell>
   }
 

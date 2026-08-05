@@ -7,7 +7,7 @@ export const brand = {
     primaryStrong: '#6366F1',
     primaryStrongRgb: '99 102 241',
     deepBlue: '#1E293B',
-    darkBackground: '#0B1220',
+    darkBackground: '#000000',
     cardBackground: '#111827',
     mutedText: '#94A3B8',
     white: '#FFFFFF',
