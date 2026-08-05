@@ -579,32 +579,22 @@ These routes are intended for authenticated users, but currently lack session en
 
 ## Recommended Next Packets
 
-**PXF-018A:** Form security hardening
-- Add CSRF tokens to contact form and waitlist
-- Implement rate limiting on form submissions
-- Add honeypot fields
+**PXF-018A — corrective security remediation (locally validated; release pending):**
+- MailerLite now uses environment-only configuration and fails closed when required values are missing.
+- Repository-owned secret-source policy and seven focused tests pass locally and are wired into Main CI before build.
+- `/api/tenants/projects` remains fail closed with HTTP 501 and contains no Prisma import or query.
+- Contact and Waitlist share one deterministic fixed-window limiter; four limiter tests pass.
+- Twelve strict API security checks pass against the built standalone server.
+- External MailerLite credential revocation and rotation remain pending owner verification.
 
-**PXF-018B:** Session and per-user authorization
-- Implement Ory session validation in middleware
-- Add session checks to protected routes
-- Add per-user authorization checks to commerce APIs
-- Add CSRF token validation to state-mutating endpoints
+**Next packet selection after PXF-018A release:**
+- Do not begin broad Ory middleware work without an approved protected-product contract.
+- Resolve the 22 owner decisions for historical, internal, product-variant, and API-consolidation surfaces.
+- Select one bounded authorization or integration-secret packet only from exact runtime evidence and an explicit product decision.
+- Clarify `/admin/og` protection intent and any genuinely active integration consumers; do not reintroduce the nonexistent generic `/api/webhook` item.
 
-**PXF-018C:** Email token security
-- Verify token validation on `/success` and `/unsubscribe`
-- Add rate limiting and replay protection
-- Document token format and lifecycle
-
-**PXF-018D:** Webhook and API secret verification
-- Code review `/api/stripe` webhook signature validation
-- Code review `/api/social`, `/api/(make)`, `/api/(n8n)` secret validation
-- Implement uniform secret validation pattern
-
-**PXF-017C:** Unknown surface clarification (inventory)
-- Document `/api/webhook` purpose and consumer
-- Document `/api/tenants` purpose and auth model
-- Clarify `/admin/og` protection intent
+Contact and Waitlist already implement schema validation, honeypot filtering, and six-request fixed-window limiting. Stripe webhook signature verification and Preferences token validation are also implemented and now have strict regression evidence.
 
 ---
 
-**Status:** Audit complete. No implementation performed. All findings documented for PXF-018 series work packets.
+**Status:** Audit corrected through PXF-018A local implementation and deterministic evidence. Push, CI, deployment observation, and external credential rotation verification remain pending.

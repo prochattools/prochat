@@ -3,7 +3,7 @@
 **Status:** canonical executable plan  
 **Owner:** Steve Westhoek  
 **Scope:** documentation, audits, prototypes, production foundation, public pages, migration, validation, launch, and maintenance  
-**Last updated:** 2026-08-04
+**Last updated:** 2026-08-05
 
 ## Authority and reading order
 
@@ -46,9 +46,9 @@ last_verified_production_at: 2026-08-04T19:15:00Z
 deployment_observation_source: Main workflow run 30939864855 (canonical chrome closeout) + PXF-017A cleanup deployed; direct production /api/version, /api/health, /docs, and eight-route verification
 validated_date: 2026-08-04
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
-current_program_state: The canonical public platform is deployed to production (SHA 7cfa126). All eight canonical routes serve with unified navigation, footer, and neutral design. Contact page centered in neutral viewport. 12 verified-unused legacy components removed (src/components cleanup). All CI checks pass (TypeScript, ESLint, design governance, 40/40 browser/accessibility). Owner-directed benchmark tuning closed. Phase 11 PARTIAL: redirects active, first cleanup deployed, inventory created, protected-route hardening design pending.
+current_program_state: The canonical public platform is deployed to production (SHA 7cfa126). All eight canonical routes serve with unified navigation, footer, and neutral design. Contact page centered in neutral viewport. 12 verified-unused legacy components removed (src/components cleanup). All CI checks pass (TypeScript, ESLint, design governance, 40/40 browser/accessibility). Owner-directed benchmark tuning closed. Phase 11 PARTIAL: redirects active, first cleanup deployed, inventory created, protected-route hardening design pending. PXF-018A is locally validated with environment-only MailerLite configuration, a deterministic repository secret-source policy, shared fixed-window limiting, sixteen strict API/limiter tests, TypeScript, zero-warning lint, and a 109-page production build. Push, CI, deployment observation, and external credential revocation/rotation remain pending.
 current_phase: Phase 13 — continuous governance
-current_packet: PXF-017B — inventory correction and auth-boundary audit
+current_packet: PXF-018A — corrective security remediation and deterministic evidence
 canonical_visual_routes_active: 8
 canonical_route_implementation: COMPLETE
 public_docs_alignment: COMPLETE

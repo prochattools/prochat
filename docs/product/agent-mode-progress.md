@@ -3,8 +3,8 @@
 **Source:** `prochat`  
 **Branch:** `main`  
 **Audit date:** 2026-07-31  
-**Reconciliation date:** 2026-08-04  
-**Status:** PXF-017B inventory correction and auth-boundary audit (in progress); PXF-016E canonical public chrome closeout deployed; PXF-017A legacy cleanup deployed; SHA `7cfa126` verified in production
+**Reconciliation date:** 2026-08-05  
+**Status:** PXF-018A corrective security remediation locally validated; push, CI, deployment observation, and external MailerLite credential revocation/rotation remain pending; PXF-016E canonical public chrome closeout and PXF-017A legacy cleanup remain deployed; SHA `7cfa126` is the last verified production revision
 
 ## Purpose
 
@@ -892,3 +892,36 @@ The code and documents are ready for the closeout commit and normal push to `mai
 - Phase 13 remains ongoing: continuous governance and bounded maintenance.
 - Authenticated/protected application flows remain a separate future implementation scope.
 - Future `/philosophy` and `/about` routes remain roadmap candidates, not current release gaps.
+
+
+
+## PXF-018A — Corrective security remediation
+
+**Implemented and locally validated:** 2026-08-05  
+**Release status:** push, CI, and deployment observation pending  
+**External action:** revoke and rotate the exposed MailerLite credential; owner verification pending
+
+### Implemented
+
+- Removed literal and legacy MailerLite credential sources from `src/app/api/mailerlite/subscribe/route.ts`.
+- Required `MAILERLITE_API_KEY` and `MAILERLITE_GROUP_ID`; the route fails closed with a generic HTTP 500 configuration error when either is missing.
+- Added repository-owned source policy validation in `scripts/security/` and wired `npm run test:secret-sources` into Main CI before build.
+- Retained the HTTP 501 fail-closed boundary for `/api/tenants/projects` with no Prisma import or project query.
+- Extracted duplicated Contact and Waitlist fixed-window limiting into `src/lib/security/fixed-window-rate-limit.ts` with injected store and clock support.
+- Rewired Contact and Waitlist to the shared limiter without changing their schema, honeypot, or response contracts.
+- Replaced permissive API evidence with strict production-semantic checks for tenants/projects, Contact, Waitlist, Preferences, Stripe webhook signatures, and five fail-closed routes.
+
+### Local validation
+
+- Secret-source policy: 7/7 tests passed; live MailerLite source passed.
+- Shared limiter: 4/4 tests passed.
+- API security evidence: 12/12 tests passed against the built standalone server.
+- Combined security suite: 16/16 passed.
+- TypeScript: passed.
+- ESLint: passed with zero warnings.
+- Production build: passed; 109 static pages generated.
+- Workbench `forbidden_secret_material` scan passed for the corrected MailerLite handler before release review.
+
+### Boundary
+
+PXF-018A must not be marked deployed or externally complete until the commits reach `origin/main`, Main CI completes successfully, production observation is updated where applicable, and the repository owner verifies MailerLite credential revocation/rotation. Broad Ory/session work remains unapproved; the next packet must be selected from exact owner decisions and runtime evidence.
