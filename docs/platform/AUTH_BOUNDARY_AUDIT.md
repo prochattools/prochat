@@ -1,9 +1,10 @@
-# Authentication Boundary Audit — PXF-017B
+# Authentication Boundary Audit — PXF-018A Deployment Status
 
 **Created:** 2026-08-04  
+**Deployed:** 2026-08-05T14:12:22Z (workflow 31012683840, SHA 38bc212)  
 **Scope:** All protected, admin, commerce, webhook, and internal routes  
 **Source:** src/middleware.ts, src/lib/admin.ts, route handlers, server actions, tests  
-**Status:** Evidence-based audit, implementation deferred  
+**Status:** Audit corrected and remediation deployed (MailerLite credential removed, project API fail-closed, CI security tests wired)  
 
 ## Executive Summary
 

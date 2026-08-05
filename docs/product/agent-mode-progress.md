@@ -897,9 +897,9 @@ The code and documents are ready for the closeout commit and normal push to `mai
 
 ## PXF-018A — Corrective security remediation
 
-**Implemented and locally validated:** 2026-08-05  
-**Release status:** push, CI, and deployment observation pending  
-**External action:** revoke and rotate the exposed MailerLite credential; owner verification pending
+**Implemented, validated, and deployed:** 2026-08-05T14:12:22Z (workflow 31012683840, SHA 38bc212)  
+**Release status:** DEPLOYED — all 8 canonical routes HTTP 200; production /api/version matches pushed SHA  
+**External action:** revoke and rotate the exposed MailerLite credential; **PENDING** owner verification post-deployment
 
 ### Implemented
 

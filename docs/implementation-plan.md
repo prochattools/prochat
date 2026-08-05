@@ -3,7 +3,7 @@
 **Status:** canonical executable plan  
 **Owner:** Steve Westhoek  
 **Scope:** documentation, audits, prototypes, production foundation, public pages, migration, validation, launch, and maintenance  
-**Last updated:** 2026-08-05
+**Last updated:** 2026-08-05T14:12:22Z
 
 ## Authority and reading order
 
@@ -41,12 +41,12 @@ validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
 validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-last_verified_production_head: 7cfa1261de651dbb1ba602e3f7df4f8d8d5f9343
-last_verified_production_at: 2026-08-04T19:15:00Z
-deployment_observation_source: Main workflow run 30939864855 (canonical chrome closeout) + PXF-017A cleanup deployed; direct production /api/version, /api/health, /docs, and eight-route verification
-validated_date: 2026-08-04
+last_verified_production_head: 38bc212ad315d211812f4c4432b76afbf66a63e0
+last_verified_production_at: 2026-08-05T14:12:22Z
+deployment_observation_source: Main workflow run 31012683840 (PXF-018A security remediation) deployed; direct production /api/version, /api/health, /docs, and eight-route verification; all routes HTTP 200; built 2026-08-05T14:03:48Z
+validated_date: 2026-08-05
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
-current_program_state: The canonical public platform is deployed to production (SHA 7cfa126). All eight canonical routes serve with unified navigation, footer, and neutral design. Contact page centered in neutral viewport. 12 verified-unused legacy components removed (src/components cleanup). All CI checks pass (TypeScript, ESLint, design governance, 40/40 browser/accessibility). Owner-directed benchmark tuning closed. Phase 11 PARTIAL: redirects active, first cleanup deployed, inventory created, protected-route hardening design pending. PXF-018A is locally validated with environment-only MailerLite configuration, a deterministic repository secret-source policy, shared fixed-window limiting, sixteen strict API/limiter tests, TypeScript, zero-warning lint, and a 109-page production build. Push, CI, deployment observation, and external credential revocation/rotation remain pending.
+current_program_state: PXF-018A security remediation deployed to production (SHA 38bc212). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). MailerLite credential exposure removed (requires env var only; external rotation PENDING). Project enumeration hardened (501 fail-closed). CI wired with secret scanning and 11 API security tests. Auth audit corrected (/memory, /memory-qa, /workbench confirmed public). Owner decisions reduced 23→22. All CI checks pass (TypeScript ✓, ESLint ✓, secret-sources ✓, build ✓ 109 pages, browser evidence ✓, API security ✓). Phase 11 PARTIAL (inventory, cleanup, audit deployed). Phase 13 continuous governance.
 current_phase: Phase 13 — continuous governance
 current_packet: PXF-018A — corrective security remediation and deterministic evidence
 canonical_visual_routes_active: 8

@@ -36,7 +36,7 @@ Current values used by the route (required):
 - `MAILERLITE_GROUP_ID` — Subscriber group ID (required; no fallback)
 - `MAILERLITE_API_BASE_URL` — (optional; defaults to `https://connect.mailerlite.com/api`)
 
-Security note: PXF-018A removed literal and legacy MailerLite credential sources. The route reads `MAILERLITE_API_KEY` directly at use sites and reads `MAILERLITE_GROUP_ID` from its required environment variable. `npm run test:secret-sources` validates this source policy in CI. **External action required: revoke and rotate the exposed MailerLite API credential** (status: pending owner verification).
+Security note: PXF-018A removed literal and legacy MailerLite credential sources (deployed 2026-08-05T14:12:22Z, workflow 31012683840, SHA 38bc212). The route reads `MAILERLITE_API_KEY` directly at use sites and reads `MAILERLITE_GROUP_ID` from its required environment variable. `npm run test:secret-sources` validates this source policy in CI. **External action required: revoke and rotate the exposed MailerLite API credential** (status: **PENDING** owner verification post-deployment).
 
 ## Request and response behavior
 
