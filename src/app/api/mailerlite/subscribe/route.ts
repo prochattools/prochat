@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server'
 const BASE_URL =
   process.env.MAILERLITE_API_BASE_URL || 'https://connect.mailerlite.com/api'
 const GROUP_ID = process.env.MAILERLITE_GROUP_ID
-const API_KEY = process.env.MAILERLITE_API_KEY
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -18,14 +17,14 @@ export async function POST(req: NextRequest) {
   if (!EMAIL_REGEX.test(normalizedEmail)) {
     return NextResponse.json(
       { error: 'Please provide a valid email address.' },
-      { status: 400 }
+      { status: 400 },
     )
   }
 
-  if (!API_KEY || !GROUP_ID) {
+  if (!process.env.MAILERLITE_API_KEY || !GROUP_ID) {
     return NextResponse.json(
       { error: 'Server is missing required configuration.' },
-      { status: 500 }
+      { status: 500 },
     )
   }
 
@@ -33,7 +32,7 @@ export async function POST(req: NextRequest) {
     const response = await fetch(`${BASE_URL}/subscribers`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${API_KEY}`,
+        Authorization: `Bearer ${process.env.MAILERLITE_API_KEY}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
@@ -58,7 +57,7 @@ export async function POST(req: NextRequest) {
       ) {
         return NextResponse.json(
           { message: 'You are already subscribed.' },
-          { status: 200 }
+          { status: 200 },
         )
       }
 
@@ -67,13 +66,13 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { message: 'Check your inbox — your copy is on its way.' },
-      { status: 200 }
+      { status: 200 },
     )
   } catch (error) {
     console.error('MailerLite subscribe error:', error)
     return NextResponse.json(
       { error: 'Unable to subscribe right now. Please try again.' },
-      { status: 500 }
+      { status: 500 },
     )
   }
 }
