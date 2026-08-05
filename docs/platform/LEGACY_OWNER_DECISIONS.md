@@ -1,10 +1,10 @@
 # Legacy Owner Decision Register — PXF-017B
 
 **Created:** 2026-08-04  
-**Status:** All 22 items pending explicit owner decision  
+**Status:** 17 decisions pending; 5 items verified absent (no tracked code removal required)  
 **Scope:** Phase 11 legacy surface classification decisions  
 
-This register tracks the 22 unresolved surface items that require explicit owner classification before proceeding with Phase 11 consolidation and removal work.
+This register tracks 22 surface items. Five have been verified as never-implemented paths (guides, playbooks, snippets, glossary, bb) — their status is documented as "no code removal required." The remaining **17 items require explicit owner classification** before proceeding with Phase 11 consolidation and removal work.
 
 ---
 
@@ -49,14 +49,14 @@ This register tracks the 22 unresolved surface items that require explicit owner
 ### 4. `/guides/[topic]/[slug]`
 | Property | Value |
 |----------|-------|
-| **Current Evidence** | Empty scaffolded directory with no files; no content ever implemented |
+| **Current Evidence** | VERIFIED ABSENT — no route file, no directory; never existed in tracked repo state |
 | **Known Consumers** | None (zero-consumer verification complete) |
 | **SEO/External-Link Risk** | None (never indexed, no external links possible) |
 | **Data/Auth Dependency** | None |
-| **Options** | Delete (zero consumers, never populated) |
-| **Recommended Default** | DELETED (PXF-017B no-regret removal) |
-| **Owner Decision** | **COMPLETED** — Removed in commit c0b2dee |
-| **Implementation Dependency** | None — zero-risk removal complete |
+| **Options** | No removal required (path was never implemented) |
+| **Recommended Default** | Declare VERIFIED ABSENT — no tracked route exists to delete |
+| **Owner Decision** | **PENDING** (manifest status only; no code change required) |
+| **Implementation Dependency** | None — documentation correction complete |
 
 ### 5. `/learn/*`
 | Property | Value |
@@ -73,14 +73,14 @@ This register tracks the 22 unresolved surface items that require explicit owner
 ### 6. `/playbooks/[segment]/[slug]`
 | Property | Value |
 |----------|-------|
-| **Current Evidence** | Empty scaffolded directory with no files; no content ever implemented |
+| **Current Evidence** | VERIFIED ABSENT — no route file, no directory; never existed in tracked repo state |
 | **Known Consumers** | None (zero-consumer verification complete) |
 | **SEO/External-Link Risk** | None (never indexed, no external links possible) |
 | **Data/Auth Dependency** | None |
-| **Options** | Delete (zero consumers, never populated) |
-| **Recommended Default** | DELETED (PXF-017B no-regret removal) |
-| **Owner Decision** | **COMPLETED** — Removed in commit c0b2dee |
-| **Implementation Dependency** | None — zero-risk removal complete |
+| **Options** | No removal required (path was never implemented) |
+| **Recommended Default** | Declare VERIFIED ABSENT — no tracked route exists to delete |
+| **Owner Decision** | **PENDING** (manifest status only; no code change required) |
+| **Implementation Dependency** | None — documentation correction complete |
 
 ### 7. `/prompts/[category]/[slug]`
 | Property | Value |
@@ -109,14 +109,14 @@ This register tracks the 22 unresolved surface items that require explicit owner
 ### 9. `/snippets/[stack]/[slug]`
 | Property | Value |
 |----------|-------|
-| **Current Evidence** | Empty scaffolded directory with no files; no content ever implemented |
+| **Current Evidence** | VERIFIED ABSENT — no route file, no directory; never existed in tracked repo state |
 | **Known Consumers** | None (zero-consumer verification complete) |
 | **SEO/External-Link Risk** | None (never indexed, no external links possible) |
 | **Data/Auth Dependency** | None |
-| **Options** | Delete (zero consumers, never populated) |
-| **Recommended Default** | DELETED (PXF-017B no-regret removal) |
-| **Owner Decision** | **COMPLETED** — Removed in commit c0b2dee |
-| **Implementation Dependency** | None — zero-risk removal complete |
+| **Options** | No removal required (path was never implemented) |
+| **Recommended Default** | Declare VERIFIED ABSENT — no tracked route exists to delete |
+| **Owner Decision** | **PENDING** (manifest status only; no code change required) |
+| **Implementation Dependency** | None — documentation correction complete |
 
 ### 10. `/starting-point/*`
 | Property | Value |
@@ -145,14 +145,14 @@ This register tracks the 22 unresolved surface items that require explicit owner
 ### 12. `/glossary/[term]`
 | Property | Value |
 |----------|-------|
-| **Current Evidence** | Empty scaffolded directory with no files; content intentionally removed in PXF-016 cleanup |
-| **Known Consumers** | None (zero-consumer verification complete; content removed previously) |
-| **SEO/External-Link Risk** | None (never indexed, no external links possible after cleanup) |
+| **Current Evidence** | VERIFIED ABSENT — no route file, no directory; never existed in tracked repo state |
+| **Known Consumers** | None (zero-consumer verification complete) |
+| **SEO/External-Link Risk** | None (never indexed, no external links possible) |
 | **Data/Auth Dependency** | None |
-| **Options** | Delete (zero consumers, content previously removed) |
-| **Recommended Default** | DELETED (PXF-017B no-regret removal) |
-| **Owner Decision** | **COMPLETED** — Removed in commit c0b2dee |
-| **Implementation Dependency** | None — zero-risk removal complete |
+| **Options** | No removal required (path was never implemented) |
+| **Recommended Default** | Declare VERIFIED ABSENT — no tracked route exists to delete |
+| **Owner Decision** | **PENDING** (manifest status only; no code change required) |
+| **Implementation Dependency** | None — documentation correction complete |
 
 ---
 
@@ -261,26 +261,26 @@ This register tracks the 22 unresolved surface items that require explicit owner
 ### 21. `/bb`
 | Property | Value |
 |----------|-------|
-| **Current Evidence** | Empty scaffolded directory with no files; never implemented |
+| **Current Evidence** | VERIFIED ABSENT — no route file, no directory; never existed in tracked repo state |
 | **Known Consumers** | None (zero-consumer verification complete) |
 | **SEO/External-Link Risk** | None (never indexed, no external links possible) |
 | **Data/Auth Dependency** | None |
-| **Options** | Delete (zero consumers, never populated) |
-| **Recommended Default** | DELETED (PXF-017B no-regret removal) |
-| **Owner Decision** | **COMPLETED** — Removed in commit c0b2dee |
-| **Implementation Dependency** | None — zero-risk removal complete |
+| **Options** | No removal required (path was never implemented) |
+| **Recommended Default** | Declare VERIFIED ABSENT — no tracked route exists to delete |
+| **Owner Decision** | **PENDING** (manifest status only; no code change required) |
+| **Implementation Dependency** | None — documentation correction complete |
 
 ### 22. `/api/waiting-list` vs `/api/waitlist`
 | Property | Value |
 |----------|-------|
-| **Current Evidence** | Two waitlist endpoints exist; possible duplicate or alternate naming |
-| **Known Consumers** | Both /waitlist form and legacy forms may use either endpoint |
+| **Current Evidence** | `/api/waiting-list/route.ts` is exact POST re-export: `export { POST } from '../waitlist/route'`; both endpoints return identical response. Verified by source inspection (legacy-compatibility.test.ts line 18–31). |
+| **Known Consumers** | Legacy form endpoints and possible external integrations that reference the older path |
 | **SEO/External-Link Risk** | N/A (APIs) |
-| **Data/Auth Dependency** | None (public forms) |
-| **Options** | 1. Consolidate into single /api/waitlist endpoint with redirect; 2. Keep both as aliases (backward compatibility); 3. Deprecate /api/waiting-list; 4. Clarify intent |
-| **Recommended Default** | Consolidate into /api/waitlist; 301-redirect /api/waiting-list callers |
+| **Data/Auth Dependency** | None (public form submission) |
+| **Options** | 1. Keep both as aliases (backward compatibility, zero cost); 2. Deprecate /api/waiting-list with redirect; 3. Document /api/waiting-list as canonical alias; 4. Consolidate into /api/waitlist only |
+| **Recommended Default** | Keep both; /api/waiting-list is zero-cost re-export maintaining backward compatibility |
 | **Owner Decision** | **PENDING** |
-| **Implementation Dependency** | API consolidation + redirect setup + consumer update |
+| **Implementation Dependency** | None (retention requires no changes); redirect/deprecation requires consumer audit |
 
 
 ---
