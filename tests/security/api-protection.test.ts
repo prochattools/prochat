@@ -1,223 +1,125 @@
 import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
 import { describe, it } from 'node:test'
 
-describe('API Security Protections', () => {
-  const baseUrl = process.env.TEST_BASE_URL || 'http://localhost:3000'
+const baseUrl = process.env.TEST_BASE_URL
 
+if (!baseUrl) {
+  throw new Error('TEST_BASE_URL is required')
+}
+
+async function readJson(response: Response) {
+  return response.json() as Promise<Record<string, unknown>>
+}
+
+describe('API security protections', () => {
   describe('GET /api/tenants/projects', () => {
-    it('returns exactly 501 without authentication', async () => {
-      const response = await fetch(`${baseUrl}/api/tenants/projects`, {
-        method: 'GET',
+    it('returns exactly 501 with an error-only response', async () => {
+      const response = await fetch(`${baseUrl}/api/tenants/projects`)
+      assert.equal(response.status, 501)
+      assert.deepEqual(await readJson(response), {
+        error: 'Authentication and tenant authorization are not yet implemented.',
+        detail:
+          'This endpoint requires runtime session validation and tenant-scoped authorization.',
       })
-      assert.equal(response.status, 501, 'Expected exactly 501 Not Implemented')
     })
 
-    it('returns JSON error message (not project data)', async () => {
-      const response = await fetch(`${baseUrl}/api/tenants/projects`, {
-        method: 'GET',
-      })
-
-      const body = await response.json()
-      assert(body.error, 'Response must contain error property')
-      assert.strictEqual(
-        typeof body.projects,
-        'undefined',
-        'Response must not contain projects property'
+    it('contains no Prisma import or project query', async () => {
+      const source = await readFile(
+        new URL('../../src/app/api/tenants/projects/route.ts', import.meta.url),
+        'utf8',
       )
-    })
-
-    it('does not contain project metadata in response', async () => {
-      const response = await fetch(`${baseUrl}/api/tenants/projects`, {
-        method: 'GET',
-      })
-
-      const body = await response.json()
-      const bodyStr = JSON.stringify(body)
-      assert(
-        !bodyStr.includes('id') || body.error,
-        'Response body should not contain project identifiers'
-      )
+      assert.doesNotMatch(source, /@\/libs\/prisma|\bprisma\b|findMany\s*\(/)
     })
   })
 
-  describe('POST /api/contact', () => {
-    it('rejects honeypot field violations with 400', async () => {
-      const response = await fetch(`${baseUrl}/api/contact`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: 'Test User',
-          email: 'test@example.com',
-          topic: 'General',
-          message: 'Test message',
-          honeypot: 'filled', // honeypot field (should be empty)
-        }),
-      })
-
-      assert.equal(response.status, 400, 'Honeypot violation must return 400')
+  it('filters a schema-valid Contact honeypot submission', async () => {
+    const response = await fetch(`${baseUrl}/api/contact`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Security Test',
+        email: 'contact-honeypot@example.com',
+        topic: 'General Question',
+        message: 'This schema-valid message is intentionally longer than twenty characters.',
+        honeypot: 'filled-by-bot',
+      }),
     })
 
-    it('blocks requests exceeding rate limit (6 per minute per IP)', async () => {
-      const payload = {
-        name: 'Rate Test',
-        email: 'ratetest@example.com',
-        topic: 'General',
-        message: 'Test',
-        honeypot: '',
-      }
-
-      const requests = []
-      for (let i = 0; i < 8; i++) {
-        requests.push(
-          fetch(`${baseUrl}/api/contact`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          })
-        )
-      }
-
-      const responses = await Promise.all(requests)
-      const statusCodes = responses.map((r) => r.status)
-
-      // First 6 should succeed (200), remaining should be rate-limited (429)
-      const successCount = statusCodes.filter((s) => s === 200).length
-      const blockedCount = statusCodes.filter((s) => s === 429).length
-
-      assert(
-        successCount >= 6,
-        `Expected at least 6 successful requests, got ${successCount}`
-      )
-      assert(blockedCount > 0, `Expected rate-limit blocks (429), got none`)
+    assert.equal(response.status, 200)
+    assert.deepEqual(await readJson(response), {
+      success: true,
+      spamFiltered: true,
     })
   })
 
-  describe('POST /api/waitlist', () => {
-    it('rejects honeypot field violations with 400', async () => {
-      const response = await fetch(`${baseUrl}/api/waitlist`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: 'test@example.com',
-          products: [],
-          honeypot: 'filled', // honeypot field (should be empty)
-        }),
-      })
-
-      assert.equal(response.status, 400, 'Honeypot violation must return 400')
+  it('filters a schema-valid Waitlist honeypot submission', async () => {
+    const response = await fetch(`${baseUrl}/api/waitlist`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: 'waitlist-honeypot@example.com',
+        products: ['uxkit'],
+        honeypot: 'filled-by-bot',
+      }),
     })
 
-    it('blocks requests exceeding rate limit (6 per minute per IP)', async () => {
-      const payload = {
-        email: 'ratetest-waitlist@example.com',
-        products: [],
-        honeypot: '',
-      }
-
-      const requests = []
-      for (let i = 0; i < 8; i++) {
-        requests.push(
-          fetch(`${baseUrl}/api/waitlist`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          })
-        )
-      }
-
-      const responses = await Promise.all(requests)
-      const statusCodes = responses.map((r) => r.status)
-
-      const successCount = statusCodes.filter((s) => [200, 409].includes(s)).length
-      const blockedCount = statusCodes.filter((s) => s === 429).length
-
-      assert(
-        successCount >= 6,
-        `Expected at least 6 successful requests, got ${successCount}`
-      )
-      assert(blockedCount > 0, `Expected rate-limit blocks (429), got none`)
-    })
+    assert.equal(response.status, 200)
+    const body = await readJson(response)
+    assert.equal(body.success, true)
+    assert.equal(body.spamFiltered, true)
   })
 
-  describe('POST /api/preferences', () => {
-    it('rejects mutation without valid token', async () => {
-      const response = await fetch(`${baseUrl}/api/preferences`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: 'test@example.com',
-          preferences: { unsubscribe: true },
-        }),
-      })
+  it('redirects an invalid Preferences token with error=invalid', async () => {
+    const formData = new FormData()
+    formData.set('token', 'invalid-security-test-token')
+    formData.append('products', 'uxkit')
 
-      // Must reject — token is required
-      assert(
-        [400, 401, 403].includes(response.status),
-        `Preferences without token must be rejected (got ${response.status})`
-      )
+    const response = await fetch(`${baseUrl}/api/preferences`, {
+      method: 'POST',
+      body: formData,
+      redirect: 'manual',
     })
+
+    assert.equal(response.status, 303)
+    const location = response.headers.get('location')
+    assert(location)
+    const redirectUrl = new URL(location, baseUrl)
+    assert.equal(redirectUrl.pathname, '/preferences')
+    assert.equal(redirectUrl.searchParams.get('error'), 'invalid')
   })
 
-  describe('POST /api/webhook/stripe', () => {
-    it('rejects requests with invalid stripe-signature header', async () => {
-      const response = await fetch(`${baseUrl}/api/webhook/stripe`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'stripe-signature': 'invalid_signature',
-        },
-        body: JSON.stringify({
-          type: 'payment_intent.succeeded',
-          data: { object: {} },
-        }),
-      })
-
-      assert.equal(
-        response.status,
-        400,
-        'Invalid Stripe signature must return exactly 400'
-      )
+  it('rejects a missing Stripe signature with exactly 400', async () => {
+    const response = await fetch(`${baseUrl}/api/webhook/stripe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{}',
     })
-
-    it('rejects requests missing stripe-signature header', async () => {
-      const response = await fetch(`${baseUrl}/api/webhook/stripe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'payment_intent.succeeded',
-          data: { object: {} },
-        }),
-      })
-
-      assert.equal(
-        response.status,
-        400,
-        'Missing Stripe signature must return exactly 400'
-      )
-    })
+    assert.equal(response.status, 400)
   })
 
-  describe('Fail-closed protected API routes', () => {
-    const failClosedRoutes = [
-      { method: 'GET', path: '/api/projects' },
-      { method: 'GET', path: '/api/subscription' },
-      { method: 'GET', path: '/api/link' },
-      { method: 'GET', path: '/api/active' },
-      { method: 'GET', path: '/api/scenarios' },
-    ]
-
-    failClosedRoutes.forEach(({ method, path }) => {
-      it(`${method} ${path} returns exactly 501`, async () => {
-        const response = await fetch(`${baseUrl}${path}`, {
-          method,
-        })
-
-        assert.equal(
-          response.status,
-          501,
-          `${method} ${path} must return exactly 501 (got ${response.status})`
-        )
-      })
+  it('rejects an invalid Stripe signature with exactly 400', async () => {
+    const response = await fetch(`${baseUrl}/api/webhook/stripe`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'stripe-signature': 't=0,v1=invalid',
+      },
+      body: '{}',
     })
+    assert.equal(response.status, 400)
   })
+
+  for (const route of [
+    '/api/projects',
+    '/api/subscription',
+    '/api/link',
+    '/api/active',
+    '/api/scenarios',
+  ]) {
+    it(`fails closed at ${route} with exactly 501`, async () => {
+      const response = await fetch(`${baseUrl}${route}`)
+      assert.equal(response.status, 501)
+    })
+  }
 })

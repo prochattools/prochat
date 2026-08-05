@@ -84,20 +84,8 @@ jobs:
       - name: Lint design-system governance
         run: npm run lint:design
 
-      - name: Secret scanning
-        run: |
-          # Verify MailerLite endpoint uses only environment variables (no hardcoded secrets/keys)
-          API_KEY_LINE=$(grep "API_KEY = " src/app/api/mailerlite/subscribe/route.ts)
-          if ! echo "$API_KEY_LINE" | grep -q "process.env.MAILERLITE_API_KEY"; then
-            echo "❌ MailerLite API_KEY must use process.env.MAILERLITE_API_KEY"
-            exit 1
-          fi
-          GROUP_ID_LINE=$(grep "GROUP_ID = " src/app/api/mailerlite/subscribe/route.ts)
-          if ! echo "$GROUP_ID_LINE" | grep -q "process.env.MAILERLITE_GROUP_ID"; then
-            echo "❌ MailerLite GROUP_ID must use process.env.MAILERLITE_GROUP_ID"
-            exit 1
-          fi
-          echo "✓ MailerLite credentials use environment variables only"
+      - name: Validate secret sources
+        run: npm run test:secret-sources
 
       - name: Build
         run: npm run build

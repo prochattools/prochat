@@ -6,27 +6,32 @@ import WaitlistConfirmationEmail from '@/components/email-templates/WaitlistConf
 import prisma from '@/libs/prisma'
 import { waitlistSubmissionSchema } from '@/lib/waitlist/schema'
 import { formatWaitlistProducts } from '@/lib/waitlist/products'
+import {
+  createFixedWindowRateLimiter,
+  type FixedWindowRateLimitEntry,
+} from '@/lib/security/fixed-window-rate-limit'
 import { buildWaitlistPreferenceUrls } from '@/lib/waitlist/server'
 
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX_REQUESTS = 6
 
-type RateLimitEntry = {
-  count: number
-  resetAt: number
-}
-
 const globalRateLimitStore = globalThis as typeof globalThis & {
-  __waitlistRateLimitStore?: Map<string, RateLimitEntry>
+  __waitlistRateLimitStore?: Map<string, FixedWindowRateLimitEntry>
 }
 
 const rateLimitStore =
   globalRateLimitStore.__waitlistRateLimitStore ??
-  new Map<string, RateLimitEntry>()
+  new Map<string, FixedWindowRateLimitEntry>()
 
 if (!globalRateLimitStore.__waitlistRateLimitStore) {
   globalRateLimitStore.__waitlistRateLimitStore = rateLimitStore
 }
+
+const checkRateLimit = createFixedWindowRateLimiter({
+  maxRequests: RATE_LIMIT_MAX_REQUESTS,
+  windowMs: RATE_LIMIT_WINDOW_MS,
+  store: rateLimitStore,
+})
 
 function normalizeEmailAddress(value: string | undefined) {
   const raw = (value || '').trim()
@@ -48,33 +53,6 @@ function getClientIp(request: Request) {
   }
 
   return 'unknown'
-}
-
-function checkRateLimit(key: string) {
-  const now = Date.now()
-  const current = rateLimitStore.get(key)
-
-  if (!current || current.resetAt <= now) {
-    rateLimitStore.set(key, {
-      count: 1,
-      resetAt: now + RATE_LIMIT_WINDOW_MS,
-    })
-    return { limited: false, retryAfterSeconds: 0 }
-  }
-
-  if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return {
-      limited: true,
-      retryAfterSeconds: Math.max(
-        1,
-        Math.ceil((current.resetAt - now) / 1000),
-      ),
-    }
-  }
-
-  current.count += 1
-  rateLimitStore.set(key, current)
-  return { limited: false, retryAfterSeconds: 0 }
 }
 
 function maskEmail(email: string) {

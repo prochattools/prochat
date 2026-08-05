@@ -4,26 +4,31 @@ import { Resend } from 'resend'
 import ContactConfirmationEmail from '@/components/email-templates/ContactConfirmationEmail'
 import ContactNotificationEmail from '@/components/email-templates/ContactNotificationEmail'
 import { contactSubmissionSchema } from '@/lib/contact/schema'
+import {
+  createFixedWindowRateLimiter,
+  type FixedWindowRateLimitEntry,
+} from '@/lib/security/fixed-window-rate-limit'
 
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX_REQUESTS = 6
 
-type RateLimitEntry = {
-  count: number
-  resetAt: number
-}
-
 const globalRateLimitStore = globalThis as typeof globalThis & {
-  __contactRateLimitStore?: Map<string, RateLimitEntry>
+  __contactRateLimitStore?: Map<string, FixedWindowRateLimitEntry>
 }
 
 const rateLimitStore =
   globalRateLimitStore.__contactRateLimitStore ??
-  new Map<string, RateLimitEntry>()
+  new Map<string, FixedWindowRateLimitEntry>()
 
 if (!globalRateLimitStore.__contactRateLimitStore) {
   globalRateLimitStore.__contactRateLimitStore = rateLimitStore
 }
+
+const checkRateLimit = createFixedWindowRateLimiter({
+  maxRequests: RATE_LIMIT_MAX_REQUESTS,
+  windowMs: RATE_LIMIT_WINDOW_MS,
+  store: rateLimitStore,
+})
 
 function normalizeEmailAddress(value: string | undefined) {
   const raw = (value || '').trim()
@@ -48,33 +53,6 @@ function getClientIp(request: Request) {
   }
 
   return 'unknown'
-}
-
-function checkRateLimit(key: string) {
-  const now = Date.now()
-  const current = rateLimitStore.get(key)
-
-  if (!current || current.resetAt <= now) {
-    rateLimitStore.set(key, {
-      count: 1,
-      resetAt: now + RATE_LIMIT_WINDOW_MS,
-    })
-    return { limited: false, retryAfterSeconds: 0 }
-  }
-
-  if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return {
-      limited: true,
-      retryAfterSeconds: Math.max(
-        1,
-        Math.ceil((current.resetAt - now) / 1000),
-      ),
-    }
-  }
-
-  current.count += 1
-  rateLimitStore.set(key, current)
-  return { limited: false, retryAfterSeconds: 0 }
 }
 
 export async function POST(request: Request) {
