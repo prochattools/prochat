@@ -9,8 +9,6 @@ import {
   WorkbenchGuardedFlowComposition,
 } from './components/illustrations/compositions'
 import HomepageTrackedLink from './components/HomepageTrackedLink'
-import { Footer } from './components/layout/Footer'
-import { MarketingNav } from './components/layout/MarketingNav'
 import './prochat-memory-theme.css'
 import './prochat-home.css'
 
@@ -287,8 +285,6 @@ export default function App() {
       <section className="pm-hero-section" aria-labelledby="pm-hero-title">
         <MemoryLaserField variant="css" />
         <div className="pm-grid-overlay" aria-hidden="true" />
-
-        <MarketingNav cta={{ label: 'Choose a product', href: '#current-products', trackingCta: 'choose_product_path' }} />
 
         <div className="pm-hero-content">
           <div className="pm-status-pill">
@@ -625,7 +621,6 @@ export default function App() {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   )
 }

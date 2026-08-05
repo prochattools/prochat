@@ -1,7 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react'
 
-import { Footer } from '../layout/Footer'
-import { MarketingNav } from '../layout/MarketingNav'
 import ProductTrackedAction from './ProductTrackedAction'
 import '../../prochat-memory-theme.css'
 import './product-pages.css'
@@ -99,7 +97,6 @@ export function PublicProductPage({
     <div className="pm-marketing-page pm-public-product-page">
       <section className="pm-product-hero" aria-labelledby={titleId}>
         <div className="pm-grid-overlay" aria-hidden="true" />
-        <MarketingNav />
 
         <div className="pm-product-hero__layout">
           <div className="pm-product-hero__copy">
@@ -137,7 +134,6 @@ export function PublicProductPage({
       </section>
 
       {children}
-      <Footer />
     </div>
   )
 }

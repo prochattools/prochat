@@ -369,3 +369,18 @@
 .public-legal-page__main {
   flex: 1;
 }
+
+/* Canonical public shell — owns nav and footer for all 8 public routes */
+.pc-canonical-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 100svh;
+  background: rgb(var(--pc-public-bg-rgb));
+  color: var(--pm-text);
+  transition: none;
+}
+
+.pc-canonical-main {
+  display: flex;
+  flex-direction: column;
+}

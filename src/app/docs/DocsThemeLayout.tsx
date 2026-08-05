@@ -3,9 +3,6 @@ import type { PageMapItem } from 'nextra'
 
 import { Layout } from 'nextra-theme-docs'
 
-import { Footer } from '@/app/(marketing)/components/layout/Footer'
-import { MarketingNav } from '@/app/(marketing)/components/layout/MarketingNav'
-
 import 'nextra-theme-docs/style-prefixed.css'
 import '../../../styles/docs.css'
 import '@/assets/styles/prochat-public-chrome.css'
@@ -57,35 +54,31 @@ export default async function DocsThemeLayout({
   docsCategory?: string
 }) {
   return (
-    <div className="docs-shell flex min-h-screen flex-col">
-      <MarketingNav />
-      <div className="docs-shell-inner flex flex-1 flex-col">
-        <Layout
-          pageMap={PUBLIC_DOCS_NAVIGATION}
-          editLink={null}
-          feedback={{
-            content: 'Question? Join the ProChat discussion →',
-            link: DOCS_FEEDBACK_LINK,
-            labels: 'docs',
-          }}
-          search={null}
-          nextThemes={{
-            storageKey: 'theme',
-            attribute: 'class',
-            defaultTheme: 'dark',
-            disableTransitionOnChange: true,
-          }}
-          sidebar={{
-            autoCollapse: true,
-            defaultMenuCollapseLevel: 1,
-          }}
-          navbar={null}
-          darkMode={false}
-        >
-          <div className="flex-1">{children}</div>
-        </Layout>
-      </div>
-      <Footer />
+    <div className="docs-shell-inner flex flex-1 flex-col">
+      <Layout
+        pageMap={PUBLIC_DOCS_NAVIGATION}
+        editLink={null}
+        feedback={{
+          content: 'Question? Join the ProChat discussion →',
+          link: DOCS_FEEDBACK_LINK,
+          labels: 'docs',
+        }}
+        search={null}
+        nextThemes={{
+          storageKey: 'theme',
+          attribute: 'class',
+          defaultTheme: 'dark',
+          disableTransitionOnChange: true,
+        }}
+        sidebar={{
+          autoCollapse: true,
+          defaultMenuCollapseLevel: 1,
+        }}
+        navbar={null}
+        darkMode={false}
+      >
+        <div className="flex-1">{children}</div>
+      </Layout>
     </div>
   )
 }

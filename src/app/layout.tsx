@@ -96,7 +96,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <StructuredData id="schema-website" data={getWebsiteSchema()} />
         <UmamiAnalytics />
       </head>
-      <body className="font-body bg-background text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
+      <body className="font-body text-foreground selection:bg-primary/20 dark:selection:bg-primary/40">
         <Providers>
           <AppChrome>{children}</AppChrome>
         </Providers>

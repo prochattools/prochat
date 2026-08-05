@@ -35,7 +35,7 @@ const htmlRoutes = [
     path: '/contact',
     classification: 'route_accessibility',
     expectedUnauthenticatedStatus: 'public contact surface',
-    stableAssertion: 'Start with one memory problem.',
+    stableAssertion: "Let's talk.",
   },
   {
     name: 'privacy',
@@ -125,7 +125,7 @@ const endpointRoutes = [
 
 const routeReadinessExpectations = new Map<string, string>([
   ['home', 'Stop rebuilding context.'],
-  ['contact', 'Start with one memory problem.'],
+  ['contact', "Let's talk."],
   ['privacy', 'Privacy Policy for ProChat'],
   ['memory-legacy', 'ProChat Memory / Volume 01'],
   ['buildflow', 'BuildFlow is useful.'],

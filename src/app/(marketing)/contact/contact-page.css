@@ -1,16 +1,14 @@
 .contact-page-root {
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  background: rgb(var(--pc-public-bg-rgb));
-  color: var(--pm-text);
+  /* No own chrome — layout is owned by pc-canonical-shell */
+  width: 100%;
 }
 
 .contact-page-main {
-  min-height: calc(100svh - 5.5rem);
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   flex: 1;
+  padding-block: clamp(1.5rem, 3vw, 3rem);
 }
 
 .contact-page-root .contact-memory-hero {

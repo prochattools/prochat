@@ -23,6 +23,16 @@ body {
 		border-color 650ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Suppress theme-switch transitions inside the canonical public shell.
+   These routes don't have a theme toggle, so the 650ms bg transitions
+   only cause a visible flash on first paint and navigation. */
+.pc-canonical-shell,
+.pc-canonical-shell *,
+.pc-canonical-shell *::before,
+.pc-canonical-shell *::after {
+	transition: none;
+}
+
 img,
 video,
 canvas {
@@ -298,12 +308,14 @@ html {
 	scroll-behavior: smooth;
 	font-size: var(--pc-base-font-size);
 	color-scheme: dark;
-	background: rgb(var(--pc-bg-rgb) / 1);
+	/* Canonical public routes use pure black; legacy/internal shells own their own bg.
+	   Using absolute black prevents a visible navy flash during the 650ms bg transition. */
+	background: rgb(0 0 0);
 }
 
 body {
 	font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-	background-color: rgb(var(--pc-bg-rgb) / 1);
+	background-color: rgb(0 0 0);
 	color: rgb(var(--pc-text-rgb) / 1);
 	line-height: 1.58;
 	letter-spacing: 0.001em;

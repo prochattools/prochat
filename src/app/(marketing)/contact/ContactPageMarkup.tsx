@@ -11,53 +11,46 @@ export default function ContactPageMarkup({
 }: ContactPageMarkupProps) {
   const isMemoryQaBeta = initialTopic === 'ProChat Memory for QA beta'
   const isWorkbench = initialTopic === 'ProChat Workbench'
-  const kicker = isMemoryQaBeta
-    ? 'CONTACT · MEMORY FOR QA BETA'
-    : isWorkbench
-      ? 'CONTACT · WORKBENCH'
-      : 'CONTACT · MEMORY'
+
   const heading = isMemoryQaBeta ? (
     <>
-      Apply for the selected <em>QA beta.</em>
+      Let&rsquo;s <em>talk.</em>
     </>
   ) : isWorkbench ? (
     <>
-      Start with one <em>guarded project flow.</em>
+      Let&rsquo;s <em>talk.</em>
     </>
   ) : (
     <>
-      Start with one <em>memory problem.</em>
+      Let&rsquo;s <em>talk.</em>
     </>
   )
+
   const intro = isMemoryQaBeta
-    ? 'Tell us about the repeated QA work you want to test with ProChat Memory for QA. We will use this note as selected beta application context.'
+    ? "Tell me about the role, project, or question you have in mind. I'll reply with the clearest next step."
     : isWorkbench
-      ? 'Tell us where guarded local project work would help. We will use this note to understand the smallest useful Workbench flow.'
-      : 'Tell us where your team keeps rebuilding context. We will help turn one repeated task into a focused ProChat Memory tester flow.'
-  const formIntro = isMemoryQaBeta
-    ? 'Share the QA workflow, evidence types, and evaluation context for the selected Memory for QA beta.'
+      ? "Tell me about the role, project, or question you have in mind. I'll reply with the clearest next step."
+      : "Tell me about the role, project, or question you have in mind. I'll reply with the clearest next step."
+
+  const formHelper = isMemoryQaBeta
+    ? 'Share enough context for a useful reply.'
     : isWorkbench
-      ? 'Share the local project workflow, guardrails, or implementation blocker so we can understand the next useful step.'
-      : 'Share the product question, context problem, or implementation blocker so we can understand the next useful step.'
+      ? 'Share enough context for a useful reply.'
+      : 'Share enough context for a useful reply.'
 
   return (
     <>
       <section className="pm-hero-section contact-memory-hero">
         <div className="pm-container pm-hero-grid">
           <div className="pm-hero-copy">
-            <p className="pm-kicker">{kicker}</p>
+            <p className="pm-kicker">Contact</p>
             <h1>{heading}</h1>
             <p>{intro}</p>
-            <div className="pm-trust-line">Clear context · Human-reviewed · Focused reply</div>
           </div>
 
           <div className="pm-review-card contact-form-panel" id="contact-form-card">
-            <div className="pm-record-meta">
-              <span>Contact form</span>
-              <span>PRIVATE</span>
-            </div>
-            <h2>Send a direct message</h2>
-            <p>{formIntro}</p>
+            <h2>Send a message</h2>
+            <p>{formHelper}</p>
 
             <form
               data-contact-form=""
@@ -123,13 +116,13 @@ export default function ContactPageMarkup({
                   id="contact-message"
                   name="message"
                   className="contact-textarea"
-                  placeholder="Describe the repeated task, the context you keep rebuilding, and what useful memory should preserve."
+                  placeholder="Describe what you have in mind — the role, project, or question."
                   rows={6}
                   aria-required="true"
                   required
                 ></textarea>
                 <p className="contact-helper-text">
-                  Include the task, examples of good output, and what currently gets lost between sessions.
+                  A few sentences is enough. I read every message.
                 </p>
                 <p className="contact-field-error hidden" data-error-for="message"></p>
               </div>
