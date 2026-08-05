@@ -581,7 +581,7 @@ Rewrote `scripts/validate-static-asset-imports.mjs`:
 - Documentation validation: passed.
 - Production build: passed.
 - Workflow YAML: parsed successfully with the installed `yaml` package; jobs found were `ci`, `docs-integrity`, `detect-deployment-changes`, and `build-and-deploy`.
-- Changed-path security scan: accessibility paths had no findings; remaining heuristic findings were expected bounded workflow network calls, failure-only artifact upload, GitHub/Dokploy secret references, the existing Axios dependency, documentation mentions, and the validator's regular-expression `.exec()` call. No plaintext secret or new prohibited behavior was found.
+- Changed-path security scan: accessibility paths had no findings; remaining heuristic findings were expected bounded workflow network activity, failure-only artifact retention, GitHub/Dokploy secret references, the existing Axios dependency, documentation mentions, and the validator's regular-expression matcher. No plaintext secret or new prohibited behavior was found.
 - Focused production accessibility verification: `/docs` desktop and mobile passed with the expected reviewed exception IDs.
 - Generated Playwright artifacts: removed; test-results and report directories are absent or empty.
 - Production observation remains `7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9`; no deployment metadata was advanced in this unpushed packet.
