@@ -37,14 +37,14 @@ Routes with verified active consumers or critical infrastructure. RETAIN propose
 | 22 | `/api/waiting-list` vs `/api/waitlist` | Zero-cost re-export (backward compatibility) | PXF-018I | Acknowledge or override |
 | 16 | `/legal-ai-workflows` | Already consolidated (redirects to `/ai-workflows`) | PXF-018F | Acknowledge or override |
 
-### Conditional Removal / Security Gating — 2 items
+### Conditional Restriction / Removal — 2 items
 
-Routes with clear owner decision required (security gate or removal).
+Routes with clear owner decision required (restrict to development or remove from production).
 
-| Item | Route | Evidence | Packet | Owner action |
-|-----:|---|---|---|---|
-| 19 | `/systems/events` | Zero repository inbound links; safe if external use confirmed | PXF-018H | Confirm no external dependency; approve REMOVE or DEFER |
-| 14–15 | `/debug/*`, `/debug/analytics` | Development utilities in production | PXF-018G | Choose: GATE (NODE_ENV) or REMOVE (build-time) |
+| Item | Route | Evidence | Packet | Implementation condition | Owner action |
+|-----:|---|---|---|---|---|
+| 19 | `/systems/events` | Zero repository inbound links; safe if external use confirmed | PXF-018H | Remove only if external dependencies confirmed absent | Confirm no external dependency; approve REMOVE or DEFER |
+| 14–15 | `/debug/*`, `/debug/analytics` | Development utilities in production | PXF-018G | If RETAIN: restrict to NODE_ENV=development; if REMOVE: exclude from production build | Choose RETAIN (with NODE_ENV=development restriction) or REMOVE |
 
 ### REDIRECT / CONSOLIDATE (Destination Required) — 5 items
 
@@ -58,7 +58,7 @@ Routes requiring explicit destination path before approval.
 | 8 | `/proof` | CONSOLIDATE → `/docs` or RETAIN | PXF-018B | Evaluate + choose destination |
 | 10 | `/starting-point/*` | CONSOLIDATE → `/memory` or `/workbench` | PXF-018D | Confirm destination based on onboarding audience |
 
-### Strategy / External Evidence Required — 3 items
+### Strategy / External Evidence Required — 2 items
 
 Routes dependent on owner knowledge or external audit.
 
@@ -171,9 +171,10 @@ Routes dependent on owner knowledge or external audit.
 | **External unknowns** | Onboarding activity status unknown (active vs. deprecated); email campaign dependency unverified |
 | **Implementation packet** | PXF-018D (Onboarding Flow Consolidation) |
 | **Implementation scope** | Code: route files, consolidation logic, 1 internal Link href. Docs: onboarding flow mapping |
-| **PROPOSED disposition** | **CONSOLIDATE** to canonical product route (`/memory` or `/memory-qa` or `/workbench`) pending onboarding audience clarification |
-| **PROPOSED destination** | **OWNER REQUIRED** — `/memory`, `/memory-qa`, or `/workbench` (destination depends on target onboarding audience) |
-| **Owner override** | *[ BLANK — confirm destination based on onboarding use case ]* |
+| **PROPOSED disposition** | **CONSOLIDATE** to canonical product route with owner-selected destination (not pre-selected) |
+| **PROPOSED destination** | **OWNER REQUIRED (select one):** `/memory`, `/memory-qa`, or `/workbench` — destination must be chosen by owner based on target onboarding audience |
+| **Implementation condition** | Owner must select exactly one destination; combined routing to multiple destinations not permitted |
+| **Owner override** | *[ BLANK — select destination: `/memory` OR `/memory-qa` OR `/workbench`; or provide alternative ]* |
 | **Final disposition** | *[ BLANK — filled by owner ]* |
 | **Owner approval signature** | *[ BLANK — name/date ]* |
 
@@ -223,11 +224,12 @@ Routes dependent on owner knowledge or external audit.
 | **Category** | Internal system; development infrastructure exposed in production |
 | **Repository Evidence** | Routes exist; shell route ROUTE-057 classified as `protected_internal_shell`; exposes system information; no legitimate production consumers identified |
 | **External unknowns** | None; security decision is owner's |
-| **Implementation packet** | PXF-018G (Debug Routes Security Gating) |
-| **Implementation scope** | Code: NODE_ENV environment checks OR build-time exclusion config |
-| **PROPOSED disposition** | **GATE** (behind NODE_ENV=development) OR **REMOVE** (from production build) — Owner choice |
-| **PROPOSED destination** | N/A (gating/removal; no movement) |
-| **Owner override** | *[ BLANK — choose GATE or REMOVE; confirm no production-monitoring scenarios justify exposure ]* |
+| **Implementation packet** | PXF-018G (Debug Routes Security Restriction) |
+| **Implementation scope** | Code: NODE_ENV environment checks (restrict to development) OR build-time exclusion config (remove from production) |
+| **PROPOSED disposition** | **RETAIN** (with development-environment restriction: NODE_ENV=development only) OR **REMOVE** (from production build entirely) — Owner choice |
+| **PROPOSED destination** | N/A (restriction/removal; no movement) |
+| **Implementation condition** | If RETAIN: restrict access to NODE_ENV=development; if REMOVE: exclude from production build |
+| **Owner override** | *[ BLANK — choose RETAIN (with NODE_ENV=development restriction) or REMOVE; confirm no production-monitoring scenarios justify exposure ]* |
 | **Final disposition** | *[ BLANK — filled by owner ]* |
 | **Owner approval signature** | *[ BLANK — name/date ]* |
 
@@ -242,10 +244,11 @@ Routes dependent on owner knowledge or external audit.
 | **Repository Evidence** | Route exists; shell route ROUTE-057 classified as `protected_internal_shell`; exposes analytics tracking data; no legitimate production consumers identified |
 | **External unknowns** | None; security decision is owner's |
 | **Implementation packet** | PXF-018G |
-| **Implementation scope** | Code: NODE_ENV environment checks OR build-time exclusion config |
-| **PROPOSED disposition** | **GATE** (behind NODE_ENV=development) OR **REMOVE** (from production build) — Owner choice (same as Item 14) |
-| **PROPOSED destination** | N/A (gating/removal; no movement) |
-| **Owner override** | *[ BLANK — choose GATE or REMOVE; confirm no production-monitoring scenarios justify exposure ]* |
+| **Implementation scope** | Code: NODE_ENV environment checks (restrict to development) OR build-time exclusion config (remove from production) |
+| **PROPOSED disposition** | **RETAIN** (with development-environment restriction: NODE_ENV=development only) OR **REMOVE** (from production build entirely) — Owner choice (same as Item 14) |
+| **PROPOSED destination** | N/A (restriction/removal; no movement) |
+| **Implementation condition** | If RETAIN: restrict access to NODE_ENV=development; if REMOVE: exclude from production build |
+| **Owner override** | *[ BLANK — choose RETAIN (with NODE_ENV=development restriction) or REMOVE; confirm no production-monitoring scenarios justify exposure ]* |
 | **Final disposition** | *[ BLANK — filled by owner ]* |
 | **Owner approval signature** | *[ BLANK — name/date ]* |
 
@@ -257,12 +260,12 @@ Routes dependent on owner knowledge or external audit.
 |----------|-------|
 | **Route/Surface Identity** | `/legal-ai-workflows` (legal document generation route) |
 | **Category** | Internal system; legal/compliance infrastructure |
-| **Repository Evidence** | Route exists as **immediate redirect** to `/ai-workflows` (`src/app/legal-ai-workflows/page.tsx` contains redirect); shell route ROUTE-021; already consolidated |
+| **Repository Evidence** | Route exists as **immediate redirect** to `/ai-workflows` (`src/app/legal-ai-workflows/page.tsx` contains redirect); shell route ROUTE-021; consolidation already implemented |
 | **External unknowns** | None; consolidation is already complete |
 | **Implementation packet** | PXF-018F |
-| **Implementation scope** | No implementation required; documentation only (acknowledge existing consolidation) |
-| **PROPOSED disposition** | **ACKNOWLEDGE** — Consolidation already in place (redirects to `/ai-workflows`); no action required |
-| **PROPOSED destination** | N/A (already consolidated as redirect) |
+| **Implementation scope** | No implementation required if CONSOLIDATE approved; documentation only (owner confirmation of existing consolidation) |
+| **PROPOSED disposition** | **CONSOLIDATE** → `/ai-workflows` (consolidation already implemented via redirect; owner approval confirms classification) |
+| **PROPOSED destination** | `/ai-workflows` (already in place; no change needed) |
 | **Owner override** | *[ BLANK — provide if proposing alternative destination or removal ]* |
 | **Final disposition** | *[ BLANK — filled by owner ]* |
 | **Owner approval signature** | *[ BLANK — name/date ]* |
@@ -363,19 +366,58 @@ Routes dependent on owner knowledge or external audit.
 
 ### Approval Options
 
-**Option 1: Approve all unchanged proposals**
+**Bulk approval eligibility:** Bulk approval applies ONLY to items with:
+- Fully specified, canonical dispositions (RETAIN, REDIRECT, CONSOLIDATE, ARCHIVE, REMOVE, or DEFER)
+- Explicit destination (if REDIRECT/CONSOLIDATE)
+- No OWNER REQUIRED, unresolved external evidence, multiple alternatives, or security ambiguity
+- No blank fields
 
-All 16 items above are proposed with evidence-backed defaults. If approving all unchanged proposals in bulk:
+**Items currently ineligible for bulk approval:** 1 (external audit required), 7 (external audit required), 10 (destination selection required), 11 (product strategy required), 19 (external dependency confirmation required)
+
+**Items eligible for bulk approval if accepted unchanged:** 2, 5, 8, 13, 14–15, 16, 17, 18, 20, 22 (9 items with fully specified proposals)
+
+**Option 1: Approve eligible items only (selective approval)**
+
+Approve only the subset of items that are fully specified and require no clarification:
 
 ```
-I, _________________ (name), approve all 16 proposed dispositions without modification.
+I, _________________ (name), approve the following dispositions without modification:
+Items: 2, 5, 8, 13, 14–15, 16, 17, 18, 20, 22
+
+[Items 1, 7, 10, 11, 19 remain pending clarification and are NOT approved.]
 
 Signature: _________________ Date: _________________
 ```
 
-**Option 2: Approve with selective overrides**
+**Option 2: Approve eligible subset, then resolve pending items**
 
-For any item where you deviate from the proposed disposition, fill in that item's "Owner override" field and then sign below:
+First, approve the subset of items fully specified and ready:
+
+```
+I, _________________ (name), approve the following dispositions:
+Items: 2, 5, 8, 13, 14–15, 16, 17, 18, 20, 22
+
+[Items 1, 7, 10, 11, 19 are NOT approved pending clarification.]
+
+Signature: _________________ Date: _________________
+```
+
+Then, separately after external audits or clarifications are complete:
+
+```
+I, _________________ (name), approve additional dispositions:
+- Item 1: [disposition, destination, rationale]
+- Item 7: [disposition, destination, rationale]
+- Item 10: [disposition, destination selection, rationale]
+- Item 11: [disposition, destination, rationale]
+- Item 19: [disposition, external-dependency confirmation, rationale]
+
+Signature: _________________ Date: _________________
+```
+
+**Option 3: Approve with overrides (for selective changes to eligible items only)**
+
+For any of the currently-eligible items (2, 5, 8, 13, 14–15, 16, 17, 18, 20, 22) where you deviate from the proposed disposition, fill in that item's "Owner override" field and then sign below:
 
 ```
 I, _________________ (name), approve the proposed dispositions with the following overrides:
@@ -383,25 +425,7 @@ I, _________________ (name), approve the proposed dispositions with the followin
 - Item __: [override details]
 [Continue for each override]
 
-Signature: _________________ Date: _________________
-```
-
-**Option 3: Defer specific items pending clarification**
-
-For any item requiring external input (external backlink audit for Items 1, 7; product strategy for Item 11; external dependency confirmation for Item 19), you may:
-- Approve items without external unknowns (all others)
-- Defer those items to "DEFER" with rationale
-
-```
-I, _________________ (name), approve the following dispositions:
-[List items 2–6, 8–10, 12–18, 20–22 — all without external unknowns]
-
-Items deferred pending:
-- Item 1 (external backlink audit)
-- Item 7 (external backlink audit)
-- Item 11 (WaaS product strategy decision)
-- Item 19 (external dependency confirmation)
-[Rationale]
+[Items 1, 7, 10, 11, 19 remain pending clarification and NOT approved.]
 
 Signature: _________________ Date: _________________
 ```
@@ -473,12 +497,12 @@ After owner signs off, implementation packets execute in this order (only approv
 
 **16 pending items** with repository-verified evidence:
 - Items 13, 17, 18, 20, 22: Verified active consumers (RETAIN proposed)
-- Item 16: Already consolidated as redirect (ACKNOWLEDGE proposed)
-- Items 14–15: Development utilities exposed in production (GATE or REMOVE proposed)
+- Item 16: Already consolidated as redirect (CONSOLIDATE → `/ai-workflows` proposed)
+- Items 14–15: Development utilities exposed in production (RETAIN with NODE_ENV restriction or REMOVE proposed)
 - Item 19: Zero repository inbound links (REMOVE proposed after external confirmation)
 - Items 1, 5, 8, 10: Consolidation candidates (REDIRECT/CONSOLIDATE proposed; destinations required)
-- Items 2: Purpose unclear / multiple options (REDIRECT or RETAIN proposed; owner decision required)
-- Item 7, 11: Strategy-dependent (conditional proposals; external audit or product decision required)
+- Item 2: Purpose unclear / multiple options (REDIRECT or RETAIN proposed; owner decision required)
+- Items 7, 11: Strategy-dependent (conditional proposals; external audit or product decision required)
 
 **6 verified-absent items** (excluded from this manifest; no owner decision):
 - Item 3 `/brainbridge`: Never implemented

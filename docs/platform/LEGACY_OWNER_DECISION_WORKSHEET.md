@@ -225,11 +225,12 @@ Remaining 16 items require owner classification.
 | **Known Consumers** | Development-only; should have no production consumers |
 | **SEO/External-Link Risk** | **NONE** (should not be indexed; internal development tools) |
 | **Data/Authentication Dependency** | None explicit; but debug output could expose system information |
-| **Recommended Default** | **SECURITY GATE REQUIRED** — Gate behind development-environment flag (`NODE_ENV=development`) or move to build-time exclusion so routes do not exist in production |
+| **Recommended Default** | **SECURITY RESTRICTION REQUIRED** — Restrict behind development-environment flag (`NODE_ENV=development`) or remove from production build entirely |
 | **Implementation Dependency** | Environment variable gating in route definition or Next.js build-time exclusion; CI/production-build verification |
-| **Owner-Selected Disposition** | *[ BLANK — awaiting owner decision ]* Must choose: **GATE** (behind NODE_ENV) or **REMOVE** (from production build) |
-| **Redirect/Consolidation Destination** | *[ N/A — internal utility; not applicable ]* |
-| **Owner Rationale/Notes** | *[ BLANK — owner to confirm: gate preference (environment flag vs. build exclusion) and any production-monitoring scenarios that justify exposure ]* |
+| **Owner-Selected Disposition** | *[ BLANK — awaiting owner decision ]* Must choose: **RETAIN** (restricted to NODE_ENV=development) or **REMOVE** (from production build) |
+| **Implementation Condition** | If RETAIN: add NODE_ENV=development check to route handler; if REMOVE: exclude routes from production build configuration |
+| **Redirect/Consolidation Destination** | *[ N/A — security restriction/removal only; not applicable ]* |
+| **Owner Rationale/Notes** | *[ BLANK — owner to confirm: preference for environment-gated RETAIN vs. REMOVE; and any production-monitoring scenarios that justify exposure ]* |
 | **Approval Date** | *[ BLANK ]* |
 | **Approved By** | *[ BLANK ]* |
 
@@ -245,31 +246,32 @@ Remaining 16 items require owner classification.
 | **Known Consumers** | Development-only; should have no production consumers |
 | **SEO/External-Link Risk** | **NONE** (internal; should not be indexed) |
 | **Data/Authentication Dependency** | None explicit; but analytics debug output could expose tracking information |
-| **Recommended Default** | **SECURITY GATE REQUIRED** — Gate behind development-environment flag or move to build-time exclusion |
+| **Recommended Default** | **SECURITY RESTRICTION REQUIRED** — Restrict behind development-environment flag or remove from production build |
 | **Implementation Dependency** | Environment variable gating or Next.js build-time exclusion; CI verification |
-| **Owner-Selected Disposition** | *[ BLANK — awaiting owner decision ]* Must choose: **GATE** (environment flag) or **REMOVE** (production build) |
-| **Redirect/Consolidation Destination** | *[ N/A — internal utility ]* |
-| **Owner Rationale/Notes** | *[ BLANK — owner to confirm: gate preference and any production-monitoring justification ]* |
+| **Owner-Selected Disposition** | *[ BLANK — awaiting owner decision ]* Must choose: **RETAIN** (restricted to NODE_ENV=development) or **REMOVE** (from production build) |
+| **Implementation Condition** | If RETAIN: add NODE_ENV=development check to route handler; if REMOVE: exclude routes from production build configuration |
+| **Redirect/Consolidation Destination** | *[ N/A — security restriction/removal only ]* |
+| **Owner Rationale/Notes** | *[ BLANK — owner to confirm: preference for environment-gated RETAIN vs. REMOVE; decision may be same as Item 14 ]* |
 | **Approval Date** | *[ BLANK ]* |
 | **Approved By** | *[ BLANK ]* |
 
 ---
 
-#### Item 16: `/legal-ai-workflows` — Legal document generation (internal system)
+#### Item 16: `/legal-ai-workflows` — Legal document generation (already consolidated)
 
 | Property | Value |
 |----------|-------|
 | **Route/Surface Identity** | `/legal-ai-workflows` (legal document generation route) |
 | **Category** | Internal system; legal/compliance infrastructure |
-| **Current Verified Evidence** | Route exists; appears to handle legal document generation for AI workflows; scope, purpose, and consumer workflows not documented |
-| **Known Consumers** | Unknown internal systems (not documented) |
-| **SEO/External-Link Risk** | **NONE** (internal system) |
-| **Data/Authentication Dependency** | Unknown; legal document handling may require authorization or compliance gates (unverified) |
-| **Recommended Default** | **REQUIRES CLARIFICATION FIRST** — Decide disposition only after documenting: (1) exact purpose (legal-template generation, compliance reporting, etc.), (2) current/planned consumers, (3) authorization/compliance requirements |
-| **Implementation Dependency** | PXF-017C clarification packet required before disposition |
-| **Owner-Selected Disposition** | *[ BLANK — CLARIFICATION REQUIRED; tentative options: RETAIN if active, DEFER if undecided, REMOVE if unused ]* |
-| **Redirect/Consolidation Destination** | *[ N/A — internal system ]* |
-| **Owner Rationale/Notes** | *[ BLANK — owner MUST provide: purpose, consumer workflows, compliance gates, and legal implications BEFORE disposition finalized ]* |
+| **Current Verified Evidence** | Route exists as immediate redirect to `/ai-workflows`; consolidation already implemented; scope of consolidation verified: redirect only |
+| **Known Consumers** | Redirect target only; consolidation already in place |
+| **SEO/External-Link Risk** | **NONE** (internal system; immediate redirect) |
+| **Data/Authentication Dependency** | N/A (immediate redirect; no independent handling) |
+| **Recommended Default** | **CONSOLIDATE** → `/ai-workflows` (consolidation already implemented via redirect; owner approval confirms classification without code changes) |
+| **Implementation Dependency** | None if CONSOLIDATE approved (consolidation exists); documentation only |
+| **Owner-Selected Disposition** | **CONSOLIDATE** (recommended; implementation already complete) OR owner may propose alternative |
+| **Redirect/Consolidation Destination** | `/ai-workflows` (already in place; no changes needed) |
+| **Owner Rationale/Notes** | *[ BLANK — owner to confirm CONSOLIDATE (with no code changes needed) or provide if proposing alternative destination or REMOVE ]* |
 | **Approval Date** | *[ BLANK ]* |
 | **Approved By** | *[ BLANK ]* |
 
@@ -406,12 +408,15 @@ The following six items have been verified as never-implemented routes or empty 
 
 Before marking an item **APPROVED**, verify:
 
-- [ ] Disposition is one of: `RETAIN`, `REDIRECT`, `CONSOLIDATE`, `ARCHIVE`, `REMOVE`, `DEFER`
-- [ ] If `REDIRECT` or `CONSOLIDATE`, destination is explicitly specified
-- [ ] If `REMOVE` or destructive operation, owner has confirmed understanding of consequences
-- [ ] Rationale or notes explain any deviation from recommended default
-- [ ] Approval date and approver are recorded
-- [ ] Implementation packet dependencies are documented (if applicable)
+- [ ] Disposition is **EXACTLY ONE OF:** `RETAIN`, `REDIRECT`, `CONSOLIDATE`, `ARCHIVE`, `REMOVE`, `DEFER` (no other values permitted)
+- [ ] If `REDIRECT` or `CONSOLIDATE`, destination is **explicitly specified and canonical** (not combined, not pre-selected, not conditional)
+- [ ] If `RETAIN`, any implementation condition (e.g., NODE_ENV=development restriction) is **separated from the disposition** and documented as a separate implementation detail
+- [ ] If `REMOVE` or destructive operation, owner has **confirmed understanding** of consequences and verified zero remaining consumers
+- [ ] If `DEFER`, reason for deferral is **documented** and blocking criteria are explicit
+- [ ] Rationale or notes **explain any deviation** from recommended default
+- [ ] Approval date and **approver name** are recorded
+- [ ] Implementation packet dependencies are **documented** (if applicable)
+- [ ] **NO items with blank final disposition, DEFER, OWNER REQUIRED, or unresolved conditions may be included in bulk approval**
 
 ---
 
