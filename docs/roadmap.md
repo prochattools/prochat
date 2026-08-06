@@ -757,6 +757,8 @@ The historical Product Experience Foundation implementation and PXF-010 governan
 
 See `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` for the 17 substantive legacy-surface classification items awaiting explicit owner disposition. Five verified-absent routes are catalogued but require no action.
 
+**Implementation blueprint:** `docs/platform/PXF018_IMPLEMENTATION_PLAN.md` maps all 17 decisions into bounded execution packets (PXF-018A through PXF-018I) with dependencies, validation, and rollback paths. Awaits owner classification in the worksheet.
+
 ## Final design-hardening closeout
 
 - Screenshot-based audit: 40/40 canonical route/viewport combinations pass for the immutable local closeout chain: docs-mobile implementation commit `ada06665f5944fc988f4dad4a5fed47cee471d8b` and evidence/metadata closeout commit `29854de09b04792c377d0bba7528297acb14c155`. Production remains separately verified at `91436457e4d3aa8a5d9782ff671ce49e10d7ef07`. The tested widths are 1440, 1024, 768, 390, and 320 pixels; the seven non-docs canonical routes retained contained document widths in the representative regression sample.
