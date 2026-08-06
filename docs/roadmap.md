@@ -753,6 +753,10 @@ Phase 13 — ONGOING
 
 The historical Product Experience Foundation implementation and PXF-010 governance repair are complete. The platform remains in continuous governance (Phase 13), while Phase 15 adds externally verifiable release identity so future production attestation does not depend on privileged Dokploy access.
 
+### Phase 11 owner decisions
+
+See `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` for the 17 substantive legacy-surface classification items awaiting explicit owner disposition. Five verified-absent routes are catalogued but require no action.
+
 ## Final design-hardening closeout
 
 - Screenshot-based audit: 40/40 canonical route/viewport combinations pass for the immutable local closeout chain: docs-mobile implementation commit `ada06665f5944fc988f4dad4a5fed47cee471d8b` and evidence/metadata closeout commit `29854de09b04792c377d0bba7528297acb14c155`. Production remains separately verified at `91436457e4d3aa8a5d9782ff671ce49e10d7ef07`. The tested widths are 1440, 1024, 768, 390, and 320 pixels; the seven non-docs canonical routes retained contained document widths in the representative regression sample.

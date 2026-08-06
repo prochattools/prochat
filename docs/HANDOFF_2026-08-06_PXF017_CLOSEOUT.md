@@ -105,8 +105,8 @@ The next safe packet is owner-decision preparation and bounded Phase 12 manual e
 
 Priority order:
 
-1. Review the 17 pending legacy-surface decisions with the owner.
-2. Record explicit retain/retire/redirect/defer decisions.
+1. **Review the 17 pending legacy-surface decisions with the owner** — see `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md`
+2. Record explicit retain/retire/redirect/defer decisions in the worksheet.
 3. Only after approval, compile one bounded implementation packet for the chosen decisions.
 4. Separately schedule manual Phase 12 evidence if desired.
 5. Verify external MailerLite rotation when the owner completes it.
