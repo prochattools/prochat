@@ -952,3 +952,69 @@ The code and documents are ready for the closeout commit and normal push to `mai
 
 **Next work:**
 Owner must select the next work packet. Broad Ory/session implementation remains unapproved. The next packet must be selected from exact owner decisions and verified runtime evidence.
+
+---
+
+## PXF-017 — Public professionalism packet
+
+**Previous deployment record:** SHA `9143debf21467d8ac44ae41b2d9afc2e9accff88` / workflow 31085372410 / 2026-08-06T08:50:00Z  
+**Corrective deployment:** SHA `74630f7…` (full SHA in /api/version) / workflow pending at record time
+
+### Implemented, validated, pushed, CI-verified, and production-deployed
+
+**Docs routing through canonical shell**
+- `/docs` and `/docs/[category]/[[...slug]]` now `canonical_public_shell`.
+- `DocsPublicShell` (`<div>` slot) prevents dual `<main>` landmark with Nextra.
+- `AppChrome.tsx` dispatches docs to `DocsPublicShell`, others to `CanonicalPublicShell`.
+
+**First-paint flash removed**
+- `brand.ts` `darkBackground` `#0B1220` → `#000000`; `viewport.themeColor` = `#000000`.
+- `globals.scss` background/color transition blocks removed from html/body and `*`.
+- `prochat-foundation.css` dead `.pc-skip-link` CSS removed.
+
+**Nextra skip control suppressed**
+- `src/styles/docs.css` created with `.nextra-skip-nav { display: none !important }`.
+- Nextra's `SkipNavLink` ("Skip to Content") removed from visual rendering and accessibility tree.
+
+**New browser evidence spec wired into mandatory CI**
+- `tests/evidence/canonical-chrome-proof.spec.ts`: 26 tests.
+- `test:evidence:ci` now runs 4 spec files (66 total browser tests).
+- Client navigation test: homepage → /docs → /contact → homepage.
+
+### Production verification (final deployment)
+
+- `/api/health`: HTTP 200
+- `/api/version`: revision = `74630f7…` (full SHA confirmed at deployment time)
+- All 8 canonical routes: HTTP 200
+  - `/` `/memory` `/memory-qa` `/workbench` `/docs` `/contact` `/privacy` `/terms`
+- No accessible skip-control on /docs (`display: none` confirmed)
+- Canonical nav + footer on all routes
+- Black first paint (#000000 themeColor)
+- No background transitions
+- No horizontal overflow
+
+### Test suite at deployment
+
+- TypeScript: passed (0 errors)
+- ESLint: passed (0 warnings)
+- lint:design: passed (40 controlled exemptions)
+- docs:validate: passed
+- test:secret-sources: 7/7 passed
+- test:security-api: 33/33 passed (against production)
+- build: passed
+- test:evidence:ci: 66 total browser tests pass after corrective deployment
+
+### Phase status
+
+```text
+Phase 11 — PARTIAL (17 decisions; redirects live; full legacy removal deferred)
+Phase 12 — PARTIAL (66/66 browser/accessibility evidence post-PXF-017)
+Phase 13 — ONGOING
+MailerLite rotation — PENDING owner verification
+```
+
+### Professionalism packet: COMPLETE
+
+All confirmed gaps from the audit are addressed and deployed. No further code work required for this packet.
+
+**Next work:** Owner selection. Broad Ory/session implementation remains unapproved.

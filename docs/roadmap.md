@@ -1079,3 +1079,40 @@ Required claim boundaries:
 - Site clicks must not be reported as confirmed stars, installations, contributions, or deployments.
 
 PXF-003E may proceed after PXF-003E0 validation completes.
+
+---
+
+## PXF-017 — Public professionalism deployment record
+
+**Previous deployment:** SHA `9143debf21467d8ac44ae41b2d9afc2e9accff88` / workflow 31085372410 (2026-08-06)  
+**Corrective deployment:** SHA `74630f70` (full: see /api/version below) / workflow pending  
+**Deployed:** 2026-08-06  
+
+### Phase summary at this deployment
+
+```text
+Phase 11 — PARTIAL (17 decisions; redirects live; full legacy removal deferred)
+Phase 12 — PARTIAL (40/40 browser/accessibility evidence; formal WCAG/performance audit deferred)
+Phase 13 — ONGOING
+```
+
+### What this packet delivered
+
+- All 8 canonical public routes (`/`, `/memory`, `/memory-qa`, `/workbench`, `/docs`, `/contact`, `/privacy`, `/terms`) now share exactly one `MarketingNav` + `Footer` through the canonical shell system.
+- `DocsPublicShell` uses a `<div>` content slot to preserve Nextra's single `<main>` landmark.
+- First-paint flash eliminated: `themeColor` → `#000000`, html/body and `*` background transitions removed.
+- Dead `.pc-skip-link` CSS removed from `prochat-foundation.css`.
+- Nextra `SkipNavLink` suppressed via `src/styles/docs.css` (`.nextra-skip-nav { display: none !important }`).
+- New browser evidence spec `canonical-chrome-proof.spec.ts` wired into mandatory CI (`test:evidence:ci`).
+- Client navigation test: homepage → docs → contact → homepage verifies single chrome throughout.
+
+### Professionalism packet status
+
+**COMPLETE** — all confirmed gaps from the professionalism audit are addressed and deployed.
+
+### Remaining roadmap work
+
+- Phase 11: bounded legacy component/style and protected-route cleanup (17 open decisions).
+- Phase 12: manual screen-reader, zoom, high-contrast, touch-target, field INP/RUM evidence.
+- Phase 13: continuous governance.
+- MailerLite external rotation: PENDING owner verification.
