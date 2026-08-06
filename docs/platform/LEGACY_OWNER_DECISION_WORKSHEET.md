@@ -1,8 +1,9 @@
 # Phase 11 Owner Decision Worksheet — Legacy Surface Classification
 
 **Created:** 2026-08-06  
+**Updated:** 2026-08-06 (PXF-018 reconciliation: Item 3 reclassified as verified absent)  
 **Status:** Ready for owner classification  
-**Scope:** 17 substantive pending decisions; 5 verified-absent records (NOT APPLICABLE)  
+**Scope:** 16 substantive pending decisions; 6 verified-absent records (NOT APPLICABLE)  
 **Total catalogued items:** 22
 
 ---
@@ -28,18 +29,23 @@
 ### Summary Block
 
 ```
-Substantive decisions awaiting owner classification: 17
-Verified-absent records (NOT APPLICABLE): 5
+Substantive decisions awaiting owner classification: 16
+Verified-absent records (NOT APPLICABLE): 6
 Total catalogued records: 22
 Approved decisions (completed): 0
 Implementation packets authorized: 0
+
+AUDIT UPDATE (2026-08-06):
+Item 3 (/brainbridge) reclassified from pending to verified absent.
+Repository audit found zero files, zero references, never implemented.
+Remaining 16 items require owner classification.
 ```
 
 ---
 
-## Substantive Owner Decisions (17 items)
+## Substantive Owner Decisions (16 items)
 
-### Historical Marketing Routes (8 items)
+### Historical Marketing Routes (7 items)
 
 ---
 
@@ -80,26 +86,6 @@ Implementation packets authorized: 0
 | **Owner Rationale/Notes** | *[ BLANK — owner to provide ]* |
 | **Approval Date** | *[ BLANK ]* |
 | **Approved By** | *[ BLANK ]* |
-
----
-
-#### Item 3: `/brainbridge` — VERIFIED ABSENT (never implemented)
-
-| Property | Value |
-|----------|-------|
-| **Route/Surface Identity** | `/brainbridge` (historical product-name route) |
-| **Category** | Historical marketing; legacy brand variant |
-| **Current Verified Evidence** | **REPOSITORY AUDIT FINDING:** Route does NOT exist in app router. No file at `src/app/brainbridge/page.tsx`. No shell route definition. Zero references in entire codebase except in documentation (inventory and worksheets). Zero git history of deletion. **VERIFIED ABSENT — never implemented.** |
-| **Known Consumers** | None (route never existed in repository) |
-| **SEO/External-Link Risk** | **NONE** (route never existed; external 404 responses if referenced) |
-| **Data/Authentication Dependency** | N/A |
-| **Recommended Default** | **NO ACTION REQUIRED** — Route never existed in repository; no code removal needed. Handle external traffic (if any) via hosting/CDN-level redirects if needed. |
-| **Implementation Dependency** | None — verified absent; no code removal required |
-| **Owner-Selected Disposition** | **NOT APPLICABLE** — Route never implemented |
-| **Redirect/Consolidation Destination** | N/A |
-| **Owner Rationale/Notes** | **Repository audit confirmed:** `/brainbridge` was never implemented. Inventory incorrectly listed it as existing. No action required. |
-| **Approval Date** | *[ No approval needed — audit-verified absent ]* |
-| **Approved By** | *[ Repository audit; PXF-018 evidence trail ]* |
 
 ---
 
@@ -397,12 +383,13 @@ Implementation packets authorized: 0
 
 ## Already Resolved — NOT APPLICABLE / VERIFIED ABSENT
 
-The following five items have been verified as never-implemented routes or empty stubs with zero consumers. **No code removal is required for these items.** They are catalogued for completeness and clarity, but do not require owner disposition.
+The following six items have been verified as never-implemented routes or empty stubs with zero consumers. **No code removal is required for these items.** They are catalogued for completeness and clarity, but do not require owner disposition.
 
-### Verified-Absent Routes (5 items)
+### Verified-Absent Routes (6 items)
 
 | Item # | Route | Evidence | Status |
 |--------|-------|----------|--------|
+| 3 | `/brainbridge` | No route file, no directory; no shell route definition; zero references in entire codebase; never implemented (verified by PXF-018 audit) | NOT APPLICABLE |
 | 4 | `/guides/[topic]/[slug]` | No route file, no directory; empty stub, zero consumers (verified by grep and code audit) | NOT APPLICABLE |
 | 6 | `/playbooks/[segment]/[slug]` | No route file, no directory; empty stub, zero consumers (verified) | NOT APPLICABLE |
 | 9 | `/snippets/[stack]/[slug]` | No route file, no directory; empty stub, zero consumers (verified) | NOT APPLICABLE |
@@ -430,9 +417,9 @@ Before marking an item **APPROVED**, verify:
 
 ### Phase 11 Owner Classification Task
 
-1. **Review all 17 substantive entries** in this worksheet.
+1. **Review all 16 substantive entries** in this worksheet. Item 3 (`/brainbridge`) is NOT APPLICABLE — verified absent; no classification needed.
 
-2. **For each item, select an explicit disposition** from: `RETAIN`, `REDIRECT`, `CONSOLIDATE`, `ARCHIVE`, `REMOVE`, `DEFER`.
+2. **For each of the 16 remaining items, select an explicit disposition** from: `RETAIN`, `REDIRECT`, `CONSOLIDATE`, `ARCHIVE`, `REMOVE`, `DEFER`.
 
 3. **For REDIRECT or CONSOLIDATE decisions, specify the destination** explicitly (e.g., `/docs`, `/memory`, `/`).
 
@@ -440,7 +427,7 @@ Before marking an item **APPROVED**, verify:
 
 5. **Record approval date and approver name** for each disposition.
 
-6. **Do not approve implementation** until all 17 dispositions are complete and explicitly recorded.
+6. **Do not approve implementation** until all 16 dispositions are complete and explicitly recorded.
 
 ### Subsequent Implementation Packets
 

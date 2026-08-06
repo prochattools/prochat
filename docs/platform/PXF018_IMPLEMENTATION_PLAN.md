@@ -1,15 +1,16 @@
 # PXF-018 — Phase 11 Legacy Surface Implementation Blueprint
 
 **Created:** 2026-08-06  
+**Updated:** 2026-08-06 (PXF-018 reconciliation: Item 3 removed; maps 16 substantive decisions)  
 **Status:** Blueprint and packet design; awaiting owner decision classifications  
-**Scope:** Maps all 17 substantive Phase 11 decisions into bounded execution packets  
+**Scope:** Maps 16 substantive Phase 11 decisions into bounded execution packets (Item 3 verified absent)  
 **Reference:** `LEGACY_OWNER_DECISION_WORKSHEET.md`
 
 ---
 
 ## Executive Summary
 
-This document defines a complete implementation strategy for Phase 11 legacy surface decisions WITHOUT pre-selecting any disposition. Each of the 17 substantive decisions is mapped into independent, validated execution packets with explicit dependencies, entry criteria, and rollback paths.
+This document defines a complete implementation strategy for Phase 11 legacy surface decisions WITHOUT pre-selecting any disposition. Each of the 16 substantive decisions (Item 3 verified absent) is mapped into independent, validated execution packets with explicit dependencies, entry criteria, and rollback paths.
 
 **This document does NOT authorize implementation.** Packets remain blocked until owner decisions are recorded in `LEGACY_OWNER_DECISION_WORKSHEET.md`.
 
@@ -26,13 +27,12 @@ This document defines a complete implementation strategy for Phase 11 legacy sur
 
 ## Packet Summary Matrix
 
-All 17 substantive items mapped to execution packets. Each packet is independently executable upon owner approval.
+16 substantive items (Item 3 verified absent) mapped to execution packets. Each packet is independently executable upon owner approval.
 
 | Item | Route/Surface | Category | Recommended Default | Packet ID | Risk Level | Complexity |
 |-----:|---|---|---|---|---|---|
 | 1 | `/blog/[slug]` | Marketing | CONSOLIDATE → /docs | PXF-018A | HIGH | Medium |
 | 2 | `/book` | Marketing | REDIRECT → /docs | PXF-018A | LOW | Low |
-| 3 | `/brainbridge` | Marketing | REDIRECT → /memory or / | PXF-018A | MEDIUM | Low |
 | 5 | `/learn/*` | Marketing | CONSOLIDATE → /docs | PXF-018B | MEDIUM | Medium |
 | 7 | `/prompts/[category]/[slug]` | Marketing | EVALUATE + (RETAIN \| CONSOLIDATE) | PXF-018C | HIGH | High |
 | 8 | `/proof` | Marketing | CONSOLIDATE → /docs or RETAIN | PXF-018B | MEDIUM | Medium |
@@ -52,20 +52,18 @@ All 17 substantive items mapped to execution packets. Each packet is independent
 
 ## Execution Packets (Detailed Specifications)
 
-### PXF-018A: Marketing Routes with High/Medium SEO Risk (Blog, Book, Brainbridge)
+### PXF-018A: Marketing Routes with High/Medium SEO Risk (Blog, Book)
 
-**Scope:** Items 1, 2, 3  
-**Routes affected:** `/blog/[slug]`, `/book`, `/brainbridge`  
-**Recommended defaults:** Blog+Book → CONSOLIDATE/REDIRECT to `/docs`; Brainbridge → REDIRECT to product route  
+**Scope:** Items 1, 2  
+**Routes affected:** `/blog/[slug]`, `/book`  
+**Recommended defaults:** Blog+Book → CONSOLIDATE/REDIRECT to `/docs`  
 **Entry criteria (blocking conditions):**
 - Owner has classified Item 1 `/blog/[slug]` with explicit disposition (CONSOLIDATE, REDIRECT, or DEFER)
 - Owner has classified Item 2 `/book` with explicit disposition
-- Owner has classified Item 3 `/brainbridge` with explicit disposition and destination (if REDIRECT/CONSOLIDATE)
 
 **Likely affected files/symbols:**
 - `src/app/blog/[slug]/page.tsx` (Item 1 route)
 - `src/app/book/page.tsx` (Item 2 route)
-- `src/app/brainbridge/page.tsx` (Item 3 route)
 - `src/helpers/shell-routes.ts` or route manifest
 - `next.config.js` or `next-config.mjs` (redirects config if applicable)
 - `public/sitemap.xml` (sitemap generation)
@@ -75,7 +73,7 @@ All 17 substantive items mapped to execution packets. Each packet is independent
 **Dependencies:**
 - Item 1 requires external backlink audit or owner acceptance of SEO risk
 - Item 1 requires destination path clarity if REDIRECT/CONSOLIDATE
-- Items 2–3 have no blocking technical dependencies
+- Item 2 has no blocking technical dependencies
 
 **Risks:**
 - **SEO (Item 1):** Indexed content with external links; improper redirects cause 404s and damage search rankings
@@ -84,7 +82,7 @@ All 17 substantive items mapped to execution packets. Each packet is independent
 
 **Implementation order:**
 1. (If CONSOLIDATE/REDIRECT Item 1) Audit external backlinks and document destination
-2. (If CONSOLIDATE/REDIRECT Item 2–3) Confirm destination routes are stable
+2. (If CONSOLIDATE/REDIRECT Item 2) Confirm destination routes are stable
 3. Create redirect mappings in Next.js config or route handlers
 4. Test 301/302 redirects locally and in staging
 5. Verify sitemap and robots.txt behavior post-redirect
@@ -96,7 +94,6 @@ All 17 substantive items mapped to execution packets. Each packet is independent
 # Verify routes still render (before redirect)
 curl -L http://localhost:3000/blog/test-post -I | grep "HTTP\|Location"
 curl -L http://localhost:3000/book -I | grep "HTTP"
-curl -L http://localhost:3000/brainbridge -I | grep "HTTP"
 
 # After redirect: verify 301/302
 curl -L -H "User-Agent: GoogleBot" http://localhost:3000/blog/old-post | grep "Location"

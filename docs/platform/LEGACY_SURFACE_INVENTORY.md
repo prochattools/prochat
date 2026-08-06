@@ -186,17 +186,15 @@
 
 ### Pending Owner Classification
 
-**23 unique unresolved decisions:**
+**16 unique unresolved decisions (PXF-018 audit update):**
 
-- **12 historical marketing routes** → blog, guides, playbooks, prompts, learning, proof, snippets, starting-point, waas, glossary, brainbridge, book: OWNER DECISION on consolidation vs. archive
+- **7 historical marketing routes** → blog, book, learn, prompts, proof, starting-point, waas: OWNER DECISION on consolidation vs. archive (verified absent: guides, playbooks, snippets, glossary, brainbridge)
 - **8 internal system routes** → ai-workflows, debug, debug/analytics, legal-ai-workflows, processing-page, social, systems/events, systems/prochat-os: OWNER DECISION on activation, gating, or removal
-- **1 product variant** → /bb: OWNER DECISION on redirect or archive
 - **1 API consolidation** → /api/waiting-list vs /api/waitlist: OWNER DECISION on merge or keep separate
-- **1 unknown webhook** → /api/webhook: OWNER DECISION on API consumer and auth model
 
 ## Next Phase 11 Work
 
-1. **Owner classification decision** → 23 routes/APIs listed above requiring explicit owner choice (consolidate, redirect, archive, keep, remove, or merge)
+1. **Owner classification decision** → 16 routes/APIs listed above requiring explicit owner choice (consolidate, redirect, archive, keep, remove, or merge)
 2. **Protected-route boundary hardening** → Ory integration audit, session validation, authorization checks for /memory, /memory-qa, /workbench, /chat, /dashboard, /preferences, all /api/*, all /admin/*
 3. **Cleanup waves 2–4** (dependent on 1 and 2)
    - Wave 2: Redirect historical marketing routes (after owner decides consolidation target)

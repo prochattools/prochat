@@ -1,10 +1,11 @@
 # Legacy Owner Decision Register — PXF-017B
 
 **Created:** 2026-08-04  
-**Status:** 17 decisions pending; 5 items verified absent (no tracked code removal required)  
+**Updated:** 2026-08-06 (PXF-018 audit: Item 3 reclassified as verified absent)  
+**Status:** 16 decisions pending; 6 items verified absent (no tracked code removal required)  
 **Scope:** Phase 11 legacy surface classification decisions  
 
-This register tracks 22 surface items. Five have been verified as never-implemented paths (guides, playbooks, snippets, glossary, bb) — their status is documented as "no code removal required." The remaining **17 items require explicit owner classification** before proceeding with Phase 11 consolidation and removal work.
+This register tracks 22 surface items. Six have been verified as never-implemented paths (guides, playbooks, snippets, glossary, brainbridge, bb) — their status is documented as "no code removal required." The remaining **16 items require explicit owner classification** before proceeding with Phase 11 consolidation and removal work.
 
 ---
 
@@ -34,17 +35,6 @@ This register tracks 22 surface items. Five have been verified as never-implemen
 | **Owner Decision** | **PENDING** |
 | **Implementation Dependency** | Route redirect + content consolidation |
 
-### 3. `/brainbridge`
-| Property | Value |
-|----------|-------|
-| **Current Evidence** | Route exists; historical product naming variant (Brainbridge = early ProChat product name?) |
-| **Known Consumers** | Possibly external links from early marketing (not verified) |
-| **SEO/External-Link Risk** | Medium — historical product name may be referenced externally |
-| **Data/Auth Dependency** | None (public) |
-| **Options** | 1. Redirect to /studio or /kits landing; 2. Redirect to homepage; 3. Keep as legacy brand variant; 4. Remove |
-| **Recommended Default** | Redirect to /studio (route to current product interface) |
-| **Owner Decision** | **PENDING** |
-| **Implementation Dependency** | Route redirect + brand messaging update |
 
 ### 4. `/guides/[topic]/[slug]`
 | Property | Value |
@@ -287,19 +277,20 @@ This register tracks 22 surface items. Five have been verified as never-implemen
 
 ## Summary
 
-**Total Unresolved:** 17 items (5 cleared by PXF-017B no-regret removal)  
+**Total Unresolved:** 16 items (6 cleared by PXF-017B + PXF-018 audit)  
 **By Category:**
-- Historical marketing: 8 items (blog, book, brainbridge, learn, prompts, proof, starting-point, waas) [deleted: guides, playbooks, snippets, glossary]
+- Historical marketing: 7 items (blog, book, learn, prompts, proof, starting-point, waas) [verified absent: guides, playbooks, snippets, glossary, brainbridge]
 - Internal system: 8 items (ai-workflows, debug, debug/analytics, legal-ai-workflows, processing-page, social, systems/events, systems/prochat-os)
-- Product variants: 0 items [deleted: /bb]
+- Product variants: 0 items [verified absent: /bb]
 - API consolidation: 1 item (/api/waiting-list vs /api/waitlist — both retained for backward compatibility)
 
-**Cleared in PXF-017B (No-Regret Removal):**
-1. `/guides/[topic]/[slug]` — empty stub, zero consumers
-2. `/playbooks/[segment]/[slug]` — empty stub, zero consumers
-3. `/snippets/[stack]/[slug]` — empty stub, zero consumers
-4. `/glossary/[term]` — content removed, scaffolding is dead code, zero consumers
-5. `/bb` — never implemented, zero consumers
+**Verified Absent (No Code Removal Required):**
+1. `/guides/[topic]/[slug]` — never implemented, zero consumers
+2. `/playbooks/[segment]/[slug]` — never implemented, zero consumers
+3. `/snippets/[stack]/[slug]` — never implemented, zero consumers
+4. `/glossary/[term]` — never implemented, zero consumers
+5. `/brainbridge` — never implemented, zero consumers (PXF-018 audit)
+6. `/bb` — never implemented, zero consumers
 
 **Test Coverage Added (PXF-017B):**
 - `tests/security/legacy-compatibility.test.ts` (23 tests)

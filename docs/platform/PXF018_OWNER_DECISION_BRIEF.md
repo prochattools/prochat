@@ -1,7 +1,8 @@
 # PXF-018 Owner Decision Brief — Phase 11 Legacy Surface Audit Results
 
 **Created:** 2026-08-06  
-**Status:** Repository evidence audit complete; all 17 substantive items catalogued with verified findings  
+**Updated:** 2026-08-06 (PXF-018 reconciliation: Item 3 reclassified; 16 pending decisions)  
+**Status:** Repository evidence audit complete; 16 substantive items requiring owner classification; 6 verified absent  
 **Scope:** Verified consumers, dependencies, SEO/auth implications, and owner classification options  
 **Evidence standard:** Repository source code, navigation config, shell routes, sitemap, internal references, grep verification  
 
@@ -9,11 +10,11 @@
 
 ## Executive Summary
 
-All 17 substantive Phase 11 decision items have been audited for repository evidence. Five verified-absent items from PXF-017B remain valid (no code removal required). This brief summarizes findings with concrete repository evidence and non-binding recommendations to guide owner classification.
+16 substantive Phase 11 decision items require owner classification. 6 verified-absent items from PXF-017B (plus Item 3 from PXF-018 audit) require no code removal. This brief summarizes findings with concrete repository evidence and non-binding recommendations to guide owner classification.
 
 **Key findings:**
 - **Items 19–20:** Contrary to prior belief, `/systems/prochat-os` and `/systems/events` have **verified consumers** in navigation (3+ internal links each)
-- **Item 3:** `/brainbridge` was **never implemented** — repository has zero files, zero references
+- **Item 3:** `/brainbridge` was **never implemented** — repository has zero files, zero references (VERIFIED ABSENT; not an owner decision)
 - **Item 18:** `/social` is an **API route generator** for OG images, not a page route — active consumer of `/api/social/*` endpoints
 - **Item 22:** `/api/waiting-list` is exact re-export of `/api/waitlist` — zero-cost backward compatibility maintained
 - **Items 13–18:** All internal system routes exist and have documented shell-route classifications
@@ -650,7 +651,6 @@ All 17 substantive Phase 11 decision items have been audited for repository evid
 | Item | Route | Recommendation | Why | Owner action |
 |-----:|---|---|---|---|
 | 2 | `/book` | RETAIN or redirect to `/contact` | Internal links suggest call-booking page | Confirm purpose; update links if redirecting |
-| 3 | `/brainbridge` | NO ACTION (never implemented) | Zero files, zero references; never existed | Acknowledge VERIFIED ABSENT; no code removal |
 | 5 | `/learn/*` | CONSOLIDATE → `/docs/learn` | Indexed; overlaps with `/docs` and `/prompts` | Decide consolidation destination |
 | 8 | `/proof` | CONSOLIDATE → `/docs` or RETAIN | Case-study content; 1 internal link only | Evaluate content value; decide destination |
 | 13 | `/ai-workflows/*` | RETAIN | Active product entry point; verified consumers | Document purpose; do NOT remove |
@@ -690,19 +690,21 @@ All 17 substantive Phase 11 decision items have been audited for repository evid
 
 ## Next Owner Actions
 
-1. **Review all 17 items** above with focus on Items 1, 7, 11, 10 (require owner knowledge/external audit)
+1. **Review all 16 pending items** above (Item 3 verified absent; no owner decision needed). Focus on Items 1, 7, 11, 10 (require owner knowledge/external audit).
 
 2. **For high-priority items (1, 7):** Obtain external backlink audit via search console or third-party tools
 
 3. **For Items 13–18:** Confirm accuracy of documented purpose and consumers
 
-4. **Record disposition for all 17 items** in `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md`:
+4. **Record disposition for all 16 items** in `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md`:
    - Select: `RETAIN`, `REDIRECT`, `CONSOLIDATE`, `ARCHIVE`, `REMOVE`, `DEFER`
    - Provide destination (if `REDIRECT`/`CONSOLIDATE`)
    - Provide clarification (if `DEFER` or flagged with "CLARIFICATION REQUIRED")
    - Sign and date each disposition
 
-5. **No implementation authorized** until all 17 dispositions are recorded and approved
+5. **Item 3 (`/brainbridge`) requires no classification** — verified absent; no code removal needed
+
+6. **No implementation authorized** until all 16 dispositions are recorded and approved
 
 ---
 
