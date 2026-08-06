@@ -386,6 +386,14 @@ html.dark .docs-logo-wordmark img {
   }
 }
 
+/* Nextra unconditionally renders SkipNavLink ("Skip to Content"). Since
+ * DocsPublicShell provides our canonical MarketingNav for keyboard entry,
+ * Nextra's built-in skip control is redundant and must not appear or be
+ * accessible. display:none removes it from the accessibility tree. */
+.nextra-skip-nav {
+  display: none !important;
+}
+
 /* Nextra's prefixed responsive utilities do not collapse this flex layout
  * reliably when the marketing header owns the navbar. Keep the mobile docs
  * surface single-column without changing the desktop/tablet shell. */

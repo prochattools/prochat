@@ -1,9 +1,0 @@
-/* docs.css — scoped overrides for the Docs section.
-   Imported by DocsThemeLayout; does not affect canonical chrome selectors. */
-
-/* Nextra unconditionally renders SkipNavLink. Since DocsPublicShell provides
-   our own canonical MarketingNav for keyboard navigation, Nextra's built-in
-   skip control is redundant and must not be visible or accessible. */
-.nextra-skip-nav {
-  display: none !important;
-}
