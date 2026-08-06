@@ -354,8 +354,9 @@ Routes dependent on owner knowledge or external audit.
 | **External unknowns** | Legacy form endpoints and possibly external integrations may depend on `/api/waiting-list` (unquantified) |
 | **Implementation packet** | PXF-018I (API Endpoint Aliasing — Backward-Compatibility Retention) |
 | **Implementation scope** | No implementation required if RETAIN approved; if DEPRECATE chosen: external consumer audit required before sunset |
-| **PROPOSED disposition** | **RETAIN BOTH** — `/api/waiting-list` is zero-cost re-export maintaining backward compatibility; minimal burden; no breaking change justified |
-| **PROPOSED destination** | N/A (retention; no movement) |
+| **PROPOSED disposition** | **RETAIN** — Both `/api/waiting-list` and `/api/waitlist` remain active; `/api/waiting-list` is a zero-cost re-export maintaining backward compatibility |
+| **PROPOSED destination** | N/A (retention; both endpoints preserved as-is) |
+| **Implementation detail** | No code changes required; both endpoints continue to function identically via re-export pattern |
 | **Owner override** | *[ BLANK — provide if proposing deprecation and confirming external consumer audit and sunset window ]* |
 | **Final disposition** | *[ BLANK — filled by owner ]* |
 | **Owner approval signature** | *[ BLANK — name/date ]* |
@@ -367,65 +368,99 @@ Routes dependent on owner knowledge or external audit.
 ### Approval Options
 
 **Bulk approval eligibility:** Bulk approval applies ONLY to items with:
-- Fully specified, canonical dispositions (RETAIN, REDIRECT, CONSOLIDATE, ARCHIVE, REMOVE, or DEFER)
+- Exactly ONE canonical disposition value (RETAIN, REDIRECT, CONSOLIDATE, ARCHIVE, REMOVE, or DEFER)
 - Explicit destination (if REDIRECT/CONSOLIDATE)
-- No OWNER REQUIRED, unresolved external evidence, multiple alternatives, or security ambiguity
-- No blank fields
+- No alternative dispositions or conditional branches
+- No owner-choice implementation branches
+- No unresolved external evidence
+- No OWNER REQUIRED selections
 
-**Items currently ineligible for bulk approval:** 1 (external audit required), 7 (external audit required), 10 (destination selection required), 11 (product strategy required), 19 (external dependency confirmation required)
+**Items ineligible for bulk approval (require owner selection or external input):**
+- Item 1: External backlink audit required
+- Item 2: Multiple disposition options (REDIRECT or RETAIN); requires purpose confirmation
+- Item 5: No blocking issues; FULLY SPECIFIED — **eligible**
+- Item 7: External backlink audit required
+- Item 8: Multiple disposition options (CONSOLIDATE or RETAIN); requires content-value assessment
+- Item 10: Requires owner to select single destination from three options
+- Item 11: Requires product strategy decision
+- Item 13: No blocking issues; FULLY SPECIFIED — **eligible**
+- Item 14: Multiple disposition options (RETAIN or REMOVE); requires security choice
+- Item 15: Multiple disposition options (RETAIN or REMOVE); requires security choice (same as 14)
+- Item 16: No blocking issues; FULLY SPECIFIED — **eligible**
+- Item 17: No blocking issues; FULLY SPECIFIED — **eligible**
+- Item 18: No blocking issues; FULLY SPECIFIED — **eligible**
+- Item 19: External dependency confirmation required
+- Item 20: No blocking issues; FULLY SPECIFIED — **eligible**
+- Item 22: No blocking issues; FULLY SPECIFIED — **eligible**
 
-**Items eligible for bulk approval if accepted unchanged:** 2, 5, 8, 13, 14–15, 16, 17, 18, 20, 22 (9 items with fully specified proposals)
+**Items eligible for bulk approval (fully specified, single disposition):** 5, 13, 16, 17, 18, 20, 22 (7 items)
 
-**Option 1: Approve eligible items only (selective approval)**
+**Items requiring owner selection before approval:** 2, 8, 14–15 (require binary or ternary choice)
 
-Approve only the subset of items that are fully specified and require no clarification:
+**Items requiring external input before approval:** 1, 7, 10, 11, 19 (require audit/strategy/confirmation)
+
+**Option 1: Bulk approval (fully specified items only)**
+
+Approve the 7 fully-specified items with single, unconditional dispositions:
 
 ```
-I, _________________ (name), approve the following dispositions without modification:
-Items: 2, 5, 8, 13, 14–15, 16, 17, 18, 20, 22
+I, _________________ (name), approve all proposed dispositions for the following items
+without modification, and authorize these dispositions to be written to each item's
+final-disposition field:
 
-[Items 1, 7, 10, 11, 19 remain pending clarification and are NOT approved.]
+Items: 5, 13, 16, 17, 18, 20, 22
+
+These items are fully specified and require no owner selection, external input, or
+clarification. Upon signature, each proposed disposition becomes the final disposition.
+
+[Items 1, 2, 7, 8, 10, 11, 14–15, 19 remain pending and are NOT approved by this signature.]
 
 Signature: _________________ Date: _________________
 ```
 
-**Option 2: Approve eligible subset, then resolve pending items**
+**Option 2: Selective approval (fully specified subset + owner selections)**
 
-First, approve the subset of items fully specified and ready:
+Approve the 7 fully-specified items, then provide disposition choices for items requiring owner selection:
+
+First, bulk-approve the fully specified items:
 
 ```
-I, _________________ (name), approve the following dispositions:
-Items: 2, 5, 8, 13, 14–15, 16, 17, 18, 20, 22
-
-[Items 1, 7, 10, 11, 19 are NOT approved pending clarification.]
+I, _________________ (name), approve all proposed dispositions for the following items:
+Items: 5, 13, 16, 17, 18, 20, 22
 
 Signature: _________________ Date: _________________
 ```
 
-Then, separately after external audits or clarifications are complete:
+Then, complete one final-disposition entry for each item requiring your selection:
+
+- **Item 2** (/book): Select ONE — REDIRECT to `/contact` OR RETAIN. Fill its "Final disposition" field, sign, and date.
+- **Item 8** (/proof): Select ONE — CONSOLIDATE to `/docs` OR RETAIN. Fill its "Final disposition" field, sign, and date.
+- **Item 14** (/debug/*): Select ONE — RETAIN (NODE_ENV=development) OR REMOVE. Fill its "Final disposition" field, sign, and date.
+- **Item 15** (/debug/analytics): Select ONE — RETAIN (NODE_ENV=development) OR REMOVE. Fill its "Final disposition" field, sign, and date.
+
+Then resolve items requiring external input (1, 7, 10, 11, 19) after audits/clarifications are complete.
+
+**Option 3: All items deferred pending clarification**
+
+If you prefer to defer all final decisions and collect owner selections separately:
 
 ```
-I, _________________ (name), approve additional dispositions:
-- Item 1: [disposition, destination, rationale]
-- Item 7: [disposition, destination, rationale]
-- Item 10: [disposition, destination selection, rationale]
-- Item 11: [disposition, destination, rationale]
-- Item 19: [disposition, external-dependency confirmation, rationale]
+I, _________________ (name), mark all 16 items as DEFER pending the following:
 
-Signature: _________________ Date: _________________
-```
+Items requiring external input:
+- Item 1: External backlink audit via search console
+- Item 7: External backlink audit via search console
+- Item 19: Confirmation of zero external dependencies
 
-**Option 3: Approve with overrides (for selective changes to eligible items only)**
+Items requiring owner selection:
+- Item 2: Confirm purpose: call-booking (REDIRECT) or strategic resource (RETAIN)?
+- Item 8: Evaluate content value: strategic (RETAIN) or consolidate (CONSOLIDATE)?
+- Item 10: Select onboarding destination: /memory, /memory-qa, or /workbench?
+- Item 11: Confirm WaaS product status: current (RETAIN), deprecated (REDIRECT), or consolidate (CONSOLIDATE)?
+- Item 14–15: Choose security posture: restrict to development (RETAIN) or remove from production (REMOVE)?
 
-For any of the currently-eligible items (2, 5, 8, 13, 14–15, 16, 17, 18, 20, 22) where you deviate from the proposed disposition, fill in that item's "Owner override" field and then sign below:
-
-```
-I, _________________ (name), approve the proposed dispositions with the following overrides:
-- Item __: [override details]
-- Item __: [override details]
-[Continue for each override]
-
-[Items 1, 7, 10, 11, 19 remain pending clarification and NOT approved.]
+Fully specified items (5, 13, 16, 17, 18, 20, 22) may be approved in a separate tranche
+once clarifications are ready.
 
 Signature: _________________ Date: _________________
 ```
@@ -442,38 +477,73 @@ Signature: _________________ Date: _________________
 
 ---
 
-## Authorization Boundary
+## Authorization Model
 
-**CRITICAL:** Only signed final dispositions authorize mapped implementation packets.
+**How bulk approval populates final dispositions:**
+
+When you approve the 7 fully-specified items (5, 13, 16, 17, 18, 20, 22) via bulk signature:
+
+1. You sign a statement that authorizes the proposed dispositions to become final dispositions
+2. Each signed item's "Final disposition" field is understood to be populated by reference to the PROPOSED disposition you approved
+3. Only the items explicitly listed in your signed bulk approval are authorized
+4. All other items remain with blank final-disposition fields pending further approval
+
+**Mechanical guarantee:**
+
+```
+Signed items: 5, 13, 16, 17, 18, 20, 22
+  → Final disposition for Item 5 = PROPOSED disposition for Item 5 (CONSOLIDATE)
+  → Final disposition for Item 13 = PROPOSED disposition for Item 13 (RETAIN)
+  → Final disposition for Item 16 = PROPOSED disposition for Item 16 (CONSOLIDATE)
+  → Final disposition for Item 17 = PROPOSED disposition for Item 17 (RETAIN)
+  → Final disposition for Item 18 = PROPOSED disposition for Item 18 (RETAIN)
+  → Final disposition for Item 20 = PROPOSED disposition for Item 20 (RETAIN)
+  → Final disposition for Item 22 = PROPOSED disposition for Item 22 (RETAIN)
+
+Unsigned items: 1, 2, 7, 8, 10, 11, 14–15, 19
+  → Final disposition remains BLANK
+  → No implementation authorized
+```
+
+**CRITICAL:** Only signed items authorize mapped implementation packets.
 
 | Condition | Impact |
 |-----------|--------|
+| **Item in signed approval list** | Proposed disposition becomes final; packet is authorized |
+| **Item NOT in signed approval list** | Final disposition remains blank; packet remains blocked |
 | **Blank final disposition** | Item is NOT authorized for implementation |
 | **DEFER final disposition** | Packet blocked indefinitely pending clarification |
-| **Signed final disposition** | Mapped packet is unblocked and may proceed to execution |
-| **Owner override provided** | Override replaces proposed disposition upon signature |
+| **Owner override provided for signed item** | Override replaces proposed disposition (must be added to item's entry before signature) |
 
 ---
 
 ## Post-Approval Execution Order
 
-After owner signs off, implementation packets execute in this order (only approved packets proceed):
+Implementation packets execute only after final dispositions are signed and non-blank. Execution order is:
 
-**Phase 1: Parallel Execution (no blocking dependencies)**
-- **PXF-018A** (Items 1–2): Marketing routes with SEO
-- **PXF-018B** (Items 5, 8): Learning hub consolidation
-- **PXF-018D** (Item 10): Onboarding flow
-- **PXF-018G** (Items 14–15): Debug security gating
-- **PXF-018H-Item19** (Item 19 only): Events route removal
-- **PXF-018I** (Item 22): API aliasing (no-op if RETAIN)
+**Fully Specified (can execute immediately upon bulk approval)**
 
-**Phase 2: Conditional Execution (strategy-dependent)**
-- **PXF-018C** (Item 7): Prompt library (after backlink audit or owner decision)
-- **PXF-018E** (Item 11): WaaS variant (after product strategy confirmation)
+**Phase 1A: Parallel Execution (fully specified items)**
+- **PXF-018B** (Item 5): Learning hub consolidation — CONSOLIDATE → `/docs/learn`
+- **PXF-018F** (Items 13, 16, 17, 18): Internal system routes (RETAIN; optional documentation only)
+- **PXF-018H** (Item 20): ProChat OS route (RETAIN; no removal)
+- **PXF-018I** (Item 22): API aliasing (RETAIN both endpoints as-is)
 
-**Phase 3: No-Op / Documentation (automatic if approved)**
-- **PXF-018F** (Items 13, 16, 17, 18): Internal system routes (optional documentation only; no code changes if RETAIN)
-- **PXF-018H-Item20** (Item 20): ProChat OS (no-op; route retained; do NOT remove)
+**Conditional on Owner Selection (blocked until Item N receives final disposition)**
+
+**Phase 1B: Parallel Execution (after owner selections complete)**
+- **PXF-018A** (Items 1–2): Marketing routes — Item 1 after backlink audit; Item 2 after purpose confirmation
+- **PXF-018B** (Item 8): Proof hub — after content-value assessment
+- **PXF-018G** (Items 14–15): Debug security — RETAIN (NODE_ENV=development) or REMOVE (after owner chooses)
+
+**Phase 2: Conditional Execution (external input required)**
+- **PXF-018C** (Item 7): Prompt library — after external backlink audit
+- **PXF-018D** (Item 10): Onboarding flow — after destination selection
+- **PXF-018E** (Item 11): WaaS variant — after product strategy confirmation
+- **PXF-018H** (Item 19): Events removal — after external dependency confirmation (REMOVE or DEFER)
+
+**Blocked indefinitely (unless DEFER resolved):**
+Any item marked DEFER without clarification cannot proceed.
 
 ---
 
