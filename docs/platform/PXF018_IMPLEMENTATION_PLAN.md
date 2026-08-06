@@ -29,24 +29,24 @@ This document defines a complete implementation strategy for Phase 11 legacy sur
 
 16 substantive items (Item 3 verified absent) mapped to execution packets. Each packet is independently executable upon owner approval.
 
-| Item | Route/Surface | Category | Recommended Default | Packet ID | Risk Level | Complexity |
+| Item | Route/Surface | Category | Approval Status | Packet ID | Risk Level | Complexity |
 |-----:|---|---|---|---|---|---|
-| 1 | `/blog/[slug]` | Marketing | Unresolved: RETAIN or CONSOLIDATE; destination owner-required | PXF-018A | HIGH | Medium |
-| 2 | `/book` | Marketing | Unresolved: RETAIN or REDIRECT → `/contact` | PXF-018A | LOW | Low |
-| 5 | `/learn/*` | Marketing | CONSOLIDATE → `/docs/learn` | PXF-018B | MEDIUM | Medium |
-| 7 | `/prompts/[category]/[slug]` | Marketing | Unresolved: RETAIN or CONSOLIDATE; destination owner-required | PXF-018C | HIGH | High |
-| 8 | `/proof` | Marketing | Unresolved: RETAIN or CONSOLIDATE → `/docs` | PXF-018B | MEDIUM | Medium |
-| 10 | `/starting-point/*` | Marketing | CONSOLIDATE; owner selects `/memory`, `/memory-qa`, or `/workbench` | PXF-018D | LOW | Low |
-| 11 | `/waas/accountants` | Marketing | Unresolved: RETAIN, REDIRECT, ARCHIVE, REMOVE, or DEFER | PXF-018E | MEDIUM | Medium |
-| 13 | `/ai-workflows/*` | Internal | RETAIN | PXF-018F | MEDIUM | Low |
-| 14 | `/debug/*` | Internal | Unresolved: RETAIN or REMOVE; `NODE_ENV=development` is a RETAIN condition | PXF-018G | MEDIUM | Low |
-| 15 | `/debug/analytics` | Internal | Unresolved: RETAIN or REMOVE; `NODE_ENV=development` is a RETAIN condition | PXF-018G | MEDIUM | Low |
-| 16 | `/legal-ai-workflows` | Internal | CONSOLIDATE → `/ai-workflows` | PXF-018F | LOW | None |
-| 17 | `/processing-page` | Internal | RETAIN | PXF-018F | MEDIUM | Low |
-| 18 | `/social` | Internal | RETAIN | PXF-018F | HIGH | None |
-| 19 | `/systems/events` | Internal | REMOVE only after owner confirms no external dependency | PXF-018H | LOW | Low |
-| 20 | `/systems/prochat-os` | Internal | RETAIN | PXF-018H | MEDIUM | None |
-| 22 | `/api/waiting-list` vs `/api/waitlist` | API | RETAIN; preserve both spellings as implementation detail | PXF-018I | NONE | None |
+| 1 | `/blog/[slug]` | Marketing | Owner selection: RETAIN or CONSOLIDATE; destination required | PXF-018A | HIGH | Medium |
+| 2 | `/book` | Marketing | Owner selection: RETAIN or REDIRECT; destination required | PXF-018A | LOW | Low |
+| 5 | `/learn/*` | Marketing | Bulk-eligible: CONSOLIDATE → `/docs/learn` | PXF-018B | MEDIUM | Medium |
+| 7 | `/prompts/[category]/[slug]` | Marketing | Owner selection: RETAIN or CONSOLIDATE (after backlink audit); destination required | PXF-018C | HIGH | High |
+| 8 | `/proof` | Marketing | Owner selection: RETAIN or CONSOLIDATE; destination required | PXF-018B | MEDIUM | Medium |
+| 10 | `/starting-point/*` | Marketing | Bulk-eligible: CONSOLIDATE; owner selects ONE destination | PXF-018D | LOW | Low |
+| 11 | `/waas/accountants` | Marketing | Owner selection: RETAIN, CONSOLIDATE, or REDIRECT (depends on product strategy) | PXF-018E | MEDIUM | Medium |
+| 13 | `/ai-workflows/*` | Internal | Bulk-eligible: RETAIN | PXF-018F | MEDIUM | Low |
+| 14 | `/debug/*` | Internal | Owner selection: RETAIN (NODE_ENV gate) or REMOVE | PXF-018G | MEDIUM | Low |
+| 15 | `/debug/analytics` | Internal | Owner selection: RETAIN (NODE_ENV gate) or REMOVE | PXF-018G | MEDIUM | Low |
+| 16 | `/legal-ai-workflows` | Internal | Bulk-eligible: CONSOLIDATE → `/ai-workflows` | PXF-018F | LOW | None |
+| 17 | `/processing-page` | Internal | Bulk-eligible: RETAIN | PXF-018F | MEDIUM | Low |
+| 18 | `/social` | Internal | Bulk-eligible: RETAIN (critical OG infrastructure) | PXF-018F | HIGH | None |
+| 19 | `/systems/events` | Internal | Owner selection: REMOVE or DEFER (pending external dependency confirmation) | PXF-018H | LOW | Low |
+| 20 | `/systems/prochat-os` | Internal | Bulk-eligible: RETAIN (7+ verified consumers) | PXF-018H | MEDIUM | None |
+| 22 | `/api/waiting-list` vs `/api/waitlist` | API | Bulk-eligible: RETAIN (both endpoints preserved) | PXF-018I | NONE | None |
 
 ---
 
@@ -56,10 +56,10 @@ This document defines a complete implementation strategy for Phase 11 legacy sur
 
 **Scope:** Items 1, 2  
 **Routes affected:** `/blog/[slug]`, `/book`  
-**Recommended defaults:** Item 1 remains unresolved between RETAIN and CONSOLIDATE with an owner-supplied destination. Item 2 requires owner selection between RETAIN and REDIRECT → `/contact`.  
+**Status:** Both items require owner selection; no defaults are preselected  
 **Entry criteria (blocking conditions):**
-- Owner has classified Item 1 `/blog/[slug]` with a canonical disposition and supplied a destination if CONSOLIDATE/REDIRECT is selected
-- Owner has classified Item 2 `/book` as RETAIN or REDIRECT → `/contact`; `/docs` is not the current manifest proposal
+- Item 1: Owner has selected one canonical disposition (RETAIN or CONSOLIDATE) and, if CONSOLIDATE/REDIRECT, supplied explicit destination
+- Item 2: Owner has selected one canonical disposition (RETAIN or REDIRECT) and, if REDIRECT, supplied exact destination
 
 **Likely affected files/symbols:**
 - `src/app/blog/[slug]/page.tsx` (Item 1 route)
@@ -262,9 +262,10 @@ grep -r "/api/prompts\|/prompts" src/ --include="*.ts" --include="*.tsx" | grep 
 
 **Scope:** Item 10  
 **Route:** `/starting-point/*`  
-**Recommended default:** CONSOLIDATE, with the owner selecting exactly one destination: `/memory`, `/memory-qa`, or `/workbench`.  
+**Status:** Fully specified as CONSOLIDATE; owner must select exactly ONE destination (not combined)  
 **Entry criteria:**
-- Owner has recorded a signed final disposition of CONSOLIDATE and selected exactly one destination
+- Owner has recorded a signed final disposition of CONSOLIDATE
+- Owner has selected exactly ONE destination: `/memory`, `/memory-qa`, OR `/workbench` (not multiple; not combined)
 
 **Likely affected files:**
 - `src/app/starting-point/page.tsx` and nested routes
@@ -377,11 +378,10 @@ grep -r "waas\|accountants" src/ --include="*.ts" --include="*.tsx"
 
 **Scope:** Items 13, 16, 17, 18  
 **Routes affected:** `/ai-workflows/*` (verified consumer), `/legal-ai-workflows` (already consolidated), `/processing-page` (verified consumer), `/social` (critical OG infrastructure)  
-**Recommended defaults:** Item 13 RETAIN; Item 16 CONSOLIDATE → `/ai-workflows`; Item 17 RETAIN; Item 18 RETAIN.  
+**Status:** All four items are fully specified in manifest as RETAIN (bulk-eligible for approval)  
 **Entry criteria:**
-- Each item to execute has a signed final disposition in the approval manifest
-- Item 16 executes only as CONSOLIDATE → `/ai-workflows`
-- Unapproved sibling items remain blocked and do not prevent partial execution of approved items
+- Items 13, 16, 17, 18 have signed final dispositions in the approval manifest (individually or via bulk signature)
+- Unapproved sibling items remain blocked; partial execution of approved items is supported
 
 **Why separate packet?**
 These are internal system routes with verified consumers. Repository audit found:
@@ -552,19 +552,22 @@ npm run build
 ### PXF-018H: Internal System Routes with Distinct Dispositions (Events, ProChat OS)
 
 **Scope:** Items 19, 20  
-**Routes affected:** `/systems/events` (REMOVE), `/systems/prochat-os` (RETAIN)  
+**Routes affected:** `/systems/events` (removal candidate), `/systems/prochat-os` (RETAIN)  
 
-**CRITICAL CORRECTION:** Prior PXF-018H scope incorrectly grouped both items as "zero-consumer removal." Audit evidence now shows:
-- **Item 19 (`/systems/events`):** Zero verified inbound links → REMOVE is safe
+**Status:** Distinct dispositions: Item 19 requires owner choice (REMOVE or DEFER); Item 20 is fully specified as RETAIN  
+
+**Audit evidence:**
+- **Item 19 (`/systems/events`):** Zero verified inbound links → REMOVE is safe if owner confirms no external dependencies
 - **Item 20 (`/systems/prochat-os`):** 7+ verified internal links → MUST RETAIN; removal breaks product landing pages
 
-Split handling:
+Handling:
 
-#### Item 19: `/systems/events` — REMOVE (zero verified consumers)
+#### Item 19: `/systems/events` — Requires owner choice (REMOVE or DEFER)
 
 **Entry criteria:**
-- Owner acknowledges zero verified repository links and confirms acceptable to remove
-- If external dependencies suspected, select DEFER pending clarification
+- Owner has selected one canonical disposition: REMOVE or DEFER
+- If REMOVE: owner confirms zero verified repository links and acceptable to remove
+- If DEFER: pending clarification on external dependencies
 
 **Why removal is safe:**
 Grep search verified zero explicit inbound links. Skeleton route; no active consumers identified.
@@ -852,7 +855,7 @@ The owner approval manifest controls authorization:
 
 - **Bulk-eligible (7):** Items 5, 13, 16, 17, 18, 20, and 22.
 - **Owner selection required (4):** Items 2, 8, 14, and 15.
-- **External input required (5):** Items 1, 7, 10, 11, and 19.
+- **External input or owner selection required (5):** Items 1 (backlink audit), 7 (backlink audit), 10 (destination), 11 (product strategy), and 19 (external dependency confirmation).
 - A valid bulk signature writes only the explicitly listed PROPOSED dispositions to FINAL by reference.
 - Omitted, unsigned, blank, or DEFER items authorize no implementation.
 - REDIRECT or CONSOLIDATE without an exact destination remains blocked.
