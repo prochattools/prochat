@@ -31,11 +31,12 @@ describe('Legacy compatibility routes and APIs', () => {
     })
 
     it('honeypot: /api/waiting-list POST exits before persistence', async () => {
-      // Test that honeypot field triggers success response WITHOUT writing DB
+      // Test that honeypot field triggers success response WITHOUT writing DB.
+      // The schema merges company_website into the honeypot field.
       const honeypotSchema = {
         email: 'honeypot-security-check@example.com',
         products: ['uxkit'],
-        website: 'filled-by-bot', // honeypot field
+        company_website: 'filled-by-bot', // honeypot field — schema key is company_website
       }
 
       const response = await fetch(`${baseUrl}/api/waiting-list`, {
@@ -52,17 +53,18 @@ describe('Legacy compatibility routes and APIs', () => {
   })
 
   describe('Route redirects: backward compatibility', () => {
-    it('/legal-ai-workflows redirects to /ai-workflows', async () => {
-      const response = await fetch(`${baseUrl}/legal-ai-workflows`, {
-        redirect: 'manual',
-      })
+    it('/legal-ai-workflows resolves to /ai-workflows', async () => {
+      // Follow the redirect to verify /legal-ai-workflows ultimately reaches /ai-workflows.
+      // Next.js app-router redirect() returns a 307 but the Location header may be a
+      // full origin URL; following the redirect is the most robust check.
+      const response = await fetch(`${baseUrl}/legal-ai-workflows`)
 
+      assert.equal(response.status, 200, '/legal-ai-workflows should ultimately return 200')
+      const finalUrl = new URL(response.url)
       assert(
-        response.status >= 300 && response.status < 400,
-        '/legal-ai-workflows should redirect (3xx status)',
+        finalUrl.pathname === '/ai-workflows' || finalUrl.pathname.startsWith('/ai-workflows'),
+        `/legal-ai-workflows should resolve to /ai-workflows, got ${finalUrl.pathname}`,
       )
-      const location = response.headers.get('location')
-      assert(location?.includes('/ai-workflows'), `redirect location should point to /ai-workflows, got ${location}`)
     })
   })
 
