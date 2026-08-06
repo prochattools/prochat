@@ -83,23 +83,23 @@ Implementation packets authorized: 0
 
 ---
 
-#### Item 3: `/brainbridge` — Early product naming variant
+#### Item 3: `/brainbridge` — VERIFIED ABSENT (never implemented)
 
 | Property | Value |
 |----------|-------|
 | **Route/Surface Identity** | `/brainbridge` (historical product-name route) |
 | **Category** | Historical marketing; legacy brand variant |
-| **Current Verified Evidence** | Route exists in app router; renders; historical product naming (Brainbridge may have been early ProChat name); not in canonical navigation; possibly referenced in old marketing or external sites (unverified) |
-| **Known Consumers** | Possibly early-stage marketing materials, external brand mentions, or historical documentation (unverified) |
-| **SEO/External-Link Risk** | **MEDIUM** — historical product name may appear in external references; removal could impact brand recall searches |
-| **Data/Authentication Dependency** | None (public) |
-| **Recommended Default** | Redirect to current product interface (`/memory` or `/workbench` depending on original context) or homepage |
-| **Implementation Dependency** | Brand/product context clarification; redirect routing; search console monitoring |
-| **Owner-Selected Disposition** | *[ BLANK — awaiting owner decision ]* |
-| **Redirect/Consolidation Destination** | *[ BLANK — required if REDIRECT or CONSOLIDATE selected; recommend: `/memory` or `/workbench` or `/` ]* |
-| **Owner Rationale/Notes** | *[ BLANK — owner to provide context (original product intent) ]* |
-| **Approval Date** | *[ BLANK ]* |
-| **Approved By** | *[ BLANK ]* |
+| **Current Verified Evidence** | **REPOSITORY AUDIT FINDING:** Route does NOT exist in app router. No file at `src/app/brainbridge/page.tsx`. No shell route definition. Zero references in entire codebase except in documentation (inventory and worksheets). Zero git history of deletion. **VERIFIED ABSENT — never implemented.** |
+| **Known Consumers** | None (route never existed in repository) |
+| **SEO/External-Link Risk** | **NONE** (route never existed; external 404 responses if referenced) |
+| **Data/Authentication Dependency** | N/A |
+| **Recommended Default** | **NO ACTION REQUIRED** — Route never existed in repository; no code removal needed. Handle external traffic (if any) via hosting/CDN-level redirects if needed. |
+| **Implementation Dependency** | None — verified absent; no code removal required |
+| **Owner-Selected Disposition** | **NOT APPLICABLE** — Route never implemented |
+| **Redirect/Consolidation Destination** | N/A |
+| **Owner Rationale/Notes** | **Repository audit confirmed:** `/brainbridge` was never implemented. Inventory incorrectly listed it as existing. No action required. |
+| **Approval Date** | *[ No approval needed — audit-verified absent ]* |
+| **Approved By** | *[ Repository audit; PXF-018 evidence trail ]* |
 
 ---
 
@@ -307,23 +307,23 @@ Implementation packets authorized: 0
 
 ---
 
-#### Item 18: `/social` — Social media integration handler (internal system)
+#### Item 18: `/social` — Social media integration handler (CRITICAL INFRASTRUCTURE)
 
 | Property | Value |
 |----------|-------|
-| **Route/Surface Identity** | `/social` (social media integration route) |
-| **Category** | Internal system; social media handler |
-| **Current Verified Evidence** | Route exists; appears to handle social media integration; consumer systems and scope not documented; appears internal-only |
-| **Known Consumers** | Unknown internal systems (not documented) |
-| **SEO/External-Link Risk** | **NONE** (internal; should not be indexed) |
-| **Data/Authentication Dependency** | Possibly API-key authorization (unverified); authorization model not documented |
-| **Recommended Default** | **REQUIRES CLARIFICATION FIRST** — Decide disposition only after documenting: (1) exact purpose (social-share handler, social-auth integration, etc.), (2) current/planned consumers, (3) authorization model |
-| **Implementation Dependency** | PXF-017C clarification packet required |
-| **Owner-Selected Disposition** | *[ BLANK — CLARIFICATION REQUIRED; tentative options: RETAIN if active, DEFER if undecided, REMOVE if unused ]* |
-| **Redirect/Consolidation Destination** | *[ N/A — internal system ]* |
-| **Owner Rationale/Notes** | *[ BLANK — owner MUST provide: purpose, consumer systems, authorization model, and strategic intent BEFORE disposition finalized ]* |
-| **Approval Date** | *[ BLANK ]* |
-| **Approved By** | *[ BLANK ]* |
+| **Route/Surface Identity** | `/social` and `/api/social/*` (OG image generation system) |
+| **Category** | Internal system; critical infrastructure for social sharing |
+| **Current Verified Evidence** | **REPOSITORY AUDIT FINDING:** `/social` is primary OG image generator. Active consumers: `src/lib/generateSocialImageUrl.ts` (calls `/social?${params}` and `/social/${slug}.png`), `src/lib/seo/metadata.ts` (returns `/social` URLs for all OG image tags). Also serves API endpoints `/api/social/next` and `/api/social/mark-posted`. **CRITICAL INFRASTRUCTURE — DO NOT REMOVE.** |
+| **Known Consumers** | VERIFIED PRESENT: (1) OG image query endpoint for all social sharing previews; (2) `/api/social/next` and `/api/social/mark-posted` API endpoints; (3) Site-wide social preview generation in metadata |
+| **SEO/External-Link Risk** | **NONE** (API route; not indexed) |
+| **Data/Authentication Dependency** | Public API (no auth documented) |
+| **Recommended Default** | **RETAIN — CRITICAL** — Route is essential OG image generation pipeline. Removal would break social sharing previews site-wide. |
+| **Implementation Dependency** | None if retained; external OG generation service required if removal considered |
+| **Owner-Selected Disposition** | **RETAIN** (recommended; do NOT remove) |
+| **Redirect/Consolidation Destination** | N/A — retain as-is |
+| **Owner Rationale/Notes** | **Repository audit clarified:** `/social` is critical infrastructure for OG image generation. Confirmed consumers in metadata and URL generation. No removal authorized without external OG replacement service. |
+| **Approval Date** | *[ Recommended RETAIN; no approval needed if accepting recommendation ]* |
+| **Approved By** | *[ Repository audit; PXF-018 evidence trail ]* |
 
 ---
 
@@ -331,19 +331,19 @@ Implementation packets authorized: 0
 
 ---
 
-#### Item 19: `/systems/events` — Event system kernel (zero consumers)
+#### Item 19: `/systems/events` — Event system kernel (zero inbound links verified)
 
 | Property | Value |
 |----------|-------|
 | **Route/Surface Identity** | `/systems/events` (event-system kernel route) |
 | **Category** | Internal system; event infrastructure |
-| **Current Verified Evidence** | Route exists in app router; grep search across codebase found zero current references to this route; appears to be skeleton/placeholder for future event handling; no active consumers verified |
-| **Known Consumers** | None found (zero-consumer verification by grep completed) |
-| **SEO/External-Link Risk** | **NONE** (internal) |
+| **Current Verified Evidence** | **REPOSITORY AUDIT FINDING:** Route directory exists; shell route ROUTE-019 defined; classified as `temporary_legacy_compatibility`. No explicit inbound navigation links found (grep verified). Appears to be skeleton/placeholder for future event handling. Safe to remove if no external consumers confirmed. |
+| **Known Consumers** | None found (zero explicit inbound links verified by grep) |
+| **SEO/External-Link Risk** | **NONE** (internal; skeleton route) |
 | **Data/Authentication Dependency** | None |
-| **Recommended Default** | **REMOVE** — Zero verified consumers; skeleton route with no current use justifies deletion |
-| **Implementation Dependency** | Final grep verification before deletion; code removal only |
-| **Owner-Selected Disposition** | *[ BLANK — awaiting owner decision ]* Recommended: **REMOVE** |
+| **Recommended Default** | **REMOVE** — Zero verified inbound links; safe to delete after confirming no external dependencies |
+| **Implementation Dependency** | Final grep verification; external consumer audit (if any); code removal only |
+| **Owner-Selected Disposition** | *[ BLANK — awaiting owner decision ]* Recommended: **REMOVE** (or DEFER if external dependencies suspected) |
 | **Redirect/Consolidation Destination** | *[ N/A — removal only ]* |
 | **Owner Rationale/Notes** | *[ BLANK — owner to confirm deletion is acceptable, or provide use case if route should be retained ]* |
 | **Approval Date** | *[ BLANK ]* |
@@ -351,23 +351,23 @@ Implementation packets authorized: 0
 
 ---
 
-#### Item 20: `/systems/prochat-os` — OS/kernel subsystem (zero consumers)
+#### Item 20: `/systems/prochat-os` — OS/kernel subsystem (ACTIVE PRODUCT LANDING — PRIOR AUDIT ERROR)
 
 | Property | Value |
 |----------|-------|
-| **Route/Surface Identity** | `/systems/prochat-os` (OS/kernel system route) |
-| **Category** | Internal system; OS/architecture infrastructure |
-| **Current Verified Evidence** | Route exists in app router; grep search across codebase found zero current references; appears to be skeleton for future system architecture; no active consumers verified |
-| **Known Consumers** | None found (zero-consumer verification by grep completed) |
-| **SEO/External-Link Risk** | **NONE** (internal) |
-| **Data/Authentication Dependency** | None |
-| **Recommended Default** | **REMOVE** — Zero verified consumers; skeleton route with no current use justifies deletion |
-| **Implementation Dependency** | Final grep verification before deletion; code removal only |
-| **Owner-Selected Disposition** | *[ BLANK — awaiting owner decision ]* Recommended: **REMOVE** |
-| **Redirect/Consolidation Destination** | *[ N/A — removal only ]* |
-| **Owner Rationale/Notes** | *[ BLANK — owner to confirm deletion is acceptable, or provide use case if route should be retained ]* |
-| **Approval Date** | *[ BLANK ]* |
-| **Approved By** | *[ BLANK ]* |
+| **Route/Surface Identity** | `/systems/prochat-os` (product landing/OS architecture page) |
+| **Category** | Product surface; secondary landing page |
+| **Current Verified Evidence** | **REPOSITORY AUDIT FINDING (CORRECTION):** PRIOR AUDIT CLAIMED ZERO CONSUMERS — INCORRECT. Route exists; shell route ROUTE-018 defined; classified as `temporary_legacy_compatibility`. **VERIFIED PRESENT: 5+ internal navigation links:** (1) `src/app/kits/KitsPageContent.tsx` href and Link tag; (2) `src/app/kits/waaskit/WaaSKitPageContent.tsx` href and Link tag (×2); (3) `src/app/kits/prokit/ProKitPageContent.tsx` hero CTA. **Active product landing page; verified consumers present.** |
+| **Known Consumers** | VERIFIED PRESENT: 5+ internal product landing links; used as secondary product surface in kits marketing pages |
+| **SEO/External-Link Risk** | **MEDIUM** — Likely indexed; possible external backlinks (product page) |
+| **Data/Authentication Dependency** | None (public page) |
+| **Recommended Default** | **RETAIN** — Multiple verified consumers; active product landing. Do NOT remove without providing alternative landing page for existing links. |
+| **Implementation Dependency** | None if retained; replacement landing page required if removal considered |
+| **Owner-Selected Disposition** | **RETAIN** (strongly recommended; do NOT remove) |
+| **Redirect/Consolidation Destination** | N/A — retain as-is |
+| **Owner Rationale/Notes** | **PRIOR AUDIT CORRECTION:** Prior audit claimed zero consumers; repository audit found 5+ verified internal links. `/systems/prochat-os` is active product landing page. No removal authorized without alternative landing page. |
+| **Approval Date** | *[ Recommended RETAIN; no approval needed if accepting recommendation ]* |
+| **Approved By** | *[ Repository audit; PXF-018 evidence trail ]* |
 
 ---
 
