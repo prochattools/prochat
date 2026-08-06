@@ -6,6 +6,8 @@
 **Scope:** 16 substantive pending decisions; 6 verified-absent records (NOT APPLICABLE)  
 **Total catalogued items:** 22
 
+**For owner approval:** See `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — condensed review surface with proposed dispositions and sign-off block.
+
 ---
 
 ## Critical Safety Notes

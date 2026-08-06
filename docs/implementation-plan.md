@@ -3050,3 +3050,17 @@ b3c726b fix: add reviewed exceptions for docs link-in-text-block violations
 ### Stop condition met
 
 Public professionalism packet complete. No route decisions, auth, or design expansion.
+
+---
+
+## Phase 11 — Legacy migration and removal (PARTIAL)
+
+**Status:** Awaiting owner approval on 16 pending legacy-surface classification decisions.
+
+**For owner approval:** Review `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — 16 items with evidence-backed proposed dispositions, override options, and sign-off block.
+
+**Implementation blueprint:** `docs/platform/PXF018_IMPLEMENTATION_PLAN.md` (packet specifications PXF-018A through PXF-018I with dependencies, validation, rollback).
+
+**Audit evidence:** `docs/platform/PXF018_OWNER_DECISION_BRIEF.md` (findings) and `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` (detailed evidence tables).
+
+Only signed owner dispositions authorize mapped implementation packets.

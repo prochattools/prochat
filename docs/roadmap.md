@@ -755,9 +755,11 @@ The historical Product Experience Foundation implementation and PXF-010 governan
 
 ### Phase 11 owner decisions
 
-See `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` for the 17 substantive legacy-surface classification items awaiting explicit owner disposition. Five verified-absent routes are catalogued but require no action.
+**For owner approval:** See `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — 16 pending items with evidence-backed proposed dispositions, owner override options, and sign-off block. Only signed final dispositions authorize mapped implementation packets.
 
-**Implementation blueprint:** `docs/platform/PXF018_IMPLEMENTATION_PLAN.md` maps all 17 decisions into bounded execution packets (PXF-018A through PXF-018I) with dependencies, validation, and rollback paths. Awaits owner classification in the worksheet.
+**Background audit evidence:** `docs/platform/PXF018_OWNER_DECISION_BRIEF.md` (audit findings with repository proof) and `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` (detailed evidence tables for all 16 pending + 6 verified-absent items).
+
+**Implementation blueprint:** `docs/platform/PXF018_IMPLEMENTATION_PLAN.md` maps all 16 pending decisions into bounded execution packets (PXF-018A through PXF-018I) with dependencies, validation, and rollback paths. Awaits owner approval in the manifest.
 
 ## Final design-hardening closeout
 
