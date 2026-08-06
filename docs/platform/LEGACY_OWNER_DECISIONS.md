@@ -301,8 +301,8 @@ This register tracks 22 surface items. Six have been verified as never-implement
   - Accessibility checks for all active legacy routes (book, learn, proof, starting-point, ai-workflows, systems/prochat-os, systems/events, waas/accountants)
   - 404 verification for all removed stubs (guides, playbooks, snippets, glossary, bb)
 
-**Recommended Action:** Owner to review remaining 17 items and provide explicit decisions. No removal or consolidation should proceed without explicit owner approval.
+**Recommended Action:** Owner to review remaining 16 items and provide explicit decisions. Item 3 verified absent (no owner decision needed). No removal or consolidation should proceed without explicit owner approval.
 
 ---
 
-**Status:** 5 verified-absent items marked NOT APPLICABLE (no code removal required). 17 items remain pending explicit owner decision. All 22 total items catalogued.
+**Status:** 6 verified-absent items marked NOT APPLICABLE (no code removal required). 16 items remain pending explicit owner decision. All 22 total items catalogued.

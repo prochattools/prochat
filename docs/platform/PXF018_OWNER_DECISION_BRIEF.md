@@ -13,7 +13,8 @@
 16 substantive Phase 11 decision items require owner classification. 6 verified-absent items from PXF-017B (plus Item 3 from PXF-018 audit) require no code removal. This brief summarizes findings with concrete repository evidence and non-binding recommendations to guide owner classification.
 
 **Key findings:**
-- **Items 19–20:** Contrary to prior belief, `/systems/prochat-os` and `/systems/events` have **verified consumers** in navigation (3+ internal links each)
+- **Item 19 (`/systems/events`):** Zero verified inbound links; safe to remove if no external dependencies
+- **Item 20 (`/systems/prochat-os`):** Contrary to prior belief, has **7+ verified consumers** in navigation (kits, buildflow, book, AI workflows)
 - **Item 3:** `/brainbridge` was **never implemented** — repository has zero files, zero references (VERIFIED ABSENT; not an owner decision)
 - **Item 18:** `/social` is an **API route generator** for OG images, not a page route — active consumer of `/api/social/*` endpoints
 - **Item 22:** `/api/waiting-list` is exact re-export of `/api/waitlist` — zero-cost backward compatibility maintained
@@ -711,9 +712,9 @@
 ## Validation Evidence Summary
 
 **Repository audit completed:**
-- 17 substantive items audited against source code
+- 16 substantive items audited against source code (Item 3 verified absent)
 - 66 browser evidence tests remain valid
-- 5 verified-absent items from PXF-017B remain valid
+- 6 verified-absent items total (5 from PXF-017B + Item 3)
 - Phase 11/12 status: PARTIAL (unchanged)
 - MailerLite owner verification: PENDING (unchanged)
 
@@ -733,6 +734,6 @@
 
 ---
 
-**Status:** Audit complete. All 17 items require owner classification before implementation can proceed.
+**Status:** Audit complete. All 16 substantive items require owner classification before implementation can proceed.
 
-**Next: Owner reviews brief and records dispositions in `LEGACY_OWNER_DECISION_WORKSHEET.md`**
+**Next: Owner reviews brief and records dispositions in `LEGACY_OWNER_DECISION_WORKSHEET.md`. Items 13–18 have verified consumers; RETAIN is safe default.**

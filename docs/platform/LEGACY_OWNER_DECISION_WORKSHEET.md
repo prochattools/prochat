@@ -343,15 +343,15 @@ Remaining 16 items require owner classification.
 |----------|-------|
 | **Route/Surface Identity** | `/systems/prochat-os` (product landing/OS architecture page) |
 | **Category** | Product surface; secondary landing page |
-| **Current Verified Evidence** | **REPOSITORY AUDIT FINDING (CORRECTION):** PRIOR AUDIT CLAIMED ZERO CONSUMERS — INCORRECT. Route exists; shell route ROUTE-018 defined; classified as `temporary_legacy_compatibility`. **VERIFIED PRESENT: 5+ internal navigation links:** (1) `src/app/kits/KitsPageContent.tsx` href and Link tag; (2) `src/app/kits/waaskit/WaaSKitPageContent.tsx` href and Link tag (×2); (3) `src/app/kits/prokit/ProKitPageContent.tsx` hero CTA. **Active product landing page; verified consumers present.** |
-| **Known Consumers** | VERIFIED PRESENT: 5+ internal product landing links; used as secondary product surface in kits marketing pages |
+| **Current Verified Evidence** | **REPOSITORY AUDIT FINDING (CORRECTION):** PRIOR AUDIT CLAIMED ZERO CONSUMERS — INCORRECT. Route exists; shell route ROUTE-018 defined; classified as `temporary_legacy_compatibility`. **VERIFIED PRESENT: 7+ internal navigation links:** (1) `src/app/kits/KitsPageContent.tsx` (×2); (2) `src/app/kits/waaskit/WaaSKitPageContent.tsx` (×2); (3) `src/app/kits/prokit/ProKitPageContent.tsx` (×2); (4) `src/app/kits/uxkit/UXKitPageContent.tsx` (×2); (5) `src/app/buildflow/BuildFlowPageContent.tsx` (×2); (6) `src/app/book/BookPageContent.tsx` (×1); (7) `src/app/ai-workflows/AIWorkflowsPageContent.tsx` (×1); (8) `src/components/AppShell.tsx` navigation check. **Active product landing page with extensive verified consumers.** |
+| **Known Consumers** | VERIFIED PRESENT: 7+ internal product landing links; used as primary CTA across kits marketing pages, book page, and AI workflows page |
 | **SEO/External-Link Risk** | **MEDIUM** — Likely indexed; possible external backlinks (product page) |
 | **Data/Authentication Dependency** | None (public page) |
 | **Recommended Default** | **RETAIN** — Multiple verified consumers; active product landing. Do NOT remove without providing alternative landing page for existing links. |
 | **Implementation Dependency** | None if retained; replacement landing page required if removal considered |
 | **Owner-Selected Disposition** | **RETAIN** (strongly recommended; do NOT remove) |
 | **Redirect/Consolidation Destination** | N/A — retain as-is |
-| **Owner Rationale/Notes** | **PRIOR AUDIT CORRECTION:** Prior audit claimed zero consumers; repository audit found 5+ verified internal links. `/systems/prochat-os` is active product landing page. No removal authorized without alternative landing page. |
+| **Owner Rationale/Notes** | **PRIOR AUDIT CORRECTION:** Prior audit claimed zero consumers; repository audit found 7+ verified internal links spanning kits, buildflow, books, and AI workflows product pages. `/systems/prochat-os` is active product landing page. No removal authorized without alternative landing page. |
 | **Approval Date** | *[ Recommended RETAIN; no approval needed if accepting recommendation ]* |
 | **Approved By** | *[ Repository audit; PXF-018 evidence trail ]* |
 
@@ -444,4 +444,4 @@ After owner classification is complete:
 
 **Worksheet created by:** PXF-017 closeout handoff  
 **Worksheet reviewed by:** (awaiting owner input)  
-**All 17 substantive items awaiting explicit owner decision.**
+**All 16 substantive pending items awaiting explicit owner decision. 6 verified-absent items are NOT APPLICABLE.**

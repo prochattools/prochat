@@ -38,14 +38,14 @@ This document defines a complete implementation strategy for Phase 11 legacy sur
 | 8 | `/proof` | Marketing | CONSOLIDATE → /docs or RETAIN | PXF-018B | MEDIUM | Medium |
 | 10 | `/starting-point/*` | Marketing | CONSOLIDATE → /memory | PXF-018D | LOW | Low |
 | 11 | `/waas/accountants` | Marketing | EVALUATE + (RETAIN \| CONSOLIDATE) | PXF-018E | MEDIUM | Medium |
-| 13 | `/ai-workflows/*` | Internal | CLARIFY → (RETAIN \| REMOVE) | PXF-018F | UNKNOWN | Unknown |
+| 13 | `/ai-workflows/*` | Internal | RETAIN (verified consumer) | PXF-018F | MEDIUM | Low |
 | 14 | `/debug/*` | Internal | GATE or REMOVE | PXF-018G | MEDIUM | Low |
 | 15 | `/debug/analytics` | Internal | GATE or REMOVE | PXF-018G | MEDIUM | Low |
-| 16 | `/legal-ai-workflows` | Internal | CLARIFY → (RETAIN \| REMOVE) | PXF-018F | UNKNOWN | Unknown |
-| 17 | `/processing-page` | Internal | CLARIFY → (RETAIN \| REMOVE) | PXF-018F | UNKNOWN | Unknown |
-| 18 | `/social` | Internal | CLARIFY → (RETAIN \| REMOVE) | PXF-018F | UNKNOWN | Unknown |
-| 19 | `/systems/events` | Internal | REMOVE | PXF-018H | LOW | Low |
-| 20 | `/systems/prochat-os` | Internal | REMOVE | PXF-018H | LOW | Low |
+| 16 | `/legal-ai-workflows` | Internal | ACKNOWLEDGE (already consolidated) | PXF-018F | LOW | None |
+| 17 | `/processing-page` | Internal | RETAIN (verified consumer) | PXF-018F | MEDIUM | Low |
+| 18 | `/social` | Internal | RETAIN (critical OG infrastructure) | PXF-018F | HIGH | None |
+| 19 | `/systems/events` | Internal | REMOVE (zero verified consumers) | PXF-018H | LOW | Low |
+| 20 | `/systems/prochat-os` | Internal | RETAIN (7+ verified consumers) | PXF-018H | MEDIUM | None |
 | 22 | `/api/waiting-list` vs `/api/waitlist` | API | RETAIN (both) | PXF-018I | NONE | None |
 
 ---
@@ -372,21 +372,23 @@ grep -r "waas\|accountants" src/ --include="*.ts" --include="*.tsx"
 
 ---
 
-### PXF-018F: Internal System Clarification Packet (AI Workflows, Legal, Processing, Social)
+### PXF-018F: Internal System Routes (AI Workflows, Legal, Processing, Social)
 
 **Scope:** Items 13, 16, 17, 18  
-**Routes affected:** `/ai-workflows/*`, `/legal-ai-workflows`, `/processing-page`, `/social`  
-**Recommended default:** DEFER pending clarification of purpose, consumers, and authorization model  
-**Entry criteria (BLOCKING):**
-- **Owner provides written clarification for each item:**
-  - Item 13: Exact purpose of `/ai-workflows/*`, current/planned consumers, authorization model
-  - Item 16: Exact purpose of `/legal-ai-workflows`, current/planned consumers, compliance gates
-  - Item 17: Consumer workflows for `/processing-page`, session/auth model, alternative status display (if exists)
-  - Item 18: Exact purpose of `/social`, current/planned consumers, authorization model
-- Owner selects disposition: RETAIN (keep and document), REMOVE (delete after zero-consumer verification), or DEFER (further research)
+**Routes affected:** `/ai-workflows/*` (verified consumer), `/legal-ai-workflows` (already consolidated), `/processing-page` (verified consumer), `/social` (critical OG infrastructure)  
+**Recommended default:** RETAIN all four (repository audit confirms active use; no removal recommended)  
+**Entry criteria:**
+- Owner acknowledges audit findings for each item
+- Owner selects disposition: RETAIN + document purpose, or DEFER if clarification needed
 
 **Why separate packet?**
-These are internal systems with undocumented dependencies. Implementation requires owner clarification first. Forcing a decision without clarity risks breaking unknown consumers or deleting in-use infrastructure.
+These are internal system routes with verified consumers. Repository audit found:
+- Item 13: Active consumer in `/go` route shortener; link in `/systems/prochat-os` CTA
+- Item 16: Already consolidated as redirect to `/ai-workflows`
+- Item 17: Active consumer in `src/components/PriceItem.tsx`
+- Item 18: Critical OG image generation pipeline (used in all `/social?*` and `/social/*.png` requests)
+
+No removal is recommended without replacing functionality.
 
 **Likely affected files:**
 - `src/app/ai-workflows/` and nested routes
@@ -405,22 +407,41 @@ These are internal systems with undocumented dependencies. Implementation requir
 - **Security:** Some routes may require authorization; unclear what gates exist
 
 **Implementation order:**
-1. Owner provides written clarification for each item (documented in this packet or worksheet)
-2. Clarification drives disposition: RETAIN (safe default), REMOVE (after zero-consumer proof), or DEFER
-3. If RETAIN: document purpose, consumers, and authorization in code/docs
-4. If REMOVE: comprehensive grep search for all references; verify zero consumers; delete routes and tests
-5. If DEFER: revisit after clarification is obtained
+1. Owner acknowledges audit findings (repository evidence shows all four routes have verified consumers or already consolidated)
+2. Owner selects disposition: RETAIN (document purpose) or DEFER (if external clarification needed)
+3. If RETAIN: Add code comments documenting purpose, consumers, and any authorization gates:
+   - Item 13: Document that `/ai-workflows` is active product entry point via `/go` shortener and product marketing CTAs
+   - Item 16: Document that `/legal-ai-workflows` is already consolidated (redirects to `/ai-workflows`)
+   - Item 17: Document that `/processing-page` is async processing status display used by PriceItem and other workflows
+   - Item 18: Document that `/social` is critical OG image generation pipeline; removal would break social sharing previews
+4. If DEFER: no implementation; revisit after owner clarification obtained
+5. No removal recommended without replacing functionality
 
-**Validation commands:**
+**Validation commands (verification that routes exist and have documented consumers):**
 ```bash
-# Comprehensive grep search for references
-grep -r "ai-workflows\|legal-ai-workflows\|processing-page\|/social" src/ tests/ --include="*.ts" --include="*.tsx" --include="*.json"
+# Verify Item 13 consumers
+grep -r "ai-workflows" src/ --include="*.ts" --include="*.tsx" | grep -v "legal-ai"
+# Expected: WORKFLOW_OFFER_PATH, ProChatOSPageContent link, AppShell check
+
+# Verify Item 16 consolidation
+grep -r "legal-ai-workflows" src/ --include="*.ts" --include="*.tsx"
+# Expected: Only redirect in page.tsx; AppShell navigation check
+
+# Verify Item 17 consumer
+grep -r "processing-page" src/ --include="*.ts" --include="*.tsx"
+# Expected: PriceItem.tsx href and shell routing
+
+# Verify Item 18 consumers
+grep -r "/social\?" src/ --include="*.ts" --include="*.tsx"
+grep -r "generateSocialImageUrl\|seo/metadata" src/ --include="*.ts" --include="*.tsx"
+# Expected: generateSocialImageUrl and metadata.ts return /social URLs
 
 # Check route files exist
-find src/app -type d -name "ai-workflows" -o -name "legal-ai-workflows" -o -name "processing-page" -o -name "social"
+find src/app -type d \( -name "ai-workflows" -o -name "legal-ai-workflows" -o -name "processing-page" -o -name "social" \)
 
-# Type check (if routes modified)
+# Type check
 npm run type-check
+npm run build
 ```
 
 **Rollback method:**
@@ -444,12 +465,14 @@ npm run type-check
 - If RETAIN: purpose and consumers documented in code comments or README
 
 **Owner action required BEFORE this packet can execute:**
-Write clarification notes for Items 13, 16, 17, 18 in the worksheet or email. Include:
-- Current purpose and use case
-- Known/planned consumers (if any)
-- Authorization model or security gates (if applicable)
-- Evidence of active use (if any)
-- Preference: RETAIN, REMOVE, or DEFER
+1. Review audit findings for Items 13, 16, 17, 18 (all have verified consumers or already consolidated)
+2. Select disposition for each: RETAIN (document purpose) or DEFER (if external clarification needed)
+3. Do NOT select REMOVE unless providing alternative implementation:
+   - Item 13: Alternative product entry point if removing `/ai-workflows`
+   - Item 16: N/A — already consolidated; no removal needed
+   - Item 17: Alternative async processing status display if removing `/processing-page`
+   - Item 18: External OG image generation service if removing `/social`
+4. Record disposition in worksheet with rationale
 
 ---
 
@@ -523,69 +546,110 @@ npm run build
 
 ---
 
-### PXF-018H: Zero-Consumer Internal System Removal (Events, ProChat OS)
+### PXF-018H: Internal System Routes with Distinct Dispositions (Events, ProChat OS)
 
 **Scope:** Items 19, 20  
-**Routes affected:** `/systems/events`, `/systems/prochat-os`  
-**Recommended default:** REMOVE (zero verified consumers)  
-**Entry criteria:**
-- Owner has classified Items 19–20 with explicit disposition (REMOVE or DEFER/RETAIN if future use planned)
-- If REMOVE: zero-consumer verification already complete (from worksheet evidence)
+**Routes affected:** `/systems/events` (REMOVE), `/systems/prochat-os` (RETAIN)  
 
-**Why confident removal?**
-Grep search in original audit found zero references. These are skeleton routes for future features, not active code.
+**CRITICAL CORRECTION:** Prior PXF-018H scope incorrectly grouped both items as "zero-consumer removal." Audit evidence now shows:
+- **Item 19 (`/systems/events`):** Zero verified inbound links → REMOVE is safe
+- **Item 20 (`/systems/prochat-os`):** 7+ verified internal links → MUST RETAIN; removal breaks product landing pages
+
+Split handling:
+
+#### Item 19: `/systems/events` — REMOVE (zero verified consumers)
+
+**Entry criteria:**
+- Owner acknowledges zero verified repository links and confirms acceptable to remove
+- If external dependencies suspected, select DEFER pending clarification
+
+**Why removal is safe:**
+Grep search verified zero explicit inbound links. Skeleton route; no active consumers identified.
 
 **Likely affected files:**
-- `src/app/systems/events/page.tsx` or route handler
-- `src/app/systems/prochat-os/page.tsx` or route handler
-- Tests (if any) referencing these routes
+- `src/app/systems/events/page.tsx`
+- Shell route ROUTE-019 definition
+- Tests (if any)
 
 **Dependencies:**
 - None. Zero verified consumers.
 
 **Risks:**
-- **LOW:** Removal is safe; skeleton routes have no active use
+- **LOW:** Removal is safe; route has no inbound navigation
 
-**Implementation order:**
-1. Final grep verification confirming zero references
-2. Delete route files and tests
+#### Item 20: `/systems/prochat-os` — RETAIN (7+ verified consumers)
+
+**Entry criteria:**
+- Route is active product landing with multiple verified internal links
+- Removal would break product marketing pages
+
+**Why retention is mandatory:**
+Repository audit found 7+ verified internal links:
+- `src/app/kits/KitsPageContent.tsx` (2 links)
+- `src/app/kits/waaskit/WaaSKitPageContent.tsx` (2 links)
+- `src/app/kits/prokit/ProKitPageContent.tsx` (2 links)
+- `src/app/kits/uxkit/UXKitPageContent.tsx` (2 links)
+- `src/app/buildflow/BuildFlowPageContent.tsx` (2 links)
+- `src/app/book/BookPageContent.tsx` (1 link)
+- `src/app/ai-workflows/AIWorkflowsPageContent.tsx` (1 link)
+- `src/components/AppShell.tsx` (navigation classification)
+
+**Likely affected files:**
+- `src/app/systems/prochat-os/` (entire directory)
+- Shell route ROUTE-018 definition
+- 7+ internal navigation links (would break if removed)
+
+**Dependencies:**
+- None. Route is independently functional.
+
+**Risks:**
+- **HIGH if removed:** Breaks product landing pages; breaks existing CTAs
+- **LOW if retained:** Route is actively used in product marketing; no risk
+
+**Implementation order (Item 19 ONLY — Item 20 must NOT be removed):**
+1. Final grep verification confirming `/systems/events` has zero references
+2. Delete `/systems/events` route files and tests
 3. Verify no broken imports
 4. Build and type-check
 5. Commit and deploy
 
-**Validation commands:**
+**Validation commands (Item 19 only):**
 ```bash
-# Final consumer verification
-grep -r "systems/events\|systems/prochat-os" src/ tests/ --include="*.ts" --include="*.tsx" --include="*.json"
+# Final consumer verification for Item 19
+grep -r "systems/events" src/ tests/ --include="*.ts" --include="*.tsx" --include="*.json"
 # Should return zero results
 
 # Verify route files
-find src/app -path "*/systems/*" -type f
+find src/app -path "*systems/events*" -type f
+
+# Verify Item 20 links are NOT broken
+grep -r "/systems/prochat-os" src/ --include="*.ts" --include="*.tsx" | wc -l
+# Should return 7+ results (all retained)
 
 # After deletion: type check
 npm run type-check
 npm run build
-
-# Verify no references in imports
-grep -r "systems" src/app --include="*.ts" --include="*.tsx" | grep -v "/systems" | head -10
 ```
 
-**Rollback method:**
+**Rollback method (Item 19):**
 - Revert file deletion from prior commit
 - Rebuild
 
 **Commit boundaries:**
-- Single commit: "chore: remove unused /systems routes (events, prochat-os)"
+- Single commit for Item 19 removal only: "chore: remove unused /systems/events route"
+- Item 20 must be retained in separate no-op or documented decision commit
 
 **Deployment requirements:**
-- Staging test; build verification
-- No deployment risk (routes have zero consumers)
+- Staging test confirming Item 19 is gone; Item 20 still renders
+- Build verification
+- No deployment risk (Item 19 has zero consumers; Item 20 retained)
 
-**Completion evidence:**
-- Route files deleted
+**Completion evidence (Item 19):**
+- `/systems/events` route deleted
 - No broken imports
 - Build passing
 - Tests updated or deleted
+- Item 20 retained and verified working
 
 ---
 
@@ -677,8 +741,8 @@ PXF-018F (Internal Systems Clarification) ← CRITICAL BLOCKER
 PXF-018G (Debug Security)
   ↓ (no blocking deps)
   
-PXF-018H (Zero-Consumer Removal)
-  ↓ (no blocking deps; removal is safe)
+PXF-018H (Item 19 Removal + Item 20 Retention)
+  ↓ (Item 19 has no blocking deps; Item 20 must be retained with verified consumers)
   
 PXF-018I (API Aliasing)
   ↓ (no blocking deps if RETAIN; requires consumer audit if DEPRECATE)
@@ -686,10 +750,10 @@ PXF-018I (API Aliasing)
 
 ### Critical Path (Items That Block Others)
 
-1. **PXF-018F (Internal Systems Clarification)** — BLOCKING
-   - Items 13, 16, 17, 18 cannot be implemented without owner clarification
-   - Clarification may reveal dependencies affecting PXF-018A–E (unlikely but possible)
-   - Recommend: Complete PXF-018F clarification FIRST
+1. **PXF-018F (Internal Systems Routes)** — LOW PRIORITY
+   - Items 13, 16, 17, 18 all have verified consumers; no removal recommended
+   - RETAIN is safe default; no action required unless owner plans external refactoring
+   - Recommend: Acknowledge audit findings and document purpose in code (optional; not blocking)
 
 2. **PXF-018A (Marketing SEO)** — HIGH PRIORITY
    - Item 1 (`/blog`) requires external backlink audit; delays potential Phase 11 completion
@@ -701,26 +765,29 @@ PXF-018I (API Aliasing)
 
 ### Execution Order (Recommended Sequence)
 
-**Phase 1: Clarification and Planning (Owner tasks)**
-1. Complete PXF-018F clarification (Items 13, 16, 17, 18)
-2. Make disposition decisions for all 17 items in worksheet
-3. Provide destination paths for REDIRECT/CONSOLIDATE choices
+**Phase 1: Owner Classification (Owner tasks)**
+1. Make disposition decisions for all 16 pending items in worksheet
+2. Provide destination paths for REDIRECT/CONSOLIDATE choices
+3. For Items 13–18: acknowledge audit findings (no external clarification needed unless planning major refactoring)
 
 **Phase 2: Parallel Execution (Post-approval)**
 - PXF-018A (Marketing SEO) — Medium priority; awaits backlink audit
 - PXF-018B (Learning Hub) — Low priority; no blocking deps
 - PXF-018D (Onboarding) — Low priority; no blocking deps
 - PXF-018G (Debug Security) — Medium priority; security-sensitive
-- PXF-018H (Zero-Consumer) — Low priority; no risk
+- PXF-018H (Item 19 Removal) — Low priority; no risk
+- PXF-018F (Internal Systems Docs) — Optional; low priority (no removal recommended; retention is safe)
 
 **Phase 3: Conditional Execution (Strategy-dependent)**
 - PXF-018C (Prompt Library) — Awaits backlink audit or owner decision
 - PXF-018E (WaaS) — Awaits product strategy decision
 - PXF-018I (API Aliasing) — No-op if RETAIN; consumer audit if DEPRECATE
+- PXF-018H (Item 20 Retention) — Automatic; no action needed (route has verified consumers; must be retained)
 
 **Phase 4: Implementation Refinement (Post-staging)**
-- Run PXF-018A–I in staging; verify redirects, 404s, and build success
+- Run approved packets in staging; verify redirects, 404s, and build success
 - Deploy to production in dependency order
+- Verify Item 19 deletion does not affect Item 20 (both in same directory)
 
 ---
 
@@ -735,17 +802,17 @@ Each packet is **independently reviewable and rollbackable**. DO NOT combine pac
 | PXF-018C | None | A–B, D–I | SEO evaluation required |
 | PXF-018D | None | A–C, E–I | Onboarding is separate concern |
 | PXF-018E | None | A–D, F–I | Product strategy decision |
-| PXF-018F | MUST complete before other internal decisions | A–E, G–I | Blocking clarification |
+| PXF-018F | None | A–E, G–I | Optional documentation only; no removal recommended |
 | PXF-018G | None | A–F, H–I | Security gate must be isolated |
-| PXF-018H | None | A–G, I | Zero-consumer removal must be atomic |
+| PXF-018H (Item 19 ONLY) | None | A–G, I | Item 19 removal must be atomic; Item 20 must be retained |
 | PXF-018I | None | A–H | API change must be isolated |
 
 ---
 
 ## Validation Checklist (Before Deployment)
 
-- [ ] All 17 substantive items mapped to a packet
-- [ ] 5 verified-absent items explicitly excluded from packets
+- [ ] All 16 substantive pending items mapped to a packet
+- [ ] 6 verified-absent items explicitly excluded from packets
 - [ ] No disposition preselected; all remain blank pending owner decision
 - [ ] No invented consumer, destination, analytics, or approval fact appears
 - [ ] Browser evidence counts remain: 66 total (6+18+16+26)
@@ -788,9 +855,9 @@ Each packet is **independently reviewable and rollbackable**. DO NOT combine pac
 ### What must happen next:
 
 1. **Owner completes worksheet:**
-   - Select disposition for all 17 items
+   - Select disposition for all 16 pending items
    - Provide destinations for REDIRECT/CONSOLIDATE
-   - Provide clarification for Items 13, 16–18
+   - For Items 13–18: acknowledge audit findings (no external clarification needed unless planning major refactoring)
    - Record dates and approver name
 
 2. **After approval, execute packets in dependency order:**
@@ -807,7 +874,7 @@ Each packet is **independently reviewable and rollbackable**. DO NOT combine pac
 
 ## References
 
-- **Source:** `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` (17 items + 5 verified-absent)
+- **Source:** `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` (16 pending items + 6 verified-absent)
 - **Context:** `docs/platform/LEGACY_OWNER_DECISIONS.md` (detailed register)
 - **Brief:** `docs/platform/LEGACY_OWNER_DECISION_BRIEF.md` (executive summary)
 - **Roadmap:** `docs/roadmap.md` (Phase 11 PARTIAL status)
@@ -815,8 +882,8 @@ Each packet is **independently reviewable and rollbackable**. DO NOT combine pac
 
 ---
 
-**Status:** Blueprint complete; awaiting owner decisions to unlock implementation packets.
+**Status:** Blueprint complete; audit reconciled; awaiting owner decisions to unlock implementation packets.
 
-**Worksheet status:** 17 dispositions PENDING; 5 verified-absent items excluded.
+**Worksheet status:** 16 dispositions PENDING; 6 verified-absent items excluded (Item 3 reclassified; Items 13–18 have verified consumers).
 
-**Next owner action:** Classify all 17 items and provide destinations/clarification (see **Packet PXF-018F** and worksheet).
+**Next owner action:** Classify all 16 pending items and provide destinations for REDIRECT/CONSOLIDATE choices. For Items 13–18, audit confirms active use; RETAIN is safe default. No external clarification needed unless planning major refactoring (see **Packet PXF-018F** and worksheet).
