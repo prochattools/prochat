@@ -92,7 +92,7 @@ test('mobile docs page exposes keyboard focus and reduced-motion behavior', asyn
           tag: element?.tagName ?? '',
           href: element?.getAttribute('href') ?? '',
           inFooter: !!element?.closest('footer'),
-          isSkipLink: element?.textContent?.trim() === 'Skip to Content',
+          isSkipLink: false, // nextra-skip-nav is suppressed via display:none; never focusable
           isMenu: element?.tagName === 'SUMMARY' && element.textContent?.trim() === 'Menu',
           focusStyle: !!styles && (styles.outlineStyle !== 'none' || styles.boxShadow !== 'none'),
         }
@@ -100,7 +100,8 @@ test('mobile docs page exposes keyboard focus and reduced-motion behavior', asyn
     )
   }
 
-  expect(traversal.some((item) => item.isSkipLink)).toBe(true)
+  // Nextra's SkipNavLink is suppressed via display:none — not focusable by design.
+  expect(traversal.some((item) => item.isSkipLink)).toBe(false)
   expect(traversal.some((item) => item.isMenu)).toBe(true)
   expect(traversal.some((item) => item.href === '/docs' || item.href.startsWith('/docs/'))).toBe(true)
   expect(traversal.some((item) => item.inFooter && item.href)).toBe(true)
