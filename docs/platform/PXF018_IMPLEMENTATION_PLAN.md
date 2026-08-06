@@ -31,22 +31,22 @@ This document defines a complete implementation strategy for Phase 11 legacy sur
 
 | Item | Route/Surface | Category | Recommended Default | Packet ID | Risk Level | Complexity |
 |-----:|---|---|---|---|---|---|
-| 1 | `/blog/[slug]` | Marketing | CONSOLIDATE → /docs | PXF-018A | HIGH | Medium |
-| 2 | `/book` | Marketing | REDIRECT → /docs | PXF-018A | LOW | Low |
-| 5 | `/learn/*` | Marketing | CONSOLIDATE → /docs | PXF-018B | MEDIUM | Medium |
-| 7 | `/prompts/[category]/[slug]` | Marketing | EVALUATE + (RETAIN \| CONSOLIDATE) | PXF-018C | HIGH | High |
-| 8 | `/proof` | Marketing | CONSOLIDATE → /docs or RETAIN | PXF-018B | MEDIUM | Medium |
-| 10 | `/starting-point/*` | Marketing | CONSOLIDATE → /memory | PXF-018D | LOW | Low |
-| 11 | `/waas/accountants` | Marketing | EVALUATE + (RETAIN \| CONSOLIDATE) | PXF-018E | MEDIUM | Medium |
-| 13 | `/ai-workflows/*` | Internal | RETAIN (verified consumer) | PXF-018F | MEDIUM | Low |
-| 14 | `/debug/*` | Internal | GATE or REMOVE | PXF-018G | MEDIUM | Low |
-| 15 | `/debug/analytics` | Internal | GATE or REMOVE | PXF-018G | MEDIUM | Low |
-| 16 | `/legal-ai-workflows` | Internal | ACKNOWLEDGE (already consolidated) | PXF-018F | LOW | None |
-| 17 | `/processing-page` | Internal | RETAIN (verified consumer) | PXF-018F | MEDIUM | Low |
-| 18 | `/social` | Internal | RETAIN (critical OG infrastructure) | PXF-018F | HIGH | None |
-| 19 | `/systems/events` | Internal | REMOVE (zero verified consumers) | PXF-018H | LOW | Low |
-| 20 | `/systems/prochat-os` | Internal | RETAIN (7+ verified consumers) | PXF-018H | MEDIUM | None |
-| 22 | `/api/waiting-list` vs `/api/waitlist` | API | RETAIN (both) | PXF-018I | NONE | None |
+| 1 | `/blog/[slug]` | Marketing | Unresolved: RETAIN or CONSOLIDATE; destination owner-required | PXF-018A | HIGH | Medium |
+| 2 | `/book` | Marketing | Unresolved: RETAIN or REDIRECT → `/contact` | PXF-018A | LOW | Low |
+| 5 | `/learn/*` | Marketing | CONSOLIDATE → `/docs/learn` | PXF-018B | MEDIUM | Medium |
+| 7 | `/prompts/[category]/[slug]` | Marketing | Unresolved: RETAIN or CONSOLIDATE; destination owner-required | PXF-018C | HIGH | High |
+| 8 | `/proof` | Marketing | Unresolved: RETAIN or CONSOLIDATE → `/docs` | PXF-018B | MEDIUM | Medium |
+| 10 | `/starting-point/*` | Marketing | CONSOLIDATE; owner selects `/memory`, `/memory-qa`, or `/workbench` | PXF-018D | LOW | Low |
+| 11 | `/waas/accountants` | Marketing | Unresolved: RETAIN, REDIRECT, ARCHIVE, REMOVE, or DEFER | PXF-018E | MEDIUM | Medium |
+| 13 | `/ai-workflows/*` | Internal | RETAIN | PXF-018F | MEDIUM | Low |
+| 14 | `/debug/*` | Internal | Unresolved: RETAIN or REMOVE; `NODE_ENV=development` is a RETAIN condition | PXF-018G | MEDIUM | Low |
+| 15 | `/debug/analytics` | Internal | Unresolved: RETAIN or REMOVE; `NODE_ENV=development` is a RETAIN condition | PXF-018G | MEDIUM | Low |
+| 16 | `/legal-ai-workflows` | Internal | CONSOLIDATE → `/ai-workflows` | PXF-018F | LOW | None |
+| 17 | `/processing-page` | Internal | RETAIN | PXF-018F | MEDIUM | Low |
+| 18 | `/social` | Internal | RETAIN | PXF-018F | HIGH | None |
+| 19 | `/systems/events` | Internal | REMOVE only after owner confirms no external dependency | PXF-018H | LOW | Low |
+| 20 | `/systems/prochat-os` | Internal | RETAIN | PXF-018H | MEDIUM | None |
+| 22 | `/api/waiting-list` vs `/api/waitlist` | API | RETAIN; preserve both spellings as implementation detail | PXF-018I | NONE | None |
 
 ---
 
@@ -56,10 +56,10 @@ This document defines a complete implementation strategy for Phase 11 legacy sur
 
 **Scope:** Items 1, 2  
 **Routes affected:** `/blog/[slug]`, `/book`  
-**Recommended defaults:** Blog+Book → CONSOLIDATE/REDIRECT to `/docs`  
+**Recommended defaults:** Item 1 remains unresolved between RETAIN and CONSOLIDATE with an owner-supplied destination. Item 2 requires owner selection between RETAIN and REDIRECT → `/contact`.  
 **Entry criteria (blocking conditions):**
-- Owner has classified Item 1 `/blog/[slug]` with explicit disposition (CONSOLIDATE, REDIRECT, or DEFER)
-- Owner has classified Item 2 `/book` with explicit disposition
+- Owner has classified Item 1 `/blog/[slug]` with a canonical disposition and supplied a destination if CONSOLIDATE/REDIRECT is selected
+- Owner has classified Item 2 `/book` as RETAIN or REDIRECT → `/contact`; `/docs` is not the current manifest proposal
 
 **Likely affected files/symbols:**
 - `src/app/blog/[slug]/page.tsx` (Item 1 route)
@@ -130,10 +130,10 @@ npm run build
 
 **Scope:** Items 5, 8  
 **Routes affected:** `/learn/*`, `/proof`  
-**Recommended defaults:** Both CONSOLIDATE to `/docs` with redirects  
+**Recommended defaults:** Item 5 CONSOLIDATE → `/docs/learn`. Item 8 requires owner selection between RETAIN and CONSOLIDATE → `/docs`.  
 **Entry criteria:**
-- Owner has classified Item 5 `/learn/*` with explicit disposition and destination (if REDIRECT/CONSOLIDATE)
-- Owner has classified Item 8 `/proof` with explicit disposition and destination (if REDIRECT/CONSOLIDATE)
+- Item 5 has a signed final disposition of CONSOLIDATE → `/docs/learn`
+- Item 8 has a signed final disposition of RETAIN or CONSOLIDATE → `/docs`
 
 **Likely affected files:**
 - `src/app/learn/page.tsx` or `src/app/learn/layout.tsx` (Item 5)
@@ -197,11 +197,11 @@ npm run build
 
 **Scope:** Item 7  
 **Route:** `/prompts/[category]/[slug]`  
-**Recommended default:** Evaluate external-link volume; RETAIN if high SEO value, else CONSOLIDATE to `/docs`  
+**Recommended default:** Final disposition remains unresolved between RETAIN and CONSOLIDATE. External backlink evidence is an entry criterion, not a disposition; any CONSOLIDATE decision requires an owner-supplied destination.  
 **Entry criteria:**
-- Owner has classified Item 7 with explicit disposition
-- If CONSOLIDATE/REDIRECT selected: owner has provided destination path
-- If RETAIN selected: owner has approved separate maintenance
+- External backlink evidence has been reviewed by the owner
+- Owner has recorded a signed final disposition of RETAIN or CONSOLIDATE
+- If CONSOLIDATE is selected, the owner has provided the exact destination path
 
 **Likely affected files:**
 - `src/app/prompts/[category]/[slug]/page.tsx`
@@ -262,9 +262,9 @@ grep -r "/api/prompts\|/prompts" src/ --include="*.ts" --include="*.tsx" | grep 
 
 **Scope:** Item 10  
 **Route:** `/starting-point/*`  
-**Recommended default:** CONSOLIDATE to canonical product routes (`/memory`, `/memory-qa`, or `/workbench`)  
+**Recommended default:** CONSOLIDATE, with the owner selecting exactly one destination: `/memory`, `/memory-qa`, or `/workbench`.  
 **Entry criteria:**
-- Owner has classified Item 10 with explicit disposition and destination (if REDIRECT/CONSOLIDATE)
+- Owner has recorded a signed final disposition of CONSOLIDATE and selected exactly one destination
 
 **Likely affected files:**
 - `src/app/starting-point/page.tsx` and nested routes
@@ -322,10 +322,11 @@ npm run build
 
 **Scope:** Item 11  
 **Route:** `/waas/accountants`  
-**Recommended default:** EVALUATE WaaS product strategy; if current, RETAIN or CONSOLIDATE under `/workbench`; if deprecated, REDIRECT to homepage  
+**Recommended default:** Final disposition remains unresolved among RETAIN, REDIRECT, ARCHIVE, REMOVE, or DEFER. Product strategy confirmation is an entry criterion, not a disposition.  
 **Entry criteria:**
-- Owner has classified Item 11 with explicit disposition
-- If CONSOLIDATE/REDIRECT: owner has confirmed destination
+- Owner has confirmed WaaS product strategy
+- Owner has recorded one signed canonical final disposition
+- If REDIRECT is selected, the owner has confirmed the exact destination
 
 **Likely affected files:**
 - `src/app/waas/accountants/page.tsx`
@@ -376,10 +377,11 @@ grep -r "waas\|accountants" src/ --include="*.ts" --include="*.tsx"
 
 **Scope:** Items 13, 16, 17, 18  
 **Routes affected:** `/ai-workflows/*` (verified consumer), `/legal-ai-workflows` (already consolidated), `/processing-page` (verified consumer), `/social` (critical OG infrastructure)  
-**Recommended default:** RETAIN all four (repository audit confirms active use; no removal recommended)  
+**Recommended defaults:** Item 13 RETAIN; Item 16 CONSOLIDATE → `/ai-workflows`; Item 17 RETAIN; Item 18 RETAIN.  
 **Entry criteria:**
-- Owner acknowledges audit findings for each item
-- Owner selects disposition: RETAIN + document purpose, or DEFER if clarification needed
+- Each item to execute has a signed final disposition in the approval manifest
+- Item 16 executes only as CONSOLIDATE → `/ai-workflows`
+- Unapproved sibling items remain blocked and do not prevent partial execution of approved items
 
 **Why separate packet?**
 These are internal system routes with verified consumers. Repository audit found:
@@ -480,9 +482,10 @@ npm run build
 
 **Scope:** Items 14, 15  
 **Routes affected:** `/debug/*`, `/debug/analytics`  
-**Recommended default:** GATE behind `NODE_ENV=development` or build-time exclusion  
+**Recommended default:** Owner selection required for each item: RETAIN or REMOVE. `NODE_ENV=development` or build-time exclusion is an implementation condition of RETAIN, not a disposition.  
 **Entry criteria:**
-- Owner has classified Items 14–15 with explicit disposition: GATE (environment flag) or REMOVE (from production build)
+- Owner has recorded one signed final disposition for each item: RETAIN or REMOVE
+- If RETAIN is selected, the owner has approved the development-only implementation condition
 
 **Why separate packet?**
 Security-sensitive. Development utilities should not be accessible in production. Gating is low-risk; removal is zero-risk.
@@ -498,18 +501,18 @@ Security-sensitive. Development utilities should not be accessible in production
 
 **Risks:**
 - **Security (MODERATE):** Debug routes expose system information; information disclosure if production-accessible
-- **Low implementation risk:** Both GATE and REMOVE are straightforward
+- **Low implementation risk:** RETAIN with development-only conditions and REMOVE are both straightforward
 
 **Implementation order:**
-1. Owner decides: GATE (check NODE_ENV before rendering) or REMOVE (exclude from production build)
-2. If GATE: add conditional checks in route handlers; verify routes 404 in production
+1. Owner decides: RETAIN or REMOVE
+2. If RETAIN: add `NODE_ENV=development` conditional checks; verify routes 404 in production
 3. If REMOVE: configure Next.js to exclude `/debug` routes from production build
 4. Test locally with `NODE_ENV=development` (routes accessible) and `NODE_ENV=production` (routes inaccessible)
 5. Deploy to staging; verify debug routes return 404 in production environment
 
 **Validation commands:**
 ```bash
-# If GATE chosen: verify environment variable handling
+# If RETAIN with development-only condition is chosen: verify environment handling
 NODE_ENV=development npm run dev &
 curl -I http://localhost:3000/debug  # Should be accessible
 # Kill dev server
@@ -657,9 +660,10 @@ npm run build
 
 **Scope:** Item 22  
 **Route:** `/api/waiting-list` vs `/api/waitlist`  
-**Recommended default:** RETAIN BOTH (zero-cost backward-compatibility alias)  
+**Recommended default:** RETAIN. Preserving both endpoint spellings is an implementation detail of RETAIN, not a separate disposition.  
 **Entry criteria:**
-- Owner has classified Item 22 with explicit disposition: RETAIN (both) or REMOVE/DEPRECATE (waiting-list only)
+- Item 22 has a signed final disposition of RETAIN in the approval manifest
+- Both endpoint spellings remain available under that RETAIN disposition
 
 **Why separate decision?**
 API deprecation requires consumer audit and sunset communication. Retention (the safe default) requires no action.
@@ -842,27 +846,30 @@ Each packet is **independently reviewable and rollbackable**. DO NOT combine pac
 6. ❌ Consolidate Phase 12 manual evidence
 7. ❌ Consolidate MailerLite verification
 
-### What blocks implementation of each packet:
+### Approval mechanics and execution gates
 
-| Condition | Impact |
-|-----------|--------|
-| Blank disposition | Packet blocked indefinitely |
-| DEFER disposition | Packet deferred; revisit next cycle |
-| REDIRECT/CONSOLIDATE without destination | Packet blocked until destination specified |
-| REMOVE without zero-consumer proof | Packet blocked; audit required |
-| PXF-018F clarification incomplete | Items 13, 16–18 blocked |
+The owner approval manifest controls authorization:
+
+- **Bulk-eligible (7):** Items 5, 13, 16, 17, 18, 20, and 22.
+- **Owner selection required (4):** Items 2, 8, 14, and 15.
+- **External input required (5):** Items 1, 7, 10, 11, and 19.
+- A valid bulk signature writes only the explicitly listed PROPOSED dispositions to FINAL by reference.
+- Omitted, unsigned, blank, or DEFER items authorize no implementation.
+- REDIRECT or CONSOLIDATE without an exact destination remains blocked.
+- REMOVE without required consumer or external-dependency confirmation remains blocked.
+- Packet execution may be partial: approved items may execute while unapproved sibling items remain blocked.
 
 ### What must happen next:
 
-1. **Owner completes worksheet:**
-   - Select disposition for all 16 pending items
-   - Provide destinations for REDIRECT/CONSOLIDATE
-   - For Items 13–18: acknowledge audit findings (no external clarification needed unless planning major refactoring)
-   - Record dates and approver name
+1. **Owner completes the approval manifest:**
+   - Bulk-approve only explicitly listed eligible items, or approve items individually
+   - Select one canonical disposition for owner-selection items
+   - Resolve required external inputs before signing blocked items
+   - Provide exact destinations and record approver/date fields
 
-2. **After approval, execute packets in dependency order:**
-   - Only approved packets execute
-   - Each packet commits independently
+2. **After approval, execute authorized item scopes in dependency order:**
+   - Only signed final dispositions execute
+   - Each bounded item or packet scope commits independently
    - Validate in staging before production deploy
 
 3. **Phase 12 and MailerLite remain separate:**
