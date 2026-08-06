@@ -1025,7 +1025,71 @@ All confirmed gaps from the audit are addressed and deployed. No further code wo
 
 **Deployed SHA:** `b7f564a1883309758be55be097ae3616fdfa0fc8`  
 **Workflow:** 31093765830  
-**Deployed:** 2026-08-06T10:41:32Z  
+**Deployed:** 2026-08-06T10:41:32Z
+
+---
+
+## PXF-017 — Final roadmap truth and owner decision closeout
+
+**Documented:** 2026-08-06  
+**Status:** documentation and evidence work complete
+
+### Roadmap synchronization
+
+Updated three canonical roadmap documents to reflect final PXF-017 deployment:
+
+- `docs/roadmap.md` — deployed SHA, workflow, browser evidence counts (66 total), Phase 11/12/13 status
+- `docs/implementation-plan.md` — deployed SHA, workflow, browser evidence counts, Phase 11/12/13 status
+- `docs/product/agent-mode-progress.md` — this file, deployed SHA, final status records
+
+### Exact browser test counts
+
+| Spec | Tests | Details |
+|---|---:|---|
+| docs-mobile | 6 | layout, focus, reduced-motion |
+| canonical-route-smoke | 20 | 4 routes × (desktop + mobile) + 2 contact visual |
+| canonical-accessibility | 19 | 8 routes × 2 viewports, Axe WCAG scans |
+| canonical-chrome-proof | 26 | chrome invariants, geometry, docs, contact, client navigation |
+| **Total** | **66** | **All deployed and passing** |
+| test:security-api | 33 | 12 API protection + 4 rate-limiter + 16 security-api + 1 redirect |
+| design governance | 5 rules | 39 controlled exemptions |
+
+### Owner decision register
+
+- **22 total items catalogued**
+- **17 substantive pending decisions** (owner classification required)
+- **5 verified-absent items** (no code removal required; marked NOT APPLICABLE)
+
+Verified-absent closures (all have zero tracked route files; no implementation to remove):
+1. `/guides/[topic]/[slug]` → NOT APPLICABLE
+2. `/playbooks/[segment]/[slug]` → NOT APPLICABLE
+3. `/snippets/[stack]/[slug]` → NOT APPLICABLE
+4. `/glossary/[term]` → NOT APPLICABLE
+5. `/bb` → NOT APPLICABLE
+
+All 17 pending items documented in `docs/platform/LEGACY_OWNER_DECISIONS.md` and `docs/platform/LEGACY_OWNER_DECISION_BRIEF.md`.
+
+### Phase status
+
+| Phase | Status | Evidence |
+|---|---|---|
+| Phase 11 | PARTIAL | Redirects live, 17 owner decisions pending, cleanup deployed (PXF-017A) |
+| Phase 12 | PARTIAL | 66 browser tests ✓; manual screen-reader, 200% zoom, high-contrast, field RUM/INP deferred |
+| Phase 13 | ONGOING | Continuous governance active; no completion gate |
+
+### Deployed state
+
+- Deployment: PXF-017 public professionalism (2026-08-06T10:41:32Z, workflow 31093765830, SHA b7f564a1883309758be55be097ae3616fdfa0fc8)
+- All 8 canonical routes HTTP 200
+- Docs routing through canonical shell ✓
+- First-paint black background, no transitions ✓
+- Nextra skip control suppressed ✓
+- Browser evidence 66/66 ✓
+- Security API tests 33/33 ✓
+- Accessibility tests 16/16 ✓
+- Build: 109 pages
+- TypeScript ✓, ESLint ✓, Design governance ✓
+- MailerLite external credential rotation: PENDING owner verification  
 
 ### Corrective commits after initial push
 

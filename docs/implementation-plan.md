@@ -41,14 +41,14 @@ validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
 validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-last_verified_production_head: 38bc212ad315d211812f4c4432b76afbf66a63e0
-last_verified_production_at: 2026-08-05T14:12:22Z
-deployment_observation_source: Main workflow run 31012683840 (PXF-018A security remediation) deployed; direct production /api/version, /api/health, /docs, and eight-route verification; all routes HTTP 200; built 2026-08-05T14:03:48Z
-validated_date: 2026-08-05
+last_verified_production_head: b7f564a1883309758be55be097ae3616fdfa0fc8
+last_verified_production_at: 2026-08-06T10:41:32Z
+deployment_observation_source: Main workflow run 31093765830 (PXF-017 public professionalism) deployed; direct production /api/version, /api/health, /docs, and eight-route verification; all routes HTTP 200; built 2026-08-06T10:28:19Z
+validated_date: 2026-08-06
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
-current_program_state: PXF-018A security remediation deployed to production (SHA 38bc212). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). MailerLite credential exposure removed (requires env var only; external rotation PENDING). Project enumeration hardened (501 fail-closed). CI wired with secret scanning and comprehensive test suite (API protection 12/12, fixed-window rate-limiter 4/4, combined test:security-api 16/16, secret-source policy 7/7). Auth audit corrected (/memory, /memory-qa, /workbench confirmed public). Owner decisions reduced 23→22. All CI checks pass (TypeScript ✓, ESLint ✓, secret-sources ✓, build ✓ 109 pages, browser evidence ✓, security tests ✓). Phase 11 PARTIAL (inventory, cleanup, audit deployed). Phase 13 continuous governance.
+current_program_state: PXF-017 public professionalism deployed to production (SHA b7f564a1883309758be55be097ae3616fdfa0fc8). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). Docs routed through canonical shell. First-paint black background, no transitions. Nextra skip control suppressed. Browser evidence: 66 tests (6+20+19+26). All CI checks pass (TypeScript ✓, ESLint ✓, build ✓ 109 pages, browser evidence 66/66 ✓, security-api 33/33 ✓, accessibility 16/16 ✓). Phase 11 PARTIAL (17 pending decisions). Phase 12 PARTIAL (browser/accessibility evidence passed, manual screen-reader/zoom/high-contrast/field-RUM deferred). Phase 13 continuous governance. MailerLite external rotation PENDING owner verification.
 current_phase: Phase 13 — continuous governance
-current_packet: PXF-018A — corrective security remediation and deterministic evidence
+current_packet: PXF-017 — public professionalism deployment
 canonical_visual_routes_active: 8
 canonical_route_implementation: COMPLETE
 public_docs_alignment: COMPLETE
@@ -70,7 +70,7 @@ browser_runner_worktree: COMMITTED
 browser_runner_artifact_disposition: GUARDED_WORKFLOW_SEPARATE
 shell_contract: DEPLOYED
 closeout_push_status: COMPLETE — ada06665f5944fc988f4dad4a5fed47cee471d8b, 29854de09b04792c377d0bba7528297acb14c155, and ecc0fdfe8dda0e285c7aea8e3aaded97ef0003ba reached origin/main on 2026-07-31; PXF-016A/B/B1/B2 chain (7260f87e0c449cfb3441c42dbdd1c8a0ab57e5e9) pushed and deployed 2026-08-01; PXF-016C/C1/C2 chain pushed 2026-08-02 and deployed as 853207b49f338c4832e1f8a84e237ca6bf0c400b
-deployment_status: VERIFIED — production /api/version matched 38bc212ad315d211812f4c4432b76afbf66a63e0 after successful Main workflow run 31012683840 (all 5 jobs passed including PXF-018A security remediation); all 8 canonical routes HTTP 200; image ghcr.io/prochattools/prochat:38bc212ad315d211812f4c4432b76afbf66a63e0 built 2026-08-05T14:03:48Z; CI checks: TypeScript ✓, ESLint ✓, secret-sources scan ✓, build ✓ 109 pages, browser evidence ✓, API security tests ✓ (16/16 passed including 12 API protection + 4 rate-limiter tests); this is an operational observation, not a mutable repository-HEAD field
+deployment_status: VERIFIED — production /api/version matched b7f564a1883309758be55be097ae3616fdfa0fc8 after successful Main workflow run 31093765830 (all 5 jobs passed including PXF-017 public professionalism); all 8 canonical routes HTTP 200; image ghcr.io/prochattools/prochat:b7f564a1883309758be55be097ae3616fdfa0fc8 built 2026-08-06T10:28:19Z; CI checks: TypeScript ✓, ESLint ✓, build ✓ 109 pages, browser evidence ✓ (66 tests), security-api ✓ (33/33), accessibility ✓ (16/16); this is an operational observation, not a mutable repository-HEAD field
 ```
 
 ## Historical executor queue

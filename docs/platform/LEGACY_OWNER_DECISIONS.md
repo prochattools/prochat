@@ -54,9 +54,9 @@ This register tracks 22 surface items. Five have been verified as never-implemen
 | **SEO/External-Link Risk** | None (never indexed, no external links possible) |
 | **Data/Auth Dependency** | None |
 | **Options** | No removal required (path was never implemented) |
-| **Recommended Default** | Declare VERIFIED ABSENT — no tracked route exists to delete |
-| **Owner Decision** | **PENDING** (manifest status only; no code change required) |
-| **Implementation Dependency** | None — documentation correction complete |
+| **Recommended Default** | NOT APPLICABLE — no tracked route exists |
+| **Owner Decision** | **NOT APPLICABLE** |
+| **Implementation Dependency** | None — verified absent, no action required |
 
 ### 5. `/learn/*`
 | Property | Value |
@@ -78,9 +78,9 @@ This register tracks 22 surface items. Five have been verified as never-implemen
 | **SEO/External-Link Risk** | None (never indexed, no external links possible) |
 | **Data/Auth Dependency** | None |
 | **Options** | No removal required (path was never implemented) |
-| **Recommended Default** | Declare VERIFIED ABSENT — no tracked route exists to delete |
-| **Owner Decision** | **PENDING** (manifest status only; no code change required) |
-| **Implementation Dependency** | None — documentation correction complete |
+| **Recommended Default** | NOT APPLICABLE — no tracked route exists |
+| **Owner Decision** | **NOT APPLICABLE** |
+| **Implementation Dependency** | None — verified absent, no action required |
 
 ### 7. `/prompts/[category]/[slug]`
 | Property | Value |
@@ -114,9 +114,9 @@ This register tracks 22 surface items. Five have been verified as never-implemen
 | **SEO/External-Link Risk** | None (never indexed, no external links possible) |
 | **Data/Auth Dependency** | None |
 | **Options** | No removal required (path was never implemented) |
-| **Recommended Default** | Declare VERIFIED ABSENT — no tracked route exists to delete |
-| **Owner Decision** | **PENDING** (manifest status only; no code change required) |
-| **Implementation Dependency** | None — documentation correction complete |
+| **Recommended Default** | NOT APPLICABLE — no tracked route exists |
+| **Owner Decision** | **NOT APPLICABLE** |
+| **Implementation Dependency** | None — verified absent, no action required |
 
 ### 10. `/starting-point/*`
 | Property | Value |
@@ -150,9 +150,9 @@ This register tracks 22 surface items. Five have been verified as never-implemen
 | **SEO/External-Link Risk** | None (never indexed, no external links possible) |
 | **Data/Auth Dependency** | None |
 | **Options** | No removal required (path was never implemented) |
-| **Recommended Default** | Declare VERIFIED ABSENT — no tracked route exists to delete |
-| **Owner Decision** | **PENDING** (manifest status only; no code change required) |
-| **Implementation Dependency** | None — documentation correction complete |
+| **Recommended Default** | NOT APPLICABLE — no tracked route exists |
+| **Owner Decision** | **NOT APPLICABLE** |
+| **Implementation Dependency** | None — verified absent, no action required |
 
 ---
 
@@ -266,9 +266,9 @@ This register tracks 22 surface items. Five have been verified as never-implemen
 | **SEO/External-Link Risk** | None (never indexed, no external links possible) |
 | **Data/Auth Dependency** | None |
 | **Options** | No removal required (path was never implemented) |
-| **Recommended Default** | Declare VERIFIED ABSENT — no tracked route exists to delete |
-| **Owner Decision** | **PENDING** (manifest status only; no code change required) |
-| **Implementation Dependency** | None — documentation correction complete |
+| **Recommended Default** | NOT APPLICABLE — no tracked route exists |
+| **Owner Decision** | **NOT APPLICABLE** |
+| **Implementation Dependency** | None — verified absent, no action required |
 
 ### 22. `/api/waiting-list` vs `/api/waitlist`
 | Property | Value |
@@ -314,4 +314,4 @@ This register tracks 22 surface items. Five have been verified as never-implemen
 
 ---
 
-**Status:** 5 zero-consumer items removed in PXF-017B (no-regret work complete). 17 items remain pending explicit owner decision. Backward compatibility locked via tests.
+**Status:** 5 verified-absent items marked NOT APPLICABLE (no code removal required). 17 items remain pending explicit owner decision. All 22 total items catalogued.
