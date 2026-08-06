@@ -1018,3 +1018,38 @@ MailerLite rotation — PENDING owner verification
 All confirmed gaps from the audit are addressed and deployed. No further code work required for this packet.
 
 **Next work:** Owner selection. Broad Ory/session implementation remains unapproved.
+
+---
+
+## PXF-017 — Final deployment correction
+
+**Deployed SHA:** `b7f564a1883309758be55be097ae3616fdfa0fc8`  
+**Workflow:** 31093765830  
+**Deployed:** 2026-08-06T10:41:32Z  
+
+### Corrective commits after initial push
+
+- `a16721e` — fix: apply nextra-skip-nav suppression to correct docs.css location (CSS was added to `src/styles/docs.css` but the import path resolves to `styles/docs.css` at project root)
+- `b7f564a` — fix: update docs-mobile evidence to reflect suppressed skip control (mobile keyboard traversal test expected `isSkipLink=true`; now `display:none` makes it non-focusable)
+
+### Production verification (2026-08-06T10:41:32Z)
+
+- `/api/health`: HTTP 200 `{"status":"ok"}`
+- `/api/version`: revision `b7f564a1883309758be55be097ae3616fdfa0fc8` confirmed
+- All 8 canonical routes: HTTP 200
+- Production docs: `.nextra-skip-nav { display: none }` confirmed via Playwright
+- `getByRole('link', /^skip to content$/i)` count = 0 on production /docs
+- CI workflow 31093765830: **success** — all jobs passed
+
+### Final test counts (CI 31093765830)
+
+- docs-mobile: 6 tests ✓
+- canonical-route-smoke: 18 + 2 contact = 20 tests ✓
+- canonical-accessibility: 19 tests ✓
+- canonical-chrome-proof: 26 tests ✓ (including client-nav test)
+- test:security-api: 33 tests ✓
+- Total browser evidence: **66 tests passed**
+
+### Professionalism packet: COMPLETE — final state
+
+All confirmed gaps addressed, deployed, and CI-verified at SHA `b7f564a1`.
