@@ -21,8 +21,8 @@ This checklist documents the manual evidence that remains deferred.
 
 | Test | Tests | Evidence | Status |
 |---|---:|---|---|
-| Browser smoke tests (canonical routes) | 20 | All 8 canonical routes at desktop/mobile pass HTTP, pathname, main, h1 checks | ✓ COMPLETE |
-| Accessibility (Axe WCAG 2.x) | 19 | 8 routes × 2 viewports; zero critical/serious violations reviewed | ✓ COMPLETE |
+| Browser smoke tests (canonical routes) | 18 | All 8 canonical routes at desktop/mobile pass HTTP, pathname, main, h1 checks | ✓ COMPLETE |
+| Accessibility (Axe WCAG 2.x) | 16 | 8 routes × 2 viewports; zero critical/serious violations reviewed | ✓ COMPLETE |
 | Docs-mobile layout | 6 | 390px, 320px viewport; layout reflow, focus traversal, reduced-motion | ✓ COMPLETE |
 | Chrome/shell proof | 26 | First-paint black, navigation/footer presence, no transitions, geometry, client nav | ✓ COMPLETE |
 | **Total automated** | **66** | **All passing; all production-required** | ✓ COMPLETE |
@@ -46,7 +46,7 @@ This checklist documents the manual evidence that remains deferred.
 - [ ] Product illustrations have semantic alt text or ARIA descriptions
 - [ ] Footer links are discoverable and labeled
 - [ ] Navigation menu keyboard traversal and menu state announcement
-- [ ] Skip link present and reachable (docs: verified suppressed; others: present and functional)
+- [ ] Skip link intentionally suppressed on public routes per approved design
 - [ ] No orphaned text or confusing pauses
 - [ ] Reduced-motion preference respected
 
