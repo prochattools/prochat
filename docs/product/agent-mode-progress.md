@@ -1013,7 +1013,7 @@ Owner must select the next work packet. Broad Ory/session implementation remains
 - build: passed
 - test:evidence:ci: 66 total browser tests pass after corrective deployment
 
-### Phase status
+### Phase status (HISTORICAL — PXF-017 Intermediate Record, 2026-08-06)
 
 ```text
 Phase 11 — PARTIAL (7 approved items + Item 5 consolidation complete; 9 pending decisions + 6 verified-absent = 22 catalogued; redirects live; full legacy removal deferred)
@@ -1022,11 +1022,11 @@ Phase 13 — ONGOING
 MailerLite rotation — PENDING owner verification
 ```
 
+**NOTE: SUPERSEDED.** Final Phase 11 owner decision closure occurred 2026-08-07. All 16 substantive items signed, executed, and validated. See "CURRENT STATE AND NEXT ACTION" section below for final status.
+
 ### Professionalism packet: COMPLETE
 
 All confirmed gaps from the audit are addressed and deployed. No further code work required for this packet.
-
-**Next work:** Owner selection. Broad Ory/session implementation remains unapproved.
 
 ---
 

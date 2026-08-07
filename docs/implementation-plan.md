@@ -1,9 +1,9 @@
 # ProChat Public Platform Implementation Plan
 
-**Status:** canonical executable plan  
+**Status:** canonical executable plan — REPOSITORY-SCOPED IMPLEMENTATION COMPLETE  
 **Owner:** Steve Westhoek  
 **Scope:** documentation, audits, prototypes, production foundation, public pages, migration, validation, launch, and maintenance  
-**Last updated:** 2026-08-05T14:12:22Z
+**Last updated:** 2026-08-07T00:00:00Z
 
 ## Authority and reading order
 
@@ -46,9 +46,9 @@ last_verified_production_at: 2026-08-06T10:41:32Z
 deployment_observation_source: Main workflow run 31093765830 (PXF-017 public professionalism) deployed; direct production /api/version, /api/health, /docs, and eight-route verification; all routes HTTP 200; built 2026-08-06T10:28:19Z
 validated_date: 2026-08-06
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
-current_program_state: PXF-017 public professionalism deployed to production (SHA b7f564a1883309758be55be097ae3616fdfa0fc8). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). Docs routed through canonical shell. First-paint black background, no transitions. Nextra skip control suppressed. Browser evidence: 66 tests (6+18+16+26). All CI checks pass (TypeScript ✓, ESLint ✓, build ✓ 109 pages, browser evidence 66/66 ✓, security-api 33/33 ✓, accessibility 16/16 ✓). Phase 11 COMPLETE (all 16 substantive legacy items signed 2026-08-07, executed, and validated; 6 verified-absent items classified NOT APPLICABLE; zero unresolved decisions). Phase 12 PARTIAL (66 automated browser/accessibility tests passing; manual screen-reader, zoom, high-contrast, field RUM/INP deferred). Phase 13 continuous governance active. MailerLite external credential rotation PENDING owner verification.
+current_program_state: PXF-017 public professionalism deployed to production (SHA b7f564a1883309758be55be097ae3616fdfa0fc8). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). Docs routed through canonical shell. First-paint black background, no transitions. Nextra skip control suppressed. Browser evidence: 66 tests (6+18+16+26). All CI checks pass (TypeScript ✓, ESLint ✓, build ✓ 109 pages, browser evidence 66/66 ✓, security-api 33/33 ✓, accessibility 16/16 ✓). Phase 11 COMPLETE (all 16 substantive legacy items signed 2026-08-07, executed, and validated; 6 verified-absent items classified NOT APPLICABLE; zero unresolved decisions; repository-scoped implementation complete). Phase 12 PARTIAL (66 automated browser/accessibility tests passing; manual screen-reader, zoom, high-contrast, field RUM/INP deferred). Phase 13 continuous governance active. MailerLite external credential rotation PENDING owner verification. Repository-scoped implementation is COMPLETE.
 current_phase: Phase 13 — continuous governance
-current_packet: PXF-017 — public professionalism deployment
+current_packet: NONE — repository-scoped implementation complete; no active packet
 canonical_visual_routes_active: 8
 canonical_route_implementation: COMPLETE
 public_docs_alignment: COMPLETE
@@ -701,10 +701,10 @@ The platform is deployed and live. All canonical routes pass CI. Phase 11 legacy
 Product Experience Foundation: COMPLETE
 All canonical public routes: DEPLOYED
 Program phase: continuous governance (Phase 13)
-Legacy deletion: deferred to future cleanup wave
-Phase 11 owner decisions: 17 items awaiting classification (see LEGACY_OWNER_DECISION_WORKSHEET.md)
-Phase 11 implementation blueprint: 9 bounded packets mapped (see PXF018_IMPLEMENTATION_PLAN.md)
-Next execution: Phase 13 quarterly review cadence
+Phase 11 legacy items: COMPLETE (16 substantive items signed, executed, validated; 6 verified-absent classified NOT APPLICABLE; zero unresolved decisions; repository-scoped implementation complete)
+Phase 12 evidence: PARTIAL (66 automated browser/accessibility tests passing; manual screen-reader, zoom, high-contrast, field RUM/INP deferred)
+External work: MailerLite rotation PENDING owner verification; protected-route hardening design-pending
+Next execution: Phase 13 continuous governance; no active repository implementation packet
 PPF historical queue: retained as implementation history only
 ```
 

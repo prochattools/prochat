@@ -1,9 +1,9 @@
 # ProChat Public Platform Roadmap
 
-**Status:** canonical repository-local execution roadmap
+**Status:** canonical repository-local execution roadmap — REPOSITORY-SCOPED IMPLEMENTATION COMPLETE
 **Owner:** Steve Westhoek
 **Scope:** ProChat public platform, design system, migration, public pages, validation, launch, and maintenance
-**Last updated:** 2026-08-05T14:12:22Z
+**Last updated:** 2026-08-07T00:00:00Z
 
 ## Authority
 
@@ -38,11 +38,11 @@ validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 last_verified_production_head: b7f564a1883309758be55be097ae3616fdfa0fc8
 last_verified_production_at: 2026-08-06T10:41:32Z
 deployment_observation_source: Main workflow run 31093765830 (PXF-017 public professionalism, corrected docs routing); all 8 canonical routes HTTP 200; direct production /api/version matches full deployed SHA; built 2026-08-06T10:28:19Z
-validated_date: 2026-08-06
+validated_date: 2026-08-07
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
-current_program_state: PXF-017 public professionalism is deployed to production (SHA b7f564a1883309758be55be097ae3616fdfa0fc8). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). Docs routing through canonical shell deployed. First-paint flash removed (#000000 background, no transitions). Nextra skip control suppressed. Browser evidence: 66 total tests (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof). All checks passed (TypeScript ✓, ESLint ✓, docs validation ✓, build ✓ 109 pages, browser evidence 66/66 ✓, API security 33/33 ✓, accessibility 16/16 ✓). External MailerLite credential rotation PENDING owner verification. Phase 11 COMPLETE (all 16 substantive items signed 2026-08-07, executed, and validated; 6 verified-absent items classified NOT APPLICABLE; zero unresolved decisions; repository-scoped implementation complete). Phase 12 PARTIAL (66 automated browser/accessibility tests passing; manual screen-reader, zoom, high-contrast, field RUM/INP deferred). Phase 13 ONGOING continuous governance.
+current_program_state: PXF-017 public professionalism is deployed to production (SHA b7f564a1883309758be55be097ae3616fdfa0fc8). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). Docs routing through canonical shell deployed. First-paint flash removed (#000000 background, no transitions). Nextra skip control suppressed. Browser evidence: 66 total tests (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof). All checks passed (TypeScript ✓, ESLint ✓, docs validation ✓, build ✓ 109 pages, browser evidence 66/66 ✓, API security 33/33 ✓, accessibility 16/16 ✓). External MailerLite credential rotation PENDING owner verification. Phase 11 COMPLETE (all 16 substantive items signed 2026-08-07, executed, and validated; 6 verified-absent items classified NOT APPLICABLE; zero unresolved decisions; repository-scoped implementation complete). Phase 12 PARTIAL (66 automated browser/accessibility tests passing; manual screen-reader, zoom, high-contrast, field RUM/INP deferred). Phase 13 ONGOING continuous governance. Repository-scoped roadmap COMPLETE.
 current_phase: Phase 13 — continuous governance
-current_packet: PXF-017 — public professionalism deployment (docs shell routing, first-paint flash, skip control, browser evidence)
+current_packet: NONE — repository-scoped implementation complete; no active packet
 canonical_visual_routes_active: 8
 canonical_routes: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms
 legacy_redirects_active: /prochat-memory -> /memory; /qa-memory -> /memory-qa
@@ -84,7 +84,7 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 | Phase 8 | SUPERSEDED | Independent review | Phases 3, 5, 6, 7 | iterative production review via PXF-003 through PXF-006 packets | review report and findings reconciliation | superseded; accessibility, responsive, and design reviews completed in production packets | Phase 9 |
 | Phase 9 | DONE | Production foundation | Phase 8 and approved migration rows | Nexus-derived dark tokens, Golos Text, shared marketing layout, canonical routes | fonts, tokens, shells, primitives, tests, and infrastructure | production foundation deployed | Phase 10 |
 | Phase 10 | DONE | Public pages | Phase 9 and approved page copy | all 8 canonical routes deployed: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms | canonical public pages and shell updates | all required public responsibilities implemented and production-verified | Phase 11 |
-| Phase 11 | COMPLETE | Legacy migration and removal | Phase 10 and verified replacements | 16 items signed (7 bulk + 9 individual authorization 2026-08-07); all 16 implementations complete and deployed; 6 verified-absent items; zero unresolved decisions | all 16 owner decisions classified, executed, and validated as approved; legacy redirects active; Items 1–2, 5, 7–8, 10–11, 13–20, 22 fully operational | all route consolidations deployed; debug security gating verified; Item 19 removal confirmed; build passing, routes rendering, redirects working; full style/component removal deferred to future wave | Phase 12 |
+| Phase 11 | COMPLETE | Legacy migration and removal | Phase 10 and verified replacements | 16 items signed (7 bulk + 9 individual authorization 2026-08-07); all 16 implementations complete and deployed; 6 verified-absent items classified NOT APPLICABLE; zero unresolved decisions | all 16 owner decisions classified, executed, and validated as approved; legacy redirects active; Items 1–2, 5, 7–8, 10–11, 13–20, 22 fully operational | repository-scoped implementation complete; all route consolidations deployed; debug security gating verified; Item 19 removal confirmed; build passing, routes rendering, redirects working | Phase 12 |
 | Phase 12 | PARTIAL | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking, docs mobile TOC overlap fix deployed, and 66 browser evidence tests completed (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof) | visual and launch acceptance verified; formal accessibility and performance evidence remains | site is live and passing CI; responsive, focus, reduced-motion, metadata, analytics, and docs-mobile evidence pass (66/66 ✓), while formal WCAG 2.2 AA audit and measured performance baseline remain deferred | Phase 13 |
 | Phase 13 | ONGOING | Continuous governance | launch | platform live and deployed | review and maintenance cadence | — | Phase 13 |
 | Phase 14 | COMPLETE | Design-system governance and launch hardening | Phase 12 | token architecture documentation, enforcement linting, docs migration, repository classification, accessibility hardening | canonical design authority established, token drift prevented, artifact classification complete; commit `54b6de4`, successful CI workflow `30555031503`, matching immutable/latest GHCR digest, and production route checks | governance implementation and release gates complete; Dokploy terminal identity remained unavailable | Phase 15 |
@@ -755,9 +755,9 @@ The historical Product Experience Foundation implementation and PXF-010 governan
 
 ### Phase 11 owner decisions — COMPLETE (2026-08-07)
 
-**EXECUTION STATUS (2026-08-07):** All 16 substantive legacy items signed and executed.
-- **7 bulk-approved items:** Items 5, 13, 16, 17, 18, 20, 22 — dispositions signed and confirmed
-- **9 individual approvals:** Items 1, 2, 7, 8, 10, 11, 14, 15, 19 — dispositions signed individually and executed
+**EXECUTION STATUS (2026-08-07):** All 16 substantive legacy items signed, executed, and validated. 6 verified-absent items classified NOT APPLICABLE. Zero unresolved decisions.
+- **7 bulk-approved items:** Items 5, 13, 16, 17, 18, 20, 22 — dispositions signed and confirmed; implementations deployed and validated
+- **9 individual approvals:** Items 1, 2, 7, 8, 10, 11, 14, 15, 19 — dispositions signed individually and executed; validations complete
 
 **DISPOSITIONS SIGNED AND EXECUTED (16/16 complete):**
 - Item 1 (`/blog/[slug]`): ✓ RETAIN (indexed blog content preserved; internal references managed)
@@ -1114,15 +1114,15 @@ PXF-003E may proceed after PXF-003E0 validation completes.
 ## PXF-017 — Public professionalism deployment record
 
 **Previous deployment:** SHA `9143debf21467d8ac44ae41b2d9afc2e9accff88` / workflow 31085372410 (2026-08-06)  
-**Corrective deployment:** SHA `74630f70` (full: see /api/version below) / workflow pending  
-**Deployed:** 2026-08-06  
+**Corrective deployment:** SHA `b7f564a1883309758be55be097ae3616fdfa0fc8` (final, verified) / workflow 31093765830  
+**Deployed:** 2026-08-06T10:41:32Z  
 
 ### Phase summary at this deployment
 
 ```text
-Phase 11 — PARTIAL (16 pending owner decisions; redirects live; full legacy removal deferred)
+Phase 11 — COMPLETE (all 16 substantive items signed 2026-08-07, executed, validated; 6 verified-absent classified NOT APPLICABLE; zero unresolved decisions)
 Phase 12 — PARTIAL (66 browser/accessibility evidence tests passed; manual screen-reader, zoom, high-contrast, field RUM/INP deferred)
-Phase 13 — ONGOING
+Phase 13 — ONGOING (continuous governance)
 ```
 
 ### What this packet delivered
@@ -1139,9 +1139,9 @@ Phase 13 — ONGOING
 
 **COMPLETE** — all confirmed gaps from the professionalism audit are addressed and deployed.
 
-### Remaining roadmap work
+### Remaining work outside repository scope
 
-- Phase 11: bounded legacy component/style and protected-route cleanup (16 pending owner decisions; 6 verified-absent items require no action).
-- Phase 12: manual screen-reader, zoom, high-contrast, touch-target, field INP/RUM evidence.
-- Phase 13: continuous governance.
-- MailerLite external rotation: PENDING owner verification.
+- Phase 12: manual screen-reader, zoom, high-contrast, touch-target, field INP/RUM evidence (deferred; outside current repository scope).
+- Phase 13: continuous governance and bounded maintenance.
+- MailerLite credential rotation: PENDING external owner/provider action (code completed; requires external credential update).
+- Protected-route hardening (Ory/session): design-pending, awaiting owner decision scope.
