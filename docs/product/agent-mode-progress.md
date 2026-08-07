@@ -1,10 +1,10 @@
 # ProChat Completion and Repository-Truth Audit Record
 
-**Source:** `prochat`  
-**Branch:** `main`  
-**Audit date:** 2026-07-31  
-**Reconciliation date:** 2026-08-06  
-**Status:** PXF-017 public professionalism deployed and verified (SHA b7f564a1883309758be55be097ae3616fdfa0fc8, workflow 31093765830, 2026-08-06T10:41:32Z); all 8 canonical routes HTTP 200; external MailerLite credential rotation PENDING; PXF-016E canonical public chrome closeout and PXF-017A legacy cleanup previously deployed; current production revision b7f564a1883309758be55be097ae3616fdfa0fc8
+**Source:** `prochat`
+**Branch:** `main`
+**Audit date:** 2026-07-31
+**Reconciliation date:** 2026-08-07
+**Status:** Phase 11 complete; all 16 substantive legacy items signed, executed, and validated; repository-scoped implementation complete (SHA 97055b3, workflow 31219521538, 2026-08-07T21:26:39Z); all 8 canonical routes HTTP 200 with verified legacy redirects; external MailerLite credential rotation PENDING; current production revision 97055b3
 
 ## Purpose
 
@@ -32,9 +32,9 @@ validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
 validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-last_verified_production_head: b7f564a1883309758be55be097ae3616fdfa0fc8
-last_verified_production_at: 2026-08-06T10:41:32Z
-deployment_observation_source: Main workflow run 31093765830 (PXF-017 public professionalism); direct production /api/version, /api/health, /docs, and eight-route verification (all 8 routes HTTP 200); image ghcr.io/prochattools/prochat:b7f564a1883309758be55be097ae3616fdfa0fc8; built 2026-08-06T10:28:19Z
+last_verified_production_head: 97055b3
+last_verified_production_at: 2026-08-07T21:26:39Z
+deployment_observation_source: Main workflow run 31219521538 (Phase 11 complete closure); production /api/version verified at 97055b3; all 8 canonical routes HTTP 200 with legacy redirects (book→contact 307, starting-point→workbench 307, waas/accountants→workbench 307, docs/learn 200, systems/events 404, debug 404, debug/analytics 404); image ghcr.io/prochattools/prochat:97055b3; built 2026-08-07
 ```
 
 The validation anchors are immutable evidence. The production fields are dated operational observations and do not claim to track the live repository HEAD.

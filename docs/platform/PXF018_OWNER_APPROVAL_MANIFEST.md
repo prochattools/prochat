@@ -1,10 +1,21 @@
 # PXF-018 Owner Approval Manifest — Phase 11 Legacy Surface Decisions
+## CURRENT STATUS: COMPLETE (2026-08-07)
 
-**Created:** 2026-08-06  
-**Updated:** 2026-08-07 (Bulk approval signed; Item 5 implementation complete)  
-**Status:** Partially approved and executing; 9 items remain pending  
-**Scope:** 7 approved + 1 implemented; 9 pending; 6 verified absent  
-**Verified absent:** 6 items (no owner decision needed; excluded from this manifest)  
+**All 16 substantive legacy items signed, executed, and validated. Phase 11 implementation is COMPLETE.**
+
+**Deployment:** SHA 97055b3, workflow 31219521538, 2026-08-07T21:26:39Z
+**Verified state:** All 8 canonical routes HTTP 200; legacy redirects active; debug routes gated; Item 19 removed.
+**See also:** `docs/roadmap.md` (Phase 11 closure summary), `agent-mode-progress.md` (execution status).
+
+---
+
+## Historical Reference: Approval and Execution Record
+
+**Created:** 2026-08-06
+**Updated:** 2026-08-07 (Bulk approval signed; Item 5 implementation complete)
+**Status (FINAL):** All 16 substantive items approved and executed; 9 items remain pending **[CORRECTED: now completed]**; 6 verified absent
+**Scope:** 7 bulk-approved + 9 individually-approved (completed 2026-08-07); 6 verified absent
+**Verified absent:** 6 items (no owner decision needed; excluded from this manifest)
 **Total catalogued:** 22 items  
 
 ---

@@ -1,16 +1,29 @@
 # PXF-018 Owner Decision Brief — Phase 11 Legacy Surface Audit Results
+## SUPERSEDED — Phase 11 Complete (2026-08-07)
 
-**Created:** 2026-08-06  
-**Updated:** 2026-08-06 (PXF-018 reconciliation: Item 3 reclassified; 16 pending decisions)  
-**Status:** Repository evidence audit complete; 16 substantive items requiring owner classification; 6 verified absent  
-**Scope:** Verified consumers, dependencies, SEO/auth implications, and owner classification options  
+**CURRENT STATUS:** This document is HISTORICAL audit evidence. All 16 substantive legacy items have been classified, approved, and executed.
+
+**Deployment:** SHA 97055b3, workflow 31219521538, 2026-08-07T21:26:39Z
+**Result:** Phase 11 is COMPLETE. All owner decisions have been signed and implemented.
+**See:** `docs/roadmap.md` and `agent-mode-progress.md` for final Phase 11 closure evidence.
+
+---
+
+## Historical Reference: Audit Results (ARCHIVED)
+
+**Created:** 2026-08-06
+**Updated:** 2026-08-06 (PXF-018 reconciliation: Item 3 reclassified; 16 pending decisions)
+**Status (ARCHIVED):** Repository evidence audit complete; 16 substantive items **[CORRECTED: now all classified and executed]**; 6 verified absent
+**Scope:** Verified consumers, dependencies, SEO/auth implications, and owner classification options
 **Evidence standard:** Repository source code, navigation config, shell routes, sitemap, internal references, grep verification  
 
 ---
 
-## Executive Summary
+## Historical Executive Summary
 
-16 substantive Phase 11 decision items require owner classification. 6 verified-absent items from PXF-017B (plus Item 3 from PXF-018 audit) require no code removal. This brief summarizes findings with concrete repository evidence and non-binding recommendations to guide owner classification.
+16 substantive Phase 11 decision items required owner classification. 6 verified-absent items from PXF-017B (plus Item 3 from PXF-018 audit) required no code removal. This brief summarized findings with concrete repository evidence and non-binding recommendations to guide owner classification.
+
+**Status update:** All items have been classified and implemented. This is now a historical audit record.
 
 **Key findings:**
 - **Item 19 (`/systems/events`):** Zero verified inbound links; safe to remove if no external dependencies

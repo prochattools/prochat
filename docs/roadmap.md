@@ -35,9 +35,9 @@ validated_program_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
 validated_docs_mobile_head: ada06665f5944fc988f4dad4a5fed47cee471d8b
 validated_closeout_head: 29854de09b04792c377d0bba7528297acb14c155
 validated_production_baseline_head: 91436457e4d3aa8a5d9782ff671ce49e10d7ef07
-last_verified_production_head: b7f564a1883309758be55be097ae3616fdfa0fc8
-last_verified_production_at: 2026-08-06T10:41:32Z
-deployment_observation_source: Main workflow run 31093765830 (PXF-017 public professionalism, corrected docs routing); all 8 canonical routes HTTP 200; direct production /api/version matches full deployed SHA; built 2026-08-06T10:28:19Z
+last_verified_production_head: 97055b3
+last_verified_production_at: 2026-08-07T21:26:39Z
+deployment_observation_source: Main workflow run 31219521538 (Phase 11 legacy closure and final validation); all 8 canonical routes HTTP 200 (/book→/contact 307, /starting-point→/workbench 307, /waas/accountants→/workbench 307, /docs/learn 200, /systems/events 404, /debug 404, /debug/analytics 404); direct production /api/version matches deployed SHA; built 2026-08-07
 validated_date: 2026-08-07
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
 current_program_state: PXF-017 public professionalism is deployed to production (SHA b7f564a1883309758be55be097ae3616fdfa0fc8). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). Docs routing through canonical shell deployed. First-paint flash removed (#000000 background, no transitions). Nextra skip control suppressed. Browser evidence: 66 total tests (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof). All checks passed (TypeScript ✓, ESLint ✓, docs validation ✓, build ✓ 109 pages, browser evidence 66/66 ✓, API security 33/33 ✓, accessibility 16/16 ✓). External MailerLite credential rotation PENDING owner verification. Phase 11 COMPLETE (all 16 substantive items signed 2026-08-07, executed, and validated; 6 verified-absent items classified NOT APPLICABLE; zero unresolved decisions; repository-scoped implementation complete). Phase 12 PARTIAL (66 automated browser/accessibility tests passing; manual screen-reader, zoom, high-contrast, field RUM/INP deferred). Phase 13 ONGOING continuous governance. Repository-scoped roadmap COMPLETE.

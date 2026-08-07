@@ -1,12 +1,23 @@
 # Phase 11 Owner Decision Worksheet — Legacy Surface Classification
+## SUPERSEDED — Phase 11 Complete (2026-08-07)
 
-**Created:** 2026-08-06  
-**Updated:** 2026-08-07 (Bulk approval signed; Item 5 implementation complete)  
-**Status:** Partially approved and executing; 9 pending owner selections  
-**Scope:** 7 approved + executed items; 9 pending decisions; 6 verified-absent records (NOT APPLICABLE)  
+**CURRENT STATUS:** This document is HISTORICAL audit evidence. All 16 substantive legacy items have been signed, executed, and validated. Phase 11 is COMPLETE.
+
+**Deployment:** SHA 97055b3, workflow 31219521538, 2026-08-07T21:26:39Z
+**Verified:** All 8 canonical routes HTTP 200; legacy redirects active; debug routes gated; Item 19 removed.
+**See:** `docs/roadmap.md` and `agent-mode-progress.md` for Phase 11 final execution status.
+
+---
+
+## Historical Reference: Worksheet (ARCHIVED)
+
+**Created:** 2026-08-06
+**Updated:** 2026-08-07 (Bulk approval signed; Item 5 implementation complete)
+**Status (ARCHIVED):** Partially approved and executing; 9 pending owner selections **[CORRECTED: now all complete]**
+**Scope:** 7 approved + executed items; 9 pending decisions **[CORRECTED: now all complete]**; 6 verified-absent records (NOT APPLICABLE)
 **Total catalogued items:** 22
 
-**For owner approval:** See `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — condensed review surface with proposed dispositions and sign-off block.
+**Historical reference:** See `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — condensed review surface with proposed dispositions and sign-off block.
 
 ---
 

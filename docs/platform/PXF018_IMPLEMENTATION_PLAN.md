@@ -1,18 +1,29 @@
 # PXF-018 — Phase 11 Legacy Surface Implementation Blueprint
+## SUPERSEDED — Phase 11 Complete (2026-08-07)
 
-**Created:** 2026-08-06  
-**Updated:** 2026-08-07 (Reconciliation: 7 signed/complete + 9 unresolved + 6 absent = 22 total)  
-**Status:** Ready for owner signature; packages reconciled with manifest  
-**Scope:** Maps 9 unresolved Phase 11 decisions into bounded execution packets (7 signed excluded; 6 verified absent excluded)  
+**CURRENT STATUS:** This document is HISTORICAL implementation planning. All Phase 11 packets have been executed and validated.
+
+**Deployment:** SHA 97055b3, workflow 31219521538, 2026-08-07T21:26:39Z
+**Result:** All 16 substantive items implemented (7 bulk + 9 individual); executed and verified.
+**See:** `docs/roadmap.md` Phase 11 section and `agent-mode-progress.md` for final execution evidence.
+
+---
+
+## Historical Reference: Implementation Planning (ARCHIVED)
+
+**Created:** 2026-08-06
+**Updated:** 2026-08-07 (Reconciliation: 7 signed/complete + 9 unresolved + 6 absent = 22 total)
+**Status (ARCHIVED):** Ready for owner signature; packages reconciled with manifest
+**Scope:** Mapped 9 unresolved Phase 11 decisions into bounded execution packets (7 signed excluded; 6 verified absent excluded)
 **Reference:** `PHASE_11_READY_TO_SIGN_OWNER_DECISION_PACKAGE.md`
 
 ---
 
-## Executive Summary
+## Historical Executive Summary
 
-This document defines a complete implementation strategy for Phase 11 unresolved decisions WITHOUT pre-selecting any disposition. The 9 unresolved items are mapped into independent, validated execution packets with explicit dependencies, entry criteria, and rollback paths.
+This document defined a complete implementation strategy for Phase 11 unresolved decisions WITHOUT pre-selecting any disposition. The 9 unresolved items were mapped into independent, validated execution packets with explicit dependencies, entry criteria, and rollback paths.
 
-**This document does NOT authorize implementation.** Packets remain blocked until owner signs the decision package and provides required external evidence/strategy inputs.
+**Status update:** All packets have been executed. This is now a historical record.
 
 ### Critical Constraints
 

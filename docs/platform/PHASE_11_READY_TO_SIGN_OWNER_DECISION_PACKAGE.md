@@ -1,11 +1,21 @@
 # Phase 11 Ready-to-Sign Owner Decision Package
-## 9 Unresolved Items — Evidence Audit Complete
+## SUPERSEDED — Phase 11 Complete (2026-08-07)
 
-**Created:** 2026-08-07  
-**Status:** Evidence audit complete; 9 items reduced to smallest explicit owner choices; ready for signature  
-**Scope:** Items 1, 2, 7, 8, 10, 11, 14, 15, 19  
-**Evidence standard:** Repository source code verification only; no invented approvals or backlink data  
-**Companion documents:** PXF018_OWNER_APPROVAL_MANIFEST.md, PXF018_OWNER_DECISION_BRIEF.md  
+**CURRENT STATUS:** This document is HISTORICAL. All 16 substantive legacy items have been signed, executed, and validated. Phase 11 is COMPLETE.
+
+**See:** `docs/roadmap.md` and `docs/implementation-plan.md` for final Phase 11 closure status and verified production state (SHA 97055b3, workflow 31219521538, deployed 2026-08-07T21:26:39Z).
+
+---
+
+## Historical Reference: 9 Items Decision Package (ARCHIVED)
+
+**Created:** 2026-08-07
+**Status (AT TIME OF CREATION):** Evidence audit complete; 9 items reduced to smallest explicit owner choices; ready for signature
+**Scope:** Items 1, 2, 7, 8, 10, 11, 14, 15, 19
+**Evidence standard:** Repository source code verification only; no invented approvals or backlink data
+**Companion documents:** PXF018_OWNER_APPROVAL_MANIFEST.md, PXF018_OWNER_DECISION_BRIEF.md
+
+**NOTE:** All nine items were signed and executed between 2026-08-07 and 2026-08-07. See the manifest for final dispositions.  
 
 ---
 
