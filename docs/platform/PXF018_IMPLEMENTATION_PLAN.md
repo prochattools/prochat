@@ -2,7 +2,7 @@
 
 **Created:** 2026-08-06  
 **Updated:** 2026-08-06 (PXF-018 reconciliation: Item 3 removed; maps 16 substantive decisions)  
-**Status:** Blueprint and packet design; awaiting owner decision classifications  
+**Status:** Planning-ready; authorization-blocked pending signed owner decisions and required external inputs  
 **Scope:** Maps 16 substantive Phase 11 decisions into bounded execution packets (Item 3 verified absent)  
 **Reference:** `LEGACY_OWNER_DECISION_WORKSHEET.md`
 
@@ -36,7 +36,7 @@ This document defines a complete implementation strategy for Phase 11 legacy sur
 | 5 | `/learn/*` | Marketing | Bulk-eligible: CONSOLIDATE → `/docs/learn` | PXF-018B | MEDIUM | Medium |
 | 7 | `/prompts/[category]/[slug]` | Marketing | Owner selection: RETAIN or CONSOLIDATE (after backlink audit); destination required | PXF-018C | HIGH | High |
 | 8 | `/proof` | Marketing | Owner selection: RETAIN or CONSOLIDATE; destination required | PXF-018B | MEDIUM | Medium |
-| 10 | `/starting-point/*` | Marketing | Bulk-eligible: CONSOLIDATE; owner selects ONE destination | PXF-018D | LOW | Low |
+| 10 | `/starting-point/*` | Marketing | External input / owner destination required: CONSOLIDATE; select ONE destination | PXF-018D | LOW | Low |
 | 11 | `/waas/accountants` | Marketing | Owner selection: RETAIN, CONSOLIDATE, or REDIRECT (depends on product strategy) | PXF-018E | MEDIUM | Medium |
 | 13 | `/ai-workflows/*` | Internal | Bulk-eligible: RETAIN | PXF-018F | MEDIUM | Low |
 | 14 | `/debug/*` | Internal | Owner selection: RETAIN (NODE_ENV gate) or REMOVE | PXF-018G | MEDIUM | Low |
@@ -262,7 +262,7 @@ grep -r "/api/prompts\|/prompts" src/ --include="*.ts" --include="*.tsx" | grep 
 
 **Scope:** Item 10  
 **Route:** `/starting-point/*`  
-**Status:** Fully specified as CONSOLIDATE; owner must select exactly ONE destination (not combined)  
+**Status:** Planning-ready but authorization-blocked: disposition type is CONSOLIDATE; owner must select exactly ONE destination (not combined)  
 **Entry criteria:**
 - Owner has recorded a signed final disposition of CONSOLIDATE
 - Owner has selected exactly ONE destination: `/memory`, `/memory-qa`, OR `/workbench` (not multiple; not combined)
