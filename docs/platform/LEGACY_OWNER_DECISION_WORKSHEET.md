@@ -1,9 +1,9 @@
 # Phase 11 Owner Decision Worksheet — Legacy Surface Classification
 
 **Created:** 2026-08-06  
-**Updated:** 2026-08-06 (PXF-018 reconciliation: Item 3 reclassified as verified absent)  
-**Status:** Ready for owner classification  
-**Scope:** 16 substantive pending decisions; 6 verified-absent records (NOT APPLICABLE)  
+**Updated:** 2026-08-07 (Bulk approval signed; Item 5 implementation complete)  
+**Status:** Partially approved and executing; 9 pending owner selections  
+**Scope:** 7 approved + executed items; 9 pending decisions; 6 verified-absent records (NOT APPLICABLE)  
 **Total catalogued items:** 22
 
 **For owner approval:** See `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — condensed review surface with proposed dispositions and sign-off block.
@@ -31,16 +31,24 @@
 ### Summary Block
 
 ```
-Substantive decisions awaiting owner classification: 16
-Verified-absent records (NOT APPLICABLE): 6
+EXECUTION STATUS (2026-08-07):
+Substantive decisions approved and signed: 7 (Items 5, 13, 16, 17, 18, 20, 22)
+Substantive decisions pending owner selection: 9 (Items 1, 2, 7, 8, 10, 11, 14, 15, 19)
+Verified-absent records (NOT APPLICABLE): 6 (Items 3, 4, 6, 9, 12, 21)
 Total catalogued records: 22
-Approved decisions (completed): 0
-Implementation packets authorized: 0
 
-AUDIT UPDATE (2026-08-06):
-Item 3 (/brainbridge) reclassified from pending to verified absent.
-Repository audit found zero files, zero references, never implemented.
-Remaining 16 items require owner classification.
+COMPLETED IMPLEMENTATIONS:
+Item 5: ✓ /learn → /docs/learn consolidation (CONSOLIDATE disposition implemented)
+  - Migration: Learn hub and nested routes moved to /docs/learn
+  - Redirects: 301 permanent redirects in next.config.js (/learn → /docs/learn)
+  - References: All internal links updated; PRODUCTION_GUIDE_PATH now /docs/learn/production-guide
+  - Status: Build passing, routes rendering correctly
+  - Commit: 93fa5b2
+
+PENDING APPROVALS (9 items requiring owner decisions before execution):
+Items 1, 2, 7, 8, 10, 11: Require owner selection or external input
+Items 14, 15: Require owner security choice (RETAIN or REMOVE)
+Item 19: Requires external dependency confirmation (REMOVE or DEFER)
 ```
 
 ---
@@ -447,10 +455,11 @@ After owner classification is complete:
 
 ---
 
-**Status:** Partially approved via bulk authorization. 7 items signed; 9 items remain pending owner decisions.
+**Status:** Partially approved and executing. 7 items signed and authorized; 1 fully implemented; 9 items remain pending owner decisions.
 
 **Worksheet created by:** PXF-017 closeout handoff  
 **Worksheet approved by:** Repository Owner — explicit instruction 2026-08-07  
 **Approved items (signed bulk):** 5, 13, 16, 17, 18, 20, 22  
-**Pending items (awaiting further decisions):** 1, 2, 7, 8, 10, 11, 14, 15, 19  
+**Completed implementations:** Item 5 (consolidation complete)  
+**Pending approvals (awaiting further decisions):** 1, 2, 7, 8, 10, 11, 14, 15, 19  
 **Verified-absent items (NOT APPLICABLE):** 3, 4, 6, 9, 12, 21

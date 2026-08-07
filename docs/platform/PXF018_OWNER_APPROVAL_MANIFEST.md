@@ -1,8 +1,9 @@
 # PXF-018 Owner Approval Manifest — Phase 11 Legacy Surface Decisions
 
 **Created:** 2026-08-06  
-**Status:** Ready for owner review and approval  
-**Scope:** 16 substantive pending decisions with evidence-backed proposed dispositions  
+**Updated:** 2026-08-07 (Bulk approval signed; Item 5 implementation complete)  
+**Status:** Partially approved and executing; 9 items remain pending  
+**Scope:** 7 approved + 1 implemented; 9 pending; 6 verified absent  
 **Verified absent:** 6 items (no owner decision needed; excluded from this manifest)  
 **Total catalogued:** 22 items  
 

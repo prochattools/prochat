@@ -84,7 +84,7 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 | Phase 8 | SUPERSEDED | Independent review | Phases 3, 5, 6, 7 | iterative production review via PXF-003 through PXF-006 packets | review report and findings reconciliation | superseded; accessibility, responsive, and design reviews completed in production packets | Phase 9 |
 | Phase 9 | DONE | Production foundation | Phase 8 and approved migration rows | Nexus-derived dark tokens, Golos Text, shared marketing layout, canonical routes | fonts, tokens, shells, primitives, tests, and infrastructure | production foundation deployed | Phase 10 |
 | Phase 10 | DONE | Public pages | Phase 9 and approved page copy | all 8 canonical routes deployed: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms | canonical public pages and shell updates | all required public responsibilities implemented and production-verified | Phase 11 |
-| Phase 11 | PARTIAL | Legacy migration and removal | Phase 10 and verified replacements | legacy redirects active; legacy code and styles deferred to future cleanup wave | redirects, archives, and bounded removals | legacy redirects implemented; full style/component removal deferred to future wave | Phase 12 |
+| Phase 11 | PARTIAL | Legacy migration and removal | Phase 10 and verified replacements | 7 items approved (bulk authorization 2026-08-07); Item 5 consolidation implemented (/learn → /docs/learn with 301 redirects); 9 items blocked pending owner selections; 6 verified-absent items | all 16 owner decisions classified and executed as approved; legacy redirects active; Item 5 fully operational | Item 5 consolidation complete (build passing, routes rendering, redirects working); 9 owner selections required before further execution; full style/component removal deferred to future wave | Phase 12 |
 | Phase 12 | PARTIAL | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking, docs mobile TOC overlap fix deployed, and 40/40 canonical viewport audit completed | visual and launch acceptance verified; formal accessibility and performance evidence remains | site is live and passing CI; responsive, focus, reduced-motion, metadata, analytics, and docs-mobile evidence pass, while formal WCAG 2.2 AA audit and measured performance baseline remain deferred | Phase 13 |
 | Phase 13 | ONGOING | Continuous governance | launch | platform live and deployed | review and maintenance cadence | — | Phase 13 |
 | Phase 14 | COMPLETE | Design-system governance and launch hardening | Phase 12 | token architecture documentation, enforcement linting, docs migration, repository classification, accessibility hardening | canonical design authority established, token drift prevented, artifact classification complete; commit `54b6de4`, successful CI workflow `30555031503`, matching immutable/latest GHCR digest, and production route checks | governance implementation and release gates complete; Dokploy terminal identity remained unavailable | Phase 15 |
@@ -746,7 +746,7 @@ Phase 7 — SUPERSEDED (motion system deployed in production)
 Phase 8 — SUPERSEDED (iterative review completed in production packets)
 Phase 9 — DONE
 Phase 10 — DONE
-Phase 11 — PARTIAL (redirects live; full legacy removal deferred)
+Phase 11 — PARTIAL (7 approved items + Item 5 consolidation complete; 9 items pending owner decisions)
 Phase 12 — PARTIAL (site live; formal WCAG/performance audit deferred)
 Phase 13 — ONGOING
 ```
@@ -755,11 +755,22 @@ The historical Product Experience Foundation implementation and PXF-010 governan
 
 ### Phase 11 owner decisions
 
-**For owner approval:** See `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — 16 pending items with evidence-backed proposed dispositions, owner override options, and sign-off block. Only signed final dispositions authorize mapped implementation packets.
+**EXECUTION STATUS (2026-08-07):** Bulk owner approval signed for Items 5, 13, 16, 17, 18, 20, 22 (7 items). Item 5 (/learn → /docs/learn consolidation) implementation complete: migration finished, routes rendering, redirects active, build passing. 
 
-**Background audit evidence:** `docs/platform/PXF018_OWNER_DECISION_BRIEF.md` (audit findings with repository proof) and `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` (detailed evidence tables for all 16 pending + 6 verified-absent items).
+**COMPLETED IMPLEMENTATIONS:**
+- Item 5: ✓ `/learn` → `/docs/learn` consolidation (CONSOLIDATE disposition) — commit 93fa5b2
+  - Learn hub and nested routes migrated to canonical `/docs/learn` 
+  - Production guide path updated: `/learn/production-guide` → `/docs/learn/production-guide`
+  - All internal references, navigation, and sitemap updated
+  - Permanent 301 redirects in next.config.js preserve old URLs
+  - Build passing, typecheck clean, routes rendering correctly
 
-**Implementation blueprint:** `docs/platform/PXF018_IMPLEMENTATION_PLAN.md` maps all 16 pending decisions into bounded execution packets (PXF-018A through PXF-018I) with dependencies, validation, and rollback paths. Awaits owner approval in the manifest.
+**PENDING APPROVALS (9 items):** Items 1, 2, 7, 8, 10, 11, 14, 15, 19 require owner selections before execution can proceed.
+
+**RESOURCES:**
+- **Owner approval manifest:** `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — Updated status showing 7 approved items and execution progress
+- **Background audit evidence:** `docs/platform/PXF018_OWNER_DECISION_BRIEF.md` (audit findings with repository proof) and `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` (detailed evidence tables, execution status)
+- **Implementation blueprint:** `docs/platform/PXF018_IMPLEMENTATION_PLAN.md` maps all decisions into bounded execution packets (PXF-018A through PXF-018I) with dependencies, validation, and rollback paths
 
 ## Final design-hardening closeout
 
