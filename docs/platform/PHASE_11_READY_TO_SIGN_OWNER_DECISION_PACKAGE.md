@@ -43,17 +43,17 @@ These 4 items have sufficient repository evidence to narrow disposition choices.
 | **Route exists** | `src/app/proof/ProofPageContent.tsx`, `src/app/proof/page.tsx` ✓ |
 | **Purpose** | Case study / social proof showcase |
 | **Internal links** | 1 verified: StudioPageContent.tsx (`secondaryCtaLink="/proof"`) |
-| **External links** | None found in repo |
-| **SEO risk** | MEDIUM — indexed; external reference volume unknown |
+| **External links** | None found in repo; external case-study references unknown |
+| **SEO risk** | MEDIUM — indexed; external reference volume not verified in repository |
 | **Auth required** | None (public) |
 
 **Allowed dispositions:**
 - `RETAIN` (keep existing content and 1 internal link)
-- `CONSOLIDATE` → explicit owner destination (owner must specify)
+- `CONSOLIDATE` → explicit owner-specified destination (owner must specify)
 
 **Recommended choice (non-binding):** RETAIN or CONSOLIDATE based on strategic value of case-study content
 
-**Owner signature required:** Select ONE disposition + destination if CONSOLIDATE
+**Owner signature required:** Select ONE disposition; if CONSOLIDATE, specify destination
 
 ---
 
@@ -90,7 +90,7 @@ These 5 items require external evidence, owner knowledge, or strategy determinat
 | **Route exists** | `src/app/blog/page.tsx`, `src/app/blog/[slug]/page.tsx` ✓ |
 | **Purpose** | Blog hub with indexed content |
 | **Internal links** | 0 verified in code (not in main navigation) |
-| **External links** | Volume unknown; external backlinks not quantified in repository |
+| **External links** | Volume unknown; external backlinks not verified in repository |
 | **SEO risk** | **HIGH** — indexed content; improper redirects damage rankings |
 | **Auth required** | None (public) |
 
@@ -98,17 +98,17 @@ These 5 items require external evidence, owner knowledge, or strategy determinat
 
 **Allowed dispositions:**
 - `RETAIN` (keep as independent blog hub)
-- `CONSOLIDATE` → explicit owner destination (owner must specify)
+- `CONSOLIDATE` → explicit owner-specified destination (owner must specify)
 
-**External evidence required:** Backlink volume via search console
+**External evidence required:** Backlink volume via search console (optional; owner may accept SEO risk)
 
 **Recommended choice (non-binding):** 
 - If high external backlinks: `RETAIN` (preserve SEO presence)
-- If low external backlinks: `CONSOLIDATE` (consolidate under docs)
+- If low/unknown external backlinks: `CONSOLIDATE` (consolidate under docs) or RETAIN based on strategic choice
 
 **Owner signature required:** 
-1. Provide external backlink audit or confirm acceptability of SEO risk
-2. Select ONE disposition + destination if CONSOLIDATE
+1. Provide external backlink audit OR confirm acceptability of SEO risk
+2. Select ONE disposition; if CONSOLIDATE, specify destination
 
 ---
 
@@ -148,11 +148,11 @@ These 5 items require external evidence, owner knowledge, or strategy determinat
 | **Route exists** | `src/app/starting-point/` directory with nested routes ✓ |
 | **Purpose** | Onboarding flow / entry point |
 | **Internal links** | 1 verified: ProofPageContent.tsx (`secondaryCtaLink="/starting-point"`) |
-| **Email dependencies** | Unknown; email campaign dependencies not verified in repository |
+| **Email dependencies** | Email campaign dependencies not verified in repository |
 | **SEO risk** | NONE (internal/onboarding route; not indexed) |
 | **Auth required** | None (public entry point) |
 
-**Note:** This item remains **audience-strategy-blocked** because onboarding destination selection requires owner knowledge of target product path and audience.
+**Note:** This item remains **audience-strategy-blocked** because onboarding destination selection requires owner knowledge of target product path and audience. Repository-proven: 1 internal link to `/starting-point`. External email/campaign dependencies unknown.
 
 **Allowed dispositions:**
 - `CONSOLIDATE` → exactly ONE destination (not combined):
@@ -179,7 +179,7 @@ These 5 items require external evidence, owner knowledge, or strategy determinat
 | **Route exists** | `src/app/waas/accountants/page.tsx` ✓ |
 | **Purpose** | Workflows-as-a-Service product variant landing page |
 | **Internal links** | 2+ verified in kits pages (navigation to product variant) |
-| **External links** | Unknown; external references not verified in repository |
+| **External links** | External references not verified in repository |
 | **SEO risk** | MEDIUM — product page; positioning signals impact external search |
 | **Auth required** | None (public) |
 
@@ -188,7 +188,7 @@ These 5 items require external evidence, owner knowledge, or strategy determinat
 **Allowed dispositions:**
 - `RETAIN` (if WaaS is active product offering)
 - `CONSOLIDATE` → `/workbench` (if WaaS consolidates into unified product)
-- `REDIRECT` → explicit owner destination (if WaaS is deprecated; owner specifies target)
+- `REDIRECT` → explicit owner-specified destination (if WaaS is deprecated; owner specifies target)
 
 **Strategy input required:** Owner determines whether WaaS is current or deprecated
 
@@ -198,25 +198,25 @@ These 5 items require external evidence, owner knowledge, or strategy determinat
 
 **Owner signature required:** 
 1. Confirm WaaS product status (current, deprecated, or other)
-2. Select ONE disposition + destination if REDIRECT/CONSOLIDATE
+2. Select ONE disposition; if REDIRECT or CONSOLIDATE, specify destination
 
 ---
 
-### Item 19: `/systems/events` — Zero repository inbound links; external dependencies UNKNOWN
+### Item 19: `/systems/events` — Zero repository inbound links; external dependencies unknown
 
 | Finding | Evidence |
 |---------|----------|
 | **Route exists** | `src/app/systems/events/` directory ✓ |
 | **Purpose** | Event system kernel; legacy classification |
 | **Internal links** | 0 verified (grep search returned zero repository references) |
-| **External dependencies** | **UNKNOWN** — no repository evidence available |
+| **External dependencies** | **Unknown** — not verified in repository; removal safety cannot be confirmed from repository evidence alone |
 | **SEO risk** | NONE (internal system route) |
 | **Auth required** | Unclear; shell-classification indicates internal-only intent |
 
 **Note:** This item remains **externally blocked** because external dependencies cannot be confirmed or denied from repository evidence alone.
 
 **Allowed dispositions:**
-- `REMOVE` (only if owner confirms zero external dependencies exist)
+- `REMOVE` (only if owner confirms zero external dependencies exist outside repository)
 - `DEFER` (pending clarification of external dependency status)
 
 **Recommended choice (non-binding):** `DEFER` until external dependency status confirmed

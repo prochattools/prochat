@@ -79,7 +79,7 @@ Routes dependent on owner knowledge or external audit.
 | **Route/Surface Identity** | `/blog/[slug]` (dynamic blog post routes) |
 | **Category** | Historical marketing |
 | **Repository Evidence** | Blog infrastructure exists (route files: `src/app/blog/[slug]/page.tsx`); indexed content; shell routes ROUTE-038/039/083 classified as `temporary_legacy_compatibility` |
-| **External unknowns** | External backlinks exist but volume unquantified (external audit required) |
+| **External unknowns** | External backlinks unknown; volume not quantified in repository (external audit required) |
 | **Implementation packet** | PXF-018A (Marketing Routes with High/Medium SEO Risk) |
 | **Implementation scope** | Code: route files, redirect config, shell routes. Docs: sitemap, robots.txt |
 | **PROPOSED disposition** | **CONSOLIDATE** → `/docs/blog/*` with 301 redirects |
@@ -150,13 +150,13 @@ Routes dependent on owner knowledge or external audit.
 |----------|-------|
 | **Route/Surface Identity** | `/proof` (proof/case-study hub route) |
 | **Category** | Historical marketing; social proof content |
-| **Repository Evidence** | Proof hub exists (`src/app/proof/ProofPageContent.tsx`); verified internal link in StudioPageContent.tsx; likely indexed; external case-study links possible but unquantified |
-| **External unknowns** | Content value unclear; external case-study link volume unknown |
+| **Repository Evidence** | Proof hub exists (`src/app/proof/ProofPageContent.tsx`); verified internal link in StudioPageContent.tsx; likely indexed; external case-study links volume unknown |
+| **External unknowns** | Content value unclear; external case-study link volume not verified in repository |
 | **Implementation packet** | PXF-018B |
-| **Implementation scope** | Code: route files, 1 internal Link href. Docs: content audit, redirect config |
-| **PROPOSED disposition** | Conditional: **CONSOLIDATE** → `/docs` (or dedicated `/case-studies`) if low external backlinks; **RETAIN** if strategic proof content |
-| **PROPOSED destination** | `/docs/proof` or `/case-studies` (conditional; owner to evaluate content value) |
-| **Owner override** | *[ BLANK — provide if proposing retention or content-value assessment ]* |
+| **Implementation scope** | Code: route files, 1 internal Link href. Docs: content audit (if consolidating), redirect config |
+| **PROPOSED disposition** | **RETAIN** or **CONSOLIDATE** → owner-specified destination (owner selection required) |
+| **PROPOSED destination** | *OWNER REQUIRED* (specify destination if consolidating) |
+| **Owner override** | *[ BLANK — select RETAIN or CONSOLIDATE; if consolidating, specify destination ]* |
 | **Final disposition** | *[ BLANK — filled by owner ]* |
 | **Owner approval signature** | *[ BLANK — name/date ]* |
 

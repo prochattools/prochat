@@ -77,7 +77,7 @@ This document defines a complete implementation strategy for Phase 11 unresolved
 
 **Risks:**
 - **SEO (Item 1):** Indexed content with external links; improper redirects cause 404s and damage search rankings
-- **Consumer (Item 1):** Email campaigns may reference old blog URLs (unverified but likely)
+- **Consumer (Item 1):** Email campaign dependencies not verified in repository; external backlink audit required to assess
 - **Rollback:** Keep source routes and source files until redirect verification completes
 
 **Implementation order:**
@@ -130,66 +130,64 @@ npm run build
 
 **Scope:** Items 5, 8  
 **Routes affected:** `/learn/*`, `/proof`  
-**Recommended defaults:** Item 5 CONSOLIDATE → `/docs/learn`. Item 8 requires owner selection between RETAIN and CONSOLIDATE → `/docs`.  
+**Status:** Item 5 completed and signed (CONSOLIDATE → `/docs/learn`). Item 8 requires owner selection between RETAIN and CONSOLIDATE; destination required if consolidating.  
 **Entry criteria:**
-- Item 5 has a signed final disposition of CONSOLIDATE → `/docs/learn`
-- Item 8 has a signed final disposition of RETAIN or CONSOLIDATE → `/docs`
+- Item 5: Already consolidated via redirect to `/docs/learn`; Item 5 execution complete
+- Item 8: Owner has selected one canonical disposition (RETAIN or CONSOLIDATE); if CONSOLIDATE, owner has supplied explicit destination
 
-**Likely affected files:**
-- `src/app/learn/page.tsx` or `src/app/learn/layout.tsx` (Item 5)
-- `src/app/proof/page.tsx` or similar (Item 8)
-- Content files and nested routes
-- Route manifest and sitemap
+**Likely affected files (Item 8 only):**
+- `src/app/proof/page.tsx` or similar
+- Content files and dependencies
+- Route manifest and sitemap (if consolidating)
 - Navigation/footer helpers if linked
 
-**Dependencies:**
-- Item 8 requires content audit (case studies may have value justifying retention)
-- Both items have no critical technical dependencies
-- Destination routes (`/docs`) must be stable
+**Dependencies (Item 8 only):**
+- Content value assessment (owner decision)
+- If consolidating: destination route must be stable and owner-specified
 
-**Risks:**
-- **SEO (Item 8):** External case-study links unverified; may exist
-- **Consumer:** Email campaigns may reference old learning paths (unverified)
+**Risks (Item 8 only):**
+- **SEO:** External case-study link volume unknown; improper redirects may impact search rankings
+- **Consumer:** Email campaign dependencies not verified in repository
 - **Content migration:** Ensure no orphaned assets or dependencies
 
-**Implementation order:**
-1. Audit content in `/learn` and `/proof` (quantity, types, internal/external references)
-2. Decide if content should be copied to `/docs` or removed entirely
-3. Create redirect mappings
+**Implementation order (Item 8 only):**
+1. Owner selects final disposition: RETAIN or CONSOLIDATE → [owner-specified destination]
+2. If CONSOLIDATE: audit content in `/proof` (quantity, types, internal references)
+3. Create redirect mappings or remove content per disposition
 4. Test redirects locally
-5. Verify internal and external link impact (grep for old paths)
+5. Verify no broken internal links (grep for `/proof` references)
 6. Deploy with monitoring
 
-**Validation commands:**
+**Validation commands (Item 8 only):**
 ```bash
 # Find all references to old paths
-grep -r "/learn\|/proof" src/ tests/ --include="*.ts" --include="*.tsx" --include="*.json"
+grep -r "/proof" src/ tests/ --include="*.ts" --include="*.tsx" --include="*.json"
 
-# Verify nested routes render
-curl -L http://localhost:3000/learn/topic -I
+# Verify route renders
 curl -L http://localhost:3000/proof -I
 
 # Test build
 npm run build
 ```
 
-**Rollback method:**
-- Revert source routes and redirect config
+**Rollback method (Item 8 only):**
+- Revert route files and redirect config
 - Rebuild
 
 **Commit boundaries:**
-- One commit for `/learn` consolidation (if approved)
-- One commit for `/proof` consolidation (if approved)
-- Or combined if both use same disposition
+- Item 5: ✓ Already committed (separate transaction, completed)
+- Item 8: One commit for `/proof` consolidation (if approved) OR no-op if RETAIN
 
-**Deployment requirements:**
-- Staging test with redirect verification
+**Deployment requirements (Item 8 only):**
+- Staging test with redirect verification (if consolidating)
 - Content migration audit (if consolidating)
 
-**Completion evidence:**
-- Redirect mappings functional (301/302 chains verified)
-- No broken internal links
-- Content migrated or removed per disposition
+**Completion evidence (Item 8 only):**
+- Owner disposition recorded (RETAIN or CONSOLIDATE)
+- If consolidating: redirect mappings functional (301/302 verified)
+- If consolidating: no broken internal links
+- If consolidating: content migrated or removed per disposition
+- If retaining: no changes needed
 
 ---
 
@@ -212,12 +210,12 @@ npm run build
 **Dependencies:**
 - **Critical:** Requires external backlink audit to assess SEO impact
 - Destination route (if CONSOLIDATE) must be determined by owner
-- Possible CMS or content management dependency
+- CMS or content management dependencies: unknown
 
 **Risks:**
-- **SEO (HIGH):** Indexed content with probable external developer-community links; improper 301 redirects damage rankings
+- **SEO (HIGH):** Indexed content; external backlink volume unknown; improper 301 redirects damage rankings
 - **Duplicate content:** If content mirrored in `/docs`, SEO duplication penalty possible
-- **API consumers:** Unverified external integrations may depend on endpoint (unlikely but possible)
+- **API consumers:** External integrations not verified in repository; unknown dependencies possible
 
 **Implementation order:**
 1. (Owner task) Audit external backlinks via search console or third-party tools
@@ -274,8 +272,8 @@ grep -r "/api/prompts\|/prompts" src/ --include="*.ts" --include="*.tsx" | grep 
 - Tests: `tests/onboarding.spec.ts` or similar
 
 **Dependencies:**
-- Destination route mapping must be clarified (which product route(s) should onboarding users reach?)
-- Email or marketing campaign dependencies (unverified but likely)
+- **BLOCKING:** Destination route must be chosen by owner (which product route should onboarding users reach: /memory, /memory-qa, or /workbench?)
+- Email or marketing campaign dependencies not verified in repository
 
 **Risks:**
 - **Consumer:** Email onboarding sequences may reference old paths
@@ -323,11 +321,11 @@ npm run build
 
 **Scope:** Item 11  
 **Route:** `/waas/accountants`  
-**Allowed dispositions:** RETAIN (if WaaS current), CONSOLIDATE → `/workbench` (if consolidating), REDIRECT → explicit destination (if deprecated)  
+**Allowed dispositions:** RETAIN (if WaaS current), CONSOLIDATE → explicit owner-specified destination (if consolidating), REDIRECT → explicit owner-specified destination (if deprecated)  
 **Entry criteria:**
 - Owner has confirmed WaaS product strategy (current vs. deprecated)
 - Owner has recorded one signed canonical final disposition
-- If REDIRECT is selected, the owner has confirmed the exact destination
+- If CONSOLIDATE or REDIRECT is selected, the owner has confirmed the exact destination
 
 **Likely affected files:**
 - `src/app/waas/accountants/page.tsx`
@@ -338,7 +336,7 @@ npm run build
 
 **Risks:**
 - **Product positioning:** Niche audience page; retention signals product diversity; removal eliminates variant
-- **Partner links:** May have external references if part of partner program (unverified)
+- **Partner links:** External references not verified in repository; unknown dependencies possible
 
 **Implementation order:**
 1. Owner clarifies: Is WaaS product path current or deprecated?
@@ -725,19 +723,19 @@ npm run test -- api
 
 ```
 PXF-018A (Marketing SEO)
-  ↓ (no blocking deps)
+  ↓ (blocks on: Items 1–2 owner selections; Item 1 requires external backlink audit)
   
 PXF-018B (Learning Hub)
-  ↓ (no blocking deps)
+  ↓ (Item 5 complete; Item 8 blocks on: owner disposition selection)
   
 PXF-018C (Prompt Library)
-  ↓ (blocks on: external backlink audit OR owner decision to RETAIN)
+  ↓ (blocks on: Item 7 external backlink audit OR owner decision to RETAIN)
   
 PXF-018D (Onboarding)
-  ↓ (no blocking deps)
+  ↓ (blocks on: Item 10 owner selection of exactly ONE destination: /memory, /memory-qa, or /workbench)
   
 PXF-018E (WaaS)
-  ↓ (blocks on: owner product strategy decision)
+  ↓ (blocks on: Item 11 owner product strategy decision)
   
 PXF-018F (Internal System Routes — Complete)
   ↓ (all items signed/verified complete; documentation optional)
