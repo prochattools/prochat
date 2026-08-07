@@ -1,18 +1,18 @@
 # PXF-018 — Phase 11 Legacy Surface Implementation Blueprint
 
 **Created:** 2026-08-06  
-**Updated:** 2026-08-06 (PXF-018 reconciliation: Item 3 removed; maps 16 substantive decisions)  
-**Status:** Planning-ready; authorization-blocked pending signed owner decisions and required external inputs  
-**Scope:** Maps 16 substantive Phase 11 decisions into bounded execution packets (Item 3 verified absent)  
-**Reference:** `LEGACY_OWNER_DECISION_WORKSHEET.md`
+**Updated:** 2026-08-07 (Reconciliation: 7 signed/complete + 9 unresolved + 6 absent = 22 total)  
+**Status:** Ready for owner signature; packages reconciled with manifest  
+**Scope:** Maps 9 unresolved Phase 11 decisions into bounded execution packets (7 signed excluded; 6 verified absent excluded)  
+**Reference:** `PHASE_11_READY_TO_SIGN_OWNER_DECISION_PACKAGE.md`
 
 ---
 
 ## Executive Summary
 
-This document defines a complete implementation strategy for Phase 11 legacy surface decisions WITHOUT pre-selecting any disposition. Each of the 16 substantive decisions (Item 3 verified absent) is mapped into independent, validated execution packets with explicit dependencies, entry criteria, and rollback paths.
+This document defines a complete implementation strategy for Phase 11 unresolved decisions WITHOUT pre-selecting any disposition. The 9 unresolved items are mapped into independent, validated execution packets with explicit dependencies, entry criteria, and rollback paths.
 
-**This document does NOT authorize implementation.** Packets remain blocked until owner decisions are recorded in `LEGACY_OWNER_DECISION_WORKSHEET.md`.
+**This document does NOT authorize implementation.** Packets remain blocked until owner signs the decision package and provides required external evidence/strategy inputs.
 
 ### Critical Constraints
 
@@ -27,7 +27,7 @@ This document defines a complete implementation strategy for Phase 11 legacy sur
 
 ## Packet Summary Matrix
 
-16 substantive items (Item 3 verified absent) mapped to execution packets. Each packet is independently executable upon owner approval.
+9 unresolved items (7 signed excluded) mapped to execution packets. 4 items are repository-ready; 5 require external evidence or strategy input. Each packet is independently executable upon owner approval.
 
 | Item | Route/Surface | Category | Approval Status | Packet ID | Risk Level | Complexity |
 |-----:|---|---|---|---|---|---|
@@ -319,24 +319,22 @@ npm run build
 
 ---
 
-### PXF-018E: WaaS Product Variant Decision (Conditional Retention/Consolidation)
+### PXF-018E: WaaS Product Variant Decision (Strategy-Dependent)
 
 **Scope:** Item 11  
 **Route:** `/waas/accountants`  
-**Recommended default:** Final disposition remains unresolved among RETAIN, REDIRECT, ARCHIVE, REMOVE, or DEFER. Product strategy confirmation is an entry criterion, not a disposition.  
+**Allowed dispositions:** RETAIN (if WaaS current), CONSOLIDATE → `/workbench` (if consolidating), REDIRECT → explicit destination (if deprecated)  
 **Entry criteria:**
-- Owner has confirmed WaaS product strategy
+- Owner has confirmed WaaS product strategy (current vs. deprecated)
 - Owner has recorded one signed canonical final disposition
 - If REDIRECT is selected, the owner has confirmed the exact destination
 
 **Likely affected files:**
 - `src/app/waas/accountants/page.tsx`
-- `/waas/page.tsx` or `/waas/layout.tsx` (if hub exists)
-- Navigation/footer (if linked)
+- Navigation/footer links (if linked from kits pages)
 
 **Dependencies:**
-- **Critical:** Product strategy decision (is WaaS current or deprecated?)
-- Partner/marketing dependencies (unknown; may affect external links)
+- **Blocking:** Product strategy decision (is WaaS current or deprecated?)
 
 **Risks:**
 - **Product positioning:** Niche audience page; retention signals product diversity; removal eliminates variant
@@ -741,60 +739,70 @@ PXF-018D (Onboarding)
 PXF-018E (WaaS)
   ↓ (blocks on: owner product strategy decision)
   
-PXF-018F (Internal Systems Clarification) ← CRITICAL BLOCKER
-  ↓ (blocks on: owner clarification of purpose/consumers for Items 13, 16, 17, 18)
-  ↓ (after clarification, routes independently to: RETAIN docs, REMOVE verification, or DEFER)
+PXF-018F (Internal System Routes — Complete)
+  ↓ (all items signed/verified complete; documentation optional)
   
 PXF-018G (Debug Security)
-  ↓ (no blocking deps)
+  ↓ (blocks on: owner choice for Items 14–15 — RETAIN or REMOVE)
   
 PXF-018H (Item 19 Removal + Item 20 Retention)
-  ↓ (Item 19 has no blocking deps; Item 20 must be retained with verified consumers)
+  ↓ Item 19: (blocks on: external dependency confirmation or DEFER)
+  ↓ Item 20: (complete; already RETAIN-signed)
   
-PXF-018I (API Aliasing)
-  ↓ (no blocking deps if RETAIN; requires consumer audit if DEPRECATE)
+PXF-018I (API Aliasing — Complete)
+  ↓ (Item 22 already RETAIN-signed; no changes needed)
 ```
 
 ### Critical Path (Items That Block Others)
 
-1. **PXF-018F (Internal Systems Routes)** — LOW PRIORITY
-   - Items 13, 16, 17, 18 all have verified consumers; no removal recommended
-   - RETAIN is safe default; no action required unless owner plans external refactoring
-   - Recommend: Acknowledge audit findings and document purpose in code (optional; not blocking)
+1. **PXF-018D (Onboarding Flow)** — HIGH PRIORITY (BLOCKING)
+   - Item 10 requires owner to select ONE destination (/memory, /memory-qa, /workbench)
+   - Cannot execute until destination is chosen
+   - Recommend: Include in Step 2 owner decisions
 
-2. **PXF-018A (Marketing SEO)** — HIGH PRIORITY
-   - Item 1 (`/blog`) requires external backlink audit; delays potential Phase 11 completion
-   - Recommend: Start backlink audit in parallel with other decisions
+2. **PXF-018G (Debug Security)** — MEDIUM PRIORITY (BLOCKING)
+   - Items 14–15 require owner choice (RETAIN with NODE_ENV or REMOVE)
+   - Cannot execute until security posture is approved
+   - Recommend: Include in Step 1 owner decisions
 
-3. **PXF-018C (Prompt Library)** — HIGH PRIORITY
-   - Requires backlink/SEO evaluation; may inform Phase 13 governance strategy
-   - Recommend: Include in backlink audit with Item 1
+3. **PXF-018H Item 19 (Events Removal)** — MEDIUM PRIORITY (BLOCKING)
+   - Item 19 is externally blocked (external dependencies unknown)
+   - Owner must confirm zero external deps (REMOVE) or select DEFER
+   - Recommend: Include in Step 2 owner decisions
+
+4. **PXF-018A (Marketing SEO)** — HIGH PRIORITY (OPTIONAL BLOCKER)
+   - Items 1, 7 require external backlink audit
+   - Recommend: Include in parallel backlink audit (if pursuing CONSOLIDATE)
+
+5. **PXF-018E (WaaS Strategy)** — MEDIUM PRIORITY (OPTIONAL BLOCKER)
+   - Item 11 requires owner product strategy confirmation
+   - Recommend: Include in Step 2 owner decisions
 
 ### Execution Order (Recommended Sequence)
 
-**Phase 1: Owner Classification (Owner tasks)**
-1. Make disposition decisions for all 16 pending items in worksheet
-2. Provide destination paths for REDIRECT/CONSOLIDATE choices
-3. For Items 13–18: acknowledge audit findings (no external clarification needed unless planning major refactoring)
+**Phase 1: Owner Decisions (Step 1 — Repository-Ready; 4 items)**
+1. Items 2, 8, 14, 15: Owner signatures alone complete these
+2. No external input required
 
-**Phase 2: Parallel Execution (Post-approval)**
-- PXF-018A (Marketing SEO) — Medium priority; awaits backlink audit
-- PXF-018B (Learning Hub) — Low priority; no blocking deps
-- PXF-018D (Onboarding) — Low priority; no blocking deps
-- PXF-018G (Debug Security) — Medium priority; security-sensitive
-- PXF-018H (Item 19 Removal) — Low priority; no risk
-- PXF-018F (Internal Systems Docs) — Optional; low priority (no removal recommended; retention is safe)
+**Phase 2: Owner Decisions (Step 2 — External/Strategy-Blocked; 5 items)**
+1. Items 1, 7: Provide external backlink audit OR confirm SEO risk acceptance
+2. Item 10: Select ONE destination (/memory, /memory-qa, /workbench)
+3. Item 11: Confirm WaaS product status (current vs. deprecated)
+4. Item 19: Confirm zero external dependencies OR select DEFER
 
-**Phase 3: Conditional Execution (Strategy-dependent)**
-- PXF-018C (Prompt Library) — Awaits backlink audit or owner decision
-- PXF-018E (WaaS) — Awaits product strategy decision
-- PXF-018I (API Aliasing) — No-op if RETAIN; consumer audit if DEPRECATE
-- PXF-018H (Item 20 Retention) — Automatic; no action needed (route has verified consumers; must be retained)
+**Phase 3: Parallel Execution (Immediately upon owner signatures)**
+- PXF-018A (Marketing SEO) — Items 1–2 (awaits external audit if consolidating)
+- PXF-018B (Learning Hub) — Item 5 (already completed); Item 8 pending
+- PXF-018D (Onboarding) — Item 10 (awaits destination selection)
+- PXF-018G (Debug Security) — Items 14–15 (awaits owner choice)
+- PXF-018H Item 19 — (awaits external dependency confirmation)
+- PXF-018C (Prompt Library) — Item 7 (awaits external audit if consolidating)
+- PXF-018E (WaaS) — Item 11 (awaits product strategy confirmation)
 
-**Phase 4: Implementation Refinement (Post-staging)**
+**Phase 4: Post-Execution Validation (Staging/Production)**
 - Run approved packets in staging; verify redirects, 404s, and build success
 - Deploy to production in dependency order
-- Verify Item 19 deletion does not affect Item 20 (both in same directory)
+- Monitor for errors; verify Item 19 deletion (if approved) does not affect Item 20
 
 ---
 
@@ -818,19 +826,20 @@ Each packet is **independently reviewable and rollbackable**. DO NOT combine pac
 
 ## Validation Checklist (Before Deployment)
 
-- [ ] All 16 substantive pending items mapped to a packet
-- [ ] 6 verified-absent items explicitly excluded from packets
-- [ ] No disposition preselected; all remain blank pending owner decision
+- [ ] 7 signed/completion-verified items (5, 13, 16, 17, 18, 20, 22) excluded from packets
+- [ ] 9 unresolved items mapped to packets: 4 repository-ready + 5 external/strategy-blocked
+- [ ] 6 verified-absent items explicitly excluded
+- [ ] No disposition preselected; all 9 FINAL fields remain blank
 - [ ] No invented consumer, destination, analytics, or approval fact appears
 - [ ] Browser evidence counts remain: 66 total (6+18+16+26)
+- [ ] Phase 11 inventory: 7 signed + 9 unresolved + 6 absent = 22 total
 - [ ] Phase 11 status unchanged: PARTIAL
-- [ ] Phase 12 status unchanged: PARTIAL
+- [ ] Phase 12 status unchanged: PARTIAL (66 automated tests + manual evidence incomplete)
+- [ ] Phase 13: ONGOING (governance decisions ongoing)
 - [ ] MailerLite rotation status unchanged: PENDING
 - [ ] Archive branch (`archive/content-heavy-site`) not mentioned or modified
 - [ ] No application source code modified (documentation only)
 - [ ] Git diff shows documentation files only
-- [ ] Build passes: `npm run type-check && npm run build`
-- [ ] ESLint passes: `npm run lint` (if applicable)
 - [ ] No unrelated changes in working tree
 
 ---
@@ -864,36 +873,43 @@ The owner approval manifest controls authorization:
 
 ### What must happen next:
 
-1. **Owner completes the approval manifest:**
-   - Bulk-approve only explicitly listed eligible items, or approve items individually
-   - Select one canonical disposition for owner-selection items
-   - Resolve required external inputs before signing blocked items
+1. **Owner completes Phase 11 owner decision package:**
+   - Step 1 (4 items): Signature alone completes Items 2, 8, 14, 15
+   - Step 2 (5 items): Provide external evidence/strategy input for Items 1, 7, 10, 11, 19
    - Provide exact destinations and record approver/date fields
+   - Leave all FINAL dispositions blank until signed
 
-2. **After approval, execute authorized item scopes in dependency order:**
-   - Only signed final dispositions execute
-   - Each bounded item or packet scope commits independently
+2. **After approval, execute authorized packets in dependency order:**
+   - Only signed final dispositions unlock implementation packets
+   - Items 2, 8, 14, 15 may execute immediately upon Step 1 signature
+   - Items 1, 7, 10, 11, 19 execute only after Step 2 external inputs received
+   - Each packet commits independently
    - Validate in staging before production deploy
 
-3. **Phase 12 and MailerLite remain separate:**
-   - Manual evidence collection (Phase 12) is independent
-   - MailerLite credential rotation is independent
-   - Neither blocks Phase 11 cleanup
+3. **Separate workstreams (independent):**
+   - Phase 12 manual evidence collection (ongoing)
+   - MailerLite credential rotation (pending owner action)
+   - Phase 13 governance decisions (ongoing)
 
 ---
 
 ## References
 
-- **Source:** `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` (16 pending items + 6 verified-absent)
-- **Context:** `docs/platform/LEGACY_OWNER_DECISIONS.md` (detailed register)
-- **Brief:** `docs/platform/LEGACY_OWNER_DECISION_BRIEF.md` (executive summary)
+- **Package:** `docs/platform/PHASE_11_READY_TO_SIGN_OWNER_DECISION_PACKAGE.md` (9 unresolved items)
+- **Manifest:** `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` (approval structure)
+- **Brief:** `docs/platform/PXF018_OWNER_DECISION_BRIEF.md` (audit findings)
+- **Worksheet:** `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` (status record)
+- **Register:** `docs/platform/LEGACY_OWNER_DECISIONS.md` (complete inventory)
 - **Roadmap:** `docs/roadmap.md` (Phase 11 PARTIAL status)
-- **Current phase:** `docs/HANDOFF_2026-08-06_PXF017_CLOSEOUT.md`
 
 ---
 
 **Status:** Blueprint complete; audit reconciled; awaiting owner decisions to unlock implementation packets.
 
-**Worksheet status:** 16 dispositions PENDING; 6 verified-absent items excluded (Item 3 reclassified; Items 13–18 have verified consumers).
+**Current status:** 7 signed/completion-verified + 9 unresolved + 6 verified-absent = 22 total items
 
-**Next owner action:** Classify all 16 pending items and provide destinations for REDIRECT/CONSOLIDATE choices. For Items 13–18, audit confirms active use; RETAIN is safe default. No external clarification needed unless planning major refactoring (see **Packet PXF-018F** and worksheet).
+**Next owner action:** 
+1. Complete Step 1 (Items 2, 8, 14, 15): Signature alone sufficient
+2. Complete Step 2 (Items 1, 7, 10, 11, 19): Provide external evidence/strategy input
+3. Provide exact destinations for Items 1–2, 7–8, 10–11, 19 where applicable
+4. Return signed package to implementation team

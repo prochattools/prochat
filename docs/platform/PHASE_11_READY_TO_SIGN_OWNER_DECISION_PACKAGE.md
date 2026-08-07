@@ -77,29 +77,6 @@ These 4 items have sufficient repository evidence to narrow disposition choices.
 
 ---
 
-### Item 19: `/systems/events` — Zero repository inbound links; external dependencies UNKNOWN
-
-| Finding | Evidence |
-|---------|----------|
-| **Route exists** | `src/app/systems/events/` directory ✓ |
-| **Purpose** | Event system kernel; legacy classification |
-| **Internal links** | 0 verified (grep search returned zero repository references) |
-| **External dependencies** | **UNKNOWN** — no repository evidence available |
-| **SEO risk** | NONE (internal system route) |
-| **Auth required** | Unclear; shell-classification indicates internal-only intent |
-
-**Note:** This item remains **externally blocked** because external dependencies cannot be confirmed or denied from repository evidence alone.
-
-**Allowed dispositions:**
-- `REMOVE` (only if owner confirms zero external dependencies exist)
-- `DEFER` (pending clarification of external dependency status)
-
-**Recommended choice (non-binding):** `DEFER` until external dependency status confirmed
-
-**Owner signature required:** Select ONE: REMOVE (with explicit confirmation of zero external deps) OR DEFER
-
----
-
 ## B. External-Evidence-Blocked or Strategy-Required Choices (5 items)
 
 These 5 items require external evidence, owner knowledge, or strategy determination to narrow disposition choices. Repository evidence alone is insufficient.
@@ -164,6 +141,37 @@ These 5 items require external evidence, owner knowledge, or strategy determinat
 
 ---
 
+### Item 10: `/starting-point/*` — Destination selection requires audience determination
+
+| Finding | Evidence |
+|---------|----------|
+| **Route exists** | `src/app/starting-point/` directory with nested routes ✓ |
+| **Purpose** | Onboarding flow / entry point |
+| **Internal links** | 1 verified: ProofPageContent.tsx (`secondaryCtaLink="/starting-point"`) |
+| **Email dependencies** | Unknown; email campaign dependencies not verified in repository |
+| **SEO risk** | NONE (internal/onboarding route; not indexed) |
+| **Auth required** | None (public entry point) |
+
+**Note:** This item remains **audience-strategy-blocked** because onboarding destination selection requires owner knowledge of target product path and audience.
+
+**Allowed dispositions:**
+- `CONSOLIDATE` → exactly ONE destination (not combined):
+  - `/memory` (memory product entry point)
+  - `/memory-qa` (QA/testing product entry point)
+  - `/workbench` (unified product workbench)
+
+**Constraint:** Implementation logic must select EXACTLY ONE destination; combined routing not permitted.
+
+**Strategy input required:** Owner determines primary onboarding audience and corresponding destination
+
+**Recommended choice (non-binding):** Select destination based on target onboarding audience
+
+**Owner signature required:** 
+1. Identify primary onboarding audience
+2. Select exactly ONE destination: `/memory` OR `/memory-qa` OR `/workbench`
+
+---
+
 ### Item 11: `/waas/accountants` — Product strategy required to choose disposition
 
 | Finding | Evidence |
@@ -194,34 +202,26 @@ These 5 items require external evidence, owner knowledge, or strategy determinat
 
 ---
 
-### Item 10: `/starting-point/*` — Destination selection requires audience determination
+### Item 19: `/systems/events` — Zero repository inbound links; external dependencies UNKNOWN
 
 | Finding | Evidence |
 |---------|----------|
-| **Route exists** | `src/app/starting-point/` directory with nested routes ✓ |
-| **Purpose** | Onboarding flow / entry point |
-| **Internal links** | 1 verified: ProofPageContent.tsx (`secondaryCtaLink="/starting-point"`) |
-| **Email dependencies** | Unknown; email campaign dependencies not verified in repository |
-| **SEO risk** | NONE (internal/onboarding route; not indexed) |
-| **Auth required** | None (public entry point) |
+| **Route exists** | `src/app/systems/events/` directory ✓ |
+| **Purpose** | Event system kernel; legacy classification |
+| **Internal links** | 0 verified (grep search returned zero repository references) |
+| **External dependencies** | **UNKNOWN** — no repository evidence available |
+| **SEO risk** | NONE (internal system route) |
+| **Auth required** | Unclear; shell-classification indicates internal-only intent |
 
-**Note:** This item remains **audience-strategy-blocked** because onboarding destination selection requires owner knowledge of target product path and audience.
+**Note:** This item remains **externally blocked** because external dependencies cannot be confirmed or denied from repository evidence alone.
 
 **Allowed dispositions:**
-- `CONSOLIDATE` → exactly ONE destination (not combined):
-  - `/memory` (memory product entry point)
-  - `/memory-qa` (QA/testing product entry point)
-  - `/workbench` (unified product workbench)
+- `REMOVE` (only if owner confirms zero external dependencies exist)
+- `DEFER` (pending clarification of external dependency status)
 
-**Constraint:** Implementation logic must select EXACTLY ONE destination; combined routing not permitted.
+**Recommended choice (non-binding):** `DEFER` until external dependency status confirmed
 
-**Strategy input required:** Owner determines primary onboarding audience and corresponding destination
-
-**Recommended choice (non-binding):** Select destination based on target onboarding audience
-
-**Owner signature required:** 
-1. Identify primary onboarding audience
-2. Select exactly ONE destination: `/memory` OR `/memory-qa` OR `/workbench`
+**Owner signature required:** Select ONE: REMOVE (with explicit confirmation of zero external deps) OR DEFER
 
 ---
 
