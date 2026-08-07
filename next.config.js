@@ -100,6 +100,17 @@ const nextConfig = {
         destination: '/blog/is-saaskit-worth-it-for-first-time-founders-honest-evaluation',
         permanent: true,
       },
+      // PXF-018 Item 5: Consolidate /learn → /docs/learn
+      {
+        source: '/learn',
+        destination: '/docs/learn',
+        permanent: true,
+      },
+      {
+        source: '/learn/:path*',
+        destination: '/docs/learn/:path*',
+        permanent: true,
+      },
     ]
   },
   images: {
