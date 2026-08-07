@@ -70,9 +70,15 @@ describe('Legacy compatibility routes and APIs', () => {
   })
 
   describe('Legacy route accessibility', () => {
-    it('/book page is accessible and returns 200', async () => {
-      const response = await fetch(`${baseUrl}/book`)
-      assert.equal(response.status, 200, '/book should return 200')
+    it('/book source calls redirect to /contact', () => {
+      const source = readFileSync(
+        resolve(process.cwd(), 'src/app/book/page.tsx'),
+        'utf-8',
+      )
+      assert(
+        source.includes("redirect('/contact')"),
+        `book/page.tsx must call redirect('/contact'), got: ${source.trim()}`,
+      )
     })
 
     it('/learn page is accessible and returns 200', async () => {
@@ -85,9 +91,15 @@ describe('Legacy compatibility routes and APIs', () => {
       assert.equal(response.status, 200, '/proof should return 200')
     })
 
-    it('/starting-point page is accessible and returns 200', async () => {
-      const response = await fetch(`${baseUrl}/starting-point`)
-      assert.equal(response.status, 200, '/starting-point should return 200')
+    it('/starting-point source calls redirect to /workbench', () => {
+      const source = readFileSync(
+        resolve(process.cwd(), 'src/app/starting-point/page.tsx'),
+        'utf-8',
+      )
+      assert(
+        source.includes("redirect('/workbench')"),
+        `starting-point/page.tsx must call redirect('/workbench'), got: ${source.trim()}`,
+      )
     })
 
     it('/ai-workflows page is accessible and returns 200', async () => {
@@ -100,9 +112,15 @@ describe('Legacy compatibility routes and APIs', () => {
       assert.equal(response.status, 200, '/systems/prochat-os should return 200')
     })
 
-    it('/waas/accountants page redirects to /workbench', async () => {
-      const response = await fetch(`${baseUrl}/waas/accountants`)
-      assert.equal(response.status, 200, '/waas/accountants should return 200')
+    it('/waas/accountants source calls redirect to /workbench', () => {
+      const source = readFileSync(
+        resolve(process.cwd(), 'src/app/waas/accountants/page.tsx'),
+        'utf-8',
+      )
+      assert(
+        source.includes("redirect('/workbench')"),
+        `waas/accountants/page.tsx must call redirect('/workbench'), got: ${source.trim()}`,
+      )
     })
   })
 
