@@ -14,7 +14,7 @@ This file preserves the useful evidence from the completed repository, roadmap, 
 
 - The approved public-platform implementation is complete and deployed.
 - The eight canonical visual routes are `/`, `/memory`, `/memory-qa`, `/workbench`, `/docs`, `/contact`, `/privacy`, and `/terms`.
-- The canonical screenshot audit passed 40/40 route-and-viewport combinations after the `/docs` mobile overflow repair.
+- Browser evidence: 66 automated tests passed across four spec files (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof), covering all canonical routes and viewports including `/docs` mobile overflow repair.
 - Focus traversal and reduced-motion evidence were added for the docs mobile experience.
 - The public design system is centralized through the root layout, `AppChrome`, the canonical public shell, the docs-specific shell, shared foundation styles, and design-governance linting.
 - The canonical design is complete for the approved scope; docs, protected, no-shared-shell, and temporary legacy routes remain deliberate separate classifications.
@@ -1007,8 +1007,8 @@ Owner must select the next work packet. Broad Ory/session implementation remains
 ### Phase status
 
 ```text
-Phase 11 — PARTIAL (17 decisions; redirects live; full legacy removal deferred)
-Phase 12 — PARTIAL (66/66 browser/accessibility evidence post-PXF-017)
+Phase 11 — PARTIAL (16 pending owner decisions + 6 verified-absent = 22 catalogued; redirects live; full legacy removal deferred)
+Phase 12 — PARTIAL (66 automated browser/accessibility evidence passed; manual screen-reader, zoom, high-contrast, field RUM/INP deferred)
 Phase 13 — ONGOING
 MailerLite rotation — PENDING owner verification
 ```
@@ -1057,23 +1057,24 @@ Updated three canonical roadmap documents to reflect final PXF-017 deployment:
 ### Owner decision register
 
 - **22 total items catalogued**
-- **17 substantive pending decisions** (owner classification required)
-- **5 verified-absent items** (no code removal required; marked NOT APPLICABLE)
+- **16 substantive pending decisions** (owner classification and approval required; see PXF018_OWNER_APPROVAL_MANIFEST.md)
+- **6 verified-absent items** (no code removal required; marked NOT APPLICABLE)
 
 Verified-absent closures (all have zero tracked route files; no implementation to remove):
-1. `/guides/[topic]/[slug]` → NOT APPLICABLE
-2. `/playbooks/[segment]/[slug]` → NOT APPLICABLE
-3. `/snippets/[stack]/[slug]` → NOT APPLICABLE
-4. `/glossary/[term]` → NOT APPLICABLE
-5. `/bb` → NOT APPLICABLE
+1. `/brainbridge` → NOT APPLICABLE
+2. `/guides/[topic]/[slug]` → NOT APPLICABLE
+3. `/playbooks/[segment]/[slug]` → NOT APPLICABLE
+4. `/snippets/[stack]/[slug]` → NOT APPLICABLE
+5. `/glossary/[term]` → NOT APPLICABLE
+6. `/bb` → NOT APPLICABLE
 
-All 17 pending items documented in `docs/platform/LEGACY_OWNER_DECISIONS.md` and `docs/platform/LEGACY_OWNER_DECISION_BRIEF.md`.
+All 16 pending items (plus 6 verified-absent, 22 total) documented in `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md`, `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md`, and `docs/platform/LEGACY_OWNER_DECISION_BRIEF.md`.
 
 ### Phase status
 
 | Phase | Status | Evidence |
 |---|---|---|
-| Phase 11 | PARTIAL | Redirects live, 17 owner decisions pending, cleanup deployed (PXF-017A) |
+| Phase 11 | PARTIAL | Redirects live, 16 pending owner decisions + 6 verified-absent (22 total), cleanup deployed (PXF-017A) |
 | Phase 12 | PARTIAL | 66 browser tests ✓; manual screen-reader, 200% zoom, high-contrast, field RUM/INP deferred |
 | Phase 13 | ONGOING | Continuous governance active; no completion gate |
 
@@ -1105,14 +1106,16 @@ All 17 pending items documented in `docs/platform/LEGACY_OWNER_DECISIONS.md` and
 - `getByRole('link', /^skip to content$/i)` count = 0 on production /docs
 - CI workflow 31093765830: **success** — all jobs passed
 
-### Final test counts (CI 31093765830)
+### Final test counts at PXF-017 deployment (CI 31093765830, 2026-08-06)
 
 - docs-mobile: 6 tests ✓
-- canonical-route-smoke: 18 + 2 contact = 20 tests ✓
-- canonical-accessibility: 19 tests ✓
-- canonical-chrome-proof: 26 tests ✓ (including client-nav test)
+- canonical-route-smoke: 18 tests (4 routes × desktop/mobile + 2 contact visual) ✓
+- canonical-accessibility: 16 tests (Axe WCAG 2.x, 8 routes × 2 viewports) ✓
+- canonical-chrome-proof: 26 tests (including client-nav test) ✓
 - test:security-api: 33 tests ✓
-- Total browser evidence: **66 tests passed**
+- Total browser evidence: **66 tests passed (6+18+16+26)**
+
+[**Current canonical:** specs remain stable at 66 tests; canonical counts are 6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof]
 
 ### Professionalism packet: COMPLETE — final state
 

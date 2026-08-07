@@ -3042,10 +3042,10 @@ b3c726b fix: add reviewed exceptions for docs link-in-text-block violations
 ### Evidence suite at deployment
 
 - docs-mobile: 6 tests
-- canonical-route-smoke: 18 tests + 2 contact visual
-- canonical-accessibility: 19 tests (Axe across 8 routes × 2 viewports)
+- canonical-route-smoke: 18 tests (4 routes × desktop/mobile + 2 contact visual)
+- canonical-accessibility: 16 tests (Axe WCAG 2.x across 8 routes × 2 viewports)
 - canonical-chrome-proof: 26 tests (chrome invariants, geometry, docs, contact, client nav)
-- Total: 66 browser evidence tests
+- Total: 66 browser evidence tests (6+18+16+26)
 
 ### Stop condition met
 
