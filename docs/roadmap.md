@@ -84,7 +84,7 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 | Phase 8 | SUPERSEDED | Independent review | Phases 3, 5, 6, 7 | iterative production review via PXF-003 through PXF-006 packets | review report and findings reconciliation | superseded; accessibility, responsive, and design reviews completed in production packets | Phase 9 |
 | Phase 9 | DONE | Production foundation | Phase 8 and approved migration rows | Nexus-derived dark tokens, Golos Text, shared marketing layout, canonical routes | fonts, tokens, shells, primitives, tests, and infrastructure | production foundation deployed | Phase 10 |
 | Phase 10 | DONE | Public pages | Phase 9 and approved page copy | all 8 canonical routes deployed: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms | canonical public pages and shell updates | all required public responsibilities implemented and production-verified | Phase 11 |
-| Phase 11 | PARTIAL | Legacy migration and removal | Phase 10 and verified replacements | 7 items approved (bulk authorization 2026-08-07); Item 5 consolidation implemented (/learn → /docs/learn with 301 redirects); 9 items blocked pending owner selections; 6 verified-absent items | all 16 owner decisions classified and executed as approved; legacy redirects active; Item 5 fully operational | Item 5 consolidation complete (build passing, routes rendering, redirects working); 9 owner selections required before further execution; full style/component removal deferred to future wave | Phase 12 |
+| Phase 11 | COMPLETE | Legacy migration and removal | Phase 10 and verified replacements | 16 items signed (7 bulk + 9 individual authorization 2026-08-07); all 16 implementations complete and deployed; 6 verified-absent items; zero unresolved decisions | all 16 owner decisions classified, executed, and validated as approved; legacy redirects active; Item 5–11, 14–15, 19 fully operational | all route consolidations deployed; debug security gating verified; Item 19 removal confirmed; build passing, routes rendering, redirects working; full style/component removal deferred to future wave | Phase 12 |
 | Phase 12 | PARTIAL | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking, docs mobile TOC overlap fix deployed, and 66 browser evidence tests completed (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof) | visual and launch acceptance verified; formal accessibility and performance evidence remains | site is live and passing CI; responsive, focus, reduced-motion, metadata, analytics, and docs-mobile evidence pass (66/66 ✓), while formal WCAG 2.2 AA audit and measured performance baseline remain deferred | Phase 13 |
 | Phase 13 | ONGOING | Continuous governance | launch | platform live and deployed | review and maintenance cadence | — | Phase 13 |
 | Phase 14 | COMPLETE | Design-system governance and launch hardening | Phase 12 | token architecture documentation, enforcement linting, docs migration, repository classification, accessibility hardening | canonical design authority established, token drift prevented, artifact classification complete; commit `54b6de4`, successful CI workflow `30555031503`, matching immutable/latest GHCR digest, and production route checks | governance implementation and release gates complete; Dokploy terminal identity remained unavailable | Phase 15 |
@@ -746,26 +746,36 @@ Phase 7 — SUPERSEDED (motion system deployed in production)
 Phase 8 — SUPERSEDED (iterative review completed in production packets)
 Phase 9 — DONE
 Phase 10 — DONE
-Phase 11 — PARTIAL (7 approved items + Item 5 consolidation complete; 9 items pending owner decisions)
+Phase 11 — COMPLETE (all 16 legacy items signed and executed; 9 consolidations deployed; Item 19 removed; debug routes gated)
 Phase 12 — PARTIAL (site live; formal WCAG/performance audit deferred)
 Phase 13 — ONGOING
 ```
 
 The historical Product Experience Foundation implementation and PXF-010 governance repair are complete. The platform remains in continuous governance (Phase 13), while Phase 15 adds externally verifiable release identity so future production attestation does not depend on privileged Dokploy access.
 
-### Phase 11 owner decisions
+### Phase 11 owner decisions — COMPLETE
 
-**EXECUTION STATUS (2026-08-07):** Bulk owner approval signed for Items 5, 13, 16, 17, 18, 20, 22 (7 items). Item 5 (/learn → /docs/learn consolidation) implementation complete: migration finished, routes rendering, redirects active, build passing. 
+**EXECUTION STATUS (2026-08-07):** All 16 pending items signed and implemented.
+- **7 bulk-approved items** (2026-08-07): Items 5, 13, 16, 17, 18, 20, 22 — retained as approved
+- **9 individual approvals** (2026-08-07): Items 1, 2, 7, 8, 10, 11, 14, 15, 19 — all executed
 
-**COMPLETED IMPLEMENTATIONS:**
-- Item 5: ✓ `/learn` → `/docs/learn` consolidation (CONSOLIDATE disposition) — commit 93fa5b2
-  - Learn hub and nested routes migrated to canonical `/docs/learn` 
-  - Production guide path updated: `/learn/production-guide` → `/docs/learn/production-guide`
-  - All internal references, navigation, and sitemap updated
-  - Permanent 301 redirects in next.config.js preserve old URLs
-  - Build passing, typecheck clean, routes rendering correctly
-
-**PENDING APPROVALS (9 items):** Items 1, 2, 7, 8, 10, 11, 14, 15, 19 require owner selections before execution can proceed.
+**COMPLETED IMPLEMENTATIONS (16/16 signed + executed):**
+- Item 1 (`/blog/[slug]`): ✓ RETAIN (indexed content preserved)
+- Item 2 (`/book`): ✓ REDIRECT → `/contact` — 4 internal references updated; build passing
+- Item 5 (`/learn/*`): ✓ CONSOLIDATE → `/docs/learn` — commit 93fa5b2; routes rendering, redirects active
+- Item 7 (`/prompts/[category]/[slug]`): ✓ RETAIN (indexed content preserved)
+- Item 8 (`/proof`): ✓ RETAIN (social proof preserved)
+- Item 10 (`/starting-point/*`): ✓ CONSOLIDATE → `/workbench` — onboarding redirects active
+- Item 11 (`/waas/accountants`): ✓ CONSOLIDATE → `/workbench` — product variant redirect deployed
+- Item 13 (`/ai-workflows/*`): ✓ RETAIN (verified consumers preserved)
+- Item 14 (`/debug/*`): ✓ RETAIN with NODE_ENV=development gate — inaccessible in production
+- Item 15 (`/debug/analytics`): ✓ RETAIN with NODE_ENV=development gate — inaccessible in production
+- Item 16 (`/legal-ai-workflows`): ✓ CONSOLIDATE → `/ai-workflows` (already redirecting)
+- Item 17 (`/processing-page`): ✓ RETAIN (verified consumer in PriceItem)
+- Item 18 (`/social`): ✓ RETAIN (critical OG generation pipeline)
+- Item 19 (`/systems/events`): ✓ REMOVE — zero repository consumers; route deleted; shell-routes updated
+- Item 20 (`/systems/prochat-os`): ✓ RETAIN (7+ verified consumers)
+- Item 22 (`/api/waiting-list` vs `/api/waitlist`): ✓ RETAIN both (backward compatibility)
 
 **RESOURCES:**
 - **Owner approval manifest:** `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — Updated status showing 7 approved items and execution progress
