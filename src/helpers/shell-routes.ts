@@ -44,7 +44,7 @@ export const SHELL_ROUTE_DEFINITIONS: readonly ShellRouteDefinition[] = [
   { routeId: 'ROUTE-016', sourcePattern: 'missing /about', runtimePattern: '/about', shellClass: 'canonical_public_shell' },
   { routeId: 'ROUTE-017', sourcePattern: '/buildflow', runtimePattern: '/buildflow', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-018', sourcePattern: '/systems/prochat-os', runtimePattern: '/systems/prochat-os', shellClass: 'temporary_legacy_compatibility' },
-  { routeId: 'ROUTE-019', sourcePattern: '/systems/events', runtimePattern: '/systems/events', shellClass: 'temporary_legacy_compatibility' },
+  // ROUTE-019 (/systems/events) — removed per PXF-018H Item 19 (zero repository consumers)
   { routeId: 'ROUTE-020', sourcePattern: '/ai-workflows', runtimePattern: '/ai-workflows', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-021', sourcePattern: '/legal-ai-workflows', runtimePattern: '/legal-ai-workflows', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-022', sourcePattern: '/studio', runtimePattern: '/studio', shellClass: 'temporary_legacy_compatibility' },
@@ -57,7 +57,7 @@ export const SHELL_ROUTE_DEFINITIONS: readonly ShellRouteDefinition[] = [
   { routeId: 'ROUTE-029', sourcePattern: '/kits/waaskit', runtimePattern: '/kits/waaskit', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-030', sourcePattern: '/waitlist', runtimePattern: '/waitlist', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-031', sourcePattern: '/waiting-list', runtimePattern: '/waiting-list', shellClass: 'no_shared_shell' },
-  { routeId: 'ROUTE-032', sourcePattern: '/book', runtimePattern: '/book', shellClass: 'temporary_legacy_compatibility' },
+  { routeId: 'ROUTE-032', sourcePattern: '/book', runtimePattern: '/contact', shellClass: 'temporary_legacy_compatibility' }, // PXF-018A Item 2: consolidated to /contact
   { routeId: 'ROUTE-033', sourcePattern: '/proof', runtimePattern: '/proof', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-034', sourcePattern: '/starting-point', runtimePattern: '/starting-point', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-035', sourcePattern: '/docs/learn', runtimePattern: '/docs/learn', shellClass: 'temporary_legacy_compatibility' },

@@ -79,7 +79,7 @@ export default function ProChatOSPageContent({ priceId: _priceId }: ProChatOSPag
         }
         subtitle="ProChat helps your team use its own examples, style, notes, and business knowledge to prepare drafts, summaries, reports, replies, and next steps faster."
         primaryCTA={{ href: '/ai-workflows', label: 'Start with one task' }}
-        secondaryCTA={{ href: '/book', label: 'Book a call', variant: 'secondary' }}
+        secondaryCTA={{ href: '/contact', label: 'Book a call', variant: 'secondary' }}
         ambientMotion
       >
         <HeroCheckRow

@@ -83,7 +83,7 @@ export default function AIWorkflowsPageContent() {
           </>
         }
         subtitle="We turn your messy notes, examples, emails, files, and context into one review-ready output, so you can see whether ProChat saves real time before expanding."
-        primaryCTA={{ href: '/book', label: 'Book a time-saving call' }}
+        primaryCTA={{ href: '/contact', label: 'Book a time-saving call' }}
         secondaryCTA={{ href: '#offer', label: 'See the offer', variant: 'secondary' }}
         ambientMotion
       >

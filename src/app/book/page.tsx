@@ -1,32 +1,8 @@
-import { getSEOTags } from '@/libs/seo'
-import BookPageContent from './BookPageContent'
+import { redirect } from 'next/navigation'
 
-export const metadata = getSEOTags({
-  title: 'Book a Call | ProChat',
-  description:
-    'Book a free AI Fit Check or a 60-minute Personal AI Setup Session for practical help with AI tools, automations, local setup, privacy basics, and workflow planning.',
-  keywords: [
-    'AI setup session',
-    'AI consultation',
-    'personal AI workflow',
-    'business AI setup',
-    'AI automation help',
-    'ProChat booking',
-  ],
-  openGraph: {
-    title: 'Book a Call | ProChat',
-    description:
-      'Book a free AI Fit Check or a 60-minute Personal AI Setup Session for practical help setting up AI for your work, business, or personal productivity.',
-    images: ['/og'],
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    images: ['/og'],
-  },
-  canonicalUrlRelative: '/book',
-})
-
+// PXF-018A: Item 2 — REDIRECT /book → /contact
+// Approved 2026-08-07: consolidate booking entry point to contact page
+// Legacy /book content merged into contact flow
 export default function BookPage() {
-  return <BookPageContent />
+  redirect('/contact')
 }

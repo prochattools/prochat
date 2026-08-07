@@ -420,7 +420,7 @@ const ProKitPageContent = ({ priceId }: ProKitPageContentProps) => {
                 <Link href="/systems/prochat-os">EXPLORE — PROCHAT OS</Link>
               </Button>
               <Button asChild variant="secondary" size="lg">
-                <Link href="/book">BOOK — A CALL</Link>
+                <Link href="/contact">BOOK — A CALL</Link>
               </Button>
             </div>
           </div>
