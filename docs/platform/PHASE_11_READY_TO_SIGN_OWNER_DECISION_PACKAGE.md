@@ -11,7 +11,9 @@
 
 ## A. Repository-Evidence-Ready Choices (4 items)
 
-These items have sufficient repository evidence to recommend a single owner choice with no external blocking evidence.
+These 4 items have sufficient repository evidence to narrow disposition choices. Owner selection alone completes them; no external audit or strategy determination required.
+
+**Items in this section:** 2, 8, 14, 15
 
 ### Item 2: `/book` — Single internal-only route
 
@@ -26,9 +28,9 @@ These items have sufficient repository evidence to recommend a single owner choi
 
 **Allowed dispositions:**
 - `RETAIN` (keep existing 3 internal links)
-- `REDIRECT` → explicit owner destination (e.g., `/contact`, `/docs`)
+- `REDIRECT` → explicit owner destination (owner must specify)
 
-**Recommended choice (non-binding):** `REDIRECT` → `/contact` (if call-booking entry point)
+**Recommended choice (non-binding):** `REDIRECT` → `/contact` (if call-booking entry point) or `RETAIN`
 
 **Owner signature required:** Select ONE disposition + destination if REDIRECT
 
@@ -41,15 +43,15 @@ These items have sufficient repository evidence to recommend a single owner choi
 | **Route exists** | `src/app/proof/ProofPageContent.tsx`, `src/app/proof/page.tsx` ✓ |
 | **Purpose** | Case study / social proof showcase |
 | **Internal links** | 1 verified: StudioPageContent.tsx (`secondaryCtaLink="/proof"`) |
-| **External links** | None found in repo (unquantified by external audit) |
-| **SEO risk** | MEDIUM — likely indexed but low external reference volume apparent |
+| **External links** | None found in repo |
+| **SEO risk** | MEDIUM — indexed; external reference volume unknown |
 | **Auth required** | None (public) |
 
 **Allowed dispositions:**
 - `RETAIN` (keep existing content and 1 internal link)
-- `CONSOLIDATE` → explicit owner destination (e.g., `/docs/case-studies`)
+- `CONSOLIDATE` → explicit owner destination (owner must specify)
 
-**Recommended choice (non-binding):** `CONSOLIDATE` → `/docs/case-studies` (if low strategic value; if high strategic value, RETAIN)
+**Recommended choice (non-binding):** RETAIN or CONSOLIDATE based on strategic value of case-study content
 
 **Owner signature required:** Select ONE disposition + destination if CONSOLIDATE
 
@@ -75,30 +77,34 @@ These items have sufficient repository evidence to recommend a single owner choi
 
 ---
 
-### Item 19: `/systems/events` — Zero verified repository consumers
+### Item 19: `/systems/events` — Zero repository inbound links; external dependencies UNKNOWN
 
 | Finding | Evidence |
 |---------|----------|
 | **Route exists** | `src/app/systems/events/` directory ✓ |
-| **Purpose** | Event system kernel (unclear; legacy classification) |
-| **Internal links** | 0 verified (grep found zero repository links) |
-| **External dependencies** | **UNKNOWN** — no repository evidence; external systems may depend |
+| **Purpose** | Event system kernel; legacy classification |
+| **Internal links** | 0 verified (grep search returned zero repository references) |
+| **External dependencies** | **UNKNOWN** — no repository evidence available |
 | **SEO risk** | NONE (internal system route) |
-| **Auth required** | Unknown; shell-classification suggests internal-only |
+| **Auth required** | Unclear; shell-classification indicates internal-only intent |
+
+**Note:** This item remains **externally blocked** because external dependencies cannot be confirmed or denied from repository evidence alone.
 
 **Allowed dispositions:**
-- `REMOVE` (delete if external dependencies confirmed absent)
-- `DEFER` (pending external dependency verification)
+- `REMOVE` (only if owner confirms zero external dependencies exist)
+- `DEFER` (pending clarification of external dependency status)
 
-**Recommended choice (non-binding):** `DEFER` pending owner confirmation of zero external dependencies (conservative; avoids breaking external systems)
+**Recommended choice (non-binding):** `DEFER` until external dependency status confirmed
 
-**Owner signature required:** Select ONE: REMOVE (confirm no external deps) OR DEFER
+**Owner signature required:** Select ONE: REMOVE (with explicit confirmation of zero external deps) OR DEFER
 
 ---
 
-## B. External-Evidence-Blocked Choices (3 items)
+## B. External-Evidence-Blocked or Strategy-Required Choices (5 items)
 
-These items require owner knowledge or external audit to narrow disposition choices. Repository evidence alone is insufficient.
+These 5 items require external evidence, owner knowledge, or strategy determination to narrow disposition choices. Repository evidence alone is insufficient.
+
+**Items in this section:** 1, 7, 10, 11, 19
 
 ### Item 1: `/blog/[slug]` — Indexed content with unknown external backlink volume
 
@@ -107,19 +113,21 @@ These items require owner knowledge or external audit to narrow disposition choi
 | **Route exists** | `src/app/blog/page.tsx`, `src/app/blog/[slug]/page.tsx` ✓ |
 | **Purpose** | Blog hub with indexed content |
 | **Internal links** | 0 verified in code (not in main navigation) |
-| **External links** | Likely exist (typical blog case) but volume unknown |
+| **External links** | Volume unknown; external backlinks not quantified in repository |
 | **SEO risk** | **HIGH** — indexed content; improper redirects damage rankings |
 | **Auth required** | None (public) |
 
+**Note:** This item remains **externally blocked** because external backlink volume cannot be determined from repository evidence.
+
 **Allowed dispositions:**
 - `RETAIN` (keep as independent blog hub)
-- `CONSOLIDATE` → explicit owner destination (e.g., `/docs/blog`)
+- `CONSOLIDATE` → explicit owner destination (owner must specify)
 
-**External evidence required:** Backlink volume via search console (determine SEO value; informs choice)
+**External evidence required:** Backlink volume via search console
 
 **Recommended choice (non-binding):** 
 - If high external backlinks: `RETAIN` (preserve SEO presence)
-- If low external backlinks: `CONSOLIDATE` → `/docs/blog` (consolidate under docs)
+- If low external backlinks: `CONSOLIDATE` (consolidate under docs)
 
 **Owner signature required:** 
 1. Provide external backlink audit or confirm acceptability of SEO risk
@@ -132,21 +140,23 @@ These items require owner knowledge or external audit to narrow disposition choi
 | Finding | Evidence |
 |---------|----------|
 | **Route exists** | `src/app/prompts/page.tsx`, `src/app/prompts/[category]/[slug]/page.tsx` ✓ |
-| **Purpose** | Developer-community prompt library; high-value content |
-| **Internal links** | 2 verified in `/learn/page.tsx` (internal cross-reference only) |
-| **External links** | Likely exist (developer community references) but volume unknown |
-| **SEO risk** | **HIGH** — indexed content; high external backlink probability |
+| **Purpose** | Developer-community prompt library |
+| **Internal links** | 2 verified in `/docs/learn/page.tsx` (internal cross-reference only) |
+| **External links** | Volume unknown; external backlinks not quantified in repository |
+| **SEO risk** | **HIGH** — indexed content; external backlink volume unknown |
 | **Auth required** | None (public) |
+
+**Note:** This item remains **externally blocked** because external backlink volume cannot be determined from repository evidence.
 
 **Allowed dispositions:**
 - `RETAIN` (keep as independent prompt library)
-- `CONSOLIDATE` → explicit owner destination (e.g., `/docs/prompts`)
+- `CONSOLIDATE` → explicit owner destination (owner must specify)
 
-**External evidence required:** Backlink volume via search console (determine SEO value; critical for choice)
+**External evidence required:** Backlink volume via search console
 
 **Recommended choice (non-binding):** 
-- If high external backlinks: `RETAIN` (preserve SEO presence and developer community discoverability)
-- If low external backlinks: `CONSOLIDATE` → `/docs/prompts` (consolidate under docs)
+- If high external backlinks: `RETAIN` (preserve SEO presence)
+- If low external backlinks: `CONSOLIDATE` (consolidate under docs)
 
 **Owner signature required:** 
 1. Provide external backlink audit or confirm acceptability of SEO risk
@@ -159,39 +169,43 @@ These items require owner knowledge or external audit to narrow disposition choi
 | Finding | Evidence |
 |---------|----------|
 | **Route exists** | `src/app/waas/accountants/page.tsx` ✓ |
-| **Purpose** | Workflows-as-a-Service product variant landing page (accountants niche) |
+| **Purpose** | Workflows-as-a-Service product variant landing page |
 | **Internal links** | 2+ verified in kits pages (navigation to product variant) |
-| **External links** | Possible partner/niche marketing references (unverified) |
-| **SEO risk** | MEDIUM — product page; positioning signals matter |
+| **External links** | Unknown; external references not verified in repository |
+| **SEO risk** | MEDIUM — product page; positioning signals impact external search |
 | **Auth required** | None (public) |
 
-**Allowed dispositions:**
-- `RETAIN` (keep if WaaS is active product offering)
-- `CONSOLIDATE` → `/workbench` (consolidate if WaaS is part of unified product)
-- `REDIRECT` → `/` or `/kits` (if WaaS is deprecated)
+**Note:** This item remains **strategy-blocked** because WaaS product status (current vs. deprecated) is an owner decision not derivable from repository evidence.
 
-**External evidence required:** Product strategy decision (is WaaS current or deprecated?)
+**Allowed dispositions:**
+- `RETAIN` (if WaaS is active product offering)
+- `CONSOLIDATE` → `/workbench` (if WaaS consolidates into unified product)
+- `REDIRECT` → explicit owner destination (if WaaS is deprecated; owner specifies target)
+
+**Strategy input required:** Owner determines whether WaaS is current or deprecated
 
 **Recommended choice (non-binding):** 
 - If WaaS is current: `RETAIN` (independent product variant landing)
-- If WaaS is deprecated: `REDIRECT` → `/` or `/kits` (consolidate to main product)
+- If WaaS is deprecated: `REDIRECT` (consolidate to main product landing)
 
 **Owner signature required:** 
-1. Confirm WaaS product status (current vs. deprecated)
+1. Confirm WaaS product status (current, deprecated, or other)
 2. Select ONE disposition + destination if REDIRECT/CONSOLIDATE
 
 ---
 
-### Item 10: `/starting-point/*` — Destination requires onboarding strategy
+### Item 10: `/starting-point/*` — Destination selection requires audience determination
 
 | Finding | Evidence |
 |---------|----------|
 | **Route exists** | `src/app/starting-point/` directory with nested routes ✓ |
 | **Purpose** | Onboarding flow / entry point |
 | **Internal links** | 1 verified: ProofPageContent.tsx (`secondaryCtaLink="/starting-point"`) |
-| **Email dependencies** | Likely (unverified); onboarding campaigns may reference old path |
+| **Email dependencies** | Unknown; email campaign dependencies not verified in repository |
 | **SEO risk** | NONE (internal/onboarding route; not indexed) |
 | **Auth required** | None (public entry point) |
+
+**Note:** This item remains **audience-strategy-blocked** because onboarding destination selection requires owner knowledge of target product path and audience.
 
 **Allowed dispositions:**
 - `CONSOLIDATE` → exactly ONE destination (not combined):
@@ -199,13 +213,11 @@ These items require owner knowledge or external audit to narrow disposition choi
   - `/memory-qa` (QA/testing product entry point)
   - `/workbench` (unified product workbench)
 
-**Constraint:** Implementation logic must select EXACTLY ONE destination, not combined routing.
+**Constraint:** Implementation logic must select EXACTLY ONE destination; combined routing not permitted.
 
-**External evidence required:** Onboarding audience / target product path determination
+**Strategy input required:** Owner determines primary onboarding audience and corresponding destination
 
-**Recommended choice (non-binding):** 
-- Determine primary onboarding audience (general users → `/memory`; QA users → `/memory-qa`; all users → `/workbench`)
-- Select destination based on user audience
+**Recommended choice (non-binding):** Select destination based on target onboarding audience
 
 **Owner signature required:** 
 1. Identify primary onboarding audience
@@ -250,21 +262,21 @@ These 7 items received bulk approval on 2026-08-07 and are already executed or v
 
 ### How to Complete This Package
 
-**Step 1: Repository-evidence-ready choices (Items 2, 8, 14–15, 19)**
+**Step 1: Repository-Evidence-Ready Choices (Items 2, 8, 14, 15)**
 
 For each item below, select ONE canonical disposition and provide any required details.
 
 #### Item 2: `/book`
 - [ ] **RETAIN** (keep existing 3 internal links)
-- [ ] **REDIRECT** → ________ (specify destination, e.g., `/contact`)
+- [ ] **REDIRECT** → ________ (specify destination)
 
 **Signature:** _________________ **Date:** _________
 
 ---
 
 #### Item 8: `/proof`
-- [ ] **RETAIN** (keep existing case-study content)
-- [ ] **CONSOLIDATE** → ________ (specify destination, e.g., `/docs/case-studies`)
+- [ ] **RETAIN** (keep existing content)
+- [ ] **CONSOLIDATE** → ________ (specify destination)
 
 **Signature:** _________________ **Date:** _________
 
@@ -285,15 +297,7 @@ Choose one for each item (can differ or be the same):
 
 ---
 
-#### Item 19: `/systems/events`
-- [ ] **REMOVE** (delete route; confirm zero external dependencies)
-- [ ] **DEFER** (pending external dependency verification)
-
-**Signature:** _________________ **Date:** _________
-
----
-
-**Step 2: External-evidence-required choices (Items 1, 7, 10, 11)**
+**Step 2: External-Evidence-Blocked or Strategy-Required Choices (Items 1, 7, 10, 11, 19)**
 
 For each item below, provide required external evidence or owner knowledge, then select disposition.
 
@@ -343,12 +347,27 @@ For each item below, provide required external evidence or owner knowledge, then
 **Owner decision:**
 - [ ] WaaS product status confirmed: 
   - [ ] **Current** (active offering) → RETAIN
-  - [ ] **Deprecated** → REDIRECT to ________ (specify destination, e.g., `/` or `/kits`)
+  - [ ] **Deprecated** → REDIRECT to ________ (specify destination)
 
 **Disposition:**
 - [ ] **RETAIN** (if current product)
-- [ ] **REDIRECT** → ________ (if deprecated)
-- [ ] **CONSOLIDATE** → ________ (if consolidating under `/workbench`)
+- [ ] **REDIRECT** → ________ (if deprecated; specify target)
+- [ ] **CONSOLIDATE** → `/workbench` (if consolidating)
+
+**Signature:** _________________ **Date:** _________
+
+---
+
+#### Item 19: `/systems/events`
+
+**Owner decision:**
+- [ ] External dependency status confirmed: 
+  - [ ] **No external dependencies exist** → REMOVE (delete route)
+  - [ ] **External dependencies status unknown** → DEFER (pending clarification)
+
+**Disposition:**
+- [ ] **REMOVE** (only if zero external dependencies confirmed)
+- [ ] **DEFER** (pending external dependency verification)
 
 **Signature:** _________________ **Date:** _________
 
@@ -382,19 +401,23 @@ For each item below, provide required external evidence or owner knowledge, then
 
 **This signature authorizes the following implementation workflow:**
 
-1. **Immediately upon signature:**
-   - Items 2, 8, 14–15, 19 dispositions unlock corresponding PXF-018 implementation packets
-   - Items 1, 7, 10, 11 dispositions + external inputs unlock corresponding packets
+1. **Immediately upon signature (Items 2, 8, 14, 15 only):**
+   - Repository-evidence-ready dispositions unlock corresponding PXF-018 implementation packets
 
-2. **No implementation without signature.**
-   - All unsigned items remain blocked
+2. **After external inputs received (Items 1, 7, 10, 11, 19):**
+   - Owner must provide external backlink audit, strategy determination, or external dependency confirmation
+   - Only then do dispositions unlock corresponding implementation packets
+
+3. **No implementation without signature.**
+   - All unsigned or incomplete items remain blocked
    - DEFER items remain blocked indefinitely pending clarification
+   - Incomplete external evidence blocks implementation
 
-3. **Implementation order:**
+4. **Implementation order:**
    - Parallel execution allowed for independent packets (PXF-018A through PXF-018I)
    - Each packet is independently reviewable and rollbackable
 
-4. **Post-implementation:**
+5. **Post-implementation:**
    - Staged validation before production deployment
    - Search console monitoring (if SEO-impacting items consolidated)
    - Error log monitoring for 404s or routing issues
@@ -403,22 +426,39 @@ For each item below, provide required external evidence or owner knowledge, then
 
 ## Validation Summary
 
-**Evidence audit completed 2026-08-07:**
-- ✓ 9 items reduced to smallest explicit owner choices
-- ✓ 4 items ready for signature (repository evidence sufficient)
-- ✓ 5 items require external evidence or owner knowledge
-- ✓ 7 items already approved and executing
-- ✓ 6 items verified absent (no owner decision required)
-- ✓ All findings derived from repository source code only
-- ✓ No invented backlinks, approvals, or consumers documented
+**Package corrections (2026-08-07 repair commit):**
+- ✓ Corrected grouping: 4 repository-evidence-ready + 5 external/strategy-blocked
+- ✓ Item 19 reclassified as externally blocked (external deps unknown; not repository-ready)
+- ✓ Removed speculative language ("likely," "possibly," "typical," "high probability")
+- ✓ Updated Item 7 evidence: `/learn/page.tsx` → `/docs/learn/page.tsx` (current reference)
+- ✓ Item 8 destination: removed speculative `/docs/case-studies`; owner specifies
+- ✓ Item 2 destination: preserved canonical `/contact` recommendation
+- ✓ Item 1, 7: Marked as externally blocked with explicit note
+- ✓ Item 10: Marked as audience-strategy-blocked with explicit note
+- ✓ Item 11: Marked as product-strategy-blocked; consistent dispositions across documents
+- ✓ Item 19: Marked as externally blocked (external deps unknown)
+- ✓ Signature block: Step 2 now covers 5 items (1, 7, 10, 11, 19)
+- ✓ Implementation Authorization: Updated to reflect 4/5 split and external input requirement
 
-**Next: Owner completes signature block; hand off to implementation team.**
+**Phase 11 inventory (unchanged):**
+- ✓ 7 signed/completion-verified items (Items 5, 13, 16, 17, 18, 20, 22)
+- ✓ 9 unresolved items requiring owner decisions (Items 1, 2, 7, 8, 10, 11, 14–15, 19)
+- ✓ 6 verified-absent items (no owner decision needed)
+- ✓ 22 total catalogued items
+
+**All findings derived from repository source code only:**
+- ✓ No invented backlinks or external claims
+- ✓ All route files verified to exist
+- ✓ All internal consumer links verified via grep
+- ✓ Speculative language removed
+
+**Next: Owner completes signature block with all external evidence; hand off to implementation team.**
 
 ---
 
-**Status:** Ready for owner signature.
+**Status:** Signature-safe; ready for owner review and completion.
 
 **Reference documents:**
-- `PXF018_OWNER_APPROVAL_MANIFEST.md` (original bulk-approval structure with all 16 pending items)
+- `PXF018_OWNER_APPROVAL_MANIFEST.md` (original bulk-approval structure)
 - `PXF018_OWNER_DECISION_BRIEF.md` (detailed audit findings with file paths)
 - `PXF018_IMPLEMENTATION_PLAN.md` (execution packets and rollback strategies)
