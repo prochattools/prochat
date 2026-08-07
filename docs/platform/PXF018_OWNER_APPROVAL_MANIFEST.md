@@ -25,7 +25,7 @@ This manifest converts the reconciled PXF-018 audit into a single review surface
 
 ## Summary: Proposed Dispositions by Category
 
-### RETAIN (No-Code Acknowledgements) — 6 items
+### RETAIN (No-Code Acknowledgements) — 5 items
 
 Routes with verified active consumers or critical infrastructure. RETAIN proposed; approval requires only documentation or no code changes.
 
@@ -36,7 +36,6 @@ Routes with verified active consumers or critical infrastructure. RETAIN propose
 | 18 | `/social` | Critical OG image pipeline (generateSocialImageUrl, seo/metadata) | PXF-018F | Acknowledge or override |
 | 20 | `/systems/prochat-os` | 7+ verified internal links (kits, buildflow, books, AI workflows) | PXF-018H | Acknowledge or override |
 | 22 | `/api/waiting-list` vs `/api/waitlist` | Zero-cost re-export (backward compatibility) | PXF-018I | Acknowledge or override |
-| 16 | `/legal-ai-workflows` | Already consolidated (redirects to `/ai-workflows`) | PXF-018F | Acknowledge or override |
 
 ### Conditional Restriction / Removal — 2 items
 
@@ -47,17 +46,18 @@ Routes with clear owner decision required (restrict to development or remove fro
 | 19 | `/systems/events` | Zero repository inbound links; safe if external use confirmed | PXF-018H | Remove only if external dependencies confirmed absent | Confirm no external dependency; approve REMOVE or DEFER |
 | 14–15 | `/debug/*`, `/debug/analytics` | Development utilities in production | PXF-018G | If RETAIN: restrict to NODE_ENV=development; if REMOVE: exclude from production build | Choose RETAIN (with NODE_ENV=development restriction) or REMOVE |
 
-### REDIRECT / CONSOLIDATE (Destination Required) — 5 items
+### REDIRECT / CONSOLIDATE (Destination Required) — 6 items
 
 Routes requiring explicit destination path before approval.
 
 | Item | Route | Proposal | Packet | Owner action |
 |-----:|---|---|---|---|
-| 1 | `/blog/[slug]` | CONSOLIDATE → `/docs` | PXF-018A | Confirm destination or RETAIN |
+| 1 | `/blog/[slug]` | RETAIN or CONSOLIDATE (owner selects; destination required if consolidate) | PXF-018A | Choose RETAIN or CONSOLIDATE; if consolidate, provide destination |
 | 2 | `/book` | REDIRECT → `/contact` or RETAIN | PXF-018A | Confirm purpose + destination |
-| 5 | `/learn/*` | CONSOLIDATE → `/docs/learn` | PXF-018B | Confirm destination |
+| 5 | `/learn/*` | CONSOLIDATE → `/docs/learn` | PXF-018B | Confirm destination (✓ completed, signed) |
 | 8 | `/proof` | CONSOLIDATE → `/docs` or RETAIN | PXF-018B | Evaluate + choose destination |
-| 10 | `/starting-point/*` | CONSOLIDATE → `/memory` or `/workbench` | PXF-018D | Confirm destination based on onboarding audience |
+| 10 | `/starting-point/*` | CONSOLIDATE → one of: `/memory`, `/memory-qa`, or `/workbench` | PXF-018D | Confirm destination based on onboarding audience (select exactly one) |
+| 16 | `/legal-ai-workflows` | CONSOLIDATE → `/ai-workflows` (✓ already redirects; consolidation complete) | PXF-018F | Acknowledge (already consolidated via redirect) |
 
 ### Strategy / External Evidence Required — 2 items
 

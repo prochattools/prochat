@@ -1016,7 +1016,7 @@ Owner must select the next work packet. Broad Ory/session implementation remains
 ### Phase status
 
 ```text
-Phase 11 — PARTIAL (16 pending owner decisions + 6 verified-absent = 22 catalogued; redirects live; full legacy removal deferred)
+Phase 11 — PARTIAL (7 approved items + Item 5 consolidation complete; 9 pending decisions + 6 verified-absent = 22 catalogued; redirects live; full legacy removal deferred)
 Phase 12 — PARTIAL (66 automated browser/accessibility evidence passed; manual screen-reader, zoom, high-contrast, field RUM/INP deferred)
 Phase 13 — ONGOING
 MailerLite rotation — PENDING owner verification
@@ -1077,13 +1077,19 @@ Verified-absent closures (all have zero tracked route files; no implementation t
 5. `/glossary/[term]` → NOT APPLICABLE
 6. `/bb` → NOT APPLICABLE
 
-All 16 pending items (plus 6 verified-absent, 22 total) documented in `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md`, `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md`, and `docs/platform/LEGACY_OWNER_DECISION_BRIEF.md`.
+**Execution status (2026-08-07):**
+- **Approved & Completed:** 7 items signed (5, 13, 16, 17, 18, 20, 22); Item 5 consolidation fully implemented
+- **Pending owner selections:** 9 items (1, 2, 7, 8, 10, 11, 14, 15, 19)
+- **Verified-absent:** 6 items (no removal required)
+- **Total:** 22 items catalogued
+
+All items documented in `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md`, `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md`, and `docs/platform/LEGACY_OWNER_DECISION_BRIEF.md`.
 
 ### Phase status
 
 | Phase | Status | Evidence |
 |---|---|---|
-| Phase 11 | PARTIAL | Redirects live, 16 pending owner decisions + 6 verified-absent (22 total), cleanup deployed (PXF-017A) |
+| Phase 11 | PARTIAL | 7 approved + Item 5 consolidation complete; 9 pending owner decisions + 6 verified-absent (22 total), cleanup deployed (PXF-017A) |
 | Phase 12 | PARTIAL | 66 browser tests ✓; manual screen-reader, 200% zoom, high-contrast, field RUM/INP deferred |
 | Phase 13 | ONGOING | Continuous governance active; no completion gate |
 

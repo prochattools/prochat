@@ -3055,12 +3055,15 @@ Public professionalism packet complete. No route decisions, auth, or design expa
 
 ## Phase 11 — Legacy migration and removal (PARTIAL)
 
-**Status:** Awaiting owner approval on 16 pending legacy-surface classification decisions.
+**Status (2026-08-07):** Bulk approval signed for 7 items (5, 13, 16, 17, 18, 20, 22); Item 5 consolidation complete. 9 items remain pending owner decisions; 6 verified-absent items require no action.
 
-**For owner approval:** Review `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — 16 items with evidence-backed proposed dispositions, override options, and sign-off block.
+**Completed:** Item 5 (`/learn` → `/docs/learn` consolidation) implemented, validated, and deployed to local HEAD. Build passing, routes rendering, redirects active.
 
-**Implementation blueprint:** `docs/platform/PXF018_IMPLEMENTATION_PLAN.md` (packet specifications PXF-018A through PXF-018I with dependencies, validation, rollback).
+**Pending owner approval (9 items):** Items 1, 2, 7, 8, 10, 11, 14, 15, 19 require selections or external input before execution.
 
-**Audit evidence:** `docs/platform/PXF018_OWNER_DECISION_BRIEF.md` (findings) and `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` (detailed evidence tables).
+**Resources:**
+- `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — approval status with corrected dispositions
+- `docs/platform/PXF018_IMPLEMENTATION_PLAN.md` — packet specifications (PXF-018A through PXF-018I)
+- `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` — execution status and pending items
 
 Only signed owner dispositions authorize mapped implementation packets.
