@@ -5,11 +5,17 @@ const MAINTENANCE_PATH = '/maintenance'
 const MAINTENANCE_MODE_VALUE = process.env.PROCHAT_MAINTENANCE_MODE ?? '1'
 
 const PUBLIC_FILE_PATTERN = /\.[^/]+$/
+const DEBUG_PATTERN = /^\/debug(?:\/|$)/
 
 function isMaintenanceModeEnabled() {
   const normalizedValue = MAINTENANCE_MODE_VALUE.trim().toLowerCase()
 
   return !['0', 'false', 'off', 'no'].includes(normalizedValue)
+}
+
+function isDevelopmentEnvironment() {
+  const nodeEnv = (process.env.NODE_ENV ?? 'production').trim().toLowerCase()
+  return nodeEnv === 'development'
 }
 
 function shouldBypassMaintenance(pathname: string) {
@@ -28,13 +34,20 @@ function shouldBypassMaintenance(pathname: string) {
 }
 
 /**
- * Temporary full-site maintenance lock.
+ * Middleware for maintenance mode and development-only route protection.
  *
- * All public routes are redirected to /maintenance while static assets,
- * Next.js internals, public metadata files, and API routes remain available.
+ * - All public routes are redirected to /maintenance while static assets,
+ *   Next.js internals, public metadata files, and API routes remain available.
+ * - Debug routes (/debug, /debug/analytics) are accessible only in development;
+ *   production requests return 404 (PXF-018G: Items 14, 15).
  */
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
+
+  // PXF-018G: Items 14–15 — Gate /debug routes to development environment only
+  if (DEBUG_PATTERN.test(pathname) && !isDevelopmentEnvironment()) {
+    return NextResponse.json({ error: 'Not Found' }, { status: 404 })
+  }
 
   if (!isMaintenanceModeEnabled() || shouldBypassMaintenance(pathname)) {
     return NextResponse.next()
