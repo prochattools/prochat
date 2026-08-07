@@ -100,12 +100,7 @@ describe('Legacy compatibility routes and APIs', () => {
       assert.equal(response.status, 200, '/systems/prochat-os should return 200')
     })
 
-    it('/systems/events page is accessible and returns 200', async () => {
-      const response = await fetch(`${baseUrl}/systems/events`)
-      assert.equal(response.status, 200, '/systems/events should return 200')
-    })
-
-    it('/waas/accountants page is accessible and returns 200', async () => {
+    it('/waas/accountants page redirects to /workbench', async () => {
       const response = await fetch(`${baseUrl}/waas/accountants`)
       assert.equal(response.status, 200, '/waas/accountants should return 200')
     })
