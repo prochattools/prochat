@@ -671,7 +671,7 @@ Phase 10 replacements and Phase 5 migration decisions.
 
 # Phase 12 — Production craft and launch validation
 
-**Status:** PARTIAL (40/40 browser/accessibility evidence passed; formal WCAG 2.2 AA audit and measured performance baseline remain deferred).
+**Status:** PARTIAL (66 browser and accessibility evidence tests passed: 6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof; manual screen-reader, zoom, high-contrast, and field RUM/INP remain deferred).
 
 ## Goal
 
@@ -763,7 +763,7 @@ The historical Product Experience Foundation implementation and PXF-010 governan
 
 ## Final design-hardening closeout
 
-- Screenshot-based audit: 40/40 canonical route/viewport combinations pass for the immutable local closeout chain: docs-mobile implementation commit `ada06665f5944fc988f4dad4a5fed47cee471d8b` and evidence/metadata closeout commit `29854de09b04792c377d0bba7528297acb14c155`. Production remains separately verified at `91436457e4d3aa8a5d9782ff671ce49e10d7ef07`. The tested widths are 1440, 1024, 768, 390, and 320 pixels; the seven non-docs canonical routes retained contained document widths in the representative regression sample.
+- Browser evidence audit: 66 tests pass across four spec files (6 docs-mobile + 18 route-smoke + 16 canonical-accessibility + 26 chrome-proof). The immutable local closeout chain includes docs-mobile implementation commit `ada06665f5944fc988f4dad4a5fed47cee471d8b` and evidence/metadata closeout commit `29854de09b04792c377d0bba7528297acb14c155`. Production remains separately verified at `91436457e4d3aa8a5d9782ff671ce49e10d7ef07`. The tested widths are 1440, 1024, 768, 390, and 320 pixels; responsive coverage includes all 8 canonical routes.
 - `/docs` root cause and fix: the imported prefixed Nextra responsive utilities left the desktop sidebar and table of contents in the mobile flex row, producing a 544px intrinsic document width and collapsing the article heading. `styles/docs.css` now establishes a single mobile content column, constrains grid/flex children and article content with `min-width: 0`/`max-width: 100%`, and removes the desktop sidebar and TOC below 768px while preserving internal code/table scrolling.
 - Focus validation: separate from the screenshot count. A fresh 390px Playwright page traversed the skip link, shared mobile Menu summary, docs links, and footer links with visible outline/box-shadow evidence. Nextra exposes no mobile docs drawer trigger in this integration; the desktop sidebar/TOC are intentionally hidden below 768px, so drawer Escape/focus restoration is not applicable. The available Menu path was opened by keyboard and Escape left focus non-body.
 - Reduced motion: explicitly emulated with `page.emulateMedia({ reducedMotion: 'reduce' })`; `matchMedia('(prefers-reduced-motion: reduce)')` returned true and the global document transition duration was `0s`.
@@ -1099,8 +1099,8 @@ PXF-003E may proceed after PXF-003E0 validation completes.
 ### Phase summary at this deployment
 
 ```text
-Phase 11 — PARTIAL (17 decisions; redirects live; full legacy removal deferred)
-Phase 12 — PARTIAL (40/40 browser/accessibility evidence; formal WCAG/performance audit deferred)
+Phase 11 — PARTIAL (16 pending owner decisions; redirects live; full legacy removal deferred)
+Phase 12 — PARTIAL (66 browser/accessibility evidence tests passed; manual screen-reader, zoom, high-contrast, field RUM/INP deferred)
 Phase 13 — ONGOING
 ```
 
@@ -1120,7 +1120,7 @@ Phase 13 — ONGOING
 
 ### Remaining roadmap work
 
-- Phase 11: bounded legacy component/style and protected-route cleanup (17 open decisions).
+- Phase 11: bounded legacy component/style and protected-route cleanup (16 pending owner decisions; 6 verified-absent items require no action).
 - Phase 12: manual screen-reader, zoom, high-contrast, touch-target, field INP/RUM evidence.
 - Phase 13: continuous governance.
 - MailerLite external rotation: PENDING owner verification.
