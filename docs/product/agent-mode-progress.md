@@ -41,15 +41,24 @@ The validation anchors are immutable evidence. The production fields are dated o
 
 ## Truthful program status
 
-- Phase 11 is `PARTIAL`: redirects active, legacy surface inventory created (docs/platform/LEGACY_SURFACE_INVENTORY.md), first cleanup deployed (12 components, 687 lines removed, PXF-017A 7cfa126). Protected-route boundary hardening design not yet started.
-- Phase 12 remains `PARTIAL`: responsive, focus, reduced-motion, metadata, analytics, and 40/40 viewport evidence pass, while formal WCAG 2.2 AA and measured performance proof remain deferred.
+**CURRENT (2026-08-07, after PXF-017 deployment):**
+
+- Phase 11 is `PARTIAL`: redirects active, legacy surface inventory created (docs/platform/LEGACY_SURFACE_INVENTORY.md), first cleanup deployed (12 components, 687 lines removed, PXF-017A 7cfa126). 16 pending owner decisions (6 verified-absent); protected-route boundary hardening is design/owner-pending (see protected-route audit).
+- Phase 12 remains `PARTIAL`: 66 automated browser/accessibility evidence tests pass (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof); manual screen-reader, zoom, high-contrast, and field RUM/INP evidence remain NOT YET EXECUTED.
 - Phase 13 remains `ONGOING`: continuous governance and bounded maintenance.
 - Phases 14 and 15 are complete.
+- MailerLite credential rotation: PENDING owner verification (code completed; external provider action required).
 - No release-blocking public-design defect is known.
+
+---
+
+## HISTORICAL CONTEXT — PXF-016 Audit Phase (2026-08-01 to 2026-08-04)
+
+*The sections below document the completed PXF-016 audit phase. For current state, see the "Truthful program status" section above and `docs/roadmap.md`.*
 
 ## PXF-016A reconciliation scope
 
-The reconciliation packet updates repository truth without redesigning the product:
+The reconciliation packet updated repository truth without redesigning the product:
 
 - separate immutable validation anchors from dated deployment observations;
 - record the completed closeout push and deployed `ecc0fdf` observation;
@@ -59,9 +68,9 @@ The reconciliation packet updates repository truth without redesigning the produ
 - update README roadmap wording from 13 to 15 phases;
 - preserve this file as a completed audit record rather than a stale active-run handoff.
 
-## Remaining work after PXF-016C/C1/C2
+## Completed: PXF-016C/C1/C2 through PXF-016E
 
-PXF-016C/C1/C2 pushed, all 4 CI jobs passed (run 30758962840), and production verified at `853207b`. PXF-016D is the active packet: measured mobile performance proof using Lighthouse against eight canonical routes. Legacy cleanup and design-debt reduction remain separate bounded maintenance waves. Manual accessibility evidence (screen reader, 200% zoom, high contrast, touch targets) remains deferred.
+PXF-016C/C1/C2 pushed, all 4 CI jobs passed (run 30758962840), and production verified at `853207b`. PXF-016D measured mobile performance proof using Lighthouse against eight canonical routes. PXF-016E completed canonical public chrome closeout (2026-08-04). Legacy cleanup and design-debt reduction remain separate bounded maintenance waves. Manual accessibility evidence (screen reader, 200% zoom, high contrast, touch targets) remains deferred.
 
 ## Validation evidence
 
@@ -866,18 +875,18 @@ Owner direction closed further benchmark tuning and prioritized a lean, consiste
 - Repaired footer semantics by removing unsupported ARIA from the footer landmark and converting the footer links to a labelled `<nav>`.
 - Extended permanent browser smoke evidence from four to all eight canonical routes and added Contact background, centering, and mobile-containment assertions.
 
-### Local validation
+### Local validation (2026-08-04 — PXF-016E, superseded by current 66-test canonical suite)
 
 - TypeScript: passed.
 - ESLint: passed with zero warnings.
 - Design governance: passed 5 rules with 39 controlled exemptions.
 - Documentation validation: passed.
 - Production build: passed; 109 pages generated.
-- Browser and accessibility evidence: **40/40 passed**.
-  - 16 Axe desktop/mobile checks across all eight routes.
-  - 16 desktop/mobile canonical route smoke checks.
-  - 2 Contact visual-closeout checks.
-  - 6 docs responsive/focus/reduced-motion checks, including 320px.
+- Browser and accessibility evidence: **40/40 passed** (historical local counts; current canonical: 66 tests = 6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof).
+  - [Historical breakdown] 16 Axe desktop/mobile checks across all eight routes.
+  - [Historical breakdown] 16 desktop/mobile canonical route smoke checks.
+  - [Historical breakdown] 2 Contact visual-closeout checks.
+  - [Historical breakdown] 6 docs responsive/focus/reduced-motion checks, including 320px.
 - Every canonical route has one visible `.pm-navbar`, visible main content, one visible `.pc-footer`, correct pathname, and no horizontal overflow.
 - Contact has no background image, uses a neutral dark background, fills at least the viewport height, centers its grid/form, and remains contained at 390px.
 
@@ -1120,3 +1129,29 @@ All 16 pending items (plus 6 verified-absent, 22 total) documented in `docs/plat
 ### Professionalism packet: COMPLETE — final state
 
 All confirmed gaps addressed, deployed, and CI-verified at SHA `b7f564a1`.
+
+---
+
+## CURRENT STATE AND NEXT ACTION (2026-08-07)
+
+**Current roadmap position:** Phase 11 (PARTIAL) / Phase 12 (PARTIAL) / Phase 13 (ONGOING)
+
+**Phase 11 status:**
+- Planning: COMPLETE
+- Implementation: blocked on owner approval
+- 16 pending owner decisions documented in `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md`
+- 6 verified-absent items (no code work required)
+- 22 items total catalogued
+
+**Phase 12 status:**
+- Automated evidence: 66 tests passing (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof)
+- Manual evidence: screen-reader, 200% zoom, high-contrast, field RUM/INP NOT YET EXECUTED (deferred to Phase 13 or owner priority)
+
+**External blockers:**
+- MailerLite credential rotation: PENDING owner verification (code completed; requires external provider action)
+- Protected-route hardening (Ory/session): design-pending, owner decision scope
+
+**NEXT OWNER ACTION:**
+Review and sign `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` to authorize Phase 11 implementation packets (PXF-018A through PXF-018I). Owner-independent documentation cleanup is complete. All roadmap/implementation-plan/agent-mode-progress claims are aligned to canonical verified evidence (16/6/22 inventory, 66 automated tests, manual evidence deferred).
+
+After owner approval: implementation proceeds via bounded packets mapped in `docs/platform/PXF018_IMPLEMENTATION_PLAN.md`.
