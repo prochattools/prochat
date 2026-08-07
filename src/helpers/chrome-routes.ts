@@ -11,7 +11,7 @@ export const MARKETING_SURFACE_ROUTES = [
   '/memory-qa',
   '/workbench',
   '/contact',
-  '/learn',
+  '/docs/learn',
   '/privacy',
   '/terms',
 ] as const
@@ -34,7 +34,7 @@ export function isFooterlessPath(pathname: string) {
 
 export function isMarketingSurfacePath(pathname: string) {
   return (
-    pathname.startsWith('/learn/') ||
+    pathname.startsWith('/docs/learn/') ||
     MARKETING_SURFACE_ROUTES.some(route => pathname === route || pathname.startsWith(`${route}/`))
   )
 }

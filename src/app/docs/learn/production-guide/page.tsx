@@ -101,7 +101,7 @@ export default async function ProductionGuidePage() {
       <article className="pc-article-shell">
         <header className="border-b border-border-subtle/80 pb-8">
           <Link
-            href="/learn"
+            href="/docs/learn"
             className="inline-flex rounded-full border border-border px-3 py-1 text-sm text-muted-foreground transition-colors hover:text-primary"
           >
             Back to Learn

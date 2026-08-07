@@ -3,8 +3,8 @@ import { MetadataRoute } from 'next'
 const SITE_URL = 'https://prochat.tools'
 
 const LEARN_SITEMAP_ROUTES = [
-  { path: '/learn', priority: 0.8 },
-  { path: '/learn/production-guide', priority: 0.8 },
+  { path: '/docs/learn', priority: 0.8 },
+  { path: '/docs/learn/production-guide', priority: 0.8 },
 ] as const
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

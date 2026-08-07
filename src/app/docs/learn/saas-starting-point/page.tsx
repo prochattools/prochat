@@ -13,12 +13,12 @@ const pageDescription =
 export const metadata = getSEOTags({
   title: pageTitle,
   description: pageDescription,
-  canonicalUrlRelative: '/learn/saas-starting-point',
+  canonicalUrlRelative: '/docs/learn/saas-starting-point',
   robots: { index: true, follow: true },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: '/learn/saas-starting-point',
+    url: '/docs/learn/saas-starting-point',
     type: 'article',
     images: ['/og'],
   },

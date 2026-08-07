@@ -12,8 +12,8 @@ function hasIntrinsicHeaderSpacing(pathname: string) {
 		pathname === '/memory-qa' ||
 		pathname === '/workbench' ||
 		pathname === '/contact' ||
-		pathname === '/learn' ||
-		pathname.startsWith('/learn/') ||
+		pathname === '/docs/learn' ||
+		pathname.startsWith('/docs/learn/') ||
 		pathname === '/systems/prochat-os' ||
 		pathname === '/ai-workflows' ||
 		pathname === '/legal-ai-workflows' ||

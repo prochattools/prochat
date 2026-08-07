@@ -5,7 +5,7 @@ import { parse as parseYaml } from 'yaml'
 import { splitSocialTitle } from '@/lib/social-image'
 
 export const LEGACY_PRODUCTION_GUIDE_SLUG = 'how-to-build-saas-with-ai-non-developer'
-export const PRODUCTION_GUIDE_PATH = '/learn/production-guide'
+export const PRODUCTION_GUIDE_PATH = '/docs/learn/production-guide'
 export const PRODUCTION_GUIDE_STATIC_SOCIAL_IMAGE_SLUG = LEGACY_PRODUCTION_GUIDE_SLUG
 
 const PRODUCTION_GUIDE_SOURCE_PATH = path.join(

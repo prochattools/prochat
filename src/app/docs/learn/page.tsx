@@ -11,7 +11,7 @@ export const metadata = getSEOTags({
   title: 'Learn | ProChat',
   description:
     'A curated four-step learning layer: Starting Point, Production Guide, AI Prompts, and Documentation.',
-  canonicalUrlRelative: '/learn',
+  canonicalUrlRelative: '/docs/learn',
   robots: { index: true, follow: true },
 })
 
@@ -21,7 +21,7 @@ const learningSteps = [
     title: 'Starting Point',
     description:
       'Clarify the buyer, outcome, and proof before you commit to a build.',
-    href: '/learn/saas-starting-point',
+    href: '/docs/learn/saas-starting-point',
     cta: 'OPEN — STARTING POINT',
   },
   {
