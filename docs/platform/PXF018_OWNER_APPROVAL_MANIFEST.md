@@ -467,13 +467,14 @@ Signature: _________________ Date: _________________
 
 ### Sign-Off
 
-**Print and fill one of the above options, or electronically sign below:**
+**APPROVED — Bulk Approval Signed**
 
 | Field | Value |
 |-------|-------|
-| **Owner name** | *[ BLANK ]* |
-| **Approval date** | *[ BLANK ]* |
-| **Option selected** | *[ BLANK — check: Bulk approval / Selective overrides / Deferred items ]* |
+| **Owner name** | Repository Owner — explicit approval via ChatGPT conversation |
+| **Approval date** | 2026-08-07 |
+| **Option selected** | **Bulk approval** — Items 5, 13, 16, 17, 18, 20, 22 |
+| **Signature evidence** | OWNER APPROVED — explicit instruction recorded 2026-08-07 |
 
 ---
 

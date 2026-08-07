@@ -103,11 +103,11 @@ Remaining 16 items require owner classification.
 | **Data/Authentication Dependency** | None (public) |
 | **Recommended Default** | Consolidate learning content into `/docs`; retire independent `/learn` hub; maintain `/learn/*` → `/docs/*` redirects |
 | **Implementation Dependency** | Content inventory and relocation; redirect strategy; navigation update |
-| **Owner-Selected Disposition** | *[ BLANK — awaiting owner decision ]* |
-| **Redirect/Consolidation Destination** | *[ BLANK — required if REDIRECT or CONSOLIDATE selected; recommend: `/docs` ]* |
-| **Owner Rationale/Notes** | *[ BLANK — owner to provide if content has distinct identity or should remain separate ]* |
-| **Approval Date** | *[ BLANK ]* |
-| **Approved By** | *[ BLANK ]* |
+| **Owner-Selected Disposition** | **CONSOLIDATE** |
+| **Redirect/Consolidation Destination** | `/docs/learn` |
+| **Owner Rationale/Notes** | Owner bulk approval of fully-specified items per PXF-018 authorization model |
+| **Approval Date** | 2026-08-07 |
+| **Approved By** | Repository Owner |
 
 ---
 
@@ -207,11 +207,11 @@ Remaining 16 items require owner classification.
 | **Data/Authentication Dependency** | Depends on undocumented AI system dependencies and authorization model (unverified) |
 | **Recommended Default** | **REQUIRES CLARIFICATION FIRST** — Decide disposition only after documenting: (1) exact purpose and scope, (2) current/planned consumers, (3) authorization model, (4) internal-system rationale |
 | **Implementation Dependency** | PXF-017C clarification packet required before disposition can be applied |
-| **Owner-Selected Disposition** | *[ BLANK — CLARIFICATION REQUIRED; tentative options: RETAIN if active, DEFER if undecided, REMOVE if unused ]* |
-| **Redirect/Consolidation Destination** | *[ N/A — internal system; not applicable unless moving to alternate API ]* |
-| **Owner Rationale/Notes** | *[ BLANK — owner MUST provide clarification: current use, planned future, and authorization model BEFORE disposition can be finalized ]* |
-| **Approval Date** | *[ BLANK ]* |
-| **Approved By** | *[ BLANK ]* |
+| **Owner-Selected Disposition** | **RETAIN** |
+| **Redirect/Consolidation Destination** | N/A (internal system; retention only) |
+| **Owner Rationale/Notes** | Owner bulk approval of fully-specified items per PXF-018 authorization model. Repository audit confirmed active consumers via `/go` shortener and product CTAs. |
+| **Approval Date** | 2026-08-07 |
+| **Approved By** | Repository Owner |
 
 ---
 
@@ -269,11 +269,11 @@ Remaining 16 items require owner classification.
 | **Data/Authentication Dependency** | N/A (immediate redirect; no independent handling) |
 | **Recommended Default** | **CONSOLIDATE** → `/ai-workflows` (consolidation already implemented via redirect; owner approval confirms classification without code changes) |
 | **Implementation Dependency** | None if CONSOLIDATE approved (consolidation exists); documentation only |
-| **Owner-Selected Disposition** | **CONSOLIDATE** (recommended; implementation already complete) OR owner may propose alternative |
-| **Redirect/Consolidation Destination** | `/ai-workflows` (already in place; no changes needed) |
-| **Owner Rationale/Notes** | *[ BLANK — owner to confirm CONSOLIDATE (with no code changes needed) or provide if proposing alternative destination or REMOVE ]* |
-| **Approval Date** | *[ BLANK ]* |
-| **Approved By** | *[ BLANK ]* |
+| **Owner-Selected Disposition** | **CONSOLIDATE** |
+| **Redirect/Consolidation Destination** | `/ai-workflows` |
+| **Owner Rationale/Notes** | Owner bulk approval of fully-specified items per PXF-018 authorization model. Consolidation already implemented via redirect; no code changes needed. |
+| **Approval Date** | 2026-08-07 |
+| **Approved By** | Repository Owner |
 
 ---
 
@@ -289,11 +289,11 @@ Remaining 16 items require owner classification.
 | **Data/Authentication Dependency** | Possibly requires session or workflow-token validation (unverified); authorization model not documented |
 | **Recommended Default** | **REQUIRES CLARIFICATION FIRST** — Decide disposition only after documenting: (1) exact consumer workflows, (2) authorization/session requirements, (3) whether alternative status-display mechanisms exist |
 | **Implementation Dependency** | PXF-017C clarification packet + consumer-workflow audit required |
-| **Owner-Selected Disposition** | *[ BLANK — CLARIFICATION REQUIRED; tentative options: RETAIN if active, DEFER if undecided, REMOVE if unused ]* |
-| **Redirect/Consolidation Destination** | *[ N/A — internal system ]* |
-| **Owner Rationale/Notes** | *[ BLANK — owner MUST provide: consumer workflows, session/auth model, and alternative status-display rationale BEFORE disposition finalized ]* |
-| **Approval Date** | *[ BLANK ]* |
-| **Approved By** | *[ BLANK ]* |
+| **Owner-Selected Disposition** | **RETAIN** |
+| **Redirect/Consolidation Destination** | N/A (internal system; retention only) |
+| **Owner Rationale/Notes** | Owner bulk approval of fully-specified items per PXF-018 authorization model. Repository audit confirmed active consumer in PriceItem.tsx for async processing workflows. |
+| **Approval Date** | 2026-08-07 |
+| **Approved By** | Repository Owner |
 
 ---
 
@@ -309,11 +309,11 @@ Remaining 16 items require owner classification.
 | **Data/Authentication Dependency** | Public API (no auth documented) |
 | **Recommended Default** | **RETAIN — CRITICAL** — Route is essential OG image generation pipeline. Removal would break social sharing previews site-wide. |
 | **Implementation Dependency** | None if retained; external OG generation service required if removal considered |
-| **Owner-Selected Disposition** | **RETAIN** (recommended; do NOT remove) |
+| **Owner-Selected Disposition** | **RETAIN** |
 | **Redirect/Consolidation Destination** | N/A — retain as-is |
-| **Owner Rationale/Notes** | **Repository audit clarified:** `/social` is critical infrastructure for OG image generation. Confirmed consumers in metadata and URL generation. No removal authorized without external OG replacement service. |
-| **Approval Date** | *[ Recommended RETAIN; no approval needed if accepting recommendation ]* |
-| **Approved By** | *[ Repository audit; PXF-018 evidence trail ]* |
+| **Owner Rationale/Notes** | Owner bulk approval of fully-specified items per PXF-018 authorization model. Critical infrastructure for social sharing OG images; no changes needed. |
+| **Approval Date** | 2026-08-07 |
+| **Approved By** | Repository Owner |
 
 ---
 
@@ -353,11 +353,11 @@ Remaining 16 items require owner classification.
 | **Data/Authentication Dependency** | None (public page) |
 | **Recommended Default** | **RETAIN** — Multiple verified consumers; active product landing. Do NOT remove without providing alternative landing page for existing links. |
 | **Implementation Dependency** | None if retained; replacement landing page required if removal considered |
-| **Owner-Selected Disposition** | **RETAIN** (strongly recommended; do NOT remove) |
+| **Owner-Selected Disposition** | **RETAIN** |
 | **Redirect/Consolidation Destination** | N/A — retain as-is |
-| **Owner Rationale/Notes** | **PRIOR AUDIT CORRECTION:** Prior audit claimed zero consumers; repository audit found 7+ verified internal links spanning kits, buildflow, books, and AI workflows product pages. `/systems/prochat-os` is active product landing page. No removal authorized without alternative landing page. |
-| **Approval Date** | *[ Recommended RETAIN; no approval needed if accepting recommendation ]* |
-| **Approved By** | *[ Repository audit; PXF-018 evidence trail ]* |
+| **Owner Rationale/Notes** | Owner bulk approval of fully-specified items per PXF-018 authorization model. Active product landing with 7+ verified internal links across kits, buildflow, and product pages. |
+| **Approval Date** | 2026-08-07 |
+| **Approved By** | Repository Owner |
 
 ---
 
@@ -377,11 +377,11 @@ Remaining 16 items require owner classification.
 | **Data/Authentication Dependency** | None (public form submission endpoint) |
 | **Recommended Default** | **RETAIN BOTH** — `/api/waiting-list` is zero-cost re-export maintaining backward compatibility; minimal code maintenance burden; no compelling reason to break external integrations or legacy forms |
 | **Implementation Dependency** | None if retention chosen (no changes required); if deprecation chosen, external consumer audit required before sunset |
-| **Owner-Selected Disposition** | *[ BLANK — awaiting owner decision ]* Recommended: **RETAIN** (both endpoints as zero-cost aliases) |
-| **Redirect/Consolidation Destination** | *[ N/A unless deprecation chosen; if REMOVE selected, redirect strategy required ]* |
-| **Owner Rationale/Notes** | *[ BLANK — owner to provide: preference for backward-compatibility retention vs. deprecation/consolidation ]* |
-| **Approval Date** | *[ BLANK ]* |
-| **Approved By** | *[ BLANK ]* |
+| **Owner-Selected Disposition** | **RETAIN** |
+| **Redirect/Consolidation Destination** | N/A — both endpoints preserved as zero-cost aliases |
+| **Owner Rationale/Notes** | Owner bulk approval of fully-specified items per PXF-018 authorization model. `/api/waiting-list` is zero-cost re-export maintaining backward compatibility with external integrations. |
+| **Approval Date** | 2026-08-07 |
+| **Approved By** | Repository Owner |
 
 ---
 
@@ -447,8 +447,10 @@ After owner classification is complete:
 
 ---
 
-**Status:** Worksheet ready for owner review and classification. No decisions pre-approved.
+**Status:** Partially approved via bulk authorization. 7 items signed; 9 items remain pending owner decisions.
 
 **Worksheet created by:** PXF-017 closeout handoff  
-**Worksheet reviewed by:** (awaiting owner input)  
-**All 16 substantive pending items awaiting explicit owner decision. 6 verified-absent items are NOT APPLICABLE.**
+**Worksheet approved by:** Repository Owner — explicit instruction 2026-08-07  
+**Approved items (signed bulk):** 5, 13, 16, 17, 18, 20, 22  
+**Pending items (awaiting further decisions):** 1, 2, 7, 8, 10, 11, 14, 15, 19  
+**Verified-absent items (NOT APPLICABLE):** 3, 4, 6, 9, 12, 21
