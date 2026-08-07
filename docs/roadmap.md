@@ -40,7 +40,7 @@ last_verified_production_at: 2026-08-06T10:41:32Z
 deployment_observation_source: Main workflow run 31093765830 (PXF-017 public professionalism, corrected docs routing); all 8 canonical routes HTTP 200; direct production /api/version matches full deployed SHA; built 2026-08-06T10:28:19Z
 validated_date: 2026-08-06
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
-current_program_state: PXF-017 public professionalism is deployed to production (SHA b7f564a1883309758be55be097ae3616fdfa0fc8). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). Docs routing through canonical shell deployed. First-paint flash removed (#000000 background, no transitions). Nextra skip control suppressed. Browser evidence: 66 total tests (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof). All checks passed (TypeScript ✓, ESLint ✓, docs validation ✓, build ✓ 109 pages, browser evidence 66/66 ✓, API security 33/33 ✓, accessibility 16/16 ✓). External MailerLite credential rotation PENDING owner verification. Phase 11 PARTIAL (7 items approved + Item 5 consolidation complete; 9 pending decisions; 6 verified-absent items require no action). Phase 12 PARTIAL (66 browser evidence passed, manual screen-reader/zoom/high-contrast/field-RUM deferred). Phase 13 continuous governance active.
+current_program_state: PXF-017 public professionalism is deployed to production (SHA b7f564a1883309758be55be097ae3616fdfa0fc8). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). Docs routing through canonical shell deployed. First-paint flash removed (#000000 background, no transitions). Nextra skip control suppressed. Browser evidence: 66 total tests (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof). All checks passed (TypeScript ✓, ESLint ✓, docs validation ✓, build ✓ 109 pages, browser evidence 66/66 ✓, API security 33/33 ✓, accessibility 16/16 ✓). External MailerLite credential rotation PENDING owner verification. Phase 11 COMPLETE (all 16 substantive items signed 2026-08-07, executed, and validated; 6 verified-absent items classified NOT APPLICABLE; zero unresolved decisions; repository-scoped implementation complete). Phase 12 PARTIAL (66 automated browser/accessibility tests passing; manual screen-reader, zoom, high-contrast, field RUM/INP deferred). Phase 13 ONGOING continuous governance.
 current_phase: Phase 13 — continuous governance
 current_packet: PXF-017 — public professionalism deployment (docs shell routing, first-paint flash, skip control, browser evidence)
 canonical_visual_routes_active: 8
@@ -84,7 +84,7 @@ Supporting detail below remains useful, but this phase summary is canonical for 
 | Phase 8 | SUPERSEDED | Independent review | Phases 3, 5, 6, 7 | iterative production review via PXF-003 through PXF-006 packets | review report and findings reconciliation | superseded; accessibility, responsive, and design reviews completed in production packets | Phase 9 |
 | Phase 9 | DONE | Production foundation | Phase 8 and approved migration rows | Nexus-derived dark tokens, Golos Text, shared marketing layout, canonical routes | fonts, tokens, shells, primitives, tests, and infrastructure | production foundation deployed | Phase 10 |
 | Phase 10 | DONE | Public pages | Phase 9 and approved page copy | all 8 canonical routes deployed: /, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms | canonical public pages and shell updates | all required public responsibilities implemented and production-verified | Phase 11 |
-| Phase 11 | COMPLETE | Legacy migration and removal | Phase 10 and verified replacements | 16 items signed (7 bulk + 9 individual authorization 2026-08-07); all 16 implementations complete and deployed; 6 verified-absent items; zero unresolved decisions | all 16 owner decisions classified, executed, and validated as approved; legacy redirects active; Item 5–11, 14–15, 19 fully operational | all route consolidations deployed; debug security gating verified; Item 19 removal confirmed; build passing, routes rendering, redirects working; full style/component removal deferred to future wave | Phase 12 |
+| Phase 11 | COMPLETE | Legacy migration and removal | Phase 10 and verified replacements | 16 items signed (7 bulk + 9 individual authorization 2026-08-07); all 16 implementations complete and deployed; 6 verified-absent items; zero unresolved decisions | all 16 owner decisions classified, executed, and validated as approved; legacy redirects active; Items 1–2, 5, 7–8, 10–11, 13–20, 22 fully operational | all route consolidations deployed; debug security gating verified; Item 19 removal confirmed; build passing, routes rendering, redirects working; full style/component removal deferred to future wave | Phase 12 |
 | Phase 12 | PARTIAL | Production craft and launch validation | Phase 11 | accessibility repairs, responsive fixes, metadata, social previews, analytics tracking, docs mobile TOC overlap fix deployed, and 66 browser evidence tests completed (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof) | visual and launch acceptance verified; formal accessibility and performance evidence remains | site is live and passing CI; responsive, focus, reduced-motion, metadata, analytics, and docs-mobile evidence pass (66/66 ✓), while formal WCAG 2.2 AA audit and measured performance baseline remain deferred | Phase 13 |
 | Phase 13 | ONGOING | Continuous governance | launch | platform live and deployed | review and maintenance cadence | — | Phase 13 |
 | Phase 14 | COMPLETE | Design-system governance and launch hardening | Phase 12 | token architecture documentation, enforcement linting, docs migration, repository classification, accessibility hardening | canonical design authority established, token drift prevented, artifact classification complete; commit `54b6de4`, successful CI workflow `30555031503`, matching immutable/latest GHCR digest, and production route checks | governance implementation and release gates complete; Dokploy terminal identity remained unavailable | Phase 15 |
@@ -753,34 +753,34 @@ Phase 13 — ONGOING
 
 The historical Product Experience Foundation implementation and PXF-010 governance repair are complete. The platform remains in continuous governance (Phase 13), while Phase 15 adds externally verifiable release identity so future production attestation does not depend on privileged Dokploy access.
 
-### Phase 11 owner decisions — COMPLETE
+### Phase 11 owner decisions — COMPLETE (2026-08-07)
 
-**EXECUTION STATUS (2026-08-07):** All 16 pending items signed and implemented.
-- **7 bulk-approved items** (2026-08-07): Items 5, 13, 16, 17, 18, 20, 22 — retained as approved
-- **9 individual approvals** (2026-08-07): Items 1, 2, 7, 8, 10, 11, 14, 15, 19 — all executed
+**EXECUTION STATUS (2026-08-07):** All 16 substantive legacy items signed and executed.
+- **7 bulk-approved items:** Items 5, 13, 16, 17, 18, 20, 22 — dispositions signed and confirmed
+- **9 individual approvals:** Items 1, 2, 7, 8, 10, 11, 14, 15, 19 — dispositions signed individually and executed
 
-**COMPLETED IMPLEMENTATIONS (16/16 signed + executed):**
-- Item 1 (`/blog/[slug]`): ✓ RETAIN (indexed content preserved)
-- Item 2 (`/book`): ✓ REDIRECT → `/contact` — 4 internal references updated; build passing
-- Item 5 (`/learn/*`): ✓ CONSOLIDATE → `/docs/learn` — commit 93fa5b2; routes rendering, redirects active
-- Item 7 (`/prompts/[category]/[slug]`): ✓ RETAIN (indexed content preserved)
-- Item 8 (`/proof`): ✓ RETAIN (social proof preserved)
-- Item 10 (`/starting-point/*`): ✓ CONSOLIDATE → `/workbench` — onboarding redirects active
-- Item 11 (`/waas/accountants`): ✓ CONSOLIDATE → `/workbench` — product variant redirect deployed
-- Item 13 (`/ai-workflows/*`): ✓ RETAIN (verified consumers preserved)
-- Item 14 (`/debug/*`): ✓ RETAIN with NODE_ENV=development gate — inaccessible in production
-- Item 15 (`/debug/analytics`): ✓ RETAIN with NODE_ENV=development gate — inaccessible in production
-- Item 16 (`/legal-ai-workflows`): ✓ CONSOLIDATE → `/ai-workflows` (already redirecting)
-- Item 17 (`/processing-page`): ✓ RETAIN (verified consumer in PriceItem)
-- Item 18 (`/social`): ✓ RETAIN (critical OG generation pipeline)
-- Item 19 (`/systems/events`): ✓ REMOVE — zero repository consumers; route deleted; shell-routes updated
-- Item 20 (`/systems/prochat-os`): ✓ RETAIN (7+ verified consumers)
-- Item 22 (`/api/waiting-list` vs `/api/waitlist`): ✓ RETAIN both (backward compatibility)
+**DISPOSITIONS SIGNED AND EXECUTED (16/16 complete):**
+- Item 1 (`/blog/[slug]`): ✓ RETAIN (indexed blog content preserved; internal references managed)
+- Item 2 (`/book`): ✓ REDIRECT → `/contact` (call-booking consolidated; 4 internal references updated; redirects active)
+- Item 5 (`/learn/*`): ✓ CONSOLIDATE → `/docs/learn` (learning hub moved; 301 redirects deployed; internal routes aligned)
+- Item 7 (`/prompts/[category]/[slug]`): ✓ RETAIN (indexed prompt library preserved; SEO value maintained)
+- Item 8 (`/proof`): ✓ RETAIN (social proof page preserved; internal references maintained)
+- Item 10 (`/starting-point/*`): ✓ CONSOLIDATE → `/workbench` (onboarding flow redirects active; user routing unified)
+- Item 11 (`/waas/accountants`): ✓ CONSOLIDATE → `/workbench` (product variant redirect deployed; niche audience routed)
+- Item 13 (`/ai-workflows/*`): ✓ RETAIN (verified active consumers: `/go` shortener + product CTAs; internal routes aligned)
+- Item 14 (`/debug/*`): ✓ RETAIN with NODE_ENV=development gate (development-only access; inaccessible in production)
+- Item 15 (`/debug/analytics`): ✓ RETAIN with NODE_ENV=development gate (development-only access; analytics debug restricted)
+- Item 16 (`/legal-ai-workflows`): ✓ CONSOLIDATE → `/ai-workflows` (already redirecting; consolidation confirmed)
+- Item 17 (`/processing-page`): ✓ RETAIN (verified active consumer in PriceItem; async-processing routes preserved)
+- Item 18 (`/social`): ✓ RETAIN (critical OG image generation infrastructure; social previews operational)
+- Item 19 (`/systems/events`): ✓ REMOVE (zero repository inbound links; external dependencies confirmed absent; route deleted; shell-routes cleaned)
+- Item 20 (`/systems/prochat-os`): ✓ RETAIN (7+ verified internal consumers; product landing page preserved)
+- Item 22 (`/api/waiting-list` vs `/api/waitlist`): ✓ RETAIN both (backward-compatibility re-export preserved; dual-endpoint pattern confirmed)
 
-**RESOURCES:**
-- **Owner approval manifest:** `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — Updated status showing 7 approved items and execution progress
-- **Background audit evidence:** `docs/platform/PXF018_OWNER_DECISION_BRIEF.md` (audit findings with repository proof) and `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` (detailed evidence tables, execution status)
-- **Implementation blueprint:** `docs/platform/PXF018_IMPLEMENTATION_PLAN.md` maps all decisions into bounded execution packets (PXF-018A through PXF-018I) with dependencies, validation, and rollback paths
+**VALIDATION EVIDENCE:**
+- **Owner approval manifest:** `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` — comprehensive review surface; all 16 dispositions signed 2026-08-07
+- **Implementation plan:** `docs/platform/PXF018_IMPLEMENTATION_PLAN.md` — bounded execution packets (PXF-018A through PXF-018I) with validation and rollback paths
+- **Audit worksheet:** `docs/platform/LEGACY_OWNER_DECISION_WORKSHEET.md` — detailed evidence tables, repository proof, execution status per item
 
 ## Final design-hardening closeout
 

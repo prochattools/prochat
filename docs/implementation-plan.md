@@ -46,7 +46,7 @@ last_verified_production_at: 2026-08-06T10:41:32Z
 deployment_observation_source: Main workflow run 31093765830 (PXF-017 public professionalism) deployed; direct production /api/version, /api/health, /docs, and eight-route verification; all routes HTTP 200; built 2026-08-06T10:28:19Z
 validated_date: 2026-08-06
 documentation_sync_status: Immutable validation anchors describe completed program evidence; deployment observation fields describe the last verified production state without claiming to track the live repository HEAD.
-current_program_state: PXF-017 public professionalism deployed to production (SHA b7f564a1883309758be55be097ae3616fdfa0fc8). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). Docs routed through canonical shell. First-paint black background, no transitions. Nextra skip control suppressed. Browser evidence: 66 tests (6+18+16+26). All CI checks pass (TypeScript ✓, ESLint ✓, build ✓ 109 pages, browser evidence 66/66 ✓, security-api 33/33 ✓, accessibility 16/16 ✓). Phase 11 PARTIAL (16 pending owner decisions; 6 verified-absent items require no action). Phase 12 PARTIAL (browser/accessibility evidence passed, manual screen-reader/zoom/high-contrast/field-RUM deferred). Phase 13 continuous governance. MailerLite external rotation PENDING owner verification.
+current_program_state: PXF-017 public professionalism deployed to production (SHA b7f564a1883309758be55be097ae3616fdfa0fc8). All eight canonical routes serve (/, /memory, /memory-qa, /workbench, /docs, /contact, /privacy, /terms all HTTP 200). Docs routed through canonical shell. First-paint black background, no transitions. Nextra skip control suppressed. Browser evidence: 66 tests (6+18+16+26). All CI checks pass (TypeScript ✓, ESLint ✓, build ✓ 109 pages, browser evidence 66/66 ✓, security-api 33/33 ✓, accessibility 16/16 ✓). Phase 11 COMPLETE (all 16 substantive legacy items signed 2026-08-07, executed, and validated; 6 verified-absent items classified NOT APPLICABLE; zero unresolved decisions). Phase 12 PARTIAL (66 automated browser/accessibility tests passing; manual screen-reader, zoom, high-contrast, field RUM/INP deferred). Phase 13 continuous governance active. MailerLite external credential rotation PENDING owner verification.
 current_phase: Phase 13 — continuous governance
 current_packet: PXF-017 — public professionalism deployment
 canonical_visual_routes_active: 8
@@ -109,9 +109,7 @@ c15c90d feat(onboarding): clarify first-success product paths
 4b423fb feat(analytics): track product-page onboarding actions
 ```
 
-The platform is deployed and live. All canonical routes pass CI. Phase 11 inventory and auth-boundary audit are the current work packets (PXF-017B).
-  status: READY
-  purpose: Browser-runner worktree isolation, stale-run disposition, and shell-contract decision.
+The platform is deployed and live. All canonical routes pass CI. Phase 11 legacy surface decisions are complete: all 16 substantive items signed (2026-08-07), executed, and validated. Phase 12 manual evidence and Phase 13 governance are current work.
   depends_on: []
   exact_inputs:
     - docs/product/agent-mode-progress.md

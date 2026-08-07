@@ -41,10 +41,10 @@ The validation anchors are immutable evidence. The production fields are dated o
 
 ## Truthful program status
 
-**CURRENT (2026-08-07, after PXF-017 deployment):**
+**CURRENT (2026-08-07, after Phase 11 owner decision closure):**
 
-- Phase 11 is `PARTIAL`: redirects active, legacy surface inventory created (docs/platform/LEGACY_SURFACE_INVENTORY.md), first cleanup deployed (12 components, 687 lines removed, PXF-017A 7cfa126). 16 pending owner decisions (6 verified-absent); protected-route boundary hardening is design/owner-pending (see protected-route audit).
-- Phase 12 remains `PARTIAL`: 66 automated browser/accessibility evidence tests pass (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof); manual screen-reader, zoom, high-contrast, and field RUM/INP evidence remain NOT YET EXECUTED.
+- Phase 11 is `COMPLETE`: all 16 substantive legacy items signed (7 bulk + 9 individual, 2026-08-07), executed, and validated. Consolidated routes deployed, redirects active, debug routes gated to NODE_ENV=development, Item 19 removed. 6 verified-absent items classified NOT APPLICABLE. Zero unresolved decisions. Repository-scoped Phase 11 implementation complete.
+- Phase 12 remains `PARTIAL`: 66 automated browser/accessibility evidence tests pass (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof); manual screen-reader, zoom, high-contrast, and field RUM/INP evidence remain NOT YET EXECUTED (deferred to Phase 13 or owner priority).
 - Phase 13 remains `ONGOING`: continuous governance and bounded maintenance.
 - Phases 14 and 15 are complete.
 - MailerLite credential rotation: PENDING owner verification (code completed; external provider action required).
@@ -1089,8 +1089,8 @@ All items documented in `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md`, `docs
 
 | Phase | Status | Evidence |
 |---|---|---|
-| Phase 11 | PARTIAL | 7 approved + Item 5 consolidation complete; 9 pending owner decisions + 6 verified-absent (22 total), cleanup deployed (PXF-017A) |
-| Phase 12 | PARTIAL | 66 browser tests ✓; manual screen-reader, 200% zoom, high-contrast, field RUM/INP deferred |
+| Phase 11 | COMPLETE | All 16 substantive legacy items signed 2026-08-07 (7 bulk + 9 individual); executed and validated; 6 verified-absent classified NOT APPLICABLE; zero unresolved decisions; cleanup deployed (PXF-017A); redirects active; routes rendering |
+| Phase 12 | PARTIAL | 66 automated browser/accessibility tests passing (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof); manual screen-reader, 200% zoom, high-contrast, field RUM/INP deferred |
 | Phase 13 | ONGOING | Continuous governance active; no completion gate |
 
 ### Deployed state
@@ -1140,24 +1140,26 @@ All confirmed gaps addressed, deployed, and CI-verified at SHA `b7f564a1`.
 
 ## CURRENT STATE AND NEXT ACTION (2026-08-07)
 
-**Current roadmap position:** Phase 11 (PARTIAL) / Phase 12 (PARTIAL) / Phase 13 (ONGOING)
+**Current roadmap position:** Phase 11 (COMPLETE) / Phase 12 (PARTIAL) / Phase 13 (ONGOING)
 
-**Phase 11 status:**
+**Phase 11 status — COMPLETE:**
 - Planning: COMPLETE
-- Implementation: blocked on owner approval
-- 16 pending owner decisions documented in `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md`
-- 6 verified-absent items (no code work required)
+- Owner decisions: COMPLETE — all 16 substantive items signed 2026-08-07 (7 bulk + 9 individual)
+- Implementation: COMPLETE — all 16 dispositions executed and validated
+- Verified-absent: 6 items classified NOT APPLICABLE (no code work required)
+- Repository-scoped implementation: COMPLETE
+- Redirects active, routes rendering, debug gates deployed, Item 19 removed
 - 22 items total catalogued
 
-**Phase 12 status:**
+**Phase 12 status — PARTIAL:**
 - Automated evidence: 66 tests passing (6 docs-mobile + 18 route-smoke + 16 accessibility + 26 chrome-proof)
-- Manual evidence: screen-reader, 200% zoom, high-contrast, field RUM/INP NOT YET EXECUTED (deferred to Phase 13 or owner priority)
+- Manual evidence: screen-reader, 200% zoom, high-contrast, field RUM/INP, touch targets NOT YET EXECUTED (deferred to Phase 13 or owner priority)
 
 **External blockers:**
 - MailerLite credential rotation: PENDING owner verification (code completed; requires external provider action)
 - Protected-route hardening (Ory/session): design-pending, owner decision scope
 
-**NEXT OWNER ACTION:**
-Review and sign `docs/platform/PXF018_OWNER_APPROVAL_MANIFEST.md` to authorize Phase 11 implementation packets (PXF-018A through PXF-018I). Owner-independent documentation cleanup is complete. All roadmap/implementation-plan/agent-mode-progress claims are aligned to canonical verified evidence (16/6/22 inventory, 66 automated tests, manual evidence deferred).
+**Documentation closeout:**
+All roadmap, implementation-plan, and agent-mode-progress claims are now aligned to canonical verified evidence (Phase 11: 16/6/22 inventory complete; Phase 12: 66 automated tests + manual evidence deferred; Phase 13: governance ongoing).
 
-After owner approval: implementation proceeds via bounded packets mapped in `docs/platform/PXF018_IMPLEMENTATION_PLAN.md`.
+**Repository-scoped implementation is COMPLETE.** Remaining work (MailerLite rotation, Phase 12 manual evidence, Phase 13 governance) are outside repository scope.
