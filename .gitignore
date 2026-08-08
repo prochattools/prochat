@@ -74,3 +74,6 @@ tools/motion-lab/hyperframes/*.webm
 tools/motion-lab/hyperframes/*.png
 tools/motion-lab/renders/
 tools/motion-lab/reviews/
+
+# HyperFrames renders subdirectory
+tools/motion-lab/hyperframes/renders/
