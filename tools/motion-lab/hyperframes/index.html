@@ -1,57 +1,73 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ProChat A2 Review Gate — HyperFrames POC</title>
+  <style>
+    @font-face {
+      font-family: "Golos Text";
+      src: url("./fonts/golos-text-400.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      src: url("./fonts/jetbrains-mono-400.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
 </head>
 <body style="margin:0;background:#0d1118;overflow:hidden">
-  <div id="a2" data-composition-id="a2-review-gate" data-start="0" data-duration="5.2" data-width="1920" data-height="1080">
-    <div class="grid"></div>
-    <div class="ambient"></div>
+  <div data-hf-id="hf-s08n" id="a2" data-composition-id="a2-review-gate" data-start="0" data-duration="5.2" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-kxq8" class="grid"></div>
+    <div data-hf-id="hf-9v4o" class="ambient"></div>
 
-    <div class="copy">
-      <div class="eyebrow">REVIEW GATE · PROCHAT MEMORY</div>
-      <h1 id="hero-title">Work arrives before it becomes memory.</h1>
-      <p id="hero-copy">Evidence keeps its source, state, and provenance until review changes what can be trusted.</p>
+    <div data-hf-id="hf-bdx3" class="copy" data-layout-allow-overlap>
+      <div data-hf-id="hf-mgtf" class="eyebrow">REVIEW GATE · PROCHAT MEMORY</div>
+      <h1 data-hf-id="hf-72va" id="hero-title" data-layout-allow-overlap>Work arrives before it becomes memory.</h1>
+      <p data-hf-id="hf-9iz2" id="hero-copy" data-layout-allow-overlap>Evidence keeps its source, state, and provenance until review changes what can be trusted.</p>
     </div>
 
-    <div class="gate" id="gate"><span>REVIEW GATE</span></div>
-    <div class="gate-state" id="gate-state">UNREVIEWED</div>
+    <div data-hf-id="hf-cmp2" class="gate" id="gate"><span data-hf-id="hf-ew80">REVIEW GATE</span></div>
+    <div data-hf-id="hf-rbww" class="gate-state" id="gate-state">UNREVIEWED</div>
 
-    <article class="evidence evidence-a" id="evidence-a">
-      <div class="card-top"><span class="pill">code</span><span class="mono">commit 42d8a1</span></div>
-      <h2>Use stable data attributes for checkout selectors</h2>
-      <p>Replace text-coupled selectors before rerunning the browser flow.</p>
-      <div class="state pending">candidate</div>
+    <article data-hf-id="hf-djrk" class="evidence evidence-a" id="evidence-a">
+      <div data-hf-id="hf-ub2w" class="card-top"><span data-hf-id="hf-dusx" class="pill">code</span><span data-hf-id="hf-7do7" class="mono">commit 42d8a1</span></div>
+      <h2 data-hf-id="hf-vo2v">Use stable data attributes for checkout selectors</h2>
+      <p data-hf-id="hf-um63">Replace text-coupled selectors before rerunning the browser flow.</p>
+      <div data-hf-id="hf-aipn" class="state pending">candidate</div>
     </article>
 
-    <article class="evidence evidence-b" id="evidence-b">
-      <div class="card-top"><span class="pill">browser</span><span class="mono">10:42:16</span></div>
-      <h2>Expected confirmation banner was not found</h2>
-      <p>Checkout verification failed after the final submit action.</p>
-      <div class="state pending">unreviewed</div>
+    <article data-hf-id="hf-o41g" class="evidence evidence-b" id="evidence-b" data-layout-allow-occlusion>
+      <div data-hf-id="hf-yfw0" class="card-top"><span data-hf-id="hf-xfe4" class="pill">browser</span><span data-hf-id="hf-64s4" class="mono">10:42:16</span></div>
+      <h2 data-hf-id="hf-14h6">Expected confirmation banner was not found</h2>
+      <p data-hf-id="hf-j89y" data-layout-allow-occlusion>Checkout verification failed after the final submit action.</p>
+      <div data-hf-id="hf-iibg" class="state pending" data-layout-allow-occlusion>unreviewed</div>
     </article>
 
-    <article class="evidence evidence-c" id="evidence-c">
-      <div class="card-top"><span class="pill">decision</span><span class="mono">review #218</span></div>
-      <h2>Keep production redirects explicit</h2>
-      <p>Preserve redirect destinations as signed owner decisions.</p>
-      <div class="state pending">awaiting review</div>
+    <article data-hf-id="hf-j5jk" class="evidence evidence-c" id="evidence-c" data-layout-allow-overlap>
+      <div data-hf-id="hf-x8yx" class="card-top"><span data-hf-id="hf-b06i" class="pill">decision</span><span data-hf-id="hf-4npw" class="mono">review #218</span></div>
+      <h2 data-hf-id="hf-ols4" data-layout-allow-overlap>Keep production redirects explicit</h2>
+      <p data-hf-id="hf-wqe0" data-layout-allow-overlap>Preserve redirect destinations as signed owner decisions.</p>
+      <div data-hf-id="hf-5cs8" class="state pending" data-layout-allow-overlap>awaiting review</div>
     </article>
 
-    <article class="evidence rejected" id="rejected">
-      <div class="card-top"><span class="pill">browser</span><span class="mono">superseded</span></div>
-      <h2>Banner-text selector assumption</h2>
-      <div class="state bad">rejected</div>
+    <article data-hf-id="hf-2mg4" class="evidence rejected" id="rejected">
+      <div data-hf-id="hf-xn9y" class="card-top"><span data-hf-id="hf-wcsk" class="pill">browser</span><span data-hf-id="hf-18m8" class="mono">superseded</span></div>
+      <h2 data-hf-id="hf-g85n">Banner-text selector assumption</h2>
+      <div data-hf-id="hf-gk3o" class="state bad">rejected</div>
     </article>
 
-    <section class="memory-workspace" id="memory-workspace">
-      <div class="workspace-top"><strong>Memory workspace</strong><span class="mono">reviewed · provenance intact</span></div>
-      <div class="memory-record" id="memory-a"><strong>Stable selector contract</strong><span>code · 42d8a1 · approved</span></div>
-      <div class="memory-record" id="memory-b"><strong>Browser verification requirement</strong><span>evidence · current</span></div>
-      <div class="memory-record" id="memory-c"><strong>Production redirect contract</strong><span>owner decision · approved</span></div>
-      <div class="ready"><span>Current task context verified</span><strong>READY</strong></div>
+    <section data-hf-id="hf-9xri" class="memory-workspace" id="memory-workspace">
+      <div data-hf-id="hf-brex" class="workspace-top"><strong data-hf-id="hf-g990">Memory workspace</strong><span data-hf-id="hf-5c1a" class="mono">reviewed · provenance intact</span></div>
+      <div data-hf-id="hf-6s68" class="memory-record" id="memory-a"><strong data-hf-id="hf-c020">Stable selector contract</strong><span data-hf-id="hf-55lp">code · 42d8a1 · approved</span></div>
+      <div data-hf-id="hf-fg23" class="memory-record" id="memory-b"><strong data-hf-id="hf-wrcy">Browser verification requirement</strong><span data-hf-id="hf-4540">evidence · current</span></div>
+      <div data-hf-id="hf-bhy2" class="memory-record" id="memory-c"><strong data-hf-id="hf-lob3">Production redirect contract</strong><span data-hf-id="hf-rm6y">owner decision · approved</span></div>
+      <div data-hf-id="hf-to91" class="ready"><span data-hf-id="hf-zusg">Current task context verified</span><strong data-hf-id="hf-aq41">READY</strong></div>
     </section>
 
     <style>
@@ -63,23 +79,23 @@
       #a2 * { box-sizing: border-box; }
       .grid { position:absolute; inset:0; opacity:.14; background-image:linear-gradient(rgb(255 255 255 / .055) 1px,transparent 1px),linear-gradient(90deg,rgb(255 255 255 / .055) 1px,transparent 1px); background-size:84px 84px; mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent); }
       .ambient { position:absolute; width:760px; height:760px; left:1040px; top:150px; border-radius:50%; background:radial-gradient(circle,rgb(49 88 199 / .16),transparent 66%); filter:blur(8px); }
-      .copy { position:absolute; z-index:4; left:105px; top:90px; width:650px; }
+      .copy { position:absolute; z-index:6; left:105px; top:60px; width:420px; }
       .eyebrow { color:#7d9af2; font:16px "JetBrains Mono",monospace; letter-spacing:.16em; }
-      h1 { margin:28px 0 22px; max-width:690px; font-size:82px; line-height:.94; letter-spacing:-.058em; font-weight:610; }
-      .copy p { margin:0; max-width:580px; color:#b6c0cd; font-size:23px; line-height:1.48; }
+      h1 { margin:18px 0 16px; font-size:56px; line-height:.95; letter-spacing:-.052em; font-weight:600; }
+      .copy p { margin:0; color:#b6c0cd; font-size:16px; line-height:1.4; }
       .gate { position:absolute; z-index:3; left:1118px; top:92px; bottom:92px; width:2px; background:linear-gradient(transparent,#7d9af2 16%,#7d9af2 84%,transparent); box-shadow:0 0 22px rgb(125 154 242 / .18); }
       .gate span { position:absolute; top:18px; left:20px; color:#7d9af2; font:14px "JetBrains Mono",monospace; letter-spacing:.14em; white-space:nowrap; }
       .gate-state { position:absolute; z-index:5; left:1054px; top:505px; width:130px; padding:14px 8px; border:1px solid #4963a8; border-radius:9px; background:#10182b; color:#c8d4fa; text-align:center; font:13px "JetBrains Mono",monospace; letter-spacing:.06em; }
-      .evidence { position:absolute; z-index:4; width:430px; min-height:180px; padding:22px 24px; border:1px solid #354156; border-radius:14px; background:linear-gradient(180deg,rgb(25 33 46 / .98),rgb(16 22 31 / .98)); box-shadow:0 22px 70px rgb(0 0 0 / .34); }
-      .evidence-a { left:670px; top:350px; }
-      .evidence-b { left:735px; top:590px; transform:scale(.96); }
-      .evidence-c { left:560px; top:792px; transform:scale(.92); }
-      .rejected { left:1240px; top:720px; width:380px; min-height:135px; opacity:.28; }
-      .card-top { display:flex; justify-content:space-between; gap:18px; margin-bottom:18px; }
-      .pill { display:inline-flex; padding:6px 10px; border:1px solid #354156; border-radius:999px; color:#b6c0cd; font:13px "JetBrains Mono",monospace; }
-      .mono { color:#8995a6; font:13px "JetBrains Mono",monospace; }
-      .evidence h2 { margin:0 0 12px; font-size:22px; line-height:1.25; letter-spacing:-.02em; font-weight:570; }
-      .evidence p { margin:0 0 16px; color:#b6c0cd; font-size:16px; line-height:1.45; }
+      .evidence { position:absolute; z-index:4; width:360px; min-height:150px; padding:16px 18px; border:1px solid #354156; border-radius:11px; background:linear-gradient(180deg,rgb(25 33 46 / .98),rgb(16 22 31 / .98)); box-shadow:0 14px 40px rgb(0 0 0 / .24); }
+      .evidence-a { left:180px; top:360px; }
+      .evidence-b { left:210px; top:540px; transform:scale(.94); }
+      .evidence-c { left:140px; top:710px; transform:scale(.91); }
+      .rejected { left:155px; top:810px; width:320px; min-height:115px; opacity:.20; }
+      .card-top { display:flex; justify-content:space-between; gap:14px; margin-bottom:14px; }
+      .pill { display:inline-flex; padding:5px 8px; border:1px solid #354156; border-radius:999px; color:#9ba6b3; font:11px "JetBrains Mono",monospace; }
+      .mono { color:#7c869b; font:11px "JetBrains Mono",monospace; }
+      .evidence h2 { margin:0 0 10px; font-size:18px; line-height:1.3; letter-spacing:-.015em; font-weight:560; }
+      .evidence p { margin:0 0 14px; color:#b6ccd9; font-size:14px; line-height:1.4; }
       .state { font:13px "JetBrains Mono",monospace; letter-spacing:.06em; text-transform:uppercase; }
       .pending { color:#e1a64f; }.bad { color:#d76b64; }
       .memory-workspace { position:absolute; z-index:2; left:1235px; top:180px; width:570px; height:620px; padding:24px; border:1px solid #425473; border-radius:16px; background:linear-gradient(180deg,rgb(17 24 35 / .98),rgb(12 18 27 / .98)); box-shadow:0 28px 90px rgb(0 0 0 / .36); opacity:0; }
@@ -106,28 +122,28 @@
         .from('#evidence-b', { opacity: 0, x: -260, y: -18, scale: 0.90, duration: 0.72 }, 0.62)
         .from('#evidence-c', { opacity: 0, x: -190, y: 34, scale: 0.88, duration: 0.70 }, 0.82)
 
-        // Review activates. Same evidence persists while its state changes.
+        // Review activates. Approved evidence escalates, stays left of gate, and fades.
         .to('#gate-state', { color: '#9bd1bb', borderColor: '#315d50', backgroundColor: '#12221e', duration: 0.3 }, 1.55)
-        .to('#evidence-a', { x: 500, y: -120, scale: 0.90, borderColor: '#526fb9', duration: 0.9 }, 1.72)
-        .to('#evidence-b', { x: 445, y: -35, scale: 0.88, borderColor: '#526fb9', duration: 0.92 }, 1.90)
-        .to('#evidence-c', { x: 625, y: -165, scale: 0.86, borderColor: '#526fb9', duration: 0.95 }, 2.06)
-        .from('#rejected', { opacity: 0, x: -120, y: -30, scale: 0.94, duration: 0.55 }, 2.15)
-        .to('#rejected', { opacity: 0.34, y: 55, scale: 0.93, duration: 0.55 }, 2.55)
+        .to('#evidence-a', { y: -180, scale: 0.88, borderColor: '#526fb9', opacity: 0.7, duration: 0.85 }, 1.68)
+        .to('#evidence-b', { y: -140, scale: 0.86, borderColor: '#526fb9', opacity: 0.7, duration: 0.88 }, 1.88)
+        .to('#evidence-c', { y: -220, scale: 0.84, borderColor: '#526fb9', opacity: 0.7, duration: 0.90 }, 2.04)
+        .from('#rejected', { opacity: 0, y: -40, scale: 0.90, duration: 0.5 }, 2.18)
+        .to('#rejected', { opacity: 0.22, y: 30, scale: 0.88, duration: 0.5 }, 2.68)
 
-        // Trusted memory workspace enters behind the approved records.
-        .to('#memory-workspace', { opacity: 1, scale: 1, x: 0, duration: 0.65 }, 2.72)
-        .from('#memory-a', { opacity: 0, x: 44, duration: 0.38 }, 2.90)
-        .from('#memory-b', { opacity: 0, x: 44, duration: 0.38 }, 3.04)
-        .from('#memory-c', { opacity: 0, x: 44, duration: 0.38 }, 3.18)
-        .from('.ready', { opacity: 0, y: 16, duration: 0.35 }, 3.42)
-        .to('#evidence-a', { opacity: 0.14, x: 540, y: -130, duration: 0.45 }, 3.45)
-        .to('#evidence-b', { opacity: 0.10, x: 485, y: -45, duration: 0.45 }, 3.50)
-        .to('#evidence-c', { opacity: 0.10, x: 665, y: -175, duration: 0.45 }, 3.55)
-        .to('#gate-state', { color: '#9bd1bb', duration: 0.25 }, 3.58)
-        .to('#hero-title', { color: '#f5f7fa', duration: 0.25 }, 3.62)
-        .from('#memory-workspace', { boxShadow: '0 0 0 rgba(0,0,0,0)', duration: 0.4 }, 3.76)
-        .to('#gate', { opacity: 0.58, duration: 0.45 }, 4.25)
-        .to('#rejected', { opacity: 0.18, duration: 0.35 }, 4.35);
+        // Trusted memory workspace enters on right side; approved evidence fully fades left.
+        .to('#memory-workspace', { opacity: 1, scale: 1, duration: 0.65 }, 2.72)
+        .from('#memory-a', { opacity: 0, x: 28, duration: 0.35 }, 2.88)
+        .from('#memory-b', { opacity: 0, x: 28, duration: 0.35 }, 3.02)
+        .from('#memory-c', { opacity: 0, x: 28, duration: 0.35 }, 3.16)
+        .from('.ready', { opacity: 0, y: 14, duration: 0.32 }, 3.38)
+        .to('#evidence-a', { opacity: 0.08, y: -200, duration: 0.4 }, 3.40)
+        .to('#evidence-b', { opacity: 0.06, y: -160, duration: 0.4 }, 3.44)
+        .to('#evidence-c', { opacity: 0.06, y: -240, duration: 0.4 }, 3.48)
+        .to('#gate-state', { color: '#9bd1bb', duration: 0.22 }, 3.54)
+        .to('#hero-title', { color: '#f5f7fa', duration: 0.22 }, 3.58)
+        .from('#memory-workspace', { boxShadow: '0 0 0 rgba(0,0,0,0)', duration: 0.35 }, 3.68)
+        .to('#gate', { opacity: 0.52, duration: 0.4 }, 4.15)
+        .to('#rejected', { opacity: 0.16, y: 45, duration: 0.3 }, 4.28);
 
       window.__timelines['a2-review-gate'] = tl;
     </script>

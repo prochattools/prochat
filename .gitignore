@@ -66,3 +66,11 @@ public/prochat-memory/assets/cta.svg
 # Incomplete laboratory work (not canonical)
 src/app/(marketing)/design-lab/
 src/app/(marketing)/motion-lab/
+
+# Motion lab — generated outputs (HyperFrames Studio, renders, reviews)
+tools/motion-lab/hyperframes/.thumbnails/
+tools/motion-lab/hyperframes/*.mp4
+tools/motion-lab/hyperframes/*.webm
+tools/motion-lab/hyperframes/*.png
+tools/motion-lab/renders/
+tools/motion-lab/reviews/
