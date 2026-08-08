@@ -762,7 +762,7 @@ The historical Product Experience Foundation implementation and PXF-010 governan
 **DISPOSITIONS SIGNED AND EXECUTED (16/16 complete):**
 - Item 1 (`/blog/[slug]`): ✓ RETAIN (indexed blog content preserved; internal references managed)
 - Item 2 (`/book`): ✓ REDIRECT → `/contact` (call-booking consolidated; 4 internal references updated; redirects active)
-- Item 5 (`/learn/*`): ✓ CONSOLIDATE → `/docs/learn` (learning hub moved; 301 redirects deployed; internal routes aligned)
+- Item 5 (`/learn/*`): ✓ CONSOLIDATE → `/docs/learn` (learning hub moved; permanent legacy redirects deployed; internal routes aligned)
 - Item 7 (`/prompts/[category]/[slug]`): ✓ RETAIN (indexed prompt library preserved; SEO value maintained)
 - Item 8 (`/proof`): ✓ RETAIN (social proof page preserved; internal references maintained)
 - Item 10 (`/starting-point/*`): ✓ CONSOLIDATE → `/workbench` (onboarding flow redirects active; user routing unified)
