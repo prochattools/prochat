@@ -1,8 +1,8 @@
 # A2/B2 Visual + Motion POC Evaluation
 
 **Branch:** `design/cloudflare-motion-poc`  
-**Base:** `922ae09`  
-**Status:** isolated POC source complete; owner visual review and external Node 22/FFmpeg/browser execution still required  
+**Validated at:** `b12ba4e` (source), re-rendered after geometry/font hardening  
+**Status:** forensic audit complete; owner visual review required  
 **Production homepage:** unchanged
 
 ## Artifacts
@@ -18,8 +18,6 @@ Preview surface: `tools/motion-lab/styleframes/index.html`
 5. `#b2-relevance-filtering` — B2 Relevance Filtering
 6. `#b2-context-assembly` — B2 Context Assembly
 7. `#b2-applied-context` — B2 Applied Context
-
-The styleframes are deterministic HTML/CSS using approved ProChat brand tokens and product-grounded evidence/review semantics. No generative fake product screenshots are used.
 
 ### B2 live scroll POC
 
@@ -42,22 +40,6 @@ The styleframes are deterministic HTML/CSS using approved ProChat brand tokens a
 - Narrative: raw evidence enters → review boundary activates → approved evidence resolves into durable memory while rejected evidence stays inspectable but demoted
 - Determinism: no `Math.random()`, `Date.now()`, async timeline construction, or timeline callbacks that mutate content
 
-## Source-size baseline
-
-Measured in the branch before media output:
-
-| Artifact | Bytes |
-| --- | ---: |
-| Styleframes HTML | 10,611 |
-| Styleframes CSS | 9,765 |
-| B2 HTML | 4,819 |
-| B2 CSS | 8,104 |
-| B2 JS | 7,174 after runtime tightening |
-| HyperFrames HTML | 9,932 |
-| HyperFrames DESIGN.md | 1,846 |
-
-The isolated lab source is intentionally small and does not add production JavaScript to the application bundle.
-
 ## Dependency decision
 
 ### Installed in production application
@@ -67,7 +49,7 @@ None.
 ### Isolated POC dependencies
 
 - GSAP / ScrollTrigger: pinned browser CDN `3.14.2` for the isolated lab only.
-- HyperFrames: invoked through `npx hyperframes` in an isolated Node >=22 shell when available.
+- HyperFrames: invoked through `npx hyperframes@0.7.102` in an isolated Node >=22 shell.
 - FFmpeg: external authoring/render requirement only.
 
 No root `package.json`, lockfile, Next.js route, production bundle, or homepage component was modified.
@@ -80,141 +62,186 @@ Both approved concepts can be represented with DOM/CSS/SVG, GSAP, deterministic 
 
 Revisit only if owner review identifies a specific depth/camera effect that cannot be achieved convincingly with the current approach.
 
-## Validation completed — execution environment
+## HyperFrames validation (executed, hardened)
 
-- Branch: `design/cloudflare-motion-poc`
-- HEAD: `8b18027`
-- Execution: Node 25.9.0, FFmpeg 8.1.1, Docker 29.4.0
-- Worktree state: fonts vendored, geometry redesigned, layout validated
-- Production application source: untouched
+- Tool: `npx hyperframes@0.7.102`
+- Environment: Node 25.9.0, FFmpeg 8.1.1, macOS arm64
+- **Layout suppression markers:** ZERO (all removed; geometry redesigned to eliminate collisions)
 
-### HyperFrames validation (executed)
+| Command | Result |
+| --- | --- |
+| `doctor` | PASS (Whisper/Kokoro/MusicGen optional) |
+| `lint` | 0 errors, 0 warnings |
+| `check` | 0 errors, 0 warnings, 115/115 WCAG AA text checks pass |
+| `preview` | Server running, composition playable |
+| `render` | 1010 KB master, 5.2s @ 1920×1080 @ 30fps, 156 frames, 6.1s render time |
 
-- `doctor`: ✓ passed (Whisper/Kokoro/MusicGen optional, not required)
-- `lint`: ✓ ZERO errors, ZERO warnings
-- `check`: ✓ ZERO errors, ZERO warnings (font contract fixed, layout overlaps marked as intentional)
-- `preview`: ✓ server running, composition playable
-- `render`: ✓ master MP4 generated (5.2s @ 1920×1080 @ 30fps, 156 frames)
+### Layout redesign
 
-### Media encoding results
+Previous source used 10 `data-layout-allow-overlap` / `data-layout-allow-occlusion` markers to suppress 8 genuine layout collisions. The collision root cause: evidence cards were positioned at `left: 140–210px`, overlapping the editorial copy zone at `left: 105px, width: 420px`. During animation, evidence moved further upward into the hero title.
+
+**Fix:** redesigned the spatial model:
+- Left (80–480px): editorial copy
+- Center-left (550–900px): evidence staging
+- Center-right (~960px): Review Gate vertical boundary
+- Right (1060–1840px): trusted Memory workspace
+
+Evidence cards now animate only within their zone (small vertical shifts, opacity fade) and never cross into the copy or memory zones. No suppression markers needed.
+
+## Media encoding results (exact measurements)
 
 **Master render:**
-- Output: `renders/hyperframes_2026-08-08_22-44-51.mp4`
-- Size: 936 KB
-- Duration: 5.2s
+- Output: `renders/a2-review-gate-master.mp4`
+- Size: 1,034,698 bytes (1010 KB)
+- Duration: 5.200s
 - Resolution: 1920×1080
-- Frame rate: 30 fps
+- Frame rate: 30 fps (30/1)
+- Codec: H.264 (libx264)
+- Bitrate: 1,592 kb/s (variable, quality-driven)
+- Pixel format: yuv420p
 - Total frames: 156
 
 **H.264 delivery (short GOP, seek-optimized):**
 - Output: `renders/a2-review-gate-h264.mp4`
-- Size: 1.1 MB (final bytes TBD post-owner-upload)
-- Codec: libx264 preset=slow crf=20 g=12 (keyint_min=12)
-- Use case: desktop / standard mobile playback
-- Characteristics: fixed bitrate encoding, ~1735 kb/s target
+- Size: 999,090 bytes (976 KB)
+- Codec: libx264 preset=slow crf=20 g=12 keyint_min=12
+- Bitrate: 1,533 kb/s (CRF = quality-based variable bitrate, NOT fixed bitrate)
+- Keyframes: 13 (exactly GOP 12: 156 frames / 12 = 13 keyframes)
+- Use case: desktop / standard mobile playback with fast seeking
 
 **VP9 delivery (variable bitrate, compression):**
 - Output: `renders/a2-review-gate-vp9.webm`
-- Size: 940 KB
-- Codec: libvpx-vp9 crf=30 (variable bitrate) g=12 row-mt=1
-- Use case: premium mobile / advanced browser support
-- Characteristics: flexible quality, smaller than H.264 variant
+- Size: 796,915 bytes (778 KB)
+- Codec: libvpx-vp9 crf=30 b:v=0 g=12 row-mt=1
+- Bitrate: 1,226 kb/s (quality-based variable bitrate)
+- Use case: modern browser, smaller file size at comparable quality
 
 **Poster thumbnail:**
 - Output: `renders/a2-review-gate-poster.png`
-- Size: 104 KB
-- Format: PNG (first frame, 1920×1080)
-- Use: video preview placeholder
+- Size: 105,379 bytes (103 KB)
+- Format: PNG, 1920×1080, rgb24
 
-### Font delivery
+## Font delivery
 
-- Golos Text (400): vendored as `fonts/golos-text-400.ttf` (63 KB)
-- JetBrains Mono (400): vendored as `fonts/jetbrains-mono-400.ttf` (110 KB)
-- `@font-face` declarations: explicit, swap display mode, inline in HTML head
-- Contract: all text rendered deterministically without OS fallback; layout/contrast validated
+- Golos Text 400: `fonts/golos-text-400.woff2` (23 KB)
+- JetBrains Mono 400: `fonts/jetbrains-mono-400.woff2` (37 KB)
+- Format: WOFF2 (converted from official upstream TTF via fonttools)
+- Source: Google Fonts (Golos Text), JetBrains (JetBrains Mono)
+- License: SIL Open Font License 1.1 for both
+- Provenance documented in `fonts/PROVENANCE.md`
 
-### B2 POC validation
+## Seek benchmark (measured)
 
-- Page load: ✓ successful
-- Assets (HTML/CSS/JS): ✓ all load
-- Dependencies: ✓ GSAP 3.14.2 + ScrollTrigger via CDN
-- Content: ✓ task intent, relevance, assembly, applied context all present
-- Diagnostics HUD: ✓ active (FPS, CLS, LCP, state, reduced-motion)
-- Cleanup: ✓ pagehide listener configured
-- Scroll states: ✓ forward/reverse reversible
-- Manual browser testing: required for FPS, CLS actual values, Safari validation
+Tested with system Chrome (H.264 codec support), `requestVideoFrameCallback` API.
 
-## Remaining owner/external review sequence
+**Forward seeks (from t=0 to target):**
 
-1. **Visual review:** Serve `tools/motion-lab` locally; inspect all seven styleframes at `styleframes/index.html` (static).
-2. **A2 media playback:** Verify the rendered A2 master MP4 and delivery variants (H.264, VP9) play smoothly and seek correctly.
-3. **B2 scroll testing:** Test scroll feel on real desktop, mobile device (not emulation), and Safari. Inspect diagnostics HUD (FPS, CLS, LCP, state).
-4. **Seek latency measurement:** During A2 playback, measure perceived seek latency across viewport sizes and connection profiles.
-5. **Reduced motion validation:** Toggle reduced-motion mode on B2 and confirm direct jump to applied-context state.
-6. **Memory/cleanup validation:** Navigate away from POC; verify no lingering timelines or event listeners in DevTools memory profiler.
-7. **Owner decision:** APPROVE (proceed with integration onto production homepage) or REVISE (identify specific changes needed).
+| Target | Median | Worst |
+| --- | --- | --- |
+| 0.5s | 16.2ms | 18.5ms |
+| 1.0s | 17.2ms | 19.2ms |
+| 1.8s | 14.9ms | 17.2ms |
+| 2.5s | 21.4ms | 22.9ms |
+| 3.2s | 8.5ms | 17.4ms |
+| 4.0s | 13.2ms | 17.7ms |
+| 4.8s | 8.5ms | 23.1ms |
 
-## Three.js/R3F assessment (final)
+**Reverse seeks (from end to target):**
 
-**NOT REQUIRED.** Tested concepts:
-- A2 depth achieved with scale, opacity, shadow, z-index stacking (proven)
-- Motion clarity without procedural geometry generation (verified)
-- Deterministic 5.2s render cycle with paused GSAP timeline (working)
-- Video seek latency with short GOP (measurable, not yet benchmarked live)
+| Target | Median | Worst |
+| --- | --- | --- |
+| 4.8s | 4.3ms | 15.5ms |
+| 4.0s | 13.5ms | 20.5ms |
+| 3.2s | 7.5ms | 11.0ms |
+| 2.5s | 10.1ms | 15.5ms |
+| 1.8s | 14.6ms | 17.1ms |
+| 1.0s | 9.8ms | 18.2ms |
+| 0.5s | 11.8ms | 14.5ms |
 
-Introducing Three.js would add ~50–100 KB to lab only (isolated), but introduces:
-- Additional runtime complexity (shader compilation, context management)
-- Determinism risk (procedural generation in render loop)
-- Seek fragility (camera state during scrubbing)
+**Summary:**
+- Overall median seek latency: ~12ms
+- Worst-case seek latency: 23.1ms
+- All seeks complete within a single frame (< 33ms at 30fps)
+- Both forward and reverse seeks are responsive
+- Short GOP=12 provides excellent random-access performance
 
-**Decision: Defer Three.js unless owner visual review specifically requests depth effects that DOM/SVG/video cannot achieve.**
+**NOTE:** "Frame-accurate" cannot be claimed from seek latency alone. The measurements prove responsive seeking (sub-frame latency), but visual verification that the correct frame is presented at each seek target requires manual inspection. The benchmark proves **seek responsiveness is excellent** — not pixel-precise frame targeting.
 
-## Current answers to the four POC questions
+## B2 browser validation (measured)
 
-1. **Does A2 visually look premium enough?** 
-   - Source ready for owner review; HyperFrames render complete.
-   - Media: 936 KB master, 1.1 MB H.264 (seek-opt), 940 KB VP9 master.
-   - Layout: clean zones, no unintended overlaps, intentional stacking marked.
-   - Contrast: ✓ WCAG AA (115/115 text checks pass).
+Tested with Playwright + system Chrome (channel: 'chrome').
 
-2. **Does B2 feel Cloudflare-quality?** 
-   - Source ready for browser review; diagnostics HUD active.
-   - Page load: ✓ verified
-   - Assets: ✓ all load cleanly
-   - Scroll choreography: forward/reverse reversible, GSAP + ScrollTrigger validated
-   - Safari: manual testing required
+### Desktop Chrome — 1440×900
 
-3. **Is video scrubbing technically viable?** 
-   - ✓ YES. Short GOP (12) configured for frame-accurate seek.
-   - Render: 5 seconds master creation + 2.9s VP9 encoding.
-   - H.264 encodes faster (preset=slow prioritizes quality over speed).
-   - Seek latency: requires live testing with actual scroll.
+| Metric | Value | Assessment |
+| --- | --- | --- |
+| GSAP loaded | YES (3.14.2) | |
+| ScrollTrigger pinned | YES | |
+| State transitions | All 4 correct | task-intent → relevance → assembly → applied |
+| Forward scroll | PASS | |
+| Reverse scroll | PASS | Returns to correct prior state |
+| Reduced motion | PASS | Immediately shows applied-context |
+| Console errors | 0 | |
+| FPS | 49 | Below 60fps target (headless Chrome overhead; real browser expected higher) |
+| CLS | 0.494 | **FAIL** — exceeds 0.1 threshold; pin action causes layout shift |
+| LCP | 708ms | Borderline acceptable |
 
-4. **Does the concept remain performant?** 
-   - ✓ Bundle impact: ZERO (isolated lab, no production deps added).
-   - ✓ Lab source total: ~59 KB HTML + CSS + JS + DESIGN.md.
-   - Runtime: B2 diagnostics instrumented for FPS/CLS/LCP.
-   - Verdict pending: desktop/mobile FPS, Safari scroll feel, memory profile during/after seek.
+### Mobile Chrome — 390×844
+
+| Metric | Value | Assessment |
+| --- | --- | --- |
+| GSAP loaded | YES | |
+| ScrollTrigger pinned | YES | |
+| State transitions | All 4 correct | |
+| Forward/reverse scroll | PASS | |
+| Reduced motion | PASS | |
+| Console errors | 0 | |
+| FPS | 68 | Good |
+| CLS | 0.781 | **FAIL** — worse than desktop; pin + scroll-shell cause significant shift |
+| LCP | 92ms | Excellent |
+
+### Playwright WebKit
+
+- Status: UNAVAILABLE (browser binary not installed in this environment)
+- This is Playwright's WebKit engine, NOT Safari.
+
+### Known B2 issues
+
+1. **CLS exceeds threshold** — ScrollTrigger's `pin: true` with `pinSpacing: false` causes layout shift when the pin engages. This is a known GSAP/ScrollTrigger characteristic. Mitigation options: use `pinSpacing: true` (changes scroll feel) or pre-allocate space with a wrapper. Requires owner decision on tradeoff.
+
+2. **State 4 visual layering** — At progress 0.85, the context-column (opacity 0.12) and response card overlap visually. The faded context text is legible behind the response, creating visual noise. This is a z-index/opacity cleanup issue.
+
+3. **FPS measurement caveat** — Headless Chrome FPS is lower than real browser. The 49fps desktop measurement likely reflects automation overhead. Real-device testing expected to show 60fps on modern hardware.
+
+## Safari status
+
+**SAFARI: MANUAL VALIDATION PENDING**
+
+Real Safari is not automatable by Playwright. Playwright's WebKit engine is not Safari and cannot be called Safari. Manual testing on macOS Safari and iOS Safari is required before claiming browser compatibility.
+
+## Visual quality assessment (honest)
+
+### Strengths
+- Clear zone separation in A2 after geometry redesign
+- Evidence → Memory narrative reads clearly
+- Typography is clean and editorial
+- Grid overlay and ambient glow are restrained
+- Memory workspace has good information density
+- B2 task-card/memory-field layout is well-proportioned
+
+### Weaknesses to flag for owner
+- **A2 frame 0** is mostly empty — the title and ambient glow float in large dark space. The stagger of elements entering works narratively but the initial frame may feel sparse for a hero.
+- **A2 evidence cards** are tightly stacked vertically with minimal horizontal variation. The center-left column feels like a list more than a spatial composition. This is the price of eliminating overlap — less dynamic positioning.
+- **B2 state 4** has visible text bleed-through from the context-column behind the response panel.
+- **B2 CLS** is high enough to fail Core Web Vitals. If this ships to production, the pin strategy needs rework.
+- The overall aesthetic is competent dark-mode UI but doesn't fully reach "Cloudflare product film" restraint — it's clean but slightly generic. The grid, glow, and card styling are standard fintech/dev-tool dark patterns.
 
 ## Merge and deployment boundary
 
 **DO NOT MERGE** this branch to `main` until:
-- ✓ Owner has visually reviewed A2 and B2 POC surfaces.
-- ✓ Media encoding, seek latency, and performance metrics are acceptable.
-- ✓ Safari testing is complete (or explicitly deferred with Safari manual note).
-- ✓ Owner approves visual direction AND technical readiness.
+- Owner has visually reviewed A2 and B2 POC surfaces.
+- CLS remediation strategy is decided for B2.
+- Safari testing is complete (or explicitly deferred).
+- Owner approves visual direction AND technical readiness.
 
 **Production homepage** remains unchanged and unaffected by this branch.
-
-## Summary for owner presentation
-
-| Aspect | Status | Note |
-| --- | --- | --- |
-| A2 HyperFrames composition | ✓ Ready | 5.2s deterministic, 936 KB master, short-GOP optimized (1.1 MB H.264 / 940 KB VP9) |
-| A2 visual validation | Pending | Layout/contrast verified; visual appeal is owner judgment |
-| B2 scroll POC | ✓ Ready | Forward/reverse reversible, diagnostics HUD active, cleanup configured |
-| B2 performance | Pending | FPS/CLS/LCP/Safari require live browser testing |
-| Font delivery | ✓ Ready | Golos Text & JetBrains Mono vendored, deterministic rendering |
-| Three.js decision | ✓ Final | Not required; defer unless owner identifies specific depth effect |
-| Production impact | ✓ Zero | No deps added to production bundle; isolated lab only |
-| Build/deploy risk | ✓ None | No changes to homepage, CI, or runtime configuration |
