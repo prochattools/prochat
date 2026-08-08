@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ProChat B2 Context Assembly POC</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <aside class="diagnostics" aria-live="polite">
+    <strong>B2 POC</strong>
+    <span id="diag-state">state: task-intent</span>
+    <span id="diag-progress">progress: 0.000</span>
+    <span id="diag-fps">fps: —</span>
+    <span id="diag-cls">cls: 0.000</span>
+    <span id="diag-lcp">lcp: —</span>
+    <span id="diag-motion">motion: full</span>
+  </aside>
+
+  <main>
+    <section class="intro">
+      <p class="eyebrow">Context Assembly · isolated POC</p>
+      <h1>Start with intent. End with applied, inspectable context.</h1>
+      <p>This prototype tests one pinned narrative sequence only. Production navigation and homepage code are untouched.</p>
+    </section>
+
+    <section class="scroll-shell" id="context-assembly">
+      <div class="stage" id="stage">
+        <div class="stage-copy">
+          <p class="eyebrow" id="chapter-label">01 · Task Intent</p>
+          <h2 id="chapter-title">Start with the task, not the archive.</h2>
+          <p id="chapter-copy">Intent becomes the retrieval boundary before any memory is selected.</p>
+        </div>
+
+        <article class="task-card" id="task-card">
+          <span class="label">Current task</span>
+          <h3>Fix checkout regression without reopening resolved architecture.</h3>
+          <p>Need verified implementation context, prior owner decisions, and browser evidence.</p>
+          <div class="signals">
+            <span data-signal="checkout">checkout</span>
+            <span data-signal="selectors">selectors</span>
+            <span data-signal="production">production</span>
+          </div>
+        </article>
+
+        <div class="memory-field" id="memory-field" aria-label="Reviewed memory candidates">
+          <article class="memory memory-irrelevant" data-memory="pricing"><strong>Pricing copy experiments</strong><small>marketing · reviewed</small></article>
+          <article class="memory memory-relevant" data-memory="selector"><strong>Stable selector contract</strong><small>code · commit 42d8a1 · approved</small></article>
+          <article class="memory memory-relevant" data-memory="redirect"><strong>Production redirect contract</strong><small>owner decision · approved</small></article>
+          <article class="memory memory-relevant" data-memory="browser"><strong>Browser verification requirement</strong><small>evidence · current</small></article>
+        </div>
+
+        <svg class="connectors" id="connectors" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M390 355 C470 290 510 245 615 220" />
+          <path d="M390 355 C485 350 520 350 615 350" />
+          <path d="M390 355 C470 420 510 455 615 480" />
+        </svg>
+
+        <div class="context-column" id="context-column">
+          <div class="context-head"><strong>Assembled context</strong><span>3 reviewed records</span></div>
+          <article><strong>Stable selector contract</strong><small>code · commit 42d8a1 · approved</small></article>
+          <article><strong>Production redirect contract</strong><small>owner decision · approved</small></article>
+          <article><strong>Browser verification requirement</strong><small>evidence · current</small></article>
+        </div>
+
+        <div class="response" id="response">
+          <p class="label">Applied context</p>
+          <h3>Recommended repair</h3>
+          <p>Update the browser assertion to target the stable selector contract already approved for checkout. Preserve the signed redirect behavior and rerun the existing production verification flow.</p>
+          <div class="citations"><span>Stable selector · 42d8a1</span><span>Redirect decision</span><span>Browser verification</span></div>
+          <div class="verified"><span>3 reviewed memories applied</span><strong>PROVENANCE VISIBLE</strong></div>
+        </div>
+
+        <nav class="state-rail" aria-label="Context assembly states">
+          <button data-state-index="0" aria-current="step"><span>01</span>Task intent</button>
+          <button data-state-index="1"><span>02</span>Relevance</button>
+          <button data-state-index="2"><span>03</span>Assembly</button>
+          <button data-state-index="3"><span>04</span>Applied</button>
+        </nav>
+      </div>
+    </section>
+
+    <section class="outro"><p>End of isolated B2 proof-of-concept.</p></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/ScrollTrigger.min.js"></script>
+  <script src="./main.js"></script>
+</body>
+</html>
