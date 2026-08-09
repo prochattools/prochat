@@ -32,7 +32,7 @@ function NavBar() {
   return (
     <nav className="hv2-nav" aria-label="Homepage v2 navigation">
       <div className="hv2-nav__inner">
-        <Link href="/debug/home-v2" className="hv2-nav__logo" aria-label="ProChat Home V2">
+        <Link href="/" className="hv2-nav__logo" aria-label="ProChat home">
           <span className="hv2-nav__mark" aria-hidden="true">P</span>
           <span className="hv2-nav__wordmark">ProChat</span>
         </Link>

@@ -26,7 +26,7 @@ export const CURRENT_CANONICAL_VISUAL_ROUTES = [
 export const FUTURE_CANONICAL_VISUAL_ROUTES = ['/philosophy', '/about'] as const
 
 export const SHELL_ROUTE_DEFINITIONS: readonly ShellRouteDefinition[] = [
-  { routeId: 'ROUTE-001', sourcePattern: '/', runtimePattern: '/', shellClass: 'canonical_public_shell' },
+  { routeId: 'ROUTE-001', sourcePattern: '/', runtimePattern: '/', shellClass: 'no_shared_shell' },
   { routeId: 'ROUTE-002', sourcePattern: '/prochat-memory', runtimePattern: '/prochat-memory', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-003', sourcePattern: '/qa-memory', runtimePattern: '/qa-memory', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-004', sourcePattern: '/contact', runtimePattern: '/contact', shellClass: 'canonical_public_shell' },

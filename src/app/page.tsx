@@ -1,5 +1,6 @@
+import { HomeV2 } from '@/components/HomeV2'
+import '@/components/home-v2.css'
 import { getSEOTags } from '@/libs/seo'
-import MarketingApp from './(marketing)/App'
 
 export const metadata = getSEOTags({
   title: 'Memory for AI-Assisted Work',
@@ -33,5 +34,5 @@ export const metadata = getSEOTags({
 })
 
 export default function Home() {
-  return <MarketingApp />
+  return <HomeV2 />
 }
