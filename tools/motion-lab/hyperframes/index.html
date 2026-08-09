@@ -78,9 +78,13 @@
     </svg>
 
     <div class="review-plane" id="review-plane">
+      <span class="review-line" aria-hidden="true"></span>
       <span class="review-label">REVIEW GATE</span>
       <span class="review-index">01</span>
-      <span class="review-state" id="review-state">AWAITING DECISION</span>
+      <span class="review-state" id="review-state">
+        <span class="review-pending">AWAITING DECISION</span>
+        <span class="review-approved">APPROVED FOR MEMORY</span>
+      </span>
       <div class="scan" id="scan"></div>
     </div>
 
@@ -151,9 +155,9 @@
       .horizon {
         position: absolute;
         left: 50%;
-        bottom: -180px;
+        bottom: 24px;
         width: 1120px;
-        height: 430px;
+        height: 260px;
         transform: translateX(-50%);
         border-radius: 50%;
         background: radial-gradient(ellipse, rgba(207,220,255,.9), rgba(125,154,242,.42) 22%, rgba(49,88,199,.12) 48%, transparent 72%);
@@ -205,17 +209,19 @@
       .review-plane {
         position: absolute;
         z-index: 5;
-        left: 1008px;
+        left: 900px;
         top: 150px;
-        width: 2px;
+        width: 220px;
         height: 760px;
-        background: linear-gradient(transparent, rgba(125,154,242,.78) 12%, rgba(125,154,242,.92) 50%, rgba(125,154,242,.78) 88%, transparent);
-        box-shadow: 0 0 18px rgba(125,154,242,.14);
       }
-      .review-label { position: absolute; top: 6px; left: 18px; color: #9eb4f5; font: 11px "JetBrains Mono", monospace; letter-spacing: .13em; white-space: nowrap; }
-      .review-index { position: absolute; top: 34px; left: 18px; color: #5d6b83; font: 10px "JetBrains Mono", monospace; }
-      .review-state { position: absolute; top: 352px; left: -78px; width: 158px; padding: 12px 8px; border: 1px solid rgba(125,154,242,.42); border-radius: 3px; background: #0d1628; color: #c9d6fb; text-align: center; font: 10px "JetBrains Mono", monospace; letter-spacing: .08em; }
-      .scan { position: absolute; left: -10px; top: 0; width: 22px; height: 88px; background: linear-gradient(180deg, transparent, rgba(168,188,255,.32), transparent); opacity: 0; }
+      .review-line { position: absolute; left: 108px; top: 0; bottom: 0; width: 2px; background: linear-gradient(transparent, rgba(125,154,242,.78) 12%, rgba(125,154,242,.92) 50%, rgba(125,154,242,.78) 88%, transparent); box-shadow: 0 0 18px rgba(125,154,242,.14); }
+      .review-label { position: absolute; top: 6px; left: 126px; color: #9eb4f5; font: 11px "JetBrains Mono", monospace; letter-spacing: .13em; white-space: nowrap; }
+      .review-index { position: absolute; top: 34px; left: 126px; color: #6f7c91; font: 10px "JetBrains Mono", monospace; }
+      .review-state { position: absolute; top: 352px; left: 30px; width: 158px; padding: 12px 8px; border: 1px solid rgba(125,154,242,.42); border-radius: 3px; background: #0d1628; color: #c9d6fb; text-align: center; font: 10px "JetBrains Mono", monospace; letter-spacing: .08em; }
+      .review-state > span { grid-area: 1 / 1; }
+      .review-state { display: grid; }
+      .review-approved { opacity: 0; }
+      .scan { position: absolute; left: 98px; top: 0; width: 22px; height: 88px; background: linear-gradient(180deg, transparent, rgba(168,188,255,.32), transparent); opacity: 0; }
 
       .memory-plane {
         position: absolute;
@@ -232,7 +238,7 @@
       .mono { color: #78869b; font: 10px "JetBrains Mono", monospace; letter-spacing: .08em; }
       .memory-rule { width: 100%; height: 1px; margin: 26px 0 0; background: linear-gradient(90deg, rgba(125,154,242,.7), rgba(125,154,242,.05)); }
       .memory-row { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; min-height: 104px; border-bottom: 1px solid rgba(190,207,255,.10); }
-      .memory-row > span { color: #61708a; font: 10px "JetBrains Mono", monospace; }
+      .memory-row > span { color: #707e95; font: 10px "JetBrains Mono", monospace; }
       .memory-row strong { display: block; margin-bottom: 7px; font-size: 16px; font-weight: 500; letter-spacing: -.012em; }
       .memory-row small { color: #78869b; font: 10px "JetBrains Mono", monospace; }
       .memory-row em { color: #8ed0b5; font: normal 10px "JetBrains Mono", monospace; letter-spacing: .08em; }
@@ -246,19 +252,20 @@
       const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
 
       tl.from('#a2', { scale: 1.025, duration: 1.2 }, 0)
-        .from('#micro-grid', { opacity: 0, duration: 0.8 }, 0)
-        .from('#horizon', { opacity: 0, y: 34, scale: 0.9, duration: 1.3 }, 0.05)
-        .from('.system-meta', { opacity: 0, duration: 0.55, stagger: 0.04 }, 0.12)
-        .from('#evidence-plane .zone-label', { opacity: 0, y: 10, duration: 0.45 }, 0.16)
-        .from('#evidence-a', { opacity: 0, x: -90, scale: 0.98, duration: 0.72 }, 0.20)
-        .from('#evidence-b', { opacity: 0, x: -76, scale: 0.965, duration: 0.72 }, 0.34)
-        .from('#evidence-c', { opacity: 0, x: -62, scale: 0.95, duration: 0.72 }, 0.48)
-        .from('#rejected', { opacity: 0, x: -48, scale: 0.94, duration: 0.62 }, 0.66)
-        .from('#review-plane', { opacity: 0, scaleY: 0.25, transformOrigin: '50% 50%', duration: 0.78 }, 0.32)
+        .from('#micro-grid', { opacity: 0.06, duration: 0.8 }, 0)
+        .from('#horizon', { opacity: 0.08, y: 34, scale: 0.9, duration: 1.3 }, 0.05)
+        .from('.system-meta', { opacity: 0.25, duration: 0.55, stagger: 0.04 }, 0.12)
+        .from('#evidence-plane .zone-label', { opacity: 0.35, y: 10, duration: 0.45 }, 0.16)
+        .from('#evidence-a', { opacity: 0.42, x: -90, scale: 0.98, duration: 0.72 }, 0.20)
+        .from('#evidence-b', { opacity: 0.32, x: -76, scale: 0.965, duration: 0.72 }, 0.34)
+        .from('#evidence-c', { opacity: 0.22, x: -62, scale: 0.95, duration: 0.72 }, 0.48)
+        .from('#rejected', { opacity: 0.08, x: -48, scale: 0.94, duration: 0.62 }, 0.66)
+        .from('#review-plane', { opacity: 0.25, duration: 0.52 }, 0.32)
+        .from('.review-line', { scaleY: 0.25, transformOrigin: '50% 50%', duration: 0.78 }, 0.32)
         .to('#atmosphere', { x: -10, y: -4, scale: 1.008, duration: 2.2, ease: 'none' }, 0.8)
         .to('#micro-grid', { x: -8, y: -3, duration: 2.2, ease: 'none' }, 0.8)
 
-        .to('#scan', { opacity: 1, y: 650, duration: 1.15, ease: 'power1.inOut' }, 1.45)
+        .to('#scan', { opacity: 1, y: 650, duration: 1.08, ease: 'power1.inOut' }, 1.45)
         .to('#review-state', { color: '#a8bcff', borderColor: 'rgba(168,188,255,.68)', duration: 0.35 }, 1.62)
         .to('#evidence-plane', { x: 54, scale: 0.992, duration: 1.0 }, 1.68)
         .to('#evidence-a', { borderColor: 'rgba(125,154,242,.42)', duration: 0.42 }, 1.82)
@@ -272,12 +279,13 @@
         .to('#evidence-a,#evidence-b,#evidence-c', { opacity: 0.12, x: 82, duration: 0.55, stagger: 0.05 }, 3.08)
         .to('#evidence-plane .zone-label', { opacity: 0.35, duration: 0.4 }, 3.10)
         .to('#review-state', { color: '#9bd1bb', borderColor: 'rgba(86,185,142,.52)', backgroundColor: '#10221d', duration: 0.42 }, 3.18)
+        .to('.review-pending', { opacity: 0, duration: 0.24 }, 3.18)
+        .to('.review-approved', { opacity: 1, duration: 0.30 }, 3.30)
         .fromTo('#memory-plane', { opacity: 0, scale: 0.94, x: 38 }, { opacity: 1, scale: 1, x: 0, duration: 0.74 }, 3.24)
         .from('#memory-a', { opacity: 0, x: 42, duration: 0.38 }, 3.48)
         .from('#memory-b', { opacity: 0, x: 42, duration: 0.38 }, 3.64)
         .from('#memory-c', { opacity: 0, x: 42, duration: 0.38 }, 3.80)
-        .to('#ready', { opacity: 1, y: 0, duration: 0.42 }, 4.12)
-        .from('#ready', { y: 10, duration: 0.42 }, 4.12)
+        .fromTo('#ready', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.42 }, 4.12)
         .to('#horizon', { opacity: 0.52, scale: 1.08, duration: 1.05 }, 4.12)
         .to('#atmosphere', { x: -14, y: -7, scale: 1.012, duration: 1.15, ease: 'none' }, 4.20)
         .to('#micro-grid', { x: -11, y: -5, opacity: 0.11, duration: 1.15, ease: 'none' }, 4.20)
@@ -285,7 +293,8 @@
         .to('.route-a,.route-b,.route-c', { opacity: 0.18, duration: 0.58 }, 4.46)
         .to('.memory-route-a,.memory-route-b,.memory-route-c', { opacity: 0.42, duration: 0.58 }, 4.46)
         .to('#review-plane', { opacity: 0.62, duration: 0.52 }, 4.72)
-        .to('#horizon', { opacity: 0.46, duration: 0.8, ease: 'none' }, 5.30);
+        .to('#horizon', { opacity: 0.46, duration: 0.8, ease: 'none' }, 5.30)
+        .to('#a2', { opacity: 1, duration: 0.3, ease: 'none' }, 6.10);
 
       window.__timelines['a2-review-gate'] = tl;
     </script>

@@ -122,14 +122,6 @@ function HeroSection() {
   )
 }
 
-const VALIDATION_METRICS = [
-  { value: '5.2s', label: 'deterministic A2 product film' },
-  { value: '778 KB', label: 'VP9 modern-browser delivery' },
-  { value: '71 FPS', label: 'validated B2 desktop and mobile' },
-  { value: '0.007', label: 'desktop B2 CLS' },
-  { value: '0.036', label: 'mobile B2 CLS' },
-]
-
 function TechnicalEvidenceSection() {
   return (
     <section className="hv2-evidence" aria-labelledby="hv2-evidence-title" data-review-artifact="technical-evidence">
@@ -140,17 +132,35 @@ function TechnicalEvidenceSection() {
           No customer logos or inflated adoption claims. These figures come from the validated A2 and B2 technical proofs on this branch, measured in Chrome before homepage integration.
         </p>
       </div>
-      <dl className="hv2-evidence__metrics">
-        {VALIDATION_METRICS.map(metric => (
-          <div key={metric.label}>
-            <dt>{metric.value}</dt>
-            <dd>{metric.label}</dd>
-          </div>
-        ))}
-      </dl>
-      <p className="hv2-evidence__footnote">
-        POC validation also recorded forward and reverse state recovery, reduced-motion rendering, and zero console errors. Integrated-page measurements appear in the owner review package.
-      </p>
+      <div className="hv2-proof-system" aria-label="Measured A2 and B2 validation record">
+        <header className="hv2-proof-system__header">
+          <div><span className="hv2-ui-label">Validation record · Home V2 V3</span><strong>Two signature systems, measured as shipped.</strong></div>
+          <span className="hv2-status hv2-status--approved"><CheckIcon /> Browser verified</span>
+        </header>
+        <div className="hv2-proof-system__body">
+          <article className="hv2-proof-system__a2">
+            <div className="hv2-proof-system__title"><span>A2</span><div><strong>Review Gate cinematic</strong><small>Deterministic product film</small></div></div>
+            <dl>
+              <div><dt>Duration</dt><dd>6.400 s · 192 frames</dd></div>
+              <div><dt>H.264</dt><dd>788,522 bytes · High profile</dd></div>
+              <div><dt>VP9</dt><dd>524,748 bytes · Profile 0</dd></div>
+              <div><dt>Seek interval</dt><dd>1.000 s · short GOP</dd></div>
+            </dl>
+          </article>
+          <article className="hv2-proof-system__b2">
+            <div className="hv2-proof-system__title"><span>B2</span><div><strong>Context Assembly</strong><small>Scroll-linked state system</small></div></div>
+            <dl>
+              <div><dt>Runtime</dt><dd>71 FPS · desktop and mobile</dd></div>
+              <div><dt>Desktop CLS</dt><dd>0.007</dd></div>
+              <div><dt>Mobile CLS</dt><dd>0.036</dd></div>
+              <div><dt>State recovery</dt><dd>Forward + reverse verified</dd></div>
+            </dl>
+          </article>
+        </div>
+        <footer className="hv2-proof-system__footer">
+          <span>Reduced motion: verified</span><span>Console errors: 0</span><span>Layout overflow: 0</span><strong>Measured, not implied</strong>
+        </footer>
+      </div>
     </section>
   )
 }
@@ -351,6 +361,7 @@ function ContextAssemblySection() {
     if (!irrelevant || !contextColumn || !response || !memoryField || !connectors || !task || !appliedManifest) return
 
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const compactLandscapePreference = window.matchMedia('(max-height: 520px) and (orientation: landscape)')
     const animatedTargets = [
       ...relevant,
       irrelevant,
@@ -375,7 +386,7 @@ function ContextAssemblySection() {
     const configureMotion = () => {
       resetMotion()
 
-      if (motionPreference.matches) {
+      if (motionPreference.matches || compactLandscapePreference.matches) {
         gsap.set(relevant, { opacity: 1, scale: 1, x: 0 })
         gsap.set(irrelevant, { opacity: 0.18 })
         gsap.set(signals, { color: 'rgb(219 228 255)', borderColor: 'rgb(111 138 220)', backgroundColor: 'rgb(33 50 92)' })
@@ -424,7 +435,7 @@ function ContextAssemblySection() {
         animation: timeline,
         invalidateOnRefresh: true,
         onUpdate(self) {
-          const nextIndex = self.progress < 0.22 ? 0 : self.progress < 0.48 ? 1 : self.progress < 0.74 ? 2 : 3
+          const nextIndex = self.progress < 0.22 ? 0 : self.progress < 0.48 ? 1 : self.progress < 0.8 ? 2 : 3
           if (nextIndex !== activeIndexRef.current) {
             activeIndexRef.current = nextIndex
             setActiveIndex(nextIndex)
@@ -436,9 +447,11 @@ function ContextAssemblySection() {
 
     configureMotion()
     motionPreference.addEventListener('change', configureMotion)
+    compactLandscapePreference.addEventListener('change', configureMotion)
 
     return () => {
       motionPreference.removeEventListener('change', configureMotion)
+      compactLandscapePreference.removeEventListener('change', configureMotion)
       resetMotion()
     }
   }, [])
@@ -524,37 +537,86 @@ function ContextAssemblySection() {
 }
 
 function ArchitectureSection() {
-  const stages = [
-    { number: '01', title: 'Sources', body: 'Conversations, code changes, browser evidence, and owner decisions.' },
-    { number: '02', title: 'Review Gate', body: 'Approve, reject, correct, or supersede before promotion.' },
-    { number: '03', title: 'Durable Memory', body: 'Local Markdown, Git versioning, readable records, visible provenance.' },
-    { number: '04', title: 'Bounded use', body: 'Retrieve only reviewed context relevant to the current task.' },
+  const columns = [
+    'Evidence sources',
+    'Scope',
+    'Review',
+    'Durable memory',
+    'Retrieval',
+    'Workbench execution',
+  ]
+  const rows = [
+    {
+      label: 'Primary object',
+      values: ['Code, browser, decisions', 'Project boundary', 'Candidate lesson', 'Markdown record', 'Task context', 'Guarded change'],
+    },
+    {
+      label: 'Human action',
+      values: ['Inspect source', 'Choose boundary', 'Approve, edit, reject', 'Correct or retire', 'Confirm relevance', 'Validate and stage'],
+    },
+    {
+      label: 'Visible record',
+      values: ['Source reference', 'Scope metadata', 'Review history', 'Git revision', 'Applied manifest', 'Validation receipt'],
+    },
+    {
+      label: 'Failure guard',
+      values: ['Stale evidence', 'Over-broad reuse', 'Unreviewed claim', 'Superseded lesson', 'Archive overload', 'Unconfirmed mutation'],
+    },
   ]
 
   return (
     <section className="hv2-architecture" aria-labelledby="hv2-architecture-title" data-review-artifact="architecture">
       <header>
-        <p className="hv2-kicker hv2-kicker--dark">Architecture</p>
-        <h2 id="hv2-architecture-title">Local, structured, human-controlled.</h2>
-        <p>Memory lives in local Markdown files. Git provides versioning. Human review gates every promotion. No cloud dependency is required.</p>
+        <p className="hv2-kicker hv2-kicker--dark">The complete system</p>
+        <h2 id="hv2-architecture-title">Evidence in. Better work out.</h2>
+        <p>Every stage keeps its object, owner action, record, and failure boundary visible from first evidence through guarded execution.</p>
       </header>
 
-      <div className="hv2-architecture__flow">
-        <svg viewBox="0 0 1200 170" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M150 85 H1050" />
-          <path d="m1036 72 14 13-14 13" />
-        </svg>
-        {stages.map(stage => (
-          <article key={stage.number}>
-            <span>{stage.number}</span>
-            <h3>{stage.title}</h3>
-            <p>{stage.body}</p>
-          </article>
-        ))}
+      <div className="hv2-system-frame">
+        <div className="hv2-system-frame__rail" aria-hidden="true"><span>CURRENT EVIDENCE</span><i /><span>CONTROLLED USE</span></div>
+        <div className="hv2-system-frame__table-wrap">
+          <table>
+            <thead><tr><th scope="col">System state</th>{columns.map((column, index) => <th key={column} scope="col"><span>{String(index + 1).padStart(2, '0')}</span>{column}</th>)}</tr></thead>
+            <tbody>{rows.map(row => <tr key={row.label}><th scope="row">{row.label}</th>{row.values.map((value, index) => <td key={`${row.label}-${columns[index]}`}>{value}</td>)}</tr>)}</tbody>
+          </table>
+        </div>
+        <footer><span>Local Markdown</span><span>Git versioning</span><span>Visible provenance</span><span>Relevant retrieval</span><strong>Human judgment remains authoritative</strong></footer>
       </div>
+    </section>
+  )
+}
 
-      <div className="hv2-architecture__contract">
-        <span>Current evidence</span><strong>+</strong><span>relevant reviewed memory</span><strong>+</strong><span>human judgment</span><strong>→</strong><span>better next work</span>
+function TailoredSection() {
+  return (
+    <section className="hv2-tailored" aria-labelledby="hv2-tailored-title" data-review-artifact="modular-grid">
+      <header>
+        <p className="hv2-kicker hv2-kicker--dark">Built around the work</p>
+        <h2 id="hv2-tailored-title">One memory model. Different working surfaces.</h2>
+        <p>Start with the discipline, interface, or ownership boundary that matches the project in front of you.</p>
+      </header>
+      <div className="hv2-tailored__grid">
+        <article className="hv2-tailored__qa">
+          <span className="hv2-ui-label">Memory for QA · selected beta</span>
+          <div><h3>Keep the investigation attached to the lesson.</h3><p>Failures, evidence, fixes, selectors, environments, and reviewer decisions remain readable as one reusable record.</p></div>
+          <Link href="/memory-qa">Explore Memory for QA <ArrowIcon /></Link>
+        </article>
+        <article className="hv2-tailored__workbench">
+          <span className="hv2-ui-label">Workbench</span>
+          <h3>Put reviewed context into a guarded local workflow.</h3>
+          <Link href="/workbench">Explore Workbench <ArrowIcon /></Link>
+        </article>
+        <article className="hv2-tailored__docs">
+          <span className="hv2-ui-label">Documentation and technical work</span>
+          <h3>Preserve decisions where the next maintainer can inspect them.</h3>
+          <p>Use human-readable records, exact sources, and correction history instead of an opaque context layer.</p>
+          <Link href="/docs">Read the documentation <ArrowIcon /></Link>
+        </article>
+        <article className="hv2-tailored__local">
+          <span className="hv2-ui-label">Local-first architecture</span>
+          <div className="hv2-tailored__local-map" aria-hidden="true"><span>your computer</span><i /><span>Markdown</span><i /><span>Git</span></div>
+          <h3>Customer memory remains on the customer&apos;s computer.</h3>
+          <p>Readable files and explicit Git history keep ownership and change visible.</p>
+        </article>
       </div>
     </section>
   )
@@ -584,12 +646,13 @@ function Footer() {
     <footer className="hv2-footer" data-review-artifact="footer">
       <div className="hv2-footer__brand">
         <span className="hv2-footer__wordmark">ProChat</span>
-        <p>Structured memory for AI workflows.</p>
+        <p>Structured memory for AI workflows. Evidence stays visible, memory stays reviewable, and actions stay explicit.</p>
       </div>
       <div className="hv2-footer__columns">
         <div><h3>Products</h3><Link href="/memory">ProChat Memory</Link><Link href="/memory-qa">Memory for QA</Link><Link href="/workbench">Workbench</Link></div>
+        <div><h3>Explore</h3><Link href="/memory">How Memory works</Link><Link href="/memory-qa">The QA edition</Link><Link href="/workbench">Local Workbench</Link></div>
         <div><h3>Resources</h3><Link href="/docs">Documentation</Link><Link href="https://github.com/prochattools">GitHub</Link><Link href="/contact">Contact</Link></div>
-        <div><h3>Company</h3><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><Link href="/contact">Contact</Link></div>
+        <div><h3>Company</h3><Link href="/contact?topic=memory-qa-beta#contact-form-card">Selected QA beta</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><Link href="/contact">Contact</Link></div>
       </div>
       <div className="hv2-footer__bottom"><span>© 2026 ProChat. All rights reserved.</span><span>Local-first · Memory-first · Human-reviewed</span></div>
     </footer>
@@ -604,12 +667,17 @@ export function HomeV2() {
         <HeroSection />
         <TechnicalEvidenceSection />
         <MemoryModelSection />
-        <div id="products">
-          <MemoryForQASection />
-          <WorkbenchSection />
-        </div>
         <ContextAssemblySection />
+        <section id="products" className="hv2-paired-products" aria-labelledby="hv2-products-title" data-review-artifact="paired-products">
+          <header>
+            <p className="hv2-kicker hv2-kicker--dark">Two products, one philosophy</p>
+            <h2 id="hv2-products-title">Keep knowledge reusable. Put it to work safely.</h2>
+            <p>Memory preserves what the project learned. Workbench brings exact local context into guarded execution.</p>
+          </header>
+          <div className="hv2-paired-products__grid"><MemoryForQASection /><WorkbenchSection /></div>
+        </section>
         <ArchitectureSection />
+        <TailoredSection />
         <ClosingSection />
       </main>
       <Footer />
