@@ -137,21 +137,18 @@
     .to(contextColumn, { opacity: 1, x: 0, scale: 1, duration: 0.20 }, 0.43)
     .to(taskCard, { y: -14, borderColor: '#526b9c', duration: 0.18 }, 0.44)
 
-    // State 3 → 4: assembled context resolves into a response with provenance.
-    .to(contextColumn, { opacity: 0.12, x: 38, scale: 0.99, duration: 0.16 }, 0.70)
-    .to(memoryField, { opacity: 0, duration: 0.12 }, 0.70)
-    .to(response, { opacity: 1, x: 0, scale: 1, duration: 0.20 }, 0.72)
-    .to(taskCard, { opacity: 0.28, y: -20, duration: 0.18 }, 0.73);
+    // State 3 → 4: context column exits fully, then response enters.
+    .to(contextColumn, { autoAlpha: 0, x: 38, scale: 0.99, duration: 0.08 }, 0.62)
+    .to(memoryField, { opacity: 0, duration: 0.08 }, 0.62)
+    .to(taskCard, { autoAlpha: 0, y: -20, duration: 0.06 }, 0.64)
+    .to(response, { opacity: 1, x: 0, scale: 1, duration: 0.18 }, 0.70);
 
   const trigger = ScrollTrigger.create({
     trigger: '#context-assembly',
     start: 'top top',
     end: 'bottom bottom',
-    pin: '#stage',
-    pinSpacing: false,
     scrub: 0.55,
     animation: timeline,
-    anticipatePin: 1,
     invalidateOnRefresh: true,
     onUpdate(self) {
       const p = self.progress;

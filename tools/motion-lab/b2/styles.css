@@ -27,7 +27,8 @@ main { overflow: clip; }
 .eyebrow { margin: 0; color: var(--cobalt); font: 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
 .scroll-shell { position: relative; height: 460vh; }
 .stage {
-  position: relative; width: min(1480px, calc(100% - 40px)); height: min(86vh, 900px); min-height: 680px;
+  position: sticky; top: 0;
+  width: min(1480px, calc(100% - 40px)); height: min(86vh, 900px); min-height: 680px;
   margin: 0 auto; overflow: hidden; border: 1px solid #202a39; border-radius: 20px;
   background:
     radial-gradient(circle at 64% 48%, rgb(49 88 199 / .14), transparent 28%),
