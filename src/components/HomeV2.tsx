@@ -28,27 +28,6 @@ function CheckIcon() {
   )
 }
 
-function NavBar() {
-  return (
-    <nav className="hv2-nav" aria-label="Homepage v2 navigation">
-      <div className="hv2-nav__inner">
-        <Link href="/" className="hv2-nav__logo" aria-label="ProChat home">
-          <span className="hv2-nav__mark" aria-hidden="true">P</span>
-          <span className="hv2-nav__wordmark">ProChat</span>
-        </Link>
-        <div className="hv2-nav__links">
-          <Link href="/memory">Memory</Link>
-          <Link href="/memory-qa">Memory for QA</Link>
-          <Link href="/workbench">Workbench</Link>
-          <Link href="/docs">Documentation</Link>
-        </div>
-        <Link href="/contact?topic=memory-qa-beta#contact-form-card" className="hv2-nav__cta">
-          Apply for beta <ArrowIcon />
-        </Link>
-      </div>
-    </nav>
-  )
-}
 
 function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -641,46 +620,25 @@ function ClosingSection() {
   )
 }
 
-function Footer() {
-  return (
-    <footer className="hv2-footer" data-review-artifact="footer">
-      <div className="hv2-footer__brand">
-        <span className="hv2-footer__wordmark">ProChat</span>
-        <p>Structured memory for AI workflows. Evidence stays visible, memory stays reviewable, and actions stay explicit.</p>
-      </div>
-      <div className="hv2-footer__columns">
-        <div><h3>Products</h3><Link href="/memory">ProChat Memory</Link><Link href="/memory-qa">Memory for QA</Link><Link href="/workbench">Workbench</Link></div>
-        <div><h3>Explore</h3><Link href="/memory">How Memory works</Link><Link href="/memory-qa">The QA edition</Link><Link href="/workbench">Local Workbench</Link></div>
-        <div><h3>Resources</h3><Link href="/docs">Documentation</Link><Link href="https://github.com/prochattools">GitHub</Link><Link href="/contact">Contact</Link></div>
-        <div><h3>Company</h3><Link href="/contact?topic=memory-qa-beta#contact-form-card">Selected QA beta</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><Link href="/contact">Contact</Link></div>
-      </div>
-      <div className="hv2-footer__bottom"><span>© 2026 ProChat. All rights reserved.</span><span>Local-first · Memory-first · Human-reviewed</span></div>
-    </footer>
-  )
-}
 
 export function HomeV2() {
   return (
     <div className="hv2-page" data-home-v2>
-      <NavBar />
-      <main>
-        <HeroSection />
-        <TechnicalEvidenceSection />
-        <MemoryModelSection />
-        <ContextAssemblySection />
-        <section id="products" className="hv2-paired-products" aria-labelledby="hv2-products-title" data-review-artifact="paired-products">
-          <header>
-            <p className="hv2-kicker hv2-kicker--dark">Two products, one philosophy</p>
-            <h2 id="hv2-products-title">Keep knowledge reusable. Put it to work safely.</h2>
-            <p>Memory preserves what the project learned. Workbench brings exact local context into guarded execution.</p>
-          </header>
-          <div className="hv2-paired-products__grid"><MemoryForQASection /><WorkbenchSection /></div>
-        </section>
-        <ArchitectureSection />
-        <TailoredSection />
-        <ClosingSection />
-      </main>
-      <Footer />
+      <HeroSection />
+      <TechnicalEvidenceSection />
+      <MemoryModelSection />
+      <ContextAssemblySection />
+      <section id="products" className="hv2-paired-products" aria-labelledby="hv2-products-title" data-review-artifact="paired-products">
+        <header>
+          <p className="hv2-kicker hv2-kicker--dark">Two products, one philosophy</p>
+          <h2 id="hv2-products-title">Keep knowledge reusable. Put it to work safely.</h2>
+          <p>Memory preserves what the project learned. Workbench brings exact local context into guarded execution.</p>
+        </header>
+        <div className="hv2-paired-products__grid"><MemoryForQASection /><WorkbenchSection /></div>
+      </section>
+      <ArchitectureSection />
+      <TailoredSection />
+      <ClosingSection />
     </div>
   )
 }
