@@ -2028,3 +2028,545 @@ body:has(.hv2-page) {
     display: none;
   }
 }
+
+
+
+/* --------------------------------------------------------------------------
+   Cloudflare fidelity pass v3 — branch-only visual composition override.
+   Keeps A2/B2 behavior intact while changing the page grammar from alternating
+   SaaS sections to a continuous cinematic technical canvas.
+   -------------------------------------------------------------------------- */
+
+.hv2-page {
+  --hv2-canvas: rgb(9 12 17);
+  --hv2-canvas-2: rgb(12 16 22);
+  --hv2-canvas-3: rgb(15 20 28);
+  --hv2-frame: rgb(255 255 255 / 0.085);
+  --hv2-frame-soft: rgb(255 255 255 / 0.045);
+  --hv2-cobalt-vivid: rgb(62 101 225);
+  --hv2-cobalt-deep-2: rgb(27 58 154);
+  --hv2-cobalt-ink: rgb(12 21 53);
+  background:
+    linear-gradient(180deg, rgb(8 11 16) 0%, rgb(10 13 18) 55%, rgb(8 11 15) 100%);
+}
+
+.hv2-nav {
+  background: rgb(8 11 15 / 0.94);
+  border-bottom-color: var(--hv2-frame);
+  backdrop-filter: blur(14px) saturate(1.05);
+}
+
+.hv2-nav__mark {
+  border-radius: 5px;
+  border-color: rgb(98 126 210 / 0.7);
+  background: rgb(23 37 78);
+}
+
+.hv2-nav__cta,
+.hv2-btn--primary {
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+/* Hero: one dominant cinematic surface instead of copy beside a card/video. */
+.hv2-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: min(860px, calc(100dvh - 92px));
+  width: min(1500px, calc(100% - 28px));
+  margin: 82px auto 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgb(122 151 235 / 0.36);
+  border-radius: 14px;
+  color: var(--hv2-white);
+  background:
+    linear-gradient(180deg, rgb(46 83 199) 0%, rgb(49 88 199) 46%, rgb(36 68 158) 100%);
+  box-shadow:
+    0 48px 120px rgb(0 0 0 / 0.34),
+    inset 0 1px 0 rgb(255 255 255 / 0.08);
+}
+
+.hv2-hero::before,
+.hv2-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hv2-hero::before {
+  z-index: 1;
+  opacity: 0.34;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.08) 1px, transparent 1px);
+  background-size: 7px 7px;
+  mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0.25), rgb(0 0 0) 42%, rgb(0 0 0) 100%);
+}
+
+.hv2-hero::after {
+  z-index: 2;
+  background:
+    radial-gradient(ellipse 42% 28% at 50% 104%, rgb(236 242 255 / 0.92) 0%, rgb(167 190 255 / 0.52) 22%, rgb(88 126 231 / 0.18) 48%, transparent 72%),
+    linear-gradient(180deg, rgb(8 13 30 / 0.16) 0%, rgb(7 13 28 / 0.2) 45%, rgb(8 12 24 / 0.54) 100%);
+}
+
+.hv2-hero__copy {
+  position: relative;
+  z-index: 5;
+  grid-area: 1 / 1;
+  align-self: center;
+  justify-self: center;
+  width: min(980px, calc(100% - 80px));
+  padding: 154px 0 132px;
+  text-align: center;
+}
+
+.hv2-hero__copy .hv2-kicker {
+  color: rgb(230 236 255 / 0.9);
+  letter-spacing: 0.16em;
+}
+
+.hv2-hero h1 {
+  max-width: 950px;
+  margin: 0 auto;
+  font-size: clamp(58px, 6.7vw, 104px);
+  font-weight: 590;
+  line-height: 0.91;
+  letter-spacing: -0.067em;
+  text-shadow: 0 2px 26px rgb(7 12 27 / 0.22);
+}
+
+.hv2-hero__lede {
+  max-width: 720px;
+  margin: 30px auto 0;
+  color: rgb(244 247 255 / 0.84);
+  font-size: clamp(16px, 1.45vw, 20px);
+  line-height: 1.55;
+}
+
+.hv2-hero .hv2-actions {
+  justify-content: center;
+  margin-top: 34px;
+}
+
+.hv2-hero .hv2-btn--primary {
+  color: rgb(18 30 66);
+  border-color: rgb(255 255 255 / 0.72);
+  background: rgb(250 251 255);
+}
+
+.hv2-hero .hv2-btn--text {
+  color: rgb(246 248 255 / 0.9);
+}
+
+.hv2-hero-film {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0.82;
+}
+
+.hv2-hero-film__bezel {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.hv2-hero-film__video,
+.hv2-hero-film__fallback,
+.hv2-hero-film__fallback img {
+  width: 100%;
+  height: 100%;
+}
+
+.hv2-hero-film__video,
+.hv2-hero-film__fallback img {
+  object-fit: cover;
+  object-position: 61% 48%;
+  filter: saturate(0.72) contrast(1.08) brightness(0.52);
+}
+
+.hv2-hero-film figcaption,
+.hv2-hero-film__meta,
+.hv2-hero-film__caption {
+  position: absolute;
+  z-index: 4;
+  bottom: 18px;
+  color: rgb(232 238 255 / 0.62);
+}
+
+/* Continuous dark canvas: remove the white/blue/white section alternation. */
+.hv2-evidence,
+.hv2-memory-model,
+.hv2-product--memory,
+.hv2-product--workbench,
+.hv2-b2,
+.hv2-architecture {
+  color: var(--hv2-text);
+  background: var(--hv2-canvas);
+  border-top: 1px solid var(--hv2-frame-soft);
+}
+
+.hv2-evidence,
+.hv2-memory-model,
+.hv2-product,
+.hv2-architecture {
+  padding-left: max(48px, calc((100vw - 1280px) / 2));
+  padding-right: max(48px, calc((100vw - 1280px) / 2));
+}
+
+.hv2-evidence::before,
+.hv2-memory-model::before,
+.hv2-product::before,
+.hv2-architecture::before {
+  content: "";
+  position: absolute;
+  inset: 0 max(28px, calc((100vw - 1360px) / 2));
+  pointer-events: none;
+  border-inline: 1px solid var(--hv2-frame-soft);
+  background-image: linear-gradient(90deg, transparent calc(33.333% - .5px), var(--hv2-frame-soft) calc(33.333% - .5px), var(--hv2-frame-soft) calc(33.333% + .5px), transparent calc(33.333% + .5px), transparent calc(66.666% - .5px), var(--hv2-frame-soft) calc(66.666% - .5px), var(--hv2-frame-soft) calc(66.666% + .5px), transparent calc(66.666% + .5px));
+  opacity: 0.72;
+}
+
+.hv2-evidence,
+.hv2-memory-model,
+.hv2-product,
+.hv2-architecture {
+  position: relative;
+  isolation: isolate;
+}
+
+.hv2-evidence > *,
+.hv2-memory-model > *,
+.hv2-product > *,
+.hv2-architecture > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hv2-kicker--dark,
+.hv2-memory-steps__label {
+  color: var(--hv2-cobalt-light);
+}
+
+.hv2-evidence h2,
+.hv2-memory-model h2,
+.hv2-product h2,
+.hv2-architecture h2,
+.hv2-product h3,
+.hv2-memory-model h3,
+.hv2-architecture h3 {
+  color: var(--hv2-text);
+}
+
+.hv2-evidence__intro > p:last-child,
+.hv2-memory-model__headline > p:last-child,
+.hv2-product__copy > p,
+.hv2-product__facts,
+.hv2-architecture > header > p:last-child,
+.hv2-evidence__footnote,
+.hv2-memory-steps p,
+.hv2-architecture__flow p {
+  color: var(--hv2-text-2);
+}
+
+/* Evidence chapter: compact framed credibility band, not a white metrics page. */
+.hv2-evidence {
+  min-height: 0;
+  padding-top: 150px;
+  padding-bottom: 120px;
+}
+
+.hv2-evidence__intro {
+  grid-template-columns: minmax(0, 1.05fr) minmax(330px, 0.55fr);
+  gap: 9vw;
+  padding-bottom: 58px;
+  border-bottom-color: var(--hv2-frame);
+}
+
+.hv2-evidence h2 {
+  max-width: 820px;
+}
+
+.hv2-evidence__metrics {
+  border-bottom: 1px solid var(--hv2-frame);
+}
+
+.hv2-evidence__metrics > div,
+.hv2-evidence__metrics > div + div {
+  min-height: 150px;
+  border-color: var(--hv2-frame);
+}
+
+.hv2-evidence__metrics dt {
+  color: var(--hv2-text);
+  font-size: clamp(34px, 3.5vw, 54px);
+}
+
+.hv2-evidence__metrics dd,
+.hv2-evidence__footnote {
+  color: var(--hv2-text-3);
+}
+
+/* Memory model: large black technical canvas with fewer visible boxes. */
+.hv2-memory-model {
+  min-height: 1080px;
+  padding-top: 170px;
+  padding-bottom: 170px;
+  background:
+    radial-gradient(circle at 75% 42%, rgb(49 88 199 / 0.08), transparent 28%),
+    var(--hv2-canvas);
+}
+
+.hv2-memory-model__headline {
+  padding-bottom: 86px;
+  border-bottom: 1px solid var(--hv2-frame);
+}
+
+.hv2-memory-model__body {
+  padding-top: 76px;
+}
+
+.hv2-memory-steps li,
+.hv2-memory-steps li + li {
+  border-color: var(--hv2-frame);
+}
+
+.hv2-memory-steps__number {
+  color: rgb(139 165 238);
+}
+
+.hv2-ledger,
+.hv2-qa-surface,
+.hv2-workbench-flow,
+.hv2-b2-task,
+.hv2-b2-memory,
+.hv2-b2-context,
+.hv2-b2-response,
+.hv2-b2-applied-manifest {
+  border-radius: 3px;
+  box-shadow: none;
+}
+
+.hv2-ledger,
+.hv2-qa-surface,
+.hv2-workbench-flow {
+  border-color: rgb(112 134 184 / 0.3);
+  background:
+    linear-gradient(180deg, rgb(18 25 36 / 0.98), rgb(12 17 25 / 0.98));
+}
+
+/* Product chapters: one large split composition, Cloudflare-style framed panels. */
+.hv2-product {
+  min-height: 980px;
+  padding-top: 150px;
+  padding-bottom: 150px;
+  border-bottom: 1px solid var(--hv2-frame-soft);
+}
+
+.hv2-product--memory {
+  background: rgb(10 13 18);
+}
+
+.hv2-product--workbench {
+  background:
+    radial-gradient(circle at 18% 55%, rgb(49 88 199 / 0.09), transparent 30%),
+    rgb(10 13 18);
+}
+
+.hv2-product__facts li,
+.hv2-product__facts li + li {
+  border-color: var(--hv2-frame);
+}
+
+.hv2-product--memory .hv2-btn--text-dark {
+  color: var(--hv2-text-2);
+}
+
+.hv2-qa-surface footer,
+.hv2-workbench-flow__result {
+  background: rgb(23 47 40);
+}
+
+/* B2: keep the validated behavior, but make the stage feel like one deep system. */
+.hv2-b2 {
+  background:
+    radial-gradient(circle at 66% 45%, rgb(49 88 199 / 0.11), transparent 30%),
+    rgb(8 11 16);
+}
+
+.hv2-b2__stage {
+  width: min(1400px, calc(100% - 36px));
+  border-inline: 1px solid var(--hv2-frame-soft);
+  background-image:
+    linear-gradient(90deg, transparent calc(33.333% - .5px), var(--hv2-frame-soft) calc(33.333% - .5px), var(--hv2-frame-soft) calc(33.333% + .5px), transparent calc(33.333% + .5px), transparent calc(66.666% - .5px), var(--hv2-frame-soft) calc(66.666% - .5px), var(--hv2-frame-soft) calc(66.666% + .5px), transparent calc(66.666% + .5px));
+}
+
+.hv2-b2-memory,
+.hv2-b2-context,
+.hv2-b2-response,
+.hv2-b2-applied-manifest,
+.hv2-b2-task {
+  border-color: rgb(102 125 181 / 0.3);
+  background: rgb(15 21 30 / 0.96);
+}
+
+/* Architecture: dense technical frame rather than a light infographic. */
+.hv2-architecture {
+  min-height: 920px;
+  padding-top: 160px;
+  padding-bottom: 150px;
+  background: rgb(10 13 18);
+}
+
+.hv2-architecture > header {
+  border-bottom-color: var(--hv2-frame);
+}
+
+.hv2-architecture__flow {
+  border-color: var(--hv2-frame);
+}
+
+.hv2-architecture__flow article,
+.hv2-architecture__flow article + article {
+  border-color: var(--hv2-frame);
+}
+
+.hv2-architecture__flow svg path {
+  stroke: rgb(103 132 215 / 0.6);
+}
+
+.hv2-architecture__contract {
+  color: var(--hv2-text-2);
+  border-color: var(--hv2-frame);
+}
+
+/* Closing CTA: Cloudflare-like luminous brand field, not a flat blue rectangle. */
+.hv2-closing {
+  position: relative;
+  isolation: isolate;
+  width: min(1500px, calc(100% - 28px));
+  min-height: 560px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgb(126 153 234 / 0.34);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgb(55 93 213) 0%, rgb(49 88 199) 58%, rgb(36 68 158) 100%);
+}
+
+.hv2-closing::before,
+.hv2-closing::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hv2-closing::before {
+  opacity: 0.28;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.08) 1px, transparent 1px);
+  background-size: 7px 7px;
+}
+
+.hv2-closing::after {
+  background: radial-gradient(ellipse 36% 28% at 50% 110%, rgb(238 243 255 / 0.9), rgb(154 181 255 / 0.3) 34%, transparent 70%);
+}
+
+.hv2-closing > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hv2-closing h2 {
+  max-width: 820px;
+  color: rgb(255 255 255);
+}
+
+.hv2-footer {
+  border-top: 0;
+  background: rgb(8 11 15);
+}
+
+/* Small-screen fidelity: keep the cinematic shell, remove template-like white slabs. */
+@media (max-width: 900px) {
+  .hv2-hero {
+    min-height: 760px;
+    width: calc(100% - 16px);
+    margin-top: 76px;
+    border-radius: 10px;
+  }
+
+  .hv2-hero__copy {
+    width: calc(100% - 34px);
+    padding: 120px 0 100px;
+  }
+
+  .hv2-hero h1 {
+    font-size: clamp(48px, 14.2vw, 72px);
+    line-height: 0.92;
+  }
+
+  .hv2-hero__lede {
+    max-width: 36rem;
+    margin-top: 24px;
+    font-size: 15px;
+  }
+
+  .hv2-hero-film__video,
+  .hv2-hero-film__fallback img {
+    object-position: 69% 50%;
+    filter: saturate(0.7) contrast(1.06) brightness(0.42);
+  }
+
+  .hv2-evidence,
+  .hv2-memory-model,
+  .hv2-product,
+  .hv2-architecture {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .hv2-evidence::before,
+  .hv2-memory-model::before,
+  .hv2-product::before,
+  .hv2-architecture::before {
+    inset-inline: 8px;
+    background-image: none;
+  }
+
+  .hv2-evidence,
+  .hv2-product,
+  .hv2-architecture {
+    padding-top: 108px;
+    padding-bottom: 96px;
+  }
+
+  .hv2-memory-model {
+    padding-top: 116px;
+    padding-bottom: 110px;
+  }
+
+  .hv2-closing {
+    width: calc(100% - 16px);
+    min-height: 520px;
+    border-radius: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hv2-hero-film {
+    opacity: 0.72;
+  }
+}

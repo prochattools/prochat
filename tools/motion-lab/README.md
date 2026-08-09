@@ -17,7 +17,7 @@ This lab turns the approved A2 Review Gate + B2 Context Assembly direction into 
   6. B2 Context Assembly
   7. B2 Applied Context
 - `b2/index.html` — four-state pinned Context Assembly scroll POC using GSAP + ScrollTrigger from pinned CDN URLs.
-- `hyperframes/index.html` — deterministic 5.2s A2 Review Gate composition following the cached HyperFrames composition/timeline contract.
+- `hyperframes/index.html` — deterministic 6.4s A2 Review Gate V3 composition following the cached HyperFrames composition/timeline contract.
 - `hyperframes/DESIGN.md` — isolated composition visual identity. It does not replace repository `DESIGN.md`.
 
 ## Design constraints
@@ -54,7 +54,7 @@ The composition is authored as standalone HTML with:
 
 - `data-composition-id="a2-review-gate"`
 - `data-start="0"`
-- `data-duration="5.2"`
+- `data-duration="6.4"`
 - `data-width="1920"`
 - `data-height="1080"`
 - synchronous paused GSAP timeline registered as `window.__timelines["a2-review-gate"]`
