@@ -6,19 +6,51 @@
 
 Existing themes, page-specific styles, gradients, fonts, and design experiments in this repository are historical implementation material. They are not design authority.
 
-## Public homepage template override — 2026-07-18
+## Homepage design authority — 2026-08-09
 
-The owner-approved public homepage direction is defined in:
+### PRIMARY REFERENCE: Cloudflare homepage (current live)
 
+The Cloudflare homepage (https://www.cloudflare.com/) is the primary structural and visual quality reference for:
+
+- homepage section structure and proportions
+- spacing rhythm and vertical pacing
+- typography scale and heading confidence
+- visual density and content-to-space ratio
+- motion pacing and section transitions
+- responsive composition and stacking behavior
+- premium material quality (card depth, surface treatment, light)
+- section background transitions
+
+### SECONDARY REFERENCE: Nexus component grammar (historical)
+
+The Nexus-derived dark template system remains available as a secondary component-grammar reference for internal card/grid language. It no longer defines homepage structure, spacing, or visual density.
+
+Previous reference document:
 ```text
 docs/product/HOMEPAGE_NEXUS_TEMPLATE_ADOPTION.md
 ```
 
-For the company landing page, that document takes precedence over conflicting public-homepage guidance in this file. The homepage must use the supplied Nexus-derived dark template system, Golos Text, its page structure, card/grid language, diagrams, arrows, and motion character.
+### RETAINED: ProChat brand and product identity
+
+ProChat retains and uses exclusively:
+- brand colors (cobalt accent, dark canvas, existing token set)
+- existing approved copy and product messaging
+- product semantics (memory, evidence, review gate, provenance)
+- logo and wordmark
+- original graphics and illustrations
+- original motion concepts (A2 Review Gate, B2 Context Assembly)
+
+### NOT COPIED from Cloudflare
+
+- source code, markup, or stylesheets
+- text content or marketing copy
+- logos, images, videos, or proprietary assets
+- brand colors or specific design tokens
+- typefaces (ProChat uses Golos Text / JetBrains Mono)
+
+### Scoping
 
 This is a scoped public-homepage override. It does not automatically restyle authenticated product interfaces or documentation surfaces.
-
-The prior generated-video and frame-scrub homepage direction is frozen optional research.
 
 > ProChat should feel like a calm, trustworthy working system for structured knowledge—not like an AI spectacle.
 
