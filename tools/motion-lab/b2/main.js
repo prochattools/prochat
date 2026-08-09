@@ -86,7 +86,10 @@
     } catch {}
   }
 
-  if (!window.gsap || !window.ScrollTrigger) {
+  const gsap = window.gsap;
+  const ScrollTrigger = window.ScrollTrigger;
+
+  if (!gsap || !ScrollTrigger) {
     document.body.dataset.pocError = 'gsap-missing';
     diag.state.textContent = 'state: GSAP unavailable';
     return;
