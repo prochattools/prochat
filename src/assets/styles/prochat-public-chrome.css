@@ -431,7 +431,7 @@ body:has(.hv4-page) .pm-navbar {
 }
 
 body:has(.hv4-page) .pm-wordmark {
-  color: rgb(144 166 247);
+  color: rgb(110 148 255); /* saturated cobalt — unified with hero panel family; 6.5:1 on #0c0c0c */
 }
 
 body:has(.hv4-page) .pm-nav-links a,
@@ -472,7 +472,7 @@ body:has(.hv4-page) .pc-footer__brand {
 }
 
 body:has(.hv4-page) .pc-footer__logo {
-  color: rgb(144 166 247);
+  color: rgb(110 148 255);
 }
 
 body:has(.hv4-page) .pc-footer__brand h2 {
@@ -487,7 +487,7 @@ body:has(.hv4-page) .pc-footer__brand p {
 }
 
 body:has(.hv4-page) .pc-footer-column__title {
-  color: rgb(144 166 247);
+  color: rgb(110 148 255);
   font: 500 0.68rem/1.2 var(--font-mono), ui-monospace, monospace;
   letter-spacing: 0.11em;
 }

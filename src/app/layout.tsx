@@ -12,6 +12,7 @@ import { Viewport } from 'next'
 import { ReactNode } from 'react'
 
 import '@/assets/styles/globals.scss'
+import '@/assets/styles/prochat-public-chrome.css'
 
 const ROOT_TITLE = 'Memory for AI-Assisted Work'
 const ROOT_DESCRIPTION =
