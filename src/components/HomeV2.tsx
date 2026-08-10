@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
 
 function ArrowIcon() {
   return (
@@ -13,30 +12,22 @@ function ArrowIcon() {
 }
 
 function HeroSection() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    const query = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const sync = () => {
-      if (query.matches) {
-        videoRef.current?.pause()
-        return
-      }
-      void videoRef.current?.play().catch(() => undefined)
-    }
-    sync()
-    query.addEventListener('change', sync)
-    return () => query.removeEventListener('change', sync)
-  }, [])
-
   return (
     <section className="hv4-hero" aria-labelledby="hv4-hero-title">
-      <div className="hv4-hero__media" aria-hidden="true">
-        <video ref={videoRef} muted playsInline preload="metadata" poster="/motion/home-v2/a2-review-gate-poster.png">
-          <source src="/motion/home-v2/a2-review-gate-vp9.webm" type="video/webm" />
-          <source src="/motion/home-v2/a2-review-gate-h264.mp4" type="video/mp4" />
-        </video>
-        <img src="/motion/home-v2/a2-review-gate-final.png" alt="" className="hv4-hero__still" />
+      <div className="hv4-hero__memory-field" aria-hidden="true">
+        <div className="hv4-hero__memory-ring hv4-hero__memory-ring--a" />
+        <div className="hv4-hero__memory-ring hv4-hero__memory-ring--b" />
+        <div className="hv4-hero__memory-ring hv4-hero__memory-ring--c" />
+        <span className="hv4-hero__memory-node hv4-hero__memory-node--a" />
+        <span className="hv4-hero__memory-node hv4-hero__memory-node--b" />
+        <span className="hv4-hero__memory-node hv4-hero__memory-node--c" />
+        <span className="hv4-hero__memory-node hv4-hero__memory-node--d" />
+        <svg className="hv4-hero__memory-paths" viewBox="0 0 1400 700" preserveAspectRatio="none">
+          <path d="M90 470 C290 330 430 365 565 260" />
+          <path d="M835 255 C980 350 1115 305 1310 455" />
+          <path d="M165 585 C390 520 505 565 650 505" />
+          <path d="M750 500 C910 560 1050 515 1240 585" />
+        </svg>
       </div>
       <div className="hv4-hero__content">
         <p className="hv4-eyebrow">Structured memory for AI work</p>
@@ -56,7 +47,7 @@ function ContextLocalSection() {
     <section className="hv4-context" aria-labelledby="hv4-context-title">
       <header className="hv4-centered-heading">
         <p className="hv4-eyebrow">Context: Local</p>
-        <h2 id="hv4-context-title">The right memory, close to the work.</h2>
+        <h2 id="hv4-context-title">The right <span className="hv4-accent-word">memory</span>, close to the work.</h2>
         <p>Reviewed context stays local, inspectable, and ready when the next task begins.</p>
       </header>
 
@@ -93,7 +84,7 @@ function TrustSection() {
     <section className="hv4-trust" aria-labelledby="hv4-trust-title">
       <header className="hv4-centered-heading hv4-centered-heading--compact">
         <p className="hv4-eyebrow">Built for inspectable AI work</p>
-        <h2 id="hv4-trust-title">Trust comes from what you can verify.</h2>
+        <h2 id="hv4-trust-title">Trust comes from what you can <span className="hv4-accent-word">verify.</span></h2>
       </header>
       <div className="hv4-trust__frame">
         <div className="hv4-trust__quote">
@@ -108,6 +99,20 @@ function TrustSection() {
         </div>
       </div>
     </section>
+  )
+}
+
+function SignalStrip() {
+  const signals = ['source attached', 'human-reviewed', 'local files', 'task-ready', 'git-versioned', 'bounded execution']
+
+  return (
+    <div className="hv4-signal-strip" aria-hidden="true">
+      <div className="hv4-signal-strip__track">
+        {[...signals, ...signals].map((signal, index) => (
+          <span key={`${signal}-${index}`}><i />{signal}</span>
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -161,7 +166,7 @@ function SystemSection() {
     <section className="hv4-system" aria-labelledby="hv4-system-title">
       <header className="hv4-centered-heading">
         <p className="hv4-eyebrow">One memory model</p>
-        <h2 id="hv4-system-title">From evidence to useful context.</h2>
+        <h2 id="hv4-system-title">From evidence to useful <span className="hv4-accent-word">context.</span></h2>
         <p>One clear path from what happened to what the next task needs.</p>
       </header>
 
@@ -238,6 +243,7 @@ export function HomeV2() {
       <HeroSection />
       <ContextLocalSection />
       <TrustSection />
+      <SignalStrip />
       <WhyChooseSection />
       <SystemSection />
       <TailoredSection />

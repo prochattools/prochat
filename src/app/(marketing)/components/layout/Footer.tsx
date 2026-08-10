@@ -77,8 +77,7 @@ export const Footer: React.FC = () => {
             </Link>
             <h2 id="pc-footer-title">Local, durable memory for AI-assisted work.</h2>
             <p>
-              ProChat keeps the public path simple: Memory first, Memory for QA as the selected beta,
-              and Workbench as guarded local project work.
+              Memory, Memory for QA, and Workbench keep reviewed project context inspectable and local.
             </p>
           </div>
 
@@ -109,7 +108,17 @@ export const Footer: React.FC = () => {
 
         <div className="pc-footer__bottom">
           <span>© {new Date().getFullYear()} ProChat</span>
-          <span>Local files · Human-reviewed · Portable memory</span>
+          <div className="pc-footer__status">
+            <iframe
+              src="https://status.prochat.tools/badge?theme=dark"
+              title="ProChat service status"
+              width="250"
+              height="30"
+              loading="lazy"
+              scrolling="no"
+            />
+          </div>
+          <span className="pc-footer__principles">Local files · Human-reviewed · Portable memory</span>
         </div>
       </div>
     </footer>

@@ -404,7 +404,7 @@ body:has(.hv4-page) {
   --pm-border: rgb(255 255 255 / 0.1);
   --pm-accent: rgb(56 91 214);
   --pm-accent-soft: rgb(56 91 214 / 0.14);
-  --pm-content-max: 1280px;
+  --pm-content-max: 1400px;
   --pm-page-gutter: 14px;
 }
 
@@ -417,7 +417,7 @@ body:has(.hv4-page) .pc-canonical-shell {
 }
 
 body:has(.hv4-page) .pm-site-header {
-  width: min(1280px, calc(100% - 28px));
+  width: min(1400px, calc(100% - 28px));
 }
 
 body:has(.hv4-page) .pm-navbar {
@@ -431,7 +431,15 @@ body:has(.hv4-page) .pm-navbar {
 }
 
 body:has(.hv4-page) .pm-wordmark {
-  color: rgb(110 148 255);
+  color: rgb(247 247 245);
+}
+
+body:has(.hv4-page) .pm-wordmark .pc-logo-wordmark__mark {
+  color: rgb(56 91 214);
+}
+
+body:has(.hv4-page) .pm-wordmark .pc-logo-wordmark__text {
+  color: rgb(247 247 245);
 }
 
 body:has(.hv4-page) .pm-nav-links a,
@@ -458,13 +466,13 @@ body:has(.hv4-page) .pc-footer {
 }
 
 body:has(.hv4-page) .pc-footer__inner {
-  width: min(1280px, calc(100% - 28px));
-  padding-block: 3.5rem 1.35rem;
+  width: min(1400px, calc(100% - 28px));
+  padding-block: 2.75rem 1.1rem;
 }
 
 body:has(.hv4-page) .pc-footer__grid {
-  grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.28fr);
-  gap: clamp(3rem, 7vw, 7rem);
+  grid-template-columns: minmax(240px, 0.58fr) minmax(0, 1.42fr);
+  gap: clamp(2.5rem, 5vw, 5.25rem);
 }
 
 body:has(.hv4-page) .pc-footer__brand {
@@ -472,7 +480,15 @@ body:has(.hv4-page) .pc-footer__brand {
 }
 
 body:has(.hv4-page) .pc-footer__logo {
-  color: rgb(110 148 255);
+  color: rgb(247 247 245);
+}
+
+body:has(.hv4-page) .pc-footer__logo .pc-logo-wordmark__mark {
+  color: rgb(56 91 214);
+}
+
+body:has(.hv4-page) .pc-footer__logo .pc-logo-wordmark__text {
+  color: rgb(247 247 245);
 }
 
 body:has(.hv4-page) .pc-footer__brand h2 {
@@ -519,12 +535,77 @@ body:has(.hv4-page) .pc-footer__bottom {
     gap: 2.25rem;
   }
 
-  body:has(.hv4-page) .pc-footer-links {
+  body:has(.hv4-page) .pc-footer__links {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.75rem 1.25rem;
+    gap: 1.5rem 1.2rem;
   }
 
   body:has(.hv4-page) .pc-footer__bottom {
     margin-top: 2.25rem;
+  }
+}
+
+
+
+/* Home V4.3 — compact footer rhythm + status sub-footer. */
+body:has(.hv4-page) .pc-footer__links {
+  gap: clamp(1.25rem, 2.2vw, 2.4rem);
+}
+
+body:has(.hv4-page) .pc-footer-column__title {
+  margin-bottom: 0.6rem;
+}
+
+body:has(.hv4-page) .pc-footer-column__list,
+body:has(.hv4-page) .pc-footer-social {
+  gap: 0.38rem;
+}
+
+body:has(.hv4-page) .pc-footer-link,
+body:has(.hv4-page) .pc-footer-social__link {
+  min-height: 1.9rem;
+  line-height: 1.35;
+}
+
+body:has(.hv4-page) .pc-footer__bottom {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin-top: 2.4rem;
+  padding-top: 0.9rem;
+}
+
+body:has(.hv4-page) .pc-footer__status {
+  justify-self: center;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+}
+
+body:has(.hv4-page) .pc-footer__status iframe {
+  display: block;
+  width: 250px;
+  max-width: 100%;
+  height: 30px;
+  border: 0;
+  opacity: 0.9;
+}
+
+body:has(.hv4-page) .pc-footer__principles {
+  justify-self: end;
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  body:has(.hv4-page) .pc-footer__bottom {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  body:has(.hv4-page) .pc-footer__status,
+  body:has(.hv4-page) .pc-footer__principles {
+    justify-self: start;
+    text-align: left;
   }
 }
