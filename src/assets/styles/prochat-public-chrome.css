@@ -431,7 +431,7 @@ body:has(.hv4-page) .pm-navbar {
 }
 
 body:has(.hv4-page) .pm-wordmark {
-  color: rgb(110 148 255); /* saturated cobalt — unified with hero panel family; 6.5:1 on #0c0c0c */
+  color: rgb(110 148 255);
 }
 
 body:has(.hv4-page) .pm-nav-links a,
