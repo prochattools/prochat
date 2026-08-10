@@ -15,18 +15,29 @@ function HeroSection() {
   return (
     <section className="hv4-hero" aria-labelledby="hv4-hero-title">
       <div className="hv4-hero__memory-field" aria-hidden="true">
-        <div className="hv4-hero__memory-ring hv4-hero__memory-ring--a" />
-        <div className="hv4-hero__memory-ring hv4-hero__memory-ring--b" />
-        <div className="hv4-hero__memory-ring hv4-hero__memory-ring--c" />
-        <span className="hv4-hero__memory-node hv4-hero__memory-node--a" />
-        <span className="hv4-hero__memory-node hv4-hero__memory-node--b" />
-        <span className="hv4-hero__memory-node hv4-hero__memory-node--c" />
-        <span className="hv4-hero__memory-node hv4-hero__memory-node--d" />
+        <div className="hv4-hero__globe-wrap">
+          <svg className="hv4-hero__globe" viewBox="0 0 240 240">
+            <circle className="hv4-hero__globe-shell" cx="120" cy="120" r="98" />
+            <g className="hv4-hero__globe-longitudes">
+              <ellipse cx="120" cy="120" rx="36" ry="98" />
+              <ellipse cx="120" cy="120" rx="66" ry="98" />
+              <ellipse cx="120" cy="120" rx="88" ry="98" />
+            </g>
+            <g className="hv4-hero__globe-latitudes">
+              <ellipse cx="120" cy="120" rx="98" ry="30" />
+              <ellipse cx="120" cy="120" rx="98" ry="58" />
+              <ellipse cx="120" cy="120" rx="98" ry="82" />
+            </g>
+            <path className="hv4-hero__globe-route" d="M43 145 C73 94 115 78 155 92 C181 101 195 122 201 148" />
+            <circle className="hv4-hero__globe-point" cx="43" cy="145" r="3" />
+            <circle className="hv4-hero__globe-point" cx="155" cy="92" r="3" />
+            <circle className="hv4-hero__globe-point" cx="201" cy="148" r="3" />
+          </svg>
+        </div>
         <svg className="hv4-hero__memory-paths" viewBox="0 0 1400 700" preserveAspectRatio="none">
-          <path d="M90 470 C290 330 430 365 565 260" />
-          <path d="M835 255 C980 350 1115 305 1310 455" />
-          <path d="M165 585 C390 520 505 565 650 505" />
-          <path d="M750 500 C910 560 1050 515 1240 585" />
+          <path d="M80 520 C285 370 430 410 575 286" />
+          <path d="M835 286 C1015 380 1130 330 1330 470" />
+          <path d="M170 610 C390 540 505 585 650 520" />
         </svg>
       </div>
       <div className="hv4-hero__content">

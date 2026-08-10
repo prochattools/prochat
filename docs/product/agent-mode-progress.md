@@ -1163,3 +1163,20 @@ All confirmed gaps addressed, deployed, and CI-verified at SHA `b7f564a1`.
 All roadmap, implementation-plan, and agent-mode-progress claims are now aligned to canonical verified evidence (Phase 11: 16/6/22 inventory complete; Phase 12: 66 automated tests + manual evidence deferred; Phase 13: governance ongoing).
 
 **Repository-scoped implementation is COMPLETE.** Remaining work (MailerLite rotation, Phase 12 manual evidence, Phase 13 governance) are outside repository scope.
+
+
+
+
+## V4.4 homepage refinement — 2026-08-10
+
+Status: implementation and validation complete; ready for commit/deploy.
+
+- Fixed the sub-1920 responsive/right-shift defect by allowing `.pc-canonical-main` to shrink (`width: 100%; min-width: 0`) and containing Home V4 / marquee intrinsic width. Verified document width equals viewport at 320, 390, 768, 1024, 1280, 1440, and 1920px.
+- Replaced the abstract hero ring/square field with a text-free, text-safe rotating SVG globe and dotted memory routes; reduced-motion behavior preserved.
+- Rebuilt Source → Review → Memory → Task packet geometry around exact chip/stem junctions and moved the rail below chip labels.
+- Rebalanced Capture/Review/Retrieve/Execute cards and all four “Built around the work” panels; local-first visual now has a dedicated non-overlapping zone.
+- Moved Better Stack status badge to the sub-footer edge and applied `theme=dark` + `color-scheme: normal` styling.
+- Strengthened Golos/JetBrains hierarchy, subtle cobalt emphasis, grayscale panel depth, and a page-wide grid/dot continuity layer without adding new colors or sections.
+- Validation: TypeScript PASS; full lint PASS; design lint PASS; production build PASS (109 pages); security scan PASS; exact production-mode browser evidence 66/66 PASS; visual audit has zero console errors and zero horizontal overflow at 390/1440/1920; local-first overlap false.
+
+Next: commit V4.4, push `main`, monitor Main workflow, then verify production SHA, health, docs, homepage, globe, responsive containment, footer status placement, and worktree cleanliness.
