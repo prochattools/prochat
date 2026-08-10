@@ -234,7 +234,7 @@ function ClosingSection() {
 
 export function HomeV2() {
   return (
-    <main className="hv4-page" data-home-v2>
+    <div className="hv4-page" data-home-v2>
       <HeroSection />
       <ContextLocalSection />
       <TrustSection />
@@ -242,6 +242,6 @@ export function HomeV2() {
       <SystemSection />
       <TailoredSection />
       <ClosingSection />
-    </main>
+    </div>
   )
 }
