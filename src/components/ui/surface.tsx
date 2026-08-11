@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/helpers/utils"
 
-const sectionVariants = cva("relative", {
+const sectionVariants = cva("pc-surface-section relative", {
   variants: {
     tone: {
       transparent: "",
@@ -22,7 +22,7 @@ const sectionVariants = cva("relative", {
   },
 })
 
-const panelVariants = cva("rounded-2xl border transition-colors", {
+const panelVariants = cva("pc-surface-panel rounded-2xl border transition-colors", {
   variants: {
     tone: {
       default: "bg-surface border-border-subtle shadow-surface",

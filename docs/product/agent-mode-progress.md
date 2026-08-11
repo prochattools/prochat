@@ -1180,3 +1180,54 @@ Status: implementation and validation complete; ready for commit/deploy.
 - Validation: TypeScript PASS; full lint PASS; design lint PASS; production build PASS (109 pages); security scan PASS; exact production-mode browser evidence 66/66 PASS; visual audit has zero console errors and zero horizontal overflow at 390/1440/1920; local-first overlap false.
 
 Next: commit V4.4, push `main`, monitor Main workflow, then verify production SHA, health, docs, homepage, globe, responsive containment, footer status placement, and worktree cleanliness.
+
+
+
+
+## Site-wide V4.4 design-system rollout — 2026-08-11
+
+Status: implementation and repository validation complete; ready for commit, push, and production verification.
+
+### Goal
+Roll the deployed V4.4 homepage language across the entire **public** ProChat website while preserving product/authenticated functionality. One MarketingNav + Footer implementation, one canonical public shell, one graphite/cobalt design system, responsive rails, Golos + JetBrains Mono hierarchy, and route-specific subtle visuals/animations.
+
+### Public route families to migrate
+- Canonical product/company: `/`, `/memory`, `/memory-qa`, `/workbench`, `/contact`, `/privacy`, `/terms`, `/docs`, `/docs/*`.
+- Product/legacy public surfaces with real content: `/buildflow`, `/systems/prochat-os`, `/ai-workflows`, `/studio`, `/kits`, `/kits/prokit`, `/kits/saaskit`, `/kits/uxkit`, `/kits/waaskit`, `/proof`, `/waitlist`, `/docs/learn`, `/docs/learn/*`, `/prompts`, `/prompts/*`.
+- Redirect-only routes (`/book`, `/starting-point`, `/waas/accountants`, `/blog`, `/legal-ai-workflows`) keep redirect behavior; no bespoke redesign required.
+- Protected/admin/auth/API/error/maintenance/internal routes remain outside this public visual migration unless they already consume shared tokens.
+
+### Architecture plan
+1. Consolidate public rendering onto one `CanonicalPublicShell`; docs may use a content wrapper mode so pages that own `<main>` stay semantically valid.
+2. Add one shared `PublicRouteScene`/route-variant system inside the shell. Each route family gets a restrained story-specific motif (memory orbit, review gate, terminal pipeline, docs stack, contact signal, OS system bus, kits modules, proof timeline, prompts stack, learning path) with reduced-motion support.
+3. Promote V4.4 graphite/cobalt rails, header/footer, grids/dots, typography, buttons, panels, and section rhythm from homepage-only selectors to the shared public shell.
+4. Restyle shared `HeroSection`, `Section`, `Panel`, content-card primitives so legacy public pages inherit the same premium language without page-by-page duplicate CSS.
+5. Patch only pages that own `<main>` or have route-specific layout conflicts; keep copy/functionality intact.
+
+### Risks / controls
+- Avoid nested `<main>` landmarks when consolidating docs/proof/studio/learn/legacy legal pages.
+- Do not migrate protected/auth/admin/API surfaces into public chrome.
+- Route-specific visuals must be decorative, text-safe, subtle, responsive, and disabled under `prefers-reduced-motion`.
+- Redirect semantics must not change.
+- Existing V4.4 homepage must remain visually stable.
+
+### Validation strategy
+- TypeScript, full lint, design lint, production build, targeted security scan.
+- Existing 66-test canonical production-mode evidence must stay green.
+- Add/extend route audit covering all migrated public content routes at desktop/mobile: HTTP 200 or expected redirect, single shared header/footer, exactly one visible main landmark, no horizontal overflow, no console/page errors.
+- Capture representative route-family screenshots before commit.
+
+### Completion checkpoint — 2026-08-11
+
+- Unified all rendered public routes onto `CanonicalPublicShell`; removed the obsolete `DocsPublicShell` after explicit approval and zero-reference verification.
+- Added `PublicRouteScene` plus `getUnifiedPublicRouteConfig()` for route-family visual variants while leaving redirect-only aliases outside the visual map.
+- Added the scoped `prochat-public-v4.css` graphite/cobalt system and tagged shared surfaces so public legacy pages inherit the V4.4 language without duplicating page CSS.
+- Preserved single-`<main>` semantics for docs, proof, studio, Learn detail pages, dynamic prompts, and waitlist; removed the redundant legacy waiting-list layout landmark.
+- Added `tests/evidence/public-v4-route-audit.spec.ts` and wired it into `test:evidence:ci`. The dedicated V4 audit passed 61/61 across 25 rendered public routes at desktop/mobile plus 10 compatibility redirects, route motifs, reduced motion, single shared header/footer/main, horizontal containment, and console/page-error checks.
+- Combined production-mode canonical + V4 evidence passed **127/127** after one accessibility repair. `/docs` inline paragraph links now receive a plain scoped underline rule that Axe can parse, allowing the obsolete two `link-in-text-block` reviewed exceptions to be removed instead of extended.
+- Final repository validation after that repair: TypeScript PASS; full ESLint PASS; design lint PASS (`5` governance rules, `40` explicit debt exemptions); production build PASS (`109` pages); combined browser evidence PASS (`127/127`).
+- Security review: `forbidden_all_high_risk` reported zero findings across all changed implementation/evidence files. A whole-changed-path scan also surfaced only historical handoff terminology plus the pre-existing unchanged `axios` dependency in `package.json`; the package diff was verified to change only `test:evidence:ci` wiring.
+- Final scope check before commit showed no protected/admin/auth/API implementation paths changed. The temporary in-process Playwright runner used for Workbench network isolation was deleted and must not be committed.
+- No commit, push, or production deployment has occurred yet. Repository `HEAD` before this rollout remains `7e7352e0cf1881852f6d281f170850909e45ec5e`.
+
+Next active task: review final diff, run final secret-material scan, commit only the intended V4.4 rollout paths, push `main`, verify the Main deployment and production SHA/health/version/docs/homepage/representative public routes, then confirm a clean worktree.
