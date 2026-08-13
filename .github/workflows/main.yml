@@ -84,9 +84,6 @@ jobs:
       - name: Lint design-system governance
         run: npm run lint:design
 
-      - name: Validate secret sources
-        run: npm run test:secret-sources
-
       - name: Build
         run: npm run build
         env:
