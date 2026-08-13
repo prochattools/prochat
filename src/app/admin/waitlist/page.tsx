@@ -9,7 +9,7 @@ type SearchParams = {
 }
 
 export const metadata = {
-  title: 'Waitlist',
+  title: 'Beta interest',
 }
 
 const statusBadges: Record<'subscribed' | 'unsubscribed', string> = {
@@ -70,18 +70,18 @@ export default async function AdminWaitlistPage({ searchParams }: { searchParams
     <div className="space-y-8">
       <div className="space-y-3">
         <p className="text-sm font-mono uppercase tracking-[0.4em] text-muted-foreground/70">Admin</p>
-        <h1 className="text-4xl font-bold tracking-[-0.02em] text-foreground">Waitlist</h1>
+        <h1 className="text-4xl font-bold tracking-[-0.02em] text-foreground">Beta interest</h1>
         <p className="text-lg text-muted-foreground">
-          View waitlist signups and whether each subscriber is still active or has unsubscribed.
+          View beta-interest signups and whether each subscriber is still active or has unsubscribed.
         </p>
       </div>
 
       <div className="rounded-3xl border border-border bg-surface p-8 shadow-sm">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-lg font-semibold text-foreground">Waitlist subscribers</p>
+            <p className="text-lg font-semibold text-foreground">Beta-interest subscribers</p>
             <p className="text-sm text-muted-foreground">
-              Read-only visibility into waitlist signups and subscription state.
+              Read-only visibility into beta-interest signups and subscription state.
             </p>
           </div>
           <button

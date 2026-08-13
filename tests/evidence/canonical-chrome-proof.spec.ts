@@ -194,11 +194,11 @@ test.describe('canonical public chrome — geometry consistency at desktop', () 
 })
 
 // ---------------------------------------------------------------------------
-// Docs — sidebar/content usable at desktop, mobile, and narrow
+// Docs — repository hub usable at desktop, mobile, and narrow
 // ---------------------------------------------------------------------------
 
-test.describe('docs page — layout with canonical shell', () => {
-  test('docs sidebar visible at desktop', async ({ page }) => {
+test.describe('docs page — repository hub with canonical shell', () => {
+  test('docs repository cards visible at desktop', async ({ page }) => {
     await page.setViewportSize(DESKTOP)
     await page.goto(new URL('/docs', baseUrl).toString(), {
       waitUntil: 'domcontentloaded',
@@ -207,10 +207,12 @@ test.describe('docs page — layout with canonical shell', () => {
     await expect(page.locator('nav.pm-navbar')).toBeVisible()
     await expect(page.locator('footer.pc-footer')).toBeVisible()
 
-    const docsShell = page.locator('.docs-shell').first()
-    await expect(docsShell).toBeVisible()
+    const docsHub = page.locator('main.pc-docs-hub')
+    await expect(docsHub).toBeVisible()
+    await expect(docsHub.locator('.pc-docs-hub__card')).toHaveCount(2)
+    await expect(docsHub).toContainText('Memory for QA')
+    await expect(docsHub).toContainText('Workbench')
 
-    // No horizontal overflow
     const layout = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
       viewportWidth: window.innerWidth,
@@ -218,13 +220,15 @@ test.describe('docs page — layout with canonical shell', () => {
     expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth)
   })
 
-  test('docs content visible at mobile (320px)', async ({ page }) => {
+  test('docs repository hub visible at mobile (320px)', async ({ page }) => {
     await page.setViewportSize(DOCS_NARROW)
     await page.goto(new URL('/docs', baseUrl).toString(), {
       waitUntil: 'domcontentloaded',
     })
 
     await expect(page.locator('nav.pm-navbar')).toBeVisible()
+    await expect(page.locator('main.pc-docs-hub')).toBeVisible()
+    await expect(page.locator('.pc-docs-hub__card')).toHaveCount(2)
     await expect(page.locator('footer.pc-footer')).toBeVisible()
 
     const layout = await page.evaluate(() => ({
@@ -262,7 +266,7 @@ test.describe('docs page — layout with canonical shell', () => {
 // ---------------------------------------------------------------------------
 
 test.describe('contact page — canonical copy and layout', () => {
-  test('contact page has correct copy and is vertically balanced at desktop', async ({ page }) => {
+  test('contact page exposes the current intake layout at desktop', async ({ page }) => {
     await page.setViewportSize(DESKTOP)
     await page.goto(new URL('/contact', baseUrl).toString(), {
       waitUntil: 'networkidle',
@@ -270,56 +274,22 @@ test.describe('contact page — canonical copy and layout', () => {
 
     await expect(page.locator('nav.pm-navbar')).toBeVisible()
     await expect(page.locator('footer.pc-footer')).toBeVisible()
+    await expect(page.locator('.contact-body-page')).toBeVisible()
+    await expect(page.locator('.contact-intake-grid')).toBeVisible()
+    await expect(page.locator('.contact-form-panel')).toBeVisible()
+    await expect(page.getByText('Send the context', { exact: false })).toBeVisible()
+    await expect(page.getByText('One brief is enough to start.', { exact: false })).toBeVisible()
 
-    // New copy present (&rsquo; → U+2019 right single quotation mark)
-    await expect(
-      page.getByText('Let’s talk', { exact: false }),
-    ).toBeVisible()
-
-    // Form panel is centered within the available main row
-    const contactEvidence = await page.evaluate(() => {
-      const panel = document.querySelector('.contact-form-panel') as HTMLElement | null
-      const panelRect = panel?.getBoundingClientRect()
-      const nav = document.querySelector('nav.pm-navbar')
-      const navRect = nav?.getBoundingClientRect()
-      const footer = document.querySelector('footer.pc-footer')
-      const footerRect = footer?.getBoundingClientRect()
-      const mainAreaTop = navRect ? navRect.bottom : 0
-      const mainAreaBottom = footerRect ? footerRect.top : window.innerHeight
-      const mainAreaCenter = mainAreaTop + (mainAreaBottom - mainAreaTop) / 2
-      const panelCenter = panelRect ? panelRect.top + panelRect.height / 2 : 0
-      return {
-        panelCenter,
-        mainAreaCenter,
-        mainAreaHeight: mainAreaBottom - mainAreaTop,
-        panelVisible: Boolean(panel && panelRect && panelRect.height > 0),
-        footerVisible: Boolean(footer && footerRect && footerRect.height > 0),
-        footerDistanceFromPanelBottom: panelRect && footerRect
-          ? footerRect.top - panelRect.bottom
-          : null,
-      }
-    })
-
-    expect(contactEvidence.panelVisible, 'contact form panel is visible').toBe(true)
-    expect(contactEvidence.footerVisible, 'footer is visible').toBe(true)
-
-    // Footer follows naturally — no excessive blank region below form.
-    // The contact layout vertically centers the form panel in the main area,
-    // so some space below the panel is expected. Assert it's less than 60% of
-    // the main area height (catches truly broken layouts with runaway blank space).
-    if (contactEvidence.footerDistanceFromPanelBottom !== null) {
-      expect(
-        contactEvidence.footerDistanceFromPanelBottom,
-        'footer follows contact form without excessive blank space',
-      ).toBeLessThan(contactEvidence.mainAreaHeight * 0.6)
-    }
-
-    // No horizontal overflow
     const layout = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
       viewportWidth: window.innerWidth,
+      intakeWidth: document.querySelector<HTMLElement>('.contact-intake-grid')?.getBoundingClientRect().width ?? 0,
+      formHeight: document.querySelector<HTMLElement>('.contact-form-panel')?.getBoundingClientRect().height ?? 0,
     }))
+
     expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth)
+    expect(layout.intakeWidth).toBeGreaterThan(600)
+    expect(layout.formHeight).toBeGreaterThan(300)
   })
 
   test('contact page contained at mobile (390px)', async ({ page }) => {

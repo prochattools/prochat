@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
 
 export default function BlogPage() {
-  redirect('/docs/learn')
+  redirect('/docs')
 }

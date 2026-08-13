@@ -1,4 +1,4 @@
-// ProChat marketing site – powered by the ProKit engine
+// ProChat public website
 // (c) 2025 Steve Westhoek / ProChat
 import bundleAnalyzer from '@next/bundle-analyzer'
 
@@ -31,31 +31,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/store',
-        destination: '/kits',
-        permanent: true,
-      },
-      {
-        source: '/store/saaskit',
-        destination: '/kits/saaskit',
-        permanent: true,
-      },
-      {
-        source: '/store/prokit',
-        destination: '/kits/prokit',
-        permanent: true,
-      },
-      {
-        source: '/store/prokit/finish',
-        destination: '/kits/prokit/finish',
-        permanent: true,
-      },
-      {
-        source: '/store/saaskit/finish',
-        destination: '/kits/saaskit/finish',
-        permanent: true,
-      },
-      {
         source: '/tos',
         destination: '/terms',
         permanent: true,
@@ -66,49 +41,43 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/system/prochat-os',
-        destination: '/systems/prochat-os',
+        source: '/buildflow',
+        destination: '/workbench',
         permanent: true,
       },
       {
-        source: '/system/events',
-        destination: '/systems/events',
+        source: '/system/prochat-os',
+        destination: '/workbench',
+        permanent: true,
+      },
+      {
+        source: '/systems/prochat-os',
+        destination: '/workbench',
         permanent: true,
       },
       {
         source: '/waiting-list',
-        destination: '/waitlist',
+        destination: '/contact?topic=memory-qa-beta#contact-form-card',
         permanent: true,
       },
-      {
-        source: '/bf',
-        destination: 'https://github.com/stevewesthoek/buildflow',
-        permanent: true,
-      },
-      {
-        source: '/brainbridge',
-        destination: 'https://github.com/stevewesthoek/brain-bridge',
-        permanent: true,
-      },
-      {
-        source: '/blog/is-saaskit-worth-it-for-first-time-founders-honest-breakdown',
-        destination: '/blog/is-saaskit-worth-it-for-first-time-founders-honest-evaluation',
-        permanent: true,
-      },
-      {
-        source: '/blog/is-saaskit-worth-it-for-first-time-founders',
-        destination: '/blog/is-saaskit-worth-it-for-first-time-founders-honest-evaluation',
-        permanent: true,
-      },
-      // PXF-018 Item 5: Consolidate /learn → /docs/learn
       {
         source: '/learn',
-        destination: '/docs/learn',
+        destination: '/docs',
         permanent: true,
       },
       {
         source: '/learn/:path*',
-        destination: '/docs/learn/:path*',
+        destination: '/docs',
+        permanent: true,
+      },
+      {
+        source: '/docs/learn',
+        destination: '/docs',
+        permanent: true,
+      },
+      {
+        source: '/docs/learn/:path*',
+        destination: '/docs',
         permanent: true,
       },
     ]
@@ -171,7 +140,4 @@ const nextConfig = {
   },
 }
 
-const createNextra = (await import('nextra')).default
-const withNextra = createNextra({})
-
-export default withBundleAnalyzer(withNextra(nextConfig))
+export default withBundleAnalyzer(nextConfig)

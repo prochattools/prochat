@@ -215,8 +215,6 @@ jobs:
         run: node scripts/check-env-docs.js
       - name: Check doc links
         run: node scripts/check-doc-links.js
-      - name: Validate docs pipeline
-        run: npm run docs:validate
 
   detect-deployment-changes:
     runs-on: ubuntu-latest

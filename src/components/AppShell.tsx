@@ -11,21 +11,10 @@ function hasIntrinsicHeaderSpacing(pathname: string) {
 		pathname === '/memory' ||
 		pathname === '/memory-qa' ||
 		pathname === '/workbench' ||
-		pathname === '/contact' ||
-		pathname === '/docs/learn' ||
-		pathname.startsWith('/docs/learn/') ||
-		pathname === '/systems/prochat-os' ||
-		pathname === '/ai-workflows' ||
-		pathname === '/legal-ai-workflows' ||
-		pathname === '/starting-point' ||
-		pathname === '/proof' ||
-		pathname === '/studio' ||
-		pathname === '/waitlist' ||
-		pathname === '/waiting-list' ||
-		pathname === '/waas/accountants' ||
 		pathname === '/docs' ||
-		pathname === '/prompts' ||
-		pathname.startsWith('/kits')
+		pathname === '/contact' ||
+		pathname === '/privacy' ||
+		pathname === '/terms'
 	)
 }
 

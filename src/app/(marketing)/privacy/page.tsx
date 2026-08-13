@@ -23,18 +23,15 @@ const linkClass =
 
 export default function PrivacyPage() {
 	return (
-		<PublicLegalPage>
-			<section className="relative bg-transparent py-24">
+		<PublicLegalPage
+			kind="privacy"
+			title="Privacy Policy"
+			updated="25 July 2026"
+			summary="How ProChat handles contact, beta, analytics, technical security, retention, and rights data across the public website."
+		>
+			<section className="pc-legal-ledger__body">
 			<div className="mx-auto w-full max-w-3xl px-page">
-				<article className="space-y-10 leading-relaxed text-slate-600 dark:text-slate-300">
-					<header className="mb-12">
-						<h1 className="mb-4 text-3xl font-bold tracking-[-0.05em] text-slate-900 dark:text-white md:text-4xl">
-							PRIVACY POLICY
-						</h1>
-						<p className="text-sm font-medium text-slate-500 dark:text-slate-400">
-							Last updated: 25 July 2026
-						</p>
-					</header>
+				<article className="pc-legal-ledger__article space-y-10 leading-relaxed text-slate-600 dark:text-slate-300">
 
 					<section aria-labelledby="privacy-scope">
 						<h2 id="privacy-scope" className={headingClass}>

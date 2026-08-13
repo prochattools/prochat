@@ -1,25 +1,6 @@
 /* Unified V4 public design system. Scoped to CanonicalPublicShell only. */
 
 .pc-public-v4 {
-  --pc-bg-rgb: 12 12 12;
-  --pc-surface-rgb: 18 19 23;
-  --pc-surface-soft-rgb: 15 16 20;
-  --pc-surface-elevated-rgb: 21 23 29;
-  --pc-text-rgb: 247 247 245;
-  --pc-muted-rgb: 18 19 23;
-  --pc-muted-foreground-rgb: 177 181 189;
-  --pc-muted-foreground-soft-rgb: 127 134 146;
-  --pc-border-rgb: 48 52 61;
-  --pc-border-subtle-rgb: 34 37 44;
-  --pc-border-strong-rgb: 76 82 96;
-  --pc-blue-500-rgb: 110 148 255;
-  --pc-blue-600-rgb: 56 91 214;
-  --pc-blue-700-rgb: 46 77 190;
-  --pc-blue-900-rgb: 23 35 83;
-  --pc-ring-rgb: 110 148 255;
-  --pc-primary-foreground-rgb: 255 255 255;
-  --pc-shadow-surface: 0 1px 0 rgb(255 255 255 / 0.035), 0 20px 50px rgb(0 0 0 / 0.28);
-  --pc-shadow-elevated: 0 1px 0 rgb(255 255 255 / 0.055), 0 28px 70px rgb(0 0 0 / 0.4);
   --pc-public-wide: 1400px;
   --pc-public-inner: 1200px;
   --pc-public-gutter: 14px;
@@ -648,167 +629,13 @@
   animation: pc-route-ledger-scan 8s ease-in-out infinite;
 }
 
-/* Studio canvas. */
-.pc-route-motif--canvas {
-  height: 260px;
-  aspect-ratio: auto;
-  border: 1px solid rgb(171 192 255 / 0.2);
-  background-image:
-    linear-gradient(rgb(171 192 255 / 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(171 192 255 / 0.08) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-.pc-route-canvas-frame {
-  position: absolute;
-  inset: 18%;
-  border: 1px solid rgb(171 192 255 / 0.28);
-}
-.pc-route-canvas-playhead {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 28%;
-  width: 1px;
-  background: rgb(110 148 255 / 0.58);
-  animation: pc-route-playhead 10s ease-in-out infinite;
-}
-.pc-route-canvas-point--a { left: 16%; top: 22%; }
-.pc-route-canvas-point--b { right: 18%; bottom: 20%; }
-
-/* Kits modules. */
-.pc-route-motif--modules {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  padding: 24px;
-  aspect-ratio: 1.35;
-}
-.pc-route-motif--modules span {
-  display: block;
-  min-height: 70px;
-  border: 1px solid rgb(171 192 255 / 0.22);
-  background: linear-gradient(145deg, rgb(56 91 214 / 0.08), rgb(15 16 20 / 0.68));
-  animation: pc-route-module-breathe 11s ease-in-out infinite;
-}
-.pc-route-motif--modules span:nth-child(2n) { animation-delay: -4s; }
-.pc-route-motif--modules span:nth-child(3n) { animation-delay: -7s; }
-
-/* Proof timeline. */
-.pc-route-motif--timeline { height: 160px; aspect-ratio: auto; }
-.pc-route-motif--timeline > span {
-  position: absolute;
-  left: 6%;
-  right: 6%;
-  top: 50%;
-  height: 1px;
-  background: rgb(171 192 255 / 0.3);
-}
-.pc-route-motif--timeline i {
-  position: absolute;
-  top: calc(50% - 5px);
-  width: 10px;
-  height: 10px;
-  border: 1px solid rgb(171 192 255 / 0.58);
-  border-radius: 50%;
-  background: rgb(17 18 22);
-}
-.pc-route-motif--timeline i:nth-of-type(1) { left: 8%; }
-.pc-route-motif--timeline i:nth-of-type(2) { left: 36%; }
-.pc-route-motif--timeline i:nth-of-type(3) { left: 64%; }
-.pc-route-motif--timeline i:nth-of-type(4) { right: 8%; }
-
-/* Prompt stack. */
-.pc-route-motif--prompts {
-  display: grid;
-  gap: 12px;
-  height: 260px;
-  aspect-ratio: auto;
-}
-.pc-route-motif--prompts span {
-  position: relative;
-  display: block;
-  border: 1px solid rgb(171 192 255 / 0.18);
-  background: rgb(17 18 22 / 0.72);
-}
-.pc-route-motif--prompts span i {
-  position: absolute;
-  left: 18px;
-  right: 18%;
-  top: 50%;
-  height: 1px;
-  background: linear-gradient(90deg, rgb(171 192 255 / 0.4), transparent);
-}
-.pc-route-motif--prompts span:nth-child(2) { transform: translateX(18px); }
-.pc-route-motif--prompts span:nth-child(3) { transform: translateX(36px); }
-.pc-route-motif--prompts span:nth-child(4) { transform: translateX(54px); }
-
-/* Learning path. */
-.pc-route-motif--learn { height: 190px; aspect-ratio: auto; }
-.pc-route-learn-line {
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 50%;
-  height: 1px;
-  background: rgb(171 192 255 / 0.28);
-}
-.pc-route-motif--learn i {
-  position: absolute;
-  top: calc(50% - 7px);
-  width: 14px;
-  height: 14px;
-  border: 1px solid rgb(171 192 255 / 0.46);
-  border-radius: 3px;
-  background: rgb(16 17 21);
-}
-.pc-route-motif--learn i:nth-of-type(1) { left: 8%; }
-.pc-route-motif--learn i:nth-of-type(2) { left: 36%; }
-.pc-route-motif--learn i:nth-of-type(3) { left: 64%; }
-.pc-route-motif--learn i:nth-of-type(4) { right: 8%; }
-
-/* Waitlist queue. */
-.pc-route-motif--queue {
-  display: flex;
-  height: 140px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  aspect-ratio: auto;
-}
-.pc-route-motif--queue::before {
-  content: '';
-  position: absolute;
-  left: 4%;
-  right: 4%;
-  top: 50%;
-  height: 1px;
-  background: rgb(171 192 255 / 0.22);
-}
-.pc-route-motif--queue span {
-  position: relative;
-  z-index: 1;
-  width: 12px;
-  height: 12px;
-  border: 1px solid rgb(171 192 255 / 0.48);
-  border-radius: 50%;
-  background: rgb(17 18 22);
-  animation: pc-route-queue-pulse 10s ease-in-out infinite;
-}
-.pc-route-motif--queue span:nth-child(2n) { animation-delay: -3s; }
-.pc-route-motif--queue span:nth-child(3n) { animation-delay: -6s; }
-
 /* Route-specific placement/intensity. */
 .pc-route-scene--memory { --pc-scene-opacity: 0.72; }
 .pc-route-scene--review { --pc-scene-opacity: 0.68; }
-.pc-route-scene--workbench .pc-route-motif,
-.pc-route-scene--os .pc-route-motif,
-.pc-route-scene--workflow .pc-route-motif { top: 150px; }
+.pc-route-scene--workbench .pc-route-motif { top: 150px; }
 .pc-route-scene--docs .pc-route-motif { top: 118px; }
 .pc-route-scene--legal { --pc-scene-opacity: 0.44; }
 .pc-route-scene--legal .pc-route-motif { top: 134px; }
-.pc-route-scene--proof { --pc-scene-opacity: 0.58; }
-.pc-route-scene--prompts .pc-route-motif,
-.pc-route-scene--learn .pc-route-motif { top: 140px; }
 
 @keyframes pc-route-path-flow { to { stroke-dashoffset: -180; } }
 @keyframes pc-route-orbit-pulse { 0%, 100% { opacity: 0.45; transform: translate(-50%, -50%) scale(0.98); } 50% { opacity: 0.86; transform: translate(-50%, -50%) scale(1.025); } }
@@ -816,9 +643,6 @@
 @keyframes pc-route-pipeline-packet { 0%, 8% { left: 8%; opacity: 0; } 15% { opacity: 1; } 84% { left: 88%; opacity: 1; } 94%, 100% { left: 88%; opacity: 0; } }
 @keyframes pc-route-radar-spin { to { transform: rotate(360deg); } }
 @keyframes pc-route-ledger-scan { 0%, 100% { top: 28px; opacity: 0.45; } 50% { top: calc(100% - 54px); opacity: 1; } }
-@keyframes pc-route-playhead { 0%, 100% { left: 18%; opacity: 0.4; } 50% { left: 82%; opacity: 0.9; } }
-@keyframes pc-route-module-breathe { 0%, 100% { opacity: 0.5; transform: translateY(0); } 50% { opacity: 0.92; transform: translateY(-4px); } }
-@keyframes pc-route-queue-pulse { 0%, 100% { opacity: 0.35; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.08); } }
 
 @media (max-width: 900px) {
   .pc-public-v4 {

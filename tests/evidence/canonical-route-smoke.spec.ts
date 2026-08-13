@@ -81,45 +81,39 @@ test.describe('canonical route smoke evidence', () => {
 })
 
 test.describe('contact page visual closeout', () => {
-  test('desktop contact form is centered on a neutral full-height background', async ({ page }) => {
+  test('desktop contact intake renders the current V4 composition', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 1000 })
     await page.goto(new URL('/contact', baseUrl).toString(), { waitUntil: 'networkidle' })
 
+    await expect(page.locator('.contact-body-page')).toBeVisible()
+    await expect(page.locator('.contact-intake-grid')).toBeVisible()
+    await expect(page.locator('.contact-form-panel')).toBeVisible()
+    await expect(page.getByText('Send the context', { exact: false })).toBeVisible()
+    await expect(page.getByText('One brief is enough to start.', { exact: false })).toBeVisible()
+
     const evidence = await page.evaluate(() => {
       const shell = document.querySelector('.pc-canonical-shell') as HTMLElement | null
-      const main = document.querySelector('.contact-page-main') as HTMLElement | null
+      const intake = document.querySelector('.contact-intake-grid') as HTMLElement | null
       const panel = document.querySelector('.contact-form-panel') as HTMLElement | null
       const shellStyle = shell ? getComputedStyle(shell) : null
-      const mainStyle = main ? getComputedStyle(main) : null
-      const panelRect = panel?.getBoundingClientRect()
-
       return {
         shellBackgroundColor: shellStyle?.backgroundColor ?? '',
         shellHeight: shell?.getBoundingClientRect().height ?? 0,
-        mainDisplay: mainStyle?.display ?? '',
-        mainJustifyContent: mainStyle?.justifyContent ?? '',
-        formCenterY: panelRect ? panelRect.top + panelRect.height / 2 : 0,
-        panelVisible: Boolean(panel && panelRect && panelRect.height > 0),
-        viewportCenterY: window.innerHeight / 2,
+        intakeWidth: intake?.getBoundingClientRect().width ?? 0,
+        panelHeight: panel?.getBoundingClientRect().height ?? 0,
         viewportHeight: window.innerHeight,
+        documentWidth: document.documentElement.scrollWidth,
+        viewportWidth: window.innerWidth,
       }
     })
 
-    // Shell background is neutral black (canonical public surface)
     const backgroundChannels = evidence.shellBackgroundColor.match(/\d+/g)?.map(Number) ?? []
     expect(backgroundChannels.length).toBeGreaterThanOrEqual(3)
     expect(Math.max(...backgroundChannels.slice(0, 3))).toBeLessThanOrEqual(16)
-    // Shell fills at least the viewport
     expect(evidence.shellHeight).toBeGreaterThanOrEqual(evidence.viewportHeight)
-    // Contact main is a column flex with vertical centering
-    expect(evidence.mainDisplay).toBe('flex')
-    expect(evidence.mainJustifyContent).toBe('center')
-    // Form panel is visible
-    expect(evidence.panelVisible, 'contact form panel exists and is visible').toBe(true)
-    // Form is centered within the visible area
-    expect(Math.abs(evidence.formCenterY - evidence.viewportCenterY)).toBeLessThan(
-      evidence.viewportHeight * 0.4,
-    )
+    expect(evidence.intakeWidth).toBeGreaterThan(600)
+    expect(evidence.panelHeight).toBeGreaterThan(300)
+    expect(evidence.documentWidth).toBeLessThanOrEqual(evidence.viewportWidth)
   })
 
   test('mobile contact layout remains contained with shared chrome', async ({ page }) => {
@@ -127,6 +121,7 @@ test.describe('contact page visual closeout', () => {
     await page.goto(new URL('/contact', baseUrl).toString(), { waitUntil: 'networkidle' })
 
     await expect(page.locator('nav.pm-navbar')).toBeVisible()
+    await expect(page.locator('.contact-intake-grid')).toBeVisible()
     await expect(page.locator('.contact-form-panel')).toBeVisible()
     await expect(page.locator('footer.pc-footer')).toBeVisible()
 

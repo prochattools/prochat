@@ -2,7 +2,7 @@
 
 This document describes the deployment flow that currently exists in the ProChat repo.
 
-ProChat does **not** use the SaaSKit runtime deploy gate. There is no runtime backup, smoke-check, restore wrapper, or automatic search-engine submission step around `next start`.
+ProChat does **not** use the retired legacy runtime deploy gate. There is no runtime backup, restore wrapper, or automatic search-engine submission step around `next start`; deployment smoke checks are handled explicitly by CI after rollout.
 
 ## Production target
 
@@ -129,7 +129,7 @@ File reference: [docker-compose.yml](docker-compose.yml)
 
 These behaviors should not be documented as active ProChat deployment features:
 
-- SaaSKit runtime deploy gate
+- retired legacy runtime deploy gate
 - legacy auth remains only for apps still mid-migration
 - shared auth for new work standardizes on ProChat UI backed by Ory
 

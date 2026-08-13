@@ -25,14 +25,13 @@ export default async function PreferencesPage({ searchParams }: PreferencesPageP
             <>
               <div className="mb-8 space-y-3">
                 <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-primary">
-                  Waitlist Preferences
+                  Beta Interest Preferences
                 </p>
                 <h1 className="font-brand text-3xl font-bold tracking-[-0.04em] text-foreground md:text-4xl">
-                  Manage your ProChat waitlist preferences
+                  Manage your ProChat beta interests
                 </h1>
                 <p className="max-w-xl text-sm leading-7 text-muted-foreground md:text-base">
-                  Update the products you want to hear about or unsubscribe from all future
-                  waitlist emails.
+                  Update the beta or prerelease programs you want to hear about, or unsubscribe from future beta-interest emails.
                 </p>
               </div>
 
@@ -53,7 +52,7 @@ export default async function PreferencesPage({ searchParams }: PreferencesPageP
 
                 <fieldset className="space-y-3">
                   <legend className="text-sm font-medium text-foreground">
-                    Select products you&apos;re interested in
+                    Select beta or prerelease programs you&apos;re interested in
                   </legend>
                   <div className="grid gap-3 sm:grid-cols-3">
                     {WAITLIST_PRODUCT_OPTIONS.map(option => {
@@ -90,10 +89,10 @@ export default async function PreferencesPage({ searchParams }: PreferencesPageP
                   />
                   <span className="space-y-1">
                     <span className="block text-sm font-medium text-foreground">
-                      Unsubscribe from all waitlist emails
+                      Unsubscribe from all beta-interest emails
                     </span>
                     <span className="block text-sm text-muted-foreground">
-                      You can still keep your product selections saved without receiving updates.
+                      You can keep your beta-interest selections saved without receiving updates.
                     </span>
                   </span>
                 </label>
@@ -117,20 +116,19 @@ export default async function PreferencesPage({ searchParams }: PreferencesPageP
           ) : (
             <div className="space-y-4">
               <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-primary">
-                Waitlist Preferences
+                Beta Interest Preferences
               </p>
               <h1 className="font-brand text-3xl font-bold tracking-[-0.04em] text-foreground md:text-4xl">
                 This preferences link is invalid or expired.
               </h1>
               <p className="max-w-xl text-sm leading-7 text-muted-foreground md:text-base">
-                Request a new waitlist confirmation email from the form if you still want to manage
-                your preferences.
+                Rejoin through the beta-interest contact flow if you still want to receive Memory for QA or Workbench updates.
               </p>
               <Link
-                href="/waitlist"
+                href="/contact?topic=memory-qa-beta#contact-form-card"
                 className="inline-flex h-12 items-center justify-center rounded-xl bg-primary px-6 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
               >
-                Open waitlist
+                Open beta contact
               </Link>
             </div>
           )}

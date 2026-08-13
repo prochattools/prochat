@@ -10,34 +10,18 @@ type RouteCase = {
   path: string
   variant: string
   motif: string
+  bodySelector: string
 }
 
 const ROUTES: RouteCase[] = [
-  { path: '/', variant: 'home', motif: 'orbit' },
-  { path: '/memory', variant: 'memory', motif: 'orbit' },
-  { path: '/memory-qa', variant: 'review', motif: 'review' },
-  { path: '/workbench', variant: 'workbench', motif: 'pipeline' },
-  { path: '/docs', variant: 'docs', motif: 'docs' },
-  { path: '/docs/saaskit/launch-flow', variant: 'docs', motif: 'docs' },
-  { path: '/docs/learn', variant: 'learn', motif: 'learn' },
-  { path: '/docs/learn/production-guide', variant: 'learn', motif: 'learn' },
-  { path: '/docs/learn/saas-starting-point', variant: 'learn', motif: 'learn' },
-  { path: '/contact', variant: 'contact', motif: 'radar' },
-  { path: '/privacy', variant: 'legal', motif: 'ledger' },
-  { path: '/terms', variant: 'legal', motif: 'ledger' },
-  { path: '/buildflow', variant: 'os', motif: 'pipeline' },
-  { path: '/systems/prochat-os', variant: 'os', motif: 'pipeline' },
-  { path: '/ai-workflows', variant: 'workflow', motif: 'pipeline' },
-  { path: '/studio', variant: 'studio', motif: 'canvas' },
-  { path: '/kits', variant: 'kits', motif: 'modules' },
-  { path: '/kits/prokit', variant: 'kits', motif: 'modules' },
-  { path: '/kits/saaskit', variant: 'kits', motif: 'modules' },
-  { path: '/kits/uxkit', variant: 'kits', motif: 'modules' },
-  { path: '/kits/waaskit', variant: 'kits', motif: 'modules' },
-  { path: '/proof', variant: 'proof', motif: 'timeline' },
-  { path: '/prompts', variant: 'prompts', motif: 'prompts' },
-  { path: '/prompts/execution/validate-this-saas-idea', variant: 'prompts', motif: 'prompts' },
-  { path: '/waitlist', variant: 'waitlist', motif: 'queue' },
+  { path: '/', variant: 'home', motif: 'orbit', bodySelector: '.hv4-page[data-home-v2]' },
+  { path: '/memory', variant: 'memory', motif: 'orbit', bodySelector: ".pm-public-product-page[data-product='memory']" },
+  { path: '/memory-qa', variant: 'review', motif: 'review', bodySelector: ".pm-public-product-page[data-product='memory-qa']" },
+  { path: '/workbench', variant: 'workbench', motif: 'pipeline', bodySelector: ".pm-public-product-page[data-product='workbench']" },
+  { path: '/docs', variant: 'docs', motif: 'docs', bodySelector: '.pc-docs-hub' },
+  { path: '/contact', variant: 'contact', motif: 'radar', bodySelector: '.contact-body-page' },
+  { path: '/privacy', variant: 'legal', motif: 'ledger', bodySelector: ".pc-legal-ledger[data-legal-kind='privacy']" },
+  { path: '/terms', variant: 'legal', motif: 'ledger', bodySelector: ".pc-legal-ledger[data-legal-kind='terms']" },
 ]
 
 const VIEWPORTS = [
@@ -51,22 +35,23 @@ const MOTION_SELECTORS: Record<string, string> = {
   pipeline: '.pc-route-motif--pipeline i',
   radar: '.pc-route-radar-sweep',
   ledger: '.pc-route-ledger-cursor',
-  canvas: '.pc-route-canvas-playhead',
-  modules: '.pc-route-motif--modules span',
-  queue: '.pc-route-motif--queue span',
 }
 
 const REDIRECTS = [
   { from: '/prochat-memory', to: '/memory' },
   { from: '/qa-memory', to: '/memory-qa' },
   { from: '/book', to: '/contact' },
+  { from: '/buildflow', to: '/workbench' },
+  { from: '/system/prochat-os', to: '/workbench' },
+  { from: '/systems/prochat-os', to: '/workbench' },
   { from: '/starting-point', to: '/workbench' },
   { from: '/waas/accountants', to: '/workbench' },
-  { from: '/blog', to: '/docs/learn' },
-  { from: '/legal-ai-workflows', to: '/ai-workflows' },
+  { from: '/learn', to: '/docs' },
+  { from: '/docs/learn', to: '/docs' },
   { from: '/privacy-policy', to: '/privacy' },
   { from: '/tos', to: '/terms' },
-  { from: '/waiting-list', to: '/waitlist' },
+  { from: '/waitlist', to: '/contact' },
+  { from: '/waiting-list', to: '/contact' },
 ] as const
 
 function normalizedPath(url: string) {
@@ -101,6 +86,9 @@ test.describe('site-wide V4 public route evidence', () => {
         await expect(page.locator('footer.pc-footer')).toHaveCount(1)
         await expect(page.locator('main')).toHaveCount(1)
         await expect(page.locator('main')).toBeVisible()
+        const body = page.locator(route.bodySelector)
+        await expect(body, `${route.path} is missing its redesigned body marker`).toHaveCount(1)
+        await expect(body).toBeVisible()
 
         const scene = page.locator(`.pc-route-scene--${route.variant}`)
         await expect(scene).toHaveCount(1)

@@ -13,10 +13,9 @@ async function readJson(response: Response) {
   return response.json() as Promise<Record<string, unknown>>
 }
 
-describe('Legacy compatibility routes and APIs', () => {
+describe('Lean compatibility routes and APIs', () => {
   describe('API equivalence: /api/waiting-list vs /api/waitlist', () => {
     it('source: /api/waiting-list/route.ts is exact POST re-export of ../waitlist/route', () => {
-      // Verify source equivalence without executing (no DB writes, no emails)
       const waitingListSource = readFileSync(
         resolve(process.cwd(), 'src/app/api/waiting-list/route.ts'),
         'utf-8',
@@ -31,128 +30,90 @@ describe('Legacy compatibility routes and APIs', () => {
     })
 
     it('honeypot: /api/waiting-list POST exits before persistence', async () => {
-      // Test that honeypot field triggers success response WITHOUT writing DB.
-      // The schema merges company_website into the honeypot field.
-      const honeypotSchema = {
-        email: 'honeypot-security-check@example.com',
-        products: ['uxkit'],
-        company_website: 'filled-by-bot', // honeypot field — schema key is company_website
-      }
-
       const response = await fetch(`${baseUrl}/api/waiting-list`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(honeypotSchema),
+        body: JSON.stringify({
+          email: 'honeypot-security-check@example.com',
+          products: ['memory-qa'],
+          company_website: 'filled-by-bot',
+        }),
       })
 
       assert.equal(response.status, 200, 'honeypot should return 200')
       const data = await readJson(response)
       assert.equal(data.spamFiltered, true, 'honeypot response must set spamFiltered: true')
-      // Handler exits before Prisma.waitlistSignup.create() is called
     })
   })
 
-  describe('Route redirects: backward compatibility', () => {
-    it('/legal-ai-workflows source file performs redirect to /ai-workflows', () => {
-      // Verify the page source performs a redirect to /ai-workflows without
-      // making an HTTP request. Next.js app-router redirect() in a server
-      // component emits a NEXT_REDIRECT that is not reliably observable as
-      // a standard HTTP redirect when fetching localhost in CI.
-      const source = readFileSync(
-        resolve(process.cwd(), 'src/app/legal-ai-workflows/page.tsx'),
-        'utf-8',
-      )
-      assert(
-        source.includes("redirect('/ai-workflows')"),
-        `legal-ai-workflows/page.tsx must call redirect('/ai-workflows'), got: ${source.trim()}`,
-      )
-    })
+  describe('Intentional compatibility redirects', () => {
+    for (const route of [
+      { path: 'src/app/book/page.tsx', expected: "redirect('/contact')" },
+      { path: 'src/app/starting-point/page.tsx', expected: "redirect('/workbench')" },
+      { path: 'src/app/waas/accountants/page.tsx', expected: "redirect('/workbench')" },
+      {
+        path: 'src/app/waitlist/page.tsx',
+        expected: "redirect('/contact?topic=memory-qa-beta#contact-form-card')",
+      },
+    ]) {
+      it(`${route.path} keeps its lean redirect`, () => {
+        const source = readFileSync(resolve(process.cwd(), route.path), 'utf-8')
+        assert(
+          source.includes(route.expected),
+          `${route.path} must include ${route.expected}, got: ${source.trim()}`,
+        )
+      })
+    }
+
+    for (const route of [
+      { from: '/buildflow', to: '/workbench' },
+      { from: '/systems/prochat-os', to: '/workbench' },
+      { from: '/learn', to: '/docs' },
+      { from: '/docs/learn', to: '/docs' },
+      { from: '/waiting-list', to: '/contact' },
+    ]) {
+      it(`${route.from} resolves into ${route.to}`, async () => {
+        const response = await fetch(`${baseUrl}${route.from}`)
+        assert.equal(response.status, 200, `${route.from} should resolve successfully`)
+        assert.equal(new URL(response.url).pathname, route.to)
+      })
+    }
   })
 
-  describe('Legacy route accessibility', () => {
-    it('/book source calls redirect to /contact', () => {
-      const source = readFileSync(
-        resolve(process.cwd(), 'src/app/book/page.tsx'),
-        'utf-8',
-      )
-      assert(
-        source.includes("redirect('/contact')"),
-        `book/page.tsx must call redirect('/contact'), got: ${source.trim()}`,
-      )
-    })
-
-    it('/learn page is accessible and returns 200', async () => {
-      const response = await fetch(`${baseUrl}/learn`)
-      assert.equal(response.status, 200, '/learn should return 200')
-    })
-
-    it('/proof page is accessible and returns 200', async () => {
-      const response = await fetch(`${baseUrl}/proof`)
-      assert.equal(response.status, 200, '/proof should return 200')
-    })
-
-    it('/starting-point source calls redirect to /workbench', () => {
-      const source = readFileSync(
-        resolve(process.cwd(), 'src/app/starting-point/page.tsx'),
-        'utf-8',
-      )
-      assert(
-        source.includes("redirect('/workbench')"),
-        `starting-point/page.tsx must call redirect('/workbench'), got: ${source.trim()}`,
-      )
-    })
-
-    it('/ai-workflows page is accessible and returns 200', async () => {
-      const response = await fetch(`${baseUrl}/ai-workflows`)
-      assert.equal(response.status, 200, '/ai-workflows should return 200')
-    })
-
-    it('/systems/prochat-os page is accessible and returns 200', async () => {
-      const response = await fetch(`${baseUrl}/systems/prochat-os`)
-      assert.equal(response.status, 200, '/systems/prochat-os should return 200')
-    })
-
-    it('/waas/accountants source calls redirect to /workbench', () => {
-      const source = readFileSync(
-        resolve(process.cwd(), 'src/app/waas/accountants/page.tsx'),
-        'utf-8',
-      )
-      assert(
-        source.includes("redirect('/workbench')"),
-        `waas/accountants/page.tsx must call redirect('/workbench'), got: ${source.trim()}`,
-      )
-    })
+  describe('Retired public products do not render', () => {
+    for (const route of [
+      '/ai-workflows',
+      '/legal-ai-workflows',
+      '/proof',
+      '/studio',
+      '/kits',
+      '/kits/prokit',
+      '/kits/saaskit',
+      '/kits/uxkit',
+      '/kits/waaskit',
+      '/prompts',
+      '/docs/saaskit/launch-flow',
+    ]) {
+      it(`${route} returns 404`, async () => {
+        const response = await fetch(`${baseUrl}${route}`)
+        assert.equal(response.status, 404, `${route} must not render a retired product page`)
+      })
+    }
   })
 
-  describe('Empty stub directories return 404', () => {
-    it('/guides returns 404', async () => {
-      const response = await fetch(`${baseUrl}/guides`)
-      assert.equal(response.status, 404, '/guides stub should return 404')
-    })
-
-    it('/guides/topic/slug returns 404', async () => {
-      const response = await fetch(`${baseUrl}/guides/test-topic/test-slug`)
-      assert.equal(response.status, 404, '/guides/[topic]/[slug] stub should return 404')
-    })
-
-    it('/playbooks returns 404', async () => {
-      const response = await fetch(`${baseUrl}/playbooks`)
-      assert.equal(response.status, 404, '/playbooks stub should return 404')
-    })
-
-    it('/snippets returns 404', async () => {
-      const response = await fetch(`${baseUrl}/snippets`)
-      assert.equal(response.status, 404, '/snippets stub should return 404')
-    })
-
-    it('/glossary returns 404', async () => {
-      const response = await fetch(`${baseUrl}/glossary`)
-      assert.equal(response.status, 404, '/glossary stub should return 404')
-    })
-
-    it('/bb returns 404', async () => {
-      const response = await fetch(`${baseUrl}/bb`)
-      assert.equal(response.status, 404, '/bb stub should return 404')
-    })
+  describe('Empty legacy stub directories remain unavailable', () => {
+    for (const route of [
+      '/guides',
+      '/guides/test-topic/test-slug',
+      '/playbooks',
+      '/snippets',
+      '/glossary',
+      '/bb',
+    ]) {
+      it(`${route} returns 404`, async () => {
+        const response = await fetch(`${baseUrl}${route}`)
+        assert.equal(response.status, 404, `${route} should remain unavailable`)
+      })
+    }
   })
 })

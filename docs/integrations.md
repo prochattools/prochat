@@ -1,153 +1,79 @@
 # Integrations
 
-This document summarizes the external services that ProChat actively integrates with in the current codebase.
+This document summarizes external services that still have active source integration points in the current ProChat repository.
 
-Use [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md) for the env contract. This document focuses on behavior and system role.
+Use `docs-public/environment.md` for the environment-variable contract. This document focuses on runtime role and safety boundaries.
 
 ## Shared Auth UI + Ory
 
-The current auth pattern uses ProChat as the shared auth UI and Ory as the backend identity/session layer.
+ProChat provides the shared authentication UI while Ory remains the identity/session backend.
 
 Current behavior:
 
-- middleware redirects unauthenticated users to the shared ProChat auth UI
-- ProChat renders app-specific auth screens via the `app` query parameter
-- Ory handles login, registration, sessions, and identity storage
-- local and CI flows can run with auth disabled or in mock mode when required
+- sign-in and sign-up pages create Ory browser-flow URLs
+- app-specific auth presentation is selected by the `app` query parameter
+- protected/internal routes remain conservative where runtime Ory validation is still incomplete
+- admin and automation routes that lack complete runtime session validation fail closed or remain informational
 
-Key implementation points:
-
-- auth gating lives in [middleware.ts](/Users/Office/Repos/Organisation/ProChat/Web/prochat/src/middleware.ts)
-- shared auth theme selection lives in [src/lib/auth-ui.ts](/Users/Office/Repos/Organisation/ProChat/Web/prochat/src/lib/auth-ui.ts)
-- ProChat sign-in and sign-up pages hand off to Ory browser flows
-
-## Stripe
-
-Stripe powers checkout, subscription updates, and billing portal flows.
-
-Current behavior:
-
-- checkout session creation through `/api/stripe/create-checkout`
-- webhook verification through `/api/webhook/stripe`
-- customer portal creation through `/api/stripe/create-portal`
-- mode-based configuration through `STRIPE_MODE` and `NEXT_PUBLIC_STRIPE_MODE`
-
-Implementation notes:
-
-- Stripe env resolution lives in [stripe-env.ts](/Users/Office/Repos/Organisation/ProChat/Web/prochat/src/libs/stripe-env.ts)
-- subscription state is stored in Prisma
+Key implementation points include `src/app/sign-in`, `src/app/sign-up`, `src/lib/auth-ui.ts`, `src/lib/admin.ts`, and the protected automation route groups.
 
 ## Resend
 
-Resend powers outbound email for:
-
-- contact flow
-- waitlist and admin notifications
-- thank-you and invoice email flows
-
-Implementation points:
-
-- route handlers under `src/app/api/contact` and `src/app/api/waitlist`
-- shared service in `src/libs/resend.ts`
-
-## GitHub App entitlements
-
-ProChat includes a GitHub App-based entitlement flow for private repository access.
+Resend is used directly by the active Contact and beta-interest/waitlist route handlers.
 
 Current behavior:
 
-- creates GitHub App JWTs
-- exchanges installation tokens
-- discovers repo installations when needed
-- invites collaborators to product repositories
+- `/api/contact` sends user/admin contact email when the required Resend configuration is present
+- `/api/waitlist` sends beta-interest confirmation/admin notifications when configured
+- `/api/waiting-list` is an exact compatibility POST re-export of `/api/waitlist`
 
-Implementation point:
-
-- [github.ts](/Users/Office/Repos/Organisation/ProChat/Web/prochat/src/lib/store/github.ts)
-
-This is a real integration and should be documented as such.
-
-See [github-entitlements.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/github-entitlements.md) for the purchase-to-repository access flow.
-
-## MailerLite
-
-MailerLite powers the funnel and lead-magnet subscription endpoint.
-
-Current behavior:
-
-- validates email input
-- subscribes contacts to a MailerLite group
-- handles already-subscribed responses gracefully
-
-Implementation point:
-
-- [route.ts](/Users/Office/Repos/Organisation/ProChat/Web/prochat/src/app/api/mailerlite/subscribe/route.ts)
-
-See [mailerlite-funnel.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/mailerlite-funnel.md) for the route behavior and operator notes.
+The former commerce invoice, purchase-thank-you, and licence-revocation email runtime is retired.
 
 ## Make
 
-Make is used for scenario provisioning and activation.
+Make-related internal API routes remain in the repository for automation/project workflows.
 
-Current behavior in API routes:
+The current safety boundary is important: routes that require runtime authentication return fail-closed responses until Ory session validation is implemented. They are not part of the canonical eight-route public website.
 
-- list scenarios
-- clone scenario templates
-- create hooks and wire credentials
-- activate and deactivate scenarios
-- persist resulting project metadata
-
-Relevant route group:
-
-- `src/app/api/(make)/...`
-
-See [automation-routes.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/automation-routes.md) for the route inventory.
+See `docs/automation-routes.md` for the current internal route inventory.
 
 ## n8n
 
-n8n is used as an alternative automation backend.
+n8n-related internal API routes remain as an alternative automation backend.
 
-Current behavior:
+As with Make, current routes must respect the fail-closed authentication boundary and are not canonical public website surfaces.
 
-- clone workflows
-- create or reuse credentials
-- activate workflows
-- return webhook URLs for project execution
-
-Relevant route group:
-
-- `src/app/api/(n8n)/...`
-
-See [automation-routes.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/automation-routes.md) for the route inventory.
+See `docs/automation-routes.md` for the current internal route inventory.
 
 ## Umami
 
-Umami is the current public analytics integration.
+Umami is the active public analytics integration.
 
 Current behavior:
 
-- loads a client-side analytics script when env values are present
-- uses public script URL and website ID configuration
+- `src/app/layout.tsx` mounts the analytics component
+- `src/lib/analytics/umami.ts` handles custom event tracking
+- analytics is enabled only when the configured public values are present
+- current privacy disclosure for Umami lives on `/privacy`
 
-Implementation point:
+## Retired integrations
 
-- [UmamiAnalytics.tsx](/Users/Office/Repos/Organisation/ProChat/Web/prochat/src/components/UmamiAnalytics.tsx)
+The lean-site cleanup removed application integrations that no longer have an active product/runtime role:
 
-## Docs automation
+- Stripe checkout, webhook, billing portal, subscription, and licence provisioning runtime
+- MailerLite lead-funnel subscription endpoint
+- GitHub App entitlement/private-repository provisioning for retired paid Kits
+- AI-backed generated public Docs automation
+- WordPress/FluentCRM from this Next.js repository runtime
 
-The docs pipeline also depends on external AI services when enabled.
+Do not restore these integrations to satisfy historical documentation or tests. Historical implementation details remain available in Git history.
 
-Key behavior:
-
-- OpenAI-backed AI doc generation is used when `OPENAI_API_KEY` is available
-- otherwise the docs pipeline falls back to structured templates
-
-Low-level reference:
-
-- [scripts/docs/README.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/docs/README.md)
+The live `prochat.tools/wp-admin` / FluentCRM surface, if still reachable, is served outside this repository and must be retired at its separate hosting/routing origin.
 
 ## Related references
 
-- [overview.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/overview.md)
-- [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
+- `docs/overview.md`
+- `docs/deployment.md`
+- `docs-public/environment.md`
+- `docs/automation-routes.md`
+- `docs/product/agent-mode-progress.md`

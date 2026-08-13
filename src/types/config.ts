@@ -26,9 +26,6 @@ export interface ConfigProps {
   appName: string;
   appDescription: string;
   domainName: string;
-  stripe: {
-    products: StripeProduct[];
-  };
   colors: {
     theme: Theme;
     main: string;

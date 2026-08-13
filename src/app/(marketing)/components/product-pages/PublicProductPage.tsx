@@ -80,6 +80,12 @@ export interface PublicProductPageProps {
   children: ReactNode
 }
 
+const PRODUCT_SYSTEM_LABELS: Record<CanonicalProductRoute, readonly [string, string, string]> = {
+  '/memory': ['EVIDENCE', 'REVIEW', 'RETRIEVAL'],
+  '/memory-qa': ['FAILURE', 'COMPARE', 'LESSON'],
+  '/workbench': ['CONTEXT', 'CHANGE', 'VALIDATE'],
+}
+
 export function PublicProductPage({
   activeRoute,
   eyebrow,
@@ -91,10 +97,12 @@ export function PublicProductPage({
   visual,
   children,
 }: PublicProductPageProps) {
-  const titleId = `pm-product-title-${activeRoute.slice(1)}`
+  const productKey = activeRoute.slice(1)
+  const titleId = `pm-product-title-${productKey}`
+  const systemLabels = PRODUCT_SYSTEM_LABELS[activeRoute]
 
   return (
-    <div className="pm-marketing-page pm-public-product-page">
+    <div className="pm-marketing-page pm-public-product-page" data-product={productKey}>
       <section className="pm-product-hero" aria-labelledby={titleId}>
         <div className="pm-grid-overlay" aria-hidden="true" />
 
@@ -129,7 +137,22 @@ export function PublicProductPage({
             </ul>
           </div>
 
-          <div className="pm-product-hero__visual">{visual}</div>
+          <div className="pm-product-hero__visual">
+            <div className="pm-product-visual__telemetry" aria-hidden="true">
+              <span>{productKey.toUpperCase()}</span>
+              <span>PUBLIC SYSTEM</span>
+              <span>LIVE</span>
+            </div>
+            {visual}
+            <ol className="pm-product-system-strip" aria-label={`${productKey} system sequence`}>
+              {systemLabels.map((label, index) => (
+                <li key={label}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <strong>{label}</strong>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </section>
 

@@ -62,7 +62,7 @@ function ContextLocalSection() {
         <p>Reviewed context stays local, inspectable, and ready when the next task begins.</p>
       </header>
 
-      <div className="hv4-context__visual" aria-label="A local memory system connecting evidence, review, and current-task context">
+      <div className="hv4-context__visual" role="group" aria-label="A local memory system connecting evidence, review, and current-task context">
         <div className="hv4-orbit hv4-orbit--outer" />
         <div className="hv4-orbit hv4-orbit--middle" />
         <div className="hv4-orbit hv4-orbit--inner" />

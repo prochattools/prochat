@@ -123,18 +123,6 @@ svg {
 	--pc-card-title-tracking: -0.025em;
 	--pc-body-muted-opacity: 0.82;
 
-	/* Canonical public design tokens shared by marketing, Contact, and Docs. */
-	--pc-public-bg-rgb: 0 0 0;
-	--pc-public-surface-rgb: 7 7 7;
-	--pc-public-surface-elevated-rgb: 14 14 14;
-	--pc-public-text-rgb: 250 250 250;
-	--pc-public-muted-rgb: 163 163 163;
-	--pc-public-border-rgb: 255 255 255;
-	--pc-public-accent-rgb: 86 216 202;
-	--pc-public-accent-strong-rgb: 79 124 255;
-	--pc-public-radius: 1.5rem;
-	--pc-public-container: 96rem;
-	--pc-public-shadow: 0 1px 0 rgb(255 255 255 / 0.05), 0 24px 80px rgb(0 0 0 / 0.38);
 	--blue-50: rgb(241 244 255);
 	--blue-500: rgb(91 124 255);
 	--blue-600: rgb(76 111 255);
@@ -221,67 +209,70 @@ svg {
 			rgb(var(--background-light-rgb) / 1) 100%);
 	--pc-gradient-glow: var(--ai-glow);
 
-	--pc-blue-600: var(--blue-600);
-	--pc-blue-500: var(--blue-500);
-	--pc-blue-900: var(--blue-900);
-	--pc-blue-600-rgb: var(--blue-600-rgb);
-	--pc-blue-500-rgb: var(--blue-500-rgb);
-	--pc-blue-900-rgb: var(--blue-900-rgb);
+	/* Canonical ProChat design system — one graphite/cobalt palette for public and internal UI. */
+	--pc-blue-500: rgb(110 148 255);
+	--pc-blue-600: rgb(56 91 214);
+	--pc-blue-700: rgb(46 77 190);
+	--pc-blue-900: rgb(23 35 83);
+	--pc-blue-500-rgb: 110 148 255;
+	--pc-blue-600-rgb: 56 91 214;
+	--pc-blue-700-rgb: 46 77 190;
+	--pc-blue-900-rgb: 23 35 83;
 
-	--pc-gray-950: rgb(11 18 32);
-	--pc-gray-900: rgb(16 24 40);
-	--pc-gray-800: rgb(29 41 57);
-	--pc-gray-700: rgb(52 64 84);
-	--pc-gray-600: rgb(71 84 103);
-	--pc-gray-500: rgb(102 112 133);
-	--pc-gray-400: rgb(152 162 179);
-	--pc-gray-300: rgb(208 213 221);
-	--pc-gray-200: rgb(228 231 236);
-	--pc-gray-100: rgb(239 241 244);
-	--pc-gray-50: rgb(247 248 250);
+	--pc-gray-950: rgb(12 12 12);
+	--pc-gray-900: rgb(18 19 23);
+	--pc-gray-800: rgb(21 23 29);
+	--pc-gray-700: rgb(48 52 61);
+	--pc-gray-600: rgb(76 82 96);
+	--pc-gray-500: rgb(127 134 146);
+	--pc-gray-400: rgb(177 181 189);
+	--pc-gray-300: rgb(208 211 217);
+	--pc-gray-200: rgb(228 230 234);
+	--pc-gray-100: rgb(239 240 242);
+	--pc-gray-50: rgb(247 247 245);
 
-	--pc-gray-950-rgb: 11 18 32;
-	--pc-gray-900-rgb: 16 24 40;
-	--pc-gray-800-rgb: 29 41 57;
-	--pc-gray-700-rgb: 52 64 84;
-	--pc-gray-600-rgb: 71 84 103;
-	--pc-gray-500-rgb: 102 112 133;
-	--pc-gray-400-rgb: 152 162 179;
-	--pc-gray-300-rgb: 208 213 221;
-	--pc-gray-200-rgb: 228 231 236;
-	--pc-gray-100-rgb: 239 241 244;
-	--pc-gray-50-rgb: 247 248 250;
+	--pc-gray-950-rgb: 12 12 12;
+	--pc-gray-900-rgb: 18 19 23;
+	--pc-gray-800-rgb: 21 23 29;
+	--pc-gray-700-rgb: 48 52 61;
+	--pc-gray-600-rgb: 76 82 96;
+	--pc-gray-500-rgb: 127 134 146;
+	--pc-gray-400-rgb: 177 181 189;
+	--pc-gray-300-rgb: 208 211 217;
+	--pc-gray-200-rgb: 228 230 234;
+	--pc-gray-100-rgb: 239 240 242;
+	--pc-gray-50-rgb: 247 247 245;
 
-	--pc-bg: var(--bg-primary);
-	--pc-surface: var(--surface-primary);
-	--pc-surface-soft: var(--bg-secondary);
-	--pc-surface-elevated: var(--surface-elevated);
-	--pc-text: var(--text-primary);
-	--pc-muted: var(--bg-secondary);
-	--pc-muted-foreground: var(--text-secondary);
-	--pc-muted-foreground-soft: var(--text-muted);
-	--pc-border: var(--border-default);
-	--pc-border-subtle: var(--border-subtle);
-	--pc-border-strong: var(--border-strong);
+	--pc-bg: rgb(12 12 12);
+	--pc-surface: rgb(18 19 23);
+	--pc-surface-soft: rgb(15 16 20);
+	--pc-surface-elevated: rgb(21 23 29);
+	--pc-text: rgb(247 247 245);
+	--pc-muted: rgb(18 19 23);
+	--pc-muted-foreground: rgb(177 181 189);
+	--pc-muted-foreground-soft: rgb(127 134 146);
+	--pc-border: rgb(48 52 61);
+	--pc-border-subtle: rgb(34 37 44);
+	--pc-border-strong: rgb(76 82 96);
 
-	--pc-bg-rgb: var(--bg-primary-rgb);
-	--pc-surface-rgb: var(--surface-primary-rgb);
-	--pc-surface-soft-rgb: var(--bg-secondary-rgb);
-	--pc-surface-elevated-rgb: var(--surface-elevated-rgb);
-	--pc-text-rgb: var(--text-primary-rgb);
-	--pc-muted-rgb: var(--bg-secondary-rgb);
-	--pc-muted-foreground-rgb: var(--text-secondary-rgb);
-	--pc-muted-foreground-soft-rgb: var(--text-muted-rgb);
-	--pc-border-rgb: var(--border-default-rgb);
-	--pc-border-subtle-rgb: var(--border-subtle-rgb);
-	--pc-border-strong-rgb: var(--border-strong-rgb);
-	--pc-ring-rgb: var(--accent-focus-rgb);
+	--pc-bg-rgb: 12 12 12;
+	--pc-surface-rgb: 18 19 23;
+	--pc-surface-soft-rgb: 15 16 20;
+	--pc-surface-elevated-rgb: 21 23 29;
+	--pc-text-rgb: 247 247 245;
+	--pc-muted-rgb: 18 19 23;
+	--pc-muted-foreground-rgb: 177 181 189;
+	--pc-muted-foreground-soft-rgb: 127 134 146;
+	--pc-border-rgb: 48 52 61;
+	--pc-border-subtle-rgb: 34 37 44;
+	--pc-border-strong-rgb: 76 82 96;
+	--pc-ring-rgb: 110 148 255;
 	--pc-primary-foreground-rgb: 255 255 255;
 	--pc-destructive-rgb: 220 38 38;
 	--pc-destructive-foreground-rgb: 255 255 255;
-	--pc-shadow-surface: 0 1px 2px rgb(16 24 40 / 0.05), 0 8px 24px rgb(16 24 40 / 0.08);
-	--pc-shadow-elevated: 0 12px 40px rgb(16 24 40 / 0.12);
-	--pc-shadow-inset: inset 0 1px 0 rgb(255 255 255 / 0.72);
+	--pc-shadow-surface: 0 1px 0 rgb(255 255 255 / 0.035), 0 20px 50px rgb(0 0 0 / 0.28);
+	--pc-shadow-elevated: 0 1px 0 rgb(255 255 255 / 0.055), 0 28px 70px rgb(0 0 0 / 0.4);
+	--pc-shadow-inset: inset 0 1px 0 rgb(255 255 255 / 0.04);
 	--pc-selected-row-rgb: var(--pc-blue-500-rgb);
 
 	font-feature-settings: "kern";
@@ -985,33 +976,6 @@ html.dark {
 			rgb(var(--background-dark-rgb) / 1) 100%);
 	--pc-gradient-glow: var(--ai-glow);
 
-	--pc-bg: var(--bg-primary);
-	--pc-surface: var(--surface-primary);
-	--pc-surface-soft: var(--bg-secondary);
-	--pc-surface-elevated: var(--surface-elevated);
-	--pc-text: var(--text-primary);
-	--pc-muted: var(--bg-secondary);
-	--pc-muted-foreground: var(--text-secondary);
-	--pc-muted-foreground-soft: var(--text-muted);
-	--pc-border: var(--border-default);
-	--pc-border-subtle: var(--border-subtle);
-	--pc-border-strong: var(--border-strong);
-
-	--pc-bg-rgb: var(--bg-primary-rgb);
-	--pc-surface-rgb: var(--surface-primary-rgb);
-	--pc-surface-soft-rgb: var(--bg-secondary-rgb);
-	--pc-surface-elevated-rgb: var(--surface-elevated-rgb);
-	--pc-text-rgb: var(--text-primary-rgb);
-	--pc-muted-rgb: var(--bg-secondary-rgb);
-	--pc-muted-foreground-rgb: var(--text-secondary-rgb);
-	--pc-muted-foreground-soft-rgb: var(--text-muted-rgb);
-	--pc-border-rgb: var(--border-default-rgb);
-	--pc-border-subtle-rgb: var(--border-subtle-rgb);
-	--pc-border-strong-rgb: var(--border-strong-rgb);
-	--pc-ring-rgb: var(--accent-focus-rgb);
-	--pc-shadow-surface: 0 1px 0 rgb(255 255 255 / 0.03), 0 8px 24px rgb(0 0 0 / 0.35);
-	--pc-shadow-elevated: 0 1px 0 rgb(255 255 255 / 0.05), 0 20px 40px rgb(0 0 0 / 0.45);
-	--pc-shadow-inset: inset 0 1px 0 rgb(255 255 255 / 0.04);
 }
 
 html.dark .logo-text,

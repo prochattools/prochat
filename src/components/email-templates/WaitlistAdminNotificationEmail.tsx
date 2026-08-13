@@ -113,7 +113,7 @@ const WaitlistAdminNotificationEmail: React.FC<Readonly<WaitlistAdminNotificatio
 }) => (
   <Html>
     <Head />
-    <Preview>New ProChat Waitlist Signup</Preview>
+    <Preview>New ProChat Beta Interest</Preview>
     <Body style={styles.body}>
       <Container style={styles.container}>
         <Section style={styles.shell}>
@@ -121,8 +121,8 @@ const WaitlistAdminNotificationEmail: React.FC<Readonly<WaitlistAdminNotificatio
 
           <Section style={styles.header}>
             <ProChatEmailBrand lockupUrl={brandLockupUrl} />
-            <Text style={styles.eyebrow}>ProChat Waitlist Intake</Text>
-            <Text style={styles.title}>New ProChat Waitlist Signup</Text>
+            <Text style={styles.eyebrow}>ProChat Beta Intake</Text>
+            <Text style={styles.title}>New ProChat Beta Interest</Text>
           </Section>
 
           <Section style={styles.section}>
@@ -130,7 +130,7 @@ const WaitlistAdminNotificationEmail: React.FC<Readonly<WaitlistAdminNotificatio
             <Text style={styles.value}>{email}</Text>
 
             <Section style={styles.card}>
-              <Text style={styles.label}>Products selected</Text>
+              <Text style={styles.label}>Programs selected</Text>
               {products.map(product => (
                 <Text key={product} style={styles.bullet}>
                   • {product}
@@ -142,7 +142,7 @@ const WaitlistAdminNotificationEmail: React.FC<Readonly<WaitlistAdminNotificatio
             <Text style={styles.value}>{timestampIso}</Text>
           </Section>
 
-          <Text style={styles.footer}>Status: WAITLIST NOTIFICATION SENT</Text>
+          <Text style={styles.footer}>Status: BETA INTEREST NOTIFICATION SENT</Text>
         </Section>
       </Container>
     </Body>

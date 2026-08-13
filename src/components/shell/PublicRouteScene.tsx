@@ -65,59 +65,6 @@ function LedgerMotif() {
   )
 }
 
-function ModulesMotif() {
-  return (
-    <div className="pc-route-motif pc-route-motif--modules">
-      {[0, 1, 2, 3, 4, 5].map(index => <span key={index} />)}
-    </div>
-  )
-}
-
-function CanvasMotif() {
-  return (
-    <div className="pc-route-motif pc-route-motif--canvas">
-      <span className="pc-route-canvas-frame" />
-      <i className="pc-route-canvas-playhead" />
-      <b className="pc-route-canvas-point pc-route-canvas-point--a" />
-      <b className="pc-route-canvas-point pc-route-canvas-point--b" />
-    </div>
-  )
-}
-
-function TimelineMotif() {
-  return (
-    <div className="pc-route-motif pc-route-motif--timeline">
-      <span />
-      {[0, 1, 2, 3].map(index => <i key={index} />)}
-    </div>
-  )
-}
-
-function PromptMotif() {
-  return (
-    <div className="pc-route-motif pc-route-motif--prompts">
-      {[0, 1, 2, 3].map(index => <span key={index}><i /></span>)}
-    </div>
-  )
-}
-
-function LearnMotif() {
-  return (
-    <div className="pc-route-motif pc-route-motif--learn">
-      <span className="pc-route-learn-line" />
-      {[0, 1, 2, 3].map(index => <i key={index} />)}
-    </div>
-  )
-}
-
-function QueueMotif() {
-  return (
-    <div className="pc-route-motif pc-route-motif--queue">
-      {[0, 1, 2, 3, 4, 5, 6].map(index => <span key={index} />)}
-    </div>
-  )
-}
-
 function renderMotif(variant: PublicVisualVariant) {
   switch (variant) {
     case 'home':
@@ -126,8 +73,6 @@ function renderMotif(variant: PublicVisualVariant) {
     case 'review':
       return <ReviewMotif />
     case 'workbench':
-    case 'os':
-    case 'workflow':
       return <PipelineMotif />
     case 'docs':
       return <DocsMotif />
@@ -135,18 +80,6 @@ function renderMotif(variant: PublicVisualVariant) {
       return <RadarMotif />
     case 'legal':
       return <LedgerMotif />
-    case 'studio':
-      return <CanvasMotif />
-    case 'kits':
-      return <ModulesMotif />
-    case 'proof':
-      return <TimelineMotif />
-    case 'prompts':
-      return <PromptMotif />
-    case 'learn':
-      return <LearnMotif />
-    case 'waitlist':
-      return <QueueMotif />
   }
 }
 

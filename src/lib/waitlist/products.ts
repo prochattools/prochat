@@ -1,17 +1,21 @@
 export const WAITLIST_PRODUCT_OPTIONS = [
-  { value: 'uxkit', label: 'UXKit' },
-  { value: 'waaskit', label: 'WaaSKit' },
-  { value: 'prochat-os', label: 'ProChat OS' },
+  { value: 'memory-qa', label: 'Memory for QA beta' },
+  { value: 'workbench', label: 'Workbench prerelease' },
 ] as const
 
 export type WaitlistProductValue = (typeof WAITLIST_PRODUCT_OPTIONS)[number]['value']
 
 export const WAITLIST_PRODUCT_LABELS: Record<WaitlistProductValue, string> = {
-  uxkit: 'UXKit',
-  waaskit: 'WaaSKit',
-  'prochat-os': 'ProChat OS',
+  'memory-qa': 'Memory for QA beta',
+  workbench: 'Workbench prerelease',
 }
 
-export function formatWaitlistProducts(products: WaitlistProductValue[]) {
-  return products.map(product => WAITLIST_PRODUCT_LABELS[product])
+export function formatWaitlistProducts(products: readonly string[]) {
+  return products.map(product => {
+    const normalized = product.trim().toLowerCase()
+    if (normalized in WAITLIST_PRODUCT_LABELS) {
+      return WAITLIST_PRODUCT_LABELS[normalized as WaitlistProductValue]
+    }
+    return product.trim()
+  })
 }

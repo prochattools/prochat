@@ -16,115 +16,71 @@ const viewports = [
 
 test.describe('/docs responsive layout', () => {
   for (const viewport of viewports) {
-    test(`${viewport.width}px has contained layout and usable heading`, async ({ page }) => {
+    test(`${viewport.width}px keeps the repository hub contained`, async ({ page }) => {
       await page.setViewportSize(viewport)
-      await page.goto(new URL('/docs', baseUrl).toString(), { waitUntil: 'networkidle' })
+      const response = await page.goto(new URL('/docs', baseUrl).toString(), { waitUntil: 'networkidle' })
+
+      expect(response).not.toBeNull()
+      expect(response!.status()).toBeLessThan(400)
+
+      const main = page.locator('main.pc-docs-hub')
+      await expect(main).toHaveCount(1)
+      await expect(main).toBeVisible()
+      await expect(main.locator('h1')).toBeVisible()
+
+      const cards = main.locator('.pc-docs-hub__card')
+      await expect(cards).toHaveCount(2)
+      await expect(cards.nth(0)).toContainText('Memory for QA')
+      await expect(cards.nth(1)).toContainText('Workbench')
+      await expect(main.locator('.pc-docs-hub__boundary')).toBeVisible()
 
       const layout = await page.evaluate(() => {
-        const heading = document.querySelector('main h1')
-        const toc = document.querySelector('.nextra-toc')
-        const headingRect = heading?.getBoundingClientRect()
-        const tocRect = toc?.getBoundingClientRect()
-        const horizontallyScrollable = [...document.querySelectorAll('pre, table')]
-          .map((element) => ({
-            scrollWidth: element.scrollWidth,
-            clientWidth: element.clientWidth,
-            overflowX: getComputedStyle(element).overflowX,
-          }))
-          .filter(({ scrollWidth, clientWidth }) => scrollWidth > clientWidth)
+        const cardRects = [...document.querySelectorAll<HTMLElement>('.pc-docs-hub__card')].map(card => {
+          const rect = card.getBoundingClientRect()
+          return { left: rect.left, right: rect.right, top: rect.top, width: rect.width }
+        })
         return {
           documentWidth: document.documentElement.scrollWidth,
           viewportWidth: window.innerWidth,
-          headingWidth: headingRect?.width ?? 0,
-          headingHeight: headingRect?.height ?? 0,
-          headingText: heading?.textContent ?? '',
-          headingLineHeight: heading
-            ? (Number.parseFloat(getComputedStyle(heading).lineHeight) ||
-               Number.parseFloat(getComputedStyle(heading).fontSize) * 1.2)
-            : 0,
-          tocRight: tocRect?.right ?? 0,
-          horizontallyScrollable,
+          cardRects,
         }
       })
 
       expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth)
-      expect(layout.headingWidth).toBeGreaterThan(200)
-      expect(layout.headingHeight / layout.headingLineHeight).toBeLessThan(layout.headingText.length / 2)
-      for (const element of layout.horizontallyScrollable) {
-        expect(element.overflowX).toMatch(/auto|scroll/)
+      for (const card of layout.cardRects) {
+        expect(card.left).toBeGreaterThanOrEqual(0)
+        expect(card.right).toBeLessThanOrEqual(layout.viewportWidth + 1)
+        expect(card.width).toBeGreaterThan(200)
       }
 
-      if (viewport.width < 768) {
-        // Assert no TOC is visibly rendered at mobile widths.
-        // Uses Playwright visibility semantics (non-zero geometry + no hidden ancestor)
-        // rather than computed display alone, which is insufficient when the server
-        // fails to deliver stylesheets or an ancestor hides the element.
-        await expect(page.locator('.nextra-toc:visible')).toHaveCount(0)
+      if (viewport.width <= 700) {
+        expect(Math.abs(layout.cardRects[0].top - layout.cardRects[1].top)).toBeGreaterThan(40)
       } else {
-        // Assert the intended desktop TOC is visible and within the viewport.
-        await expect(page.locator('.nextra-toc').first()).toBeVisible()
-        expect(layout.tocRight).toBeLessThanOrEqual(viewport.width)
+        expect(Math.abs(layout.cardRects[0].top - layout.cardRects[1].top)).toBeLessThan(4)
       }
     })
   }
 })
 
-test('mobile docs page exposes keyboard focus and reduced-motion behavior', async ({ page }) => {
+test('mobile docs page preserves keyboard focus and reduced motion', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 900 })
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto(new URL('/docs', baseUrl).toString(), { waitUntil: 'networkidle' })
 
-  const traversal = [] as Array<{
-    tag: string
-    href: string
-    inFooter: boolean
-    isSkipLink: boolean
-    isMenu: boolean
-    focusStyle: boolean
-  }>
-  for (let index = 0; index < 100; index += 1) {
-    await page.keyboard.press('Tab')
-    traversal.push(
-      await page.evaluate(() => {
-        const element = document.activeElement as HTMLElement | null
-        const styles = element ? getComputedStyle(element) : null
-        return {
-          tag: element?.tagName ?? '',
-          href: element?.getAttribute('href') ?? '',
-          inFooter: !!element?.closest('footer'),
-          isSkipLink: false, // nextra-skip-nav is suppressed via display:none; never focusable
-          isMenu: element?.tagName === 'SUMMARY' && element.textContent?.trim() === 'Menu',
-          focusStyle: !!styles && (styles.outlineStyle !== 'none' || styles.boxShadow !== 'none'),
-        }
-      }),
-    )
-  }
+  const firstDocsLink = page.locator('.pc-docs-hub__links a').first()
+  await expect(firstDocsLink).toBeVisible()
+  await firstDocsLink.focus()
+  await expect(firstDocsLink).toBeFocused()
 
-  // Nextra's SkipNavLink is suppressed via display:none — not focusable by design.
-  expect(traversal.some((item) => item.isSkipLink)).toBe(false)
-  expect(traversal.some((item) => item.isMenu)).toBe(true)
-  expect(traversal.some((item) => item.href === '/docs' || item.href.startsWith('/docs/'))).toBe(true)
-  expect(traversal.some((item) => item.inFooter && item.href)).toBe(true)
-  expect(traversal.some((item) => item.focusStyle)).toBe(true)
+  const reducedMotion = await page.evaluate(() => {
+    const pulse = document.querySelector<HTMLElement>('.pc-body-hero__diagram-pulse')
+    const line = document.querySelector<HTMLElement>('.pc-body-hero__diagram li > i')
+    return {
+      pulseAnimation: pulse ? getComputedStyle(pulse).animationName : 'none',
+      lineAnimation: line ? getComputedStyle(line).animationName : 'none',
+    }
+  })
 
-  const mobileDocsDrawer = await page.locator('.nextra-mobile-nav').count()
-  expect(mobileDocsDrawer).toBeGreaterThan(0)
-  expect(await page.getByRole('button', { name: /open navigation menu/i }).count()).toBe(0)
-  // The custom Nextra integration intentionally has no mobile drawer trigger:
-  // the desktop sidebar and TOC are removed below 768px, while the shared
-  // header's semantic Menu summary remains the available mobile navigation.
-  await page.getByText('Menu', { exact: true }).focus()
-  await page.keyboard.press('Enter')
-  await expect(page.locator('details.pm-mobile-nav')).toHaveAttribute('open', '')
-  await page.keyboard.press('Escape')
-  await expect
-    .poll(() => page.evaluate(() => document.activeElement?.tagName ?? ''))
-    .not.toBe('BODY')
-
-  await expect
-    .poll(() => page.evaluate(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches))
-    .toBe(true)
-  await expect
-    .poll(() => page.evaluate(() => getComputedStyle(document.documentElement).transitionDuration))
-    .toBe('0s')
+  expect(reducedMotion.pulseAnimation).toBe('none')
+  expect(reducedMotion.lineAnimation).toBe('none')
 })

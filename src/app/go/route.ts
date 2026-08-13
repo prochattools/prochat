@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { normalizeSource, SourceSlug, sourceFromReferrerString } from './source'
 
 const MAX_AGE = 60 * 60 * 24 * 30
-const WORKFLOW_OFFER_PATH = '/ai-workflows'
+const WORKBENCH_PATH = '/workbench'
 
 export const dynamic = 'force-dynamic'
 
@@ -39,7 +39,7 @@ function setTrackingCookies(response: NextResponse, source: SourceSlug, secure: 
 
   response.cookies.set('pc_source', source, cookieOptions)
   response.cookies.set('pc_entry', 'go', cookieOptions)
-  response.cookies.set('pc_campaign', 'ai-workflows', cookieOptions)
+  response.cookies.set('pc_campaign', 'workbench', cookieOptions)
 }
 
 function resolveSource(request: NextRequest): SourceSlug {
@@ -72,12 +72,12 @@ function buildRedirectLocation(
 
   const searchString = queryParams.toString()
 
-  return `${WORKFLOW_OFFER_PATH}${searchString ? `?${searchString}` : ''}`
+  return `${WORKBENCH_PATH}${searchString ? `?${searchString}` : ''}`
 }
 
 export function GET(request: NextRequest) {
   let source: SourceSlug = 'direct'
-  let location = WORKFLOW_OFFER_PATH
+  let location = WORKBENCH_PATH
 
   try {
     const explicitSource = normalizeSource(request.nextUrl.searchParams.get('src'))

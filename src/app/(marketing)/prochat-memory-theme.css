@@ -2,20 +2,20 @@
    Scoped to .pm-marketing-page so authenticated product surfaces remain unchanged. */
 
 .pm-marketing-page {
-  --pm-canvas: rgb(var(--pc-public-bg-rgb));
-  --pm-surface: rgb(var(--pc-public-surface-rgb));
-  --pm-surface-raised: rgb(var(--pc-public-surface-elevated-rgb));
-  --pm-surface-hover: rgb(var(--pc-public-surface-elevated-rgb) / 0.96);
-  --pm-text: rgb(var(--pc-public-text-rgb));
-  --pm-text-secondary: rgb(var(--pc-public-muted-rgb));
-  --pm-text-muted: rgb(var(--pc-public-muted-rgb) / 0.74);
-  --pm-text-faint: rgb(var(--pc-public-muted-rgb) / 0.5);
-  --pm-border: rgb(var(--pc-public-border-rgb) / 0.13);
-  --pm-border-subtle: rgb(var(--pc-public-border-rgb) / 0.085);
-  --pm-border-faint: rgb(var(--pc-public-border-rgb) / 0.06);
-  --pm-accent: rgb(var(--pc-public-accent-rgb));
-  --pm-accent-soft: rgb(var(--pc-public-accent-rgb) / 0.13);
-  --pm-grid-line: rgb(255 255 255 / 0.025);
+  --pm-canvas: rgb(var(--pc-bg-rgb));
+  --pm-surface: rgb(var(--pc-surface-rgb));
+  --pm-surface-raised: rgb(var(--pc-surface-elevated-rgb));
+  --pm-surface-hover: rgb(var(--pc-surface-elevated-rgb) / 0.96);
+  --pm-text: rgb(var(--pc-text-rgb));
+  --pm-text-secondary: rgb(var(--pc-muted-foreground-rgb));
+  --pm-text-muted: rgb(var(--pc-muted-foreground-soft-rgb));
+  --pm-text-faint: rgb(var(--pc-muted-foreground-soft-rgb) / 0.7);
+  --pm-border: rgb(var(--pc-border-strong-rgb) / 0.72);
+  --pm-border-subtle: rgb(var(--pc-border-rgb) / 0.82);
+  --pm-border-faint: rgb(var(--pc-border-subtle-rgb) / 0.72);
+  --pm-accent: rgb(var(--pc-blue-500-rgb));
+  --pm-accent-soft: rgb(var(--pc-blue-500-rgb) / 0.13);
+  --pm-grid-line: rgb(var(--pc-border-subtle-rgb) / 0.4);
   --pm-radius-card: 1.38rem;
   --pm-radius-panel: 1.85rem;
   --pm-page-gutter: clamp(1rem, 4vw, 3rem);
@@ -60,7 +60,7 @@
   min-height: 100svh;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 31%, rgb(86 216 202 / 0.105), transparent 21rem),
+    radial-gradient(ellipse at 50% 31%, rgb(var(--pc-blue-500-rgb) / 0.105), transparent 21rem),
     linear-gradient(180deg, rgb(4 4 4) 0%, rgb(0 0 0) 72%, rgb(1 1 1) 100%);
 }
 
@@ -95,7 +95,7 @@
   width: clamp(2rem, 5vw, 4.5rem);
   content: '';
   opacity: 0.42;
-  background-image: radial-gradient(circle, rgb(86 216 202 / 0.38) 0 1px, transparent 1.5px);
+  background-image: radial-gradient(circle, rgb(var(--pc-blue-500-rgb) / 0.38) 0 1px, transparent 1.5px);
   background-size: 7px 7px;
   filter: blur(0.2px);
   mask-image: linear-gradient(to bottom, transparent, black 8%, black 42%, transparent 72%);
@@ -135,7 +135,7 @@
 .pm-wordmark {
   display: inline-flex;
   min-height: 1.5rem;
-  color: rgb(var(--pc-public-accent-rgb));
+  color: rgb(var(--pc-blue-500-rgb));
   align-items: center;
   gap: 0.65rem;
   min-width: max-content;
@@ -369,10 +369,10 @@
 }
 
 .pm-laser-field {
-  --pm-laser-ice: rgb(223 253 248);
-  --pm-laser-teal: rgb(101 241 223);
-  --pm-laser-blue: rgb(108 143 255);
-  --pm-laser-core: rgb(78 219 207);
+  --pm-laser-ice: rgb(var(--pc-text-rgb));
+  --pm-laser-teal: rgb(var(--pc-blue-500-rgb));
+  --pm-laser-blue: rgb(var(--pc-blue-500-rgb));
+  --pm-laser-core: rgb(var(--pc-blue-600-rgb));
 
   position: absolute;
   top: 2.8rem;
@@ -384,7 +384,7 @@
   pointer-events: none;
   mask-image: linear-gradient(to bottom, black, black 65%, transparent 100%);
   contain: layout paint style;
-  color: rgb(101 241 223 / 1);
+  color: rgb(var(--pc-blue-500-rgb));
 }
 
 .pm-laser-field::after {
@@ -422,7 +422,7 @@
   height: 40rem;
   background:
     linear-gradient(90deg, transparent, rgb(242 255 253 / 0.2), transparent),
-    linear-gradient(180deg, rgb(86 216 202 / 0), rgb(86 216 202 / 0.11) 38%, rgb(92 126 255 / 0.055) 76%, transparent);
+    linear-gradient(180deg, rgb(var(--pc-blue-500-rgb) / 0), rgb(var(--pc-blue-500-rgb) / 0.11) 38%, rgb(92 126 255 / 0.055) 76%, transparent);
   filter: blur(30px);
 }
 
@@ -430,13 +430,13 @@
   top: 3rem;
   width: 1px;
   height: 37rem;
-  background: linear-gradient(180deg, transparent, rgb(241 255 252 / 0.42) 28%, rgb(86 216 202 / 0.34) 68%, transparent);
+  background: linear-gradient(180deg, transparent, rgb(241 255 252 / 0.42) 28%, rgb(var(--pc-blue-500-rgb) / 0.34) 68%, transparent);
   box-shadow:
-    -2.4rem 4rem 0 rgb(86 216 202 / 0.11),
+    -2.4rem 4rem 0 rgb(var(--pc-blue-500-rgb) / 0.11),
     2.35rem 5rem 0 rgb(100 139 255 / 0.1),
     -1.05rem 11rem 0 rgb(218 255 249 / 0.13),
-    1.1rem 15rem 0 rgb(86 216 202 / 0.11),
-    0 0 2.4rem rgb(86 216 202 / 0.24);
+    1.1rem 15rem 0 rgb(var(--pc-blue-500-rgb) / 0.11),
+    0 0 2.4rem rgb(var(--pc-blue-500-rgb) / 0.24);
 }
 
 .pm-laser-canvas,
@@ -495,7 +495,7 @@
   opacity: 0.54;
   background:
     repeating-linear-gradient(90deg, transparent 0 11px, rgb(235 255 252 / 0.12) 11px 12px, transparent 12px 23px),
-    linear-gradient(180deg, transparent, rgb(86 216 202 / 0.22), transparent);
+    linear-gradient(180deg, transparent, rgb(var(--pc-blue-500-rgb) / 0.22), transparent);
   mask-image: radial-gradient(ellipse at center, black, transparent 72%);
 }
 
@@ -509,7 +509,7 @@
   opacity: 0.62;
   background: rgb(239 255 252 / 0.86);
   box-shadow:
-    0 0 0.52rem rgb(86 216 202 / 0.44),
+    0 0 0.52rem rgb(var(--pc-blue-500-rgb) / 0.44),
     0 0 1.3rem rgb(96 128 255 / 0.12);
 }
 
@@ -558,7 +558,7 @@
   height: 14rem;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: rgb(86 216 202 / 0.035);
+  background: rgb(var(--pc-blue-500-rgb) / 0.035);
   filter: blur(60px);
   pointer-events: none;
 }
@@ -721,7 +721,7 @@
   flex: 0 0 auto;
   border-radius: 50%;
   background: var(--pm-accent);
-  box-shadow: 0 0 0.65rem rgb(86 216 202 / 0.28);
+  box-shadow: 0 0 0.65rem rgb(var(--pc-blue-500-rgb) / 0.28);
 }
 
 .pm-trust-principles {
@@ -805,7 +805,7 @@
   height: 0.38rem;
   border: 1px solid var(--pm-accent);
   border-radius: 50%;
-  box-shadow: 0 0 0.55rem rgb(86 216 202 / 0.22);
+  box-shadow: 0 0 0.55rem rgb(var(--pc-blue-500-rgb) / 0.22);
 }
 
 .pm-benefits-header h2 {
@@ -853,7 +853,7 @@
   border: 1px solid var(--pm-border-subtle);
   border-radius: var(--pm-radius-card);
   background:
-    radial-gradient(circle at 52% 48%, rgb(86 216 202 / 0.035), transparent 38%),
+    radial-gradient(circle at 52% 48%, rgb(var(--pc-blue-500-rgb) / 0.035), transparent 38%),
     linear-gradient(145deg, rgb(255 255 255 / 0.018), transparent 44%),
     rgb(7 7 7);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.025);
@@ -924,7 +924,7 @@
     clamp(7.5rem, 11vw, 10rem);
   border-top: 1px solid var(--pm-border-faint);
   background:
-    radial-gradient(ellipse at 54% 44%, rgb(86 216 202 / 0.045), transparent 30rem),
+    radial-gradient(ellipse at 54% 44%, rgb(var(--pc-blue-500-rgb) / 0.045), transparent 30rem),
     rgb(2 2 2);
 }
 
@@ -1125,7 +1125,7 @@
     clamp(7.5rem, 11vw, 10.5rem);
   border-top: 1px solid var(--pm-border-faint);
   background:
-    radial-gradient(ellipse at 22% 18%, rgb(86 216 202 / 0.052), transparent 28rem),
+    radial-gradient(ellipse at 22% 18%, rgb(var(--pc-blue-500-rgb) / 0.052), transparent 28rem),
     linear-gradient(180deg, rgb(2 2 2), rgb(0 0 0));
 }
 
@@ -1222,7 +1222,7 @@
 }
 
 .pm-product-path--qa {
-  border-color: rgb(86 216 202 / 0.18);
+  border-color: rgb(var(--pc-blue-500-rgb) / 0.18);
 }
 
 .pm-product-path__visual {
@@ -1231,7 +1231,7 @@
   padding: clamp(0.65rem, 1.15vw, 1rem);
   border-bottom: 1px solid var(--pm-border-faint);
   background:
-    radial-gradient(ellipse at 50% 44%, rgb(86 216 202 / 0.06), transparent 66%),
+    radial-gradient(ellipse at 50% 44%, rgb(var(--pc-blue-500-rgb) / 0.06), transparent 66%),
     rgb(4 4 4);
 }
 
@@ -1332,7 +1332,7 @@
   content: '';
   border-radius: 999px;
   background: var(--pm-accent);
-  box-shadow: 0 0 1rem rgb(86 216 202 / 0.35);
+  box-shadow: 0 0 1rem rgb(var(--pc-blue-500-rgb) / 0.35);
 }
 
 .pm-product-choice-actions {
@@ -1372,7 +1372,7 @@
     clamp(7.5rem, 11vw, 10.5rem);
   border-top: 1px solid var(--pm-border-faint);
   background:
-    radial-gradient(ellipse at 70% 16%, rgb(86 216 202 / 0.046), transparent 30rem),
+    radial-gradient(ellipse at 70% 16%, rgb(var(--pc-blue-500-rgb) / 0.046), transparent 30rem),
     linear-gradient(180deg, rgb(0 0 0), rgb(3 3 3));
 }
 
@@ -1456,7 +1456,7 @@
 .pm-adoption-path--qa {
   display: grid;
   grid-template-rows: minmax(19rem, 0.92fr) auto;
-  border-color: rgb(86 216 202 / 0.2);
+  border-color: rgb(var(--pc-blue-500-rgb) / 0.2);
 }
 
 .pm-adoption-path--workbench {
@@ -1471,7 +1471,7 @@
   padding: clamp(0.55rem, 1.1vw, 0.95rem);
   border-bottom: 1px solid var(--pm-border-faint);
   background:
-    radial-gradient(ellipse at 52% 46%, rgb(86 216 202 / 0.055), transparent 68%),
+    radial-gradient(ellipse at 52% 46%, rgb(var(--pc-blue-500-rgb) / 0.055), transparent 68%),
     rgb(4 4 4);
 }
 
@@ -1619,7 +1619,7 @@
   padding: clamp(6.5rem, 10vw, 9rem) var(--pm-page-gutter);
   border-top: 1px solid var(--pm-border-faint);
   background:
-    radial-gradient(ellipse at 48% 0%, rgb(86 216 202 / 0.12), transparent 31rem),
+    radial-gradient(ellipse at 48% 0%, rgb(var(--pc-blue-500-rgb) / 0.12), transparent 31rem),
     linear-gradient(180deg, rgb(3 3 3), var(--pm-canvas));
 }
 
@@ -1726,21 +1726,21 @@
 }
 
 .pc-footer {
-  --pc-footer-canvas: rgb(0 0 0);
-  --pc-footer-surface: rgb(7 7 7);
-  --pc-footer-text: rgb(250 250 250);
-  --pc-footer-secondary: rgb(163 163 163);
-  --pc-footer-muted: rgb(121 121 121);
-  --pc-footer-border: rgb(255 255 255 / 0.11);
-  --pc-footer-border-faint: rgb(255 255 255 / 0.065);
-  --pc-footer-accent: rgb(86 216 202);
+  --pc-footer-canvas: rgb(var(--pc-bg-rgb));
+  --pc-footer-surface: rgb(var(--pc-surface-soft-rgb));
+  --pc-footer-text: rgb(var(--pc-text-rgb));
+  --pc-footer-secondary: rgb(var(--pc-muted-foreground-rgb));
+  --pc-footer-muted: rgb(var(--pc-muted-foreground-soft-rgb));
+  --pc-footer-border: rgb(var(--pc-border-rgb) / 0.82);
+  --pc-footer-border-faint: rgb(var(--pc-border-subtle-rgb) / 0.72);
+  --pc-footer-accent: rgb(var(--pc-blue-500-rgb));
 
   position: relative;
   z-index: 10;
   overflow: hidden;
   border-top: 1px solid var(--pc-footer-border);
   background:
-    radial-gradient(ellipse at 78% 0%, rgb(86 216 202 / 0.075), transparent 26rem),
+    radial-gradient(ellipse at 78% 0%, rgb(var(--pc-blue-500-rgb) / 0.075), transparent 26rem),
     linear-gradient(180deg, var(--pc-footer-surface), var(--pc-footer-canvas));
   color: var(--pc-footer-text);
 }

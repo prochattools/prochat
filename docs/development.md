@@ -105,12 +105,12 @@ Relevant toggles are documented in [environment.md](/Users/Office/Repos/Organisa
 
 ## Local docs workflow
 
-There are two docs surfaces in the repo:
+There are two documentation contexts in the repository:
 
-- internal docs in `/docs`
-- generated public docs under `src/content/docs`
+- internal repository documentation under `docs/` and `docs-public/`
+- the lean public `/docs` repository hub for Memory for QA and Workbench
 
-When working on the generated public docs pipeline, use [scripts/docs/README.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/docs/README.md) as the implementation reference.
+The former generated `src/content/docs` / `scripts/docs` pipeline is retired. Do not restore it as part of normal documentation work; update the relevant repository docs or the lean `/docs` hub instead.
 
 ## Production-style build caveat
 
@@ -122,4 +122,3 @@ When working on the generated public docs pipeline, use [scripts/docs/README.md]
 - [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md)
 - [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md)
 - [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
-- [scripts/docs/README.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/docs/README.md)

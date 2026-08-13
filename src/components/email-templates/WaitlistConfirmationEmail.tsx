@@ -124,12 +124,12 @@ const WaitlistConfirmationEmail: React.FC<Readonly<WaitlistConfirmationEmailProp
   unsubscribeUrl,
 }) => {
   const singleProductLine =
-    products.length === 1 ? `You joined the waitlist for: ${products[0]}` : null
+    products.length === 1 ? `You registered interest in: ${products[0]}` : null
 
   return (
     <Html>
       <Head />
-      <Preview>You&apos;re on the ProChat waitlist</Preview>
+      <Preview>Your ProChat beta interest is confirmed</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.shell}>
@@ -137,18 +137,18 @@ const WaitlistConfirmationEmail: React.FC<Readonly<WaitlistConfirmationEmailProp
 
             <Section style={styles.header}>
               <ProChatEmailBrand lockupUrl={brandLockupUrl} />
-              <Text style={styles.eyebrow}>ProChat Waitlist</Text>
-              <Text style={styles.title}>You&apos;re on the ProChat waitlist</Text>
+              <Text style={styles.eyebrow}>ProChat Beta Interest</Text>
+              <Text style={styles.title}>Your beta interest is confirmed</Text>
             </Section>
 
             <Section style={styles.section}>
-              <Text style={styles.paragraph}>Thank you for joining the ProChat waitlist.</Text>
+              <Text style={styles.paragraph}>Thank you for registering your interest.</Text>
 
               {singleProductLine ? (
                 <Text style={styles.paragraph}>{singleProductLine}</Text>
               ) : (
                 <Section style={styles.listCard}>
-                  <Text style={styles.listLabel}>Products selected</Text>
+                  <Text style={styles.listLabel}>Programs selected</Text>
                   {products.map(product => (
                     <Text key={product} style={styles.bullet}>
                       • {product}
@@ -158,15 +158,14 @@ const WaitlistConfirmationEmail: React.FC<Readonly<WaitlistConfirmationEmailProp
               )}
 
               <Section style={styles.listCard}>
-                <Text style={styles.listLabel}>You&apos;ll receive</Text>
-                <Text style={styles.bullet}>• Early access invitations</Text>
-                <Text style={styles.bullet}>• Roadmap updates</Text>
-                <Text style={styles.bullet}>• Launch pricing details</Text>
+                <Text style={styles.listLabel}>You may receive</Text>
+                <Text style={styles.bullet}>• Selected beta or prerelease invitations</Text>
+                <Text style={styles.bullet}>• Relevant product progress updates</Text>
+                <Text style={styles.bullet}>• Requests for focused feedback</Text>
               </Section>
 
               <Text style={styles.paragraph}>
-                You’ll receive thoughtful updates as we release improvements and new
-                features.
+                Updates will stay focused on the Memory for QA or Workbench program you selected.
               </Text>
 
               <Text style={styles.paragraph}>Signed up with: {email}</Text>

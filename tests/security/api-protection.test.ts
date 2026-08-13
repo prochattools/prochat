@@ -59,7 +59,7 @@ describe('API security protections', () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: 'waitlist-honeypot@example.com',
-        products: ['uxkit'],
+        products: ['memory-qa'],
         honeypot: 'filled-by-bot',
       }),
     })
@@ -73,7 +73,7 @@ describe('API security protections', () => {
   it('redirects an invalid Preferences token with error=invalid', async () => {
     const formData = new FormData()
     formData.set('token', 'invalid-security-test-token')
-    formData.append('products', 'uxkit')
+    formData.append('products', 'workbench')
 
     const response = await fetch(`${baseUrl}/api/preferences`, {
       method: 'POST',
@@ -89,30 +89,8 @@ describe('API security protections', () => {
     assert.equal(redirectUrl.searchParams.get('error'), 'invalid')
   })
 
-  it('rejects a missing Stripe signature with exactly 400', async () => {
-    const response = await fetch(`${baseUrl}/api/webhook/stripe`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: '{}',
-    })
-    assert.equal(response.status, 400)
-  })
-
-  it('rejects an invalid Stripe signature with exactly 400', async () => {
-    const response = await fetch(`${baseUrl}/api/webhook/stripe`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'stripe-signature': 't=0,v1=invalid',
-      },
-      body: '{}',
-    })
-    assert.equal(response.status, 400)
-  })
-
   for (const route of [
     '/api/projects',
-    '/api/subscription',
     '/api/link',
     '/api/active',
     '/api/scenarios',

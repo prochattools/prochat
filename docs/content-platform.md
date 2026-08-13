@@ -1,103 +1,62 @@
-# ProChat Content Platform
+# ProChat Public Content Platform
 
-This document describes the current root-domain content and SEO system in ProChat.
+This document describes the current root-domain public content and SEO contract.
 
-## Content surfaces
+## Canonical public routes
 
-The content platform is MDX-driven and currently serves these public surfaces:
+The active canonical public surface is intentionally small:
 
-- `/learn`
-- `/learn/saas-starting-point`
-- `/learn/production-guide`
+- `/`
+- `/memory`
+- `/memory-qa`
+- `/workbench`
 - `/docs`
-- `/prompts`
+- `/contact`
+- `/privacy`
+- `/terms`
 
-The root sitemap also exposes the main marketing and product pages (`/`, `/contact`, `/proof`, `/kits`, `/kits/prokit`, `/kits/saaskit`, `/starting-point`).
+The root sitemap emits only those eight routes.
 
-The section configuration is defined in [config.ts](/Users/Office/Repos/Organisation/ProChat/Web/prochat/src/lib/content/config.ts).
+## Documentation
 
-## Content roots
+The active `/docs` route is a repository-oriented hub for Memory for QA and Workbench. It links readers to repository documentation, issues, and beta/contact paths.
 
-Current source roots include:
+The former generated public documentation system is retired. In particular:
 
-- docs: `src/content/docs`
-- prompts: `src/lib/content/prompts`
-- production-guide source: `src/content/learn/production-guide.mdx`
+- `src/content/docs` has no active tracked content
+- `scripts/docs` has no active tracked implementation
+- Nextra and the dynamic Docs route are removed
+- Learn, Production Guide, Starting Point documentation, and the public Prompt library are retired
 
-The public `/docs` section is generated content. It is not the same as the internal `/docs` folder in the repo root.
+Do not regenerate or restore those systems as part of normal documentation work. Historical implementation details remain available in Git history.
 
-## Route model
+## Content rendering
 
-The route tree is owned inside the Next.js app:
+Current canonical pages are implemented directly as Next.js routes and shared React components. There is no active generic MDX content engine for public Blog, Learn, Prompt, or generated Docs pages.
 
-- learn routes live under `src/app/learn/*`
-- the standalone Starting Point landing page lives under `src/app/starting-point/page.tsx`
-- docs detail pages live under `src/app/docs/[category]/[[...slug]]`
-- prompt detail pages live under `src/app/prompts/[category]/[slug]`
-- the legacy blog route remains only as a compatibility layer for the retained production guide and OG/share support
+The compatibility `/blog` entrypoint redirects to `/docs`; dynamic Blog article rendering is retired.
 
-This keeps the content graph on the root domain while sharing the same build and deployment pipeline as the rest of the app.
+## SEO and discovery
 
-## Generated assets
+Current SEO behavior is deliberately bounded:
 
-The content platform also generates site assets at build time:
+- `src/app/sitemap.ts` emits exactly the eight canonical public routes
+- `src/app/robots.ts` allows public indexing while disallowing API, admin, authentication, chat, preferences, and other private/internal paths
+- compatibility aliases redirect into canonical public routes rather than publishing duplicate bodies
+- retired product/content routes are not emitted by the sitemap
 
-- Open Graph images
-- `sitemap.xml`
-- section sitemaps for `/docs` and `/learn`
+Structured data and page metadata should describe only active Memory, Memory for QA, Workbench, Docs, Contact, and legal surfaces.
 
-The public docs router does not pre-render every doc page during `next build`. It prebuilds the core docs entry points and serves the rest of the retained public docs on demand so deploy builds stay leaner while `/docs` remains fully available.
+## Compatibility boundaries
 
-Current indexing posture:
+Some historical URLs remain only as redirect compatibility, including BuildFlow / ProChat OS aliases to Workbench, Learn aliases to Docs, legal aliases to the current Privacy/Terms pages, and waitlist aliases into the Memory for QA beta contact flow.
 
-- `/docs` and `/learn` remain in sitemap output and are indexable
-- `/prompts` stays live but is intentionally `noindex` while the prompt library remains thin
-- removed surfaces such as blog corpus, glossary, snippets, playbooks, guides, and `/saas-glossary` are not emitted by sitemap generation
+Compatibility routes must not restore retired product bodies or duplicate canonical content.
 
-Relevant scripts:
+## Validation
 
-- `npm run generate:social`
-- `npm run sitemap`
+For public content/SEO changes, run the repository code/config validation chain documented in `REPO_OPERATIONS.md` and the canonical browser evidence suite against a maintenance-off local production build.
 
-## Publishing model
+## External infrastructure boundary
 
-Publishing is build-driven.
-
-The repo does not use:
-
-- runtime cron publishing
-- live post publication toggles outside deploy/build flow
-
-Instead, content visibility is determined by the build output and the MDX content state that exists at build time.
-
-## SEO helpers
-
-SEO behavior is centralized through shared helpers and content loaders rather than route-specific ad hoc logic.
-
-This includes:
-
-- metadata helpers
-- taxonomy helpers
-- content loaders
-- OG generation
-- sitemap generation
-
-## Relationship to the docs pipeline
-
-The content platform consumes generated docs from `src/content/docs`.
-
-Those files are produced by the docs automation system described in [scripts/docs/README.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/docs/README.md).
-
-## Manual search follow-up
-
-After a production deploy:
-
-1. resubmit `/sitemap.xml` in Google Search Console
-2. request indexing manually for the retained priority surfaces when a refresh is needed
-
-ProChat does not auto-submit those URLs during runtime startup.
-
-## Related references
-
-- [overview.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/overview.md)
-- [open-graph-system.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/open-graph-system.md)
+WordPress/FluentCRM is not part of this Next.js content platform. Any live `prochat.tools/wp-admin` or FluentCRM surface must be retired at its separate hosting/routing origin.

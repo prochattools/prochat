@@ -1,17 +1,15 @@
-export const CHROMELESS_ROUTES = ['/starting-point', '/docs', '/sign-in', '/sign-up', '/prochat-memory']
-export const FULLSCREEN_ROUTES: string[] = []
-export const MINIMAL_HEADER_ROUTES = ['/kits/prokit/finish', '/kits/saaskit/finish']
-export const FOOTERLESS_ROUTES = ['/kits/prokit/finish', '/kits/saaskit/finish']
+export const CHROMELESS_ROUTES = ['/sign-in', '/sign-up'] as const
+export const FULLSCREEN_ROUTES: readonly string[] = []
+export const MINIMAL_HEADER_ROUTES: readonly string[] = []
+export const FOOTERLESS_ROUTES: readonly string[] = []
 
 export const MARKETING_SURFACE_ROUTES = [
   '/',
-  '/prochat-memory',
-  '/qa-memory',
   '/memory',
   '/memory-qa',
   '/workbench',
+  '/docs',
   '/contact',
-  '/docs/learn',
   '/privacy',
   '/terms',
 ] as const
@@ -33,8 +31,5 @@ export function isFooterlessPath(pathname: string) {
 }
 
 export function isMarketingSurfacePath(pathname: string) {
-  return (
-    pathname.startsWith('/docs/learn/') ||
-    MARKETING_SURFACE_ROUTES.some(route => pathname === route || pathname.startsWith(`${route}/`))
-  )
+  return MARKETING_SURFACE_ROUTES.some(route => pathname === route)
 }

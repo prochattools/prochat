@@ -1231,3 +1231,217 @@ Roll the deployed V4.4 homepage language across the entire **public** ProChat we
 - No commit, push, or production deployment has occurred yet. Repository `HEAD` before this rollout remains `7e7352e0cf1881852f6d281f170850909e45ec5e`.
 
 Next active task: review final diff, run final secret-material scan, commit only the intended V4.4 rollout paths, push `main`, verify the Main deployment and production SHA/health/version/docs/homepage/representative public routes, then confirm a clean worktree.
+
+
+
+## Public page-body redesign — homepage-language rollout — 2026-08-11
+
+Status: active implementation.
+
+### Corrected goal
+The V4.4 shell/design foundation is already deployed, but many non-home public page bodies still use pre-V4 hero, scaffolding, card, and section systems. This pass must redesign the **actual content body of every rendered public page family** so it feels authored in the same graphite/cobalt, editorial-technical language as the homepage while preserving each page's own content, hierarchy, use case, and conversion goal.
+
+This is explicitly **not** a copy/paste of homepage visuals. Each family needs its own applicable visual story and motion pattern. Passing shell/motif/overflow tests is necessary but not sufficient; representative screenshots and DOM evidence must show the body composition itself has changed.
+
+### Public scope
+- Product pages: `/memory`, `/memory-qa`, `/workbench`.
+- OS/workflow pages: `/buildflow`, `/systems/prochat-os`, `/ai-workflows`.
+- Company/service pages: `/studio`, `/contact`, `/proof`.
+- Product catalog/details: `/kits`, `/kits/prokit`, `/kits/saaskit`, `/kits/uxkit`, `/kits/waaskit`.
+- Knowledge/execution pages: `/docs`, `/docs/*`, `/docs/learn`, `/docs/learn/*`, `/prompts`, `/prompts/*`.
+- Legal/conversion: `/privacy`, `/terms`, `/waitlist`.
+- Redirect-only aliases keep existing redirect behavior and are not redesigned independently.
+- Protected/admin/auth/API/maintenance/internal surfaces remain untouched.
+
+### Design rules
+1. Preserve the homepage palette, type hierarchy, rails, linework, density, cobalt accents, restrained glow, and evidence-first tone.
+2. Replace legacy full-page `HeroSection`, generic `Hero`, `Scaffolding`, old rounded-card grids, and unrelated visual systems on public page bodies.
+3. Give each family a distinct composition:
+   - Memory: evidence ledger + retrieval orbit + correction history.
+   - QA: failure packet + review gate + current-evidence timeline.
+   - Workbench: bounded run terminal + file scope + validation/Git checkpoint.
+   - OS/BuildFlow/AI workflows: system bus + workflow graph + before/after work packet.
+   - Studio: constrained engagement canvas + artifact track + fit gate.
+   - Kits: module rack/product hierarchy + legacy/current status markers; each kit gets a different module diagram.
+   - Proof: evidence timeline + production signal panels.
+   - Prompts/Learn/Docs: execution sequence, reading/progress rail, content metadata, technical note blocks; dynamic detail pages inherit the same language without flattening article readability.
+   - Contact: signal/request intake console with topic-specific context.
+   - Legal: ledger/document register with high-readability article body.
+   - Waitlist: queue/status console with product lanes.
+4. Motion must be small, page-relevant, and disabled under `prefers-reduced-motion`; no decorative animation may obscure copy or controls.
+5. Keep current copy, SEO/schema, forms, checkout, analytics, redirects, and functional behavior unless a layout change requires a semantic wrapper adjustment.
+
+### Implementation batches
+1. **Shared body primitives + product pages** — redesign `PublicProductPage`/product visuals and introduce reusable V4 body primitives for section headers, data strips, process rails, evidence panels, and CTA bands.
+2. **OS/workflow/service families** — BuildFlow, ProChat OS, AI Workflows, Studio, Proof, Contact.
+3. **Kits family** — index and four kit detail pages, preserving purchase/access behavior.
+4. **Knowledge/legal/conversion** — Docs/Learn/Prompts dynamic content, Privacy/Terms, Waitlist.
+5. **Hardening** — browser screenshot/body-audit evidence at desktop/mobile, TypeScript, full lint, design lint, production build, accessibility/route evidence, security scan, commit/push/production verification.
+
+### Acceptance criteria
+- Every rendered public route family has a redesigned page body, not only a V4 shell wrapper.
+- No representative page retains the old top-level `HeroSection`/generic `Hero` + `Scaffolding` composition unless a narrowly scoped reusable component has itself been redesigned into the new system.
+- Each family exposes a distinct body visual/motion artifact tied to its content.
+- Desktop and mobile screenshots show the same design language as the homepage without cloning homepage sections.
+- Exactly one header/footer/main landmark, no horizontal overflow, no console/page errors, reduced motion respected.
+- Protected/admin/auth/API implementation paths remain unchanged.
+
+Next active task: implement Batch 1 — shared V4 body primitives and the Memory, Memory QA, and Workbench page-body redesign.
+
+
+
+## Lean public surface reset — 2026-08-11
+
+User direction supersedes the broad page-body redesign scope. The active public website must be lean and represent only the current ProChat product boundary.
+
+### Canonical active public surface
+- `/` — homepage.
+- `/memory` — ProChat Memory.
+- `/memory-qa` — ProChat Memory for QA.
+- `/workbench` — ProChat Workbench.
+- `/docs` — lean documentation landing for the Memory for QA and Workbench repositories only; no SaaSKit/ProKit/WaaSKit/Learn/Production Guide/Starting Point corpus.
+- `/contact` — contact and selected-beta interest.
+- `/privacy`, `/terms` — required legal surfaces.
+- `/waitlist` — keep backend capability but remove from normal public navigation; repurpose only as a beta-interest path for Memory for QA / Workbench if retained.
+
+### Retire from active public platform
+- BuildFlow public product route and presentation.
+- ProChat OS and AI Workflows public routes and presentation.
+- Kits catalogue and ProKit/SaaSKit/UXKit/WaaSKit public product/shopping surfaces.
+- SaaSKit/ProKit checkout initiation, public licence auto-provision flows, and application-level licence administration are retired. The owner confirmed no licences were ever sold, so `/admin/licenses`, revocation, claim, finish/recovery, entitlement provisioning, and related commerce runtime were removed. Active Memory for QA and Workbench repository licence language remains intentionally preserved.
+- Docs Learn, Production Guide, SaaS Starting Point, and all non-Memory/QA/Workbench internal docs content.
+- Studio, Proof, and Prompts public content are treated as legacy under the existing migration/strategy authority and should leave the active public platform.
+- Legacy WordPress/FluentCRM is not implemented in this Next repo; remove any repo links if found and treat the live `/wp-admin` surface as separate hosting/infrastructure retirement work.
+
+### Design rule
+One centrally defined design system only. Current public surfaces must use the canonical V4 graphite/cobalt system. Retired surfaces must not retain competing public themes merely because they were previously redesigned.
+
+### Waitlist recommendation
+Keep the existing hardened waitlist backend because it already provides Zod validation, rate limiting, Prisma persistence, Resend confirmation/admin notifications, unsubscribe/preferences, analytics, and an internal read-only admin view. Simplify the public semantics to beta interest for `Memory for QA` and `Workbench`, hide it from navigation for now, and expose it only from selected beta CTAs when needed.
+
+### Safety boundary for commerce retirement
+The owner explicitly confirmed that no licences were ever sold. Public shopping/checkout, billing, licence administration, claim/finish flows, webhook/payment runtime, and new entitlement provisioning were therefore removed from the application. No active repository licence language for Memory for QA or Workbench was removed as part of this cleanup.
+
+Next active task: prune legacy public routes/navigation/docs/commerce entry points, simplify waitlist to beta interest, then remove orphaned legacy design definitions and validate the remaining active surface.
+
+
+
+## Lean public surface validation closeout — 2026-08-13
+
+The lean reset is implemented in the worktree and fully validated locally. This section supersedes the stale `Next active task` at the end of the 2026-08-11 reset section. No commit, push, deployment, or production-SHA claim has been made yet.
+
+### Final active public boundary
+- Canonical public routes: `/`, `/memory`, `/memory-qa`, `/workbench`, `/docs`, `/contact`, `/privacy`, `/terms`.
+- `/waitlist` remains hidden from normal navigation and redirects to `/contact?topic=memory-qa-beta#contact-form-card`.
+- `/waiting-list` remains a compatibility redirect into Contact; `/api/waitlist` and `/api/waiting-list` remain the hardened beta-interest backend/alias.
+- Intentional compatibility redirects include old Memory aliases, `/book` → Contact, BuildFlow/ProChat OS/Starting Point/WaaS accountants → Workbench, Learn/Docs Learn → Docs, and old legal aliases → current legal pages.
+- Retired Kits, AI Workflows, Studio, Proof, Prompts, and legacy Docs product routes no longer render their old bodies; automated compatibility/security evidence asserts 404 retirement where applicable.
+
+### Implementation closeout
+- Retired public products, Kits catalogue/details, Learn/Production Guide/Prompts/Studio/Proof/OS/AI Workflows, old dynamic Docs/Nextra runtime, old Blog article runtime, public commerce/Stripe checkout/webhook/subscription/portal, licence administration/provisioning/claim/finish flows, and the generated product-Docs pipeline were removed.
+- Owner-confirmed unused `/admin/licenses` and associated licence runtime were removed; current Memory for QA and Workbench repository licence language remains intentionally preserved.
+- Waitlist semantics now represent `Memory for QA beta` and `Workbench prerelease`; admin/preferences/email copy was updated to beta-interest terminology.
+- `/docs` is a lean two-repository hub for Memory for QA and Workbench only.
+- One graphite/cobalt design system now owns public and active admin semantic tokens. Competing teal/public/navy token layers and retired route-motif/body families were removed.
+- Product pages, Contact, Docs, Legal, homepage/Memory theme, public chrome, footer, and active admin navigation resolve through the central `--pc-*` V4 token source.
+- Root sitemap contains exactly the eight canonical public routes. Robots policy no longer references deleted commerce/dashboard routes.
+- Accessibility evidence no longer carries Nextra exceptions or Nextra-era baselines; current canonical routes use zero-finding baselines.
+
+### Final local validation evidence
+- `npm run build`: **PASS** — Next.js production build compiled, type-validity check passed, and static generation completed `44/44`.
+- `npm run typecheck`: **PASS**.
+- `npm run lint`: **PASS** with zero warnings (`--max-warnings=0`).
+- `npm run lint:design`: **PASS** — 5 governance rules passed; existing 40 explicit debt exemptions remained unchanged; no baseline write/exemption was added.
+- Security suite: **41/41 PASS** across fixed-window rate limiting, API protection, waitlist API equivalence, intentional compatibility redirects, retired-route 404s, and legacy-stub 404s.
+- Browser/canonical/accessibility evidence: **97/97 PASS** in Chromium against a maintenance-off local production build. The suite covers desktop/mobile canonical route smoke, actual V4 body markers, Docs responsive layout, canonical chrome, Axe accessibility evidence, compatibility redirects, and retired public-route behavior.
+- Temporary local validation runner `scripts/validation/run-lean-browser-evidence.mjs` was deleted after evidence passed.
+- Final active-source legacy scan found only intentional compatibility records for `/buildflow` and `/systems/prochat-os`, plus a generic `Proof/trust` stylesheet comment unrelated to the retired Proof product.
+
+### Security-scan classification
+- `forbidden_all_high_risk` over active runtime implementation paths: **PASS, zero findings**.
+- A broader scan also identified expected/non-new patterns: existing GitHub workflow network/artifact operations, the existing `axios` dependency, the pre-existing preferences `token` query variable, and intentional local-test `fetch`/`FormData` calls. Exact diffs confirmed this cleanup did not introduce the workflow network operations, `axios`, or the preferences token handling.
+- `forbidden_secret_material` over changed source/config/evidence/workflow paths excluding the known preferences token false positive: **PASS, zero findings**.
+- The preferences-page token finding is a pre-existing URL query token read; its diff contains only beta-interest copy/link changes.
+- `package-lock.json` exceeds the Workbench security-scanner per-file limit. It passed JSON validation, and a bounded direct scan found no private-key headers or common live credential/token prefixes.
+
+### Scope and protected-surface review
+- Final diff is intentionally deletion-heavy: `262 files changed, 1379 insertions, 24347 deletions` before this handoff append.
+- Active auth/sign-in/sign-up implementation was not modified.
+- Active Contact and waitlist APIs remain intact; removed API paths are the explicitly retired commerce/licence/MailerLite endpoints.
+- Admin changes are limited to removing licence administration, redirecting `/admin` to retained beta-interest admin, current OG sample copy, and V4 token/navigation styling.
+- `.github/workflows/main.yml` changed only by removing the deleted Docs-pipeline validation step; dedicated obsolete Docs/Wave-1 workflows were deleted separately.
+
+### Remaining release work
+- Do **not** commit until the owner requests/permits the final commit step for this run. Current instruction is still `Do not commit yet`.
+- After commit/push authorization, verify production `/api/version` equals the new full SHA and recheck all eight canonical routes plus compatibility redirects.
+- The live `prochat.tools/wp-admin` / FluentCRM surface is not implemented or proxied by this Next repository. Its retirement remains a separate hosting/upstream ownership action and must not be represented as completed by this repo cleanup.
+
+
+
+## Lean public surface closeout evidence — 2026-08-13
+
+The lean reset is implemented and validated in the current uncommitted worktree. No commit, push, or production deployment has occurred from this run.
+
+### Final active public contract
+- Canonical public routes: `/`, `/memory`, `/memory-qa`, `/workbench`, `/docs`, `/contact`, `/privacy`, `/terms`.
+- `/waitlist` remains hidden and redirects to `/contact?topic=memory-qa-beta#contact-form-card`.
+- `/api/waitlist` remains active; `/api/waiting-list` is an exact POST compatibility re-export.
+- New beta-interest selections are limited to `memory-qa` and `workbench`; historical stored values remain displayable but are not selectable.
+- BuildFlow / historical ProChat OS compatibility aliases resolve to Workbench. Learn aliases resolve to Docs. Privacy/TOS aliases resolve to the current legal pages.
+- Retired Kits, AI Workflows, Studio, Proof, Prompts, legacy Learn/dynamic Docs, checkout, Stripe webhook, subscription, and application licence surfaces no longer render their prior bodies.
+
+### Commerce / licence boundary
+The owner explicitly confirmed no licences were ever sold. Application checkout, billing, Stripe webhook/runtime, licence administration, claim/finish/recovery, entitlement provisioning, commerce email runtime, and related ProKit/SaaSKit product catalog code were removed. Memory for QA and Workbench repository licence wording remains intentionally preserved.
+
+### Design-system closeout
+- One graphite/cobalt `--pc-*` token source now governs the active public and internal surfaces.
+- Product pages, Contact, Docs/Legal editorial bodies, canonical chrome, homepage/Memory theme, footer, and active admin navigation consume the central semantic token system.
+- Retired Studio/Kits/Proof/Prompts/Learn/waitlist route motifs and retired body themes were removed.
+- `src/assets/styles/prochat-public-bodies.css` now serves only active editorial/Docs/legal bodies.
+- `product-pages.css` now serves only Memory, Memory for QA, and Workbench using the central palette; route individuality comes from content and diagrams rather than competing palettes.
+
+### Validation evidence
+- Production build: PASS (`next build`), 44 generated routes, static generation 44/44.
+- Standalone TypeScript: PASS (`tsc --noEmit`).
+- Full ESLint: PASS, zero warnings (`eslint . --max-warnings=0`).
+- Design lint: PASS, 5 governance rules; existing 40 debt exemptions unchanged; no new baseline or exemption added.
+- Security suite: PASS, 41/41 tests.
+- Lean browser evidence: PASS, 97/97 Playwright tests across Docs mobile layout, canonical route smoke, canonical accessibility, canonical chrome proof, and V4 route audit.
+- Browser evidence covers desktop 1440x1000 and mobile 390x900 for all eight canonical routes and asserts actual route-body markers, one canonical header/footer/main ownership, no horizontal overflow, current Contact/Docs bodies, accessibility gates, and intentional compatibility redirects.
+- Retired-route security evidence verifies 404 for AI Workflows, legal AI Workflows, Proof, Studio, Kits and all Kit product paths, Prompts, and a retired SaaSKit Docs path.
+- Active-source legacy-product scan: remaining matches are intentional redirect/404 evidence plus the generic CSS comment `Proof/trust`; no stale active product body/copy match remains.
+- `forbidden_all_high_risk`: zero findings across current production implementation and browser-evidence files. Broader scan findings were limited to pre-existing CI `curl`/artifact upload/network syntax, unchanged `axios` dependency metadata, the unchanged Preferences query-token variable, and intentional local HTTP calls in security tests; targeted diffs confirm this cleanup did not introduce those patterns.
+- `forbidden_secret_material`: zero findings across the second active-file batch. The first batch produced only the unchanged Preferences `token` query variable as a lexical false positive; its diff contains wording/link changes only. The scanner rejected `package-lock.json` for file size, and direct diff review confirms its only changes are removal of seven root dependency declarations with no secret material added.
+- Final diff scope before handoff append: 262 files, 1,379 insertions, 24,347 deletions; overwhelmingly retirement of legacy product/docs/commerce/design code.
+
+### External infrastructure boundary
+No WordPress/FluentCRM implementation is present in this Next.js repository. The live `prochat.tools/wp-admin` / FluentCRM surface must be retired at its separate hosting/upstream origin; this repository cleanup cannot itself disable that service. Before production closeout, identify the host/proxy/container or legacy origin serving that path and disable or detach it there.
+
+### Current release state
+Repository implementation is validated and ready for final scope review. Do not commit or push until the owner explicitly advances beyond the current no-commit instruction. After commit/push, production `/api/version` must equal the new full commit SHA and all eight canonical production routes must be reverified at desktop and mobile widths.
+
+
+
+### Post-closeout hygiene and exact-final validation — 2026-08-13
+
+A final repository/documentation sweep after the first closeout removed the last zero-consumer commerce/infrastructure remnants and corrected internal operator docs:
+
+- removed orphan `ProblemSolution` marketing code containing retired Stripe setup copy
+- removed zero-consumer Stripe, licence, and WordPress icon implementations plus their barrel exports
+- removed the final zero-consumer `src/types/prices.d.ts` Stripe product type declarations
+- rewrote `docs/content-platform.md` to the current eight-route lean public content/SEO contract
+- converted `docs/docs-automation.md` into an explicit retirement record
+- updated `docs/development.md`, `docs/integrations.md`, `docs/deployment.md`, and `REPO_OPERATIONS.md` so they no longer instruct contributors to use deleted generated-Docs, Stripe, MailerLite, GitHub-entitlement, or legacy product tooling
+- documentation environment synchronization: PASS
+- documentation link validation: PASS
+- final active `src` scan for Stripe, MailerLite, WordPress/FluentCRM, legacy licence icons, ProKit/SaaSKit/WaaSKit, BuildFlow, ProChat OS, and AI Workflows: no matches
+- exact-final production build after those removals: PASS, static generation 44/44
+- exact-final standalone TypeScript: PASS
+- exact-final ESLint: PASS with zero warnings
+- exact-final design lint: PASS with the existing debt baseline unchanged
+- exact-final security suite: PASS 41/41
+- exact-final lean browser evidence: PASS 97/97
+- latest focused high-risk and secret-material scans for the post-closeout active edits: zero findings
+- final tracked diff snapshot before this append: 275 files changed, 1,596 insertions, 25,083 deletions; scope remains overwhelmingly retirement and consolidation
+
+External WordPress/FluentCRM check: the repository still contains no WordPress/FluentCRM runtime or reverse-proxy ownership for `/wp-admin`. A public check of the previously supplied FluentCRM admin URL now returns HTTP 404. No separate upstream can be identified from this repository configuration; if a legacy WordPress host still exists administratively, its provider/container must be retired outside this repo.

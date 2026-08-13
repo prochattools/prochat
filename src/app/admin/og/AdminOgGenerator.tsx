@@ -10,9 +10,9 @@ type FormState = {
 }
 
 const defaultValues: FormState = {
-  line1: 'Launch your SaaS this week.',
-  line2: 'Skip the months of setup.',
-  subtitle: 'SaaSKit removes the setup work that slows founders down.',
+  line1: 'Build with reviewed context.',
+  line2: 'Ship with bounded execution.',
+  subtitle: 'ProChat Memory and Workbench keep evidence, review, and local project work explicit.',
 }
 
 function toAbsoluteUrl(pathOrUrl: string, origin: string) {

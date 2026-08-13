@@ -1,18 +1,18 @@
 /* Shared canonical public chrome: navigation, footer, and required tokens.
    Contains no homepage, product, contact-form, or docs-content selectors. */
 
-:root {
-  --pm-bg: rgb(var(--pc-public-bg-rgb));
-  --pm-surface: rgb(12 12 12);
-  --pm-surface-raised: rgb(17 17 17);
-  --pm-text: rgb(var(--pc-public-text-rgb));
-  --pm-text-secondary: rgb(var(--pc-public-text-rgb) / 0.66);
-  --pm-text-muted: rgb(var(--pc-public-text-rgb) / 0.48);
-  --pm-text-faint: rgb(var(--pc-public-text-rgb) / 0.32);
-  --pm-border: rgb(var(--pc-public-text-rgb) / 0.11);
-  --pm-accent: rgb(var(--pc-public-accent-rgb));
-  --pm-accent-soft: rgb(var(--pc-public-accent-rgb) / 0.12);
-  --pm-content-max: var(--pc-public-container);
+.pc-public-v4 {
+  --pm-bg: rgb(var(--pc-bg-rgb));
+  --pm-surface: rgb(var(--pc-surface-rgb));
+  --pm-surface-raised: rgb(var(--pc-surface-elevated-rgb));
+  --pm-text: rgb(var(--pc-text-rgb));
+  --pm-text-secondary: rgb(var(--pc-muted-foreground-rgb));
+  --pm-text-muted: rgb(var(--pc-muted-foreground-soft-rgb));
+  --pm-text-faint: rgb(var(--pc-muted-foreground-soft-rgb) / 0.7);
+  --pm-border: rgb(var(--pc-border-rgb) / 0.82);
+  --pm-accent: rgb(var(--pc-blue-500-rgb));
+  --pm-accent-soft: rgb(var(--pc-blue-500-rgb) / 0.12);
+  --pm-content-max: var(--pc-public-wide);
   --pm-page-gutter: var(--pc-page-gutter);
   --pm-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -44,7 +44,7 @@
   display: inline-flex;
   min-height: 24px;
   min-width: 24px;
-  color: rgb(var(--pc-public-accent-rgb));
+  color: rgb(var(--pc-blue-500-rgb));
   align-items: center;
   gap: 0.65rem;
   font-size: 0.92rem;
@@ -367,7 +367,7 @@
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  background: rgb(var(--pc-public-bg-rgb));
+  background: rgb(var(--pc-bg-rgb));
   color: var(--pm-text);
 }
 
@@ -380,7 +380,7 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   min-height: 100svh;
-  background: rgb(var(--pc-public-bg-rgb));
+  background: rgb(var(--pc-bg-rgb));
   color: var(--pm-text);
   transition: none;
 }
