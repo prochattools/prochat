@@ -1,142 +1,86 @@
 # Deployment
 
-This document describes the deployment flow that currently exists in the ProChat repo.
+This document covers the current lean ProChat deployment path.
 
-ProChat does **not** use the retired legacy runtime deploy gate. There is no runtime backup, restore wrapper, or automatic search-engine submission step around `next start`; deployment smoke checks are handled explicitly by CI after rollout.
+## Production source
 
-## Production target
+- release branch: `main`
+- CI/CD workflow: `.github/workflows/main.yml`
+- container/deployment platform: Dokploy
+- production revision endpoint: `/api/version`
 
-Production is built for Dokploy.
+The deployed `revision` must match the intended full Git SHA from `main`.
 
-Current expectations:
+## Required pre-deploy validation
 
-- Dokploy runs `npm run build`
-- Dokploy starts the app with `npm run start`
+Before a release, run the relevant repository checks:
 
-## Actual build flow
+```bash
+node scripts/check-env-docs.js
+node scripts/check-doc-links.js
+npm run typecheck
+npm run lint
+npm run lint:design
+npm run build
+```
 
-The relevant scripts are defined in [package.json](/Users/Office/Repos/Organisation/ProChat/Web/prochat/package.json), [scripts/provision-auto.js](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/provision-auto.js), and [scripts/start-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/start-production.sh).
+For security/public UI changes also run the maintained security and canonical browser evidence suites against a maintenance-off local production server.
 
-Production build sequence:
+## Database preparation
 
-1. `npm run build`
-2. `next build`
+Deployment workflows may initialize/migrate tenant database state using the current `APP_SLUG`, `DATABASE_URL`, `SYSTEM_DATABASE_URL`, `SHADOW_DATABASE_URL`, and provisioning credentials.
 
-The hot build path does **not** automatically run:
+There is no active Stripe checkout/licence deployment contract. Do not add retired Stripe/Kits secrets back to CI simply because historical Prisma models or migration docs still exist.
 
-- tenant provisioning
-- Prisma production migrations
-- social image generation
-- sitemap generation
+## Environment
 
-## Provisioning flow
+Active runtime environment variables are documented in `docs-public/environment.md` and mirrored in `.env.example`.
 
-`scripts/provision-auto.js` is the orchestration layer used by the explicit deploy-prep helper.
+Production metadata is injected by build/deployment:
 
-Behavior:
+- `PROCHAT_GIT_SHA`
+- `PROCHAT_IMAGE_REF`
+- `PROCHAT_BUILD_TIMESTAMP`
 
-- resolves `APP_SLUG` from env or `.env.production`
-- requires `APP_SLUG` in production
-- runs `db:init`
-- runs `db:migrate:prod` in production
-- runs `db:migrate:dev` outside production
+## Maintenance mode
 
-The lower-level tenant provisioning logic lives in [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md).
+`PROCHAT_MAINTENANCE_MODE` gates production requests. CI/evidence must set or account for it deliberately.
 
-## Migration flow
+## Post-deploy verification
 
-Production migrations use Prisma deploy mode:
+After rollout:
 
-- command: `npm run db:migrate:prod`
-- implementation: `prisma migrate deploy --schema=prisma/system.prisma`
+1. verify `GET /api/version` returns the expected full SHA;
+2. verify the eight canonical routes at desktop and mobile widths;
+3. verify intentional compatibility redirects;
+4. verify retired product routes do not render retired bodies;
+5. check production health/console evidence relevant to the change.
 
-Development migrations use:
+Canonical routes:
 
-- command: `npm run db:migrate:dev`
-- implementation: `prisma migrate dev --schema=prisma/system.prisma`
+- `/`
+- `/memory`
+- `/memory-qa`
+- `/workbench`
+- `/docs`
+- `/contact`
+- `/privacy`
+- `/terms`
 
-The production contract is repo-enforced at startup. [prepare-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/deploy/prepare-production.sh) now runs from `npm run start` before Next starts, so the tenant schema is provisioned and `prisma migrate deploy` creates new tables such as `License` and `LicenseEvent`. Dokploy can still run the same helper as an optional pre-deploy check to fail earlier, but the primary guarantee now lives in the repo-owned start path.
+## Rollback
 
-## Startup behavior
+Use normal deployment-platform rollback/redeploy behavior to restore a known-good image/SHA. Never force-push `main` as a deployment rollback mechanism.
 
-`npm run start` calls `scripts/start-production.sh`.
+## Retired deployment dependencies
 
-That script:
+The current deploy path does not require:
 
-- runs `sh scripts/deploy/prepare-production.sh`
-- starts `next start -p ${PORT:-3056}`
-- syncs standalone static assets when needed for the current runtime layout
+- Stripe keys/product/price/webhook secrets;
+- GitHub App purchaser-entitlement credentials;
+- MailerLite credentials;
+- generated Docs AI credentials;
+- Strapi credentials;
+- Make/n8n integration credentials;
+- WordPress/FluentCRM containers in this repository.
 
-It does not:
-
-- perform deploy gating
-- create backups
-- run smoke tests
-- roll back a failed deploy
-- auto-submit sitemaps to Google or Bing
-
-## Manual search follow-up
-
-After a production deploy, operators should handle search-console follow-up manually:
-
-1. resubmit `${NEXT_PUBLIC_SITE_URL}/sitemap.xml` in Google Search Console
-2. request indexing manually for the retained priority surfaces if they need to be refreshed:
-   - `/`
-   - `/learn`
-   - `/learn/saas-starting-point`
-   - `/learn/production-guide`
-   - `/starting-point`
-   - `/docs`
-   - `/kits/saaskit`
-   - `/kits/prokit`
-   - `/proof`
-   - `/contact`
-
-ProChat does not perform those submissions automatically at runtime.
-
-## CI behavior
-
-GitHub Actions currently builds with Node 20 in [ci.yml](/Users/Office/Repos/Organisation/ProChat/Web/prochat/.github/workflows/ci.yml).
-
-CI flow:
-
-- starts Postgres 16 as a service
-- sets tenant and Stripe test env vars
-- provisions the tenant schema
-- generates Prisma client
-- runs dev migrations
-- runs `npm run build`
-
-CI therefore validates the application build on Node 20 while keeping provisioning and migration steps explicit in the workflow.
-
-## Node version constraint
-
-The runtime contract is Node 20.
-
-- Docker uses Node 20 in [Dockerfile](/Users/Office/Repos/Organisation/ProChat/Web/prochat/Dockerfile)
-- GitHub Actions CI uses Node 20 in [ci.yml](/Users/Office/Repos/Organisation/ProChat/Web/prochat/.github/workflows/ci.yml)
-- `package.json` enforces `node >=20`
-
-Production containers and local tooling should therefore target Node 20 as the single supported version.
-
-## Docker compose
-
-`docker-compose.yml` is currently used only to provision Postgres for local development. WordPress/MySQL services were removed because they are not part of the production runtime.
-
-File reference: [docker-compose.yml](docker-compose.yml)
-
-## Known non-features
-
-These behaviors should not be documented as active ProChat deployment features:
-
-- retired legacy runtime deploy gate
-- legacy auth remains only for apps still mid-migration
-- shared auth for new work standardizes on ProChat UI backed by Ory
-
-## Related references
-
-- [overview.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/overview.md)
-- [production-lifecycle.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/production-lifecycle.md)
-- [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
-- [development.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/development.md)
+A separately approved future feature must prove a live runtime consumer before adding any such deployment dependency back.

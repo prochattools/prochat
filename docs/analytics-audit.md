@@ -1,171 +1,41 @@
-# Analytics Audit
+# Analytics audit
 
-## Current Umami integration
-- Base script injection already exists in `src/app/layout.tsx` via `src/components/UmamiAnalytics.tsx`.
-- Public env setup uses `NEXT_PUBLIC_UMAMI_SCRIPT_URL` plus `NEXT_PUBLIC_UMAMI_WEBSITE_ID`.
-- The script is rendered once in the root layout head as a deferred Umami script tag.
-- The website ID should match the Umami property configured for ProChat.
+Status: current lean implementation.
 
-## Current analytics layer
-- Tracking is centralized in `src/utils/analytics.ts` and implemented in `src/lib/analytics/umami.ts`.
-- The helper uses `window.umami.track(...)` only and queues early events briefly until the tracker is available.
-- Event usage is fragmented:
-  - `explore_kits_click`
-  - `kit_view`
-  - `cta_click`
-  - `checkout_start`
-  - `proof_view`
-  - `contact_submit`
-  - `blog_cta_click`
+## Provider
 
-## Existing tracked flows
-- Global header CTA:
-  - `src/components/Header.tsx`
-- Product page CTAs and checkout starts:
-  - `src/app/kits/prokit/ProKitPageContent.tsx`
-  - `src/app/kits/saaskit/SaaSkitPageContent.tsx`
-- Contact form success:
-  - `src/app/(marketing)/contact/page.tsx`
-- Blog CTA clicks:
-  - `src/components/ContextualLinkCta.tsx`
-  - blog pages that pass analytics props into it
-- Proof page custom view/click events:
-  - `src/app/proof/ProofPageContent.tsx`
-- Outbound bridge CTA:
-  - `src/app/waas/accountants/page.tsx`
+ProChat uses Umami for public analytics.
 
-## High-value funnel points found
+Runtime integration:
 
-### Lead magnet / starting point
-- Page: `src/app/starting-point/page.tsx`
-- Form: `src/app/starting-point/_components/StartSignupForm.tsx`
-- API: `src/app/api/mailerlite/subscribe/route.ts`
-- Notes:
-  - This is a strong acquisition funnel.
-  - The current flow delivers by email, not direct in-app PDF download.
-  - `lead_magnet_download` is not currently observable from the product code and should not be fabricated.
+- `src/components/UmamiAnalytics.tsx` mounts the script only when both public Umami env values are configured.
+- `src/lib/analytics/umami.ts` provides route-agnostic event helpers.
+- `src/app/layout.tsx` mounts the analytics component globally.
 
-### Waitlist
-- Page and UI:
-  - `src/app/waiting-list/WaitlistPageMarkup.tsx`
-  - `src/app/waiting-list/WaitingListBody.tsx`
-- API:
-  - `src/app/api/waitlist/route.ts`
-- Notes:
-  - This is now a multi-product waitlist for `uxkit`, `waaskit`, and `prochat-os`.
-  - Product selection is meaningful context and should be tracked.
+Required public configuration:
 
-### Product / pricing / checkout intent
-- SaaSKit page:
-  - `src/app/kits/saaskit/SaaSkitPageContent.tsx`
-- ProKit page:
-  - `src/app/kits/prokit/ProKitPageContent.tsx`
-- Checkout client:
-  - `src/helpers/checkout.ts`
-- Checkout creation API:
-  - `src/app/api/stripe/create-checkout/route.ts`
-- Checkout success / entitlement page:
-  - `src/app/kits/_components/KitAccessFinishClient.tsx`
-  - `src/app/kits/prokit/finish/page.tsx`
-  - `src/app/kits/saaskit/finish/page.tsx`
-- Notes:
-  - `checkout_start` is already partially tracked.
-  - `checkout_success` should be tracked from the finish pages.
-  - Product values are available safely from config / kit page metadata and can be included.
+- `NEXT_PUBLIC_UMAMI_SCRIPT_URL`
+- `NEXT_PUBLIC_UMAMI_WEBSITE_ID`
 
-### Contact / sales intent
-- Page:
-  - `src/app/(marketing)/contact/page.tsx`
-- Markup:
-  - `src/app/(marketing)/contact/ContactPageMarkup.tsx`
-- Notes:
-  - Contact form success is already tracked.
-  - This is a strong high-intent lead event and should remain.
+## Current event call sites
 
-### Content intent
-- Content CTA component:
-  - `src/components/ContextualLinkCta.tsx`
-- Retained content pages:
-  - `src/app/learn/production-guide/page.tsx`
-  - `src/components/content/CTASection.tsx`
-- Notes:
-  - Existing `blog_cta_click` is useful and already high-signal.
-  - No need to track low-signal content interactions.
+The active repository uses analytics on current lean surfaces only. Event helpers are called from current homepage/product/contact/beta-interest interactions rather than retired Kits or checkout flows.
 
-## Current problems
-- One script injection point exists, which is good.
-- The website ID is stale.
-- Env naming is slightly inconsistent in the legacy setup.
-- Event taxonomy is fragmented and too generic in places:
-  - `cta_click`
-  - `kit_view`
-  - `proof_view`
-- Some meaningful funnels have no tracking:
-  - lead magnet view / submit / success
-  - waitlist view / submit / success
-  - pricing section views
-  - checkout success
-  - checkout cancel
+The implementation intentionally avoids reviving retired checkout, pricing, subscription, or purchase-return events.
 
-## Recommended lean event map
+## Privacy boundary
 
-### Acquisition / lead generation
-- `lead_magnet_view`
-- `lead_magnet_submit`
-- `lead_magnet_success`
+Analytics configuration is disclosed on the active `/privacy` page. Do not add a new analytics provider without updating privacy documentation and validating the new data flow.
 
-### Waitlist
-- `waitlist_view`
-- `waitlist_submit`
-- `waitlist_success`
+## Validation
 
-### Commercial intent
-- `nav_cta_click`
-- `product_cta_click`
-- `pricing_view`
-- `checkout_start`
-- `checkout_success`
-- `checkout_cancel`
+For analytics changes:
 
-### Sales intent
-- `contact_submit`
+1. verify the event has a live source consumer;
+2. keep payloads free of secrets or message/contact contents unless explicitly approved;
+3. run TypeScript, ESLint, build, and focused browser evidence;
+4. verify analytics remains disabled when the two Umami public env values are absent.
 
-### Content intent
-- `blog_cta_click`
+## Historical analytics documents
 
-## Payload guidance
-- Keep payloads small and operational:
-  - `product`
-  - `location`
-  - `source_page`
-  - `products` (comma-separated for waitlists where multiple selections are allowed)
-  - `value`
-  - `currency`
-- Avoid over-encoding session data or user identity.
-
-## Files likely to change
-- `src/components/UmamiAnalytics.tsx`
-- `src/app/layout.tsx`
-- `src/utils/analytics.ts`
-- `src/app/systems/events/EventTaxonomyContent.tsx`
-- `src/app/starting-point/_components/StartSignupForm.tsx`
-- `src/app/waiting-list/WaitingListBody.tsx`
-- `src/app/(marketing)/contact/page.tsx`
-- `src/components/Header.tsx`
-- `src/components/ContextualLinkCta.tsx`
-- `src/app/proof/ProofPageContent.tsx`
-- `src/helpers/checkout.ts`
-- `src/app/kits/prokit/ProKitPageContent.tsx`
-- `src/app/kits/saaskit/SaaSkitPageContent.tsx`
-- `src/app/kits/_components/KitAccessFinishClient.tsx`
-- `src/app/api/stripe/create-checkout/route.ts`
-- `.env.example`
-- `docs/getting-started.md`
-- `docs-public/environment.md`
-
-## Implementation recommendation
-- Keep one global Umami script injection point.
-- Add a small typed analytics helper as the source of truth.
-- Re-export from the legacy helper path if needed to avoid broad churn.
-- Normalize existing business events rather than adding more.
-- Track only meaningful funnel step entry, submits, completions, and core CTA intent.
+The former Kits/checkout analytics implementation summary is archived under `docs/archive/retired-systems/analytics-implementation-summary.md`. It is historical evidence, not current guidance.

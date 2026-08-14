@@ -1,87 +1,79 @@
-# ProChat Repo Status
+# Repository status
 
-Status: current repository alignment note.  
-Last updated: 2026-07-07
+Status: lean public release deployed; final repository hygiene/hardening pass in progress.
 
-## Canonical authority
+Last consolidated: 2026-08-13.
 
-The `mind` repository is canonical for ProChat company philosophy, product hierarchy, naming, positioning, business stage, legal-policy direction, growth policy, and cross-product roadmap.
+## Public product surface
 
-Start with:
+Current canonical routes:
 
-```text
-mind/wiki/organisations/prochat/brand/README.md
-mind/wiki/organisations/prochat/brand/product-strategy.md
-mind/wiki/organisations/prochat/brand/product-naming-architecture.md
-mind/wiki/organisations/prochat/brand/product-roadmap.md
-mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
-mind/wiki/organisations/prochat/brand/global-design-foundation.md
-mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
-mind/wiki/organisations/prochat/brand/website-build-contract.md
-```
+- `/`
+- `/memory`
+- `/memory-qa`
+- `/workbench`
+- `/docs`
+- `/contact`
+- `/privacy`
+- `/terms`
 
-This repository is subordinate to Mind. It controls verified website implementation facts only: routes, components, content rendering, analytics hooks, deployment behavior, environment contracts, and docs automation.
+Memory, Memory for QA, and Workbench are the active product identities. BuildFlow remains only where a technical/internal compatibility identifier is required by Workbench contracts.
 
-When this repository conflicts with Mind, Mind wins and this repository must be corrected.
+## Retired runtime surfaces
 
-## Current product hierarchy
+The following are not active public products or runtime systems:
 
-```text
-ProChat
-├── ProChat Memory
-│   └── ProChat Memory for QA
-└── ProChat Workbench
-```
+- ProChat OS
+- SaaSKit, ProKit, UXKit, WaaSKit
+- AI Workflows / Legal AI Workflows
+- Studio, Proof, Prompts, Learn, Production Guide
+- generated Docs/Nextra and dynamic legacy Blog content
+- Stripe checkout/webhook/subscription/portal runtime
+- application licence administration/provisioning
+- MailerLite funnel integration
+- GitHub purchaser entitlement provisioning
+- WordPress/FluentCRM inside this Next.js repository
 
-ProChat currently has exactly two products:
+Historical evidence remains under `docs/archive/**`, `docs/migration/**`, and Git history.
 
-- **ProChat Memory** — flagship product.
-- **ProChat Workbench** — second product.
+## Active runtime capabilities
 
-**ProChat Memory for QA** is the first launch niche and first discipline-specific edition of ProChat Memory.
+- canonical public marketing/product/legal pages
+- Contact API
+- beta-interest/waitlist API and compatibility alias
+- Umami analytics
+- Resend-backed Contact/beta-interest email when configured
+- tenant/database scripts and Prisma runtime
+- shared sign-in/sign-up UI using Ory browser flows
+- internal social automation protected by `SOCIAL_AUTOMATION_SECRET`
 
-## Website status
+## Deferred internal functionality
 
-The public website should lead with the Memory-first ProChat strategy:
+Runtime Ory session validation is not implemented for `/admin`, project, Make, and n8n APIs. Those capabilities intentionally fail closed with 501/misconfigured responses.
 
-- ProChat Memory as the flagship;
-- ProChat Memory for QA as the first launch niche and first discipline-specific edition;
-- ProChat Workbench as the second product, introduced separately and only where relevant.
+This is an explicit deferred-hardening decision and does not block the canonical public website.
 
-Current primary public routes:
+## Environment contract
 
-- `/` — Memory-led ProChat homepage;
-- `/prochat-memory` — ProChat Memory page;
-- `/qa-memory` — ProChat Memory for QA page;
-- `/contact` — contact and tester-interest route.
+The active environment contract is defined by:
 
-## Legacy and historical references
+- `.env.example`
+- `docs-public/environment.md`
 
-The following names may appear only when clearly framed as historical, archived, legacy, internal, technical, or future/capability context:
+Do not reintroduce retired Stripe/GitHub/MailerLite/Strapi/Make/n8n/generated-Docs credentials without a separately approved runtime consumer.
 
-- ProChat OS;
-- SaaSKit, ProKit, UXKit, WaaSKit;
-- MikeOSS;
-- BuildFlow;
-- ProChat Answers;
-- ProChat Automations;
-- ProChat API;
-- ProChat MCP.
+## Validation baseline
 
-They must not be presented as current public products, current flagship strategy, product navigation, homepage positioning, or primary calls to action.
+The lean release has previously passed production build, TypeScript, ESLint, design lint, security tests, canonical browser/accessibility evidence, deployment SHA verification, desktop/mobile production route checks, compatibility redirects, and retired-route checks.
 
-BuildFlow may remain as an internal/technical compatibility identifier for ProChat Workbench when required by implementation details.
+The final hygiene batch must rerun the relevant validation before commit/push because source/docs changed again.
 
-## Public conversion and cleanup status
+## Current hygiene scope
 
-Public menus, footer links, homepage sections, and primary CTAs should align with the current Mind-defined product hierarchy.
-
-Older direct-access or archived routes may remain temporarily for compatibility, redirects, historical review, or future cleanup. They should not be promoted as current company strategy unless Mind explicitly changes the product boundary.
-
-## Authentication status
-
-See [auth-status.md](./auth-status.md).
-
-## Rule
-
-Do not use this file to redefine ProChat strategy. Use it only to record the current website repository status under Mind's canonical strategy.
+- remove verified orphan helpers;
+- archive retired-system docs that were still in active locations;
+- align active documentation with code;
+- explicitly document the deferred Ory boundary;
+- remove ignored browser artifacts where possible;
+- verify branch cleanup with evidence before deletion;
+- validate, commit, push, and require a clean worktree.

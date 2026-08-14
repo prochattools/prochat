@@ -73,7 +73,7 @@ export async function getAdminAccessState(): Promise<AdminAccessState> {
   if (!user) {
     return {
       status: 'misconfigured',
-      message: 'Admin authentication is not implemented yet. Ory session validation is still TODO.',
+      message: 'Admin runtime authentication is deferred. Ory session validation is not enabled, so admin access remains fail-closed.',
     }
   }
 

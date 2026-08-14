@@ -1,124 +1,78 @@
-# Development
+# Development workflow
 
-This document describes the actual local development workflow for the ProChat repo.
+This repository now serves a lean public ProChat site plus a small set of internal/admin/API capabilities. Development guidance should follow the current code, not retired Kits, Stripe, MailerLite, generated Docs, or old product workflows.
 
-## Prerequisites
+## Runtime
 
-- Node and npm installed locally
-- Postgres available for development
-- project env values present in `.env` or `.env.example` copied into local config
+- Node.js 20
+- npm/package-lock
+- Next.js App Router
+- PostgreSQL/Prisma for tenant and waitlist data workflows
 
-The repo expects local database access for provisioning and migrations. The common local setup uses Postgres exposed on `localhost:5434`.
-
-The local app server is reserved on `http://localhost:3056` so it does not collide with other apps on this machine.
-
-## Install
+## Daily commands
 
 ```bash
 npm install
+npm run dev
+npm run typecheck
+npm run lint
+npm run lint:design
+npm run build
 ```
 
-`postinstall` runs Prisma client generation:
+`npm run build` is the authoritative production compile/type/static-generation check.
+
+## Canonical public surface
+
+The active public website is exactly:
+
+- `/`
+- `/memory`
+- `/memory-qa`
+- `/workbench`
+- `/docs`
+- `/contact`
+- `/privacy`
+- `/terms`
+
+Compatibility aliases may redirect into those routes, but new public work should not add legacy product bodies or duplicate canonical content.
+
+## Documentation workflow
+
+Internal repository documentation lives under `docs/` and `docs-public/`. The active public `/docs` page is a lean repository hub for Memory for QA and Workbench.
+
+The former Nextra/generated `src/content/docs` + `scripts/docs` pipeline is retired.
+
+For documentation changes run:
 
 ```bash
-prisma generate --schema=prisma/system.prisma
+node scripts/check-env-docs.js
+node scripts/check-doc-links.js
 ```
 
-## Environment setup
+## Browser evidence
 
-Use [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md) as the canonical env reference.
+Canonical UI changes should be checked through the maintained Playwright evidence suite. Start a local production build deliberately with maintenance mode disabled, set `WAVE1_BASE_URL`, then run the evidence scripts defined in `package.json`/`REPO_OPERATIONS.md`.
 
-In development, bootstrap scripts can fill some defaults automatically, but local development still depends on a valid database connection and app slug.
+Do not commit Playwright report or test-result output.
 
-Important local values:
+## Security/API development
 
-- `APP_SLUG`
-- `DATABASE_URL`
-- `SYSTEM_DATABASE_URL`
-- `SHADOW_DATABASE_URL`
-- `PORT`
-- Stripe test values when checkout flows are exercised
-- Shared auth UI / Ory config set, depending on the workflow
+Active Contact and beta-interest routes remain production APIs. Security tests cover honeypots, rate limits, compatibility behavior, and fail-closed internal APIs.
 
-## Local provisioning flow
+Runtime Ory session validation for `/admin`, projects, Make, and n8n routes is deferred. These capabilities intentionally return 501/misconfigured responses rather than guessing at identity. Preserve that fail-closed posture until authenticated Ory session retrieval is implemented and tested.
 
-The repo provisions a tenant schema before the dev server starts.
+## Database work
 
-Primary commands:
+Database commands can be destructive. Use `DATABASE_URL`, `SYSTEM_DATABASE_URL`, and `SHADOW_DATABASE_URL` only in the documented workflows. Do not run cleanup/migration commands against production without explicit owner approval.
 
-- `npm run db:init -- --slug <slug>`
-- `npm run db:migrate:dev`
+The Prisma schema still contains some legacy compatibility/history models even when the corresponding application runtime has been retired. Do not revive retired public commerce simply because a historical model exists.
 
-During normal local startup, `npm run dev` handles this automatically through the npm lifecycle.
+## Environment changes
 
-## Dev server flow
+When adding/removing a real runtime environment variable, update both:
 
-`npm run dev` runs:
+- `.env.example`
+- `docs-public/environment.md`
 
-1. `predev`
-2. environment bootstrap
-3. tenant provisioning
-4. Prisma development migrations
-5. `next dev`
-
-The exact predev chain is defined in [package.json](/Users/Office/Repos/Organisation/ProChat/Web/prochat/package.json).
-
-## Useful commands
-
-### Runtime and build
-
-- `npm run dev`
-- `npm run build`
-- `npm run start`
-
-### Database
-
-- `npm run db:init -- --slug <slug>`
-- `npm run db:migrate:dev`
-- `npm run db:migrate:prod`
-- `npm run db:cleanup -- --slug <slug>`
-- `npm run db:provision:local`
-
-### Docs pipeline
-
-- `npm run docs:ingest`
-- `npm run docs:ai-generate`
-- `npm run docs:generate`
-- `npm run docs:validate`
-- `npm run docs:ai-build`
-- `npm run docs:extract:typescript`
-- `npm run docs:extract:openapi`
-
-### Content and publishing assets
-
-- `npm run generate:social`
-- `npm run sitemap`
-
-## Local auth behavior
-
-Auth behavior depends on env configuration.
-
-- if the shared auth UI and Ory backend are configured, the Ory-backed auth UI is used
-- if auth config is disabled or missing outside production, the repo can run in mock mode
-
-Relevant toggles are documented in [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md).
-
-## Local docs workflow
-
-There are two documentation contexts in the repository:
-
-- internal repository documentation under `docs/` and `docs-public/`
-- the lean public `/docs` repository hub for Memory for QA and Workbench
-
-The former generated `src/content/docs` / `scripts/docs` pipeline is retired. Do not restore it as part of normal documentation work; update the relevant repository docs or the lean `/docs` hub instead.
-
-## Production-style build caveat
-
-`npm run build` is a compile step. Production schema readiness is now enforced by `npm run start`, which runs `sh scripts/deploy/prepare-production.sh` before Next launches. If you want to test that behavior locally, run the helper manually before `npm run start`.
-
-## Related references
-
-- [overview.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/overview.md)
-- [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md)
-- [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
+Then run `node scripts/check-env-docs.js`.

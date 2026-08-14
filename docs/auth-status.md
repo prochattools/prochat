@@ -1,23 +1,44 @@
-# ProChat Auth Status
+# Authentication status
 
-- ProChat runtime does not use Clerk.
-- Clerk shims and active imports have been removed.
-- `@clerk/nextjs` has been removed from package dependencies.
-- Ory is the intended authentication direction.
-- Ory session validation is not fully implemented yet.
-- Middleware is currently pass-through until Ory validation is implemented.
-- Protected routes must not assume auth enforcement until Ory is complete.
+Status: public browser-flow auth is active; internal runtime session authorization is deferred and fail-closed.
 
-## TODO
+## Active behavior
 
-- define protected routes
-- define Ory env vars
-- implement Ory middleware/session validation
-- implement route-level guards where needed
-- add smoke tests for protected routes
-- update deployment docs
-- remove this temporary pass-through warning when Ory is active
+Sign-in/sign-up pages create Ory browser flows using:
 
-## Legacy references
+- `NEXT_PUBLIC_ORY_PUBLIC_URL`
+- `NEXT_PUBLIC_AUTH_UI_URL`
 
-Any Clerk mention that remains in legacy boilerplate or generated docs is historical only and must not be read as ProChat runtime guidance.
+This supports the shared ProChat authentication UI and Ory-hosted identity flow.
+
+## Deferred internal authorization
+
+The repository does not yet implement authenticated Ory session retrieval for runtime authorization inside:
+
+- `/admin/**`
+- `/api/projects`
+- Make-related internal API routes
+- n8n-related internal API routes
+- related project/scenario internal endpoints covered by security tests
+
+Those routes intentionally return HTTP 501, a misconfigured state, or another fail-closed response. This is deliberate hardening, not a production outage.
+
+`ADMIN_EMAILS` and `ADMIN_USER_IDS` define future allowlist metadata only. They do not authenticate a request without a validated Ory session.
+
+## Why the boundary stays closed
+
+Enabling these internal routes safely requires all of the following in one separately approved implementation:
+
+1. retrieve and validate the request's Ory session server-side;
+2. normalize the authenticated user identity;
+3. apply admin/tenant/project authorization;
+4. preserve CSRF/cookie/session semantics required by Ory;
+5. add positive and negative security tests;
+6. update environment/integration documentation;
+7. rerun production security and browser evidence.
+
+Until that work is approved, do not bypass the 501/misconfigured behavior and do not infer identity from headers, query params, or allowlist configuration alone.
+
+## Current decision
+
+For the lean public-site release this capability is explicitly **deferred internal functionality**. Public canonical behavior does not depend on it, so no auth implementation is included in the post-release hygiene pass.

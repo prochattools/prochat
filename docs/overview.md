@@ -1,145 +1,65 @@
-# ProChat website overview
+# Documentation overview
 
-**Status:** repository-local website implementation overview  
-**Owner:** Steve Westhoek  
-**Scope:** ProChat website, marketing pages, public docs/learn surfaces, conversion flows, SEO metadata, and website implementation
+This repository keeps active operating guidance separate from historical migration/archive evidence.
 
-## Authority
+## Current active guidance
 
-Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning, business stage, growth policy, legal-policy direction, and cross-product roadmap.
+Start here for present-day ProChat behavior:
 
-Read Mind before changing public product positioning or strategy language:
+- `docs/repo-status.md` — current repository/product/runtime state
+- `docs/roadmap.md` — completed public roadmap plus explicitly deferred internal hardening
+- `docs/implementation-plan.md` — current implementation/hygiene acceptance criteria
+- `docs/getting-started.md` — local setup and validation
+- `docs/development.md` — day-to-day contributor workflow
+- `docs/deployment.md` — deployment and production verification
+- `docs/production-lifecycle.md` — release lifecycle and rollback boundary
+- `docs/database.md` — active database/runtime notes
+- `docs/auth-status.md` — Ory browser-flow status and deferred fail-closed internal authorization
+- `docs/integrations.md` — current external integrations
+- `docs/analytics-audit.md` — current Umami analytics boundary
+- `docs/ai-guidelines.md` — current AI/automation repository safety rules
+- `docs/content-platform.md` — current public content/SEO contract
+- `docs/docs-automation.md` — explicit retirement record for the generated Docs system
+- `docs/product/agent-mode-progress.md` — latest operational handoff/current state
+- `docs-public/environment.md` — active environment-variable contract
 
-```text
-mind/wiki/organisations/prochat/brand/README.md
-mind/wiki/organisations/prochat/brand/product-strategy.md
-mind/wiki/organisations/prochat/brand/product-naming-architecture.md
-mind/wiki/organisations/prochat/brand/product-roadmap.md
-mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
-mind/wiki/organisations/prochat/brand/global-design-foundation.md
-mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
-mind/wiki/organisations/prochat/brand/website-build-contract.md
-```
+## Canonical public website
 
-This repository is subordinate to Mind. It describes website implementation and must not independently redefine ProChat strategy.
+The public site is intentionally limited to:
 
-## Current product boundary
+- `/`
+- `/memory`
+- `/memory-qa`
+- `/workbench`
+- `/docs`
+- `/contact`
+- `/privacy`
+- `/terms`
 
-Mind currently defines exactly two ProChat products:
+Memory, Memory for QA, and Workbench are the current product identities.
 
-```text
-ProChat Memory
-ProChat Workbench
-```
+## Historical evidence
 
-Current edition and launch focus:
+Historical plans and superseded implementation material belong in:
 
-```text
-ProChat Memory for QA
-```
+- `docs/archive/**`
+- `docs/migration/**`
+- `docs/platform/**` when explicitly tied to completed historical PXF work
+- Git history
 
-Repository-local rules:
+Documents in those areas may mention retired ProChat OS, Kits, BuildFlow-as-product, Stripe, MailerLite, GitHub entitlement provisioning, older analytics, or older route strategies. They are evidence, not current product/runtime guidance.
 
-- ProChat Memory is the flagship product.
-- ProChat Memory for QA is the first launch niche and first discipline-specific edition.
-- ProChat Workbench is the second product.
-- ProChat Answers, ProChat Automations, API access, and MCP integrations are capabilities or future interfaces, not current products.
-- ProChat OS, SaaSKit, ProKit, UXKit, WaaSKit, and MikeOSS are legacy, historical, external, or archive-only references where relevant.
-- BuildFlow is a technical/internal compatibility identifier for Workbench where required, not a current ProChat product.
+The final post-release hygiene pass additionally archives several retired system documents under:
 
-## Repository purpose
+- `docs/archive/retired-systems/mailerlite-funnel.md`
+- `docs/archive/retired-systems/github-entitlements.md`
+- `docs/archive/retired-systems/builder-reference.md`
+- `docs/archive/retired-systems/analytics-implementation-summary.md`
 
-The ProChat repository implements the public website and related conversion surfaces.
+## Compatibility wording
 
-It owns:
+BuildFlow may remain only as a technical/internal compatibility identifier required by Workbench contracts. Historical redirects may still mention retired product names in tests/config so inbound links resolve safely.
 
-- homepage and product landing pages;
-- ProChat Memory marketing pages;
-- ProChat Memory for QA niche page;
-- ProChat Workbench marketing page;
-- contact, waitlist, and conversion routes;
-- public docs and learn surfaces;
-- SEO metadata, Open Graph, robots, and sitemap behavior;
-- website runtime and deployment mechanics.
+## Documentation rule
 
-It does not own:
-
-- ProChat company philosophy;
-- product count or hierarchy;
-- product naming architecture;
-- legal-policy direction;
-- growth policy;
-- cross-product roadmap.
-
-## System domains
-
-### 1. Website runtime
-
-The app/runtime side serves website pages, product routes, contact/waitlist flows, API routes, auth-adjacent surfaces, billing-adjacent surfaces where still present, and operational integrations.
-
-Implementation references:
-
-```text
-docs/deployment.md
-docs/production-lifecycle.md
-docs/database.md
-docs/development.md
-docs/integrations.md
-docs/auth-status.md
-```
-
-### 2. Content and SEO platform
-
-The content/SEO side owns public learn/docs surfaces, metadata, Open Graph output, and sitemap behavior.
-
-Implementation references:
-
-```text
-docs/content-platform.md
-docs/open-graph-system.md
-docs/design-system.md
-docs/mailerlite-funnel.md
-```
-
-### 3. Documentation automation
-
-The documentation automation system may ingest, normalize, generate, and publish docs into the website surface.
-
-Implementation references:
-
-```text
-docs/docs-automation.md
-scripts/docs/README.md
-```
-
-## Active documentation rule
-
-Active docs in this repository should be lean. They should explain how the website implements Mind's strategy, not duplicate the strategy itself.
-
-Older ProChat OS, kit, BuildFlow, MikeOSS, law-firm, or module documents should be archived in a later cleanup batch when they are no longer active website guidance.
-
-## Current local docs
-
-Use:
-
-```text
-PRODUCT.md
-DESIGN.md
-brand-spec.md
-docs/strategy.md
-docs/design/
-docs/platform/
-docs/migration/
-docs/homepage-design-spec.md
-docs/homepage-visual-storyboard.md
-docs/homepage-example-data.md
-docs/homepage-technical-design.md
-docs/homepage-design-orchestration.md
-docs/homepage-validation-plan.md
-docs/roadmap.md
-docs/implementation-plan.md
-```
-
-as repository-local product, design, and website implementation guides only.
-
-Use Mind for company strategy, canonical product truth, canonical homepage copy, and cross-product roadmap decisions.
+If an active document disagrees with current source, current source wins and the document should be corrected in the same change. Retired systems must not remain in active setup/environment/deployment guidance merely because history exists elsewhere.

@@ -1,148 +1,55 @@
 # Database
 
-This is the canonical database model for ProChat.
+This document describes the current database boundary for the lean ProChat repository.
 
-The repo uses a schema-per-app pattern inside an existing Postgres database. ProChat scripts provision schemas and tenant users, but they do not create databases.
+## Connections
 
-## Core model
+- `DATABASE_URL` — runtime tenant-scoped Prisma connection.
+- `SYSTEM_DATABASE_URL` — provisioning, migration, and cleanup connection.
+- `SHADOW_DATABASE_URL` — Prisma migrate-dev shadow connection.
+- `TENANT_DB_PASSWORD` — provisioning credential for tenant-role setup.
+- `APP_SLUG` — tenant/application slug used by provisioning scripts.
 
-For each app slug:
+See `.env.example` and `docs-public/environment.md` for the active environment contract.
 
-- schema: `tenant_<slug>`
-- tenant database user: `tenant_<slug>_user`
+## Current runtime usage
 
-Example:
+The public website primarily uses database-backed behavior for retained tenant/project infrastructure and beta-interest/waitlist data where applicable.
 
-- slug: `prochat`
-- schema: `tenant_prochat`
-- user: `tenant_prochat_user`
+Database commands remain operational infrastructure and can be destructive. Follow `REPO_OPERATIONS.md`; do not run production cleanup or migration commands casually.
 
-The runtime connects through the tenant user. Infra scripts connect through an admin URL.
+## Prisma schema and historical residue
 
-## What is provisioned
+`prisma/system.prisma` still contains several historical/compatibility models, including legacy `License`, `LicenseEvent`, and `Subscription` tables.
 
-The provisioning scripts in [scripts/db/init-tenant.js](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/db/init-tenant.js) do the following:
+Current source audits show no active application runtime consumers for those legacy licence/subscription models after the lean commerce/licensing retirement.
 
-1. validate the slug
-2. derive the schema and tenant user names
-3. create the schema if it does not exist
-4. create or update the tenant role
-5. revoke access outside the tenant schema
-6. grant privileges inside the tenant schema
-7. set the tenant role search path to that schema
-8. create or update the infra registry row in `public.tenants`
+Their continued schema presence must **not** be interpreted as an active public commerce capability. They are database compatibility/history residue until a separately approved schema/data-retention migration removes them safely.
 
-The script is idempotent and is safe to rerun for the same slug.
+## Retired application behavior
 
-## Slug rules
+The lean application no longer implements:
 
-The implementation currently accepts lowercase letters, numbers, and underscores:
+- Stripe checkout/webhook/subscription runtime;
+- application licence administration;
+- licence claim/finish/recovery flows;
+- purchaser GitHub entitlement provisioning.
 
-- valid pattern: `[a-z0-9_]+`
+No licences were sold according to the owner-confirmed lean cleanup decision. Application code for those flows was removed.
 
-That matters because the script derives SQL identifiers directly from the slug.
+## Migration discipline
 
-## `public.tenants` registry
+Before changing Prisma/database structure:
 
-`public.tenants` exists for infrastructure bookkeeping only.
+1. identify current code consumers;
+2. distinguish live data obligations from historical residue;
+3. define migration and rollback behavior;
+4. validate against the intended tenant/system database context;
+5. avoid destructive production cleanup without explicit approval;
+6. update this document and the environment contract if runtime requirements change.
 
-It is used by provisioning and cleanup scripts to track:
+## Local development
 
-- `slug`
-- `schema_name`
-- `db_user`
-- `db_password`
-- `type`
-- `external_id`
-- timestamps
+Local Docker/Postgres mappings may differ from production. Use the URLs in your local env file rather than assuming a port/schema.
 
-The application runtime is not supposed to use `public.tenants` for request handling.
-
-## Tenant types
-
-The scripts currently support two tenant types:
-
-- `prod`
-- `preview`
-
-`prod` is the default.
-
-`preview` is only set when `db:init` is run with `--preview`. Cleanup logic is intentionally stricter for non-preview tenants.
-
-## Provisioning entry points
-
-Primary commands:
-
-- `npm run db:init -- --slug <slug>`
-- `npm run db:init -- --slug <slug> --preview`
-- `npm run db:init -- --slug <slug> --external-id <id>`
-
-Higher-level wrapper:
-
-- `npm run provision:auto`
-
-`provision:auto` resolves the environment, calls `db:init`, and then runs the correct Prisma migration command.
-
-## Cleanup flow
-
-Cleanup is implemented in `scripts/db/cleanup-tenant.js`.
-
-Command:
-
-- `npm run db:cleanup -- --slug <slug>`
-
-Behavior:
-
-- looks up the slug in `public.tenants`
-- refuses to remove non-preview tenants unless `--force` is used
-- drops the tenant schema
-- drops the tenant user
-- removes the registry row
-
-## Prisma ownership
-
-The schema is defined in [prisma/system.prisma](/Users/Office/Repos/Organisation/ProChat/Web/prochat/prisma/system.prisma).
-
-Current models include:
-
-- `Subscription`
-- `Project`
-- `Audiences`
-- `WaitlistSignup`
-- `License`
-- `LicenseEvent`
-
-Prisma commands used by the repo:
-
-- development: `prisma migrate dev --schema=prisma/system.prisma`
-- production: `prisma migrate deploy --schema=prisma/system.prisma`
-
-## Environment split
-
-The full env contract lives in [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md).
-
-At a database level, the important split is:
-
-- runtime uses `DATABASE_URL`
-- provisioning and cleanup scripts use `SYSTEM_DATABASE_URL`
-- Prisma dev migrations use `SHADOW_DATABASE_URL`
-
-This split is intentional and should not be collapsed in documentation.
-
-## Production posture
-
-Production assumes:
-
-- an existing Postgres database
-- schema-only provisioning inside that database
-- provisioning and migrations happen from the build pipeline
-- runtime connects as the tenant-scoped database user
-
-The docs should not describe database creation, multi-database tenancy, or runtime schema discovery because those are not the current implementation.
-
-## Related references
-
-- [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
-- [development.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/development.md)
-- [tenant-cleanup.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/tenant-cleanup.md)
+The repository does not implicitly create a production database. Provisioning/migration scripts expect the target database/service to exist.

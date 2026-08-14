@@ -1,120 +1,85 @@
-# Production Lifecycle
+# Production lifecycle
 
-This document describes the real production build and startup sequence for ProChat.
+This document describes the current production path for the lean ProChat repository.
 
-It complements [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md) by focusing on sequence rather than infrastructure summary.
+## Source of truth
 
-## Lifecycle overview
+- release branch: `main`
+- CI/CD entrypoint: `.github/workflows/main.yml`
+- production deployment target: Dokploy/container deployment
+- production revision evidence: `/api/version`
 
-Production follows a build-first lifecycle:
+The public release must correspond to the exact full Git commit SHA deployed from `main`.
 
-1. Dokploy runs `npm run build`
-2. `next build` compiles the standalone app output
-3. Dokploy starts the container with `npm run start`
-4. `scripts/start-production.sh` runs `sh scripts/deploy/prepare-production.sh`
-5. the startup script launches `next start`
-6. operators handle any Search Console follow-up manually after deploy
+## Pre-push validation
 
-## Startup database prep
+Before committing/pushing code or config changes:
 
-Database preparation is enforced by the production startup path.
+```bash
+npm run typecheck
+npm run lint
+npm run lint:design
+npm run build
+```
 
-Current command:
+When relevant also run:
 
-- `NODE_ENV=production npm run provision:auto`
+```bash
+node scripts/check-env-docs.js
+node scripts/check-doc-links.js
+npm run test:security-api
+npm run test:evidence:ci
+```
 
-[prepare-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/deploy/prepare-production.sh) is invoked by [scripts/start-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/start-production.sh) and hands off to [scripts/provision-auto.js](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/provision-auto.js). Dokploy can still run it as an optional pre-deploy command if operators want earlier failure before the container starts.
+Security/browser suites require a deliberately started maintenance-off local production server and the documented base-URL environment variables.
 
-## Provisioning and migration sequence
+## CI and deployment
 
-`scripts/provision-auto.js` currently does this in production:
+A push to `main` runs the maintained GitHub Actions workflow. The workflow validates the codebase, builds the production container/image, and triggers the Dokploy rollout when deployment conditions are met.
 
-1. resolve `APP_SLUG`
-2. fail if `APP_SLUG` is missing
-3. run `npm run db:init -- --slug <slug>`
-4. run `npm run db:migrate:prod`
+Do not reintroduce retired generated-Docs, Stripe checkout, MailerLite, GitHub entitlement, or legacy product gates into the deployment path.
 
-That means tenant provisioning and Prisma production migrations run before Next starts serving traffic in production, while remaining outside the generic build command.
+## Deployment metadata
 
-## Build continuation
+The container/build pipeline supplies:
 
-`npm run build` currently does one thing:
+- `PROCHAT_GIT_SHA`
+- `PROCHAT_IMAGE_REF`
+- `PROCHAT_BUILD_TIMESTAMP`
 
-1. `next build`
+`GET /api/version` exposes those values for release verification.
 
-Optional generators remain outside the hot build path:
+A successful production closeout requires the `revision` returned by `/api/version` to equal the full SHA of `main` that was intentionally released.
 
-- `npm run generate:social`
-- `npm run sitemap`
+## Production route verification
 
-Docs also avoid pre-rendering the full public corpus at build time. The docs router prebuilds only the core landing and onboarding pages, and less-frequent public doc pages are generated on demand and cached.
+After deployment verify the eight canonical routes at desktop and mobile widths:
 
-## Startup phase
+- `/`
+- `/memory`
+- `/memory-qa`
+- `/workbench`
+- `/docs`
+- `/contact`
+- `/privacy`
+- `/terms`
 
-Runtime startup is handled by [scripts/start-production.sh](/Users/Office/Repos/Organisation/ProChat/Web/prochat/scripts/start-production.sh).
+Also verify intentional compatibility redirects and that retired product bodies remain unavailable.
 
-Current behavior:
+## Maintenance mode
 
-- run `sh scripts/deploy/prepare-production.sh`
-- start `next start -p ${PORT:-3000}`
-- sync `.next/static` and `.next/standalone/.next/static` so both supported runtime layouts can serve assets
-- wait on the Next.js process
+`PROCHAT_MAINTENANCE_MODE` controls the maintenance gate. Evidence/production checks must account for the value deliberately; do not infer route failures from a maintenance-mode response.
 
-The script then waits on the Next.js process.
+## Rollback
 
-## Manual search-console step
+If deployment verification fails:
 
-Search-engine follow-up is manual, not automatic.
+1. stop additional releases;
+2. identify the last known-good production SHA/image;
+3. use the deployment platform's normal rollback/redeploy mechanism;
+4. reverify `/api/version` and canonical routes;
+5. keep Git history linear—do not force-push `main` to simulate rollback.
 
-After deploy:
+## External services
 
-1. resubmit `${NEXT_PUBLIC_SITE_URL}/sitemap.xml` in Google Search Console
-2. request indexing manually for the retained primary surfaces when needed:
-   - `/`
-   - `/learn`
-   - `/learn/saas-starting-point`
-   - `/learn/production-guide`
-   - `/starting-point`
-   - `/docs`
-   - `/kits/saaskit`
-   - `/kits/prokit`
-   - `/proof`
-   - `/contact`
-
-The runtime does not ping Google or Bing on startup.
-
-## What is not part of the lifecycle
-
-The current ProChat production lifecycle does not include:
-
-- SaaSKit runtime deploy gate behavior
-- runtime backup orchestration
-- runtime smoke-check and rollback flow
-
-## Dokploy role
-
-Dokploy is the production execution environment for:
-
-- the build command
-- the start command
-- production env injection
-- network access to the production database
-
-In practical terms, Dokploy is where the build-driven provisioning and startup lifecycle is executed.
-
-## Operational implication
-
-The startup-enforced schema-readiness step assumes:
-
-- valid production env values
-- reachable production database connections
-- correct app slug and tenant credentials
-
-Keeping database prep outside `npm run build` means ordinary compile jobs stay free of live production database access, while `npm run start` now guarantees the repo-owned schema-readiness path before the app serves requests.
-
-## Related references
-
-- [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md)
-- [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
-- [github-entitlements.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/github-entitlements.md)
+WordPress/FluentCRM is not owned by this Next.js runtime. A legacy external service must be retired at its separate hosting/routing origin, not by adding proxy/deletion behavior to this repository.

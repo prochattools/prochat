@@ -1,183 +1,85 @@
-# Environment
+# Environment variables
 
-This is the single operator contract for all environment variables that ProChat actually uses.
+This document is the active environment contract for the lean ProChat runtime. It mirrors `.env.example` and intentionally excludes retired Stripe, GitHub entitlement, MailerLite, generated-Docs, Strapi, Make/n8n, and Ory-admin variables.
 
-Other docs should link here instead of duplicating the contract. The list below reflects the env values referenced in runtime code, automation routes, docs scripts, and content helpers.
+## Application and tenant
 
-## Core runtime and database
+- `APP_SLUG` — tenant/application slug used by database provisioning scripts.
+- `EXTERNAL_ID` — optional external tenant identifier consumed by tenant initialization.
+- `PORT` — local server port; defaults to `3056` in development helpers.
+- `NODE_ENV` — standard Node environment selector.
 
-- `APP_SLUG`
-- `DATABASE_URL`
-- `SYSTEM_DATABASE_URL`
-- `SHADOW_DATABASE_URL`
-- `TENANT_DB_PASSWORD`
-- `EXTERNAL_ID`
-- `PORT`
+## Database
 
-These values are used by the tenant provisioning scripts, CLI helpers, and runtime startup. `APP_SLUG` determines the tenant schema (`tenant_<slug>`); the three database URLs keep runtime, provisioning, and Prisma shadow workloads separate. `TENANT_DB_PASSWORD` is required in production.
-`PORT` is reserved for the local app server and should be set to `3056` in this workspace to avoid collisions with other applications.
+- `DATABASE_URL` — runtime tenant-scoped Prisma connection.
+- `SYSTEM_DATABASE_URL` — provisioning, migration, and cleanup connection.
+- `SHADOW_DATABASE_URL` — Prisma migrate-dev shadow database connection.
+- `TENANT_DB_PASSWORD` — password used when provisioning/updating a tenant role.
 
-## Release identity
+The runtime does not create a production database implicitly. Provisioning/migration commands must use the documented database workflow and production credentials deliberately.
+
+## Shared auth UI and Ory browser flows
+
+- `NEXT_PUBLIC_AUTH_UI_URL` — public URL for the shared ProChat auth UI.
+- `NEXT_PUBLIC_ORY_PUBLIC_URL` — public Ory endpoint used to create browser sign-in/sign-up flows.
+
+Runtime Ory session validation for internal `/admin`, project, Make, and n8n APIs is intentionally deferred. Those internal capabilities remain fail-closed with HTTP 501 and do not currently consume Ory admin credentials.
+
+## Admin allowlist metadata
+
+- `ADMIN_EMAILS` — comma-separated admin email allowlist.
+- `ADMIN_USER_IDS` — comma-separated admin user-ID allowlist.
+
+These values do not bypass the deferred runtime session boundary. `/admin` remains fail-closed until authenticated Ory session retrieval is implemented.
+
+## Public site and maintenance mode
+
+- `NEXT_PUBLIC_APP_URL` — application base URL used by URL/image helpers.
+- `NEXT_PUBLIC_SITE_URL` — canonical site URL; preferred by sitemap/site URL helpers when present.
+- `PROCHAT_MAINTENANCE_MODE` — maintenance gate. Production deployment must set this deliberately; local validation commonly uses `0`.
+
+## Analytics
+
+- `NEXT_PUBLIC_UMAMI_SCRIPT_URL` — Umami script URL.
+- `NEXT_PUBLIC_UMAMI_WEBSITE_ID` — Umami website identifier.
+
+If either Umami value is missing, the analytics component does not mount the tracking script.
+
+## Contact and beta-interest email
+
+- `RESEND_API_KEY` — Resend API key used by active Contact and beta-interest handlers.
+- `RESEND_FROM` — preferred sender fallback.
+- `EMAIL_FROM` — secondary sender fallback.
+- `CONTACT_FROM_EMAIL` — Contact-specific sender override.
+- `SUPPORT_EMAIL` — preferred support/admin destination fallback.
+- `CONTACT_TO_EMAIL` — Contact-specific destination override.
+- `WAITLIST_FROM_EMAIL` — beta-interest sender override.
+- `WAITLIST_ADMIN_EMAIL` — beta-interest admin destination override.
+
+In development, Contact/beta-interest handlers can return preview behavior when Resend is not configured. Production email delivery requires the appropriate Resend/sender configuration.
+
+## Internal social automation
+
+- `SOCIAL_AUTOMATION_SECRET` — shared secret required by the internal `/api/social/next` and `/api/social/mark-posted` endpoints.
+
+These endpoints are internal automation surfaces, not canonical public website routes.
+
+## Deployment metadata
+
+The following values are normally injected by CI/container build rather than hand-configured:
 
 - `PROCHAT_GIT_SHA`
 - `PROCHAT_IMAGE_REF`
 - `PROCHAT_BUILD_TIMESTAMP`
 
-The production image build injects these non-secret values from GitHub Actions. `/api/version` returns them with `Cache-Control: no-store`, and the same revision is exposed through `X-ProChat-Revision`. Local builds default to `unknown`; production verification must treat `unknown` as an unattested build rather than a successful identity match.
+`/api/version` exposes this deployment metadata for release verification.
 
-## Site URLs and public hosts
+## Test and evidence helpers
 
-- `NEXT_PUBLIC_SITE_URL`
-- `NEXT_PUBLIC_APP_URL`
-- `PROCHAT_MAINTENANCE_MODE`
-- `NEXT_PUBLIC_STRAPI_BASE_URL`
-- `NEXT_PUBLIC_STRAPI_API_TOKEN`
-- `NEXT_PUBLIC_YOUTUBE_URL`
-- `NEXT_PUBLIC_UMAMI_SCRIPT_URL`
-- `NEXT_PUBLIC_UMAMI_WEBSITE_ID`
+- `WAVE1_BASE_URL` — base URL used by canonical browser evidence/performance tooling.
+- `PERF_DIAGNOSTIC_MODE` — enables focused performance diagnostics when set to `1`.
+- `PERF_DIAGNOSTIC_ROUTES` — optional comma-separated diagnostic route subset.
 
-`NEXT_PUBLIC_SITE_URL` is the canonical URL used for sitemap generation and canonical metadata (`scripts/generate-sitemap.ts`, `src/lib/seo/metadata.ts`). `NEXT_PUBLIC_APP_URL` is consumed by metadata and social image helpers (`src/lib/generateSocialImageUrl.ts` and other UI helpers). The Strapi helper (`src/utils/fetch.ts`) references the Strapi host and token. The YouTube URL is only used in marketing sections that expose an external video host.
-For local development, `NEXT_PUBLIC_APP_URL` should point at `http://localhost:3056`.
+## Retired variables
 
-`PROCHAT_MAINTENANCE_MODE` controls the temporary full-site maintenance redirect. It defaults to enabled when unset. Set it to `0`, `false`, `off`, or `no` to expose public routes; any other value keeps maintenance mode enabled. API routes, Next.js assets, favicon, robots, sitemap, manifests, and public files bypass the maintenance redirect.
-
-## Auth (Ory)
-
-ProChat runtime does not use Clerk for its own website/runtime auth. Ory is the intended direction, but runtime session validation is still TODO.
-
-See [auth-status.md](../docs/auth-status.md) for the canonical auth state, warnings, and TODO list.
-
-Current ProChat auth values:
-
-- `NEXT_PUBLIC_AUTH_UI_URL`
-- `NEXT_PUBLIC_ORY_PUBLIC_URL`
-- `ORY_ADMIN_URL`
-- `ORY_ADMIN_API_KEY`
-- `ORY_PROJECT_ID`
-- `ADMIN_EMAILS`
-- `ADMIN_USER_IDS`
-
-The shared ProChat auth UI should be documented against the Ory-backed auth model once that UI and validation are implemented. Middleware remains pass-through for now, and protected app flows must not assume auth enforcement until Ory session validation exists.
-
-`ADMIN_EMAILS` and `ADMIN_USER_IDS` are comma-separated lists used to identify admin users for accessing restricted routes (`src/lib/admin.ts`). At least one must be configured for admin access to be available.
-
-## Payments (Stripe)
-
-- `STRIPE_MODE`
-- `NEXT_PUBLIC_STRIPE_MODE`
-- `STRIPE_SECRET_KEY_TEST`
-- `STRIPE_SECRET_KEY_LIVE`
-- `STRIPE_WEBHOOK_SECRET_TEST`
-- `STRIPE_WEBHOOK_SECRET_LIVE`
-- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST`
-- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE`
-- `STRIPE_PRICE_PROKIT_TEST`
-- `STRIPE_PRICE_PROKIT_LIVE`
-- `STRIPE_PRODUCT_PROKIT_TEST`
-- `STRIPE_PRODUCT_PROKIT_LIVE`
-- `STRIPE_PRICE_SAASKIT_TEST`
-- `STRIPE_PRICE_SAASKIT_LIVE`
-- `STRIPE_PRODUCT_SAASKIT_TEST`
-- `STRIPE_PRODUCT_SAASKIT_LIVE`
-
-Stripe helpers (`src/libs/stripe-env.ts`, `src/lib/store/stripe.ts`) require mode selectors and mode-specific keys. Product/price IDs are required to identify the purchased kit and to resolve GitHub repo provisioning metadata.
-
-## Email and messaging
-
-- `RESEND_API_KEY`
-- `RESEND_FROM` (fallback for `CONTACT_FROM_EMAIL`)
-- `EMAIL_FROM` (fallback for contact route)
-- `CONTACT_FROM_EMAIL`
-- `CONTACT_TO_EMAIL`
-- `SUPPORT_EMAIL`
-- `WAITLIST_FROM_EMAIL`
-- `WAITLIST_ADMIN_EMAIL`
-
-Resend notifications, contact, and waitlist routes all rely on these keys. The route logic falls back to the `RESEND_FROM`/`EMAIL_FROM` aliases when the primary values are missing at runtime.
-
-## GitHub App
-
-- `GITHUB_APP_ID`
-- `GITHUB_APP_PRIVATE_KEY_BASE64`
-- `GITHUB_APP_INSTALLATION_ID`
-
-The entitlement flow (`src/lib/store/github.ts`, `src/app/api/store/_lib/handle-kit-claim.ts`) reads these values to mint GitHub App JWTs and invite collaborators for ProKit/SaaSKit purchases.
-
-## MailerLite funnel
-
-- `MAILERLITE_API_KEY`
-- `MAILERLITE_GROUP_ID`
-- `MAILERLITE_API_BASE_URL`
-- `MAILERLITE` (legacy fallback)
-
-`src/app/api/mailerlite/subscribe/route.ts` requires the API key, group, and base URL to add a subscriber. The legacy `MAILERLITE` variable is only used as a fallback when `MAILERLITE_API_KEY` is missing.
-
-## Automation (Make / n8n)
-
-- `MAKE_API_KEY`
-- `MAKE_TEAM_ID`
-- `MAKE_API_URL`
-- `MAKE_ORGANIZATION_ID` (optional trace)
-- `N8N_API_KEY`
-- `N8N_API_URL`
-- `N8N_WEBHOOK_URL`
- - `SOCIAL_AUTOMATION_SECRET`
-
-`SOCIAL_AUTOMATION_SECRET` is a private token used by internal automation scripts when publishing or managing evergreen social posts.
-
-Make and n8n routes clone workflows, create webhooks, and persist `Project` records. Only the API key, team ID, and base URL are required in code; `MAKE_ORGANIZATION_ID` is present in `.env.example` but unused in the current routes.
-
-## Docs pipeline
-
-- `DOCS_STRICT`
-- `DOCS_SKIP_AI`
-- `DOCS_SOURCE_COMMIT`
-- `DOCS_EXPORT_PRODUCT`
-- `DOCS_EXPORT_PATH`
-- `DOCS_EXPORT_COMMIT`
-- `OPENAI_API_KEY`
-- `DOCS_EXPORT_REPO_URL`
-- `DOCS_EXPORT_SOURCE_LAYOUT`
-- `DOCS_EXPORT_SOURCE_PATH`
-
-The docs automation stack uses these values for strict validation, AI generation, and manifest attribution (`scripts/docs/*`). See [docs-automation.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/docs-automation.md) for the pipeline overview.
-`DOCS_EXPORT_REPO_URL`, `DOCS_EXPORT_SOURCE_LAYOUT`, and `DOCS_EXPORT_SOURCE_PATH` describe where the pipeline read its source material. They are supplied by the extraction scripts before `docs:ingest` or `docs:ai-build` runs and remain relevant whenever external docs exports are synchronized.
-
-## Analytics and helpers
-
-- `NEXT_PUBLIC_UMAMI_SCRIPT_URL`
-- `NEXT_PUBLIC_UMAMI_WEBSITE_ID`
-- `NEXT_PUBLIC_YOUTUBE_URL`
-- `NEXT_PUBLIC_STRAPI_BASE_URL`
-- `NEXT_PUBLIC_STRAPI_API_TOKEN`
-
-The marketing analytics helper (`src/components/UmamiAnalytics.tsx`) uses the Umami script/ID. The content helpers use the Strapi host/token and YouTube reference for embed links.
-
-## Build and tooling flags
-
-- `NODE_ENV`
-- `CI`
-- `GITHUB_ACTIONS`
-- `ANALYZE`
-- `NEXT_PUBLIC_STRAPI_BASE_URL`
-- `WAVE1_BASE_URL`
-- `PERF_DIAGNOSTIC_MODE`
-- `PERF_DIAGNOSTIC_ROUTES`
-
-`NODE_ENV`, `CI`, and `GITHUB_ACTIONS` are used in runtime and scripts to gate behavior (middleware, docs pipeline, bootstrap scripts). `ANALYZE` is only read by `next.config.js` when enabling bundle analysis; it is considered a build-time or debugging toggle.
-
-`WAVE1_BASE_URL` is the local production server URL used by `scripts/run-canonical-performance.mjs` during CI performance evidence collection. It must point to a locally running server (e.g. `http://localhost:3000`) and must never be set to a production or staging host. It is not used at runtime.
-
-`PERF_DIAGNOSTIC_MODE` is a debugging flag used by the canonical performance evidence script (`scripts/run-canonical-performance.mjs`). Set to `1` to enable diagnostic mode, which runs a single Lighthouse audit per route instead of three. `PERF_DIAGNOSTIC_ROUTES` is a comma-separated list of specific routes to audit in diagnostic mode (e.g., `"/,/memory,/docs"`); if omitted, all canonical routes are tested. These are only used during development and CI performance testing, not at runtime.
-
-## Legacy traces
-
-- `MAILERLITE` (legacy fallback mentioned above)
-These variables appear in examples or legacy scripts but are no longer actively read in the canonical runtime flows.
-
-## Related references
-
-- [overview.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/overview.md)
-- [deployment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/deployment.md)
-- [database.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/database.md)
-- [integrations.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/integrations.md)
+Do not add Stripe checkout/webhook/product variables, GitHub entitlement/provisioning credentials, MailerLite credentials, Strapi credentials, Make/n8n integration credentials, generated-Docs AI keys, or Ory admin credentials back to the active environment contract unless a separately approved feature reintroduces a verified runtime consumer.

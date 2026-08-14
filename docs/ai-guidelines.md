@@ -1,83 +1,63 @@
-# ProChat AI Guidelines
+# AI and automation guidelines
 
-These rules define how AI assistants and automation may interact with the ProChat system. ProChat is the active SaaS platform in this repository, powered by SaaSKit conventions and the smaller ProKit boilerplate lineage. The goal is to let AI help while protecting the architecture.
+These rules describe how AI-assisted development and internal automation may interact with the current ProChat repository.
 
-## 1) Purpose & scope
-The ProChat platform reuses SaaSKit contracts for provisioning, migrations, and environment setup. These guidelines apply to code, docs, database schema/migrations, and infra scripts inside this repository.
+## Current product boundary
 
-## 2) Core architectural invariants (do not break)
-### Auth boundary
-- Clerk has been removed from active ProChat runtime code.
-- Ory is the intended authentication direction, but session validation is still TODO.
-- Middleware is pass-through until Ory session validation exists.
-- See `docs/auth-status.md` for the canonical runtime auth state.
-- Legacy boilerplate artifacts may mention Clerk only if they carry the required warning that they do not describe active ProChat runtime authentication.
+The canonical public products are Memory, Memory for QA, and Workbench. The public site also exposes Docs, Contact, Privacy, and Terms.
 
-Forbidden: reintroducing Clerk as ProChat runtime auth, mixing ProChat runtime auth docs with sold-boilerplate auth docs, or treating implementation tools such as Kiro as ProChat authentication platforms.
+Retired Kits, ProChat OS, AI Workflows, Studio, Proof, Prompts, generated Docs, checkout/licensing, and MailerLite systems are historical only. Do not restore them because older docs or Git history mention them.
 
-### Single-tenant runtime
-- One schema: `tenant_<APP_SLUG>`  
-- One DB user: `tenant_<APP_SLUG>_user`  
-- Runtime uses `DATABASE_URL` only.
+BuildFlow may appear only where a technical/internal compatibility identifier is required by Workbench implementation contracts.
 
-Forbidden: multi-tenant per-request routing, using `SYSTEM_DATABASE_URL` in runtime, auto-detecting tenants from hostnames.
+## Repository safety
 
-### Registry is infra-only
-`public.tenants` exists solely for provisioning/cleanup scripts with columns:
+AI-assisted changes must:
+
+- preserve exact operation IDs, source IDs, package names, routes, env names, and persisted contracts unless a separately approved migration changes them;
+- read current source before editing;
+- keep changes bounded to the requested scope;
+- avoid secrets, `.env` files, keys, generated output, vendor code, and `.git/**`;
+- stage explicit paths only;
+- never force-push;
+- validate code/config changes with the smallest meaningful checks;
+- keep the canonical public surface stable unless a concrete approved product change requires otherwise.
+
+## Authentication and internal APIs
+
+Ory browser-flow integration is active for sign-in/sign-up.
+
+Runtime Ory session validation for `/admin`, project, Make, and n8n APIs is deliberately deferred. Those internal routes currently fail closed with HTTP 501 or an equivalent misconfigured state.
+
+AI tooling must not bypass that boundary, fabricate identity, trust allowlist env values as authentication, or silently enable those routes. A future implementation must add authenticated Ory session retrieval, authorization checks, tests, and security review before changing fail-closed behavior.
+
+## Public content and data
+
+Do not send contact messages, beta-interest submissions, database contents, secrets, or internal user data to external AI providers unless the product explicitly implements and documents that flow.
+
+The repository no longer contains a direct OpenAI helper for general application use. New model integrations require an explicit product/architecture decision, current provider documentation, environment/privacy review, and bounded source consumers.
+
+## Automation
+
+Internal social automation remains authenticated by `SOCIAL_AUTOMATION_SECRET`.
+
+Make/n8n/project API stubs are not production-ready automation integrations; they are fail-closed placeholders pending authenticated runtime design.
+
+## Documentation discipline
+
+Treat current active docs as authoritative only when they match current source. Historical plans belong under `docs/archive/**` or `docs/migration/**` and must be clearly understood as history.
+
+When a subsystem is retired, remove its active code/config/env guidance rather than keeping speculative compatibility instructions indefinitely.
+
+## Validation expectations
+
+At minimum for meaningful code/config changes:
+
+```bash
+npm run typecheck
+npm run lint
+npm run lint:design
+npm run build
 ```
-slug text primary key,
-schema_name text,
-db_user text,
-db_password text,
-type text,            -- 'prod' | 'preview'
-external_id text null,
-created_at timestamptz,
-updated_at timestamptz
-```
-Forbidden: runtime access to registry or changing meaning of `type`.
 
-### Environment contract
-- `APP_SLUG` – canonical tenant slug  
-- `DATABASE_URL` – tenant runtime DB  
-- `SYSTEM_DATABASE_URL` – admin DB for scripts only  
-- `SHADOW_DATABASE_URL` – Prisma shadow DB for `migrate dev`  
-- `TENANT_DB_PASSWORD` – password used when provisioning tenant user
-
-Forbidden: change semantics of these vars or use `SYSTEM_DATABASE_URL`/`SHADOW_DATABASE_URL` during app runtime.
-
-## 3) Database scripts & commands (public contract)
-- `db:init` provisions schema + role + registry row using `SYSTEM_DATABASE_URL` (`TENANT_DB_PASSWORD` in prod; `devpass` in dev).  
-- `db:migrate:dev` uses `prisma migrate dev`; `db:migrate:prod` uses `prisma migrate deploy`.  
-- `db:cleanup` deletes preview tenants unless `--force`; uses `SYSTEM_DATABASE_URL`; must not silently delete prod tenants.
-- New apps must be provisioned via `./scripts/provision-saas.sh <project-slug>` (wraps `db:init` + migrations and updates `.env.production`).  
-
-## 4) Prisma rules
-Datasource:
-```
-datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
-}
-```
-Allowed: add models/fields useful for future SaaS apps; generate migrations when asked.  
-Forbidden: remove core models, change IDs/PKs without explicit instruction.
-
-## 5) Boilerplate vs app-specific logic
-The underlying SaaSKit and ProKit layers must remain generic.
-- Allowed: reusable dashboards, billing scaffolding, onboarding patterns, generic APIs.  
-- Not allowed: niche-specific branding/flows tightly coupled to one vertical.
-
-## 6) AI behavior rules
-- Confirm intent before touching migrations, tenant model, provisioning scripts, or env contracts.  
-- Keep diffs minimal; do not rewrite entire files unless requested.  
-- Infra changes must be reflected in `README.md`, `docs/database.md`, `docs/deployment.md`, `docs/tenant-cleanup.md`.
-- Do not modify `scripts/provision-saas.sh` unless explicitly instructed.  
-- If anything conflicts with this file, this file wins unless a human explicitly approves the change.
-
-## 7) Summary
-The ProChat platform runs on a stable SaaSKit foundation. AI may improve features, fix bugs, and enhance DX, but must not:
-- break single-tenant architecture  
-- change env contracts  
-- alter provisioning semantics  
-- introduce multi-tenancy
+Add security/browser/documentation checks when the changed surface requires them. Do not weaken tests or create exemptions merely to make validation pass.
