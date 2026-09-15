@@ -1,4 +1,4 @@
-FROM node:20-bullseye AS base
+FROM node:20-bookworm AS base
 WORKDIR /app
 
 FROM base AS deps
@@ -30,7 +30,7 @@ ENV STRIPE_PRICE_SAASKIT_LIVE=price_build_placeholder
 COPY . .
 RUN npm run build
 
-FROM node:20-bullseye-slim AS runner
+FROM node:20-bookworm-slim AS runner
 ARG PROCHAT_GIT_SHA=unknown
 ARG PROCHAT_IMAGE_REF=unknown
 ARG PROCHAT_BUILD_TIMESTAMP=unknown
@@ -43,21 +43,9 @@ ENV PROCHAT_BUILD_TIMESTAMP=$PROCHAT_BUILD_TIMESTAMP
 LABEL org.opencontainers.image.revision=$PROCHAT_GIT_SHA
 LABEL org.opencontainers.image.created=$PROCHAT_BUILD_TIMESTAMP
 RUN set -eux; \
-    retry_apt() { \
-      for delay in 0 5 10; do \
-        [ "$delay" -eq 0 ] || sleep "$delay"; \
-        rm -rf /var/lib/apt/lists/*; \
-        if apt-get update && apt-get install -y --no-install-recommends "$@"; then \
-          return 0; \
-        fi; \
-      done; \
-      return 1; \
-    }; \
-    retry_apt curl ca-certificates gnupg2; \
-    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -; \
-    echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list; \
-    retry_apt postgresql-client-15; \
-    rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/pgdg.list
+    apt-get update; \
+    apt-get install -y --no-install-recommends curl ca-certificates postgresql-client-15; \
+    rm -rf /var/lib/apt/lists/*
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
