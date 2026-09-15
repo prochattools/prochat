@@ -42,10 +42,21 @@ ENV PROCHAT_IMAGE_REF=$PROCHAT_IMAGE_REF
 ENV PROCHAT_BUILD_TIMESTAMP=$PROCHAT_BUILD_TIMESTAMP
 LABEL org.opencontainers.image.revision=$PROCHAT_GIT_SHA
 LABEL org.opencontainers.image.created=$PROCHAT_BUILD_TIMESTAMP
-RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates gnupg2 && \
-    curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
-    apt-get update && apt-get install -y --no-install-recommends postgresql-client-15 && \
+RUN set -eux; \
+    retry_apt() { \
+      for delay in 0 5 10; do \
+        [ "$delay" -eq 0 ] || sleep "$delay"; \
+        rm -rf /var/lib/apt/lists/*; \
+        if apt-get update && apt-get install -y --no-install-recommends "$@"; then \
+          return 0; \
+        fi; \
+      done; \
+      return 1; \
+    }; \
+    retry_apt curl ca-certificates gnupg2; \
+    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -; \
+    echo "deb http://apt.postgresql.org/pub/repos/apt bullseye-pgdg main" > /etc/apt/sources.list.d/pgdg.list; \
+    retry_apt postgresql-client-15; \
     rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/pgdg.list
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/.next/standalone ./
