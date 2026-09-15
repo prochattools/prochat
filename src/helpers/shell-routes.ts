@@ -48,6 +48,8 @@ export const SHELL_ROUTE_DEFINITIONS: readonly ShellRouteDefinition[] = [
   { routeId: 'ROUTE-042', sourcePattern: '/waas/accountants', runtimePattern: '/workbench', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-043', sourcePattern: '/privacy-policy', runtimePattern: '/privacy-policy', shellClass: 'no_shared_shell' },
   { routeId: 'ROUTE-044', sourcePattern: '/tos', runtimePattern: '/tos', shellClass: 'no_shared_shell' },
+  { routeId: 'ROUTE-084', sourcePattern: '/evermind', runtimePattern: '/evermind', shellClass: 'no_shared_shell' },
+  { routeId: 'ROUTE-085', sourcePattern: '/nevermind', runtimePattern: '/nevermind', shellClass: 'no_shared_shell' },
   { routeId: 'ROUTE-045', sourcePattern: '/admin', runtimePattern: '/admin', shellClass: 'protected_internal_shell' },
   { routeId: 'ROUTE-047', sourcePattern: '/admin/og', runtimePattern: '/admin/og', shellClass: 'protected_internal_shell' },
   { routeId: 'ROUTE-048', sourcePattern: '/admin/waitlist', runtimePattern: '/admin/waitlist', shellClass: 'protected_internal_shell' },
