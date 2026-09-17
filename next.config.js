@@ -22,12 +22,17 @@ const nextConfig = {
     return [
       {
         source: '/prochat-memory',
-        destination: '/memory',
+        destination: '/evermind',
         permanent: true,
       },
       {
         source: '/qa-memory',
-        destination: '/memory-qa',
+        destination: '/evermind',
+        permanent: true,
+      },
+      {
+        source: '/workbench',
+        destination: '/mastermind',
         permanent: true,
       },
       {
@@ -42,17 +47,17 @@ const nextConfig = {
       },
       {
         source: '/buildflow',
-        destination: '/workbench',
+        destination: '/mastermind',
         permanent: true,
       },
       {
         source: '/system/prochat-os',
-        destination: '/workbench',
+        destination: '/mastermind',
         permanent: true,
       },
       {
         source: '/systems/prochat-os',
-        destination: '/workbench',
+        destination: '/mastermind',
         permanent: true,
       },
       {

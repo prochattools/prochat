@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { normalizeSource, SourceSlug, sourceFromReferrerString } from './source'
 
 const MAX_AGE = 60 * 60 * 24 * 30
-const WORKBENCH_PATH = '/workbench'
+const MASTERMIND_PATH = '/mastermind'
 
 export const dynamic = 'force-dynamic'
 
@@ -39,7 +39,7 @@ function setTrackingCookies(response: NextResponse, source: SourceSlug, secure: 
 
   response.cookies.set('pc_source', source, cookieOptions)
   response.cookies.set('pc_entry', 'go', cookieOptions)
-  response.cookies.set('pc_campaign', 'workbench', cookieOptions)
+  response.cookies.set('pc_campaign', 'mastermind', cookieOptions)
 }
 
 function resolveSource(request: NextRequest): SourceSlug {
@@ -72,12 +72,12 @@ function buildRedirectLocation(
 
   const searchString = queryParams.toString()
 
-  return `${WORKBENCH_PATH}${searchString ? `?${searchString}` : ''}`
+  return `${MASTERMIND_PATH}${searchString ? `?${searchString}` : ''}`
 }
 
 export function GET(request: NextRequest) {
   let source: SourceSlug = 'direct'
-  let location = WORKBENCH_PATH
+  let location = MASTERMIND_PATH
 
   try {
     const explicitSource = normalizeSource(request.nextUrl.searchParams.get('src'))

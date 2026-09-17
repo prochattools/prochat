@@ -14,9 +14,9 @@ import { ReactNode } from 'react'
 import '@/assets/styles/globals.scss'
 import '@/assets/styles/prochat-public-chrome.css'
 
-const ROOT_TITLE = 'Memory for AI-Assisted Work'
+const ROOT_TITLE = 'Evermind, Nevermind, and Mastermind'
 const ROOT_DESCRIPTION =
-  'ProChat builds local-first, review-first tools for reusable memory and safe AI-assisted project work.'
+  'Human-owned memory, working context, and controlled execution across the AI models and providers you choose.'
 
 const fontSans = localFont({
   src: '../assets/fonts/HostGrotesk-latin.woff2',

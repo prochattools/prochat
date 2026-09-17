@@ -56,9 +56,9 @@ function normalizeFieldName(raw: string): ContactFieldName | null {
 }
 
 export type ContactInitialTopic =
-  | 'ProChat Memory'
-  | 'ProChat Memory for QA beta'
-  | 'ProChat Workbench'
+  | 'Evermind'
+  | 'Nevermind'
+  | 'Mastermind'
 
 type ContactPageClientProps = {
   initialTopic: ContactInitialTopic

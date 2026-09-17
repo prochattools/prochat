@@ -4,29 +4,29 @@ import { Input } from '@/components/ui/input'
 const CONTACT_SUBMIT_IDLE_HTML = 'SEND MESSAGE'
 
 type ContactPageMarkupProps = {
-  initialTopic?: 'ProChat Memory' | 'ProChat Memory for QA beta' | 'ProChat Workbench'
+  initialTopic?: 'Evermind' | 'Nevermind' | 'Mastermind'
 }
 
 const TOPIC_CONTEXT = {
-  'ProChat Memory': {
-    label: 'Memory enquiry',
-    helper: 'Describe the workflow, memory problem, or question you want to explore.',
-    signals: ['Memory use case', 'Current context', 'Clear next step'],
+  Evermind: {
+    label: 'Evermind enquiry',
+    helper: 'Describe the memory workflow or local-first question you want to explore.',
+    signals: ['Memory use case', 'Human ownership', 'Clear next step'],
   },
-  'ProChat Memory for QA beta': {
-    label: 'Memory for QA beta',
-    helper: 'Describe the repeated QA failure pattern, current investigation workflow, and team context.',
-    signals: ['QA workflow', 'Beta fit', 'Review context'],
+  Nevermind: {
+    label: 'Nevermind enquiry',
+    helper: 'Describe the context problem or AI-tool workflow you want to make more continuous.',
+    signals: ['Working context', 'Tool choice', 'Clear next step'],
   },
-  'ProChat Workbench': {
-    label: 'Workbench enquiry',
-    helper: 'Describe the repository workflow, guarded change, or local project problem you want to discuss.',
-    signals: ['Project scope', 'Guarded workflow', 'Clear next step'],
+  Mastermind: {
+    label: 'Mastermind enquiry',
+    helper: 'Describe the intention, project context, or bounded execution workflow you want to clarify.',
+    signals: ['Project context', 'Execution boundary', 'Clear next step'],
   },
 } as const
 
 export default function ContactPageMarkup({
-  initialTopic = 'ProChat Memory',
+  initialTopic = 'Evermind',
 }: ContactPageMarkupProps) {
   const topicContext = TOPIC_CONTEXT[initialTopic]
 

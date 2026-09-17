@@ -6,7 +6,7 @@ import { sanitizeSocialHeadlineLine, sanitizeSocialSubtitle } from '@/lib/social
 
 export const SITE_TITLE_SUFFIX = 'ProChat'
 export const DEFAULT_DESCRIPTION =
-  'ProChat builds local-first, review-first tools for reusable memory and safe AI-assisted project work.'
+  'ProChat connects human-owned AI memory, working context, and controlled execution across the models and providers you choose.'
 
 const brandPattern = /\s*[|—-]\s*ProChat$/i
 

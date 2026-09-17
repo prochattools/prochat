@@ -4,9 +4,9 @@ import Logo from '@/components/logo'
 import { SocialIcon } from '@/components/ui/social-icons'
 
 const PRODUCT_LINKS = [
-  { href: '/memory', label: 'ProChat Memory' },
-  { href: '/memory-qa', label: 'ProChat Memory for QA' },
-  { href: '/workbench', label: 'ProChat Workbench' },
+  { href: '/evermind', label: 'Evermind' },
+  { href: '/nevermind', label: 'Nevermind' },
+  { href: '/mastermind', label: 'Mastermind' },
 ] as const
 
 const RESOURCE_LINKS = [
@@ -17,8 +17,6 @@ const RESOURCE_LINKS = [
 ] as const
 
 const PARTICIPATION_LINKS = [
-  { href: 'https://github.com/prochattools/memory-qa', label: 'Memory for QA repository', external: true },
-  { href: 'https://github.com/prochattools/workbench', label: 'Workbench repository', external: true },
   { href: 'https://github.com/prochattools', label: 'ProChat on GitHub', external: true },
 ] as const
 
@@ -75,9 +73,9 @@ export const Footer: React.FC = () => {
             <Link href="/" className="pc-footer__logo" aria-label="ProChat home">
               <Logo scale={1.02} />
             </Link>
-            <h2 id="pc-footer-title">Local, durable memory for AI-assisted work.</h2>
+            <h2 id="pc-footer-title">Memory, context, and controlled execution for AI work.</h2>
             <p>
-              Memory, Memory for QA, and Workbench keep reviewed project context inspectable and local.
+              Evermind remembers. Nevermind brings context. Mastermind directs the work.
             </p>
           </div>
 

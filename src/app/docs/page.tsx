@@ -4,17 +4,17 @@ import { getSEOTags } from '@/libs/seo'
 import { getDocsSchemas } from '@/libs/structured-data'
 
 const DOCS_DESCRIPTION =
-  'Documentation and repository guidance for ProChat Memory for QA and ProChat Workbench.'
+  'Documentation for Evermind, Nevermind, and Mastermind.'
 
 export async function generateMetadata() {
   return getSEOTags({
-    title: 'ProChat Documentation | Memory for QA and Workbench',
+    title: 'ProChat Documentation | Evermind, Nevermind, and Mastermind',
     description: DOCS_DESCRIPTION,
     keywords: [
-      'Memory for QA documentation',
-      'ProChat Workbench documentation',
-      'reviewed QA memory',
-      'guarded local project work',
+      'Evermind documentation',
+      'Nevermind documentation',
+      'Mastermind documentation',
+      'controlled AI execution',
     ],
     openGraph: {
       title: 'ProChat Documentation',
@@ -28,8 +28,8 @@ export async function generateMetadata() {
     },
     socialImage: {
       line1: 'ProChat Documentation',
-      line2: 'Memory for QA + Workbench',
-      subtitle: 'Two repositories. Two current documentation paths.',
+      line2: 'Memory + context + execution',
+      subtitle: 'Three products. One connected direction.',
     },
     canonicalUrlRelative: '/docs',
   })
@@ -37,33 +37,42 @@ export async function generateMetadata() {
 
 const paths = [
   {
-    id: 'memory-qa',
+    id: 'evermind',
     index: '01',
-    eyebrow: 'Selected beta',
-    title: 'Memory for QA',
+    eyebrow: 'Human-owned memory',
+    title: 'Evermind',
     description:
-      'Evaluate reviewed QA memory using the public repository, current beta license, repository docs, and issue tracker.',
-    signals: ['Reviewed investigations', 'Evidence + correction', 'Selected beta'],
+      'Start with local, portable memory that keeps the Capture · Review · Retrieve loop clear and inspectable.',
+    signals: ['Free / local-first', 'Capture · Review · Retrieve', 'Human-owned'],
     links: [
-      { label: 'Repository', href: 'https://github.com/prochattools/memory-qa' },
-      { label: 'Documentation', href: 'https://github.com/prochattools/memory-qa/tree/main/docs' },
-      { label: 'Issues', href: 'https://github.com/prochattools/memory-qa/issues' },
-      { label: 'Beta access', href: '/contact?topic=memory-qa-beta#contact-form-card', internal: true },
+      { label: 'Explore Evermind', href: '/evermind', internal: true },
+      { label: 'Contact ProChat', href: '/contact', internal: true },
     ],
   },
   {
-    id: 'workbench',
+    id: 'nevermind',
     index: '02',
-    eyebrow: 'Public prerelease',
-    title: 'Workbench',
+    eyebrow: 'Context layer',
+    title: 'Nevermind',
     description:
-      'Use the public repository for setup, guarded local-project workflows, validation guidance, contribution rules, and release notes.',
-    signals: ['Bounded context', 'Guarded changes', 'Explicit validation'],
+      'See how Nevermind turns durable memory into working context for the AI tools and tasks you choose.',
+    signals: ['Working context', 'Relevant retrieval', 'Tool-flexible'],
     links: [
-      { label: 'Repository', href: 'https://github.com/prochattools/workbench' },
-      { label: 'README', href: 'https://github.com/prochattools/workbench/blob/main/README.md' },
-      { label: 'Documentation', href: 'https://github.com/prochattools/workbench/tree/main/docs' },
-      { label: 'Issues', href: 'https://github.com/prochattools/workbench/issues' },
+      { label: 'Explore Nevermind', href: '/nevermind', internal: true },
+      { label: 'Contact ProChat', href: '/contact', internal: true },
+    ],
+  },
+  {
+    id: 'mastermind',
+    index: '03',
+    eyebrow: 'Reasoning / orchestration',
+    title: 'Mastermind',
+    description:
+      'Understand how Mastermind turns vague intentions into executable plans while bounded work and validation stay visible.',
+    signals: ['Real project context', 'Bounded delegation', 'Explicit validation'],
+    links: [
+      { label: 'Explore Mastermind', href: '/mastermind', internal: true },
+      { label: 'Contact ProChat', href: '/contact', internal: true },
     ],
   },
 ] as const
@@ -75,26 +84,26 @@ export default function DocsIndexPage() {
 
       <PublicEditorialHero
         variant="docs"
-        eyebrow="Documentation / current repositories"
+        eyebrow="Documentation / product family"
         title={
           <>
-            Two products.<br />
-            <strong>Two documentation paths.</strong>
+            Three products.<br />
+            <strong>One connected direction.</strong>
           </>
         }
-        description="The website no longer maintains a second documentation universe. Current implementation guidance lives with the Memory for QA and Workbench repositories, where the code, release state, issues, and documentation stay together."
-        primaryAction={{ href: '#repository-docs', label: 'Choose a repository' }}
-        signals={['Memory for QA', 'Workbench', 'Repository-owned docs']}
-        visualTitle="DOCS / CURRENT"
-        visualCaption="CHOOSE → READ → EVALUATE → REPORT"
+        description="Explore the product family from human-owned memory to working context and controlled execution. Each product has a distinct role, and the pages keep those boundaries explicit."
+        primaryAction={{ href: '#repository-docs', label: 'Choose a product' }}
+        signals={['Evermind', 'Nevermind', 'Mastermind']}
+        visualTitle="DOCS / PRODUCT FAMILY"
+        visualCaption="REMEMBER → CONTEXTUALIZE → DIRECT"
       />
 
       <section className="pc-docs-hub__paths" id="repository-docs" aria-labelledby="repository-docs-title">
         <div className="pc-docs-hub__intro">
-          <div className="pc-body-kicker"><span aria-hidden="true" />Repository documentation</div>
-          <h2 id="repository-docs-title">Start where the implementation lives.</h2>
+          <div className="pc-body-kicker"><span aria-hidden="true" />Product documentation</div>
+          <h2 id="repository-docs-title">Start with the layer that fits the work.</h2>
           <p>
-            Product documentation now follows the repositories instead of duplicating setup and implementation guidance inside the marketing site.
+            Product documentation starts with the role each layer plays, so the path from memory to execution remains understandable.
           </p>
         </div>
 

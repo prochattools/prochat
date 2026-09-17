@@ -7,9 +7,9 @@ import Logo from '@/components/logo'
 import { trackEvent } from '@/utils/analytics'
 
 const NAV_ITEMS = [
-  { href: '/memory', label: 'Memory' },
-  { href: '/memory-qa', label: 'Memory for QA' },
-  { href: '/workbench', label: 'Workbench' },
+  { href: '/evermind', label: 'Evermind' },
+  { href: '/nevermind', label: 'Nevermind' },
+  { href: '/mastermind', label: 'Mastermind' },
   { href: '/docs', label: 'Documentation' },
 ] as const
 
@@ -40,15 +40,15 @@ export function MarketingNav({ cta }: { cta?: MarketingNavCta }) {
   const pathname = usePathname() || ''
 
   const primaryCta = cta ?? {
-    label: 'Explore Memory',
-    href: '/memory',
-    trackingCta: 'explore_memory',
+    label: 'Explore Evermind',
+    href: '/evermind',
+    trackingCta: 'explore_evermind',
   }
 
   const handleCtaClick = (location: string) => {
     trackEvent('nav_cta_click', {
       location,
-      product: 'prochat_memory',
+      product: 'evermind',
       cta: primaryCta.trackingCta,
       source_page: pathname,
     })

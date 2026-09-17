@@ -3,9 +3,9 @@ import { getSiteUrl } from '@/libs/site-url'
 
 const CANONICAL_ROUTES = [
   '/',
-  '/memory',
-  '/memory-qa',
-  '/workbench',
+  '/evermind',
+  '/nevermind',
+  '/mastermind',
   '/docs',
   '/contact',
   '/privacy',
@@ -20,6 +20,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}${path === '/' ? '' : path}`,
     lastModified,
     changeFrequency: path === '/' ? 'weekly' : 'monthly',
-    priority: index === 0 ? 1 : path === '/memory' || path === '/memory-qa' || path === '/workbench' ? 0.9 : 0.7,
+    priority: index === 0 ? 1 : path === '/evermind' || path === '/nevermind' || path === '/mastermind' ? 0.9 : 0.7,
   }))
 }

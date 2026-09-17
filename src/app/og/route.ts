@@ -153,7 +153,7 @@ export async function GET() {
                 color: brand.colors.white,
               },
             },
-            'Local-first memory for AI-assisted work',
+            'Evermind · Nevermind · Mastermind',
           ),
           h(
             'p',
@@ -169,7 +169,7 @@ export async function GET() {
                 color: brand.colors.subtleText,
               },
             },
-            'Reviewed context. Guarded local tools.',
+            'Memory. Context. Controlled execution.',
           ),
         ),
         h(
@@ -197,7 +197,7 @@ export async function GET() {
                 whiteSpace: 'nowrap',
               },
             },
-            'Structured infrastructure for launching with confidence.',
+            'Human-owned memory, working context, and deliberate execution.',
           ),
           h(
             'span',

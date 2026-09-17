@@ -9,15 +9,9 @@ type ContactPageProps = {
 function resolveInitialTopic(topic: string | string[] | undefined): ContactInitialTopic {
   const value = Array.isArray(topic) ? topic[0] : topic
 
-  if (value === 'memory-qa' || value === 'memory-qa-beta') {
-    return 'ProChat Memory for QA beta'
-  }
-
-  if (value === 'workbench') {
-    return 'ProChat Workbench'
-  }
-
-  return 'ProChat Memory'
+  if (value === 'nevermind') return 'Nevermind'
+  if (value === 'mastermind' || value === 'workbench') return 'Mastermind'
+  return 'Evermind'
 }
 
 export default async function ContactPage({ searchParams }: ContactPageProps) {

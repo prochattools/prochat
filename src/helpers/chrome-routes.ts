@@ -5,9 +5,6 @@ export const FOOTERLESS_ROUTES: readonly string[] = []
 
 export const MARKETING_SURFACE_ROUTES = [
   '/',
-  '/memory',
-  '/memory-qa',
-  '/workbench',
   '/docs',
   '/contact',
   '/privacy',

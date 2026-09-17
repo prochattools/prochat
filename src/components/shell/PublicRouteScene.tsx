@@ -13,26 +13,6 @@ function OrbitMotif() {
   )
 }
 
-function ReviewMotif() {
-  return (
-    <div className="pc-route-motif pc-route-motif--review">
-      <span className="pc-route-gate pc-route-gate--a" />
-      <span className="pc-route-gate pc-route-gate--b" />
-      <span className="pc-route-review-path" />
-      <i className="pc-route-review-packet" />
-    </div>
-  )
-}
-
-function PipelineMotif() {
-  return (
-    <div className="pc-route-motif pc-route-motif--pipeline">
-      {[0, 1, 2, 3].map(index => <span key={index} />)}
-      <i />
-    </div>
-  )
-}
-
 function DocsMotif() {
   return (
     <div className="pc-route-motif pc-route-motif--docs">
@@ -68,12 +48,7 @@ function LedgerMotif() {
 function renderMotif(variant: PublicVisualVariant) {
   switch (variant) {
     case 'home':
-    case 'memory':
       return <OrbitMotif />
-    case 'review':
-      return <ReviewMotif />
-    case 'workbench':
-      return <PipelineMotif />
     case 'docs':
       return <DocsMotif />
     case 'contact':

@@ -3,32 +3,31 @@ import '@/components/home-v2.css'
 import { getSEOTags } from '@/libs/seo'
 
 export const metadata = getSEOTags({
-  title: 'Memory for AI-Assisted Work',
+  title: 'Evermind, Nevermind, and Mastermind',
   description:
-    'ProChat builds local-first, review-first tools for reusable memory and safe AI-assisted project work.',
+    'Human-owned memory, working context, and controlled execution across the AI models and providers you choose.',
   keywords: [
-    'ProChat Memory',
-    'ProChat Memory for QA',
-    'ProChat Workbench',
-    'AI-assisted work memory',
-    'local-first memory',
-    'review-first AI tools',
-    'persistent project context',
-    'safe AI-assisted project work',
+    'Evermind',
+    'Nevermind',
+    'Mastermind',
+    'local-first AI memory',
+    'working context',
+    'controlled execution',
+    'model provider flexibility',
   ],
   openGraph: {
-    title: 'Memory for AI-Assisted Work',
+    title: 'Evermind, Nevermind, and Mastermind',
     description:
-      'Local-first, review-first tools for reusable memory and safe AI-assisted project work.',
+      'Human-owned memory, working context, and controlled execution across the AI models and providers you choose.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
   },
   socialImage: {
-    line1: 'ProChat Memory',
-    line2: 'AI-assisted work',
-    subtitle: 'Local-first memory. Reviewed context. Guarded local tools.',
+    line1: 'Evermind · Nevermind · Mastermind',
+    line2: 'Memory. Context. Execution.',
+    subtitle: 'Human-owned memory. Working context. Controlled execution.',
   },
   canonicalUrlRelative: '/',
 })

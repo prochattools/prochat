@@ -3,9 +3,9 @@ import { getSEOTags } from '@/libs/seo'
 import config from '@/config'
 
 export const metadata = getSEOTags({
-  title: `Contact ${config.appName} | Memory Beta and Workbench`,
+  title: `Contact ${config.appName} | Evermind, Nevermind, and Mastermind`,
   description:
-    'Contact ProChat about ProChat Memory, the selected Memory for QA beta, or guarded local project work with ProChat Workbench.',
+    'Contact ProChat about human-owned memory, working context, or controlled execution with Evermind, Nevermind, and Mastermind.',
   canonicalUrlRelative: '/contact',
 })
 

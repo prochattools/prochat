@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
 export const CONTACT_TOPICS = [
-  'ProChat Memory',
-  'ProChat Memory for QA beta',
-  'ProChat Workbench',
+  'Evermind',
+  'Nevermind',
+  'Mastermind',
   'Partnership / Media',
   'Privacy / Terms',
   'General Question',

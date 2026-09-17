@@ -5,7 +5,7 @@ const config: ConfigProps = {
 	appName: 'ProChat',
 	// REQUIRED: a short description of your app for SEO tags (can be overwritten)
 	appDescription:
-		'ProChat helps businesses turn repeated emails, notes, examples, reports, and follow-ups into drafts, summaries, tasks, and replies their team can review and use.',
+		'ProChat connects human-owned AI memory, working context, and controlled execution across the models and providers you choose.',
 	// REQUIRED (no https://, no trailing slash; just the naked canonical domain)
 	domainName: 'prochat.tools',
 	colors: {

@@ -41,12 +41,12 @@ function HeroSection() {
         </svg>
       </div>
       <div className="hv4-hero__content">
-        <p className="hv4-eyebrow">Structured memory for AI work</p>
-        <h1 id="hv4-hero-title">Build memory that gets better with your work.</h1>
-        <p className="hv4-hero__lede">Keep reviewed decisions, evidence, and lessons reusable across every new task.</p>
+        <p className="hv4-eyebrow">A human-owned system for AI work</p>
+        <h1 id="hv4-hero-title">Remember what matters. Direct the work.</h1>
+        <p className="hv4-hero__lede">Evermind remembers. Nevermind brings context. Mastermind directs the work.</p>
         <div className="hv4-actions">
-          <Link href="/memory" className="hv4-button hv4-button--light">Explore Memory <ArrowIcon /></Link>
-          <Link href="/workbench" className="hv4-button hv4-button--ghost">Start with Workbench <ArrowIcon /></Link>
+          <Link href="/evermind" className="hv4-button hv4-button--light">Explore Evermind <ArrowIcon /></Link>
+          <Link href="/mastermind" className="hv4-button hv4-button--ghost">Explore Mastermind <ArrowIcon /></Link>
         </div>
       </div>
     </section>
@@ -137,10 +137,10 @@ function WhyChooseSection() {
       <div className="hv4-why__grid">
         <article className="hv4-feature-panel hv4-feature-panel--dark">
           <div className="hv4-feature-panel__copy">
-            <p className="hv4-eyebrow">Memory for QA</p>
-            <h3>Stop solving the same QA failure twice.</h3>
-            <p>Preserve evidence, fixes, and reviewed conclusions as one reusable record.</p>
-            <Link href="/memory-qa">Explore Memory for QA <ArrowIcon /></Link>
+            <p className="hv4-eyebrow">Nevermind</p>
+            <h3>Turn memory into working context.</h3>
+            <p>Bring the context that matters into the tools and tasks you are already using.</p>
+            <Link href="/nevermind">Explore Nevermind <ArrowIcon /></Link>
           </div>
           <div className="hv4-mini-console">
             <span>checkout · browser evidence</span>
@@ -151,10 +151,10 @@ function WhyChooseSection() {
 
         <article className="hv4-feature-panel hv4-feature-panel--cobalt">
           <div className="hv4-feature-panel__copy">
-            <p className="hv4-eyebrow">Workbench</p>
-            <h3>Build through ChatGPT locally.</h3>
-            <p>Bring exact project context into a bounded workflow on your own computer.</p>
-            <Link href="/workbench">Start with Workbench <ArrowIcon /></Link>
+            <p className="hv4-eyebrow">Mastermind</p>
+            <h3>Turn vague intentions into controlled execution.</h3>
+            <p>Reason across real project context, delegate bounded work, and validate what changed.</p>
+            <Link href="/mastermind">Explore Mastermind <ArrowIcon /></Link>
           </div>
           <div className="hv4-workflow-strip">
             <span>read context</span><b>→</b><span>make change</span><b>→</b><span>validate</span><b>→</b><span>commit</span>
@@ -167,10 +167,10 @@ function WhyChooseSection() {
 
 function SystemSection() {
   const modes = [
-    { n: '01', title: 'Capture', copy: 'Evidence keeps its source.' },
-    { n: '02', title: 'Review', copy: 'People decide what lasts.' },
-    { n: '03', title: 'Retrieve', copy: 'Only relevant memory returns.' },
-    { n: '04', title: 'Execute', copy: 'Workbench applies context safely.' },
+    { n: '01', title: 'Remember', copy: 'Evermind keeps memory human-owned.' },
+    { n: '02', title: 'Contextualize', copy: 'Nevermind brings memory into the work.' },
+    { n: '03', title: 'Plan', copy: 'Mastermind turns intent into an executable plan.' },
+    { n: '04', title: 'Direct', copy: 'Bounded execution stays visible and deliberate.' },
   ]
 
   return (
@@ -208,24 +208,21 @@ function TailoredSection() {
       </header>
       <div className="hv4-tailored__grid">
         <article className="hv4-tailored__memory">
-          <p className="hv4-eyebrow">Memory</p>
-          <h3>Keep reviewed project knowledge reusable.</h3>
-          <Link href="/memory">Explore Memory <ArrowIcon /></Link>
+          <p className="hv4-eyebrow">Evermind</p>
+          <h3>Keep human-owned memory reusable.</h3>
+          <p>Free, local-first memory with a clear Capture · Review · Retrieve loop.</p>
+          <Link href="/evermind">Explore Evermind <ArrowIcon /></Link>
         </article>
-        <article className="hv4-tailored__local">
-          <p className="hv4-eyebrow">Local-first</p>
-          <h3>Your memory stays on your computer.</h3>
-          <div className="hv4-local-stack"><span>files</span><span>Markdown</span><span>Git</span></div>
+        <article className="hv4-tailored__nevermind">
+          <p className="hv4-eyebrow">Nevermind</p>
+          <h3>Bring memory into working context.</h3>
+          <p>Nevermind turns memory into working context for the AI tools you choose.</p>
+          <Link href="/nevermind">Explore Nevermind <ArrowIcon /></Link>
         </article>
-        <article className="hv4-tailored__qa">
-          <p className="hv4-eyebrow">Memory for QA</p>
-          <h3>Turn failure evidence into durable lessons.</h3>
-          <Link href="/memory-qa">Explore the beta <ArrowIcon /></Link>
-        </article>
-        <article className="hv4-tailored__workbench">
-          <p className="hv4-eyebrow">Workbench</p>
-          <h3>Put trusted context into a guarded local workflow.</h3>
-          <Link href="/workbench">Open Workbench <ArrowIcon /></Link>
+        <article className="hv4-tailored__mastermind">
+          <p className="hv4-eyebrow">Mastermind</p>
+          <h3>Direct bounded work with real project context.</h3>
+          <Link href="/mastermind">Explore Mastermind <ArrowIcon /></Link>
         </article>
       </div>
     </section>
@@ -238,11 +235,11 @@ function ClosingSection() {
       <div>
         <p className="hv4-eyebrow">Start with one repeated workflow</p>
         <h2 id="hv4-closing-title">Put trusted memory to work.</h2>
-        <p>Choose Memory for QA, begin with Workbench, or talk through a workflow.</p>
+        <p>Start with human-owned memory, add working context, or direct the work.</p>
       </div>
       <div className="hv4-actions">
-        <Link href="/contact?topic=memory-qa-beta#contact-form-card" className="hv4-button hv4-button--light">Apply for beta <ArrowIcon /></Link>
-        <Link href="/workbench" className="hv4-button hv4-button--ghost">Start with Workbench <ArrowIcon /></Link>
+        <Link href="/evermind" className="hv4-button hv4-button--light">Start with Evermind <ArrowIcon /></Link>
+        <Link href="/mastermind" className="hv4-button hv4-button--ghost">Explore Mastermind <ArrowIcon /></Link>
       </div>
     </section>
   )

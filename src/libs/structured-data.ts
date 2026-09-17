@@ -104,6 +104,26 @@ export function getWorkbenchSchema() {
   }
 }
 
+export function getMastermindSchema() {
+  const siteUrl = getSiteUrl()
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Mastermind',
+    description:
+      'A free reasoning and orchestration layer for turning vague intentions into controlled execution across authorized project context.',
+    url: `${siteUrl}/mastermind`,
+    applicationCategory: 'DeveloperApplication',
+    isAccessibleForFree: true,
+    author: {
+      '@type': 'Organization',
+      name: 'ProChat',
+      url: `${siteUrl}/`,
+    },
+  }
+}
+
 export function getDocsSchemas() {
   const siteUrl = getSiteUrl()
 
@@ -113,7 +133,7 @@ export function getDocsSchemas() {
       '@type': 'CollectionPage',
       name: 'ProChat Documentation',
       description:
-        'Documentation for ProChat Memory, the selected Memory for QA beta, and ProChat Workbench.',
+        'Documentation for Evermind, Nevermind, and Mastermind.',
       url: `${siteUrl}/docs`,
       isPartOf: {
         '@type': 'WebSite',

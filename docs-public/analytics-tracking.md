@@ -8,12 +8,12 @@ Product pages track two categories of user interaction using the `ProductTracked
 
 ### product_cta_click
 
-Fires when a visitor activates a primary product call-to-action on a canonical product page (`/memory`, `/memory-qa`, `/workbench`).
+Fires when a visitor activates a product call-to-action on the current product family pages (`/evermind`, `/nevermind`, `/mastermind`).
 
 Properties:
 
 - `location` — `hero` or `closing` (position on the page)
-- `product` — `memory`, `memory-qa`, or `workbench`
+- `product` — the current product identifier, such as `evermind`, `nevermind`, or `mastermind`
 - `cta` — label of the activated action (e.g. `"Apply for Beta"`, `"View on GitHub"`)
 - `source_page` — canonical route that fired the event
 

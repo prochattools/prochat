@@ -6,8 +6,8 @@ All public marketing routes use a single shared component: `MarketingNav` at `sr
 
 This component is used in three entry points:
 
-- **Homepage** (`App.tsx`) — with a custom CTA pointing to `#current-products`
-- **Product pages** (`PublicProductPage.tsx`) — with the default "Explore Memory" CTA
+- **Homepage** (`HomeV2.tsx`) — with product-family CTAs
+- **Product pages** (`PublicProductPage.tsx`) — for retained legacy compatibility pages
 - **Contact, Privacy, Terms** (`Header.tsx`) — via `LegacyCompatibilityShell`
 - **Docs** (`DocsThemeLayout.tsx`) — via `<Header forceVisible />`
 
@@ -24,7 +24,7 @@ The CSS required by `MarketingNav` (`pm-navbar`, `pm-site-header`, `pm-pill-butt
 <MarketingNav cta={null} /> // CTA suppressed
 ```
 
-The `cta` prop is optional. When omitted, defaults to `{ label: 'Explore Memory', href: '/memory', trackingCta: 'explore_memory' }`. Pass `null` to suppress the CTA entirely.
+The `cta` prop is optional. When omitted, defaults to `{ label: 'Explore Evermind', href: '/evermind', trackingCta: 'explore_evermind' }`. Pass `null` to suppress the CTA entirely.
 
 ### Analytics
 
@@ -33,7 +33,7 @@ CTA clicks fire `nav_cta_click` via `trackEvent` (Umami). Payload:
 ```json
 {
   "location": "header | mobile_header",
-  "product": "prochat_memory",
+  "product": "evermind",
   "cta": "<trackingCta string>",
   "source_page": "<current pathname>"
 }
@@ -42,9 +42,9 @@ CTA clicks fire `nav_cta_click` via `trackEvent` (Umami). Payload:
 ### Nav items
 
 ```
-/memory          Memory
-/memory-qa       Memory for QA
-/workbench       Workbench
+/evermind        Evermind
+/nevermind       Nevermind
+/mastermind      Mastermind
 /docs            Documentation
 ```
 

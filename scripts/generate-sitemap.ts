@@ -17,9 +17,9 @@ const SITE_URL = 'https://prochat.tools'
 
 const PAGE_PATHS = [
   { path: '/', changefreq: 'weekly', priority: '1.0' },
-  { path: '/memory', changefreq: 'weekly', priority: '0.9' },
-  { path: '/memory-qa', changefreq: 'weekly', priority: '0.85' },
-  { path: '/workbench', changefreq: 'weekly', priority: '0.85' },
+  { path: '/evermind', changefreq: 'weekly', priority: '0.9' },
+  { path: '/nevermind', changefreq: 'weekly', priority: '0.9' },
+  { path: '/mastermind', changefreq: 'weekly', priority: '0.9' },
   { path: '/docs', changefreq: 'weekly', priority: '0.8' },
   { path: '/contact', changefreq: 'monthly', priority: '0.7' },
   { path: '/privacy', changefreq: 'yearly', priority: '0.5' },

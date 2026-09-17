@@ -1,8 +1,5 @@
 export type PublicVisualVariant =
   | 'home'
-  | 'memory'
-  | 'review'
-  | 'workbench'
   | 'docs'
   | 'contact'
   | 'legal'
@@ -22,9 +19,6 @@ export function getUnifiedPublicRouteConfig(pathname: string): PublicRouteDesign
   const path = normalize(pathname)
 
   if (path === '/') return { variant: 'home' }
-  if (path === '/memory') return { variant: 'memory' }
-  if (path === '/memory-qa') return { variant: 'review' }
-  if (path === '/workbench') return { variant: 'workbench' }
   if (path === '/docs') return { variant: 'docs', contentOwnsMain: true }
   if (path === '/contact') return { variant: 'contact' }
   if (path === '/privacy' || path === '/terms') return { variant: 'legal' }
