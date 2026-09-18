@@ -15,9 +15,6 @@ type RouteCase = {
 
 const ROUTES: RouteCase[] = [
   { path: '/', variant: 'home', motif: 'orbit', bodySelector: '.hv4-page[data-home-v2]' },
-  { path: '/memory', variant: 'memory', motif: 'orbit', bodySelector: ".pm-public-product-page[data-product='memory']" },
-  { path: '/memory-qa', variant: 'review', motif: 'review', bodySelector: ".pm-public-product-page[data-product='memory-qa']" },
-  { path: '/workbench', variant: 'workbench', motif: 'pipeline', bodySelector: ".pm-public-product-page[data-product='workbench']" },
   { path: '/docs', variant: 'docs', motif: 'docs', bodySelector: '.pc-docs-hub' },
   { path: '/contact', variant: 'contact', motif: 'radar', bodySelector: '.contact-body-page' },
   { path: '/privacy', variant: 'legal', motif: 'ledger', bodySelector: ".pc-legal-ledger[data-legal-kind='privacy']" },
@@ -31,21 +28,18 @@ const VIEWPORTS = [
 
 const MOTION_SELECTORS: Record<string, string> = {
   orbit: '.pc-route-orbit',
-  review: '.pc-route-review-packet',
-  pipeline: '.pc-route-motif--pipeline i',
   radar: '.pc-route-radar-sweep',
   ledger: '.pc-route-ledger-cursor',
 }
 
 const REDIRECTS = [
-  { from: '/prochat-memory', to: '/memory' },
-  { from: '/qa-memory', to: '/memory-qa' },
+  { from: '/prochat-memory', to: '/evermind' },
+  { from: '/qa-memory', to: '/evermind' },
   { from: '/book', to: '/contact' },
-  { from: '/buildflow', to: '/workbench' },
-  { from: '/system/prochat-os', to: '/workbench' },
-  { from: '/systems/prochat-os', to: '/workbench' },
-  { from: '/starting-point', to: '/workbench' },
-  { from: '/waas/accountants', to: '/workbench' },
+  { from: '/workbench', to: '/mastermind' },
+  { from: '/buildflow', to: '/mastermind' },
+  { from: '/system/prochat-os', to: '/mastermind' },
+  { from: '/systems/prochat-os', to: '/mastermind' },
   { from: '/learn', to: '/docs' },
   { from: '/docs/learn', to: '/docs' },
   { from: '/privacy-policy', to: '/privacy' },

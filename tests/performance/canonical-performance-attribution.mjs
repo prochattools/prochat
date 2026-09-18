@@ -9,9 +9,9 @@ const LCP_AUDIT_IDS = [
 
 const ROUTE_MANIFEST_KEYS = {
   '/': ['/page'],
-  '/memory': ['/(marketing)/memory/page'],
-  '/memory-qa': ['/(marketing)/memory-qa/page'],
-  '/workbench': ['/(marketing)/workbench/page'],
+  '/evermind': ['/evermind/page'],
+  '/nevermind': ['/nevermind/page'],
+  '/mastermind': ['/mastermind/page'],
   '/docs': ['/docs/[[...mdxPath]]/page'],
   '/contact': ['/(marketing)/contact/page'],
   '/privacy': ['/(marketing)/privacy/page'],

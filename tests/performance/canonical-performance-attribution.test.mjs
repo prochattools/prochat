@@ -35,7 +35,7 @@ describe('trace-based LCP attribution', () => {
     const result = extractTraceLcpAttribution(
       traceArtifacts([
         traceEvent('navigationStart', 1_000_000, {
-          documentLoaderURL: 'http://localhost:3000/memory',
+          documentLoaderURL: 'http://localhost:3000/evermind',
           isOutermostMainFrame: true,
           navigationId: 'main-nav',
         }),
@@ -68,7 +68,7 @@ describe('trace-based LCP attribution', () => {
     const result = extractTraceLcpAttribution(
       traceArtifacts([
         traceEvent('navigationStart', 1_000_000, {
-          documentLoaderURL: 'http://localhost:3000/memory',
+          documentLoaderURL: 'http://localhost:3000/evermind',
           isOutermostMainFrame: true,
           navigationId: 'main-nav',
         }),
@@ -98,7 +98,7 @@ describe('trace-based LCP attribution', () => {
     const result = extractTraceLcpAttribution(
       traceArtifacts([
         traceEvent('navigationStart', 1_000_000, {
-          documentLoaderURL: 'http://localhost:3000/memory',
+          documentLoaderURL: 'http://localhost:3000/evermind',
           isOutermostMainFrame: true,
           navigationId: 'main-nav',
         }),
@@ -114,14 +114,14 @@ describe('trace-based LCP attribution', () => {
           isOutermostMainFrame: true,
           candidateIndex: 2,
           nodeId: 42,
-          nodeName: "H1 id='pm-product-title-memory'",
+          nodeName: "H1 id='evermind-hero-title'",
           type: 'text',
           size: 73130,
         }),
       ]),
     )
     assert.equal(result.finalCandidate.type, 'text')
-    assert.equal(result.finalCandidate.nodeName, "H1 id='pm-product-title-memory'")
+    assert.equal(result.finalCandidate.nodeName, "H1 id='evermind-hero-title'")
     assert.equal(result.candidateCount, 2)
     assert.equal(result.replacementObserved, true)
     assert.deepEqual(result.candidateIndexes, [1, 2])
@@ -131,7 +131,7 @@ describe('trace-based LCP attribution', () => {
     const result = extractTraceLcpAttribution(
       traceArtifacts([
         traceEvent('navigationStart', 1_000_000, {
-          documentLoaderURL: 'http://localhost:3000/memory',
+          documentLoaderURL: 'http://localhost:3000/evermind',
           isOutermostMainFrame: true,
           navigationId: 'main-nav',
         }),
@@ -298,33 +298,33 @@ describe('route and representative attribution', () => {
       {
         pages: {
           '/page': ['static/chunks/2117-a.js', 'static/chunks/home.js'],
-          '/(marketing)/memory/page': ['static/chunks/2117-a.js', 'static/chunks/memory.js'],
+          '/evermind/page': ['static/chunks/2117-a.js', 'static/chunks/evermind.js'],
         },
       },
-      ['/', '/memory'],
+      ['/', '/evermind'],
     )
     assert.deepEqual(result['/'].files, ['static/chunks/2117-a.js', 'static/chunks/home.js'])
-    assert.deepEqual(result['/memory'].files, ['static/chunks/2117-a.js', 'static/chunks/memory.js'])
+    assert.deepEqual(result['/evermind'].files, ['static/chunks/2117-a.js', 'static/chunks/evermind.js'])
   })
 
   it('parses per-route client-reference manifests and ignores numeric chunk IDs', () => {
     const parsed = parseClientReferenceManifest(
       'globalThis.__RSC_MANIFEST=(globalThis.__RSC_MANIFEST||{});' +
-        'globalThis.__RSC_MANIFEST["/(marketing)/memory/page"]=' +
+        'globalThis.__RSC_MANIFEST["/evermind/page"]=' +
         JSON.stringify({
           clientModules: {
-            a: { chunks: ['1931', 'static/chunks/2117-a.js', 'static/chunks/memory.js'] },
+            a: { chunks: ['1931', 'static/chunks/2117-a.js', 'static/chunks/evermind.js'] },
             b: { chunks: ['static/chunks/2117-a.js'] },
           },
-          entryCSSFiles: { page: ['static/css/memory.css'] },
+          entryCSSFiles: { page: ['static/css/evermind.css'] },
         }),
     )
-    const result = extractRouteChunkInventory({ '/memory': parsed }, ['/memory'])
-    assert.equal(result['/memory'].manifestKey, '/(marketing)/memory/page')
-    assert.deepEqual(result['/memory'].files, [
+    const result = extractRouteChunkInventory({ '/evermind': parsed }, ['/evermind'])
+    assert.equal(result['/evermind'].manifestKey, '/evermind/page')
+    assert.deepEqual(result['/evermind'].files, [
       'static/chunks/2117-a.js',
-      'static/chunks/memory.js',
-      'static/css/memory.css',
+      'static/chunks/evermind.js',
+      'static/css/evermind.css',
     ])
   })
 
@@ -343,7 +343,7 @@ describe('route and representative attribution', () => {
   it('keeps attribution separate from required aggregate metrics', () => {
     const summary = diagnosticSummary(
       {
-        route: '/memory',
+        route: '/evermind',
         medians: { LCP_seconds: 2.8 },
         attribution: {
           lcp: { element: { selector: 'h1' }, phases: { renderDelayMs: 500 } },
@@ -352,10 +352,10 @@ describe('route and representative attribution', () => {
           mainThread: { longTasks: [] },
         },
       },
-      { '/memory': { manifestKey: '/(marketing)/memory/page', files: ['memory.js'] } },
+      { '/evermind': { manifestKey: '/evermind/page', files: ['evermind.js'] } },
     )
     assert.equal(summary.LCP_seconds, 2.8)
     assert.equal(summary.totalJavaScriptTransferBytes, 123)
-    assert.equal(summary.routeChunks.files[0], 'memory.js')
+    assert.equal(summary.routeChunks.files[0], 'evermind.js')
   })
 })

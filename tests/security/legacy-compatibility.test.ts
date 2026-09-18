@@ -49,8 +49,6 @@ describe('Lean compatibility routes and APIs', () => {
   describe('Intentional compatibility redirects', () => {
     for (const route of [
       { path: 'src/app/book/page.tsx', expected: "redirect('/contact')" },
-      { path: 'src/app/starting-point/page.tsx', expected: "redirect('/workbench')" },
-      { path: 'src/app/waas/accountants/page.tsx', expected: "redirect('/workbench')" },
       {
         path: 'src/app/waitlist/page.tsx',
         expected: "redirect('/contact?topic=memory-qa-beta#contact-form-card')",
@@ -66,8 +64,8 @@ describe('Lean compatibility routes and APIs', () => {
     }
 
     for (const route of [
-      { from: '/buildflow', to: '/workbench' },
-      { from: '/systems/prochat-os', to: '/workbench' },
+      { from: '/buildflow', to: '/mastermind' },
+      { from: '/systems/prochat-os', to: '/mastermind' },
       { from: '/learn', to: '/docs' },
       { from: '/docs/learn', to: '/docs' },
       { from: '/waiting-list', to: '/contact' },

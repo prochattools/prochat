@@ -48,7 +48,7 @@ if (BASE_URL.includes('prochat.tools') || BASE_URL.includes('staging')) {
   process.exit(1)
 }
 
-const CANONICAL_ROUTES = ['/', '/memory', '/memory-qa', '/workbench', '/docs', '/contact', '/privacy', '/terms']
+const CANONICAL_ROUTES = ['/', '/evermind', '/nevermind', '/mastermind', '/docs', '/contact', '/privacy', '/terms']
 const DIAGNOSTIC_MODE = process.env.PERF_DIAGNOSTIC_MODE === '1'
 const requestedDiagnosticRoutes = (process.env.PERF_DIAGNOSTIC_ROUTES ?? '')
   .split(',')
@@ -175,9 +175,9 @@ function loadRouteChunkInventory() {
   const root = join(__dirname, '..')
   const routeManifestPaths = {
     '/': '.next/server/app/(marketing)/page_client-reference-manifest.js',
-    '/memory': '.next/server/app/(marketing)/memory/page_client-reference-manifest.js',
-    '/memory-qa': '.next/server/app/(marketing)/memory-qa/page_client-reference-manifest.js',
-    '/workbench': '.next/server/app/(marketing)/workbench/page_client-reference-manifest.js',
+    '/evermind': '.next/server/app/evermind/page_client-reference-manifest.js',
+    '/nevermind': '.next/server/app/nevermind/page_client-reference-manifest.js',
+    '/mastermind': '.next/server/app/mastermind/page_client-reference-manifest.js',
     '/docs': '.next/server/app/docs/page_client-reference-manifest.js',
     '/contact': '.next/server/app/(marketing)/contact/page_client-reference-manifest.js',
     '/privacy': '.next/server/app/(marketing)/privacy/page_client-reference-manifest.js',

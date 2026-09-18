@@ -52,7 +52,7 @@ These are repository-local validation and compile commands. `npm run build` also
 ## Operational Constraints
 
 - Node 20 is the supported runtime for Docker, CI, and local tooling.
-- The active public documentation surface is the lean `/docs` repository hub for Memory for QA and Workbench. The retired generated `src/content/docs` / `scripts/docs` pipeline must not be reintroduced.
+- The active public documentation surface is the lean `/docs` repository hub for Evermind, Nevermind, and Mastermind. The retired generated `src/content/docs` / `scripts/docs` pipeline must not be reintroduced.
 - WordPress, the MCP bridge, and Dokploy branch previews are legacy and must not be reintroduced.
 - Any environment change must be reflected in `docs-public/environment.md` and `.env.example` when applicable.
 - The live `prochat.tools/wp-admin` / FluentCRM surface is not implemented by this repository and must be retired at its separate hosting or routing origin.

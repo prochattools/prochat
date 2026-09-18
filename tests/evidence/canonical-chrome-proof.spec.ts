@@ -7,16 +7,15 @@ if (!baseUrl) {
   throw new Error('WAVE1_BASE_URL is required')
 }
 
-const CANONICAL_ROUTES = [
+const STANDARD_PUBLIC_ROUTES = [
   '/',
-  '/memory',
-  '/memory-qa',
-  '/workbench',
   '/docs',
   '/contact',
   '/privacy',
   '/terms',
 ] as const
+
+const CINEMATIC_PRODUCT_ROUTES = ['/evermind', '/nevermind', '/mastermind'] as const
 
 const DESKTOP = { name: 'desktop', width: 1440, height: 1000 } as const
 const MOBILE = { name: 'mobile', width: 390, height: 900 } as const
@@ -29,7 +28,7 @@ const VIEWPORTS = [DESKTOP, MOBILE] as const
 // ---------------------------------------------------------------------------
 
 test.describe('canonical public chrome — structure and first-paint invariants', () => {
-  for (const route of CANONICAL_ROUTES) {
+  for (const route of STANDARD_PUBLIC_ROUTES) {
     for (const viewport of VIEWPORTS) {
       test(`${route} chrome at ${viewport.name}`, async ({ page }) => {
         await page.setViewportSize(viewport)
@@ -145,7 +144,7 @@ test.describe('canonical public chrome — geometry consistency at desktop', () 
       footerHeight: number
     }> = []
 
-    for (const route of CANONICAL_ROUTES) {
+    for (const route of STANDARD_PUBLIC_ROUTES) {
       await page.goto(new URL(route, baseUrl).toString(), {
         waitUntil: 'domcontentloaded',
       })
@@ -194,6 +193,70 @@ test.describe('canonical public chrome — geometry consistency at desktop', () 
 })
 
 // ---------------------------------------------------------------------------
+// Cinematic product funnels — route-owned chrome and motion invariants
+// ---------------------------------------------------------------------------
+
+test.describe('cinematic product funnels — route-owned chrome', () => {
+  for (const route of CINEMATIC_PRODUCT_ROUTES) {
+    for (const viewport of VIEWPORTS) {
+      test(`${route} renders its funnel at ${viewport.name}`, async ({ page }) => {
+        await page.setViewportSize(viewport)
+
+        const response = await page.goto(new URL(route, baseUrl).toString(), {
+          waitUntil: 'domcontentloaded',
+        })
+
+        expect(response, `${route} navigation response`).not.toBeNull()
+        expect(response!.status(), `${route} HTTP status`).toBeLessThan(400)
+        expect(new URL(page.url()).pathname.replace(/\/$/, '') || '/', `${route} final path`).toBe(route)
+
+        await expect(page.locator('.cpf-root')).toHaveCount(1)
+        await expect(page.locator('.cpf-root')).toBeVisible()
+        await expect(page.locator('.cpf-nav')).toHaveCount(1)
+        await expect(page.locator('.cpf-nav')).toBeVisible()
+        await expect(page.locator('.cpf-root main')).toBeVisible()
+        await expect(page.locator('.cpf-root main h1').first()).toBeVisible()
+        await expect(page.locator('.cpf-root main h1').first()).not.toHaveText('')
+
+        for (const product of ['Evermind', 'Nevermind', 'Mastermind']) {
+          const href = `/${product.toLowerCase()}`
+          const productLink = page.locator(`.cpf-nav__links a[href="${href}"]`)
+          await expect(productLink).toHaveCount(1)
+          if (viewport.name === 'desktop') {
+            await expect(productLink).toBeVisible()
+          }
+        }
+
+        const layout = await page.evaluate(() => ({
+          documentWidth: document.documentElement.scrollWidth,
+          viewportWidth: window.innerWidth,
+        }))
+        expect(layout.documentWidth, `${route} overflows at ${viewport.name}`).toBeLessThanOrEqual(layout.viewportWidth)
+      })
+    }
+  }
+
+  test('product funnels honor reduced motion', async ({ page }) => {
+    await page.setViewportSize(DESKTOP)
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+
+    for (const route of CINEMATIC_PRODUCT_ROUTES) {
+      await page.goto(new URL(route, baseUrl).toString(), { waitUntil: 'domcontentloaded' })
+      const motion = await page.evaluate(() => {
+        const reveal = document.querySelector<HTMLElement>('.cpf-reveal')
+        const canvas = document.querySelector<HTMLElement>('.cpf-video__canvas')
+        return {
+          revealTransitionDuration: reveal ? getComputedStyle(reveal).transitionDuration : '',
+          canvasDisplay: canvas ? getComputedStyle(canvas).display : 'none',
+        }
+      })
+      expect(motion.revealTransitionDuration, `${route} reveal transitions must stop under reduced motion`).toBe('0s')
+      expect(motion.canvasDisplay, `${route} video canvas must be hidden under reduced motion`).toBe('none')
+    }
+  })
+})
+
+// ---------------------------------------------------------------------------
 // Docs — repository hub usable at desktop, mobile, and narrow
 // ---------------------------------------------------------------------------
 
@@ -209,9 +272,10 @@ test.describe('docs page — repository hub with canonical shell', () => {
 
     const docsHub = page.locator('main.pc-docs-hub')
     await expect(docsHub).toBeVisible()
-    await expect(docsHub.locator('.pc-docs-hub__card')).toHaveCount(2)
-    await expect(docsHub).toContainText('Memory for QA')
-    await expect(docsHub).toContainText('Workbench')
+    await expect(docsHub.locator('.pc-docs-hub__card')).toHaveCount(3)
+    await expect(docsHub).toContainText('Evermind')
+    await expect(docsHub).toContainText('Nevermind')
+    await expect(docsHub).toContainText('Mastermind')
 
     const layout = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
@@ -228,7 +292,7 @@ test.describe('docs page — repository hub with canonical shell', () => {
 
     await expect(page.locator('nav.pm-navbar')).toBeVisible()
     await expect(page.locator('main.pc-docs-hub')).toBeVisible()
-    await expect(page.locator('.pc-docs-hub__card')).toHaveCount(2)
+    await expect(page.locator('.pc-docs-hub__card')).toHaveCount(3)
     await expect(page.locator('footer.pc-footer')).toBeVisible()
 
     const layout = await page.evaluate(() => ({

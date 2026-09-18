@@ -33,7 +33,7 @@ export const SHELL_ROUTE_DEFINITIONS: readonly ShellRouteDefinition[] = [
   { routeId: 'ROUTE-010', sourcePattern: 'global error', runtimePattern: null, shellClass: 'no_shared_shell' },
   { routeId: 'ROUTE-012', sourcePattern: '/memory', runtimePattern: '/memory', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-013', sourcePattern: '/memory-qa', runtimePattern: '/memory-qa', shellClass: 'temporary_legacy_compatibility' },
-  { routeId: 'ROUTE-014', sourcePattern: '/workbench', runtimePattern: '/workbench', shellClass: 'temporary_legacy_compatibility' },
+  { routeId: 'ROUTE-014', sourcePattern: '/workbench', runtimePattern: '/mastermind', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-086', sourcePattern: '/mastermind', runtimePattern: '/mastermind', shellClass: 'no_shared_shell' },
   { routeId: 'ROUTE-017', sourcePattern: '/buildflow', runtimePattern: '/mastermind', shellClass: 'temporary_legacy_compatibility' },
   { routeId: 'ROUTE-018', sourcePattern: '/systems/prochat-os', runtimePattern: '/mastermind', shellClass: 'temporary_legacy_compatibility' },

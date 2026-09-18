@@ -11,7 +11,7 @@ import {
 } from './accessibility-policy'
 
 function node(target: string): AxeNodeLike {
-  return { target: [target], html: '<a href="/memory">Memory</a>' }
+  return { target: [target], html: '<a href="/evermind">Evermind</a>' }
 }
 
 function exception(overrides: Partial<ReviewedAxeException> = {}): ReviewedAxeException {
@@ -55,7 +55,7 @@ describe('evaluateBlockingViolations', () => {
   })
 
   it('rejects the wrong route', () => {
-    const result = evaluateBlockingViolations(violation(), '/memory', 'desktop', [exception()])
+    const result = evaluateBlockingViolations(violation(), '/evermind', 'desktop', [exception()])
     assert.equal(result.unreviewed.length, 1)
   })
 
@@ -172,7 +172,7 @@ describe('summarizeNonBlockingEvidence — environment-sensitive rule exclusion'
   it('a serious color-contrast violation is unreviewed and blocking unless an exact exception exists', () => {
     const result = evaluateBlockingViolations(
       [{ id: 'color-contrast', impact: 'serious', nodes: [node('#any-element')] }],
-      '/memory',
+      '/evermind',
       'desktop',
       [],
     )

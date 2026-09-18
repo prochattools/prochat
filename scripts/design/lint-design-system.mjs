@@ -375,7 +375,7 @@ async function lintShellRoutingOnly() {
     violations.push('current canonical visual route allowlist must remain empty')
   }
 
-  for (const route of ['/memory', '/memory/qa', '/workbench', '/philosophy', '/about']) {
+  for (const route of ['/evermind', '/nevermind', '/mastermind', '/philosophy', '/about']) {
     if (!shellRoutes.includes(`'${route}'`)) {
       violations.push(`future canonical route ${route} is missing`)
     }

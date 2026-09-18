@@ -27,9 +27,9 @@ export const MOBILE_LIGHTHOUSE_CONFIG = {
 
 export const CANONICAL_ROUTES = [
   '/',
-  '/memory',
-  '/memory-qa',
-  '/workbench',
+  '/evermind',
+  '/nevermind',
+  '/mastermind',
   '/docs',
   '/contact',
   '/privacy',

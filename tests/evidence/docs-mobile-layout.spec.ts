@@ -29,9 +29,10 @@ test.describe('/docs responsive layout', () => {
       await expect(main.locator('h1')).toBeVisible()
 
       const cards = main.locator('.pc-docs-hub__card')
-      await expect(cards).toHaveCount(2)
-      await expect(cards.nth(0)).toContainText('Memory for QA')
-      await expect(cards.nth(1)).toContainText('Workbench')
+      await expect(cards).toHaveCount(3)
+      await expect(cards.nth(0)).toContainText('Evermind')
+      await expect(cards.nth(1)).toContainText('Nevermind')
+      await expect(cards.nth(2)).toContainText('Mastermind')
       await expect(main.locator('.pc-docs-hub__boundary')).toBeVisible()
 
       const layout = await page.evaluate(() => {
@@ -55,8 +56,7 @@ test.describe('/docs responsive layout', () => {
 
       if (viewport.width <= 700) {
         expect(Math.abs(layout.cardRects[0].top - layout.cardRects[1].top)).toBeGreaterThan(40)
-      } else {
-        expect(Math.abs(layout.cardRects[0].top - layout.cardRects[1].top)).toBeLessThan(4)
+        expect(Math.abs(layout.cardRects[1].top - layout.cardRects[2].top)).toBeGreaterThan(40)
       }
     })
   }

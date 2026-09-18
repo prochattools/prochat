@@ -6,7 +6,8 @@ if (!baseUrl) {
   throw new Error('WAVE1_BASE_URL is required')
 }
 
-const routes = ['/', '/memory', '/memory-qa', '/workbench', '/docs', '/contact', '/privacy', '/terms'] as const
+const routes = ['/', '/evermind', '/nevermind', '/mastermind', '/docs', '/contact', '/privacy', '/terms'] as const
+const cinematicRoutes = new Set<string>(['/evermind', '/nevermind', '/mastermind'])
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
@@ -44,16 +45,24 @@ test.describe('canonical route smoke evidence', () => {
           `${route} redirected away: expected ${expectedPath}, landed on ${finalPath}`,
         ).toBe(expectedPath)
 
-        await expect(page.locator('main')).toBeVisible()
+        const main = cinematicRoutes.has(route) ? page.locator('.cpf-root main') : page.locator('main').first()
+        await expect(main).toBeVisible()
 
-        const navigation = page.locator('nav.pm-navbar')
-        await expect(navigation, `${route} is missing the canonical public navigation`).toHaveCount(1)
-        await expect(navigation).toBeVisible()
+        if (cinematicRoutes.has(route)) {
+          await expect(page.locator('.cpf-root'), `${route} is missing its cinematic root`).toHaveCount(1)
+          await expect(page.locator('.cpf-root')).toBeVisible()
+          await expect(page.locator('.cpf-nav'), `${route} is missing its cinematic navigation`).toHaveCount(1)
+          await expect(page.locator('.cpf-nav')).toBeVisible()
+        } else {
+          const navigation = page.locator('nav.pm-navbar')
+          await expect(navigation, `${route} is missing the canonical public navigation`).toHaveCount(1)
+          await expect(navigation).toBeVisible()
 
-        const footer = page.locator('footer.pc-footer')
-        await expect(footer, `${route} is missing the canonical public footer`).toHaveCount(1)
-        await expect(footer).toBeVisible()
-        await expect(footer.getByRole('link', { name: 'ProChat home' })).toBeVisible()
+          const footer = page.locator('footer.pc-footer')
+          await expect(footer, `${route} is missing the canonical public footer`).toHaveCount(1)
+          await expect(footer).toBeVisible()
+          await expect(footer.getByRole('link', { name: 'ProChat home' })).toBeVisible()
+        }
 
         // A non-empty primary heading must be present — proves the page rendered.
         // Pattern is intentionally loose: any word characters suffice to avoid coupling to marketing copy.
