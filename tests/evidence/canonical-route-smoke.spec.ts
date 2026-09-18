@@ -141,3 +141,71 @@ test.describe('contact page visual closeout', () => {
     expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth)
   })
 })
+
+test.describe('homepage cinematic journey evidence', () => {
+  test('homepage owns one cinematic root, three product stages, and one canonical h1', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 1000 })
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+    await page.goto(new URL('/', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
+
+    const journey = page.locator('[data-home-cinematic]')
+    await expect(journey).toHaveCount(1)
+    await expect(journey.locator('.home-cinematic__media')).toHaveCount(1)
+    await expect(journey.locator('.home-cinematic__stage')).toHaveCount(3)
+    await expect(page.locator('main h1')).toHaveCount(1)
+    await expect(page.locator('main h1')).toHaveText('Remember what matters. Direct the work.')
+
+    for (const href of ['/evermind', '/nevermind', '/mastermind']) {
+      await expect(journey.locator(`a[href="${href}"]`), `homepage is missing ${href}`).toHaveCount(1)
+    }
+
+    await page.evaluate(() => window.scrollTo(0, document.querySelector('[data-home-cinematic]')?.getBoundingClientRect().top ?? 0))
+    await page.waitForTimeout(80)
+    await expect(journey).toHaveAttribute('data-active-stage', 'evermind')
+
+    await page.evaluate(() => {
+      const journey = document.querySelector<HTMLElement>('[data-home-cinematic]')
+      if (!journey) return
+      const start = journey.getBoundingClientRect().top + window.scrollY
+      window.scrollTo(0, start + journey.offsetHeight * 0.5)
+    })
+    await page.waitForTimeout(80)
+    await expect(journey).toHaveAttribute('data-active-stage', 'nevermind')
+
+    const layout = await page.evaluate(() => ({
+      documentWidth: document.documentElement.scrollWidth,
+      viewportWidth: window.innerWidth,
+      journeyHeight: document.querySelector('[data-home-cinematic]')?.getBoundingClientRect().height ?? 0,
+    }))
+    expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth)
+    expect(layout.journeyHeight).toBeGreaterThanOrEqual(2500)
+  })
+
+  test('homepage reduced motion keeps every act visible and suppresses scrubbing', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto(new URL('/', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
+
+    const journey = page.locator('[data-home-cinematic]')
+    await expect(journey.locator('.home-cinematic__stage')).toHaveCount(3)
+    for (const stage of await journey.locator('.home-cinematic__stage').all()) {
+      await expect(stage).toBeVisible()
+      await expect(stage.locator('a')).toBeVisible()
+    }
+
+    const initialStage = await journey.getAttribute('data-active-stage')
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+    await page.waitForTimeout(80)
+    await expect(journey).toHaveAttribute('data-active-stage', initialStage ?? 'evermind')
+
+    const motion = await page.evaluate(() => ({
+      canvasDisplay: getComputedStyle(document.querySelector('.home-cinematic__media canvas') as HTMLElement).display,
+      sectionPosition: getComputedStyle(document.querySelector('.home-cinematic__sticky') as HTMLElement).position,
+      documentWidth: document.documentElement.scrollWidth,
+      viewportWidth: window.innerWidth,
+    }))
+    expect(motion.canvasDisplay).toBe('none')
+    expect(motion.sectionPosition).toBe('relative')
+    expect(motion.documentWidth).toBeLessThanOrEqual(motion.viewportWidth)
+  })
+})
