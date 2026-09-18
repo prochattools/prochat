@@ -30,8 +30,6 @@ const CANONICAL_ROUTES = [
   '/terms',
 ] as const
 
-const CINEMATIC_PRODUCT_ROUTES = new Set(['/evermind', '/nevermind', '/mastermind'])
-
 const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900 },
   { name: 'mobile', width: 390, height: 900 },
@@ -83,19 +81,9 @@ test.describe('canonical accessibility evidence', () => {
 
         // Scan the complete application document. Reviewed exceptions are
         // applied after Axe analysis so no subtree or unrelated rule is hidden.
-        const axe = new AxeBuilder({ page }).withTags(WCAG_TAGS)
-        // Axe's target-size rule treats the compact, deliberately padded public
-        // chrome as a spacing violation even where the implementation supplies
-        // the required 24px hit area. The cinematic funnels also use translucent
-        // video compositing, which makes Axe's static color-contrast calculation
-        // unreliable. Keep the remaining WCAG scan and the explicit browser
-        // chrome/focus/overflow evidence as the contract for these surfaces.
-        const disabledAxeRules = ['target-size']
-        if (CINEMATIC_PRODUCT_ROUTES.has(route)) {
-          disabledAxeRules.push('color-contrast')
-        }
-        axe.disableRules(disabledAxeRules)
-        const accessibilityScanResults = await axe.analyze()
+        const accessibilityScanResults = await new AxeBuilder({ page })
+          .withTags(WCAG_TAGS)
+          .analyze()
 
         const viewportName = viewport.name as AccessibilityViewport
         const blockingEvaluation = evaluateBlockingViolations(
