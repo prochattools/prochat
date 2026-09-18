@@ -19,6 +19,7 @@ export default function AppChrome({ children }: { children: ReactNode }) {
       <CanonicalPublicShell
         visualVariant={publicDesign.variant}
         contentOwnsMain={publicDesign.contentOwnsMain}
+        contentOwnsShell={publicDesign.contentOwnsShell}
       >
         {children}
       </CanonicalPublicShell>

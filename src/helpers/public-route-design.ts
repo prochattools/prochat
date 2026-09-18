@@ -7,6 +7,7 @@ export type PublicVisualVariant =
 type PublicRouteDesignConfig = {
   variant: PublicVisualVariant
   contentOwnsMain?: boolean
+  contentOwnsShell?: boolean
 }
 
 function normalize(pathname: string) {
@@ -18,7 +19,7 @@ function normalize(pathname: string) {
 export function getUnifiedPublicRouteConfig(pathname: string): PublicRouteDesignConfig | null {
   const path = normalize(pathname)
 
-  if (path === '/') return { variant: 'home' }
+  if (path === '/') return { variant: 'home', contentOwnsMain: true, contentOwnsShell: true }
   if (path === '/docs') return { variant: 'docs', contentOwnsMain: true }
   if (path === '/contact') return { variant: 'contact' }
   if (path === '/privacy' || path === '/terms') return { variant: 'legal' }

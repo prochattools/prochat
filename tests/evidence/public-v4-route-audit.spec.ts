@@ -76,8 +76,15 @@ test.describe('site-wide V4 public route evidence', () => {
         await expect(shell).toHaveCount(1)
         await expect(shell).toHaveAttribute('data-public-variant', route.variant)
 
-        await expect(page.locator('nav.pm-navbar')).toHaveCount(1)
-        await expect(page.locator('footer.pc-footer')).toHaveCount(1)
+        if (route.path === '/') {
+          await expect(page.locator('nav[aria-label="Primary navigation"]')).toHaveCount(1)
+          await expect(page.locator('footer.home-cinematic-footer')).toHaveCount(1)
+          await expect(page.locator('nav.pm-navbar')).toHaveCount(0)
+          await expect(page.locator('footer.pc-footer')).toHaveCount(0)
+        } else {
+          await expect(page.locator('nav.pm-navbar')).toHaveCount(1)
+          await expect(page.locator('footer.pc-footer')).toHaveCount(1)
+        }
         await expect(page.locator('main')).toHaveCount(1)
         await expect(page.locator('main')).toBeVisible()
         const body = page.locator(route.bodySelector)

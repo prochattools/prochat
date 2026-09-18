@@ -51,15 +51,22 @@ test.describe('canonical public chrome — structure and first-paint invariants'
           `${route} must have no accessible skip-to-content control at ${viewport.name}`,
         ).toHaveCount(0)
 
-        // Exactly one canonical nav
-        const navCount = await page.locator('nav.pm-navbar').count()
-        expect(navCount, `${route} pm-navbar count at ${viewport.name}`).toBe(1)
-        await expect(page.locator('nav.pm-navbar')).toBeVisible()
+        const nav = route === '/'
+          ? page.locator('nav[aria-label="Primary navigation"]')
+          : page.locator('nav.pm-navbar')
+        const footer = route === '/'
+          ? page.locator('footer.home-cinematic-footer')
+          : page.locator('footer.pc-footer')
 
-        // Exactly one canonical footer
-        const footerCount = await page.locator('footer.pc-footer').count()
-        expect(footerCount, `${route} pc-footer count at ${viewport.name}`).toBe(1)
-        await expect(page.locator('footer.pc-footer')).toBeVisible()
+        expect(await nav.count(), `${route} primary nav count at ${viewport.name}`).toBe(1)
+        await expect(nav).toBeVisible()
+        expect(await footer.count(), `${route} footer count at ${viewport.name}`).toBe(1)
+        await expect(footer).toBeVisible()
+
+        if (route === '/') {
+          expect(await page.locator('nav.pm-navbar').count(), `${route} legacy nav count`).toBe(0)
+          expect(await page.locator('footer.pc-footer').count(), `${route} legacy footer count`).toBe(0)
+        }
 
         // html/body/shell backgrounds are neutral black
         const backgrounds = await page.evaluate(() => {
@@ -144,7 +151,7 @@ test.describe('canonical public chrome — geometry consistency at desktop', () 
       footerHeight: number
     }> = []
 
-    for (const route of STANDARD_PUBLIC_ROUTES) {
+    for (const route of STANDARD_PUBLIC_ROUTES.filter(route => route !== '/')) {
       await page.goto(new URL(route, baseUrl).toString(), {
         waitUntil: 'domcontentloaded',
       })
@@ -406,8 +413,10 @@ test.describe('client navigation — chrome integrity across route changes', () 
 
     // Start on homepage
     await page.goto(new URL('/', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
-    expect(await page.locator('nav.pm-navbar').count()).toBe(1)
-    expect(await page.locator('footer.pc-footer').count()).toBe(1)
+    expect(await page.locator('nav[aria-label="Primary navigation"]').count()).toBe(1)
+    expect(await page.locator('footer.home-cinematic-footer').count()).toBe(1)
+    expect(await page.locator('nav.pm-navbar').count()).toBe(0)
+    expect(await page.locator('footer.pc-footer').count()).toBe(0)
 
     // Navigate to /docs
     await page.goto(new URL('/docs', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
@@ -439,13 +448,15 @@ test.describe('client navigation — chrome integrity across route changes', () 
     // Navigate back to homepage
     await page.goto(new URL('/', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
     expect(
-      await page.locator('nav.pm-navbar').count(),
-      'exactly one nav after returning to homepage',
+      await page.locator('nav[aria-label="Primary navigation"]').count(),
+      'exactly one cinematic nav after returning to homepage',
     ).toBe(1)
     expect(
-      await page.locator('footer.pc-footer').count(),
-      'exactly one footer after returning to homepage',
+      await page.locator('footer.home-cinematic-footer').count(),
+      'exactly one cinematic footer after returning to homepage',
     ).toBe(1)
+    expect(await page.locator('nav.pm-navbar').count()).toBe(0)
+    expect(await page.locator('footer.pc-footer').count()).toBe(0)
 
     // No horizontal overflow on final page
     const layout = await page.evaluate(() => ({

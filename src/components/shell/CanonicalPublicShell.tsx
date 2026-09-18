@@ -14,10 +14,12 @@ export function CanonicalPublicShell({
   children,
   visualVariant = 'home',
   contentOwnsMain = false,
+  contentOwnsShell = false,
 }: {
   children: ReactNode
   visualVariant?: PublicVisualVariant
   contentOwnsMain?: boolean
+  contentOwnsShell?: boolean
 }) {
   return (
     <div
@@ -25,7 +27,7 @@ export function CanonicalPublicShell({
       data-public-variant={visualVariant}
     >
       <PublicRouteScene variant={visualVariant} />
-      <MarketingNav />
+      {!contentOwnsShell && <MarketingNav />}
       {contentOwnsMain ? (
         <div className="pc-canonical-main pc-canonical-main--content-owned">
           {children}
@@ -35,7 +37,7 @@ export function CanonicalPublicShell({
           {children}
         </main>
       )}
-      <Footer />
+      {!contentOwnsShell && <Footer />}
     </div>
   )
 }

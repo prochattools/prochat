@@ -53,6 +53,16 @@ test.describe('canonical route smoke evidence', () => {
           await expect(page.locator('.cpf-root')).toBeVisible()
           await expect(page.locator('.cpf-nav'), `${route} is missing its cinematic navigation`).toHaveCount(1)
           await expect(page.locator('.cpf-nav')).toBeVisible()
+        } else if (route === '/') {
+          const navigation = page.locator('nav[aria-label="Primary navigation"]')
+          await expect(navigation, 'homepage is missing its cinematic navigation').toHaveCount(1)
+          await expect(navigation).toBeVisible()
+          await expect(page.locator('nav.pm-navbar')).toHaveCount(0)
+
+          const footer = page.locator('footer.home-cinematic-footer')
+          await expect(footer, 'homepage is missing its cinematic footer').toHaveCount(1)
+          await expect(footer).toBeVisible()
+          await expect(page.locator('footer.pc-footer')).toHaveCount(0)
         } else {
           const navigation = page.locator('nav.pm-navbar')
           await expect(navigation, `${route} is missing the canonical public navigation`).toHaveCount(1)
@@ -149,11 +159,30 @@ test.describe('homepage cinematic journey evidence', () => {
     await page.goto(new URL('/', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
 
     const journey = page.locator('[data-home-cinematic]')
+    await expect(page.locator('header.home-cinematic-header')).toHaveCount(1)
+    await expect(page.locator('nav[aria-label="Primary navigation"]')).toHaveCount(1)
+    await expect(page.locator('nav.pm-navbar')).toHaveCount(0)
+    await expect(page.locator('footer.home-cinematic-footer')).toHaveCount(1)
+    await expect(page.locator('footer.pc-footer')).toHaveCount(0)
+    await expect(page.getByRole('img', { name: 'ProChat logo' }).first()).toBeVisible()
     await expect(journey).toHaveCount(1)
     await expect(journey.locator('.home-cinematic__media')).toHaveCount(1)
     await expect(journey.locator('.home-cinematic__stage')).toHaveCount(3)
     await expect(page.locator('main h1')).toHaveCount(1)
     await expect(page.locator('main h1')).toHaveText('Remember what matters. Direct the work.')
+    await expect(page.locator('main')).toContainText('Evermind remembers. Nevermind brings context. Mastermind directs the work.')
+    await expect(page.locator('.home-cinematic__stage-label')).toHaveText([
+      'Evermind / Memory',
+      'Nevermind / Context',
+      'Mastermind / Execution',
+    ])
+    await expect(page.locator('footer.home-cinematic-footer')).toContainText('Local files · Human-reviewed · Portable memory')
+    for (const href of ['/evermind', '/nevermind', '/mastermind', '/docs', '/contact', '/privacy', '/terms']) {
+      expect(
+        await page.locator(`footer.home-cinematic-footer a[href="${href}"]`).count(),
+        `homepage footer is missing ${href}`,
+      ).toBeGreaterThan(0)
+    }
 
     for (const href of ['/evermind', '/nevermind', '/mastermind']) {
       await expect(journey.locator(`a[href="${href}"]`), `homepage is missing ${href}`).toHaveCount(1)
@@ -207,5 +236,29 @@ test.describe('homepage cinematic journey evidence', () => {
     expect(motion.canvasDisplay).toBe('none')
     expect(motion.sectionPosition).toBe('relative')
     expect(motion.documentWidth).toBeLessThanOrEqual(motion.viewportWidth)
+    await expect(page.locator('footer.home-cinematic-footer')).toBeVisible()
+    await expect(page.locator('footer.home-cinematic-footer a').first()).toBeVisible()
+  })
+
+  test('homepage mobile menu opens and closes without duplicating the shell', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 900 })
+    await page.goto(new URL('/', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
+
+    const navigation = page.locator('nav[aria-label="Primary navigation"]')
+    const toggle = navigation.locator('button[aria-controls="home-cinematic-mobile-menu"]')
+    const menu = page.locator('#home-cinematic-mobile-menu')
+
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    await expect(menu).toBeHidden()
+    await toggle.click()
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    await expect(menu).toBeVisible()
+    await expect(menu.getByRole('link', { name: 'Documentation' })).toBeVisible()
+
+    await toggle.click()
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    await expect(menu).toBeHidden()
+    await expect(page.locator('nav[aria-label="Primary navigation"]')).toHaveCount(1)
+    await expect(page.locator('footer.home-cinematic-footer')).toHaveCount(1)
   })
 })

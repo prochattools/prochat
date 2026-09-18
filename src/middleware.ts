@@ -3,8 +3,7 @@ import { NextResponse } from 'next/server'
 
 const MAINTENANCE_PATH = '/maintenance'
 const MAINTENANCE_MODE_VALUE =
-  process.env.PROCHAT_MAINTENANCE_MODE ??
-  (process.env.NODE_ENV === 'development' ? '0' : '1')
+  process.env.PROCHAT_MAINTENANCE_MODE ?? '0'
 
 const PUBLIC_FILE_PATTERN = /\.[^/]+$/
 const DEBUG_PATTERN = /^\/debug(?:\/|$)/
@@ -38,7 +37,8 @@ function shouldBypassMaintenance(pathname: string) {
 /**
  * Middleware for maintenance mode and development-only route protection.
  *
- * - All public routes are redirected to /maintenance while static assets,
+ * - Public routes are redirected to /maintenance only when
+ *   PROCHAT_MAINTENANCE_MODE is explicitly enabled; static assets,
  *   Next.js internals, public metadata files, and API routes remain available.
  * - Local development stays available unless PROCHAT_MAINTENANCE_MODE is
  *   explicitly enabled.

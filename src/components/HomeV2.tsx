@@ -3,6 +3,7 @@
 import Link from 'next/link'
 
 import { CinematicHomepageJourney } from './CinematicHomepageJourney'
+import { CinematicHomepageFooter, CinematicHomepageNav } from './CinematicHomepageShell'
 
 function ArrowIcon() {
   return (
@@ -206,15 +207,19 @@ function ClosingSection() {
 
 export function HomeV2() {
   return (
-    <div className="hv4-page" data-home-v2>
-      <CinematicHomepageJourney />
-      <ContextLocalSection />
-      <TrustSection />
-      <SignalStrip />
-      <WhyChooseSection />
-      <SystemSection />
-      <TailoredSection />
-      <ClosingSection />
-    </div>
+    <>
+      <CinematicHomepageNav />
+      <main id="main-content" className="hv4-page" data-home-v2>
+        <CinematicHomepageJourney />
+        <ContextLocalSection />
+        <TrustSection />
+        <SignalStrip />
+        <WhyChooseSection />
+        <SystemSection />
+        <TailoredSection />
+        <ClosingSection />
+      </main>
+      <CinematicHomepageFooter />
+    </>
   )
 }
