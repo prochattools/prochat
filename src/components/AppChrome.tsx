@@ -15,6 +15,8 @@ export default function AppChrome({ children }: { children: ReactNode }) {
   const publicDesign = getUnifiedPublicRouteConfig(pathname)
 
   if (publicDesign) {
+    if (publicDesign.contentOwnsShell) return <>{children}</>
+
     return (
       <CanonicalPublicShell
         visualVariant={publicDesign.variant}

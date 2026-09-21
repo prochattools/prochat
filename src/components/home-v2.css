@@ -1500,7 +1500,7 @@ body:has(.home-cinematic) .pc-canonical-main {
 .home-cinematic__sticky {
   position: fixed;
   z-index: 2;
-  inset: var(--pc-header-height, 64px) 0 0;
+  inset: var(--cm-header-height, 78px) 0 0;
   width: 100%;
   height: calc(100svh - var(--pc-header-height, 64px));
   min-height: 650px;
@@ -1543,15 +1543,22 @@ body:has(.home-cinematic) .pc-canonical-main {
 }
 
 .home-cinematic__intro {
-  width: min(760px, 100%);
-  transition: opacity 450ms ease-out, transform 450ms ease-out;
+  width: min(1000px, 100%);
+  opacity: 0;
+  transform: translateY(-18px);
+  transition: opacity 180ms ease-out, transform 180ms ease-out;
+}
+
+.home-cinematic[data-home-phase='intro'] .home-cinematic__intro {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .home-cinematic__intro h1 {
-  max-width: 840px;
+  max-width: 1000px;
   margin: 0 0 24px;
   color: var(--hv4-text);
-  font-size: clamp(48px, 7vw, 104px);
+  font-size: clamp(48px, 6vw, 88px);
   font-weight: 600;
   line-height: 0.94;
   letter-spacing: -0.065em;
@@ -1585,23 +1592,17 @@ body:has(.home-cinematic) .pc-canonical-main {
   visibility: hidden;
   transform: translateY(28px);
   pointer-events: none;
-  transition: opacity 450ms ease-out, transform 450ms ease-out, visibility 0s linear 450ms;
+  transition: opacity 180ms ease-out, transform 180ms ease-out, visibility 0s linear 180ms;
 }
 
-.home-cinematic[data-active-stage='evermind'] .home-cinematic__stage[data-stage='evermind'],
-.home-cinematic[data-active-stage='nevermind'] .home-cinematic__stage[data-stage='nevermind'],
-.home-cinematic[data-active-stage='mastermind'] .home-cinematic__stage[data-stage='mastermind'] {
+.home-cinematic[data-home-phase='evermind'] .home-cinematic__stage[data-stage='evermind'],
+.home-cinematic[data-home-phase='nevermind'] .home-cinematic__stage[data-stage='nevermind'],
+.home-cinematic[data-home-phase='mastermind'] .home-cinematic__stage[data-stage='mastermind'] {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
   transition-delay: 0s;
-}
-
-.home-cinematic[data-active-stage='nevermind'] .home-cinematic__intro,
-.home-cinematic[data-active-stage='mastermind'] .home-cinematic__intro {
-  opacity: 0.18;
-  transform: translateY(-12px);
 }
 
 .home-cinematic__stage-marker {
@@ -1796,8 +1797,10 @@ body:has(.home-cinematic) .pc-canonical-main {
   }
 
   .home-cinematic__intro,
-  .home-cinematic[data-active-stage='nevermind'] .home-cinematic__intro,
-  .home-cinematic[data-active-stage='mastermind'] .home-cinematic__intro {
+  .home-cinematic[data-home-phase='evermind'] .home-cinematic__intro,
+  .home-cinematic[data-home-phase='nevermind'] .home-cinematic__intro,
+  .home-cinematic[data-home-phase='mastermind'] .home-cinematic__intro,
+  .home-cinematic[data-home-phase='close'] .home-cinematic__intro {
     opacity: 1;
     transform: none;
   }
@@ -1810,9 +1813,9 @@ body:has(.home-cinematic) .pc-canonical-main {
   }
 
   .home-cinematic__stage,
-  .home-cinematic[data-active-stage='evermind'] .home-cinematic__stage[data-stage='evermind'],
-  .home-cinematic[data-active-stage='nevermind'] .home-cinematic__stage[data-stage='nevermind'],
-  .home-cinematic[data-active-stage='mastermind'] .home-cinematic__stage[data-stage='mastermind'] {
+  .home-cinematic[data-home-phase='evermind'] .home-cinematic__stage[data-stage='evermind'],
+  .home-cinematic[data-home-phase='nevermind'] .home-cinematic__stage[data-stage='nevermind'],
+  .home-cinematic[data-home-phase='mastermind'] .home-cinematic__stage[data-stage='mastermind'] {
     position: relative;
     inset: auto;
     display: grid;

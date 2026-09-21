@@ -3,6 +3,7 @@
 import Link from 'next/link'
 
 import { CinematicHomepageJourney } from './CinematicHomepageJourney'
+import { CinematicMarketingShell } from './CinematicMarketingShell'
 
 function ArrowIcon() {
   return (
@@ -15,11 +16,11 @@ function ArrowIcon() {
 function ContextLocalSection() {
   return (
     <section className="hv4-context" aria-labelledby="hv4-context-title">
-      <header className="hv4-centered-heading">
+      <div className="hv4-centered-heading">
         <p className="hv4-eyebrow">Context: Local</p>
         <h2 id="hv4-context-title">The right <span className="hv4-accent-word">memory</span>, close to the work.</h2>
         <p>Reviewed context stays local, inspectable, and ready when the next task begins.</p>
-      </header>
+      </div>
 
       <div className="hv4-context__visual" role="group" aria-label="A local memory system connecting evidence, review, and current-task context">
         <div className="hv4-orbit hv4-orbit--outer" />
@@ -52,10 +53,10 @@ function ContextLocalSection() {
 function TrustSection() {
   return (
     <section className="hv4-trust" aria-labelledby="hv4-trust-title">
-      <header className="hv4-centered-heading hv4-centered-heading--compact">
+      <div className="hv4-centered-heading hv4-centered-heading--compact">
         <p className="hv4-eyebrow">Built for inspectable AI work</p>
         <h2 id="hv4-trust-title">Trust comes from what you can <span className="hv4-accent-word">verify.</span></h2>
-      </header>
+      </div>
       <div className="hv4-trust__frame">
         <div className="hv4-trust__quote">
           <p>Memory stays readable. Review stays explicit. Every important change can be traced back to its source.</p>
@@ -89,10 +90,10 @@ function SignalStrip() {
 function WhyChooseSection() {
   return (
     <section className="hv4-why" aria-labelledby="hv4-why-title">
-      <header className="hv4-centered-heading hv4-centered-heading--compact">
+      <div className="hv4-centered-heading hv4-centered-heading--compact">
         <p className="hv4-eyebrow">Why ProChat</p>
         <h2 id="hv4-why-title">Keep the lesson. Put it back to work.</h2>
-      </header>
+      </div>
       <div className="hv4-why__grid">
         <article className="hv4-feature-panel hv4-feature-panel--dark">
           <div className="hv4-feature-panel__copy">
@@ -134,11 +135,11 @@ function SystemSection() {
 
   return (
     <section className="hv4-system" aria-labelledby="hv4-system-title">
-      <header className="hv4-centered-heading">
+      <div className="hv4-centered-heading">
         <p className="hv4-eyebrow">One memory model</p>
         <h2 id="hv4-system-title">From evidence to useful <span className="hv4-accent-word">context.</span></h2>
         <p>One clear path from what happened to what the next task needs.</p>
-      </header>
+      </div>
 
       <div className="hv4-system__frame">
         <div className="hv4-system__diagram" aria-hidden="true">
@@ -161,10 +162,10 @@ function SystemSection() {
 function TailoredSection() {
   return (
     <section className="hv4-tailored" id="products" aria-labelledby="hv4-tailored-title">
-      <header className="hv4-centered-heading hv4-centered-heading--compact">
+      <div className="hv4-centered-heading hv4-centered-heading--compact">
         <p className="hv4-eyebrow">Built around the work</p>
         <h2 id="hv4-tailored-title">Use the surface that fits the job.</h2>
-      </header>
+      </div>
       <div className="hv4-tailored__grid">
         <article className="hv4-tailored__memory">
           <p className="hv4-eyebrow">Evermind</p>
@@ -206,15 +207,19 @@ function ClosingSection() {
 
 export function HomeV2() {
   return (
-    <div className="hv4-page" data-home-v2>
-      <CinematicHomepageJourney />
-      <ContextLocalSection />
-      <TrustSection />
-      <SignalStrip />
-      <WhyChooseSection />
-      <SystemSection />
-      <TailoredSection />
-      <ClosingSection />
-    </div>
+    <CinematicMarketingShell contentOwnsMain>
+      <main id="main-content" className="cm-shell__main">
+        <div className="hv4-page" data-home-v2>
+          <CinematicHomepageJourney />
+          <ContextLocalSection />
+          <TrustSection />
+          <SignalStrip />
+          <WhyChooseSection />
+          <SystemSection />
+          <TailoredSection />
+          <ClosingSection />
+        </div>
+      </main>
+    </CinematicMarketingShell>
   )
 }

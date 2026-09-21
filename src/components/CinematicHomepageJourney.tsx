@@ -38,10 +38,12 @@ const STAGES = [
   },
 ] as const
 
-function stageForProgress(progress: number) {
-  if (progress < 1 / 3) return 'evermind'
-  if (progress < 2 / 3) return 'nevermind'
-  return 'mastermind'
+function phaseForProgress(progress: number) {
+  if (progress < 0.16) return 'intro'
+  if (progress < 0.4) return 'evermind'
+  if (progress < 0.64) return 'nevermind'
+  if (progress < 0.88) return 'mastermind'
+  return 'close'
 }
 
 export function CinematicHomepageJourney() {
@@ -50,7 +52,9 @@ export function CinematicHomepageJourney() {
     const section = sectionRef.current
     if (!section) return
     section.style.setProperty('--home-journey-progress', String(progress))
-    section.dataset.activeStage = stageForProgress(progress)
+    const phase = phaseForProgress(progress)
+    section.dataset.homePhase = phase
+    section.dataset.activeStage = phase === 'intro' || phase === 'close' ? 'none' : phase
     section.dataset.journeyState = isActive ? 'active' : 'after'
   }, [])
 
@@ -59,7 +63,8 @@ export function CinematicHomepageJourney() {
       ref={sectionRef}
       className="home-cinematic"
       data-home-cinematic
-      data-active-stage="evermind"
+      data-home-phase="intro"
+      data-active-stage="none"
       data-journey-state="active"
       aria-labelledby="home-cinematic-title"
     >
