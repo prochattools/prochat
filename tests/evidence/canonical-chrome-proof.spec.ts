@@ -23,7 +23,7 @@ const MOBILE = { name: 'mobile', width: 390, height: 900 } as const
 const DOCS_NARROW = { name: 'narrow', width: 320, height: 900 } as const
 
 const VIEWPORTS = [DESKTOP, MOBILE] as const
-const CHROME_GEOMETRY_ROUTES = ['/', '/evermind', '/nevermind', '/mastermind', '/contact'] as const
+const CHROME_GEOMETRY_ROUTES = ['/', '/evermind', '/nevermind', '/mastermind'] as const
 
 function publicNav(page: Page, route: string) {
   return CINEMATIC_MARKETING_ROUTES.has(route) ? page.locator('nav.cm-nav') : page.locator('nav.pm-navbar')
@@ -221,13 +221,13 @@ test.describe('cinematic product funnels — route-owned chrome', () => {
         expect(response!.status(), `${route} HTTP status`).toBeLessThan(400)
         expect(new URL(page.url()).pathname.replace(/\/$/, '') || '/', `${route} final path`).toBe(route)
 
-        await expect(page.locator('.cpf-root')).toHaveCount(1)
-        await expect(page.locator('.cpf-root')).toBeVisible()
+        await expect(page.locator('.cm-canonical-main')).toHaveCount(1)
+        await expect(page.locator('.cm-canonical-main')).toBeVisible()
         await expect(page.locator('nav.cm-nav')).toHaveCount(1)
         await expect(page.locator('nav.cm-nav')).toBeVisible()
-        await expect(page.locator('main.cpf-root')).toBeVisible()
-        await expect(page.locator('main.cpf-root h1').first()).toBeVisible()
-        await expect(page.locator('main.cpf-root h1').first()).not.toHaveText('')
+        await expect(page.locator('main.cm-canonical-main')).toBeVisible()
+        await expect(page.locator('main.cm-canonical-main h1').first()).toBeVisible()
+        await expect(page.locator('main.cm-canonical-main h1').first()).not.toHaveText('')
 
         for (const product of ['Evermind', 'Nevermind', 'Mastermind']) {
           const href = `/${product.toLowerCase()}`

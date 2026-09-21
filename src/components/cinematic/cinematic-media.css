@@ -9,3 +9,7 @@
 .cm-video__canvas.is-visible { opacity: 1; }
 .cm-video__veil { background: linear-gradient(180deg, rgb(4 7 11 / .08), rgb(3 5 9 / .18) 58%, rgb(2 4 7 / .35)); }
 @media (prefers-reduced-motion: reduce) { .cm-video__canvas { display: none; } .cm-video__element { opacity: 1 !important; } }
+
+.cm-experience.cm-marketing-experience .cm-video { background: rgb(181 200 210); }
+.cm-experience.cm-marketing-experience .cm-video__poster { background: radial-gradient(circle at 50% 42%, rgb(230 239 243) 0%, rgb(184 204 214) 48%, rgb(133 163 178) 100%); }
+.cm-experience.cm-marketing-experience .cm-video__veil { background-color: rgb(19 44 64 / .12); background-image: none; }

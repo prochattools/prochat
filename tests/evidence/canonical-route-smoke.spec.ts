@@ -52,8 +52,8 @@ test.describe('canonical route smoke evidence', () => {
           if (route === '/' || route === '/contact') {
             await expect(page.locator('[data-cinematic-experience]'), `${route} is missing its cinematic experience`).toHaveCount(1)
           } else {
-            await expect(page.locator('.cpf-root'), `${route} is missing its cinematic root`).toHaveCount(1)
-            await expect(page.locator('.cpf-root')).toBeVisible()
+            await expect(page.locator('.cm-canonical-main'), `${route} is missing its cinematic root`).toHaveCount(1)
+            await expect(page.locator('.cm-canonical-main')).toBeVisible()
           }
           await expect(page.locator('nav.cm-nav'), `${route} is missing its cinematic navigation`).toHaveCount(1)
           await expect(page.locator('footer.cm-footer'), `${route} is missing its cinematic footer`).toHaveCount(1)

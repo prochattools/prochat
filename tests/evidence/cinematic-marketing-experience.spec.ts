@@ -6,7 +6,7 @@ const baseUrl = process.env.WAVE1_BASE_URL
 
 if (!baseUrl) throw new Error('WAVE1_BASE_URL is required')
 
-const CINEMATIC_ROUTES = ['/', '/evermind', '/nevermind', '/mastermind', '/contact'] as const
+const CINEMATIC_ROUTES = ['/', '/evermind', '/nevermind', '/mastermind'] as const
 const GEOMETRY_POINTS = Array.from({ length: 21 }, (_, index) => index / 20)
 const SCREENSHOT_VIEWPORTS = [
   ['1600x1000', 1600, 1000],
@@ -29,7 +29,7 @@ async function settle(page: Page) {
 }
 
 test.describe('cinematic marketing experience', () => {
-  test('owns one shared shell and one media engine per route', async ({ page }) => {
+  test('owns one exact shared shell, template, and media engine per route', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.emulateMedia({ reducedMotion: 'no-preference' })
 
@@ -43,11 +43,15 @@ test.describe('cinematic marketing experience', () => {
         footers: document.querySelectorAll('footer').length,
         h1: document.querySelectorAll('main h1').length,
         experience: document.querySelectorAll('[data-cinematic-experience]').length,
+        chapters: document.querySelectorAll('[data-cinematic-chapter]').length,
         mediaRoots: document.querySelectorAll('.cm-video').length,
         canvases: document.querySelectorAll('.cm-video__canvas').length,
         videos: document.querySelectorAll('.cm-video video').length,
         legacyNav: document.querySelectorAll('.pm-navbar,.cpf-nav').length,
         legacyFooter: document.querySelectorAll('.pc-footer').length,
+        statusIframe: document.querySelectorAll('.cm-footer iframe').length,
+        coreShell: document.querySelectorAll('.cm-shell--core').length,
+        navRadius: getComputedStyle(document.querySelector('.cm-nav') as HTMLElement).borderRadius,
         overflow: document.documentElement.scrollWidth > window.innerWidth,
       }))
 
@@ -57,17 +61,41 @@ test.describe('cinematic marketing experience', () => {
         footers: 1,
         h1: 1,
         experience: 1,
+        chapters: 2,
         mediaRoots: 1,
         canvases: 1,
         videos: 1,
         legacyNav: 0,
         legacyFooter: 0,
+        statusIframe: 0,
+        coreShell: 1,
+        navRadius: '0px',
         overflow: false,
       })
     }
   })
 
-  for (const route of ['/', '/evermind', '/nevermind', '/mastermind'] as const) {
+  test('uses the supplied copy and the same data-driven template on all four routes', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+
+    const expected = {
+      '/': ['Remember what matters. Direct the work.', 'Evermind remembers. Nevermind brings context. Mastermind directs the work.'],
+      '/evermind': ["Your AI forgets. Your memory shouldn't.", 'CAPTURE · REVIEW · RETRIEVE'],
+      '/nevermind': ['The right context. At the right time.', 'CONTEXT ON DEMAND'],
+      '/mastermind': ['Turn intent into controlled execution.', 'REASON · DELEGATE · VALIDATE'],
+    } as const
+
+    for (const route of CINEMATIC_ROUTES) {
+      await page.goto(url(route), { waitUntil: 'networkidle' })
+      const [h1, marker] = expected[route]
+      await expect(page.locator('main h1')).toHaveText(h1)
+      await expect(page.locator('main')).toContainText(marker)
+      if (route === '/') await expect(page.locator('main')).toContainText(expected['/'][1])
+    }
+  })
+
+  for (const route of CINEMATIC_ROUTES) {
     test(`${route} keeps major narrative rectangles exclusive across the scroll timeline`, async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 900 })
       await page.emulateMedia({ reducedMotion: 'no-preference' })
@@ -115,14 +143,12 @@ test.describe('cinematic marketing experience', () => {
         expect(sample.overlaps, `${route} has overlapping major headings at ${point * 100}%`).toEqual([])
       }
 
-      expect([...activeChapters].sort(), `${route} chapter activation coverage`).toEqual(
-        route === '/' ? ['0', '1', '2', '3', '4', '5', '6', '7'] : ['0', '1', '2', '3'],
-      )
+      expect([...activeChapters].sort(), `${route} chapter activation coverage`).toEqual(['0', '1'])
       expect(new Set(frameChecksums).size, `${route} background frame checksum changed`).toBeGreaterThan(1)
     })
   }
 
-  test('reduced motion keeps all chapters readable without canvas scrubbing', async ({ page }) => {
+  test('reduced motion keeps all content readable without canvas scrubbing', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.emulateMedia({ reducedMotion: 'reduce' })
 
@@ -144,16 +170,22 @@ test.describe('cinematic marketing experience', () => {
     }
   })
 
-  test('captures the requested responsive visual matrix for manual review', async ({ page }) => {
+  test('captures the required responsive and scroll-state visual matrix', async ({ page }) => {
+    test.setTimeout(180_000)
     await page.emulateMedia({ reducedMotion: 'no-preference' })
     for (const [name, width, height] of SCREENSHOT_VIEWPORTS) {
       await page.setViewportSize({ width, height })
-      for (const route of ['/', '/evermind', '/nevermind', '/mastermind', '/contact'] as const) {
+      for (const route of CINEMATIC_ROUTES) {
         await page.goto(url(route), { waitUntil: 'networkidle' })
-        await page.screenshot({
-          path: path.join('test-results', `cinematic-${route === '/' ? 'home' : route.slice(1)}-${name}.png`),
-          fullPage: false,
-        })
+        const maxScroll = await page.evaluate(() => Math.max(0, document.documentElement.scrollHeight - window.innerHeight))
+        for (const [state, ratio] of [['top', 0], ['mid', 0.45], ['section-two', 0.78], ['footer', 1]] as const) {
+          await page.evaluate(y => window.scrollTo(0, y), maxScroll * ratio)
+          await settle(page)
+          await page.screenshot({
+            path: path.join('test-results', `cinematic-${route === '/' ? 'home' : route.slice(1)}-${name}-${state}.png`),
+            fullPage: false,
+          })
+        }
       }
     }
   })

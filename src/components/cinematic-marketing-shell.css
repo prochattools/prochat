@@ -92,3 +92,51 @@
   .cm-footer__links { grid-template-columns: 1fr; }
   .cm-footer__bottom { align-items: flex-start; flex-direction: column; }
 }
+
+/* The four primary marketing routes use the bright cinematic reference system. */
+.cm-shell--core {
+  --cm-header-height: 5rem;
+  background: rgb(171 190 201);
+  color: rgb(250 252 253);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.cm-shell--core .cm-shell__backdrop {
+  background-color: rgb(58 91 109 / 0.2);
+  background-image: none;
+}
+.cm-shell--core .cm-nav-shell {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0.8rem clamp(1rem, 4vw, 4rem);
+  border-bottom: 1px solid rgb(255 255 255 / 0.24);
+  background-color: rgb(27 53 73 / 0.78);
+  background-image: none;
+  backdrop-filter: blur(14px);
+}
+.cm-shell--core .cm-nav { width: min(100%, 90rem); min-height: 4rem; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.cm-shell--core .cm-nav__brand, .cm-shell--core .cm-footer__logo { color: rgb(255 255 255); filter: drop-shadow(0 2px 8px rgb(25 47 63 / 0.32)); }
+.cm-shell--core .cm-nav__links a, .cm-shell--core .cm-nav__contact { color: rgb(255 255 255 / 0.96); text-shadow: 0 1px 6px rgb(24 47 66 / 0.35); }
+.cm-shell--core .cm-nav__links a:hover, .cm-shell--core .cm-nav__links a[aria-current='page'], .cm-shell--core .cm-nav__contact:hover { color: rgb(255 255 255); }
+.cm-shell--core .cm-nav__cta { border-color: rgb(255 255 255 / 0.38); background: rgb(255 255 255 / 0.92); color: rgb(21 39 53); box-shadow: 0 0.7rem 1.8rem rgb(28 55 73 / 0.16); }
+.cm-shell--core .cm-nav__cta:hover { background: rgb(255 255 255); }
+.cm-shell--core .cm-footer { border-top-color: rgb(255 255 255 / 0.25); background-color: rgb(24 48 67 / 0.88); background-image: none; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12); }
+.cm-shell--core .cm-footer__brand h2 { color: rgb(255 255 255); font-family: Inter, system-ui, sans-serif; text-shadow: 0 2px 12px rgb(25 47 63 / 0.24); }
+.cm-shell--core .cm-footer__brand p, .cm-shell--core .cm-footer__column a, .cm-shell--core .cm-footer__social a { color: rgb(255 255 255 / 0.9); text-shadow: 0 1px 7px rgb(25 47 63 / 0.24); }
+.cm-shell--core .cm-footer__column h3 { color: rgb(255 255 255 / 0.92); }
+.cm-shell--core .cm-footer__column a:hover, .cm-shell--core .cm-footer__social a:hover { color: rgb(255 255 255); }
+.cm-shell--core .cm-footer__bottom { border-top-color: rgb(255 255 255 / 0.18); color: rgb(255 255 255 / 0.64); }
+.cm-shell--core .cm-footer__status-link { color: rgb(255 255 255 / 0.78); text-decoration: none; }
+.cm-shell--core .cm-footer__status-link:hover, .cm-shell--core .cm-footer__status-link:focus-visible { color: rgb(255 255 255); }
+.cm-shell--core .cm-nav__mobile-panel { border-color: rgb(255 255 255 / 0.3); background: rgb(30 57 76 / 0.86); box-shadow: 0 1.5rem 4rem rgb(20 43 60 / 0.28); backdrop-filter: blur(18px); }
+.cm-shell--core .cm-nav__menu-button { border-color: rgb(255 255 255 / 0.32); background: rgb(255 255 255 / 0.12); color: rgb(255 255 255); }
+.cm-shell--core .cm-nav__mobile-panel a { color: rgb(255 255 255 / 0.86); }
+.cm-shell--core .cm-nav__mobile-panel a:hover, .cm-shell--core .cm-nav__mobile-panel a:focus-visible { background: rgb(255 255 255 / 0.12); color: rgb(255 255 255); }
+
+@media (max-width: 620px) {
+  .cm-shell--core .cm-nav-shell { width: 100%; padding-inline: 0.7rem; }
+  .cm-shell--core .cm-footer__inner { width: calc(100% - 2rem); }
+}

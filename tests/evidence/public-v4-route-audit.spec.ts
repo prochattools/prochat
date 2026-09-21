@@ -15,6 +15,9 @@ type RouteCase = {
 
 const ROUTES: RouteCase[] = [
   { path: '/', variant: 'home', motif: 'cinematic', bodySelector: '[data-cinematic-experience]' },
+  { path: '/evermind', variant: 'evermind', motif: 'cinematic', bodySelector: '.cm-canonical-main' },
+  { path: '/nevermind', variant: 'nevermind', motif: 'cinematic', bodySelector: '.cm-canonical-main' },
+  { path: '/mastermind', variant: 'mastermind', motif: 'cinematic', bodySelector: '.cm-canonical-main' },
   { path: '/docs', variant: 'docs', motif: 'docs', bodySelector: '.pc-docs-hub' },
   { path: '/contact', variant: 'contact', motif: 'cinematic', bodySelector: '.cm-contact-page' },
   { path: '/privacy', variant: 'legal', motif: 'ledger', bodySelector: ".pc-legal-ledger[data-legal-kind='privacy']" },
@@ -32,7 +35,8 @@ const MOTION_SELECTORS: Record<string, string> = {
   ledger: '.pc-route-ledger-cursor',
 }
 
-const CINEMATIC_ROUTES = new Set(['/', '/contact'])
+const CORE_CINEMATIC_ROUTES = new Set(['/', '/evermind', '/nevermind', '/mastermind'])
+const CINEMATIC_ROUTES = new Set([...CORE_CINEMATIC_ROUTES, '/contact'])
 
 const REDIRECTS = [
   { from: '/prochat-memory', to: '/evermind' },
@@ -78,6 +82,12 @@ test.describe('site-wide V4 public route evidence', () => {
           await expect(page.locator('.cm-shell')).toHaveCount(1)
           await expect(page.locator('nav.cm-nav')).toHaveCount(1)
           await expect(page.locator('footer.cm-footer')).toHaveCount(1)
+          if (CORE_CINEMATIC_ROUTES.has(route.path)) {
+            await expect(page.locator('.cm-shell--core')).toHaveCount(1)
+            await expect(page.locator('.cm-marketing-experience')).toHaveCount(1)
+            await expect(page.locator('.cm-footer iframe')).toHaveCount(0)
+            await expect(page.locator('.pm-navbar,.pc-footer')).toHaveCount(0)
+          }
         } else {
           const shell = page.locator('.pc-canonical-shell.pc-public-v4')
           await expect(shell).toHaveCount(1)
