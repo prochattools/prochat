@@ -26,7 +26,8 @@ const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 900 },
 ] as const
 
-const CINEMATIC_ROUTES = new Set(['/', '/contact'])
+const CINEMATIC_ROUTES = new Set(['/'])
+const CINEMATIC_LITE_ROUTES = new Set(['/contact'])
 
 const REDIRECTS = [
   { from: '/prochat-memory', to: '/evermind' },
@@ -72,6 +73,12 @@ test.describe('site-wide V4 public route evidence', () => {
           await expect(page.locator('.cm-shell')).toHaveCount(1)
           await expect(page.locator('nav.cm-nav')).toHaveCount(1)
           await expect(page.locator('footer.cm-footer')).toHaveCount(1)
+        } else if (CINEMATIC_LITE_ROUTES.has(route.path)) {
+          await expect(page.locator('.cm-shell')).toHaveCount(1)
+          await expect(page.locator('nav.cm-nav')).toHaveCount(1)
+          await expect(page.locator('footer.cm-footer')).toHaveCount(1)
+          await expect(page.locator('.cm-experience--lite')).toHaveCount(1)
+          await expect(page.locator('.cm-experience__media')).toHaveCount(0)
         } else {
           await expect(page.locator('.cm-shell--lite')).toHaveCount(1)
           await expect(page.locator('nav.cm-nav')).toHaveCount(1)
@@ -112,11 +119,20 @@ test.describe('site-wide V4 public route evidence', () => {
 
       await page.emulateMedia({ reducedMotion: 'no-preference' })
       await page.goto(new URL(route.path, baseUrl).toString(), { waitUntil: 'domcontentloaded' })
-      await expect(page.locator('[data-cinematic-experience]')).toHaveCount(0)
-      await expect(page.locator('.cm-experience__media')).toHaveCount(0)
+      if (CINEMATIC_LITE_ROUTES.has(route.path)) {
+        await expect(page.locator('.cm-experience--lite')).toHaveCount(1)
+        await expect(page.locator('.cm-experience__media')).toHaveCount(0)
+      } else {
+        await expect(page.locator('[data-cinematic-experience]')).toHaveCount(0)
+        await expect(page.locator('.cm-experience__media')).toHaveCount(0)
+      }
 
       await page.emulateMedia({ reducedMotion: 'reduce' })
-      await expect(page.locator('.cm-shell--lite')).toHaveCount(1)
+      if (CINEMATIC_LITE_ROUTES.has(route.path)) {
+        await expect(page.locator('.cm-experience--lite')).toHaveCount(1)
+      } else {
+        await expect(page.locator('.cm-shell--lite')).toHaveCount(1)
+      }
     }
   })
 

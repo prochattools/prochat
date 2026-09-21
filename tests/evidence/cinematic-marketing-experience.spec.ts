@@ -6,7 +6,8 @@ const baseUrl = process.env.WAVE1_BASE_URL
 
 if (!baseUrl) throw new Error('WAVE1_BASE_URL is required')
 
-const CINEMATIC_ROUTES = ['/', '/evermind', '/nevermind', '/mastermind', '/contact'] as const
+const CINEMATIC_ROUTES = ['/', '/evermind', '/nevermind', '/mastermind'] as const
+const CINEMATIC_LITE_ROUTES = ['/contact'] as const
 const GEOMETRY_POINTS = Array.from({ length: 21 }, (_, index) => index / 20)
 const SCREENSHOT_VIEWPORTS = [
   ['1600x1000', 1600, 1000],
@@ -62,6 +63,42 @@ test.describe('cinematic marketing experience', () => {
         videos: 1,
         legacyNav: 0,
         legacyFooter: 0,
+        overflow: false,
+      })
+    }
+  })
+
+  test('cinematic-lite routes keep the shared shell without a media engine', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+
+    for (const route of CINEMATIC_LITE_ROUTES) {
+      const response = await page.goto(url(route), { waitUntil: 'networkidle' })
+      expect(response?.status(), `${route} response`).toBe(200)
+
+      const evidence = await page.evaluate(() => ({
+        headers: document.querySelectorAll('header').length,
+        primaryNav: document.querySelectorAll('nav[aria-label="Primary navigation"]').length,
+        footers: document.querySelectorAll('footer').length,
+        h1: document.querySelectorAll('main h1').length,
+        mediaRoots: document.querySelectorAll('.cm-video').length,
+        canvases: document.querySelectorAll('.cm-video__canvas').length,
+        videos: document.querySelectorAll('.cm-video video').length,
+        lite: document.querySelectorAll('.cm-experience--lite').length,
+        visibleChapters: Array.from(document.querySelectorAll<HTMLElement>('[data-cinematic-chapter]')).filter(element => getComputedStyle(element).opacity === '1').length,
+        overflow: document.documentElement.scrollWidth > window.innerWidth,
+      }))
+
+      expect(evidence).toEqual({
+        headers: 1,
+        primaryNav: 1,
+        footers: 1,
+        h1: 1,
+        mediaRoots: 0,
+        canvases: 0,
+        videos: 0,
+        lite: 1,
+        visibleChapters: 2,
         overflow: false,
       })
     }

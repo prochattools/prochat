@@ -47,11 +47,13 @@ export function CinematicMediaPage({
       data-active-chapter="0"
       data-journey-state="active"
     >
-      <ScrollVideoBackground
-        containerRef={pageRef}
-        className="cm-experience__media"
-        onProgress={handleProgress}
-      />
+      {!lite ? (
+        <ScrollVideoBackground
+          containerRef={pageRef}
+          className="cm-experience__media"
+          onProgress={handleProgress}
+        />
+      ) : null}
       <div className="cm-experience__wash" aria-hidden="true" />
       <div className="cm-experience__content">{children}</div>
     </div>
