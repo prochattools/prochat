@@ -1,4 +1,5 @@
 import { getSEOTags } from '@/libs/seo'
+import { CinematicLiteShell } from '@/components/CinematicMarketingShell'
 
 import { PublicLegalPage } from '../components/layout/PublicLegalPage'
 
@@ -27,6 +28,7 @@ const linkClass =
 
 export default function TermsPage() {
 	return (
+		<CinematicLiteShell>
 		<PublicLegalPage
 			kind="terms"
 			title="Terms of Service"
@@ -314,5 +316,6 @@ export default function TermsPage() {
 			</div>
 			</section>
 		</PublicLegalPage>
+		</CinematicLiteShell>
 	)
 }

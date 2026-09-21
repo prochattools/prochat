@@ -170,11 +170,32 @@ export function CinematicMarketingFooter() {
         </div>
         <div className="cm-footer__bottom">
           <span>© {new Date().getFullYear()} ProChat</span>
-          <div className="cm-footer__status"><iframe src="https://status.prochat.tools/badge?theme=dark" title="ProChat service status" width="250" height="30" loading="lazy" scrolling="no" /></div>
+          <a className="cm-footer__status-link" href="https://status.prochat.tools" target="_blank" rel="noopener noreferrer">
+            Service status <span aria-hidden="true">↗</span>
+          </a>
           <span>Local files · Human-reviewed · Portable memory</span>
         </div>
       </div>
     </footer>
+  )
+}
+
+export function CinematicLiteShell({
+  children,
+  cta,
+  contentOwnsMain = false,
+}: {
+  children: React.ReactNode
+  cta?: CinematicMarketingCta
+  contentOwnsMain?: boolean
+}) {
+  return (
+    <div className="cm-shell cm-shell--lite">
+      <div className="cm-shell__backdrop" aria-hidden="true" />
+      <CinematicMarketingNav cta={cta} />
+      {contentOwnsMain ? children : <main id="main-content" className="cm-shell__main">{children}</main>}
+      <CinematicMarketingFooter />
+    </div>
   )
 }
 

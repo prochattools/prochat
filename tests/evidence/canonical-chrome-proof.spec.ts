@@ -16,7 +16,7 @@ const STANDARD_PUBLIC_ROUTES = [
 ] as const
 
 const CINEMATIC_PRODUCT_ROUTES = ['/evermind', '/nevermind', '/mastermind'] as const
-const CINEMATIC_MARKETING_ROUTES = new Set<string>(['/', '/contact', ...CINEMATIC_PRODUCT_ROUTES])
+const CINEMATIC_SHELL_ROUTES = new Set<string>(['/', '/contact', ...CINEMATIC_PRODUCT_ROUTES, '/docs', '/privacy', '/terms'])
 
 const DESKTOP = { name: 'desktop', width: 1440, height: 1000 } as const
 const MOBILE = { name: 'mobile', width: 390, height: 900 } as const
@@ -26,11 +26,11 @@ const VIEWPORTS = [DESKTOP, MOBILE] as const
 const CHROME_GEOMETRY_ROUTES = ['/', '/evermind', '/nevermind', '/mastermind', '/contact'] as const
 
 function publicNav(page: Page, route: string) {
-  return CINEMATIC_MARKETING_ROUTES.has(route) ? page.locator('nav.cm-nav') : page.locator('nav.pm-navbar')
+  return CINEMATIC_SHELL_ROUTES.has(route) ? page.locator('nav.cm-nav') : page.locator('nav.pm-navbar')
 }
 
 function publicFooter(page: Page, route: string) {
-  return CINEMATIC_MARKETING_ROUTES.has(route) ? page.locator('footer.cm-footer') : page.locator('footer.pc-footer')
+  return CINEMATIC_SHELL_ROUTES.has(route) ? page.locator('footer.cm-footer') : page.locator('footer.pc-footer')
 }
 
 // ---------------------------------------------------------------------------
@@ -160,7 +160,7 @@ test.describe('canonical public chrome — geometry consistency at desktop', () 
       })
 
       const geo = await page.evaluate((route) => {
-        const cinematic = ['/', '/contact', '/evermind', '/nevermind', '/mastermind'].includes(route)
+          const cinematic = ['/', '/contact', '/evermind', '/nevermind', '/mastermind', '/docs', '/privacy', '/terms'].includes(route)
         const nav = document.querySelector(cinematic ? 'nav.cm-nav' : 'nav.pm-navbar')
         const footer = document.querySelector(cinematic ? 'footer.cm-footer' : 'footer.pc-footer')
         const navRect = nav?.getBoundingClientRect()
@@ -278,8 +278,8 @@ test.describe('docs page — repository hub with canonical shell', () => {
       waitUntil: 'domcontentloaded',
     })
 
-    await expect(page.locator('nav.pm-navbar')).toBeVisible()
-    await expect(page.locator('footer.pc-footer')).toBeVisible()
+    await expect(page.locator('nav.cm-nav')).toBeVisible()
+    await expect(page.locator('footer.cm-footer')).toBeVisible()
 
     const docsHub = page.locator('main.pc-docs-hub')
     await expect(docsHub).toBeVisible()
@@ -301,10 +301,10 @@ test.describe('docs page — repository hub with canonical shell', () => {
       waitUntil: 'domcontentloaded',
     })
 
-    await expect(page.locator('nav.pm-navbar')).toBeVisible()
+    await expect(page.locator('nav.cm-nav')).toBeVisible()
     await expect(page.locator('main.pc-docs-hub')).toBeVisible()
     await expect(page.locator('.pc-docs-hub__card')).toHaveCount(3)
-    await expect(page.locator('footer.pc-footer')).toBeVisible()
+    await expect(page.locator('footer.cm-footer')).toBeVisible()
 
     const layout = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,

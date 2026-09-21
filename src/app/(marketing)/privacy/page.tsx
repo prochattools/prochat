@@ -1,4 +1,5 @@
 import { getSEOTags } from '@/libs/seo'
+import { CinematicLiteShell } from '@/components/CinematicMarketingShell'
 
 import { PublicLegalPage } from '../components/layout/PublicLegalPage'
 
@@ -23,6 +24,7 @@ const linkClass =
 
 export default function PrivacyPage() {
 	return (
+		<CinematicLiteShell>
 		<PublicLegalPage
 			kind="privacy"
 			title="Privacy Policy"
@@ -246,5 +248,6 @@ export default function PrivacyPage() {
 			</div>
 			</section>
 		</PublicLegalPage>
+		</CinematicLiteShell>
 	)
 }

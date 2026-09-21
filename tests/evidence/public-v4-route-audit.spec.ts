@@ -26,12 +26,6 @@ const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 900 },
 ] as const
 
-const MOTION_SELECTORS: Record<string, string> = {
-  orbit: '.pc-route-orbit',
-  radar: '.pc-route-radar-sweep',
-  ledger: '.pc-route-ledger-cursor',
-}
-
 const CINEMATIC_ROUTES = new Set(['/', '/contact'])
 
 const REDIRECTS = [
@@ -79,23 +73,17 @@ test.describe('site-wide V4 public route evidence', () => {
           await expect(page.locator('nav.cm-nav')).toHaveCount(1)
           await expect(page.locator('footer.cm-footer')).toHaveCount(1)
         } else {
-          const shell = page.locator('.pc-canonical-shell.pc-public-v4')
-          await expect(shell).toHaveCount(1)
-          await expect(shell).toHaveAttribute('data-public-variant', route.variant)
-          await expect(page.locator('nav.pm-navbar')).toHaveCount(1)
-          await expect(page.locator('footer.pc-footer')).toHaveCount(1)
+          await expect(page.locator('.cm-shell--lite')).toHaveCount(1)
+          await expect(page.locator('nav.cm-nav')).toHaveCount(1)
+          await expect(page.locator('footer.cm-footer')).toHaveCount(1)
+          await expect(page.locator('[data-cinematic-experience]')).toHaveCount(0)
+          await expect(page.locator('.cm-experience__media')).toHaveCount(0)
         }
         await expect(page.locator('main')).toHaveCount(1)
         await expect(page.locator('main')).toBeVisible()
         const body = page.locator(route.bodySelector)
         await expect(body, `${route.path} is missing its redesigned body marker`).toHaveCount(1)
         await expect(body).toBeVisible()
-
-        if (!CINEMATIC_ROUTES.has(route.path)) {
-          const scene = page.locator(`.pc-route-scene--${route.variant}`)
-          await expect(scene).toHaveCount(1)
-          await expect(scene.locator(`.pc-route-motif--${route.motif}`)).toHaveCount(1)
-        }
 
         const layout = await page.evaluate(() => ({
           documentWidth: document.documentElement.scrollWidth,
@@ -122,17 +110,13 @@ test.describe('site-wide V4 public route evidence', () => {
         continue
       }
 
-      const selector = MOTION_SELECTORS[route.motif]
-      if (!selector) continue
-
       await page.emulateMedia({ reducedMotion: 'no-preference' })
       await page.goto(new URL(route.path, baseUrl).toString(), { waitUntil: 'domcontentloaded' })
-      const normalAnimation = await page.locator(selector).first().evaluate(element => getComputedStyle(element).animationName)
-      expect(normalAnimation, `${route.path} expected active motif animation`).not.toBe('none')
+      await expect(page.locator('[data-cinematic-experience]')).toHaveCount(0)
+      await expect(page.locator('.cm-experience__media')).toHaveCount(0)
 
       await page.emulateMedia({ reducedMotion: 'reduce' })
-      const reducedAnimation = await page.locator(selector).first().evaluate(element => getComputedStyle(element).animationName)
-      expect(reducedAnimation, `${route.path} animation must stop under reduced motion`).toBe('none')
+      await expect(page.locator('.cm-shell--lite')).toHaveCount(1)
     }
   })
 

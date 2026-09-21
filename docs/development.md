@@ -52,7 +52,7 @@ node scripts/check-doc-links.js
 
 ## Browser evidence
 
-Canonical UI changes should be checked through the maintained Playwright evidence suite. Start a local production build deliberately with maintenance mode disabled, set `WAVE1_BASE_URL`, then run the evidence scripts defined in `package.json`/`REPO_OPERATIONS.md`.
+Canonical UI changes should be checked through the maintained Playwright evidence suite. Start a local production build with `npm run build`, then use `npm run start:local` so the local server explicitly runs with maintenance mode disabled. Set `WAVE1_BASE_URL`, then run the evidence scripts defined in `package.json`/`REPO_OPERATIONS.md`.
 
 Do not commit Playwright report or test-result output.
 

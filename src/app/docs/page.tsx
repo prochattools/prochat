@@ -1,4 +1,5 @@
 import StructuredData from '@/components/StructuredData'
+import { CinematicLiteShell } from '@/components/CinematicMarketingShell'
 import PublicEditorialHero from '@/components/public/PublicEditorialHero'
 import { getSEOTags } from '@/libs/seo'
 import { getDocsSchemas } from '@/libs/structured-data'
@@ -79,8 +80,9 @@ const paths = [
 
 export default function DocsIndexPage() {
   return (
-    <main className="pc-body-page pc-docs-hub" data-body-family="docs">
-      <StructuredData id="schema-docs" data={getDocsSchemas()} />
+    <CinematicLiteShell contentOwnsMain>
+      <main id="main-content" className="pc-body-page pc-docs-hub" data-body-family="docs">
+        <StructuredData id="schema-docs" data={getDocsSchemas()} />
 
       <PublicEditorialHero
         variant="docs"
@@ -110,13 +112,13 @@ export default function DocsIndexPage() {
         <div className="pc-docs-hub__grid">
           {paths.map(path => (
             <article key={path.id} className="pc-docs-hub__card" data-doc-product={path.id}>
-              <header>
+              <div className="pc-docs-hub__card-header">
                 <span>{path.index}</span>
                 <div>
                   <small>{path.eyebrow}</small>
                   <h3>{path.title}</h3>
                 </div>
-              </header>
+              </div>
               <p>{path.description}</p>
 
               <ul className="pc-docs-hub__signals" aria-label={`${path.title} documentation signals`}>
@@ -146,6 +148,7 @@ export default function DocsIndexPage() {
           Legacy SaaS, launch, workflow, learning, and prompt documentation is retired from the active public site. Historical context remains available through repository history when needed.
         </p>
       </section>
-    </main>
+      </main>
+    </CinematicLiteShell>
   )
 }

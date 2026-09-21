@@ -8,6 +8,7 @@ if (!baseUrl) {
 
 const routes = ['/', '/evermind', '/nevermind', '/mastermind', '/docs', '/contact', '/privacy', '/terms'] as const
 const cinematicRoutes = new Set<string>(['/', '/evermind', '/nevermind', '/mastermind', '/contact'])
+const cinematicLiteRoutes = new Set<string>(['/docs', '/privacy', '/terms'])
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
@@ -58,14 +59,20 @@ test.describe('canonical route smoke evidence', () => {
           await expect(page.locator('nav.cm-nav'), `${route} is missing its cinematic navigation`).toHaveCount(1)
           await expect(page.locator('footer.cm-footer'), `${route} is missing its cinematic footer`).toHaveCount(1)
         } else {
-          const navigation = page.locator('nav.pm-navbar')
+          const navigation = page.locator(cinematicLiteRoutes.has(route) ? 'nav.cm-nav' : 'nav.pm-navbar')
           await expect(navigation, `${route} is missing the canonical public navigation`).toHaveCount(1)
           await expect(navigation).toBeVisible()
 
-          const footer = page.locator('footer.pc-footer')
+          const footer = page.locator(cinematicLiteRoutes.has(route) ? 'footer.cm-footer' : 'footer.pc-footer')
           await expect(footer, `${route} is missing the canonical public footer`).toHaveCount(1)
           await expect(footer).toBeVisible()
           await expect(footer.getByRole('link', { name: 'ProChat home' })).toBeVisible()
+
+          if (cinematicLiteRoutes.has(route)) {
+            await expect(page.locator('.cm-shell--lite')).toHaveCount(1)
+            await expect(page.locator('[data-cinematic-experience]')).toHaveCount(0)
+            await expect(page.locator('.cm-experience__media')).toHaveCount(0)
+          }
         }
 
         // A non-empty primary heading must be present — proves the page rendered.

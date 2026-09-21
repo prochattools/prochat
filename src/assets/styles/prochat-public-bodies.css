@@ -450,14 +450,14 @@
     rgb(var(--pc-surface-rgb));
 }
 
-.pc-docs-hub__card header {
+.pc-docs-hub__card-header {
   display: grid;
   grid-template-columns: 2.2rem 1fr;
   gap: 0.85rem;
   align-items: start;
 }
 
-.pc-docs-hub__card header > span,
+.pc-docs-hub__card-header > span,
 .pc-docs-hub__card small {
   color: rgb(var(--pc-body-accent));
   font-family: var(--font-mono), 'JetBrains Mono', monospace;

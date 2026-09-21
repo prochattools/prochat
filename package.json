@@ -14,6 +14,7 @@
     "build": "next build",
     "analyze": "ANALYZE=true next build",
     "start": "sh scripts/start-production.sh",
+    "start:local": "PROCHAT_MAINTENANCE_MODE=0 next start -p 3056",
     "sitemap": "tsx scripts/generate-sitemap.ts",
     "provision:auto": "node scripts/provision-auto.js",
     "postinstall": "prisma generate --schema=prisma/system.prisma",

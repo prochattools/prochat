@@ -1,7 +1,9 @@
 import TrackedOutboundLink from '@/components/TrackedOutboundLink'
+import { CinematicLiteShell } from '@/components/CinematicMarketingShell'
 
 const AccountantBridgePage = () => {
 	return (
+		<CinematicLiteShell>
 		<section className="mx-auto max-w-2xl px-page py-16 text-slate-900 dark:text-white">
 			<h1 className="text-3xl font-bold tracking-[-0.05em]">WaaS for Accountants</h1>
 			<p className="mt-4 text-slate-600 dark:text-slate-400">
@@ -28,6 +30,7 @@ const AccountantBridgePage = () => {
 				Open the accountant funnel
 			</TrackedOutboundLink>
 		</section>
+		</CinematicLiteShell>
 	)
 }
 

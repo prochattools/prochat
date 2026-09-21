@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { BookOpen } from 'lucide-react'
+import { CinematicLiteShell } from '@/components/CinematicMarketingShell'
 import HeroBadge from '@/components/ui/hero-badge'
 import HeroSection from '@/components/marketing/HeroSection'
 import { Button } from '@/components/ui/button'
@@ -95,7 +96,8 @@ export default function StartHerePage() {
   )
 
   return (
-    <main id="starting-point-top" className="min-h-screen bg-transparent text-foreground font-brand selection:bg-primary/20 selection:text-foreground">
+    <CinematicLiteShell contentOwnsMain>
+      <main id="starting-point-top" className="min-h-screen bg-transparent text-foreground font-brand selection:bg-primary/20 selection:text-foreground">
       <Suspense fallback={null}>
         <SourceTracker />
       </Suspense>
@@ -214,6 +216,7 @@ export default function StartHerePage() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </CinematicLiteShell>
   )
 }
