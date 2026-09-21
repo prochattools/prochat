@@ -14,9 +14,9 @@ type RouteCase = {
 }
 
 const ROUTES: RouteCase[] = [
-  { path: '/', variant: 'home', motif: 'orbit', bodySelector: '.hv4-page[data-home-v2]' },
+  { path: '/', variant: 'home', motif: 'cinematic', bodySelector: '[data-cinematic-experience]' },
   { path: '/docs', variant: 'docs', motif: 'docs', bodySelector: '.pc-docs-hub' },
-  { path: '/contact', variant: 'contact', motif: 'radar', bodySelector: '.contact-body-page' },
+  { path: '/contact', variant: 'contact', motif: 'cinematic', bodySelector: '.cm-contact-page' },
   { path: '/privacy', variant: 'legal', motif: 'ledger', bodySelector: ".pc-legal-ledger[data-legal-kind='privacy']" },
   { path: '/terms', variant: 'legal', motif: 'ledger', bodySelector: ".pc-legal-ledger[data-legal-kind='terms']" },
 ]
@@ -31,6 +31,8 @@ const MOTION_SELECTORS: Record<string, string> = {
   radar: '.pc-route-radar-sweep',
   ledger: '.pc-route-ledger-cursor',
 }
+
+const CINEMATIC_ROUTES = new Set(['/', '/contact'])
 
 const REDIRECTS = [
   { from: '/prochat-memory', to: '/evermind' },
@@ -72,21 +74,28 @@ test.describe('site-wide V4 public route evidence', () => {
         expect(response!.status(), `${route.path} returned ${response!.status()}`).toBeLessThan(400)
         expect(normalizedPath(page.url()), `${route.path} redirected unexpectedly`).toBe(route.path)
 
-        const shell = page.locator('.pc-canonical-shell.pc-public-v4')
-        await expect(shell).toHaveCount(1)
-        await expect(shell).toHaveAttribute('data-public-variant', route.variant)
-
-        await expect(page.locator('nav.pm-navbar')).toHaveCount(1)
-        await expect(page.locator('footer.pc-footer')).toHaveCount(1)
+        if (CINEMATIC_ROUTES.has(route.path)) {
+          await expect(page.locator('.cm-shell')).toHaveCount(1)
+          await expect(page.locator('nav.cm-nav')).toHaveCount(1)
+          await expect(page.locator('footer.cm-footer')).toHaveCount(1)
+        } else {
+          const shell = page.locator('.pc-canonical-shell.pc-public-v4')
+          await expect(shell).toHaveCount(1)
+          await expect(shell).toHaveAttribute('data-public-variant', route.variant)
+          await expect(page.locator('nav.pm-navbar')).toHaveCount(1)
+          await expect(page.locator('footer.pc-footer')).toHaveCount(1)
+        }
         await expect(page.locator('main')).toHaveCount(1)
         await expect(page.locator('main')).toBeVisible()
         const body = page.locator(route.bodySelector)
         await expect(body, `${route.path} is missing its redesigned body marker`).toHaveCount(1)
         await expect(body).toBeVisible()
 
-        const scene = page.locator(`.pc-route-scene--${route.variant}`)
-        await expect(scene).toHaveCount(1)
-        await expect(scene.locator(`.pc-route-motif--${route.motif}`)).toHaveCount(1)
+        if (!CINEMATIC_ROUTES.has(route.path)) {
+          const scene = page.locator(`.pc-route-scene--${route.variant}`)
+          await expect(scene).toHaveCount(1)
+          await expect(scene.locator(`.pc-route-motif--${route.motif}`)).toHaveCount(1)
+        }
 
         const layout = await page.evaluate(() => ({
           documentWidth: document.documentElement.scrollWidth,
@@ -104,6 +113,15 @@ test.describe('site-wide V4 public route evidence', () => {
     await page.setViewportSize({ width: 1440, height: 1000 })
 
     for (const route of ROUTES) {
+      if (CINEMATIC_ROUTES.has(route.path)) {
+        await page.emulateMedia({ reducedMotion: 'no-preference' })
+        await page.goto(new URL(route.path, baseUrl).toString(), { waitUntil: 'domcontentloaded' })
+        expect(await page.locator('.cm-video__canvas').evaluate(element => getComputedStyle(element).display), `${route.path} canvas should render normally`).not.toBe('none')
+        await page.emulateMedia({ reducedMotion: 'reduce' })
+        expect(await page.locator('.cm-video__canvas').evaluate(element => getComputedStyle(element).display), `${route.path} canvas should stop under reduced motion`).toBe('none')
+        continue
+      }
+
       const selector = MOTION_SELECTORS[route.motif]
       if (!selector) continue
 

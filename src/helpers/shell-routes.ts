@@ -58,7 +58,6 @@ export const SHELL_ROUTE_DEFINITIONS: readonly ShellRouteDefinition[] = [
   { routeId: 'ROUTE-053', sourcePattern: '/sign-up/[[...sign-up]]', runtimePattern: '/sign-up/[[...sign-up]]', shellClass: 'protected_internal_shell' },
   { routeId: 'ROUTE-056', sourcePattern: '/maintenance', runtimePattern: '/maintenance', shellClass: 'no_shared_shell' },
   { routeId: 'ROUTE-057', sourcePattern: '/debug/analytics', runtimePattern: '/debug/analytics', shellClass: 'protected_internal_shell' },
-  { routeId: 'ROUTE-057b', sourcePattern: '/debug/home-v2', runtimePattern: '/debug/home-v2', shellClass: 'no_shared_shell' },
   { routeId: 'ROUTE-058', sourcePattern: '/unsubscribe', runtimePattern: '/unsubscribe', shellClass: 'no_shared_shell' },
   { routeId: 'ROUTE-059', sourcePattern: '/api/contact', runtimePattern: '/api/contact', shellClass: 'no_shared_shell' },
   { routeId: 'ROUTE-060', sourcePattern: '/api/health', runtimePattern: '/api/health', shellClass: 'no_shared_shell' },

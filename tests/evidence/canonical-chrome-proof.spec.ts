@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { expect, test } from '@playwright/test'
+import { expect, test, type Page } from '@playwright/test'
 
 const baseUrl = process.env.WAVE1_BASE_URL
 
@@ -16,12 +16,22 @@ const STANDARD_PUBLIC_ROUTES = [
 ] as const
 
 const CINEMATIC_PRODUCT_ROUTES = ['/evermind', '/nevermind', '/mastermind'] as const
+const CINEMATIC_MARKETING_ROUTES = new Set<string>(['/', '/contact', ...CINEMATIC_PRODUCT_ROUTES])
 
 const DESKTOP = { name: 'desktop', width: 1440, height: 1000 } as const
 const MOBILE = { name: 'mobile', width: 390, height: 900 } as const
 const DOCS_NARROW = { name: 'narrow', width: 320, height: 900 } as const
 
 const VIEWPORTS = [DESKTOP, MOBILE] as const
+const CHROME_GEOMETRY_ROUTES = ['/', '/evermind', '/nevermind', '/mastermind', '/contact'] as const
+
+function publicNav(page: Page, route: string) {
+  return CINEMATIC_MARKETING_ROUTES.has(route) ? page.locator('nav.cm-nav') : page.locator('nav.pm-navbar')
+}
+
+function publicFooter(page: Page, route: string) {
+  return CINEMATIC_MARKETING_ROUTES.has(route) ? page.locator('footer.cm-footer') : page.locator('footer.pc-footer')
+}
 
 // ---------------------------------------------------------------------------
 // Chrome invariants at each viewport
@@ -52,14 +62,14 @@ test.describe('canonical public chrome — structure and first-paint invariants'
         ).toHaveCount(0)
 
         // Exactly one canonical nav
-        const navCount = await page.locator('nav.pm-navbar').count()
-        expect(navCount, `${route} pm-navbar count at ${viewport.name}`).toBe(1)
-        await expect(page.locator('nav.pm-navbar')).toBeVisible()
+        const nav = publicNav(page, route)
+        expect(await nav.count(), `${route} public nav count at ${viewport.name}`).toBe(1)
+        await expect(nav).toBeVisible()
 
         // Exactly one canonical footer
-        const footerCount = await page.locator('footer.pc-footer').count()
-        expect(footerCount, `${route} pc-footer count at ${viewport.name}`).toBe(1)
-        await expect(page.locator('footer.pc-footer')).toBeVisible()
+        const footer = publicFooter(page, route)
+        expect(await footer.count(), `${route} public footer count at ${viewport.name}`).toBe(1)
+        await expect(footer).toBeVisible()
 
         // html/body/shell backgrounds are neutral black
         const backgrounds = await page.evaluate(() => {
@@ -144,14 +154,15 @@ test.describe('canonical public chrome — geometry consistency at desktop', () 
       footerHeight: number
     }> = []
 
-    for (const route of STANDARD_PUBLIC_ROUTES) {
+    for (const route of CHROME_GEOMETRY_ROUTES) {
       await page.goto(new URL(route, baseUrl).toString(), {
         waitUntil: 'domcontentloaded',
       })
 
-      const geo = await page.evaluate(() => {
-        const nav = document.querySelector('nav.pm-navbar')
-        const footer = document.querySelector('footer.pc-footer')
+      const geo = await page.evaluate((route) => {
+        const cinematic = ['/', '/contact', '/evermind', '/nevermind', '/mastermind'].includes(route)
+        const nav = document.querySelector(cinematic ? 'nav.cm-nav' : 'nav.pm-navbar')
+        const footer = document.querySelector(cinematic ? 'footer.cm-footer' : 'footer.pc-footer')
         const navRect = nav?.getBoundingClientRect()
         const footerRect = footer?.getBoundingClientRect()
         return {
@@ -159,7 +170,7 @@ test.describe('canonical public chrome — geometry consistency at desktop', () 
           navTop: navRect ? navRect.top : -1,
           footerHeight: footerRect ? footerRect.height : -1,
         }
-      })
+      }, route)
 
       geometries.push({ route, ...geo })
     }
@@ -212,15 +223,15 @@ test.describe('cinematic product funnels — route-owned chrome', () => {
 
         await expect(page.locator('.cpf-root')).toHaveCount(1)
         await expect(page.locator('.cpf-root')).toBeVisible()
-        await expect(page.locator('.cpf-nav')).toHaveCount(1)
-        await expect(page.locator('.cpf-nav')).toBeVisible()
-        await expect(page.locator('.cpf-root main')).toBeVisible()
-        await expect(page.locator('.cpf-root main h1').first()).toBeVisible()
-        await expect(page.locator('.cpf-root main h1').first()).not.toHaveText('')
+        await expect(page.locator('nav.cm-nav')).toHaveCount(1)
+        await expect(page.locator('nav.cm-nav')).toBeVisible()
+        await expect(page.locator('main.cpf-root')).toBeVisible()
+        await expect(page.locator('main.cpf-root h1').first()).toBeVisible()
+        await expect(page.locator('main.cpf-root h1').first()).not.toHaveText('')
 
         for (const product of ['Evermind', 'Nevermind', 'Mastermind']) {
           const href = `/${product.toLowerCase()}`
-          const productLink = page.locator(`.cpf-nav__links a[href="${href}"]`)
+          const productLink = page.locator(`.cm-nav__links a[href="${href}"]`)
           await expect(productLink).toHaveCount(1)
           if (viewport.name === 'desktop') {
             await expect(productLink).toBeVisible()
@@ -243,14 +254,14 @@ test.describe('cinematic product funnels — route-owned chrome', () => {
     for (const route of CINEMATIC_PRODUCT_ROUTES) {
       await page.goto(new URL(route, baseUrl).toString(), { waitUntil: 'domcontentloaded' })
       const motion = await page.evaluate(() => {
-        const reveal = document.querySelector<HTMLElement>('.cpf-reveal')
-        const canvas = document.querySelector<HTMLElement>('.cpf-video__canvas')
+        const chapter = document.querySelector<HTMLElement>('[data-cinematic-chapter]')
+        const canvas = document.querySelector<HTMLElement>('.cm-video__canvas')
         return {
-          revealTransitionDuration: reveal ? getComputedStyle(reveal).transitionDuration : '',
+          chapterTransitionDuration: chapter ? getComputedStyle(chapter).transitionDuration : '',
           canvasDisplay: canvas ? getComputedStyle(canvas).display : 'none',
         }
       })
-      expect(motion.revealTransitionDuration, `${route} reveal transitions must stop under reduced motion`).toBe('0s')
+      expect(motion.chapterTransitionDuration, `${route} chapter transitions must stop under reduced motion`).toBe('0s')
       expect(motion.canvasDisplay, `${route} video canvas must be hidden under reduced motion`).toBe('none')
     }
   })
@@ -336,9 +347,9 @@ test.describe('contact page — canonical copy and layout', () => {
       waitUntil: 'networkidle',
     })
 
-    await expect(page.locator('nav.pm-navbar')).toBeVisible()
-    await expect(page.locator('footer.pc-footer')).toBeVisible()
-    await expect(page.locator('.contact-body-page')).toBeVisible()
+    await expect(page.locator('nav.cm-nav')).toBeVisible()
+    await expect(page.locator('footer.cm-footer')).toBeVisible()
+    await expect(page.locator('.cm-contact-page')).toBeVisible()
     await expect(page.locator('.contact-intake-grid')).toBeVisible()
     await expect(page.locator('.contact-form-panel')).toBeVisible()
     await expect(page.getByText('Send the context', { exact: false })).toBeVisible()
@@ -362,9 +373,9 @@ test.describe('contact page — canonical copy and layout', () => {
       waitUntil: 'networkidle',
     })
 
-    await expect(page.locator('nav.pm-navbar')).toBeVisible()
+    await expect(page.locator('nav.cm-nav')).toBeVisible()
     await expect(page.locator('.contact-form-panel')).toBeVisible()
-    await expect(page.locator('footer.pc-footer')).toBeVisible()
+    await expect(page.locator('footer.cm-footer')).toBeVisible()
 
     const layout = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
@@ -406,17 +417,17 @@ test.describe('client navigation — chrome integrity across route changes', () 
 
     // Start on homepage
     await page.goto(new URL('/', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
-    expect(await page.locator('nav.pm-navbar').count()).toBe(1)
-    expect(await page.locator('footer.pc-footer').count()).toBe(1)
+    expect(await publicNav(page, '/').count()).toBe(1)
+    expect(await publicFooter(page, '/').count()).toBe(1)
 
     // Navigate to /docs
     await page.goto(new URL('/docs', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
     expect(
-      await page.locator('nav.pm-navbar').count(),
+      await publicNav(page, '/docs').count(),
       'exactly one nav after navigating to /docs',
     ).toBe(1)
     expect(
-      await page.locator('footer.pc-footer').count(),
+      await publicFooter(page, '/docs').count(),
       'exactly one footer after navigating to /docs',
     ).toBe(1)
     // No skip control visible after navigation
@@ -428,22 +439,22 @@ test.describe('client navigation — chrome integrity across route changes', () 
     // Navigate to /contact
     await page.goto(new URL('/contact', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
     expect(
-      await page.locator('nav.pm-navbar').count(),
+      await publicNav(page, '/contact').count(),
       'exactly one nav after navigating to /contact',
     ).toBe(1)
     expect(
-      await page.locator('footer.pc-footer').count(),
+      await publicFooter(page, '/contact').count(),
       'exactly one footer after navigating to /contact',
     ).toBe(1)
 
     // Navigate back to homepage
     await page.goto(new URL('/', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
     expect(
-      await page.locator('nav.pm-navbar').count(),
+      await publicNav(page, '/').count(),
       'exactly one nav after returning to homepage',
     ).toBe(1)
     expect(
-      await page.locator('footer.pc-footer').count(),
+      await publicFooter(page, '/').count(),
       'exactly one footer after returning to homepage',
     ).toBe(1)
 

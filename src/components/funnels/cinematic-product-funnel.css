@@ -1,5 +1,6 @@
 .cpf-root { position: relative; min-height: 100%; background: transparent; }
-.cpf-product-card { width: min(100%, 30rem); min-width: 0; margin-top: 3rem; padding: 1rem; }
+.cpf-product-card { width: min(100%, 30rem); min-width: 0; margin-top: 1rem; padding: 1rem; }
+.cm-product-experience .cpf-product-card { margin-top: 1rem; }
 .cpf-product-card__mark { flex: 0 0 5rem; }
 .cpf-product-card > div:last-child { display: grid; gap: .28rem; }
 .cpf-product-card__kicker { color: rgb(var(--pc-blue-500-rgb)); font: 600 .72rem/1.3 var(--font-mono), monospace; letter-spacing: .15em; text-transform: uppercase; }
@@ -14,4 +15,4 @@
 .cpf-story-panel li { display: grid; gap: .35rem; padding-top: 1rem; border-top: 1px solid rgb(255 255 255 / .14); }
 .cpf-story-panel li strong { color: rgb(var(--pc-text-rgb)); }
 .cpf-story-panel li span { color: rgb(238 241 248 / .68); line-height: 1.5; }
-@media (max-width: 800px) { .cpf-story-panel { margin-left: 0; } .cpf-product-card { margin-top: 2rem; } }
+@media (max-width: 800px) { .cpf-story-panel { margin-left: 0; } .cm-product-experience .cpf-product-card { margin-top: 1.25rem; } }
