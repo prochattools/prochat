@@ -21,7 +21,19 @@ export function CinematicMediaPage({
   const handleProgress = useCallback((progress: number, isActive: boolean) => {
     const page = pageRef.current
     if (!page) return
-    const activeChapter = Math.min(chapterCount - 1, Math.floor(progress * chapterCount))
+    const chapters = Array.from(page.querySelectorAll<HTMLElement>('[data-cinematic-chapter]'))
+    const viewportCenter = window.innerHeight / 2
+    let activeChapter = 0
+    let closestDistance = Number.POSITIVE_INFINITY
+    chapters.forEach((chapter, index) => {
+      const rect = chapter.getBoundingClientRect()
+      const distance = Math.abs((rect.top + rect.bottom) / 2 - viewportCenter)
+      if (distance < closestDistance) {
+        closestDistance = distance
+        activeChapter = index
+      }
+    })
+    activeChapter = Math.min(chapterCount - 1, activeChapter)
     page.style.setProperty('--cm-progress', String(progress))
     page.dataset.activeChapter = String(activeChapter)
     page.dataset.journeyState = isActive ? 'active' : 'after'

@@ -101,7 +101,7 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
     source.crossOrigin = 'anonymous'
     source.muted = true
     source.playsInline = true
-    source.preload = 'auto'
+    source.preload = 'metadata'
     source.src = VIDEO_URL
 
     const seekTo = async (time: number) => {
@@ -191,9 +191,11 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
       }
     }
 
-    extract().catch(() => undefined)
+    const startExtraction = () => { extract().catch(() => undefined) }
+    const timeoutId = window.setTimeout(startExtraction, 1500)
     return () => {
       cancelled = true
+      window.clearTimeout(timeoutId)
       framesRef.current.forEach((frame) => frame?.close())
       framesRef.current = []
       frameCountRef.current = 0
@@ -280,5 +282,5 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
   }, [bootstrapReady, cacheReady, videoReady])
 
   const canvasVisible = bootstrapReady || cacheReady
-  return <><link rel="preload" as="image" href={BOOTSTRAP_SPRITE_URL} /><div className={`cm-video ${className}`.trim()} aria-hidden="true"><div className={`cm-video__poster ${bootstrapReady || videoReady || cacheReady ? 'is-hidden' : ''}`} /><video ref={videoRef} className={`cm-video__element ${canvasVisible || cacheReady ? 'is-hidden' : videoReady ? 'is-visible' : ''}`} src={VIDEO_URL} muted playsInline preload="auto" /><canvas ref={canvasRef} className={`cm-video__canvas ${canvasVisible ? 'is-visible' : ''}`} /><div className="cm-video__veil" /></div></>
+  return <><link rel="preload" as="image" href={BOOTSTRAP_SPRITE_URL} /><div className={`cm-video ${className}`.trim()} aria-hidden="true"><div className={`cm-video__poster ${bootstrapReady || videoReady || cacheReady ? 'is-hidden' : ''}`} /><video ref={videoRef} className={`cm-video__element ${canvasVisible || cacheReady ? 'is-hidden' : videoReady ? 'is-visible' : ''}`} src={VIDEO_URL} muted playsInline preload="metadata" /><canvas ref={canvasRef} className={`cm-video__canvas ${canvasVisible ? 'is-visible' : ''}`} /><div className="cm-video__veil" /></div></>
 }
