@@ -6,9 +6,8 @@ import { contactSubmissionSchema } from '@/lib/contact/schema'
 import { trackEvent } from '@/utils/analytics'
 import { CinematicMarketingShell } from '@/components/CinematicMarketingShell'
 
-import '../prochat-memory-theme.css'
-import './contact-page.css'
 import ContactPageMarkup from './ContactPageMarkup'
+import { CinematicMediaPage } from '@/components/cinematic/CinematicMediaPage'
 
 type ContactFieldName =
   | 'name'
@@ -301,9 +300,9 @@ export default function ContactPageClient({ initialTopic }: ContactPageClientPro
       cta={{ label: 'Start with Evermind', href: '/evermind', trackingCta: 'start_evermind' }}
     >
       <main id="main-content" ref={rootRef} className="contact-page-root">
-        <div className="contact-page-main">
+        <CinematicMediaPage className="cm-contact-experience" chapterCount={2} lite>
           <ContactPageMarkup initialTopic={initialTopic} />
-        </div>
+        </CinematicMediaPage>
       </main>
     </CinematicMarketingShell>
   )

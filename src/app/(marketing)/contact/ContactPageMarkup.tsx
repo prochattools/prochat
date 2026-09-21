@@ -1,4 +1,3 @@
-import PublicEditorialHero from '@/components/public/PublicEditorialHero'
 import { Input } from '@/components/ui/input'
 
 const CONTACT_SUBMIT_IDLE_HTML = 'SEND MESSAGE'
@@ -31,25 +30,19 @@ export default function ContactPageMarkup({
   const topicContext = TOPIC_CONTEXT[initialTopic]
 
   return (
-    <div className="pc-body-page contact-body-page" data-body-family="contact">
-      <PublicEditorialHero
-        variant="contact"
-        eyebrow="Contact / direct signal"
-        title={
-          <>
-            Send the context.<br />
-            <strong>Get the clearest next step.</strong>
-          </>
-        }
-        description="Tell me what you are working on, where the friction is, and what outcome you need. The goal is not a generic sales sequence—it is one useful reply with the right next step."
-        primaryAction={{ href: '#contact-form-card', label: 'Send the brief' }}
-        signals={topicContext.signals}
-        visualTitle="CONTACT / SIGNAL"
-        visualCaption="TOPIC → CONTEXT → REVIEW → REPLY"
-      />
+    <div className="cm-contact-page" data-body-family="contact">
+      <section className="cm-chapter cm-contact-hero" data-cinematic-chapter="0" aria-labelledby="contact-hero-title">
+        <div className="cm-chapter__inner">
+          <p className="cm-chapter__eyebrow">Contact / direct signal</p>
+          <h1 id="contact-hero-title">Send the context.<br /><span>Get the clearest next step.</span></h1>
+          <p className="cm-lede">Tell me what you are working on, where the friction is, and what outcome you need. The goal is one useful reply with the right next step.</p>
+          <div className="cm-contact-signals">{topicContext.signals.map((signal, index) => <span key={signal}><b>0{index + 1}</b>{signal}</span>)}</div>
+          <a className="cm-actions__primary cm-contact-hero__action" href="#contact-form-card">Send the brief <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
 
-      <section className="contact-intake-section" aria-labelledby="contact-intake-title">
-        <div className="contact-intake-grid">
+      <section className="cm-chapter cm-contact-intake" data-cinematic-chapter="1" aria-labelledby="contact-intake-title">
+        <div className="cm-chapter__inner contact-intake-grid">
           <aside className="contact-intake-context">
             <div className="pc-body-kicker"><span aria-hidden="true" />Request context</div>
             <h2 id="contact-intake-title">One brief is enough to start.</h2>
@@ -68,7 +61,7 @@ export default function ContactPageMarkup({
             </ol>
           </aside>
 
-          <div className="contact-form-panel" id="contact-form-card">
+          <div className="contact-form-panel cm-glass-panel" id="contact-form-card">
             <div className="contact-form-panel__header">
               <div>
                 <span>INTAKE / 01</span>

@@ -1,0 +1,11 @@
+.cm-video { position: fixed; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; background: rgb(10 10 10); }
+.cm-video__poster, .cm-video__element, .cm-video__canvas, .cm-video__veil { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cm-video__poster { background: radial-gradient(circle at 50% 42%, rgb(196 208 217) 0%, rgb(141 154 167) 35%, rgb(74 85 96) 65%, rgb(10 10 10) 100%); opacity: 1; transition: opacity .5s ease; }
+.cm-video__poster.is-hidden { opacity: 0; }
+.cm-video__element { object-fit: cover; opacity: 0; transition: opacity .5s ease; }
+.cm-video__element.is-visible { opacity: 1; }
+.cm-video__element.is-hidden { opacity: 0; }
+.cm-video__canvas { opacity: 0; transition: opacity .5s ease; }
+.cm-video__canvas.is-visible { opacity: 1; }
+.cm-video__veil { background: linear-gradient(180deg, rgb(4 7 11 / .08), rgb(3 5 9 / .18) 58%, rgb(2 4 7 / .35)); }
+@media (prefers-reduced-motion: reduce) { .cm-video__canvas { display: none; } .cm-video__element { opacity: 1 !important; } }

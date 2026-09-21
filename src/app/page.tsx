@@ -1,5 +1,4 @@
 import { HomeV2 } from '@/components/HomeV2'
-import '@/components/home-v2.css'
 import { getSEOTags } from '@/libs/seo'
 
 export const metadata = getSEOTags({

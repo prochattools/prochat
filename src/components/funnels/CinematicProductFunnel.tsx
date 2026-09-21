@@ -2,11 +2,13 @@
 
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
 
-import { ScrollVideoBackground } from './ScrollVideoBackground'
 import { CinematicMarketingShell } from '../CinematicMarketingShell'
+import { CinematicChapter, CinematicGlassPanel } from '../cinematic/CinematicChapter'
+import { CinematicMediaPage } from '../cinematic/CinematicMediaPage'
 import Logo from '../logo'
+
+import './cinematic-product-funnel.css'
 
 
 type Capability = { title: string; body: string }
@@ -121,26 +123,6 @@ const CONTENT: Record<'evermind' | 'nevermind' | 'mastermind', FunnelContent> = 
   },
 }
 
-function Reveal({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const node = ref.current
-    if (!node) return
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setVisible(true)
-        observer.disconnect()
-      }
-    }, { threshold: 0.15 })
-    observer.observe(node)
-    return () => observer.disconnect()
-  }, [])
-
-  return <div ref={ref} className={`cpf-reveal ${visible ? 'is-visible' : ''} ${className}`} style={{ transitionDelay: `${delay}ms` }}>{children}</div>
-}
-
 export function CinematicProductFunnel({ kind }: { kind: 'evermind' | 'nevermind' | 'mastermind' }) {
   const c = CONTENT[kind]
   const actionId = kind === 'evermind' ? 'get-evermind' : kind === 'nevermind' ? 'founding-edition' : 'controlled-execution'
@@ -150,15 +132,24 @@ export function CinematicProductFunnel({ kind }: { kind: 'evermind' | 'nevermind
       cta={{ label: c.navCta, href: c.navHref, trackingCta: `${kind}_primary` }}
     >
       <main id="main-content" className={`cpf-root cpf-root--${kind}`}>
-        <ScrollVideoBackground />
-        <div className="cpf-layer">
-          <section className="cpf-section" aria-labelledby={`${kind}-hero-title`}>
-            <div className="cpf-section__top"><div className="cpf-service-list">{c.eyebrowItems.map((item, i) => <Reveal key={item} delay={150 + i * 120}><span>{item}</span></Reveal>)}</div><Reveal delay={300} className="cpf-intro"><p>{c.intro}</p></Reveal></div>
-            <div className="cpf-section__bottom"><div><Reveal delay={150}><div className="cpf-badge">{c.badge}</div></Reveal><Reveal delay={280}><h1 id={`${kind}-hero-title`}>{c.heroLine1}<br />{c.heroLine2}</h1></Reveal></div><Reveal delay={420}><div className="cpf-product-card"><div className="cpf-product-card__mark"><Logo scale={0.55} /></div><div><span className="cpf-product-card__kicker">{c.product}</span><strong>{c.cardTitle}</strong><small>{c.cardMeta}</small><Link href={c.cardHref}>{c.cardCta}<ChevronRight size={14} /></Link></div></div></Reveal></div>
-          </section>
-          <div className="cpf-spacer" aria-hidden="true" />
-          <section className="cpf-section" aria-labelledby={`${kind}-capability-title`}><div className="cpf-section__top"><Reveal delay={120}><div className="cpf-badge">{c.sectionBadge}</div></Reveal><Reveal delay={220} className="cpf-intro"><p>{c.sectionIntro}</p></Reveal></div><div className="cpf-capability__bottom"><div className="cpf-capability__copy"><Reveal delay={180}><h2 id={`${kind}-capability-title`}>{c.sectionLine1}<br />{c.sectionLine2}</h2></Reveal><Reveal delay={320}><p className="cpf-body-copy">{c.sectionBody}</p></Reveal><Reveal delay={420}><div className="cpf-actions" id={actionId}><Link className="cpf-button cpf-button--primary" href={c.primaryHref}>{c.primaryCta}<ChevronRight size={14} /></Link><Link className="cpf-button cpf-button--secondary" href={c.secondaryHref}>{c.secondaryCta}</Link></div></Reveal></div><div className="cpf-capabilities">{c.capabilities.map((cap, i) => <Reveal key={cap.title} delay={300 + i * 110}><div className="cpf-capability-row"><span className="cpf-capability-row__index">0{i + 1}</span><div><div className="cpf-capability-row__title"><strong>{cap.title}</strong><ChevronRight size={16} /></div><p>{cap.body}</p></div></div></Reveal>)}</div></div></section>
-        </div>
+        <CinematicMediaPage className="cm-product-experience" chapterCount={4}>
+          <CinematicChapter id={`${kind}-hero`} index={0} align="left" eyebrow={c.badge} headingLevel="h1" title={`${c.heroLine1} ${c.heroLine2}`}>
+            <p className="cm-lede">{c.intro}</p>
+            <div className="cpf-service-list">{c.eyebrowItems.map(item => <span key={item}>{item}</span>)}</div>
+            <CinematicGlassPanel className="cpf-product-card"><div className="cpf-product-card__mark"><Logo scale={0.55} /></div><div><span className="cpf-product-card__kicker">{c.product}</span><strong>{c.cardTitle}</strong><small>{c.cardMeta}</small><Link href={c.cardHref}>{c.cardCta}<ChevronRight size={14} /></Link></div></CinematicGlassPanel>
+          </CinematicChapter>
+          <CinematicChapter id={`${kind}-story`} index={1} align="right" eyebrow={c.sectionBadge} title={`${c.sectionLine1} ${c.sectionLine2}`}>
+            <p className="cm-lede">{c.sectionIntro}</p>
+            <CinematicGlassPanel className="cpf-story-panel"><p>{c.sectionBody}</p><ul>{c.capabilities.map(cap => <li key={cap.title}><strong>{cap.title}</strong><span>{cap.body}</span></li>)}</ul></CinematicGlassPanel>
+          </CinematicChapter>
+          <CinematicChapter id={`${kind}-proof`} index={2} align="center" eyebrow="The operating loop" title="Keep the important part visible.">
+            <div className="cm-flow-grid">{c.capabilities.map((cap, index) => <article key={cap.title}><span className="cm-flow-grid__index">0{index + 1}</span><strong>{cap.title}</strong><p>{cap.body}</p></article>)}</div>
+          </CinematicChapter>
+          <CinematicChapter id={`${kind}-cta`} index={3} align="left" eyebrow="Ready when you are" title={c.sectionLine1}>
+            <p className="cm-lede">{c.sectionBody}</p>
+            <div className="cm-actions" id={actionId}><Link className="cm-actions__primary" href={c.primaryHref}>{c.primaryCta}<ChevronRight size={14} /></Link><Link className="cm-actions__secondary" href={c.secondaryHref}>{c.secondaryCta}</Link></div>
+          </CinematicChapter>
+        </CinematicMediaPage>
       </main>
     </CinematicMarketingShell>
   )

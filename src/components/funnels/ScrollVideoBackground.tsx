@@ -2,7 +2,7 @@
 
 import { RefObject, useEffect, useRef, useState } from 'react'
 
-import './cinematic-product-funnel.css'
+import '../cinematic/cinematic-media.css'
 
 const VIDEO_URL = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260729_102822_0e6c87e8-c141-4744-bf32-ad30db296371.mp4'
 const BOOTSTRAP_SPRITE_URL = '/funnels/cinematic-bootstrap.jpg'
@@ -280,5 +280,5 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
   }, [bootstrapReady, cacheReady, videoReady])
 
   const canvasVisible = bootstrapReady || cacheReady
-  return <><link rel="preload" as="image" href={BOOTSTRAP_SPRITE_URL} /><div className={`cpf-video ${className}`.trim()} aria-hidden="true"><div className={`cpf-video__poster ${bootstrapReady || videoReady || cacheReady ? 'is-hidden' : ''}`} /><video ref={videoRef} className={`cpf-video__element ${canvasVisible || cacheReady ? 'is-hidden' : videoReady ? 'is-visible' : ''}`} src={VIDEO_URL} muted playsInline preload="auto" /><canvas ref={canvasRef} className={`cpf-video__canvas ${canvasVisible ? 'is-visible' : ''}`} /><div className="cpf-video__veil" /></div></>
+  return <><link rel="preload" as="image" href={BOOTSTRAP_SPRITE_URL} /><div className={`cm-video ${className}`.trim()} aria-hidden="true"><div className={`cm-video__poster ${bootstrapReady || videoReady || cacheReady ? 'is-hidden' : ''}`} /><video ref={videoRef} className={`cm-video__element ${canvasVisible || cacheReady ? 'is-hidden' : videoReady ? 'is-visible' : ''}`} src={VIDEO_URL} muted playsInline preload="auto" /><canvas ref={canvasRef} className={`cm-video__canvas ${canvasVisible ? 'is-visible' : ''}`} /><div className="cm-video__veil" /></div></>
 }
