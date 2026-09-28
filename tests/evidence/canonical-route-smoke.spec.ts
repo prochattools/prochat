@@ -8,6 +8,7 @@ if (!baseUrl) {
 
 const routes = ['/', '/evermind', '/nevermind', '/mastermind', '/docs', '/contact', '/privacy', '/terms'] as const
 const cinematicRoutes = new Set<string>(['/', '/evermind', '/nevermind', '/mastermind', '/contact'])
+const coreCinematicRoutes = new Set<string>(['/', '/evermind', '/nevermind', '/mastermind'])
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
@@ -56,7 +57,7 @@ test.describe('canonical route smoke evidence', () => {
             await expect(page.locator('.cm-canonical-main')).toBeVisible()
           }
           await expect(page.locator('nav.cm-nav'), `${route} is missing its cinematic navigation`).toHaveCount(1)
-          await expect(page.locator('footer.cm-footer'), `${route} is missing its cinematic footer`).toHaveCount(1)
+          await expect(page.locator('footer.cm-footer'), `${route} footer contract`).toHaveCount(coreCinematicRoutes.has(route) ? 0 : 1)
         } else {
           const navigation = page.locator('nav.pm-navbar')
           await expect(navigation, `${route} is missing the canonical public navigation`).toHaveCount(1)

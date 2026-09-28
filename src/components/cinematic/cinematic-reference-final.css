@@ -1,0 +1,353 @@
+/* Final route-scoped reference layer for the four cinematic marketing pages.
+   This file intentionally does not style non-core routes. */
+
+.cm-shell.cm-shell--core {
+  --cm-ref-white: 255 255 255;
+  --cm-ref-ink: 15 34 48;
+  --cm-ref-line: rgb(255 255 255 / 0.18);
+  --cm-ref-muted: rgb(255 255 255 / 0.78);
+  min-height: 100svh;
+  overflow-x: clip;
+  background: oklch(14.5% 0 0);
+  color: rgb(var(--cm-ref-white));
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.cm-shell.cm-shell--core > .cm-shell__backdrop {
+  background: transparent;
+}
+
+.cm-shell.cm-shell--core > .cm-nav-shell {
+  position: fixed;
+  z-index: 50;
+  inset: 0 0 auto;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.cm-shell.cm-shell--core > .cm-nav-shell[data-scrolled='true'] {
+  background: rgb(12 18 25 / 0.94);
+  backdrop-filter: blur(18px);
+}
+
+.cm-shell.cm-shell--core .cm-nav {
+  width: 100%;
+  min-height: 4.875rem;
+  padding: 0 3rem;
+  border: 0;
+  border-bottom: 1px solid rgb(255 255 255 / 0.15);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.cm-shell.cm-shell--core .cm-nav__brand,
+.cm-shell.cm-shell--core .cm-nav__links a,
+.cm-shell.cm-shell--core .cm-nav__contact,
+.cm-shell.cm-shell--core .cm-nav__links a:hover,
+.cm-shell.cm-shell--core .cm-nav__links a[aria-current='page'],
+.cm-shell.cm-shell--core .cm-nav__contact:hover,
+.cm-shell.cm-shell--core .cm-nav__menu-button {
+  color: rgb(var(--cm-ref-white));
+}
+
+.cm-shell.cm-shell--core .cm-nav__links a,
+.cm-shell.cm-shell--core .cm-nav__contact {
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.cm-shell.cm-shell--core .cm-nav__cta {
+  min-height: 2.75rem;
+  border: 1px solid rgb(255 255 255 / 0.32);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.95);
+  color: rgb(var(--cm-ref-ink));
+  box-shadow: none;
+}
+
+.cm-shell.cm-shell--core .cm-nav__cta:hover {
+  background: rgb(255 255 255);
+}
+
+.cm-shell.cm-shell--core .cm-nav__menu-button {
+  border-color: rgb(255 255 255 / 0.24);
+  background: rgb(255 255 255 / 0.08);
+}
+
+.cm-shell.cm-shell--core .cm-nav__mobile-panel {
+  border: 1px solid rgb(255 255 255 / 0.22);
+  background: rgb(255 255 255 / 0.12);
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.18);
+  backdrop-filter: blur(18px);
+}
+
+.cm-shell.cm-shell--core .cm-nav__mobile-panel a {
+  color: rgb(255 255 255 / 0.84);
+}
+
+.cm-shell.cm-shell--core .cm-canonical-main,
+.cm-shell.cm-shell--core .cm-marketing-experience,
+.cm-shell.cm-shell--core .cm-experience,
+.cm-shell.cm-shell--core .cm-experience__content {
+  position: relative;
+  min-height: 100svh;
+  background: transparent;
+}
+
+.cm-shell.cm-shell--core .cm-experience {
+  color: rgb(var(--cm-ref-white));
+}
+
+.cm-shell.cm-shell--core .cm-experience__wash {
+  background: linear-gradient(180deg, rgb(3 8 15 / 0.34) 0%, rgb(3 8 15 / 0.28) 44%, rgb(3 8 15 / 0.36) 100%);
+}
+
+.cm-shell.cm-shell--core .cm-experience__content {
+  z-index: 10;
+}
+
+.cm-shell.cm-shell--core .cm-chapter {
+  min-height: 100svh;
+  display: flex;
+  align-items: stretch;
+  padding: 7rem 3rem 4rem;
+  border-bottom: 0;
+}
+
+.cm-shell.cm-shell--core .cm-chapter__inner {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cm-shell.cm-shell--core .cm-template-topline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.72fr);
+  align-items: start;
+  gap: 3rem;
+  margin: 0;
+}
+
+.cm-shell.cm-shell--core .cm-template-topline > p {
+  width: min(100%, 31rem);
+  margin: 0;
+  justify-self: end;
+  color: rgb(255 255 255 / 0.82);
+  font-size: clamp(0.92rem, 1.2vw, 1.08rem);
+  line-height: 1.55;
+  text-shadow: 0 1px 12px rgb(0 0 0 / 0.62);
+}
+
+.cm-shell.cm-shell--core .cm-template-services {
+  display: grid;
+  justify-items: start;
+  gap: 0.38rem;
+}
+
+.cm-shell.cm-shell--core .cm-template-services span {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgb(255 255 255 / 0.82);
+  font: 600 0.68rem/1.35 var(--font-sans), system-ui, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cm-shell.cm-shell--core .cm-template-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(8rem, 0.26fr);
+  align-items: end;
+  gap: clamp(2rem, 8vw, 8rem);
+}
+
+.cm-shell.cm-shell--core .cm-template-badge {
+  width: fit-content;
+  min-height: 2rem;
+  margin: 0 0 1.1rem;
+  padding: 0.45rem 0.75rem;
+  border: 0;
+  border-left: 2px solid rgb(255 255 255);
+  border-radius: 0;
+  background: rgb(255 255 255 / 0.15);
+  color: rgb(255 255 255 / 0.92);
+  font: 600 0.68rem/1.2 var(--font-sans), system-ui, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.cm-shell.cm-shell--core .cm-template-hero-copy h1,
+.cm-shell.cm-shell--core .cm-template-section-grid h2 {
+  margin: 0;
+  color: rgb(255 255 255);
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+  text-wrap: balance;
+  text-shadow: 0 2px 24px rgb(0 0 0 / 0.46);
+}
+
+.cm-shell.cm-shell--core .cm-template-hero-copy h1 {
+  max-width: 10ch;
+  font-size: clamp(3.8rem, 8.1vw, 8.5rem);
+}
+
+.cm-shell.cm-shell--core .cm-template-section-grid h2 {
+  max-width: 10ch;
+  font-size: clamp(3.1rem, 6vw, 6.6rem);
+}
+
+.cm-shell.cm-shell--core .cm-glass-panel {
+  border: 1px solid rgb(255 255 255 / 0.2);
+  background: rgb(255 255 255 / 0.11);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), 0 1.5rem 4rem rgb(18 38 52 / 0.1);
+  backdrop-filter: blur(18px);
+}
+
+.cm-shell.cm-shell--core .cm-template-context-card {
+  width: min(100%, 12rem);
+  min-height: 7.5rem;
+  align-self: end;
+  justify-self: end;
+  display: grid;
+  align-content: end;
+  gap: 0.45rem;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.cm-shell.cm-shell--core .cm-cinematic-spacer {
+  height: 80vh;
+  min-height: 80vh;
+}
+
+.cm-shell.cm-shell--core .cm-template-section-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(20rem, 0.72fr);
+  align-items: end;
+  gap: clamp(2rem, 7vw, 7rem);
+}
+
+.cm-shell.cm-shell--core .cm-template-section-grid .cm-lede {
+  max-width: 36rem;
+  margin: 1.3rem 0 0;
+  color: rgb(255 255 255 / 0.8);
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  line-height: 1.6;
+  text-shadow: 0 1px 12px rgb(0 0 0 / 0.58);
+}
+
+.cm-shell.cm-shell--core .cm-actions__primary,
+.cm-shell.cm-shell--core .cm-actions__secondary {
+  min-height: 2.85rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.cm-shell.cm-shell--core .cm-actions__primary {
+  border: 1px solid rgb(255 255 255 / 0.34);
+  background: rgb(255 255 255 / 0.95);
+  color: rgb(var(--cm-ref-ink));
+  box-shadow: none;
+}
+
+.cm-shell.cm-shell--core .cm-actions__secondary {
+  border: 1px solid rgb(255 255 255 / 0.28);
+  background: rgb(255 255 255 / 0.1);
+  color: rgb(255 255 255);
+  backdrop-filter: blur(14px);
+}
+
+.cm-shell.cm-shell--core .cm-template-capability-panel {
+  padding: 0;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.3);
+  background: rgb(255 255 255 / 0.11);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 1.5rem 4rem rgb(26 56 76 / 0.16);
+  backdrop-filter: blur(18px);
+}
+
+.cm-shell.cm-shell--core .cm-template-capability {
+  border-bottom: 1px solid rgb(255 255 255 / 0.18);
+}
+
+.cm-shell.cm-shell--core .cm-template-capability__index {
+  color: rgb(255 255 255 / 0.72);
+}
+
+.cm-shell.cm-shell--core .cm-template-capability strong,
+.cm-shell.cm-shell--core .cm-template-capability__arrow {
+  color: rgb(255 255 255 / 0.96);
+}
+
+.cm-shell.cm-shell--core .cm-template-capability p {
+  color: rgb(255 255 255 / 0.78);
+}
+
+.cm-shell.cm-shell--core .cm-template-capability:last-child {
+  border-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .cm-shell.cm-shell--core .cm-nav,
+  .cm-shell.cm-shell--core .cm-chapter {
+    padding-inline: 2rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .cm-shell.cm-shell--core .cm-template-topline,
+  .cm-shell.cm-shell--core .cm-template-hero-grid,
+  .cm-shell.cm-shell--core .cm-template-section-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cm-shell.cm-shell--core .cm-template-topline {
+    gap: 1.5rem;
+  }
+
+  .cm-shell.cm-shell--core .cm-template-topline > p,
+  .cm-shell.cm-shell--core .cm-template-context-card {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 620px) {
+  .cm-shell.cm-shell--core .cm-nav {
+    min-height: 4rem;
+    padding-inline: 1.25rem;
+  }
+
+  .cm-shell.cm-shell--core .cm-chapter {
+    padding: 6rem 1.25rem 3rem;
+  }
+
+  .cm-shell.cm-shell--core .cm-template-hero-copy h1 {
+    font-size: clamp(3.15rem, 15vw, 5.4rem);
+  }
+
+  .cm-shell.cm-shell--core .cm-template-section-grid h2 {
+    font-size: clamp(2.8rem, 13vw, 4.8rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-shell.cm-shell--core > .cm-nav-shell {
+    transition: none;
+  }
+
+  .cm-shell.cm-shell--core .cm-experience__wash {
+    background: linear-gradient(180deg, rgb(3 8 15 / 0.34), rgb(3 8 15 / 0.32) 48%, rgb(3 8 15 / 0.38));
+  }
+}

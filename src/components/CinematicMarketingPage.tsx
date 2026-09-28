@@ -8,6 +8,7 @@ import {
 } from './CinematicMarketingShell'
 import { CinematicChapter, CinematicGlassPanel } from './cinematic/CinematicChapter'
 import { CinematicMediaPage } from './cinematic/CinematicMediaPage'
+import './cinematic/cinematic-reference-final.css'
 
 export type CinematicMarketingCapability = {
   title: string
@@ -19,12 +20,12 @@ export type CinematicMarketingPageData = {
   intro: string
   badge: string
   heroTitle: string
-  heroBody: string
   cardTitle: string
   cardMeta: string
   cardCta: string
   cardHref: string
   secondEyebrow: string
+  secondIntro: string
   secondTitle: string
   secondBody: string
   capabilities: readonly CinematicMarketingCapability[]
@@ -51,16 +52,10 @@ export function CinematicMarketingPage({ data }: { data: CinematicMarketingPageD
 
             <div className="cm-template-hero-grid">
               <div className="cm-template-hero-copy">
-                <h1>{data.heroTitle}</h1>
                 <p className="cm-template-badge">{data.badge}</p>
-                <p className="cm-lede">{data.heroBody}</p>
-                <div className="cm-actions">
-                  <Link className="cm-actions__primary" href={data.primaryCta.href}>{data.primaryCta.label} <Arrow /></Link>
-                  <Link className="cm-actions__secondary" href={data.secondaryCta.href}>{data.secondaryCta.label} <Arrow /></Link>
-                </div>
+                <h1>{data.heroTitle}</h1>
               </div>
               <CinematicGlassPanel className="cm-template-context-card">
-                <span className="cm-kicker">ProChat / public system</span>
                 <strong>{data.cardTitle}</strong>
                 <small>{data.cardMeta}</small>
                 <Link className="cm-inline-link" href={data.cardHref}>{data.cardCta} <Arrow /></Link>
@@ -70,10 +65,10 @@ export function CinematicMarketingPage({ data }: { data: CinematicMarketingPageD
 
           <div className="cm-cinematic-spacer" aria-hidden="true" />
 
-          <CinematicChapter id="cinematic-capabilities" index={1} align="wide" eyebrow={data.secondEyebrow}>
+          <CinematicChapter id="cinematic-capabilities" index={1} align="wide">
             <div className="cm-template-topline cm-template-topline--second">
-              <span />
-              <p>{data.secondBody}</p>
+              <p className="cm-template-badge">{data.secondEyebrow}</p>
+              <p>{data.secondIntro}</p>
             </div>
 
             <div className="cm-template-section-grid">

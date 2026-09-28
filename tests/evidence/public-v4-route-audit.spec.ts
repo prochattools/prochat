@@ -81,7 +81,7 @@ test.describe('site-wide V4 public route evidence', () => {
         if (CINEMATIC_ROUTES.has(route.path)) {
           await expect(page.locator('.cm-shell')).toHaveCount(1)
           await expect(page.locator('nav.cm-nav')).toHaveCount(1)
-          await expect(page.locator('footer.cm-footer')).toHaveCount(1)
+          await expect(page.locator('footer.cm-footer')).toHaveCount(CORE_CINEMATIC_ROUTES.has(route.path) ? 0 : 1)
           if (CORE_CINEMATIC_ROUTES.has(route.path)) {
             await expect(page.locator('.cm-shell--core')).toHaveCount(1)
             await expect(page.locator('.cm-marketing-experience')).toHaveCount(1)

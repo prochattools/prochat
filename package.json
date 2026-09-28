@@ -34,7 +34,7 @@
     "lint": "eslint . --max-warnings=0",
     "lint:design": "node scripts/design/lint-design-system.mjs",
     "test:evidence:docs-mobile": "WAVE1_BASE_URL=${WAVE1_BASE_URL:?WAVE1_BASE_URL is required} npx playwright test tests/evidence/docs-mobile-layout.spec.ts --config=tests/evidence/playwright.wave1.config.ts --project=wave1-chromium",
-    "test:evidence:ci": "WAVE1_BASE_URL=${WAVE1_BASE_URL:?WAVE1_BASE_URL is required} npx playwright test tests/evidence/docs-mobile-layout.spec.ts tests/evidence/canonical-route-smoke.spec.ts tests/evidence/canonical-accessibility.spec.ts tests/evidence/canonical-chrome-proof.spec.ts tests/evidence/public-v4-route-audit.spec.ts --config=tests/evidence/playwright.wave1.config.ts --project=wave1-chromium",
+    "test:evidence:ci": "WAVE1_BASE_URL=${WAVE1_BASE_URL:?WAVE1_BASE_URL is required} npx playwright test tests/evidence/docs-mobile-layout.spec.ts tests/evidence/canonical-route-smoke.spec.ts tests/evidence/canonical-accessibility.spec.ts tests/evidence/canonical-chrome-proof.spec.ts tests/evidence/public-v4-route-audit.spec.ts tests/evidence/cinematic-marketing-experience.spec.ts --grep-invert='captures the required responsive and scroll-state visual matrix' --config=tests/evidence/playwright.wave1.config.ts --project=wave1-chromium",
     "lint:design:baseline": "node scripts/design/lint-design-system.mjs --write-baseline"
   },
   "dependencies": {

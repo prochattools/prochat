@@ -24,6 +24,7 @@ const DOCS_NARROW = { name: 'narrow', width: 320, height: 900 } as const
 
 const VIEWPORTS = [DESKTOP, MOBILE] as const
 const CHROME_GEOMETRY_ROUTES = ['/', '/evermind', '/nevermind', '/mastermind'] as const
+const CORE_CINEMATIC_ROUTES = new Set<string>(CHROME_GEOMETRY_ROUTES)
 
 function publicNav(page: Page, route: string) {
   return CINEMATIC_MARKETING_ROUTES.has(route) ? page.locator('nav.cm-nav') : page.locator('nav.pm-navbar')
@@ -66,10 +67,11 @@ test.describe('canonical public chrome — structure and first-paint invariants'
         expect(await nav.count(), `${route} public nav count at ${viewport.name}`).toBe(1)
         await expect(nav).toBeVisible()
 
-        // Exactly one canonical footer
+        // Core cinematic pages intentionally end after Section Two; other routes retain one footer.
         const footer = publicFooter(page, route)
-        expect(await footer.count(), `${route} public footer count at ${viewport.name}`).toBe(1)
-        await expect(footer).toBeVisible()
+        const expectedFooterCount = CORE_CINEMATIC_ROUTES.has(route) ? 0 : 1
+        expect(await footer.count(), `${route} public footer count at ${viewport.name}`).toBe(expectedFooterCount)
+        if (expectedFooterCount) await expect(footer).toBeVisible()
 
         // html/body/shell backgrounds are neutral black
         const backgrounds = await page.evaluate(() => {
@@ -193,13 +195,8 @@ test.describe('canonical public chrome — geometry consistency at desktop', () 
       `nav top spread across routes must be ≤${NAV_TOLERANCE_PX}px, got ${navTopMin}–${navTopMax}`,
     ).toBeLessThanOrEqual(NAV_TOLERANCE_PX)
 
-    // Footer must be present on every route (height > 0) — absolute height may vary
-    // by route due to font loading order; exact equality is not asserted here.
     const footerHeights = geometries.map(g => g.footerHeight)
-    expect(
-      Math.min(...footerHeights),
-      'footer must have positive height on all routes',
-    ).toBeGreaterThan(0)
+    expect(footerHeights, 'the four cinematic routes end without a footer').toEqual([-1, -1, -1, -1])
   })
 })
 
@@ -418,7 +415,7 @@ test.describe('client navigation — chrome integrity across route changes', () 
     // Start on homepage
     await page.goto(new URL('/', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
     expect(await publicNav(page, '/').count()).toBe(1)
-    expect(await publicFooter(page, '/').count()).toBe(1)
+    expect(await publicFooter(page, '/').count()).toBe(0)
 
     // Navigate to /docs
     await page.goto(new URL('/docs', baseUrl).toString(), { waitUntil: 'domcontentloaded' })
@@ -455,8 +452,8 @@ test.describe('client navigation — chrome integrity across route changes', () 
     ).toBe(1)
     expect(
       await publicFooter(page, '/').count(),
-      'exactly one footer after returning to homepage',
-    ).toBe(1)
+      'no footer after returning to homepage',
+    ).toBe(0)
 
     // No horizontal overflow on final page
     const layout = await page.evaluate(() => ({

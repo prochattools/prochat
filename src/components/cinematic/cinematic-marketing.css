@@ -170,9 +170,9 @@
 .cm-shell--core .cm-template-capability strong,
 .cm-shell--core .cm-template-capability p,
 .cm-shell--core .cm-template-capability__arrow { color: rgb(19 51 69); text-shadow: none; }
-.cm-shell--core .cm-template-capability-panel { border-color: rgb(255 255 255 / .56); background: rgb(239 246 248 / .82); }
-.cm-shell--core .cm-template-capability { border-bottom-color: rgb(19 51 69 / .18); }
-.cm-shell--core .cm-template-section-grid .cm-actions__secondary { border-color: rgb(19 51 69 / .36); background: rgb(255 255 255 / .3); }
+.cm-shell--core .cm-template-capability-panel { border-color: rgb(255 255 255 / .3); background: rgb(255 255 255 / .14); box-shadow: inset 0 1px 0 rgb(255 255 255 / .2), 0 1.5rem 4rem rgb(26 56 76 / .16); backdrop-filter: blur(18px); }
+.cm-shell--core .cm-template-capability { border-bottom-color: rgb(255 255 255 / .2); }
+.cm-shell--core .cm-template-section-grid .cm-actions__secondary { border-color: rgb(255 255 255 / .34); background: rgb(255 255 255 / .12); color: rgb(255 255 255); }
 
 @media (max-width: 800px) {
   .cm-shell--core .cm-template-topline,

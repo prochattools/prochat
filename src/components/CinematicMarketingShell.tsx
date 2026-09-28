@@ -54,7 +54,15 @@ function ArrowIcon() {
 export function CinematicMarketingNav({ cta = DEFAULT_CTA }: { cta?: CinematicMarketingCta }) {
   const pathname = usePathname() || ''
   const [isOpen, setIsOpen] = useState(false)
+  const [hasScrolled, setHasScrolled] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const updateScrollState = () => setHasScrolled(window.scrollY > 16)
+    updateScrollState()
+    window.addEventListener('scroll', updateScrollState, { passive: true })
+    return () => window.removeEventListener('scroll', updateScrollState)
+  }, [])
 
   useEffect(() => {
     if (!isOpen) return
@@ -85,7 +93,7 @@ export function CinematicMarketingNav({ cta = DEFAULT_CTA }: { cta?: CinematicMa
   }
 
   return (
-    <header className="cm-nav-shell">
+      <header className="cm-nav-shell" data-scrolled={hasScrolled}>
       <nav className="cm-nav" aria-label="Primary navigation">
         <Link href="/" className="cm-nav__brand" aria-label="ProChat home">
           <Logo scale={0.66} />
@@ -200,7 +208,7 @@ export function CinematicMarketingShell({
       <div className="cm-shell__backdrop" aria-hidden="true" />
       <CinematicMarketingNav cta={cta} />
       {contentOwnsMain ? children : <main id="main-content" className="cm-shell__main">{children}</main>}
-      <CinematicMarketingFooter cinematicTheme={cinematicTheme} />
+      {!cinematicTheme ? <CinematicMarketingFooter /> : null}
     </div>
   )
 }

@@ -28,6 +28,10 @@ async function settle(page: Page) {
   await page.waitForTimeout(520)
 }
 
+async function scrollInstantly(page: Page, y: number) {
+  await page.evaluate(target => window.scrollTo({ top: target, behavior: 'instant' }), y)
+}
+
 test.describe('cinematic marketing experience', () => {
   test('owns one exact shared shell, template, and media engine per route', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
@@ -58,7 +62,7 @@ test.describe('cinematic marketing experience', () => {
       expect(evidence).toEqual({
         headers: 1,
         primaryNav: 1,
-        footers: 1,
+        footers: 0,
         h1: 1,
         experience: 1,
         chapters: 2,
@@ -95,6 +99,51 @@ test.describe('cinematic marketing experience', () => {
     }
   })
 
+  test('mobile navigation opens, exposes product routes, and remains usable', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto(url('/'), { waitUntil: 'networkidle' })
+
+    await scrollInstantly(page, 240)
+    const header = page.locator('.cm-nav-shell')
+    await expect(header).toHaveAttribute('data-scrolled', 'true')
+    const scrolledSurface = await header.evaluate(element => ({
+      background: getComputedStyle(element).backgroundColor,
+      blur: getComputedStyle(element).backdropFilter,
+    }))
+    expect(scrolledSurface.background).not.toBe('rgba(0, 0, 0, 0)')
+    expect(scrolledSurface.blur).toContain('blur(')
+    await scrollInstantly(page, 0)
+    await expect(header).toHaveAttribute('data-scrolled', 'false')
+    const topSurface = await header.evaluate(element => getComputedStyle(element).backgroundColor)
+    expect(topSurface).toBe('rgba(0, 0, 0, 0)')
+
+    const menu = page.getByRole('button', { name: 'Menu' })
+    await expect(menu).toBeVisible()
+    await menu.click()
+    const closeMenu = page.getByRole('button', { name: 'Close' })
+    await expect(closeMenu).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.locator('#cm-mobile-menu')).toBeVisible()
+    await page.locator('#cm-mobile-menu').getByRole('link', { name: 'Mastermind' }).click()
+    await expect(page).toHaveURL(/\/mastermind$/)
+    await expect(page.locator('main h1')).toHaveText('Turn intent into controlled execution.')
+    await expect(page.locator('header')).toHaveCount(1)
+    await expect(page.locator('nav[aria-label="Primary navigation"]')).toHaveCount(1)
+    await expect(page.locator('footer')).toHaveCount(0)
+
+    await page.getByRole('button', { name: 'Menu' }).click()
+    await page.locator('#cm-mobile-menu').getByRole('link', { name: 'Evermind', exact: true }).click()
+    await expect(page).toHaveURL(/\/evermind$/)
+    await expect(page.locator('main h1')).toHaveText("Your AI forgets. Your memory shouldn't.")
+    await expect(page.locator('header')).toHaveCount(1)
+    await expect(page.locator('footer')).toHaveCount(0)
+
+    await page.goBack()
+    await expect(page).toHaveURL(/\/mastermind$/)
+    await expect(page.locator('main h1')).toHaveText('Turn intent into controlled execution.')
+    await expect(page.locator('header')).toHaveCount(1)
+    await expect(page.locator('footer')).toHaveCount(0)
+  })
+
   for (const route of CINEMATIC_ROUTES) {
     test(`${route} keeps major narrative rectangles exclusive across the scroll timeline`, async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 900 })
@@ -102,11 +151,12 @@ test.describe('cinematic marketing experience', () => {
       await page.goto(url(route), { waitUntil: 'networkidle' })
 
       const activeChapters = new Set<string>()
+      const activationSequence: string[] = []
       const frameChecksums: number[] = []
       const maxScroll = await page.evaluate(() => Math.max(0, document.documentElement.scrollHeight - window.innerHeight))
 
       for (const point of GEOMETRY_POINTS) {
-        await page.evaluate((y) => window.scrollTo(0, y), maxScroll * point)
+        await scrollInstantly(page, maxScroll * point)
         await settle(page)
 
         const sample = await page.evaluate(() => {
@@ -139,11 +189,13 @@ test.describe('cinematic marketing experience', () => {
         })
 
         activeChapters.add(sample.activeChapter)
+        if (activationSequence.at(-1) !== sample.activeChapter) activationSequence.push(sample.activeChapter)
         frameChecksums.push(sample.checksum)
         expect(sample.overlaps, `${route} has overlapping major headings at ${point * 100}%`).toEqual([])
       }
 
       expect([...activeChapters].sort(), `${route} chapter activation coverage`).toEqual(['0', '1'])
+      expect(activationSequence, `${route} stages activate in order`).toEqual(['0', '1'])
       expect(new Set(frameChecksums).size, `${route} background frame checksum changed`).toBeGreaterThan(1)
     })
   }
@@ -161,12 +213,19 @@ test.describe('cinematic marketing experience', () => {
           rect: element.getBoundingClientRect().height,
         })),
         canvasDisplay: getComputedStyle(document.querySelector('.cm-video__canvas') as HTMLElement).display,
+        videoOpacity: getComputedStyle(document.querySelector('.cm-video__element') as HTMLElement).opacity,
+        videoCurrentTime: (document.querySelector('.cm-video__element') as HTMLVideoElement).currentTime,
         links: Array.from(document.querySelectorAll<HTMLAnchorElement>('main a')).filter(link => link.getBoundingClientRect().width > 0).length,
       }))
       expect(evidence.reduced).toBe(true)
       expect(evidence.chapters.every(chapter => chapter.visible && chapter.rect > 0), `${route} readable chapters`).toBe(true)
       expect(evidence.canvasDisplay, `${route} canvas is not required under reduced motion`).toBe('none')
+      expect(evidence.videoOpacity, `${route} keeps one stable media layer under reduced motion`).toBe('1')
       expect(evidence.links, `${route} links remain usable under reduced motion`).toBeGreaterThan(0)
+      await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }))
+      await page.waitForTimeout(250)
+      const reducedVideoTime = await page.locator('.cm-video__element').evaluate((element: HTMLVideoElement) => element.currentTime)
+      expect(Math.abs(reducedVideoTime - evidence.videoCurrentTime), `${route} video does not scrub under reduced motion`).toBeLessThanOrEqual(0.02)
     }
   })
 
@@ -178,8 +237,8 @@ test.describe('cinematic marketing experience', () => {
       for (const route of CINEMATIC_ROUTES) {
         await page.goto(url(route), { waitUntil: 'networkidle' })
         const maxScroll = await page.evaluate(() => Math.max(0, document.documentElement.scrollHeight - window.innerHeight))
-        for (const [state, ratio] of [['top', 0], ['mid', 0.45], ['section-two', 0.78], ['footer', 1]] as const) {
-          await page.evaluate(y => window.scrollTo(0, y), maxScroll * ratio)
+        for (const [state, ratio] of [['top', 0], ['mid', 0.45], ['section-two', 0.78], ['end', 1]] as const) {
+          await scrollInstantly(page, maxScroll * ratio)
           await settle(page)
           await page.screenshot({
             path: path.join('test-results', `cinematic-${route === '/' ? 'home' : route.slice(1)}-${name}-${state}.png`),
