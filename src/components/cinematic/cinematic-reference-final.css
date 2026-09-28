@@ -27,8 +27,8 @@
 }
 
 .cm-shell.cm-shell--core > .cm-nav-shell[data-scrolled='true'] {
-  background: rgb(12 18 25 / 0.94);
-  backdrop-filter: blur(18px);
+  background: rgb(255 255 255 / 0.14);
+  backdrop-filter: blur(18px) saturate(1.2);
 }
 
 .cm-shell.cm-shell--core .cm-nav {

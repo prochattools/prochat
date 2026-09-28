@@ -110,7 +110,7 @@ test.describe('cinematic marketing experience', () => {
       background: getComputedStyle(element).backgroundColor,
       blur: getComputedStyle(element).backdropFilter,
     }))
-    expect(scrolledSurface.background).not.toBe('rgba(0, 0, 0, 0)')
+    expect(scrolledSurface.background).toBe('rgba(255, 255, 255, 0.14)')
     expect(scrolledSurface.blur).toContain('blur(')
     await scrollInstantly(page, 0)
     await expect(header).toHaveAttribute('data-scrolled', 'false')
