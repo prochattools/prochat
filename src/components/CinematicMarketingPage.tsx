@@ -19,14 +19,14 @@ export type CinematicMarketingPageData = {
   eyebrowItems: readonly string[]
   intro: string
   badge: string
-  heroTitle: string
+  heroTitleLines: readonly string[]
   cardTitle: string
   cardMeta: string
   cardCta: string
   cardHref: string
   secondEyebrow: string
   secondIntro: string
-  secondTitle: string
+  secondTitleLines: readonly string[]
   secondBody: string
   capabilities: readonly CinematicMarketingCapability[]
   primaryCta: CinematicMarketingCta
@@ -53,7 +53,9 @@ export function CinematicMarketingPage({ data }: { data: CinematicMarketingPageD
             <div className="cm-template-hero-grid">
               <div className="cm-template-hero-copy">
                 <p className="cm-template-badge">{data.badge}</p>
-                <h1>{data.heroTitle}</h1>
+                <h1 aria-label={data.heroTitleLines.join(' ')}>
+                  {data.heroTitleLines.map(line => <span className="cm-heading-line" key={line}>{line}</span>)}
+                </h1>
               </div>
               <CinematicGlassPanel className="cm-template-context-card">
                 <strong>{data.cardTitle}</strong>
@@ -73,7 +75,9 @@ export function CinematicMarketingPage({ data }: { data: CinematicMarketingPageD
 
             <div className="cm-template-section-grid">
               <div>
-                <h2>{data.secondTitle}</h2>
+                <h2 aria-label={data.secondTitleLines.join(' ')}>
+                  {data.secondTitleLines.map(line => <span className="cm-heading-line" key={line}>{line}</span>)}
+                </h2>
                 <p className="cm-lede">{data.secondBody}</p>
                 <div className="cm-actions">
                   <Link className="cm-actions__primary" href={data.primaryCta.href}>{data.primaryCta.label} <Arrow /></Link>

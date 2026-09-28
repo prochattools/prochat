@@ -19,6 +19,14 @@ const SCREENSHOT_VIEWPORTS = [
   ['390x844', 390, 844],
   ['375x812', 375, 812],
 ] as const
+const ACCEPTANCE_VIEWPORTS = [
+  [1440, 900],
+  [1280, 800],
+  [1024, 768],
+  [768, 1024],
+  [430, 932],
+  [390, 844],
+] as const
 
 function url(route: string) {
   return new URL(route, baseUrl).toString()
@@ -84,18 +92,84 @@ test.describe('cinematic marketing experience', () => {
     await page.emulateMedia({ reducedMotion: 'no-preference' })
 
     const expected = {
-      '/': ['Remember what matters. Direct the work.', 'Evermind remembers. Nevermind brings context. Mastermind directs the work.'],
-      '/evermind': ["Your AI forgets. Your memory shouldn't.", 'CAPTURE · REVIEW · RETRIEVE'],
-      '/nevermind': ['The right context. At the right time.', 'CONTEXT ON DEMAND'],
-      '/mastermind': ['Turn intent into controlled execution.', 'REASON · DELEGATE · VALIDATE'],
+      '/': {
+        hero: 'Remember what matters. Direct the work.',
+        heroLines: ['Remember', 'what matters.', 'Direct the work.'],
+        intro: 'A human-owned system for AI work — from memory to context to controlled execution.',
+        second: 'Memory. Context. Execution.',
+        secondLines: ['Memory.', 'Context.', 'Execution.'],
+      },
+      '/evermind': {
+        hero: "Your AI forgets. Your memory shouldn't.",
+        heroLines: ['Your AI forgets.', 'Your memory', "shouldn't."],
+        marker: 'CAPTURE · REVIEW · RETRIEVE',
+        second: 'Memory you own.',
+        secondLines: ['Memory', 'you own.'],
+      },
+      '/nevermind': {
+        hero: 'The right context. At the right time.',
+        heroLines: ['The right context.', 'At the right time.'],
+        marker: 'CONTEXT ON DEMAND',
+        second: 'Bring memory into the work.',
+        secondLines: ['Bring memory', 'into the work.'],
+      },
+      '/mastermind': {
+        hero: 'Turn intent into controlled execution.',
+        heroLines: ['Turn intent', 'into controlled', 'execution.'],
+        marker: 'REASON · DELEGATE · VALIDATE',
+        second: 'Direct the work deliberately.',
+        secondLines: ['Direct the work', 'deliberately.'],
+      },
     } as const
 
     for (const route of CINEMATIC_ROUTES) {
       await page.goto(url(route), { waitUntil: 'networkidle' })
-      const [h1, marker] = expected[route]
-      await expect(page.locator('main h1')).toHaveText(h1)
-      await expect(page.locator('main')).toContainText(marker)
-      if (route === '/') await expect(page.locator('main')).toContainText(expected['/'][1])
+      const copy = expected[route]
+      await expect(page.getByRole('heading', { level: 1, name: copy.hero })).toBeVisible()
+      await expect(page.locator('main h1 .cm-heading-line')).toHaveText([...copy.heroLines])
+      await expect(page.getByRole('heading', { level: 2, name: copy.second })).toBeVisible()
+      await expect(page.locator('main h2 .cm-heading-line')).toHaveText([...copy.secondLines])
+      if ('intro' in copy) {
+        await expect(page.locator('#cinematic-hero .cm-template-topline > p')).toHaveText(copy.intro)
+      } else {
+        await expect(page.locator('main')).toContainText(copy.marker)
+      }
+    }
+  })
+
+  test('preserves the specified heading groups and 100svh/80vh geometry responsively', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+
+    for (const [width, height] of ACCEPTANCE_VIEWPORTS) {
+      await page.setViewportSize({ width, height })
+
+      for (const route of CINEMATIC_ROUTES) {
+        await page.goto(url(route), { waitUntil: 'domcontentloaded' })
+        const evidence = await page.evaluate(() => {
+          const fragmentCount = (selector: string) => Array.from(document.querySelectorAll<HTMLElement>(selector)).map(element => {
+            const range = document.createRange()
+            range.selectNodeContents(element)
+            return range.getClientRects().length
+          })
+          const chapters = Array.from(document.querySelectorAll<HTMLElement>('[data-cinematic-chapter]'))
+          const spacer = document.querySelector<HTMLElement>('.cm-cinematic-spacer')
+          return {
+            overflow: document.documentElement.scrollWidth > window.innerWidth,
+            chapterHeights: chapters.map(chapter => Math.round(chapter.getBoundingClientRect().height)),
+            spacerHeight: Math.round(spacer?.getBoundingClientRect().height ?? 0),
+            heroLineFragments: fragmentCount('main h1 .cm-heading-line'),
+            sectionLineFragments: fragmentCount('main h2 .cm-heading-line'),
+          }
+        })
+        const heroLineCount = route === '/nevermind' ? 2 : 3
+        const sectionLineCount = route === '/' ? 3 : 2
+
+        expect(evidence.overflow, `${route} horizontal overflow at ${width}px`).toBe(false)
+        expect(evidence.chapterHeights, `${route} chapter heights at ${width}px`).toEqual([height, height])
+        expect(evidence.spacerHeight, `${route} spacer height at ${width}px`).toBe(Math.round(height * 0.8))
+        expect(evidence.heroLineFragments, `${route} hero lines at ${width}px`).toEqual(Array(heroLineCount).fill(1))
+        expect(evidence.sectionLineFragments, `${route} section lines at ${width}px`).toEqual(Array(sectionLineCount).fill(1))
+      }
     }
   })
 
@@ -110,8 +184,8 @@ test.describe('cinematic marketing experience', () => {
       background: getComputedStyle(element).backgroundColor,
       blur: getComputedStyle(element).backdropFilter,
     }))
-    expect(scrolledSurface.background).toBe('rgba(255, 255, 255, 0.14)')
-    expect(scrolledSurface.blur).toContain('blur(')
+    expect(scrolledSurface.background).toBe('rgba(0, 0, 0, 0)')
+    expect(scrolledSurface.blur).toBe('none')
     await scrollInstantly(page, 0)
     await expect(header).toHaveAttribute('data-scrolled', 'false')
     const topSurface = await header.evaluate(element => getComputedStyle(element).backgroundColor)
@@ -125,7 +199,7 @@ test.describe('cinematic marketing experience', () => {
     await expect(page.locator('#cm-mobile-menu')).toBeVisible()
     await page.locator('#cm-mobile-menu').getByRole('link', { name: 'Mastermind' }).click()
     await expect(page).toHaveURL(/\/mastermind$/)
-    await expect(page.locator('main h1')).toHaveText('Turn intent into controlled execution.')
+    await expect(page.locator('main h1')).toHaveAttribute('aria-label', 'Turn intent into controlled execution.')
     await expect(page.locator('header')).toHaveCount(1)
     await expect(page.locator('nav[aria-label="Primary navigation"]')).toHaveCount(1)
     await expect(page.locator('footer')).toHaveCount(0)
@@ -133,13 +207,13 @@ test.describe('cinematic marketing experience', () => {
     await page.getByRole('button', { name: 'Menu' }).click()
     await page.locator('#cm-mobile-menu').getByRole('link', { name: 'Evermind', exact: true }).click()
     await expect(page).toHaveURL(/\/evermind$/)
-    await expect(page.locator('main h1')).toHaveText("Your AI forgets. Your memory shouldn't.")
+    await expect(page.locator('main h1')).toHaveAttribute('aria-label', "Your AI forgets. Your memory shouldn't.")
     await expect(page.locator('header')).toHaveCount(1)
     await expect(page.locator('footer')).toHaveCount(0)
 
     await page.goBack()
     await expect(page).toHaveURL(/\/mastermind$/)
-    await expect(page.locator('main h1')).toHaveText('Turn intent into controlled execution.')
+    await expect(page.locator('main h1')).toHaveAttribute('aria-label', 'Turn intent into controlled execution.')
     await expect(page.locator('header')).toHaveCount(1)
     await expect(page.locator('footer')).toHaveCount(0)
   })
