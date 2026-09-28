@@ -9,6 +9,7 @@ const BOOTSTRAP_SPRITE_URL = '/funnels/cinematic-bootstrap.jpg'
 const BOOTSTRAP_FRAME_COUNT = 24
 const BOOTSTRAP_COLUMNS = 6
 const BOOTSTRAP_ROWS = 4
+const FIRST_FRAME_TIME_SECONDS = 0.04
 
 type ScrollVideoBackgroundProps = {
   containerRef?: RefObject<HTMLElement | null>
@@ -74,13 +75,14 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
     const image = new Image()
     image.decoding = 'async'
     image.fetchPriority = 'high'
-    image.src = BOOTSTRAP_SPRITE_URL
     image.onload = () => {
       bootstrapImageRef.current = image
       setBootstrapReady(true)
     }
+    image.src = BOOTSTRAP_SPRITE_URL
     return () => {
       image.onload = null
+      image.onerror = null
       bootstrapImageRef.current = null
     }
   }, [])
@@ -175,7 +177,7 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
 
       for (const index of buildExtractionOrder(count)) {
         if (cancelled) break
-        const time = (index / Math.max(1, count - 1)) * Math.max(0, duration - 0.05)
+        const time = Math.max(FIRST_FRAME_TIME_SECONDS, (index / Math.max(1, count - 1)) * Math.max(0, duration - 0.05))
         await seekTo(time)
         if (cancelled) break
         ctx.drawImage(source, 0, 0, width, height)
@@ -282,5 +284,5 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
   }, [bootstrapReady, cacheReady, videoReady])
 
   const canvasVisible = bootstrapReady || cacheReady
-  return <><link rel="preload" as="image" href={BOOTSTRAP_SPRITE_URL} /><div className={`cm-video ${className}`.trim()} aria-hidden="true"><div className={`cm-video__poster ${bootstrapReady || videoReady || cacheReady ? 'is-hidden' : ''}`} /><video ref={videoRef} className={`cm-video__element ${canvasVisible || cacheReady ? 'is-hidden' : videoReady ? 'is-visible' : ''}`} src={VIDEO_URL} muted playsInline preload="metadata" /><canvas ref={canvasRef} className={`cm-video__canvas ${canvasVisible ? 'is-visible' : ''}`} /><div className="cm-video__veil" /></div></>
+  return <><link rel="preload" as="image" href={BOOTSTRAP_SPRITE_URL} /><div className={`cm-video ${className}`.trim()} aria-hidden="true"><div className={`cm-video__poster ${bootstrapReady || videoReady || cacheReady ? 'is-hidden' : ''}`} /><video ref={videoRef} className={`cm-video__element ${canvasVisible || cacheReady ? 'is-hidden' : videoReady ? 'is-visible' : ''}`} src={VIDEO_URL} muted playsInline preload="metadata" /><canvas ref={canvasRef} className={`cm-video__canvas ${canvasVisible ? 'is-visible' : ''}`} data-frame-cache-ready={cacheReady ? 'true' : 'false'} /><div className="cm-video__veil" /></div></>
 }

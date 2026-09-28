@@ -274,6 +274,41 @@ test.describe('cinematic marketing experience', () => {
     })
   }
 
+  test('keeps the opening cinematic frame painted when the video cache takes over', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+    await page.goto(url('/'), { waitUntil: 'domcontentloaded' })
+
+    const canDecodeVideo = await page.evaluate(() => Boolean(
+      document.createElement('video').canPlayType('video/mp4; codecs="avc1.640028"'),
+    ))
+    const canvas = page.locator('.cm-video__canvas')
+    await expect(canvas).toHaveClass(/is-visible/)
+    if (canDecodeVideo) {
+      await expect(canvas).toHaveAttribute('data-frame-cache-ready', 'true', { timeout: 20000 })
+    } else {
+      await page.waitForTimeout(4500)
+    }
+
+    const paintedPixels = await canvas.evaluate(element => {
+      const canvas = element as HTMLCanvasElement
+      const sample = document.createElement('canvas')
+      sample.width = 32
+      sample.height = 18
+      const context = sample.getContext('2d')
+      if (!context) return 0
+      context.drawImage(canvas, 0, 0, sample.width, sample.height)
+      const pixels = context.getImageData(0, 0, sample.width, sample.height).data
+      let count = 0
+      for (let index = 3; index < pixels.length; index += 4) {
+        if (pixels[index] > 0) count += 1
+      }
+      return count
+    })
+
+    expect(paintedPixels, 'the opening frame should not be replaced by a transparent video frame').toBeGreaterThan(0)
+  })
+
   test('reduced motion keeps all content readable without canvas scrubbing', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.emulateMedia({ reducedMotion: 'reduce' })
