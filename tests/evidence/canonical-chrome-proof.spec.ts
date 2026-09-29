@@ -383,6 +383,16 @@ test.describe('contact page — canonical copy and layout', () => {
     expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth)
   })
 
+  test('legacy beta contact links still resolve to the contact form', async ({ page }) => {
+    await page.goto(new URL('/contact?topic=memory-qa-beta#contact-form-card', baseUrl).toString(), {
+      waitUntil: 'domcontentloaded',
+    })
+
+    const formSection = page.locator('#contact-form-card')
+    await expect(formSection).toBeVisible()
+    await expect(formSection.locator('form[data-contact-form]')).toBeVisible()
+  })
+
   test('contact desktop screenshot', async ({ page }) => {
     await page.setViewportSize(DESKTOP)
     await page.goto(new URL('/contact', baseUrl).toString(), {

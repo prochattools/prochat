@@ -28,7 +28,7 @@ Current behavior:
 
 ## Environment variables
 
-Canonical env documentation lives in [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md).
+Canonical env documentation lives in [environment.md](../../../docs-public/environment.md).
 
 Current values used by the route (required):
 
@@ -70,6 +70,6 @@ The route does not currently store subscriber records in Prisma.
 
 ## Related references
 
-- [integrations.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/integrations.md)
-- [environment.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs-public/environment.md)
-- [content-platform.md](/Users/Office/Repos/Organisation/ProChat/Web/prochat/docs/content-platform.md)
+- [integrations.md](../../integrations.md)
+- [environment.md](../../../docs-public/environment.md)
+- [content-platform.md](../../content-platform.md)
