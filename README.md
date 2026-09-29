@@ -21,14 +21,14 @@ Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning
 Before changing website positioning, product navigation, roadmap language, legal copy, growth claims, or marketing page structure, read:
 
 ```text
-mind/wiki/organisations/prochat/brand/README.md
-mind/wiki/organisations/prochat/brand/product-strategy.md
-mind/wiki/organisations/prochat/brand/product-naming-architecture.md
-mind/wiki/organisations/prochat/brand/product-roadmap.md
-mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
-mind/wiki/organisations/prochat/brand/global-design-foundation.md
-mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
-mind/wiki/organisations/prochat/brand/website-build-contract.md
+mind/organizations/prochat/brand/README.md
+mind/organizations/prochat/brand/product-strategy.md
+mind/organizations/prochat/brand/product-naming-architecture.md
+mind/organizations/prochat/brand/product-roadmap.md
+mind/organizations/prochat/brand/canonical-homepage-copy.md
+mind/organizations/prochat/brand/global-design-foundation.md
+mind/organizations/prochat/brand/website-visual-motion-system.md
+mind/organizations/prochat/brand/website-build-contract.md
 ```
 
 This repository must not independently redefine ProChat philosophy, product hierarchy, naming, positioning, business stage, legal-policy direction, growth policy, or cross-product roadmap.
@@ -37,21 +37,22 @@ If local website implementation facts appear to conflict with Mind, report and r
 
 ## Current product boundary
 
-Mind currently defines exactly two ProChat products:
+Mind currently defines this product system:
 
 ```text
 ProChat
-├── ProChat Memory
-│   └── ProChat Memory for QA
-└── ProChat Workbench
+├── Infinite Brain
+│   ├── Evermind — free, open-source, human-owned memory
+│   └── Nevermind — paid capability and convenience layer
+└── Mastermind — separate free, open-source planning/orchestration product
 ```
 
 Current website implications:
 
-- ProChat Memory is the flagship product.
-- ProChat Memory for QA is the first launch niche and first discipline-specific edition.
-- ProChat Workbench is the second product and should be presented separately from Memory.
-- ProChat Answers, ProChat Automations, API access, and MCP integrations are capabilities or future interfaces, not current products.
+- Evermind and Nevermind are the primary connected product system; Mastermind is separate.
+- ProChat Memory for QA is paused/historical and is not in normal public navigation.
+- Mastermind is the current public name for the former Workbench line.
+- ProChat Answers, ProChat Automations, API access, and MCP integrations are capabilities or future interfaces, not current products unless Mind explicitly changes this.
 - ProChat OS, SaaSKit, ProKit, UXKit, WaaSKit, and MikeOSS are legacy, historical, external, or archived references where relevant; they are not current ProChat products.
 - BuildFlow may appear only as a technical/internal compatibility identifier for Workbench where required.
 
@@ -68,7 +69,7 @@ Use these docs for website implementation only:
 7. `docs/migration/` — foundational legacy sweep, migration matrix, and content, route, component, style, motion, asset, and dependency audits.
 8. `docs/homepage-design-spec.md` — central homepage design brief and closed decisions.
 9. `docs/homepage-visual-storyboard.md` and `docs/homepage-example-data.md` — visual states and sanitized prototype content.
-10. `docs/homepage-technical-design.md` and `docs/homepage-design-orchestration.md` — build architecture, Brain skill methods, tooling, and GPT-5.6 Sol workflow.
+10. `docs/homepage-technical-design.md` and `docs/homepage-design-orchestration.md` — historical build-planning evidence; check current source before relying on details.
 11. `docs/homepage-validation-plan.md` — visual, motion, accessibility, performance, and release gates.
 12. `docs/roadmap.md` — canonical 15-phase public-platform roadmap and continuous-governance status.
 13. `docs/implementation-plan.md` — dependency-gated implementation tasks with validation, rollback, and commit boundaries.

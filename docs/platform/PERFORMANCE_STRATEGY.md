@@ -2,6 +2,8 @@
 
 **Status:** canonical repository-local performance program
 
+> Current-site note (2026-09-29): the homepage and three product routes now use a scroll-driven video-to-canvas renderer with a stable static bootstrap and reduced-motion fallback. This approved exception to the old static-frame-only plan must be judged against scroll smoothness, reverse-scroll continuity, cache handoff, mobile LCP, and reduced motion. PXF-016D/016D2 measurements below describe the earlier route/theme architecture; rerun them for the current eight public routes before treating their results as current.
+
 ## Principle
 
 Performance is a product and design requirement. Budgets constrain fonts, media, JavaScript, animation, and component architecture before implementation.
@@ -60,7 +62,7 @@ The following items cannot be verified by Lighthouse and require field data or m
 - Lazy-load below-the-fold cinematic modules.
 - Native scrolling only.
 - Semantic HTML, CSS, and SVG for essential visuals.
-- No autoplay hero video or frame sequence.
+- No autoplay hero video. A user-scroll-driven frame sequence is permitted only with continuous fallback, no blank cache handoff, mobile performance evidence, and a stable reduced-motion mode.
 - No smooth-scroll dependency by default.
 
 ## Fonts
@@ -101,7 +103,7 @@ Before adding a dependency, document:
 - maintenance and licence;
 - removal plan.
 
-Planned additions such as GSAP, Playwright, and axe occur in their approved implementation batch, not during documentation or static prototype work.
+Do not add a production dependency for a static prototype. Playwright is already used for browser evidence; any new renderer/glass dependency requires the cost, accessibility, maintenance, and removal review above.
 
 ## Measurement
 
@@ -146,7 +148,7 @@ selection_reason: >
 
 ## Deferred security observation (PXF-016D)
 
-CI run 30758962840 reported two Dockerfile build annotations concerning Stripe live-secret names in Docker `ARG`/`ENV` directives. These are classified as deferred container and secret-handling hardening work. They do not represent plaintext secrets committed to the repository. No action is required in PXF-016D.
+CI run 30758962840 reported Dockerfile annotations concerning Stripe live-secret names in Docker build directives. Current source still declares placeholder `STRIPE_SECRET_KEY_LIVE` and `STRIPE_WEBHOOK_SECRET_LIVE` values using builder-stage `ENV` so retired Stripe module evaluation succeeds at build time. These are placeholders, not real credentials, but their presence implies an obsolete build contract. Track removal of this build-time configuration dependency; never pass actual secrets into Docker build args or layers.
 
 
 ## LCP attribution semantics (PXF-016D2)
@@ -163,14 +165,17 @@ The canonical runner therefore records both:
 
 Do not claim a hydration delay merely because simulated LCP is later than simulated FCP. PXF-016D2 measured the failing public text candidates at or within approximately 17ms of raw FCP, rejecting the earlier 1.7–2.0 second hydration-floor hypothesis.
 
-The current blocking result is six canonical routes above the unchanged 2.5-second simulated LCP threshold. Two bounded font-loading experiments were completed and reverted because they produced no consistent material improvement.
+The historical blocking result was six then-canonical routes above the unchanged 2.5-second simulated LCP threshold. It is not a measurement of the current cinematic routes. Rerun the diagnostic and report each currently canonical route separately before selecting an optimization.
+
+### LiquidGlass evaluation (2026-09-29)
+
+A local system-Chrome prototype placed one LiquidGlass element over a scroll-driven background canvas and marked that canvas changed on each animation frame, as required for live canvas pixel updates. At 1440×900, two repeated scroll runs measured the effect at roughly 11–15fps with 50–66.6ms median RAF intervals; the existing renderer's median remained 16.7ms. The prototype also failed to preserve the context panel's original text composition. It is not approved for the cinematic scroll path. Existing CSS glass remains the current direction unless a future measured test demonstrates a faster and faithful integration.
 
 The next approved repair boundary is architectural critical-path reduction:
 
 1. separate canonical public CSS from legacy and protected-route CSS now carried by the shared render-blocking bundle;
 2. preserve only measured above-the-fold canonical styles in the initial route path;
-3. address the `/docs` Nextra/HeadlessUI transfer and two-candidate LCP separately;
+3. evaluate `/docs` transfer and LCP from current route-source evidence; generated Docs/Nextra is no longer the public Docs route;
 4. avoid root provider or shell rewrites unless later trace evidence proves they delay observed paint.
 
-Phase 12 remains partial until all eight canonical routes pass the unchanged Linux CI laboratory thresholds. Field INP and manual accessibility remain separate evidence requirements.
-
+Historical Phase 12 status does not establish current cinematic release readiness. Field INP and manual accessibility remain separate evidence requirements.

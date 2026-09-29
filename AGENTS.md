@@ -10,16 +10,17 @@ Current product hierarchy:
 
 ```text
 ProChat
-├── ProChat Memory
-│   └── ProChat Memory for QA
-└── ProChat Workbench
+├── Infinite Brain
+│   ├── Evermind — free, open-source, human-owned memory
+│   └── Nevermind — paid capability and convenience layer
+└── Mastermind — separate free, open-source planning/orchestration product
 ```
 
 Current positioning:
 
-- **ProChat Memory** is the flagship product.
-- **ProChat Memory for QA** is the first launch niche and first discipline-specific edition of ProChat Memory.
-- **ProChat Workbench** is the second product and should be presented separately from Memory.
+- Evermind and Nevermind are the primary connected ProChat product system; Mastermind is separate.
+- ProChat Memory for QA is paused/historical, not a current public product.
+- Mastermind is the current public name for the former Workbench product line.
 - ProChat OS, SaaSKit, ProKit, UXKit, WaaSKit, MikeOSS, and similar older names are legacy, historical, archived, external, or internal references unless Mind explicitly reclassifies them.
 - ProChat Answers, ProChat Automations, API access, and MCP integrations are capabilities, use cases, or future interfaces, not current products.
 - BuildFlow may appear only as a technical/internal compatibility identifier for Workbench where required.
@@ -29,10 +30,10 @@ Current positioning:
 Mind controls company and product strategy:
 
 ```text
-mind/wiki/organisations/prochat/README.md
-mind/wiki/organisations/prochat/brand/
-mind/wiki/organisations/prochat/legal/
-mind/wiki/organisations/prochat/growth/
+mind/organizations/prochat/README.md
+mind/organizations/prochat/brand/
+mind/organizations/prochat/legal/
+mind/organizations/prochat/growth/
 ```
 
 This repository controls website implementation facts: routes, components, content rendering, analytics hooks, environment contracts, docs automation, deployment behavior, and code-facing architecture.
@@ -48,7 +49,7 @@ Use these docs for implementation and website execution context only:
 - `docs/strategy.md` — repository-local website strategy subordinate to Mind;
 - `docs/roadmap.md` — website implementation roadmap subordinate to Mind;
 - `docs/implementation-plan.md` — website implementation plan subordinate to Mind;
-- `docs/prochat-memory-website-design-strategy.md` — design brief for the Memory-led website;
+- `docs/product/PUBLIC_PAGE_ARCHITECTURE.md` — historical/superseded page plan; not current route or product authority;
 - `docs/website-copy-blueprint.md` — website copy guidance subordinate to Mind;
 - `DESIGN.md` — visual/design-system guidance only.
 
@@ -84,7 +85,7 @@ The environment variable contract lives in `docs-public/environment.md` and `.en
 4. Never adjust environment contracts without updating `docs-public/environment.md` and `.env.example` where relevant.
 5. Do not reintroduce legacy systems that were removed unless the task explicitly asks for a historical archive or redirect.
 6. Node 20 is the supported runtime for Docker, CI, and local tooling unless the repo contract changes.
-7. Stripe uses mode-based environment keys (`STRIPE_MODE`, `STRIPE_SECRET_KEY_{TEST|LIVE}`, etc.).
+7. Do not restore retired Stripe runtime configuration; current environment requirements are documented in `docs-public/environment.md` and `.env.example`.
 8. Documentation integrity checks (`scripts/check-env-docs.js`, `scripts/check-doc-links.js`, `npm run docs:validate`) run automatically in CI.
 
 ## Project principles

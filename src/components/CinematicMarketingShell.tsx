@@ -7,8 +7,8 @@ import { useEffect, useRef, useState } from 'react'
 import Logo from '@/components/logo'
 import { SocialIcon } from '@/components/ui/social-icons'
 import { trackEvent } from '@/utils/analytics'
-
 import './cinematic-marketing-shell.css'
+import './cinematic/cinematic-reference-final.css'
 
 const NAV_ITEMS = [
   { href: '/evermind', label: 'Evermind' },

@@ -1,4 +1,6 @@
-# ProChat agent-mode progress
+# ProChat agent-mode progress — superseded historical closeout
+
+> Historical closeout written 2026-08-14. Its `/memory`, `/memory-qa`, `/workbench` routes, product names, and “hygiene complete” status predate the 2026-09-11 product decision and current cinematic website. Do not use this file as current operational state. Current guidance: `docs/repo-status.md`, `docs/roadmap.md`, and `docs/implementation-plan.md`.
 
 **Current status:** lean public release deployed and production-verified; repository-scoped post-release hygiene/hardening is complete and validated.
 

@@ -1,79 +1,30 @@
 # Repository status
 
-Status: lean public release deployed; final repository hygiene/hardening pass in progress.
+Status: current source has a locally validated cinematic implementation; production revision and route health are verified through the normal `main` workflow and `/api/version`.
 
-Last consolidated: 2026-08-13.
+Last reviewed: 2026-09-29.
 
-## Public product surface
+## Canonical public surface
 
-Current canonical routes:
+Routes: `/`, `/evermind`, `/nevermind`, `/mastermind`, `/docs`, `/contact`, `/privacy`, and `/terms`.
 
-- `/`
-- `/memory`
-- `/memory-qa`
-- `/workbench`
-- `/docs`
-- `/contact`
-- `/privacy`
-- `/terms`
+Evermind and Nevermind are the connected Infinite Brain product system; Mastermind is the separate free planning/orchestration product. ProChat Memory for QA is paused/historical. Mind is canonical for product naming, hierarchy, claims, and company strategy.
 
-Memory, Memory for QA, and Workbench are the active product identities. BuildFlow remains only where a technical/internal compatibility identifier is required by Workbench contracts.
+## Runtime and visual architecture
 
-## Retired runtime surfaces
+- `/`, `/evermind`, `/nevermind`, `/mastermind`: shared cinematic template, scroll-driven media, two chapters, 80vh intentional spacer, one navigation, and no footer.
+- `/contact`, `/docs`, `/privacy`, `/terms`: existing route-specific presentation, outside this visual redesign and checked for regressions only.
+- Production integration: GitHub Actions `.github/workflows/main.yml` on `main`; production revision is checked through `/api/version`.
 
-The following are not active public products or runtime systems:
+## Historical or deferred systems
 
-- ProChat OS
-- SaaSKit, ProKit, UXKit, WaaSKit
-- AI Workflows / Legal AI Workflows
-- Studio, Proof, Prompts, Learn, Production Guide
-- generated Docs/Nextra and dynamic legacy Blog content
-- Stripe checkout/webhook/subscription/portal runtime
-- application licence administration/provisioning
-- MailerLite funnel integration
-- GitHub purchaser entitlement provisioning
-- WordPress/FluentCRM inside this Next.js repository
+Generated Docs/Nextra, retired checkout/licensing, Stripe runtime, MailerLite, GitHub purchaser provisioning, and legacy product identities are not current public-site capabilities. Ory runtime authorization for internal/admin surfaces remains separately deferred and fail-closed. Historical references live under archives/migration docs and Git history.
 
-Historical evidence remains under `docs/archive/**`, `docs/migration/**`, and Git history.
+## Validated release scope
 
-## Active runtime capabilities
+Renderer reverse-scroll/cache-handoff, responsive/reduced-motion and interaction evidence, measured LiquidGlass evaluation, current copy/documentation reconciliation, production build, browser/security checks, and manual desktop/mobile review are recorded for the cinematic release. Integrate through the normal GitHub `main` workflow and verify the deployed revision/routes before describing a publication as live. The protected dirty checkout `/Users/Office/Repos/prochattools/web/prochat` is preservation-only and must remain byte-for-byte unchanged in its branch, HEAD, status, and tracked diff.
 
-- canonical public marketing/product/legal pages
-- Contact API
-- beta-interest/waitlist API and compatibility alias
-- Umami analytics
-- Resend-backed Contact/beta-interest email when configured
-- tenant/database scripts and Prisma runtime
-- shared sign-in/sign-up UI using Ory browser flows
-- internal social automation protected by `SOCIAL_AUTOMATION_SECRET`
+## Tracked performance/security notes
 
-## Deferred internal functionality
-
-Runtime Ory session validation is not implemented for `/admin`, project, Make, and n8n APIs. Those capabilities intentionally fail closed with 501/misconfigured responses.
-
-This is an explicit deferred-hardening decision and does not block the canonical public website.
-
-## Environment contract
-
-The active environment contract is defined by:
-
-- `.env.example`
-- `docs-public/environment.md`
-
-Do not reintroduce retired Stripe/GitHub/MailerLite/Strapi/Make/n8n/generated-Docs credentials without a separately approved runtime consumer.
-
-## Validation baseline
-
-The lean release has previously passed production build, TypeScript, ESLint, design lint, security tests, canonical browser/accessibility evidence, deployment SHA verification, desktop/mobile production route checks, compatibility redirects, and retired-route checks.
-
-The final hygiene batch must rerun the relevant validation before commit/push because source/docs changed again.
-
-## Current hygiene scope
-
-- remove verified orphan helpers;
-- archive retired-system docs that were still in active locations;
-- align active documentation with code;
-- explicitly document the deferred Ory boundary;
-- remove ignored browser artifacts where possible;
-- verify branch cleanup with evidence before deletion;
-- validate, commit, push, and require a clean worktree.
+- Canonical mobile LCP target: ≤2.5s; capture actual route measurements before setting the next goal.
+- Docker builder still declares placeholder `STRIPE_SECRET_KEY_LIVE` and `STRIPE_WEBHOOK_SECRET_LIVE` values via `ENV`; these are not credentials, but trigger container-build security warnings. Remove the obsolete build-time dependency in a separately validated change, without passing real secrets to the builder.

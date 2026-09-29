@@ -10,6 +10,8 @@ const BOOTSTRAP_FRAME_COUNT = 24
 const BOOTSTRAP_COLUMNS = 6
 const BOOTSTRAP_ROWS = 4
 const FIRST_FRAME_TIME_SECONDS = 0.04
+const MAX_CACHED_FRAMES = 72
+const MAX_CACHED_FRAME_WIDTH = 720
 
 type ScrollVideoBackgroundProps = {
   containerRef?: RefObject<HTMLElement | null>
@@ -45,15 +47,24 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
   const [bootstrapReady, setBootstrapReady] = useState(false)
   const [videoReady, setVideoReady] = useState(false)
   const [cacheReady, setCacheReady] = useState(false)
+  const [canvasPainted, setCanvasPainted] = useState(false)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const updatePreference = () => setPrefersReducedMotion(preference.matches)
+    updatePreference()
+    preference.addEventListener('change', updatePreference)
+    return () => preference.removeEventListener('change', updatePreference)
+  }, [])
 
   useEffect(() => {
     onProgressRef.current = onProgress
   }, [onProgress])
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const updateTarget = () => {
-      const result = reducedMotion
+      const result = prefersReducedMotion
         ? { progress: 0, isActive: true }
         : getProgress(containerRef?.current ?? null)
       targetRef.current = result.progress
@@ -61,7 +72,7 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
     }
 
     updateTarget()
-    if (reducedMotion) return
+    if (prefersReducedMotion) return
 
     window.addEventListener('scroll', updateTarget, { passive: true })
     window.addEventListener('resize', updateTarget)
@@ -69,7 +80,7 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
       window.removeEventListener('scroll', updateTarget)
       window.removeEventListener('resize', updateTarget)
     }
-  }, [containerRef])
+  }, [containerRef, prefersReducedMotion])
 
   useEffect(() => {
     const image = new Image()
@@ -162,8 +173,8 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
       })
       const duration = source.duration
       if (!Number.isFinite(duration) || duration <= 0) return
-      const count = Math.min(90, Math.max(24, Math.round(duration * 12)))
-      const width = Math.min(960, source.videoWidth || 960)
+      const count = Math.min(MAX_CACHED_FRAMES, Math.max(24, Math.round(duration * 10)))
+      const width = Math.min(MAX_CACHED_FRAME_WIDTH, source.videoWidth || MAX_CACHED_FRAME_WIDTH)
       const height = Math.max(1, Math.round(width * ((source.videoHeight || 540) / (source.videoWidth || 960))))
       const temp = document.createElement('canvas')
       temp.width = width
@@ -205,10 +216,11 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
   }, [videoReady])
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reducedMotion) return
+    if (prefersReducedMotion) return
 
     let raf = 0
+    let previousTime = 0
+    let forceDraw = true
     const drawCover = (
       ctx: CanvasRenderingContext2D,
       source: CanvasImageSource,
@@ -218,11 +230,12 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
       height: number,
       sourceX = 0,
       sourceY = 0,
+      clear = true,
     ) => {
       const scale = Math.max(width / sourceWidth, height / sourceHeight)
       const drawWidth = sourceWidth * scale
       const drawHeight = sourceHeight * scale
-      ctx.clearRect(0, 0, width, height)
+      if (clear) ctx.clearRect(0, 0, width, height)
       ctx.drawImage(
         source,
         sourceX,
@@ -236,53 +249,110 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
       )
     }
 
-    const draw = () => {
-      smoothedRef.current += (targetRef.current - smoothedRef.current) * 0.12
+    const findFrame = (frames: Array<ImageBitmap | undefined>, start: number, direction: -1 | 1) => {
+      for (let index = start; index >= 0 && index < frames.length; index += direction) {
+        if (frames[index]) return { frame: frames[index]!, index }
+      }
+      return null
+    }
+
+    const draw = (time: number) => {
+      const delta = previousTime ? Math.min(64, time - previousTime) : 16.67
+      previousTime = time
+      const oldProgress = smoothedRef.current
+      smoothedRef.current += (targetRef.current - smoothedRef.current) * (1 - Math.exp(-delta / 88))
+      const moved = Math.abs(smoothedRef.current - oldProgress) > 0.00001
       const canvas = canvasRef.current
-      const video = videoRef.current
-      const canDrawCanvas = canvas && (cacheReady || bootstrapReady)
+      const canDrawCanvas = canvas && bootstrapReady
 
       if (canDrawCanvas) {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2)
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
         const width = Math.round(window.innerWidth * dpr)
         const height = Math.round(window.innerHeight * dpr)
+        let resized = false
         if (canvas.width !== width || canvas.height !== height) {
           canvas.width = width
           canvas.height = height
+          resized = true
         }
         const ctx = canvas.getContext('2d')
 
-        if (ctx && cacheReady && frameCountRef.current > 0) {
-          const frames = framesRef.current
-          const targetIndex = Math.min(frameCountRef.current - 1, Math.round(smoothedRef.current * (frameCountRef.current - 1)))
-          let frame = frames[targetIndex]
-          if (!frame) {
-            for (let offset = 1; offset < frameCountRef.current; offset += 1) {
-              frame = frames[targetIndex - offset] ?? frames[targetIndex + offset]
-              if (frame) break
+        if (ctx && (forceDraw || resized || moved)) {
+          let drawn = false
+          try {
+            if (cacheReady && frameCountRef.current > 0) {
+              const frames = framesRef.current
+              const position = smoothedRef.current * (frameCountRef.current - 1)
+              const lower = findFrame(frames, Math.floor(position), -1)
+              const upper = findFrame(frames, Math.ceil(position), 1)
+
+              if (lower || upper) {
+                const first = lower ?? upper!
+                const second = upper ?? lower!
+                const blend = first.index === second.index
+                  ? 0
+                  : Math.min(1, Math.max(0, (position - first.index) / (second.index - first.index)))
+                drawCover(ctx, first.frame, first.frame.width, first.frame.height, width, height)
+                if (second.index !== first.index && blend > 0) {
+                  ctx.save()
+                  ctx.globalAlpha = blend
+                  drawCover(ctx, second.frame, second.frame.width, second.frame.height, width, height, 0, 0, false)
+                  ctx.restore()
+                }
+                drawn = true
+              }
             }
+
+            if (!drawn && bootstrapImageRef.current) {
+              const image = bootstrapImageRef.current
+              const framePosition = smoothedRef.current * (BOOTSTRAP_FRAME_COUNT - 1)
+              const lowerIndex = Math.floor(framePosition)
+              const upperIndex = Math.min(BOOTSTRAP_FRAME_COUNT - 1, lowerIndex + 1)
+              const blend = framePosition - lowerIndex
+              const sourceWidth = image.naturalWidth / BOOTSTRAP_COLUMNS
+              const sourceHeight = image.naturalHeight / BOOTSTRAP_ROWS
+              const drawBootstrap = (frameIndex: number, clear: boolean, alpha = 1) => {
+                ctx.save()
+                ctx.globalAlpha = alpha
+                drawCover(
+                  ctx,
+                  image,
+                  sourceWidth,
+                  sourceHeight,
+                  width,
+                  height,
+                  (frameIndex % BOOTSTRAP_COLUMNS) * sourceWidth,
+                  Math.floor(frameIndex / BOOTSTRAP_COLUMNS) * sourceHeight,
+                  clear,
+                )
+                ctx.restore()
+              }
+              drawBootstrap(lowerIndex, true)
+              if (upperIndex !== lowerIndex && blend > 0) drawBootstrap(upperIndex, false, blend)
+              drawn = true
+            }
+          } catch {
+            // Keep the last successfully painted canvas frame if a source is transiently unavailable.
           }
-          if (frame) drawCover(ctx, frame, frame.width, frame.height, width, height)
-        } else if (ctx && bootstrapReady && bootstrapImageRef.current) {
-          const image = bootstrapImageRef.current
-          const sourceWidth = image.naturalWidth / BOOTSTRAP_COLUMNS
-          const sourceHeight = image.naturalHeight / BOOTSTRAP_ROWS
-          const frameIndex = Math.min(BOOTSTRAP_FRAME_COUNT - 1, Math.round(smoothedRef.current * (BOOTSTRAP_FRAME_COUNT - 1)))
-          const sourceX = (frameIndex % BOOTSTRAP_COLUMNS) * sourceWidth
-          const sourceY = Math.floor(frameIndex / BOOTSTRAP_COLUMNS) * sourceHeight
-          drawCover(ctx, image, sourceWidth, sourceHeight, width, height, sourceX, sourceY)
+
+          if (drawn) {
+            forceDraw = false
+            if (!canvasPainted) setCanvasPainted(true)
+          }
         }
-      } else if (videoReady && video && Number.isFinite(video.duration)) {
-        const wanted = smoothedRef.current * Math.max(0, video.duration - 0.05)
-        if (!video.seeking && Math.abs(video.currentTime - wanted) > 0.04) video.currentTime = wanted
       }
-      raf = requestAnimationFrame(draw)
+
+      if (!prefersReducedMotion || !canvasPainted && bootstrapReady) {
+        raf = requestAnimationFrame(draw)
+      }
     }
 
     raf = requestAnimationFrame(draw)
     return () => cancelAnimationFrame(raf)
-  }, [bootstrapReady, cacheReady, videoReady])
+  }, [bootstrapReady, cacheReady, canvasPainted, prefersReducedMotion])
 
-  const canvasVisible = bootstrapReady || cacheReady
-  return <><link rel="preload" as="image" href={BOOTSTRAP_SPRITE_URL} /><div className={`cm-video ${className}`.trim()} aria-hidden="true"><div className={`cm-video__poster ${bootstrapReady || videoReady || cacheReady ? 'is-hidden' : ''}`} /><video ref={videoRef} className={`cm-video__element ${canvasVisible || cacheReady ? 'is-hidden' : videoReady ? 'is-visible' : ''}`} src={VIDEO_URL} muted playsInline preload="metadata" /><canvas ref={canvasRef} className={`cm-video__canvas ${canvasVisible ? 'is-visible' : ''}`} data-frame-cache-ready={cacheReady ? 'true' : 'false'} /><div className="cm-video__veil" /></div></>
+  const canvasVisible = canvasPainted && !prefersReducedMotion
+  const videoHidden = canvasPainted || prefersReducedMotion
+  const renderState = cacheReady ? 'cache' : canvasPainted ? 'bootstrap' : 'poster'
+  return <><link rel="preload" as="image" href={BOOTSTRAP_SPRITE_URL} /><div className={`cm-video ${className}`.trim()} aria-hidden="true" data-render-state={renderState}><div className={`cm-video__poster ${canvasVisible ? 'is-hidden' : ''}`} /><video ref={videoRef} className={`cm-video__element ${videoHidden ? 'is-hidden' : videoReady ? 'is-visible' : ''}`} src={VIDEO_URL} muted playsInline preload="metadata" /><canvas ref={canvasRef} className={`cm-video__canvas ${canvasVisible ? 'is-visible' : ''}`} data-frame-cache-ready={cacheReady ? 'true' : 'false'} /><div className="cm-video__veil" /></div></>
 }

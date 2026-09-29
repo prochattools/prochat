@@ -8,7 +8,6 @@ import {
 } from './CinematicMarketingShell'
 import { CinematicChapter, CinematicGlassPanel } from './cinematic/CinematicChapter'
 import { CinematicMediaPage } from './cinematic/CinematicMediaPage'
-import './cinematic/cinematic-reference-final.css'
 
 export type CinematicMarketingCapability = {
   title: string
