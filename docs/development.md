@@ -27,9 +27,9 @@ npm run build
 The active public website is exactly:
 
 - `/`
-- `/memory`
-- `/memory-qa`
-- `/workbench`
+- `/evermind`
+- `/nevermind`
+- `/mastermind`
 - `/docs`
 - `/contact`
 - `/privacy`
@@ -39,7 +39,7 @@ Compatibility aliases may redirect into those routes, but new public work should
 
 ## Documentation workflow
 
-Internal repository documentation lives under `docs/` and `docs-public/`. The active public `/docs` page is a lean repository hub for Memory for QA and Workbench.
+Internal repository documentation lives under `docs/` and `docs-public/`. The active public `/docs` page is a reading-friendly hub for Evermind, Nevermind, and Mastermind, presented in the shared static utility shell. Contact and legal routes use that shell too; legal body text remains unchanged.
 
 The former Nextra/generated `src/content/docs` + `scripts/docs` pipeline is retired.
 

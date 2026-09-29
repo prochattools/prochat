@@ -1,10 +1,12 @@
 # ProChat Design-System Implementation Bridge
 
-**Status:** repository-local implementation guidance  
+**Status:** historical design-system migration guidance
 **Canonical design truth:** `DESIGN.md` and `brand-spec.md`  
 **Canonical strategy and company design:** Mind
 
 This file explains how the approved ProChat design system should be introduced into the existing website repository.
+
+> This migration plan predates the current cinematic and utility route systems. Its planned token files, GSAP direction, and migration sequence are not current implementation facts. For the live route contract and stylesheet ownership, use `docs/overview.md`, `docs/implementation-plan.md`, and `docs/homepage-validation-plan.md`.
 
 Existing tokens, themes, gradients, fonts, hero components, and page-specific styles remain implementation inventory. They are not canonical design authority and must not be extended by default.
 

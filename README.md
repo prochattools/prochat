@@ -67,13 +67,10 @@ Use these docs for website implementation only:
 5. `docs/design/` — design principles, visual language, product visual library, copy-to-visual mapping, motion storyboards, design-lab rules, and component contracts.
 6. `docs/platform/` — page architecture, responsive strategy, accessibility strategy, and performance strategy.
 7. `docs/migration/` — foundational legacy sweep, migration matrix, and content, route, component, style, motion, asset, and dependency audits.
-8. `docs/homepage-design-spec.md` — central homepage design brief and closed decisions.
-9. `docs/homepage-visual-storyboard.md` and `docs/homepage-example-data.md` — visual states and sanitized prototype content.
-10. `docs/homepage-technical-design.md` and `docs/homepage-design-orchestration.md` — historical build-planning evidence; check current source before relying on details.
-11. `docs/homepage-validation-plan.md` — visual, motion, accessibility, performance, and release gates.
-12. `docs/roadmap.md` — canonical 15-phase public-platform roadmap and continuous-governance status.
-13. `docs/implementation-plan.md` — dependency-gated implementation tasks with validation, rollback, and commit boundaries.
-14. `docs/auth-status.md`, `docs/deployment.md`, `docs/content-platform.md`, and related implementation docs — runtime and deployment facts.
+8. `docs/homepage-validation-plan.md` — active visual, motion, accessibility, performance, and release checks.
+9. `docs/implementation-plan.md` and `docs/roadmap.md` — current website implementation status and active follow-up.
+10. `docs/homepage-design-spec.md`, `docs/homepage-visual-storyboard.md`, `docs/homepage-example-data.md`, `docs/homepage-technical-design.md`, and `docs/homepage-design-orchestration.md` — historical/pre-build evidence; check current source before relying on details.
+11. `docs/auth-status.md`, `docs/deployment.md`, `docs/content-platform.md`, and related implementation docs — runtime and deployment facts.
 
 ## Architecture overview
 

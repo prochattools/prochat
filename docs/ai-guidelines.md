@@ -4,11 +4,11 @@ These rules describe how AI-assisted development and internal automation may int
 
 ## Current product boundary
 
-The canonical public products are Memory, Memory for QA, and Workbench. The public site also exposes Docs, Contact, Privacy, and Terms.
+Evermind and Nevermind are the connected Infinite Brain product system; Mastermind is a separate ProChat product. ProChat Memory for QA is paused/historical. The public site also exposes Docs, Contact, Privacy, and Terms.
 
 Retired Kits, ProChat OS, AI Workflows, Studio, Proof, Prompts, generated Docs, checkout/licensing, and MailerLite systems are historical only. Do not restore them because older docs or Git history mention them.
 
-BuildFlow may appear only where a technical/internal compatibility identifier is required by Workbench implementation contracts.
+BuildFlow may appear only where a technical/internal compatibility identifier is required by Mastermind implementation contracts.
 
 ## Repository safety
 

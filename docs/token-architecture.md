@@ -1,9 +1,11 @@
 # ProChat Token Architecture
 
-**Status:** canonical repository-local token governance
+**Status:** historical PXF-010 token proposal; not the active route-design authority
 **Canonical design source:** Mind `wiki/organisations/prochat/brand/global-design-foundation.md`, translated by `brand-spec.md`, operationalized by `DESIGN.md`
 **Date:** 2026-07-29
 **Phase:** PXF-010 — Design-system governance and launch hardening
+
+> This document records an earlier foundation/public/`--pm-*` token proposal. Do not treat its statements about current token completeness, route consumption, or required migration steps as verified current implementation. The active public route contract is documented in `docs/overview.md`, `docs/implementation-plan.md`, and `docs/homepage-validation-plan.md`. The core cinematic routes are styled by `src/components/cinematic/cinematic-reference-final.css`; static utility routes use `src/components/cinematic/cinematic-utility.css`. Verify source before changing shared tokens.
 
 ## Token layers
 

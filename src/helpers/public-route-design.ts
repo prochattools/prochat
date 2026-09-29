@@ -20,9 +20,13 @@ export function getUnifiedPublicRouteConfig(pathname: string): PublicRouteDesign
   const path = normalize(pathname)
 
   if (path === '/') return { variant: 'home', contentOwnsShell: true }
-  if (path === '/docs') return { variant: 'docs', contentOwnsMain: true }
+  if (path === '/docs' || path.startsWith('/docs/')) {
+    return { variant: 'docs', contentOwnsShell: true }
+  }
   if (path === '/contact') return { variant: 'contact', contentOwnsShell: true }
-  if (path === '/privacy' || path === '/terms') return { variant: 'legal' }
+  if (path === '/privacy' || path === '/terms') {
+    return { variant: 'legal', contentOwnsShell: true }
+  }
 
   return null
 }

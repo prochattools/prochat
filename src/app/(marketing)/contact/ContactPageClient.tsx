@@ -7,7 +7,6 @@ import { trackEvent } from '@/utils/analytics'
 import { CinematicMarketingShell } from '@/components/CinematicMarketingShell'
 
 import ContactPageMarkup from './ContactPageMarkup'
-import { CinematicMediaPage } from '@/components/cinematic/CinematicMediaPage'
 
 type ContactFieldName =
   | 'name'
@@ -34,16 +33,13 @@ const FORM_FIELDS: ContactFieldName[] = [
 
 const CONTACT_SUBMIT_IDLE_HTML = `
   <span class="pc-action-label">
-    <span class="text-current md:hidden">SEND MY BRIEF</span>
-    <span class="hidden text-current md:inline">SEND MY BRIEF</span>
-    <span aria-hidden="true" class="hidden opacity-50 md:inline"> - </span>
-    <span class="hidden opacity-50 md:inline">FOCUSED MEMORY CONTEXT</span>
+    <span class="text-current">SEND MESSAGE</span>
   </span>
 `
 
 const CONTACT_SUBMIT_SUBMITTING_HTML = `
   <span class="pc-action-label">
-    <span class="text-current">SENDING BRIEF...</span>
+    <span class="text-current">SENDING MESSAGE...</span>
   </span>
 `
 
@@ -297,12 +293,11 @@ export default function ContactPageClient({ initialTopic }: ContactPageClientPro
   return (
     <CinematicMarketingShell
       contentOwnsMain
+      utilityTheme
       cta={{ label: 'Start with Evermind', href: '/evermind', trackingCta: 'start_evermind' }}
     >
       <main id="main-content" ref={rootRef} className="contact-page-root">
-        <CinematicMediaPage className="cm-contact-experience" chapterCount={2} lite>
-          <ContactPageMarkup initialTopic={initialTopic} />
-        </CinematicMediaPage>
+        <ContactPageMarkup initialTopic={initialTopic} />
       </main>
     </CinematicMarketingShell>
   )

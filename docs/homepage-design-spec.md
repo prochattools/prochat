@@ -1,13 +1,15 @@
 # ProChat Homepage Design Specification
 
-**Status:** approved pre-build design brief  
+**Status:** superseded pre-build design brief; retained as historical evidence
 **Canonical copy:** Mind `canonical-homepage-copy.md`  
 **Design system:** `DESIGN.md` and `brand-spec.md`  
 **Visual specification:** `docs/homepage-visual-storyboard.md`  
 **Technical architecture:** `docs/homepage-technical-design.md`  
 **Skill workflow:** `docs/homepage-design-orchestration.md`
 
-This is the central repository-local brief for the ProChat homepage. It explains what must be designed, why it matters, and which decisions are already closed.
+> This specification describes the retired Memory-first/Memory-for-QA/Workbench homepage direction. It is not current product, copy, route, or acceptance authority. Current direction is defined by Mind and the shipped implementation; use `docs/homepage-validation-plan.md`, `docs/implementation-plan.md`, and `docs/roadmap.md` for current website state.
+
+This document preserves the original pre-build design rationale and closed decisions for historical reference only.
 
 ## Objective
 

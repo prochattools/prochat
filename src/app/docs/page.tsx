@@ -1,5 +1,4 @@
 import StructuredData from '@/components/StructuredData'
-import PublicEditorialHero from '@/components/public/PublicEditorialHero'
 import { getSEOTags } from '@/libs/seo'
 import { getDocsSchemas } from '@/libs/structured-data'
 
@@ -28,8 +27,8 @@ export async function generateMetadata() {
     },
     socialImage: {
       line1: 'ProChat Documentation',
-      line2: 'Memory + context + execution',
-      subtitle: 'Three products. One connected direction.',
+      line2: 'Evermind + Nevermind + Mastermind',
+      subtitle: 'Product documentation for AI work.',
     },
     canonicalUrlRelative: '/docs',
   })
@@ -79,24 +78,14 @@ const paths = [
 
 export default function DocsIndexPage() {
   return (
-    <main className="pc-body-page pc-docs-hub" data-body-family="docs">
+    <main className="pc-body-page pc-docs-hub cm-utility-docs" data-body-family="docs">
       <StructuredData id="schema-docs" data={getDocsSchemas()} />
 
-      <PublicEditorialHero
-        variant="docs"
-        eyebrow="Documentation / product family"
-        title={
-          <>
-            Three products.<br />
-            <strong>One connected direction.</strong>
-          </>
-        }
-        description="Explore the product family from human-owned memory to working context and controlled execution. Each product has a distinct role, and the pages keep those boundaries explicit."
-        primaryAction={{ href: '#repository-docs', label: 'Choose a product' }}
-        signals={['Evermind', 'Nevermind', 'Mastermind']}
-        visualTitle="DOCS / PRODUCT FAMILY"
-        visualCaption="REMEMBER → CONTEXTUALIZE → DIRECT"
-      />
+      <header className="cm-utility-docs__hero">
+        <div className="pc-body-kicker"><span aria-hidden="true" />ProChat / Documentation</div>
+        <h1>Product documentation for AI work.</h1>
+        <p>{DOCS_DESCRIPTION} Start with the product that matches the work, then use its documentation to understand setup, boundaries, and next steps.</p>
+      </header>
 
       <section className="pc-docs-hub__paths" id="repository-docs" aria-labelledby="repository-docs-title">
         <div className="pc-docs-hub__intro">

@@ -16,7 +16,9 @@ const STANDARD_PUBLIC_ROUTES = [
 ] as const
 
 const CINEMATIC_PRODUCT_ROUTES = ['/evermind', '/nevermind', '/mastermind'] as const
-const CINEMATIC_MARKETING_ROUTES = new Set<string>(['/', '/contact', ...CINEMATIC_PRODUCT_ROUTES])
+const CINEMATIC_MARKETING_ROUTES = new Set<string>([
+  '/', '/contact', '/docs', '/privacy', '/terms', ...CINEMATIC_PRODUCT_ROUTES,
+])
 
 const DESKTOP = { name: 'desktop', width: 1440, height: 1000 } as const
 const MOBILE = { name: 'mobile', width: 390, height: 900 } as const
@@ -69,7 +71,7 @@ test.describe('canonical public chrome — structure and first-paint invariants'
 
         // Core cinematic pages intentionally end after Section Two; other routes retain one footer.
         const footer = publicFooter(page, route)
-        const expectedFooterCount = CORE_CINEMATIC_ROUTES.has(route) ? 0 : 1
+        const expectedFooterCount = 0
         expect(await footer.count(), `${route} public footer count at ${viewport.name}`).toBe(expectedFooterCount)
         if (expectedFooterCount) await expect(footer).toBeVisible()
 
@@ -275,8 +277,8 @@ test.describe('docs page — repository hub with canonical shell', () => {
       waitUntil: 'domcontentloaded',
     })
 
-    await expect(page.locator('nav.pm-navbar')).toBeVisible()
-    await expect(page.locator('footer.pc-footer')).toBeVisible()
+    await expect(page.locator('nav.cm-nav')).toBeVisible()
+    await expect(page.locator('footer')).toHaveCount(0)
 
     const docsHub = page.locator('main.pc-docs-hub')
     await expect(docsHub).toBeVisible()
@@ -298,10 +300,10 @@ test.describe('docs page — repository hub with canonical shell', () => {
       waitUntil: 'domcontentloaded',
     })
 
-    await expect(page.locator('nav.pm-navbar')).toBeVisible()
+    await expect(page.locator('nav.cm-nav')).toBeVisible()
     await expect(page.locator('main.pc-docs-hub')).toBeVisible()
     await expect(page.locator('.pc-docs-hub__card')).toHaveCount(3)
-    await expect(page.locator('footer.pc-footer')).toBeVisible()
+    await expect(page.locator('footer')).toHaveCount(0)
 
     const layout = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
@@ -345,17 +347,17 @@ test.describe('contact page — canonical copy and layout', () => {
     })
 
     await expect(page.locator('nav.cm-nav')).toBeVisible()
-    await expect(page.locator('footer.cm-footer')).toBeVisible()
-    await expect(page.locator('.cm-contact-page')).toBeVisible()
-    await expect(page.locator('.contact-intake-grid')).toBeVisible()
+    await expect(page.locator('footer')).toHaveCount(0)
+    await expect(page.locator('.cm-utility-contact')).toBeVisible()
+    await expect(page.locator('.cm-utility-contact__intro')).toBeVisible()
     await expect(page.locator('.contact-form-panel')).toBeVisible()
-    await expect(page.getByText('Send the context', { exact: false })).toBeVisible()
-    await expect(page.getByText('One brief is enough to start.', { exact: false })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Start a conversation.' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Send a message' })).toBeVisible()
 
     const layout = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
       viewportWidth: window.innerWidth,
-      intakeWidth: document.querySelector<HTMLElement>('.contact-intake-grid')?.getBoundingClientRect().width ?? 0,
+      intakeWidth: document.querySelector<HTMLElement>('.cm-utility-contact')?.getBoundingClientRect().width ?? 0,
       formHeight: document.querySelector<HTMLElement>('.contact-form-panel')?.getBoundingClientRect().height ?? 0,
     }))
 
@@ -372,7 +374,7 @@ test.describe('contact page — canonical copy and layout', () => {
 
     await expect(page.locator('nav.cm-nav')).toBeVisible()
     await expect(page.locator('.contact-form-panel')).toBeVisible()
-    await expect(page.locator('footer.cm-footer')).toBeVisible()
+    await expect(page.locator('footer')).toHaveCount(0)
 
     const layout = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,
@@ -425,8 +427,8 @@ test.describe('client navigation — chrome integrity across route changes', () 
     ).toBe(1)
     expect(
       await publicFooter(page, '/docs').count(),
-      'exactly one footer after navigating to /docs',
-    ).toBe(1)
+      'no footer after navigating to /docs',
+    ).toBe(0)
     // No skip control visible after navigation
     await expect(
       page.getByRole('link', { name: /^skip to content$/i }),
@@ -441,8 +443,8 @@ test.describe('client navigation — chrome integrity across route changes', () 
     ).toBe(1)
     expect(
       await publicFooter(page, '/contact').count(),
-      'exactly one footer after navigating to /contact',
-    ).toBe(1)
+      'no footer after navigating to /contact',
+    ).toBe(0)
 
     // Navigate back to homepage
     await page.goto(new URL('/', baseUrl).toString(), { waitUntil: 'domcontentloaded' })

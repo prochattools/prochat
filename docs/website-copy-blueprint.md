@@ -1,8 +1,10 @@
 # ProChat website copy blueprint
 
-**Status:** active website copy guidance  
+**Status:** superseded pre-cinematic copy plan; retained as historical design evidence
 **Owner:** Steve Westhoek  
 **Scope:** homepage, product pages, niche page, contact/waitlist copy, navigation, footer, metadata, and social copy
+
+> This file predates the current Evermind/Nevermind/Mastermind product and website decisions. Do not use its copy examples or hierarchy as current guidance. The current public copy is in the route source, with product truth in Mind; current implementation status and checks are in `docs/roadmap.md`, `docs/implementation-plan.md`, and `docs/homepage-validation-plan.md`.
 
 ## Authority
 

@@ -71,6 +71,20 @@ async function sampleRenderedCanvas(page: Page) {
   })
 }
 
+async function renderedCanvasChecksum(page: Page) {
+  return page.locator('.cm-video__canvas').evaluate(element => {
+    const canvas = element as HTMLCanvasElement
+    const sample = document.createElement('canvas')
+    sample.width = 24
+    sample.height = 14
+    const context = sample.getContext('2d')
+    if (!context) throw new Error('Canvas 2D context is unavailable')
+    context.drawImage(canvas, 0, 0, sample.width, sample.height)
+    return [...context.getImageData(0, 0, sample.width, sample.height).data]
+      .reduce((sum, value, index) => (sum + value * (index + 1)) % 1_000_000_007, 0)
+  })
+}
+
 test.describe('ProChat final public-site quality', () => {
   test('core routes keep every cinematic background painted through repeated scroll reversals', async ({ page }) => {
     test.setTimeout(120_000)
@@ -81,14 +95,123 @@ test.describe('ProChat final public-site quality', () => {
       const response = await page.goto(routeUrl(route), { waitUntil: 'domcontentloaded' })
       expect(response?.status(), `${route} response`).toBe(200)
       await expect(page.locator('.cm-video__canvas.is-visible')).toBeVisible()
+      await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-canvas-painted', 'true')
       await expect.poll(() => page.locator('.cm-video__canvas').evaluate(canvas => getComputedStyle(canvas).opacity)).toBe('1')
+
+      const canDecodeVideo = await page.evaluate(() => Boolean(
+        document.createElement('video').canPlayType('video/mp4; codecs="avc1.640028"'),
+      ))
+      if (canDecodeVideo) {
+        await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-frame-cache-ready', 'true', { timeout: 45_000 })
+        await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-frame-count', '120')
+      }
 
       const sampled = await sampleRenderedCanvas(page)
       expect(sampled.samples, `${route} sampled frame count`).toBeGreaterThan(200)
       expect(sampled.visibleCanvasSamples, `${route} visible canvas samples`).toBeGreaterThan(200)
       expect(sampled.uncoveredSamples, `${route} uncovered background samples`).toBe(0)
       expect(sampled.states.every(state => state === 'bootstrap' || state === 'cache'), `${route} media state stays painted`).toBe(true)
+      if (canDecodeVideo) expect(sampled.states, `${route} observed cache handoff`).toContain('cache')
     }
+  })
+
+  test('a failed candidate frame leaves the last good frame visible on all core routes', async ({ page }) => {
+    test.setTimeout(120_000)
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+
+    for (const route of CORE_ROUTES) {
+      await page.goto(routeUrl(route), { waitUntil: 'domcontentloaded' })
+      await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-canvas-painted', 'true')
+      const beforeFailure = await renderedCanvasChecksum(page)
+
+      await page.evaluate(() => {
+        const visibleCanvas = document.querySelector<HTMLCanvasElement>('.cm-video__canvas')
+        if (!visibleCanvas) throw new Error('Visible cinematic canvas is missing')
+        const prototype = CanvasRenderingContext2D.prototype
+        const original = prototype.drawImage
+        const testWindow = window as Window & { __restoreCinematicDrawImage?: typeof original }
+        testWindow.__restoreCinematicDrawImage = original
+        prototype.drawImage = new Proxy(original, {
+          apply(target, thisArg: CanvasRenderingContext2D, args: Parameters<typeof original>) {
+            if (
+              thisArg.canvas !== visibleCanvas &&
+              thisArg.canvas.width === visibleCanvas.width &&
+              thisArg.canvas.height === visibleCanvas.height
+            ) {
+              const injectedWindow = window as Window & { __cinematicCandidateFailure?: boolean }
+              injectedWindow.__cinematicCandidateFailure = true
+              throw new Error('Injected one-frame decode failure')
+            }
+            return Reflect.apply(target, thisArg, args)
+          },
+        })
+        window.scrollBy({ top: 260, behavior: 'instant' })
+      })
+
+      await expect.poll(() => page.evaluate(() => Boolean(
+        (window as Window & { __cinematicCandidateFailure?: boolean }).__cinematicCandidateFailure,
+      ))).toBe(true)
+      expect(await renderedCanvasChecksum(page), `${route} preserves last good pixels after a failed candidate`).toBe(beforeFailure)
+      await page.waitForTimeout(180)
+      expect(await renderedCanvasChecksum(page), `${route} continues to show a painted frame`).toBeGreaterThan(0)
+
+      await page.evaluate(() => {
+        const original = (window as Window & { __restoreCinematicDrawImage?: CanvasRenderingContext2D['drawImage'] }).__restoreCinematicDrawImage
+        if (original) CanvasRenderingContext2D.prototype.drawImage = original
+        delete (window as Window & { __cinematicCandidateFailure?: boolean }).__cinematicCandidateFailure
+        delete (window as Window & { __restoreCinematicDrawImage?: CanvasRenderingContext2D['drawImage'] }).__restoreCinematicDrawImage
+      })
+    }
+  })
+
+  test('cached renderer presents tiny scroll changes above 30 frames per second', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+    await page.goto(routeUrl('/'), { waitUntil: 'domcontentloaded' })
+    const canDecodeVideo = await page.evaluate(() => Boolean(
+      document.createElement('video').canPlayType('video/mp4; codecs="avc1.640028"'),
+    ))
+    test.skip(!canDecodeVideo, 'This browser has no supported H.264 decoder for the cached-video path.')
+    await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-frame-cache-ready', 'true', { timeout: 45_000 })
+
+    const cadence = await page.evaluate(async () => {
+      const canvas = document.querySelector<HTMLCanvasElement>('.cm-video__canvas')
+      if (!canvas) throw new Error('Cinematic canvas is missing')
+      const prototype = CanvasRenderingContext2D.prototype
+      const original = prototype.drawImage
+      const paintTimes: number[] = []
+      prototype.drawImage = new Proxy(original, {
+        apply(target, thisArg: CanvasRenderingContext2D, args: Parameters<typeof original>) {
+          if (thisArg.canvas === canvas) paintTimes.push(performance.now())
+          return Reflect.apply(target, thisArg, args)
+        },
+      })
+
+      try {
+        window.scrollTo({ top: 0, behavior: 'instant' })
+        await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
+        for (let index = 0; index < 90; index += 1) {
+          window.scrollBy({ top: index % 2 ? -1.5 : 2, behavior: 'instant' })
+          await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
+        }
+      } finally {
+        prototype.drawImage = original
+      }
+
+      const intervals = paintTimes.slice(1).map((time, index) => time - paintTimes[index])
+      const duration = paintTimes.length > 1 ? paintTimes.at(-1)! - paintTimes[0] : 0
+      return {
+        samples: paintTimes.length,
+        duration,
+        framesPerSecond: duration > 0 ? (paintTimes.length - 1) * 1000 / duration : 0,
+        longestGap: Math.max(0, ...intervals),
+      }
+    })
+
+    expect(cadence.samples, 'tiny scroll movements repaint the visible canvas').toBeGreaterThan(45)
+    expect(cadence.framesPerSecond, `observed paint cadence: ${JSON.stringify(cadence)}`).toBeGreaterThanOrEqual(30)
+    expect(cadence.longestGap, `no long gaps during fine scroll: ${JSON.stringify(cadence)}`).toBeLessThan(100)
   })
 
   test('four cinematic pages share one clean header and CTA labels stay on a single line at all target widths', async ({ page }) => {
@@ -104,7 +227,7 @@ test.describe('ProChat final public-site quality', () => {
         const evidence = await page.evaluate(() => {
           const heading = document.querySelector<HTMLElement>('main h1')
           const ctas = Array.from(document.querySelectorAll<HTMLElement>(
-            '.cm-actions a, .cm-nav__cta',
+            '.cm-actions a, .cm-nav__cta, .cm-template-context-card .cm-inline-link',
           )).filter(element => element.getBoundingClientRect().width > 0).map(element => {
             const textNode = Array.from(element.childNodes).find(node => node.nodeType === Node.TEXT_NODE && node.textContent?.trim())
             let lineCount = 0
@@ -207,5 +330,107 @@ test.describe('ProChat final public-site quality', () => {
       context.drawImage(canvas, 0, 0, sample.width, sample.height)
       return [...context.getImageData(0, 0, sample.width, sample.height).data].reduce((sum, value, index) => sum + value * (index + 1), 0)
     }), { timeout: 10_000 }).not.toBe(firstFrame)
+  })
+})
+
+test.describe('ProChat utility-page cinematic shell', () => {
+  test('Contact, Docs, Privacy, and Terms share the quiet utility shell without legacy chrome or animation', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+
+    for (const route of ['/contact', '/docs', '/privacy', '/terms']) {
+      const response = await page.goto(routeUrl(route), { waitUntil: 'domcontentloaded' })
+      expect(response?.status(), `${route} response`).toBe(200)
+      const evidence = await page.evaluate(() => {
+        const nav = document.querySelector<HTMLElement>('nav[aria-label="Primary navigation"]')
+        const h1 = document.querySelector<HTMLElement>('main h1')
+        const main = document.querySelector<HTMLElement>('main')
+        return {
+          shell: document.querySelectorAll('.cm-shell--utility').length,
+          navs: document.querySelectorAll('nav[aria-label="Primary navigation"]').length,
+          navShells: document.querySelectorAll('.cm-nav-shell').length,
+          mains: document.querySelectorAll('main').length,
+          footers: document.querySelectorAll('footer').length,
+          legacyNavs: document.querySelectorAll('.pm-navbar,.cpf-nav').length,
+          navRadius: nav ? getComputedStyle(nav).borderRadius : 'missing',
+          headingFont: h1 ? getComputedStyle(h1).fontFamily : '',
+          mediaRenderer: document.querySelectorAll('.cm-video,.cm-video__canvas,video').length,
+          overflow: document.documentElement.scrollWidth > window.innerWidth,
+          mainText: main?.innerText ?? '',
+        }
+      })
+
+      expect(evidence.shell, `${route} utility shell`).toBe(1)
+      expect(evidence.navs, `${route} primary navigation`).toBe(1)
+      expect(evidence.navShells, `${route} header shell count`).toBe(1)
+      expect(evidence.mains, `${route} main landmark`).toBe(1)
+      expect(evidence.footers, `${route} no footer`).toBe(0)
+      expect(evidence.legacyNavs, `${route} no legacy capsule`).toBe(0)
+      expect(evidence.navRadius, `${route} full-width navigation`).toBe('0px')
+      expect(evidence.headingFont, `${route} Golos display`).toMatch(/Golos[_ ]Text/i)
+      expect(evidence.mediaRenderer, `${route} static utility backdrop`).toBe(0)
+      expect(evidence.overflow, `${route} no horizontal overflow`).toBe(false)
+      if (route === '/contact' || route === '/docs') {
+        expect(evidence.mainText, `${route} current public product names`).not.toMatch(/ProChat Memory|Memory for QA|Workbench/i)
+      }
+    }
+  })
+
+  test('Contact keeps an accessible form and handles a successful submission', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.route('**/api/contact', async route => route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ message: 'Thanks, your message has been sent.' }),
+    }))
+    await page.goto(routeUrl('/contact'), { waitUntil: 'networkidle' })
+    await page.getByLabel('Name').fill('Taylor Example')
+    await page.getByLabel('Email').fill('taylor@example.com')
+    await page.getByRole('textbox', { name: 'Message' }).fill('I would like to learn about Evermind.')
+    await page.getByRole('button', { name: /send message/i }).click()
+    await expect(page.locator('[data-contact-status]')).toContainText('Thanks, your message has been sent.')
+    await expect(page.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible()
+  })
+
+  test('Contact, Docs, Privacy, and Terms remain usable across the responsive matrix', async ({ page }) => {
+    for (const width of VIEWPORTS) {
+      await page.setViewportSize({ width, height: width < 600 ? 844 : 900 })
+      for (const route of ['/contact', '/docs', '/privacy', '/terms']) {
+        const response = await page.goto(routeUrl(route), { waitUntil: 'domcontentloaded' })
+        expect(response?.status(), `${route} at ${width}px`).toBe(200)
+
+        const evidence = await page.evaluate(() => {
+          const heading = document.querySelector<HTMLElement>('main h1')
+          const cta = document.querySelector<HTMLElement>('.cm-nav__cta')
+          return {
+            shellCount: document.querySelectorAll('.cm-shell--utility').length,
+            navCount: document.querySelectorAll('nav[aria-label="Primary navigation"]').length,
+            mainCount: document.querySelectorAll('main').length,
+            footerCount: document.querySelectorAll('footer').length,
+            overflow: document.documentElement.scrollWidth > window.innerWidth,
+            headingVisible: Boolean(heading && heading.getBoundingClientRect().width > 0 && heading.innerText.trim()),
+            ctaOverflow: Boolean(cta && cta.scrollWidth > cta.clientWidth + 1),
+          }
+        })
+
+        expect(evidence.shellCount, `${route} utility shell at ${width}px`).toBe(1)
+        expect(evidence.navCount, `${route} nav at ${width}px`).toBe(1)
+        expect(evidence.mainCount, `${route} main at ${width}px`).toBe(1)
+        expect(evidence.footerCount, `${route} footer at ${width}px`).toBe(0)
+        expect(evidence.overflow, `${route} overflow at ${width}px`).toBe(false)
+        expect(evidence.headingVisible, `${route} heading at ${width}px`).toBe(true)
+        expect(evidence.ctaOverflow, `${route} CTA clipping at ${width}px`).toBe(false)
+      }
+    }
+  })
+
+  test('utility mobile navigation opens and retains usable links', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto(routeUrl('/docs'), { waitUntil: 'networkidle' })
+    await page.getByRole('button', { name: 'Menu' }).click()
+    await expect(page.getByRole('button', { name: 'Close' })).toHaveAttribute('aria-expanded', 'true')
+    await expect(page.getByRole('link', { name: 'Evermind', exact: true })).toBeVisible()
   })
 })

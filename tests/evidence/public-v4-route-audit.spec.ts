@@ -18,8 +18,8 @@ const ROUTES: RouteCase[] = [
   { path: '/evermind', variant: 'evermind', motif: 'cinematic', bodySelector: '.cm-canonical-main' },
   { path: '/nevermind', variant: 'nevermind', motif: 'cinematic', bodySelector: '.cm-canonical-main' },
   { path: '/mastermind', variant: 'mastermind', motif: 'cinematic', bodySelector: '.cm-canonical-main' },
-  { path: '/docs', variant: 'docs', motif: 'docs', bodySelector: '.pc-docs-hub' },
-  { path: '/contact', variant: 'contact', motif: 'cinematic', bodySelector: '.cm-contact-page' },
+  { path: '/docs', variant: 'docs', motif: 'docs', bodySelector: '.cm-utility-docs' },
+  { path: '/contact', variant: 'contact', motif: 'cinematic', bodySelector: '.cm-utility-contact' },
   { path: '/privacy', variant: 'legal', motif: 'ledger', bodySelector: ".pc-legal-ledger[data-legal-kind='privacy']" },
   { path: '/terms', variant: 'legal', motif: 'ledger', bodySelector: ".pc-legal-ledger[data-legal-kind='terms']" },
 ]
@@ -36,7 +36,7 @@ const MOTION_SELECTORS: Record<string, string> = {
 }
 
 const CORE_CINEMATIC_ROUTES = new Set(['/', '/evermind', '/nevermind', '/mastermind'])
-const CINEMATIC_ROUTES = new Set([...CORE_CINEMATIC_ROUTES, '/contact'])
+const UTILITY_ROUTES = new Set(['/docs', '/contact', '/privacy', '/terms'])
 
 const REDIRECTS = [
   { from: '/prochat-memory', to: '/evermind' },
@@ -78,34 +78,26 @@ test.describe('site-wide V4 public route evidence', () => {
         expect(response!.status(), `${route.path} returned ${response!.status()}`).toBeLessThan(400)
         expect(normalizedPath(page.url()), `${route.path} redirected unexpectedly`).toBe(route.path)
 
-        if (CINEMATIC_ROUTES.has(route.path)) {
+        if (CORE_CINEMATIC_ROUTES.has(route.path)) {
           await expect(page.locator('.cm-shell')).toHaveCount(1)
           await expect(page.locator('nav.cm-nav')).toHaveCount(1)
-          await expect(page.locator('footer.cm-footer')).toHaveCount(CORE_CINEMATIC_ROUTES.has(route.path) ? 0 : 1)
-          if (CORE_CINEMATIC_ROUTES.has(route.path)) {
-            await expect(page.locator('.cm-shell--core')).toHaveCount(1)
-            await expect(page.locator('.cm-marketing-experience')).toHaveCount(1)
-            await expect(page.locator('.cm-footer iframe')).toHaveCount(0)
-            await expect(page.locator('.pm-navbar,.pc-footer')).toHaveCount(0)
-          }
+          await expect(page.locator('footer')).toHaveCount(0)
+          await expect(page.locator('.cm-shell--core')).toHaveCount(1)
+          await expect(page.locator('.cm-marketing-experience')).toHaveCount(1)
+          await expect(page.locator('.cm-footer iframe')).toHaveCount(0)
+          await expect(page.locator('.pm-navbar,.pc-footer')).toHaveCount(0)
+        } else if (UTILITY_ROUTES.has(route.path)) {
+          await expect(page.locator('.cm-shell.cm-shell--utility')).toHaveCount(1)
+          await expect(page.locator('nav.cm-nav')).toHaveCount(1)
+          await expect(page.locator('footer')).toHaveCount(0)
         } else {
-          const shell = page.locator('.pc-canonical-shell.pc-public-v4')
-          await expect(shell).toHaveCount(1)
-          await expect(shell).toHaveAttribute('data-public-variant', route.variant)
-          await expect(page.locator('nav.pm-navbar')).toHaveCount(1)
-          await expect(page.locator('footer.pc-footer')).toHaveCount(1)
+          throw new Error(`No route-shell contract configured for ${route.path}`)
         }
         await expect(page.locator('main')).toHaveCount(1)
         await expect(page.locator('main')).toBeVisible()
         const body = page.locator(route.bodySelector)
         await expect(body, `${route.path} is missing its redesigned body marker`).toHaveCount(1)
         await expect(body).toBeVisible()
-
-        if (!CINEMATIC_ROUTES.has(route.path)) {
-          const scene = page.locator(`.pc-route-scene--${route.variant}`)
-          await expect(scene).toHaveCount(1)
-          await expect(scene.locator(`.pc-route-motif--${route.motif}`)).toHaveCount(1)
-        }
 
         const layout = await page.evaluate(() => ({
           documentWidth: document.documentElement.scrollWidth,
@@ -123,7 +115,7 @@ test.describe('site-wide V4 public route evidence', () => {
     await page.setViewportSize({ width: 1440, height: 1000 })
 
     for (const route of ROUTES) {
-      if (CINEMATIC_ROUTES.has(route.path)) {
+      if (CORE_CINEMATIC_ROUTES.has(route.path)) {
         await page.emulateMedia({ reducedMotion: 'no-preference' })
         await page.goto(new URL(route.path, baseUrl).toString(), { waitUntil: 'domcontentloaded' })
         expect(await page.locator('.cm-video__canvas').evaluate(element => getComputedStyle(element).display), `${route.path} canvas should render normally`).not.toBe('none')
@@ -131,6 +123,7 @@ test.describe('site-wide V4 public route evidence', () => {
         expect(await page.locator('.cm-video__canvas').evaluate(element => getComputedStyle(element).display), `${route.path} canvas should stop under reduced motion`).toBe('none')
         continue
       }
+      if (UTILITY_ROUTES.has(route.path)) continue
 
       const selector = MOTION_SELECTORS[route.motif]
       if (!selector) continue

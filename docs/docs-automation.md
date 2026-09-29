@@ -15,7 +15,7 @@ The cleanup removed the generated documentation system, including:
 
 ## Current documentation model
 
-The active public documentation surface is the lean `/docs` repository hub for Memory for QA and Workbench. Canonical product documentation should live with the relevant repositories and be linked from that hub.
+The active public documentation surface is a reading-friendly `/docs` hub for Evermind, Nevermind, and Mastermind. Canonical product documentation should live with the relevant repositories and be linked from that hub.
 
 Internal repository documentation remains under `docs/` and `docs-public/` as appropriate.
 

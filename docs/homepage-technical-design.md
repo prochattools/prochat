@@ -1,8 +1,10 @@
 # ProChat Homepage Technical Design
 
-**Status:** approved pre-build architecture  
+**Status:** superseded pre-build architecture; retained as historical evidence
 **Scope:** homepage design system, prototypes, implementation, motion, validation, and production hardening  
 **Does not authorize:** production homepage implementation before prototype and plan-review gates pass
+
+> This was a pre-build plan and does not describe the current renderer or authorize further implementation. Current source and acceptance authority are `docs/implementation-plan.md`, `docs/homepage-validation-plan.md`, and `docs/roadmap.md`.
 
 ## Current repository stack
 

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { CinematicMarketingShell } from '@/components/CinematicMarketingShell'
 
 import '@/assets/styles/prochat-public-chrome.css'
 import '@/assets/styles/prochat-public-bodies.css'
@@ -19,7 +20,12 @@ export function PublicLegalPage({
   summary,
 }: PublicLegalPageProps) {
   return (
-    <div className="pc-body-page public-legal-page__main pc-legal-ledger" data-body-family="legal" data-legal-kind={kind}>
+    <CinematicMarketingShell
+      contentOwnsMain
+      utilityTheme
+      cta={{ label: 'Explore Evermind', href: '/evermind', trackingCta: 'explore_evermind' }}
+    >
+    <main id="main-content" className="pc-body-page public-legal-page__main pc-legal-ledger" data-body-family="legal" data-legal-kind={kind}>
       <section className="pc-legal-ledger__masthead" aria-labelledby={`legal-${kind}-title`}>
         <div className="pc-legal-ledger__masthead-inner">
           <div>
@@ -38,6 +44,7 @@ export function PublicLegalPage({
       </section>
 
       {children}
-    </div>
+    </main>
+    </CinematicMarketingShell>
   )
 }
