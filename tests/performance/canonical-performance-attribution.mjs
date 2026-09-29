@@ -83,9 +83,12 @@ export function extractTraceLcpAttribution(artifacts) {
       replacementObserved: false,
       finalCandidate: null,
       timings: {
+        navigationToResponseMs: null,
         navigationToFcpMs: null,
         navigationToLcpMs: null,
         fcpToLcpMs: null,
+        navigationToDomContentLoadedMs: null,
+        navigationToLoadMs: null,
       },
     }
   }
@@ -115,6 +118,24 @@ export function extractTraceLcpAttribution(artifacts) {
   const fcpToLcpMs = fcp && finalCandidate
     ? microsecondsToMilliseconds(finalCandidate.ts - fcp.ts)
     : null
+  const frame = navigation.args?.frame ?? navigationData.frame
+  const sameNavigationFrame = (event) => !frame || !event.args?.frame || event.args.frame === frame
+  const documentResponse = events.find((event) => {
+    if (event?.name !== 'ResourceReceiveResponse' || event.ts < navigation.ts) return false
+    const data = traceEventData(event)
+    return (
+      (data.requestId === navigationId || data.url === navigationData.documentLoaderURL) &&
+      (!data.mimeType || data.mimeType === 'text/html') &&
+      sameNavigationFrame(event)
+    )
+  })
+  const documentResponseTs = documentResponse?.ts ?? navigation.ts
+  const domContentLoaded = events.find(
+    (event) => event?.name === 'domContentLoadedEventEnd' && event.ts >= documentResponseTs && sameNavigationFrame(event),
+  )
+  const load = events.find(
+    (event) => event?.name === 'loadEventEnd' && event.ts >= documentResponseTs && sameNavigationFrame(event),
+  )
 
   return {
     available: Boolean(finalCandidate),
@@ -136,9 +157,16 @@ export function extractTraceLcpAttribution(artifacts) {
         }
       : null,
     timings: {
+      navigationToResponseMs: documentResponse
+        ? microsecondsToMilliseconds(documentResponse.ts - navigation.ts)
+        : null,
       navigationToFcpMs,
       navigationToLcpMs,
       fcpToLcpMs,
+      navigationToDomContentLoadedMs: domContentLoaded
+        ? microsecondsToMilliseconds(domContentLoaded.ts - navigation.ts)
+        : null,
+      navigationToLoadMs: load ? microsecondsToMilliseconds(load.ts - navigation.ts) : null,
     },
   }
 }

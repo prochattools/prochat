@@ -134,7 +134,14 @@ describe('trace-based LCP attribution', () => {
           documentLoaderURL: 'http://localhost:3000/evermind',
           isOutermostMainFrame: true,
           navigationId: 'main-nav',
-        }),
+        }, 'main-frame'),
+        traceEvent('ResourceReceiveResponse', 1_030_000, {
+          requestId: 'main-nav', mimeType: 'text/html',
+        }, 'main-frame'),
+        traceEvent('domContentLoadedEventEnd', 1_020_000, {}, 'main-frame'),
+        traceEvent('loadEventEnd', 1_025_000, {}, 'main-frame'),
+        traceEvent('domContentLoadedEventEnd', 1_120_000, {}, 'main-frame'),
+        traceEvent('loadEventEnd', 1_180_000, {}, 'main-frame'),
         traceEvent('firstContentfulPaint', 1_090_000, { navigationId: 'main-nav' }),
         traceEvent('largestContentfulPaint::Candidate', 1_110_000, {
           navigationId: 'main-nav',
@@ -146,9 +153,12 @@ describe('trace-based LCP attribution', () => {
       ]),
     )
     assert.deepEqual(result.timings, {
+      navigationToResponseMs: 30,
       navigationToFcpMs: 90,
       navigationToLcpMs: 110,
       fcpToLcpMs: 20,
+      navigationToDomContentLoadedMs: 120,
+      navigationToLoadMs: 180,
     })
   })
 
@@ -158,9 +168,12 @@ describe('trace-based LCP attribution', () => {
     assert.equal(result.candidateCount, 0)
     assert.equal(result.finalCandidate, null)
     assert.deepEqual(result.timings, {
+      navigationToResponseMs: null,
       navigationToFcpMs: null,
       navigationToLcpMs: null,
       fcpToLcpMs: null,
+      navigationToDomContentLoadedMs: null,
+      navigationToLoadMs: null,
     })
   })
 })

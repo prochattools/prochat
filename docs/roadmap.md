@@ -27,7 +27,24 @@ In scope:
 
 ## Performance follow-up
 
-The canonical mobile LCP target is at most 2.5 seconds. The latest mobile-simulated canonical evidence (2026-09-29; run [36624630320](https://github.com/prochattools/prochat/actions/runs/36624630320)) completed all 8/8 routes but met the threshold on 0/8. Reported route medians were: `/` 3.78s, `/evermind` 3.69s, `/nevermind` 3.77s, `/mastermind` 3.70s, `/docs` 4.90s, `/contact` 4.90s, `/privacy` 4.90s, and `/terms` 4.89s. CLS was 0.000 and FCP was 1.21–1.22s. Trace attribution identified text as LCP, with navigation-to-FCP/LCP around 99–181ms and FCP-to-LCP 0ms; the discrepancy needs investigation before optimization. This evidence step is advisory (`continue-on-error`) and did not fail CI or deployment. These are not production field data. The next website goal is: **Investigate and bring canonical public-route LCP under 2.5 seconds without reducing cinematic fidelity.** Do not trade away the requested scroll-driven visuals to satisfy the metric.
+**Complete (2026-09-29; measurement correction only; no runtime/design changes).** The original run [36624630320](https://github.com/prochattools/prochat/actions/runs/36624630320) used Lighthouse simulated throttling and reported 0/8 routes within the 2.5s LCP target: `/` 3.78s, `/evermind` 3.69s, `/nevermind` 3.77s, `/mastermind` 3.70s, `/docs` 4.90s, `/contact` 4.90s, `/privacy` 4.90s, `/terms` 4.89s. It also paired these modeled LCP values with an original, unthrottled trace reporting text LCP within 99–181ms of navigation and 0ms after FCP. Lighthouse documents that simulated metrics are calculated after the original trace and are not expected to match it ([throttling documentation](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md)); this was not server startup or a hidden harness wait. The workflow starts and readiness-checks the server before navigating.
+
+The canonical evidence runner now uses Chrome DevTools throttling so the browser-observed LCP and trace timestamps describe the same page navigation. The 2.5s median LCP threshold is unchanged. A clean local production build on Node 20.20.2, Lighthouse 12.4.0, Chrome 153.0.8010.53, 390×844 mobile emulation, 4× CPU slowdown, and the existing slow-4G settings completed 3 runs per route, with zero failed requests, CLS 0, TBT 0, and text as the LCP candidate on every route:
+
+| Route | LCP median | LCP p75 (nearest rank) | LCP element |
+| --- | ---: | ---: | --- |
+| `/` | 2.05s | 2.09s | opening heading (`span.cm-heading-line`) |
+| `/evermind` | 2.02s | 2.39s | opening heading (`span.cm-heading-line`) |
+| `/nevermind` | 2.01s | 2.40s | opening heading (`span.cm-heading-line`) |
+| `/mastermind` | 1.86s | 7.86s* | opening heading (`span.cm-heading-line`) |
+| `/docs` | 1.89s | 2.36s | `h1` |
+| `/contact` | 2.36s | 2.38s | intro paragraph (`p`) |
+| `/privacy` | 2.02s | 2.02s | intro paragraph (`p`) |
+| `/terms` | 1.88s | 2.01s | intro paragraph (`p`) |
+
+Every measured route sample had FCP=LCP in the observed trace. Navigation→response was 579–615ms; DOMContentLoaded was 1.85–2.35s; load was 4.76–11.96s. Longer load events on cinematic routes reflect background media and occur after the LCP candidate; local server startup was excluded. `*` The `/mastermind` three-run set had two 1.82–1.86s samples and one 7.86s sample with 633ms TBT and a 443ms long task in shared chunk `7595`; three extra exact-configuration probes were 1.86, 2.00, and 2.06s with zero TBT. This is retained as a non-reproducible local outlier, not hidden. One final-run `/contact` trace measured navigation→response 586ms, DCL 2.352s, LCP 2.357s, and load 4.757s. No renderer, font, poster, media, or page layout change was justified: all route LCP medians met target, and the font-block experiment only changed the simulated estimate. The separate provisional FCP≤1.8s check remains visibly unmet under direct DevTools throttling (route medians 1.88–2.36s); this is separate from the LCP goal and was not hidden by changing its threshold. The performance workflow step remains advisory. These are local lab measurements, not production field data.
+
+Do not reduce the cinematic fidelity. The next roadmap item is the separately tracked Docker build hardening: remove placeholder Stripe environment coupling from the build without placing real secrets in build args or layers. The dependency-security review remains separately tracked.
 
 ## Tracked build hardening
 
