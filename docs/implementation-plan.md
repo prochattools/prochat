@@ -16,6 +16,8 @@ Contact, Docs, Privacy, and Terms use the shared static utility shell: one trans
 
 ### A. Renderer and motion
 
+- Root cause reproduced against deployed `c6731140191791e407a2fb6eb27ac96711883e32`: the previous renderer cleared/resized the visible canvas before drawing a candidate and then swallowed draw errors, so a failed candidate could leave that visible canvas transparent. In a production-page browser session, three controlled draw failures took the visible sample alpha sum from 85,680 to 0 while CSS opacity remained 1. This was an injected browser-only failure (not a server mutation); ordinary scroll alone did not reproduce it deterministically. The candidate stages frames offscreen and presents only successful draws; its regression test confirms the last-good pixel checksum is unchanged when a candidate draw fails.
+- The old cache capped sampling at 72 frames with `duration * 10` (about 7.2 frames/second for the 10.04-second asset). The current renderer samples up to 120 frames at 12 frames/second while reducing per-frame width from 720px to 540px, keeping the raw cached-pixel budget approximately constant and improving temporal density. It blends neighboring available frames rather than rounding progress to one frame index.
 - Reproduce slow/fast forward and reverse scroll in a real H.264-capable browser.
 - Prove cache and bootstrap handoffs do not expose blank frames; stage candidate frames offscreen, retain the last good frame after draw failures, blend neighboring frames, and stop painting when settled.
 - Keep temporal sampling at 12fps (120 frames for the current 10.04-second media) within a roughly constant raw bitmap pixel budget by limiting each frame to 540px width.

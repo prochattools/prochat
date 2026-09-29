@@ -16,7 +16,7 @@ The release source of truth is `feature/prochat-cinematic-finalization-2026-09`;
 
 In scope:
 
-1. Fix and verify reverse/forward continuity and smooth frame presentation, chapter pacing, and CTA wrapping on the four cinematic product routes.
+1. Fix and verify reverse/forward continuity and smooth frame presentation, chapter pacing, and CTA wrapping on the four cinematic product routes. The deployed `c673114…` failure mechanism was reproduced with controlled browser-only draw errors: clearing the visible canvas before candidate draw allowed a failed draw to leave a transparent surface. The candidate stages offscreen and preserves the last good frame; see `docs/implementation-plan.md` for measurements and test evidence.
 2. Keep those four routes visually consistent, including Golos display headings, one navigation, translucent capability glass, correct 100svh / 80vh / 100svh geometry, and zero footers.
 3. Bring Contact and Docs into the shared ProChat visual system with restrained/static backgrounds; migrate only shared chrome on Privacy and Terms, preserving legal meaning.
 4. Verify prefers-reduced-motion, 1440/1280/1024/768/430/390/360 layouts, route content, menu and Contact interactions, browser errors, and manually inspected screenshots.
