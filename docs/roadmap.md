@@ -1,6 +1,6 @@
 # ProChat website roadmap
 
-Status: cinematic implementation locally validated; use the normal `main` workflow and `/api/version` to determine the published revision. Performance and dependency hardening remain separate follow-up goals.
+Status: implementation and local release gates pass; current source is based on `main` at `c6731140191791e407a2fb6eb27ac96711883e32`. Production publication of this quality pass is pending the normal `main` release workflow and `/api/version` verification.
 
 Last reviewed: 2026-09-29.
 
@@ -8,7 +8,7 @@ Last reviewed: 2026-09-29.
 
 The active public routes are `/`, `/evermind`, `/nevermind`, `/mastermind`, `/docs`, `/contact`, `/privacy`, and `/terms`. Evermind and Nevermind are the connected Infinite Brain product system; Mastermind is the separate free planning/orchestration product. ProChat Memory for QA is paused/historical. Mind remains canonical for product and company strategy.
 
-The first four routes share a two-section cinematic page, one full-width navigation, one scroll-driven background renderer, one 80vh spacer, and no footer. Contact, Docs, Privacy, and Terms are regression-checked but not redesigned in this release; preserve their current route presentation and legal meaning.
+The first four routes share a two-section cinematic page, one full-width navigation, one scroll-driven background renderer, one 80vh spacer, and no footer. Contact and Docs now use the same visual language through a static, reading-friendly utility shell; Privacy and Terms use that same shell while their legal body text remains unchanged. All four utility pages have one navigation and no footer.
 
 ## Current release goal — ProChat cinematic/site quality pass
 
@@ -16,17 +16,18 @@ The release source of truth is `feature/prochat-cinematic-finalization-2026-09`;
 
 In scope:
 
-1. Fix and verify smooth reverse/forward scroll, cache/bootstrap frame blending, chapter pacing, and CTA wrapping on the four cinematic product routes.
+1. Fix and verify reverse/forward continuity and smooth frame presentation, chapter pacing, and CTA wrapping on the four cinematic product routes. The deployed `c673114…` failure mechanism was reproduced with controlled browser-only draw errors: clearing the visible canvas before candidate draw allowed a failed draw to leave a transparent surface. The candidate stages offscreen and preserves the last good frame; see `docs/implementation-plan.md` for measurements and test evidence.
 2. Keep those four routes visually consistent, including Golos display headings, one navigation, translucent capability glass, correct 100svh / 80vh / 100svh geometry, and zero footers.
-3. Keep Contact, Docs, Privacy, and Terms outside the visual redesign; retain existing routes and verify their established CI contracts.
-4. Verify prefers-reduced-motion, 1440/1280/tablet/mobile layouts, route content, menu interactions, browser errors, and manually inspected cinematic screenshots.
-5. Evaluate LiquidGlass with a measured local prototype; do not ship it unless it materially improves the glass treatment without harming media scroll performance, accessibility, or initial rendering. Initial 1440×900 Chrome prototype result: not accepted for this scroll-driven page—the one-panel dynamic-canvas run measured about 11–15fps (50–66.6ms median RAF interval) versus 16.7ms baseline cadence, and the prototype overlay did not preserve the card composition. Keep the current 11% CSS liquid-glass treatment.
-6. Audit current public copy against Mind, correct active website guidance, validate, review, commit, push, merge through the normal `main` workflow, then verify the live revision and routes.
-7. Preserve the protected checkout and unrelated repositories/worktrees. After confirmed production success only, reconcile Mastermind source continuity, indexes, and safely removable branches/worktrees; do not delete unique or unverified work.
+3. Bring Contact and Docs into the shared ProChat visual system with restrained/static backgrounds; migrate only shared chrome on Privacy and Terms, preserving legal meaning.
+4. Verify prefers-reduced-motion, 1440/1280/1024/768/430/390/360 layouts, route content, menu and Contact interactions, browser errors, and manually inspected screenshots.
+5. LiquidGlass was tested in local Chrome 153 at 1440×900 on both selected surfaces, with the real scroll-rendered page canvas copied and invalidated on each source repaint. Baseline page RAF cadence was 16.62ms average / 16.8ms p95; the context-card and capability-panel prototypes measured 16.48ms / 16.8ms and 16.50ms / 16.8ms respectively. Package-reported rates were 61fps and 60fps; initialization was 66.0ms and 65.8ms; each run handled 96 changed source frames without console errors. The previous 11–15fps estimate was not reproduced and is superseded. Do not adopt the package: screenshots show an inset, doubled-glass seam on both existing CSS panels without a compelling visual gain. Retain the CSS fallback and avoid adding a WebGL context plus frame-copy/invalidation path. Detailed evidence and screenshots are in `docs/implementation-plan.md`.
+6. Current local Chrome 153 diagnostics reached the 120-frame cache and presented 89 tiny-scroll canvas paints in 1.47s (59.99fps); 87 sampled outputs were distinct and the longest gap was 17.6ms. Slow and rapid down/up scrolling plus repeated reversals on all four core routes produced over 500 distinct sampled outputs per route, zero transparent visible-canvas samples, and no console errors. The focused browser suite passed 10/10 in system Chrome with H.264 enabled. This is a local desktop diagnostic, not a cross-device field guarantee.
+7. Update active implementation docs, validate, review, commit, push, merge through the normal `main` workflow, then verify the live revision and routes. Publication is not complete until that verification passes.
+8. Preserve the protected checkout and unrelated repositories/worktrees. After confirmed production success only, reconcile Mastermind source continuity, indexes, and safely removable branches/worktrees; do not delete unique or unverified work.
 
 ## Performance follow-up
 
-The canonical mobile LCP target is at most 2.5 seconds. A single-run local production-artifact diagnostic on 2026-09-29 (Lighthouse 12.4, Moto G Power 2022 simulation, 4× CPU, slow 4G; diagnostic mode) measured LCP as follows: `/` 2.83s, `/evermind` 3.19s, `/nevermind` 2.79s, `/mastermind` 2.80s, `/docs` 2.72s, `/contact` 2.99s. All six exceeded target; CLS was 0 and TBT was 0ms. These are local lab measurements, not production field data, and one run per route is directional rather than a stable baseline. The next website goal is: **Bring canonical public-route LCP under 2.5 seconds without reducing cinematic fidelity.** Do not trade away the requested scroll-driven visuals to satisfy the metric.
+The canonical mobile LCP target is at most 2.5 seconds. A single-run local production-artifact diagnostic on 2026-09-29 (Lighthouse 12.4, Moto G Power 2022 simulation, 4× CPU, slow 4G; diagnostic mode) measured: `/` 2.91s, `/evermind` 2.86s, `/nevermind` 2.86s, `/mastermind` 2.86s, `/docs` 4.05s, `/contact` 4.21s. All six exceeded target; CLS was 0 and TBT was 0ms. Utility-page LCP needs follow-up investigation. These are local lab measurements, not production field data; one run per route is directional rather than a stable baseline. The next website goal is: **Bring canonical public-route LCP under 2.5 seconds without reducing cinematic fidelity.** Do not trade away the requested scroll-driven visuals to satisfy the metric.
 
 ## Tracked build hardening
 

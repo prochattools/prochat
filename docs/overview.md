@@ -7,8 +7,8 @@ This repository keeps active operating guidance separate from historical migrati
 Start here for present-day ProChat behavior:
 
 - `docs/repo-status.md` — current repository/product/runtime state
-- `docs/roadmap.md` — completed public roadmap plus explicitly deferred internal hardening
-- `docs/implementation-plan.md` — current implementation/hygiene acceptance criteria
+- `docs/roadmap.md` — current release status, completed work, performance follow-up, and explicitly deferred internal hardening
+- `docs/implementation-plan.md` — current renderer, utility-shell, validation, and release acceptance criteria
 - `docs/getting-started.md` — local setup and validation
 - `docs/development.md` — day-to-day contributor workflow
 - `docs/deployment.md` — deployment and production verification
@@ -36,7 +36,7 @@ The current public site surface is:
 - `/privacy`
 - `/terms`
 
-Evermind, Nevermind, and Mastermind are the current public product identities. ProChat Memory for QA is paused/historical. Home and the three product pages share the current cinematic navigation and scroll-driven media. Docs, Contact, and legal pages retain their existing page-specific presentation; they are outside this cinematic redesign scope.
+Evermind, Nevermind, and Mastermind are the current public product identities. ProChat Memory for QA is paused/historical. Home and the three product pages share the cinematic navigation and scroll-driven media. Docs, Contact, Privacy, and Terms use the same visual system through a static, reading-friendly utility shell; legal page body text is unchanged. Current publication status is recorded in `docs/repo-status.md` and `docs/roadmap.md`.
 
 ## Historical evidence
 
@@ -47,7 +47,7 @@ Historical plans and superseded implementation material belong in:
 - `docs/platform/**` when explicitly tied to completed historical PXF work
 - Git history
 
-Documents in those areas may mention retired ProChat OS, Kits, BuildFlow-as-product, Stripe, MailerLite, GitHub entitlement provisioning, older analytics, or older route strategies. They are evidence, not current product/runtime guidance.
+Documents in those areas may mention retired ProChat OS, Kits, BuildFlow-as-product, Stripe, MailerLite, GitHub entitlement provisioning, older analytics, or older route strategies. They are evidence, not current product/runtime guidance. Older `docs/homepage-*` specifications are pre-build design evidence; current implementation and QA authority is the shipped source, `docs/homepage-validation-plan.md`, `docs/implementation-plan.md`, and `docs/roadmap.md`.
 
 The final post-release hygiene pass additionally archives several retired system documents under:
 

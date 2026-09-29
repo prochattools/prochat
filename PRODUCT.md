@@ -23,9 +23,9 @@ Mastermind — separate free, open-source planning/orchestration product
 
 ## Public website contract
 
-Canonical routes are `/`, `/evermind`, `/nevermind`, `/mastermind`, `/docs`, `/contact`, `/privacy`, and `/terms`. This cinematic visual contract applies to the first four routes only. The remaining public routes retain their existing page-specific presentation and legal substance; do not redesign them as part of the cinematic release.
+Canonical routes are `/`, `/evermind`, `/nevermind`, `/mastermind`, `/docs`, `/contact`, `/privacy`, and `/terms`. The first four routes use one shared, scroll-driven cinematic template with one full-width navigation, two narrative sections, an intentional 80vh transition spacer, Golos Text display headings, and no footer. The utility routes `/docs`, `/contact`, `/privacy`, and `/terms` use the quieter static cinematic utility shell with one navigation, readable content, and no footer; legal-page meaning remains unchanged.
 
-The home page product sentence is: “Evermind remembers. Nevermind brings context. Mastermind directs the work.” Preserve the distinct product roles and use accurate route-specific calls to action.
+The homepage lead is: “A human-owned system for AI work — from memory to context to controlled execution.” The product-sequence line is: “Evermind remembers. Nevermind brings context. Mastermind directs the work.” Preserve the distinct product roles and use accurate route-specific calls to action. Current implementation and release evidence live in `docs/implementation-plan.md`, `docs/roadmap.md`, and `docs/repo-status.md`; older design/strategy briefs are historical unless those active documents explicitly adopt them.
 
 ## Copy and claim boundaries
 

@@ -7,7 +7,7 @@ if (!baseUrl) {
 }
 
 const routes = ['/', '/evermind', '/nevermind', '/mastermind', '/docs', '/contact', '/privacy', '/terms'] as const
-const cinematicRoutes = new Set<string>(['/', '/evermind', '/nevermind', '/mastermind', '/contact'])
+const cinematicRoutes = new Set<string>(['/', '/evermind', '/nevermind', '/mastermind'])
 const coreCinematicRoutes = new Set<string>(['/', '/evermind', '/nevermind', '/mastermind'])
 
 const viewports = [
@@ -50,23 +50,20 @@ test.describe('canonical route smoke evidence', () => {
         await expect(main).toBeVisible()
 
         if (cinematicRoutes.has(route)) {
-          if (route === '/' || route === '/contact') {
+          if (route === '/') {
             await expect(page.locator('[data-cinematic-experience]'), `${route} is missing its cinematic experience`).toHaveCount(1)
           } else {
             await expect(page.locator('.cm-canonical-main'), `${route} is missing its cinematic root`).toHaveCount(1)
             await expect(page.locator('.cm-canonical-main')).toBeVisible()
           }
           await expect(page.locator('nav.cm-nav'), `${route} is missing its cinematic navigation`).toHaveCount(1)
-          await expect(page.locator('footer.cm-footer'), `${route} footer contract`).toHaveCount(coreCinematicRoutes.has(route) ? 0 : 1)
+          await expect(page.locator('footer.cm-footer'), `${route} footer contract`).toHaveCount(0)
         } else {
-          const navigation = page.locator('nav.pm-navbar')
+          const navigation = page.locator('nav[aria-label="Primary navigation"]')
+          await expect(page.locator('.cm-shell--utility'), `${route} is missing the shared utility shell`).toHaveCount(1)
           await expect(navigation, `${route} is missing the canonical public navigation`).toHaveCount(1)
           await expect(navigation).toBeVisible()
-
-          const footer = page.locator('footer.pc-footer')
-          await expect(footer, `${route} is missing the canonical public footer`).toHaveCount(1)
-          await expect(footer).toBeVisible()
-          await expect(footer.getByRole('link', { name: 'ProChat home' })).toBeVisible()
+          await expect(page.locator('footer'), `${route} utility pages do not render a legacy footer`).toHaveCount(0)
         }
 
         // A non-empty primary heading must be present — proves the page rendered.
@@ -99,15 +96,15 @@ test.describe('contact page visual closeout', () => {
     await page.setViewportSize({ width: 1440, height: 1000 })
     await page.goto(new URL('/contact', baseUrl).toString(), { waitUntil: 'networkidle' })
 
-    await expect(page.locator('.cm-contact-page')).toBeVisible()
-    await expect(page.locator('.contact-intake-grid')).toBeVisible()
+    await expect(page.locator('.cm-utility-contact')).toBeVisible()
+    await expect(page.locator('.cm-utility-contact__intro')).toBeVisible()
     await expect(page.locator('.contact-form-panel')).toBeVisible()
-    await expect(page.getByText('Send the context', { exact: false })).toBeVisible()
-    await expect(page.getByText('One brief is enough to start.', { exact: false })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Start a conversation.' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Send a message' })).toBeVisible()
 
     const evidence = await page.evaluate(() => {
       const shell = document.querySelector('.cm-shell') as HTMLElement | null
-      const intake = document.querySelector('.contact-intake-grid') as HTMLElement | null
+      const intake = document.querySelector('.cm-utility-contact') as HTMLElement | null
       const panel = document.querySelector('.contact-form-panel') as HTMLElement | null
       const shellStyle = shell ? getComputedStyle(shell) : null
       return {
@@ -133,9 +130,9 @@ test.describe('contact page visual closeout', () => {
     await page.goto(new URL('/contact', baseUrl).toString(), { waitUntil: 'networkidle' })
 
     await expect(page.locator('nav.cm-nav')).toBeVisible()
-    await expect(page.locator('.contact-intake-grid')).toBeVisible()
+    await expect(page.locator('.cm-utility-contact')).toBeVisible()
     await expect(page.locator('.contact-form-panel')).toBeVisible()
-    await expect(page.locator('footer.cm-footer')).toBeVisible()
+    await expect(page.locator('footer')).toHaveCount(0)
 
     const layout = await page.evaluate(() => ({
       documentWidth: document.documentElement.scrollWidth,

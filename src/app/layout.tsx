@@ -6,7 +6,6 @@ import UmamiAnalytics from '@/components/UmamiAnalytics'
 import { brand } from '@/lib/brand'
 import { getSEOTags } from '@/libs/seo'
 import { getOrganizationSchema, getWebsiteSchema } from '@/libs/structured-data'
-import { Golos_Text, JetBrains_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
 import { Viewport } from 'next'
 import { ReactNode } from 'react'
@@ -25,16 +24,18 @@ const fontSans = localFont({
   display: 'swap',
 })
 
-const fontBrand = Golos_Text({
-  subsets: ['latin'],
-  weight: ['400', '600', '700'],
+const fontBrand = localFont({
+  src: [
+    { path: '../../public/fonts/GolosText-Regular.ttf', weight: '400' },
+    { path: '../../public/fonts/GolosText-Bold.ttf', weight: '700' },
+  ],
   variable: '--font-brand',
   display: 'swap',
 })
 
-const fontMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '700'],
+const fontMono = localFont({
+  src: '../../public/fonts/JetBrainsMono-Regular.ttf',
+  weight: '400',
   variable: '--font-mono',
   display: 'swap',
 })

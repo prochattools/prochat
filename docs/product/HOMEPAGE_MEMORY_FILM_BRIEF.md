@@ -2,7 +2,7 @@
 
 **Status:** FROZEN OPTIONAL RESEARCH — not active implementation  
 **Decision date:** 2026-07-18  
-**Superseded by:** `docs/product/HOMEPAGE_NEXUS_TEMPLATE_ADOPTION.md`  
+**Historical design lineage:** superseded by the current website documented in `docs/implementation-plan.md` and `docs/roadmap.md`
 **Phase:** optional future visual experiment only  
 **Purpose:** preserve historical cinematic-memory research; do not use it to direct the current homepage implementation  
 **Strategic authority:** Mind repository  

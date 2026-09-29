@@ -56,15 +56,15 @@ A successful production closeout requires the `revision` returned by `/api/versi
 After deployment verify the eight canonical routes at desktop and mobile widths:
 
 - `/`
-- `/memory`
-- `/memory-qa`
-- `/workbench`
+- `/evermind`
+- `/nevermind`
+- `/mastermind`
 - `/docs`
 - `/contact`
 - `/privacy`
 - `/terms`
 
-Also verify intentional compatibility redirects and that retired product bodies remain unavailable.
+Also verify intentional compatibility redirects (`/workbench` and `/buildflow` to `/mastermind`) and that retired product bodies remain unavailable.
 
 ## Maintenance mode
 

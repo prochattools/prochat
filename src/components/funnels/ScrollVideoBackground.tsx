@@ -10,8 +10,9 @@ const BOOTSTRAP_FRAME_COUNT = 24
 const BOOTSTRAP_COLUMNS = 6
 const BOOTSTRAP_ROWS = 4
 const FIRST_FRAME_TIME_SECONDS = 0.04
-const MAX_CACHED_FRAMES = 72
-const MAX_CACHED_FRAME_WIDTH = 720
+const MAX_CACHED_FRAMES = 120
+const CACHE_READY_FRAME_COUNT = 48
+const MAX_CACHED_FRAME_WIDTH = 540
 
 type ScrollVideoBackgroundProps = {
   containerRef?: RefObject<HTMLElement | null>
@@ -44,6 +45,7 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
   const targetRef = useRef(0)
   const smoothedRef = useRef(0)
   const onProgressRef = useRef(onProgress)
+  const wakeRendererRef = useRef<() => void>(() => {})
   const [bootstrapReady, setBootstrapReady] = useState(false)
   const [videoReady, setVideoReady] = useState(false)
   const [cacheReady, setCacheReady] = useState(false)
@@ -69,6 +71,7 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
         : getProgress(containerRef?.current ?? null)
       targetRef.current = result.progress
       onProgressRef.current?.(result.progress, result.isActive)
+      wakeRendererRef.current()
     }
 
     updateTarget()
@@ -173,7 +176,7 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
       })
       const duration = source.duration
       if (!Number.isFinite(duration) || duration <= 0) return
-      const count = Math.min(MAX_CACHED_FRAMES, Math.max(24, Math.round(duration * 10)))
+      const count = Math.min(MAX_CACHED_FRAMES, Math.max(24, Math.round(duration * 12)))
       const width = Math.min(MAX_CACHED_FRAME_WIDTH, source.videoWidth || MAX_CACHED_FRAME_WIDTH)
       const height = Math.max(1, Math.round(width * ((source.videoHeight || 540) / (source.videoWidth || 960))))
       const temp = document.createElement('canvas')
@@ -200,7 +203,7 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
         framesRef.current[index]?.close()
         framesRef.current[index] = frame
         loadedCount += 1
-        if (loadedCount === BOOTSTRAP_FRAME_COUNT) setCacheReady(true)
+        if (loadedCount === CACHE_READY_FRAME_COUNT) setCacheReady(true)
       }
     }
 
@@ -221,6 +224,8 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
     let raf = 0
     let previousTime = 0
     let forceDraw = true
+    const stagingCanvas = document.createElement('canvas')
+    const stagingContext = stagingCanvas.getContext('2d')
     const drawCover = (
       ctx: CanvasRenderingContext2D,
       source: CanvasImageSource,
@@ -263,23 +268,23 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
       smoothedRef.current += (targetRef.current - smoothedRef.current) * (1 - Math.exp(-delta / 88))
       const moved = Math.abs(smoothedRef.current - oldProgress) > 0.00001
       const canvas = canvasRef.current
-      const canDrawCanvas = canvas && bootstrapReady
+      const canDrawCanvas = canvas && bootstrapReady && stagingContext
 
       if (canDrawCanvas) {
         const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
         const width = Math.round(window.innerWidth * dpr)
         const height = Math.round(window.innerHeight * dpr)
-        let resized = false
-        if (canvas.width !== width || canvas.height !== height) {
-          canvas.width = width
-          canvas.height = height
-          resized = true
+        const resized = stagingCanvas.width !== width || stagingCanvas.height !== height
+        if (resized) {
+          stagingCanvas.width = width
+          stagingCanvas.height = height
         }
-        const ctx = canvas.getContext('2d')
 
-        if (ctx && (forceDraw || resized || moved)) {
+        if (forceDraw || resized || moved) {
           let drawn = false
+          const ctx = stagingContext
           try {
+            ctx.clearRect(0, 0, width, height)
             if (cacheReady && frameCountRef.current > 0) {
               const frames = framesRef.current
               const position = smoothedRef.current * (frameCountRef.current - 1)
@@ -331,28 +336,45 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
               if (upperIndex !== lowerIndex && blend > 0) drawBootstrap(upperIndex, false, blend)
               drawn = true
             }
-          } catch {
-            // Keep the last successfully painted canvas frame if a source is transiently unavailable.
-          }
+          } catch { /* A failed candidate never touches the visible canvas. */ }
 
           if (drawn) {
-            forceDraw = false
-            if (!canvasPainted) setCanvasPainted(true)
+            try {
+              if (canvas.width !== width || canvas.height !== height) {
+                canvas.width = width
+                canvas.height = height
+              }
+              const visibleContext = canvas.getContext('2d')
+              if (visibleContext) {
+                visibleContext.drawImage(stagingCanvas, 0, 0, width, height)
+                forceDraw = false
+                if (!canvasPainted) setCanvasPainted(true)
+              }
+            } catch { /* Keep the last successfully presented frame. */ }
           }
         }
       }
 
-      if (!prefersReducedMotion || !canvasPainted && bootstrapReady) {
+      raf = 0
+      if (Math.abs(targetRef.current - smoothedRef.current) > 0.00001) {
         raf = requestAnimationFrame(draw)
       }
     }
 
-    raf = requestAnimationFrame(draw)
-    return () => cancelAnimationFrame(raf)
+    const wake = () => {
+      if (raf) return
+      raf = requestAnimationFrame(draw)
+    }
+    wakeRendererRef.current = wake
+    wake()
+    return () => {
+      wakeRendererRef.current = () => {}
+      if (raf) cancelAnimationFrame(raf)
+    }
   }, [bootstrapReady, cacheReady, canvasPainted, prefersReducedMotion])
 
   const canvasVisible = canvasPainted && !prefersReducedMotion
   const videoHidden = canvasPainted || prefersReducedMotion
   const renderState = cacheReady ? 'cache' : canvasPainted ? 'bootstrap' : 'poster'
-  return <><link rel="preload" as="image" href={BOOTSTRAP_SPRITE_URL} /><div className={`cm-video ${className}`.trim()} aria-hidden="true" data-render-state={renderState}><div className={`cm-video__poster ${canvasVisible ? 'is-hidden' : ''}`} /><video ref={videoRef} className={`cm-video__element ${videoHidden ? 'is-hidden' : videoReady ? 'is-visible' : ''}`} src={VIDEO_URL} muted playsInline preload="metadata" /><canvas ref={canvasRef} className={`cm-video__canvas ${canvasVisible ? 'is-visible' : ''}`} data-frame-cache-ready={cacheReady ? 'true' : 'false'} /><div className="cm-video__veil" /></div></>
+  return <><link rel="preload" as="image" href={BOOTSTRAP_SPRITE_URL} /><div className={`cm-video ${className}`.trim()} aria-hidden="true" data-render-state={renderState}><div className={`cm-video__poster ${canvasVisible ? 'is-hidden' : ''}`} /><video ref={videoRef} className={`cm-video__element ${videoHidden ? 'is-hidden' : videoReady ? 'is-visible' : ''}`} src={VIDEO_URL} muted playsInline preload="metadata" /><canvas ref={canvasRef} className={`cm-video__canvas ${canvasVisible ? 'is-visible' : ''}`} data-frame-cache-ready={cacheReady ? 'true' : 'false'} data-frame-count={cacheReady ? frameCountRef.current : '0'} data-canvas-painted={canvasPainted ? 'true' : 'false'} /><div className="cm-video__veil" /></div></>
 }

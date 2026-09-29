@@ -1,8 +1,10 @@
 # ProChat Homepage Design Orchestration
 
-**Status:** approved pre-build workflow  
+**Status:** historical pre-build workflow
 **Source skills:** Brain `ai/skills`  
 **Scope:** design research, specification, prototyping, implementation, review, and polish
+
+> This workflow is retained as historical planning evidence, not as current release authority. Follow the active source and validation references in `docs/overview.md`, `docs/implementation-plan.md`, and `docs/homepage-validation-plan.md`.
 
 This document defines how GPT-5.6 Sol uses the Brain design skills across research, specification, prototyping, implementation, review, and polish. It prevents duplicated design authority, conflicting methods, and unstructured execution.
 

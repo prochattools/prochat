@@ -2,7 +2,7 @@
 
 **Status:** FROZEN OPTIONAL RESEARCH — not active implementation  
 **Decision date:** 2026-07-18  
-**Superseded by:** `docs/product/HOMEPAGE_NEXUS_TEMPLATE_ADOPTION.md`  
+**Historical design lineage:** superseded by the current website documented in `docs/implementation-plan.md` and `docs/roadmap.md`
 **Source brief:** `docs/product/HOMEPAGE_MEMORY_FILM_BRIEF.md`  
 **Target:** historical 12-second scroll-controlled concept only; do not execute without a new explicit roadmap decision  
 **Strategic authority:** Mind repository  

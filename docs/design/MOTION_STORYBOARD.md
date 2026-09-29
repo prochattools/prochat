@@ -1,9 +1,9 @@
 # ProChat Motion Storyboard
 
-**Status:** canonical motion planning document  
+**Status:** historical pre-build motion planning document
 **Authority:** `docs/homepage-visual-storyboard.md`, `DESIGN.md`
 
-> Historical pre-cinematic storyboard. Its Memory/QA-specific sequences are not the current public route specification. Current routes `/`, `/evermind`, `/nevermind`, and `/mastermind` share two full-viewport sections, an intentional 80vh empty spacer, and one scroll-driven cinematic media layer. Other public routes are outside this visual redesign. See `docs/homepage-validation-plan.md` and `docs/implementation-plan.md` for active behavior and evidence.
+> Historical pre-build storyboard. Its Memory/QA-specific sequences are not the current public route specification. Current routes `/`, `/evermind`, `/nevermind`, and `/mastermind` share three ordered product stages, one scroll-driven cinematic media layer, and shared geometry. `/docs`, `/contact`, `/privacy`, and `/terms` use the static utility shell; legal body copy remains unchanged. See `docs/homepage-validation-plan.md` and `docs/implementation-plan.md` for active behavior and evidence.
 
 ## Purpose
 

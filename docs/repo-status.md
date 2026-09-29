@@ -1,6 +1,6 @@
 # Repository status
 
-Status: current source has a locally validated cinematic implementation; production revision and route health are verified through the normal `main` workflow and `/api/version`.
+Status: the cinematic and utility-page implementation passes local validation. Starting production and `origin/main` revision is `c6731140191791e407a2fb6eb27ac96711883e32`; this release is not yet published or live-verified.
 
 Last reviewed: 2026-09-29.
 
@@ -12,8 +12,8 @@ Evermind and Nevermind are the connected Infinite Brain product system; Mastermi
 
 ## Runtime and visual architecture
 
-- `/`, `/evermind`, `/nevermind`, `/mastermind`: shared cinematic template, scroll-driven media, two chapters, 80vh intentional spacer, one navigation, and no footer.
-- `/contact`, `/docs`, `/privacy`, `/terms`: existing route-specific presentation, outside this visual redesign and checked for regressions only.
+- `/`, `/evermind`, `/nevermind`, `/mastermind`: shared cinematic template, scroll-driven media, two chapters, 80vh intentional spacer, one navigation, and no footer. The cache is sampled at 12fps (120 frames for the current 10.04s video) with each frame limited to 540px width; candidate rendering uses an offscreen staging canvas to preserve the last good visible frame.
+- `/contact`, `/docs`, `/privacy`, `/terms`: shared static utility shell with one transparent navigation and no footer. Contact submission remains functional; legal page body text is unchanged; Docs uses current product names and avoids animated background media.
 - Production integration: GitHub Actions `.github/workflows/main.yml` on `main`; production revision is checked through `/api/version`.
 
 ## Historical or deferred systems
@@ -22,7 +22,7 @@ Generated Docs/Nextra, retired checkout/licensing, Stripe runtime, MailerLite, G
 
 ## Validated release scope
 
-Renderer reverse-scroll/cache-handoff, responsive/reduced-motion and interaction evidence, measured LiquidGlass evaluation, current copy/documentation reconciliation, production build, browser/security checks, and manual desktop/mobile review are recorded for the cinematic release. Integrate through the normal GitHub `main` workflow and verify the deployed revision/routes before describing a publication as live. The protected dirty checkout `/Users/Office/Repos/prochattools/web/prochat` is preservation-only and must remain byte-for-byte unchanged in its branch, HEAD, status, and tracked diff.
+Renderer continuity tests, responsive/reduced-motion and interaction evidence, measured LiquidGlass rejection, production build, 108 repository browser tests, and manual desktop/mobile review are recorded for this release. The strengthened 10-test focused quality suite passes in system Chrome with H.264 enabled. Chrome 153 locally presented 89 tiny-scroll canvas paints in 1.47s (59.99fps), with 87 distinct sampled outputs and a 17.6ms maximum gap; repeated slow/rapid reverse scrolling across all four routes produced no transparent visible-canvas samples or browser errors. The real-page LiquidGlass prototype measured 60–61 package FPS and no page RAF cadence regression, but was rejected on visual grounds because it introduced a visible inset/double-glass seam on both candidate panels without enough benefit; evidence is recorded in `docs/implementation-plan.md`. Local single-run mobile LCP diagnostics: `/` 2.91s, `/evermind` 2.86s, `/nevermind` 2.86s, `/mastermind` 2.86s, `/docs` 4.05s, `/contact` 4.21s; all exceed the 2.5s target. Production merge/deployment and remote source housekeeping remain pending. The protected dirty checkout `/Users/Office/Repos/prochattools/web/prochat` is preservation-only and must remain byte-for-byte unchanged in its branch, HEAD, status, and tracked diff.
 
 ## Tracked performance/security notes
 

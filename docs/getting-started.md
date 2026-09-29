@@ -29,9 +29,9 @@ The default local port is `3056` unless overridden by `PORT`.
 Canonical public routes:
 
 - `/`
-- `/memory`
-- `/memory-qa`
-- `/workbench`
+- `/evermind`
+- `/nevermind`
+- `/mastermind`
 - `/docs`
 - `/contact`
 - `/privacy`

@@ -1,12 +1,14 @@
 # ProChat Public Experience Brief
 
-**Status:** active Phase 1 translation brief  
-**Task:** `PXF-002`  
-**Strategic authority:** Mind repository  
-**Execution authority:** ProChat repository  
-**Next gate:** Nexus-template implementation packet `PXF-003A`  
-**Active visual authority:** `docs/product/HOMEPAGE_NEXUS_TEMPLATE_ADOPTION.md`  
-**Active conversion authority:** `docs/product/PUBLIC_CONVERSION_STRATEGY.md`
+**Status:** superseded historical translation brief — not current product or website authority
+**Task:** `PXF-002`
+**Strategic authority:** Mind repository
+**Execution authority:** ProChat repository
+**Next gate:** Nexus-template implementation packet `PXF-003A`
+**Current website implementation authority:** `docs/implementation-plan.md` and `docs/roadmap.md`
+**Canonical product authority:** Mind, `organizations/prochat/brand/`
+
+> This brief preserves the earlier Memory/Memory-for-QA/Workbench strategy and Nexus design phase. Do not use its product hierarchy, route plan, conversion language, or active-direction labels for the current public website. Current ProChat product truth and site implementation are documented in Mind and the active repository roadmap/implementation plan.
 
 ## Authority
 

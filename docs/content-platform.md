@@ -7,9 +7,9 @@ This document describes the current root-domain public content and SEO contract.
 The active canonical public surface is intentionally small:
 
 - `/`
-- `/memory`
-- `/memory-qa`
-- `/workbench`
+- `/evermind`
+- `/nevermind`
+- `/mastermind`
 - `/docs`
 - `/contact`
 - `/privacy`
@@ -19,7 +19,7 @@ The root sitemap emits only those eight routes.
 
 ## Documentation
 
-The active `/docs` route is a repository-oriented hub for Memory for QA and Workbench. It links readers to repository documentation, issues, and beta/contact paths.
+The active `/docs` route is a reading-friendly hub for Evermind, Nevermind, and Mastermind. It links readers to product routes and contact; canonical product documentation remains with the relevant repositories.
 
 The former generated public documentation system is retired. In particular:
 
@@ -45,11 +45,11 @@ Current SEO behavior is deliberately bounded:
 - compatibility aliases redirect into canonical public routes rather than publishing duplicate bodies
 - retired product/content routes are not emitted by the sitemap
 
-Structured data and page metadata should describe only active Memory, Memory for QA, Workbench, Docs, Contact, and legal surfaces.
+Structured data and page metadata should describe only active Evermind, Nevermind, Mastermind, Docs, Contact, and legal surfaces.
 
 ## Compatibility boundaries
 
-Some historical URLs remain only as redirect compatibility, including BuildFlow / ProChat OS aliases to Workbench, Learn aliases to Docs, legal aliases to the current Privacy/Terms pages, and waitlist aliases into the Memory for QA beta contact flow.
+Some historical URLs remain only as redirect compatibility, including BuildFlow / ProChat OS aliases to Mastermind, Learn aliases to Docs, legal aliases to the current Privacy/Terms pages, and retired waitlist aliases into Contact.
 
 Compatibility routes must not restore retired product bodies or duplicate canonical content.
 

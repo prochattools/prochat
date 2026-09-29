@@ -9,6 +9,7 @@ import { SocialIcon } from '@/components/ui/social-icons'
 import { trackEvent } from '@/utils/analytics'
 import './cinematic-marketing-shell.css'
 import './cinematic/cinematic-reference-final.css'
+import './cinematic/cinematic-utility.css'
 
 const NAV_ITEMS = [
   { href: '/evermind', label: 'Evermind' },
@@ -197,18 +198,20 @@ export function CinematicMarketingShell({
   cta,
   contentOwnsMain = false,
   cinematicTheme = false,
+  utilityTheme = false,
 }: {
   children: React.ReactNode
   cta?: CinematicMarketingCta
   contentOwnsMain?: boolean
   cinematicTheme?: boolean
+  utilityTheme?: boolean
 }) {
   return (
-    <div className={`cm-shell ${cinematicTheme ? 'cm-shell--core' : ''}`.trim()}>
+    <div className={`cm-shell ${cinematicTheme ? 'cm-shell--core' : ''} ${utilityTheme ? 'cm-shell--utility' : ''}`.trim()}>
       <div className="cm-shell__backdrop" aria-hidden="true" />
       <CinematicMarketingNav cta={cta} />
       {contentOwnsMain ? children : <main id="main-content" className="cm-shell__main">{children}</main>}
-      {!cinematicTheme ? <CinematicMarketingFooter /> : null}
+      {!cinematicTheme && !utilityTheme ? <CinematicMarketingFooter /> : null}
     </div>
   )
 }

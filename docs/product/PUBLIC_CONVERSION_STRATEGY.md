@@ -1,13 +1,15 @@
 # ProChat Public Conversion Strategy
 
-**Status:** ACTIVE EXECUTION DIRECTION — MIND RECONCILED 2026-07-19  
-**Decision date:** 2026-07-18  
-**Owner:** Steve Westhoek  
-**Strategic authority:** Mind repository  
-**Execution authority:** ProChat repository  
+**Status:** superseded historical strategy — do not use for current public copy or conversion decisions
+**Decision date:** 2026-07-18
+**Owner:** Steve Westhoek
+**Strategic authority:** Mind repository
+**Execution authority:** ProChat repository
 **Applies to:** homepage, product pages, documentation, contribution paths, contact paths, and future public pages
 
 ## Authority and reconciliation status
+
+> This strategy predates the founder-confirmed 2026-09-11 Evermind/Nevermind/Mastermind product architecture. Its Memory-for-QA/Workbench products, offers, licenses, routes, and CTA rules are historical and are not current public policy. Mind at `organizations/prochat/brand/` is canonical for strategy; the current website execution state is in `docs/roadmap.md` and `docs/implementation-plan.md`.
 
 This document translates the owner's clarified public-growth and service model into website behavior.
 

@@ -10,17 +10,14 @@ const TOPIC_CONTEXT = {
   Evermind: {
     label: 'Evermind enquiry',
     helper: 'Describe the memory workflow or local-first question you want to explore.',
-    signals: ['Memory use case', 'Human ownership', 'Clear next step'],
   },
   Nevermind: {
     label: 'Nevermind enquiry',
     helper: 'Describe the context problem or AI-tool workflow you want to make more continuous.',
-    signals: ['Working context', 'Tool choice', 'Clear next step'],
   },
   Mastermind: {
     label: 'Mastermind enquiry',
     helper: 'Describe the intention, project context, or bounded execution workflow you want to clarify.',
-    signals: ['Project context', 'Execution boundary', 'Clear next step'],
   },
 } as const
 
@@ -30,54 +27,35 @@ export default function ContactPageMarkup({
   const topicContext = TOPIC_CONTEXT[initialTopic]
 
   return (
-    <div className="cm-contact-page" data-body-family="contact">
-      <section className="cm-chapter cm-contact-hero" data-cinematic-chapter="0" aria-labelledby="contact-hero-title">
-        <div className="cm-chapter__inner">
-          <p className="cm-chapter__eyebrow">Contact / direct signal</p>
-          <h1 id="contact-hero-title">Send the context.<br /><span>Get the clearest next step.</span></h1>
-          <p className="cm-lede">Tell me what you are working on, where the friction is, and what outcome you need. The goal is one useful reply with the right next step.</p>
-          <div className="cm-contact-signals">{topicContext.signals.map((signal, index) => <span key={signal}><b>0{index + 1}</b>{signal}</span>)}</div>
-          <a className="cm-actions__primary cm-contact-hero__action" href="#contact-form-card">Send the brief <span aria-hidden="true">→</span></a>
+    <div className="cm-utility-contact" data-body-family="contact">
+      <section className="cm-utility-contact__intro" aria-labelledby="contact-hero-title">
+        <div className="pc-body-kicker"><span aria-hidden="true" />Contact ProChat</div>
+        <h1 id="contact-hero-title">Start a conversation.</h1>
+        <p>Tell us what you are working on and what would help. Choose Evermind, Nevermind, or Mastermind if you have a product-specific question, and we will reply with a useful next step.</p>
+        <div className="cm-utility-contact__topic" role="group" aria-label="Selected contact topic">
+          <span>ABOUT</span>
+          <strong>{topicContext.label}</strong>
+          <small>{topicContext.helper}</small>
         </div>
       </section>
 
-      <section className="cm-chapter cm-contact-intake" data-cinematic-chapter="1" aria-labelledby="contact-intake-title">
-        <div className="cm-chapter__inner contact-intake-grid">
-          <aside className="contact-intake-context">
-            <div className="pc-body-kicker"><span aria-hidden="true" />Request context</div>
-            <h2 id="contact-intake-title">One brief is enough to start.</h2>
-            <p>{topicContext.helper}</p>
-
-            <div className="contact-topic-console" role="group" aria-label="Selected contact topic">
-              <span>SELECTED ROUTE</span>
-              <strong>{topicContext.label}</strong>
-              <small>Replies are reviewed manually.</small>
-            </div>
-
-            <ol className="contact-response-rail" aria-label="What happens next">
-              <li><span>01</span><strong>You send context</strong><p>Enough detail to understand the real problem.</p></li>
-              <li><span>02</span><strong>I review the fit</strong><p>No automated qualification funnel.</p></li>
-              <li><span>03</span><strong>You get a next step</strong><p>A direct answer, question, or recommended path.</p></li>
-            </ol>
-          </aside>
-
-          <div className="contact-form-panel cm-glass-panel" id="contact-form-card">
-            <div className="contact-form-panel__header">
+      <section id="contact-form-card" className="cm-utility-contact__form contact-form-panel" aria-labelledby="contact-form-title">
+          <div className="contact-form-panel__header">
               <div>
-                <span>INTAKE / 01</span>
-                <h2>Send a message</h2>
+                <span>MESSAGE / 01</span>
+                <h2 id="contact-form-title">Send a message</h2>
               </div>
               <span className="contact-form-status-dot">OPEN</span>
-            </div>
-            <p>{topicContext.helper}</p>
+          </div>
+          <p>Required fields are marked. A few clear sentences are enough.</p>
 
-            <form
-              data-contact-form=""
-              className="contact-memory-form"
-              noValidate
-              method="post"
-              action="/api/contact"
-            >
+          <form
+            data-contact-form=""
+            className="contact-memory-form"
+            noValidate
+            method="post"
+            action="/api/contact"
+          >
               <div className="sr-only" aria-hidden="true">
                 <label htmlFor="contact-honeypot">Leave this empty</label>
                 <input
@@ -101,7 +79,7 @@ export default function ContactPageMarkup({
                     id="contact-name"
                     name="name"
                     className="contact-field"
-                    placeholder="John Doe"
+                    placeholder="Your name"
                     autoComplete="name"
                     aria-required="true"
                     required
@@ -117,7 +95,7 @@ export default function ContactPageMarkup({
                     id="contact-email"
                     name="email"
                     className="contact-field"
-                    placeholder="john@company.com"
+                    placeholder="you@example.com"
                     type="email"
                     autoComplete="email"
                     aria-required="true"
@@ -167,9 +145,7 @@ export default function ContactPageMarkup({
                 />
                 <span aria-hidden="true">→</span>
               </button>
-            </form>
-          </div>
-        </div>
+          </form>
       </section>
     </div>
   )
