@@ -10,9 +10,9 @@ const BOOTSTRAP_FRAME_COUNT = 24
 const BOOTSTRAP_COLUMNS = 6
 const BOOTSTRAP_ROWS = 4
 const FIRST_FRAME_TIME_SECONDS = 0.04
-const MAX_CACHED_FRAMES = 120
-const CACHE_READY_FRAME_COUNT = 48
-const MAX_CACHED_FRAME_WIDTH = 540
+const TARGET_CACHED_FRAME_RATE = 24
+const MAX_CACHED_FRAMES = 240
+const MAX_CACHED_FRAME_WIDTH = 384
 
 type ScrollVideoBackgroundProps = {
   containerRef?: RefObject<HTMLElement | null>
@@ -176,7 +176,7 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
       })
       const duration = source.duration
       if (!Number.isFinite(duration) || duration <= 0) return
-      const count = Math.min(MAX_CACHED_FRAMES, Math.max(24, Math.round(duration * 12)))
+      const count = Math.min(MAX_CACHED_FRAMES, Math.max(24, Math.round(duration * TARGET_CACHED_FRAME_RATE)))
       const width = Math.min(MAX_CACHED_FRAME_WIDTH, source.videoWidth || MAX_CACHED_FRAME_WIDTH)
       const height = Math.max(1, Math.round(width * ((source.videoHeight || 540) / (source.videoWidth || 960))))
       const temp = document.createElement('canvas')
@@ -203,8 +203,12 @@ export function ScrollVideoBackground({ containerRef, className = '', onProgress
         framesRef.current[index]?.close()
         framesRef.current[index] = frame
         loadedCount += 1
-        if (loadedCount === CACHE_READY_FRAME_COUNT) setCacheReady(true)
       }
+
+      // Do not hand off from the densely interpolated bootstrap sprite to a
+      // sparse subset of the main cache. Waiting for the complete cache keeps
+      // temporal spacing uniform and avoids a visible jump while scrolling.
+      if (!cancelled && loadedCount === count) setCacheReady(true)
     }
 
     const startExtraction = () => { extract().catch(() => undefined) }
