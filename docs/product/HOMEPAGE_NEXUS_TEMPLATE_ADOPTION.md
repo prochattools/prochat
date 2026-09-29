@@ -1,11 +1,13 @@
 # ProChat Homepage — Nexus Template Adoption
 
-**Status:** ACTIVE IMPLEMENTATION DIRECTION  
-**Decision date:** 2026-07-18  
-**Owner decision:** adopt the supplied Nexus automation landing-page template as the visual and structural implementation source  
-**Strategic authority:** Mind repository  
-**Design and execution authority:** ProChat repository  
-**Supersedes:** active homepage memory-film and scroll-scrub video direction
+**Status:** SUPERSEDED HISTORICAL DESIGN DECISION — do not use as current implementation direction
+**Decision date:** 2026-07-18
+**Owner decision:** adopt the supplied Nexus automation landing-page template as the visual and structural implementation source
+**Strategic authority:** Mind repository
+**Design and execution authority:** ProChat repository
+**Supersedes:** active homepage memory-film and scroll-scrub video direction at the time; itself superseded by the current cinematic website implementation
+
+> Current authority: `docs/implementation-plan.md`, `docs/roadmap.md`, `docs/homepage-validation-plan.md`, and the current source. This 2026-07-18 Nexus-template decision predates the current Evermind/Nevermind/Mastermind cinematic experience and its Contact/Docs utility shell. Its no-video/no-frame-sequence rules and old product hierarchy are historical evidence only.
 
 ## Decision
 

@@ -181,9 +181,26 @@ test.describe('ProChat final public-site quality', () => {
       const prototype = CanvasRenderingContext2D.prototype
       const original = prototype.drawImage
       const paintTimes: number[] = []
+      const sample = document.createElement('canvas')
+      sample.width = 24
+      sample.height = 14
+      const sampleContext = sample.getContext('2d')
+      if (!sampleContext) throw new Error('Canvas sampling context is unavailable')
+      const visualFrames: number[] = []
       prototype.drawImage = new Proxy(original, {
         apply(target, thisArg: CanvasRenderingContext2D, args: Parameters<typeof original>) {
-          if (thisArg.canvas === canvas) paintTimes.push(performance.now())
+          if (thisArg.canvas === canvas) {
+            paintTimes.push(performance.now())
+            sampleContext.clearRect(0, 0, sample.width, sample.height)
+            sampleContext.drawImage(canvas, 0, 0, sample.width, sample.height)
+            const pixels = sampleContext.getImageData(0, 0, sample.width, sample.height).data
+            let signature = 2166136261
+            for (let index = 0; index < pixels.length; index += 4) {
+              signature ^= pixels[index] + (pixels[index + 1] << 8) + (pixels[index + 2] << 16) + (pixels[index + 3] << 24)
+              signature = Math.imul(signature, 16777619)
+            }
+            visualFrames.push(signature >>> 0)
+          }
           return Reflect.apply(target, thisArg, args)
         },
       })
@@ -192,7 +209,7 @@ test.describe('ProChat final public-site quality', () => {
         window.scrollTo({ top: 0, behavior: 'instant' })
         await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
         for (let index = 0; index < 90; index += 1) {
-          window.scrollBy({ top: index % 2 ? -1.5 : 2, behavior: 'instant' })
+          window.scrollBy({ top: 2, behavior: 'instant' })
           await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
         }
       } finally {
@@ -206,12 +223,14 @@ test.describe('ProChat final public-site quality', () => {
         duration,
         framesPerSecond: duration > 0 ? (paintTimes.length - 1) * 1000 / duration : 0,
         longestGap: Math.max(0, ...intervals),
+        distinctRenderedFrames: new Set(visualFrames).size,
       }
     })
 
     expect(cadence.samples, 'tiny scroll movements repaint the visible canvas').toBeGreaterThan(45)
     expect(cadence.framesPerSecond, `observed paint cadence: ${JSON.stringify(cadence)}`).toBeGreaterThanOrEqual(30)
     expect(cadence.longestGap, `no long gaps during fine scroll: ${JSON.stringify(cadence)}`).toBeLessThan(100)
+    expect(cadence.distinctRenderedFrames, `tiny scroll movements visibly update the image: ${JSON.stringify(cadence)}`).toBeGreaterThanOrEqual(8)
   })
 
   test('four cinematic pages share one clean header and CTA labels stay on a single line at all target widths', async ({ page }) => {

@@ -1,13 +1,15 @@
 # ProChat Memory Visual Language
 
-**Status:** CANONICAL PUBLIC-EXPERIENCE VISUAL PHILOSOPHY  
-**Decision date:** 2026-07-19  
-**Owner approval:** implementation architecture approved  
-**Strategic authority:** Mind repository  
-**Visual execution authority:** ProChat repository  
+**Status:** historical conceptual visual reference — not the current public website design authority
+**Decision date:** 2026-07-19
+**Owner approval:** implementation architecture approved
+**Strategic authority:** Mind repository
+**Visual execution authority:** ProChat repository
 **Primitive implementation:** `docs/product/MEMORY_ILLUSTRATION_PRIMITIVES.md`
 
 ## Purpose
+
+> This July 2026 Memory-specific visual language remains useful as historical product-concept research. It does not define the current site’s visual system or product hierarchy. Follow the current implementation and roadmap in `docs/implementation-plan.md` and `docs/roadmap.md`, and Mind’s current ProChat brand sources for product truth.
 
 This document defines how ProChat Memory is expressed visually across the public website.
 
