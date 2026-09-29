@@ -1,144 +1,41 @@
 # ProChat Product Context
 
-**Status:** repository-local implementation context  
-**Canonical strategy:** Mind  
+**Status:** repository-local implementation context
+**Canonical product strategy:** Mind, `mind/organizations/prochat/brand/`
 **Applies to:** ProChat website design, implementation, review, and polish
 
-This file gives design and implementation agents the minimum product context required to work safely in this repository. It does not replace canonical Mind strategy.
+This file summarizes canonical product facts for website implementation. It must not replace Mind or invent product hierarchy, pricing, maturity, or claims.
 
-## Company
-
-ProChat is a memory-first software company.
-
-It builds local products that keep project knowledge reusable and connect familiar AI interfaces to real project work.
-
-## Current product family
-
-ProChat has exactly two current products:
-
-1. **ProChat Memory** — the flagship product for reusable project knowledge.
-2. **ProChat Workbench** — a ChatGPT-first local builder workbench.
-
-**ProChat Memory for QA** is the first discipline-specific edition of ProChat Memory. It is not a third product.
-
-Future API access, automation, and MCP integrations are capabilities or interfaces within current products, not separate products.
-
-## Flagship product
-
-ProChat Memory is a local, Markdown-first project memory system.
-
-It helps people capture, review, retrieve, correct, improve, and retire reusable project knowledge without requiring ProChat to host customer memory.
-
-The trust workflow is:
+## Current product system
 
 ```text
-current evidence
-→ draft lesson
-→ sanitization and scope
-→ human review
-→ approved memory
-→ relevant retrieval
-→ correction or retirement
+ProChat → Infinite Brain → Evermind ↔ Nevermind
+                         Mind       Brain
+
+Mastermind — separate free, open-source planning/orchestration product
 ```
 
-Current evidence and human judgment remain stronger than stored memory.
+- **Evermind** is free, open-source, durable, human-owned memory. It is local-first, readable, portable, inspectable, editable, provenance-aware, reviewed, and useful without Nevermind.
+- **Nevermind** is the paid capability and convenience layer around that memory: installation, configuration, retrieval, integrations, automation, validation, updates, and optional managed operations.
+- **Mastermind** is a separate free, open-source ChatGPT-native planner/orchestrator for bounded Codex execution. It replaces Workbench as the current public name.
+- **ProChat Memory for QA** is paused/on ice and historical. Keep its documentation and code as evidence, but do not present it as a current public product.
+- Mind and Brain remain distinct; do not introduce MindOS as another customer-facing brand.
 
-## Current launch focus
+## Public website contract
 
-The first and only current discipline-specific edition is **ProChat Memory for QA**.
+Canonical routes are `/`, `/evermind`, `/nevermind`, `/mastermind`, `/docs`, `/contact`, `/privacy`, and `/terms`. This cinematic visual contract applies to the first four routes only. The remaining public routes retain their existing page-specific presentation and legal substance; do not redesign them as part of the cinematic release.
 
-The current primary user is an individual QA tester working with repeated failures, investigations, evidence, fixes, selectors, environments, test data, and review decisions.
+The home page product sentence is: “Evermind remembers. Nevermind brings context. Mastermind directs the work.” Preserve the distinct product roles and use accurate route-specific calls to action.
 
-The selected QA beta is:
+## Copy and claim boundaries
 
-- free only for approved beta participants;
-- manually selected;
-- public source-available, not open source;
-- without a fixed end date;
-- in active development;
-- focused on measured repeated value rather than broad sales.
+- Do not claim zero hallucinations, guaranteed savings, universal compatibility, automatic trusted memory, or a hosted customer-memory platform without canonical evidence.
+- Do not imply future capabilities, APIs, MCP integrations, automation, or managed services are currently available unless verified in both Mind and implementation.
+- Do not present paused ProChat Memory for QA, Workbench, or BuildFlow as a current public product. BuildFlow may remain only as a technical/internal compatibility identifier where required.
+- Do not invent pricing, legal terms, encryption, support commitments, maturity, or customer-data handling claims.
 
-## Workbench
+## Design and implementation authority
 
-ProChat Workbench connects ChatGPT reasoning to repositories, documentation, notes, and knowledge folders through controlled local operations.
+The active cinematic design system for the first four routes is implemented by `CinematicMarketingShell`, `CinematicMarketingPage`, `CinematicProductFunnel`, `CinematicMediaPage`, and `ScrollVideoBackground`. Keep route data distinct from shared page geometry. Product pages use scroll-driven media. Reduced-motion users must retain readable content and see one stable media layer. Treat other routes as regression-only scope in this release.
 
-Its canonical sequence is:
-
-```text
-request
-→ exact local context
-→ guarded change
-→ targeted validation
-→ explicit Git action
-```
-
-Workbench must not be presented as an autonomous agent that silently controls a repository.
-
-## Homepage objective
-
-The homepage must make these points understandable:
-
-1. Useful project work should leave useful memory behind.
-2. ProChat Memory is the flagship.
-3. Memory becomes trusted through evidence, sanitization, scope, and human review.
-4. Customer memory remains local in the current product model.
-5. Relevant memory should enter a task without loading the entire archive.
-6. The currently available edition is ProChat Memory for QA.
-7. Workbench is the second product and shares the same controlled, inspectable philosophy.
-
-## Primary conversion
-
-**Explore ProChat Memory for QA**
-
-Secondary conversions:
-
-- Join the selected QA beta
-- See how Memory works
-- Explore ProChat Workbench
-
-## Brand character
-
-The company should feel:
-
-- reliable;
-- trustworthy;
-- stable;
-- clean;
-- minimal;
-- logical;
-- structural;
-- simple;
-- premium;
-- technically credible.
-
-The website should feel like a calm working system for structured knowledge, not an AI spectacle.
-
-## Copy boundaries
-
-Do not claim:
-
-- zero hallucinations;
-- automatic trusted memory;
-- guaranteed savings;
-- universal compatibility;
-- a hosted customer-memory platform;
-- encryption that is not documented;
-- that no information can ever reach an external AI provider;
-- finalized Memory pricing or enterprise support;
-- that future capabilities are current products.
-
-Use “durable” and “reusable” for Memory rather than making “persistent” the primary category language.
-
-Use “customer memory remains on the customer’s computer” rather than a blanket “private” claim.
-
-## Canonical references
-
-```text
-mind/wiki/organisations/prochat/brand/product-strategy.md
-mind/wiki/organisations/prochat/brand/product-naming-architecture.md
-mind/wiki/organisations/prochat/brand/product-roadmap.md
-mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
-mind/wiki/organisations/prochat/brand/global-design-foundation.md
-mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
-mind/wiki/organisations/prochat/brand/website-build-contract.md
-```
+Consult current implementation documentation in `docs/overview.md`, `docs/strategy.md`, `docs/roadmap.md`, and `docs/implementation-plan.md`. `docs/product/PUBLIC_PAGE_ARCHITECTURE.md` and `docs/homepage-*` plans predate the current product/routes and must be treated as historical until explicitly reconciled.

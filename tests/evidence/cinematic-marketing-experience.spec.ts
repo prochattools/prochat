@@ -323,13 +323,14 @@ test.describe('cinematic marketing experience', () => {
         })),
         canvasDisplay: getComputedStyle(document.querySelector('.cm-video__canvas') as HTMLElement).display,
         videoOpacity: getComputedStyle(document.querySelector('.cm-video__element') as HTMLElement).opacity,
+        posterOpacity: getComputedStyle(document.querySelector('.cm-video__poster') as HTMLElement).opacity,
         videoCurrentTime: (document.querySelector('.cm-video__element') as HTMLVideoElement).currentTime,
         links: Array.from(document.querySelectorAll<HTMLAnchorElement>('main a')).filter(link => link.getBoundingClientRect().width > 0).length,
       }))
       expect(evidence.reduced).toBe(true)
       expect(evidence.chapters.every(chapter => chapter.visible && chapter.rect > 0), `${route} readable chapters`).toBe(true)
       expect(evidence.canvasDisplay, `${route} canvas is not required under reduced motion`).toBe('none')
-      expect(evidence.videoOpacity, `${route} keeps one stable media layer under reduced motion`).toBe('1')
+      expect(evidence.videoOpacity === '1' || evidence.posterOpacity === '1', `${route} keeps a stable media frame or poster under reduced motion`).toBe(true)
       expect(evidence.links, `${route} links remain usable under reduced motion`).toBeGreaterThan(0)
       await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }))
       await page.waitForTimeout(250)

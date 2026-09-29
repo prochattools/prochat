@@ -20,23 +20,23 @@ Start here for present-day ProChat behavior:
 - `docs/ai-guidelines.md` — current AI/automation repository safety rules
 - `docs/content-platform.md` — current public content/SEO contract
 - `docs/docs-automation.md` — explicit retirement record for the generated Docs system
-- `docs/product/agent-mode-progress.md` — latest operational handoff/current state
+- `docs/product/agent-mode-progress.md` — historical 2026-08-14 closeout, superseded by `docs/repo-status.md`
 - `docs-public/environment.md` — active environment-variable contract
 
 ## Canonical public website
 
-The public site is intentionally limited to:
+The current public site surface is:
 
 - `/`
-- `/memory`
-- `/memory-qa`
-- `/workbench`
+- `/evermind`
+- `/nevermind`
+- `/mastermind`
 - `/docs`
 - `/contact`
 - `/privacy`
 - `/terms`
 
-Memory, Memory for QA, and Workbench are the current product identities.
+Evermind, Nevermind, and Mastermind are the current public product identities. ProChat Memory for QA is paused/historical. Home and the three product pages share the current cinematic navigation and scroll-driven media. Docs, Contact, and legal pages retain their existing page-specific presentation; they are outside this cinematic redesign scope.
 
 ## Historical evidence
 
@@ -58,7 +58,7 @@ The final post-release hygiene pass additionally archives several retired system
 
 ## Compatibility wording
 
-BuildFlow may remain only as a technical/internal compatibility identifier required by Workbench contracts. Historical redirects may still mention retired product names in tests/config so inbound links resolve safely.
+BuildFlow may remain only as a technical/internal compatibility identifier where required. Historical redirects/tests may mention retired product names so inbound links resolve safely.
 
 ## Documentation rule
 

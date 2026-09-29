@@ -1,113 +1,48 @@
-# ProChat implementation plan
+# ProChat website implementation plan
 
-Status: lean public implementation complete and deployed; final repository hygiene/hardening pass in progress.
+Status: cinematic/site quality implementation and release validation in progress.
 
-Last consolidated: 2026-08-13.
+Last reviewed: 2026-09-29.
 
-## Completed implementation
+## Current source contract
 
-The deployed public implementation consists of exactly eight canonical routes:
+Canonical public routes: `/`, `/evermind`, `/nevermind`, `/mastermind`, `/docs`, `/contact`, `/privacy`, and `/terms`. Product truth is governed by Mind at `mind/organizations/prochat/brand/`; the current identities are Evermind, Nevermind, and Mastermind. ProChat Memory for QA is paused/historical.
 
-- `/`
-- `/memory`
-- `/memory-qa`
-- `/workbench`
-- `/docs`
-- `/contact`
-- `/privacy`
-- `/terms`
+The first four routes use a shared cinematic implementation: `HomeV2` or `CinematicProductFunnel` supplies page data to `CinematicMarketingPage`; the shared page uses `CinematicMarketingShell`, one final cinematic reference stylesheet, and `ScrollVideoBackground`. Route content must not reintroduce the former public-site shell, extra headers, a footer, opaque SaaS cards, or competing route-level overrides.
 
-The completed lean migration removed retired product/catalog/commerce/content systems and consolidated the active design/runtime boundaries.
+Contact, Docs, Privacy, and Terms retain their existing route-specific presentation and are outside this cinematic redesign. Keep their established implementation and legal meaning unchanged; use the repository's existing route checks to guard against regressions.
 
-Major completed implementation areas:
+## Active work gates
 
-- canonical route shell and route-specific body evidence;
-- Memory, Memory for QA, and Workbench product pages;
-- lean Docs repository hub;
-- Contact and beta-interest handling;
-- current legal pages;
-- root sitemap and robots policy;
-- centralized graphite/cobalt design tokens across public and active admin surfaces;
-- removal of generated Docs/Nextra, dynamic legacy Blog content, Prompts/Learn/Production Guide, Kits, ProChat OS, AI Workflows, Studio, Proof, checkout, Stripe runtime, application licensing, MailerLite, GitHub entitlement provisioning, and other verified zero-consumer legacy code;
-- compatibility redirects from historical URLs into current canonical routes;
-- security/browser/accessibility evidence for current public routes and retired-route behavior;
-- CI/Dokploy deployment and exact production SHA verification.
+### A. Renderer and motion
 
-## Current final hygiene implementation
+- Reproduce slow/fast forward and reverse scroll in a real H.264-capable browser.
+- Prove cache and bootstrap handoffs do not expose blank frames; compare frames through blending and stop painting when settled.
+- Confirm the requested background demonstrably changes with scroll and chapter activation follows reading order.
+- Under reduced motion, freeze to one stable media/poster layer, disable scrubbing, preserve all content/links, and retain geometry.
 
-The post-release hygiene pass is deliberately non-product-changing. It may update repository code/docs only where current-source evidence proves cleanup or documentation drift.
+### B. Visual and content QA
 
-### H1 — orphan code and local artifacts
+- Check all four cinematic routes at desktop, laptop, tablet, and mobile widths; verify one H1, one main, no footer, no horizontal overflow, CTA wrapping, and consistent 100svh / 80vh / 100svh structure.
+- Do not redesign Contact, Docs, Privacy, or Terms in this release. Preserve their current route and legal behavior through existing regression tests.
+- Review current copy against canonical Mind source and prevent stale product identities/claims in active pages and docs.
+- Capture and manually inspect viewport screenshots after motion settles, including top, transition, Section Two, page end, and reduced-motion desktop.
+- Prototype LiquidGlass locally and compare quality, CPU/frame cadence, media scrubbing, reduced motion, and initialization cost. Do not add a dependency or ship the effect without measured benefit.
 
-- delete zero-consumer legacy helpers;
-- keep dependencies that still have active consumers;
-- remove ignored Playwright reports/test-result artifacts where available tooling permits;
-- do not alter canonical public behavior.
+Initial LiquidGlass evaluation: a real Chrome local prototype using one dynamic scroll-canvas background and one cloned context panel ran at approximately 11–15fps (median frame interval 50–66.6ms) compared with the existing renderer's 16.7ms median cadence. The captured overlay also clipped/reflowed the cloned panel. Decision: do not add the dependency to the production scroll path; current CSS glass uses an 11% translucent white surface with 18px backdrop blur and preserves media throughput. This is a measured rejection for the current implementation, not a claim that the library cannot be used on static pages.
 
-### H2 — documentation alignment
+### C. Validation and release
 
-Active documentation must match current source and must not instruct contributors to use retired Stripe, MailerLite, GitHub entitlement, Kits, generated Docs, Strapi, Make/n8n integration credentials, or old product flows.
+Run the repository-supported env/doc integrity, TypeScript, ESLint, design lint, asset validation, production build, security, and relevant browser evidence. Review a diff-based safety pass; stage exact files only; commit and push the continuation branch without rewriting history. Integrate through the repository's normal `main` workflow. Verify workflow and deployment success, `/api/version` full SHA, all eight public routes, media and browser health. Then verify the authoritative worktree is clean and the protected checkout's branch, HEAD, status, and diff fingerprint are unchanged.
 
-Historical implementation documents may remain under `docs/archive/**` and `docs/migration/**`, clearly treated as history rather than current guidance.
+## Known implementation/build debt
 
-### H3 — auth boundary
+`Dockerfile` currently sets placeholder `STRIPE_SECRET_KEY_LIVE` and `STRIPE_WEBHOOK_SECRET_LIVE` values as builder-stage environment variables so retired Stripe module evaluation can pass. They are not real secrets, but they trigger build security warnings. Track a separate narrowly tested refactor to remove this build-time configuration dependency. Never place live credentials in Docker build args or image layers.
 
-Decision: **defer runtime Ory session authorization for internal routes**.
+## Next performance gate
 
-The following remain fail-closed pending a separate security implementation:
+Measure Lighthouse mobile LCP on `/`, `/evermind`, `/nevermind`, `/mastermind`, `/docs`, and `/contact`. The target remains ≤2.5 seconds. If missed, the next roadmap item is to bring canonical public-route LCP under 2.5 seconds without reducing the cinematic experience.
 
-- `/admin/**`
-- project APIs
-- Make APIs
-- n8n APIs
-- related internal scenario/active/link routes covered by security tests
+## Completion evidence
 
-No hygiene change may replace 501/misconfigured behavior with unauthenticated access.
-
-### H4 — branches
-
-Non-main branches may be deleted only when merge evidence is available and the branch is not intentionally retained. Do not guess branch ancestry or force-delete.
-
-## Validation gate
-
-Before this hygiene pass may be committed/pushed:
-
-```bash
-node scripts/check-env-docs.js
-node scripts/check-doc-links.js
-npm run typecheck
-npm run lint
-npm run lint:design
-npm run build
-```
-
-Also run:
-
-- security API tests;
-- focused canonical browser smoke/evidence sufficient to prove public behavior did not regress;
-- final source/reference scan for stale active integrations/products;
-- high-risk and secret-material scans on changed active files;
-- final diff/status review.
-
-## Commit/push gate
-
-Commit only after all required validation passes. Stage exact paths only. Do not include ignored browser artifacts or unrelated work.
-
-After push/deployment where applicable:
-
-- verify production `/api/version` equals the intended full commit SHA;
-- verify the eight canonical routes;
-- verify key compatibility redirects and retired-route behavior;
-- require a clean local worktree.
-
-## Definition of done
-
-This repository can be called fully closed out when:
-
-1. active code/docs contain no known stale retired-runtime guidance;
-2. zero-consumer cleanup is complete for the audited scope;
-3. current status/roadmap/implementation docs agree;
-4. deferred Ory functionality is explicitly documented and remains fail-closed;
-5. branch cleanup is either completed with evidence or reported as the only external/manual limitation;
-6. validation passes;
-7. the hygiene commit is pushed and the worktree is clean.
+Record test commands/results, screenshot review, measured LiquidGlass comparison, measured LCP, feature and production commits, workflow/deployment result, live version and route checks, final branch/worktree state, preserved-checkout fingerprint, and any remaining warnings. Do not call the work complete on a green local build or successful push alone.

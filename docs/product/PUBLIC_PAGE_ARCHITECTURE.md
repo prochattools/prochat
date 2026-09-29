@@ -1,4 +1,6 @@
-# ProChat Public Page Architecture
+# ProChat Public Page Architecture — superseded historical plan
+
+> Historical plan dated 2026-07-19. Its Memory/Memory-for-QA/Workbench hierarchy, `/memory` routes, page architecture, and acceptance criteria are no longer current. For current route/product guidance see `PRODUCT.md`, `docs/overview.md`, `docs/roadmap.md`, and `docs/implementation-plan.md`. Mind at `mind/organizations/prochat/brand/` remains canonical for product truth.
 
 **Status:** CANONICAL PUBLIC-EXPERIENCE ROUTE AND PAGE-PURPOSE CONTRACT  
 **Decision date:** 2026-07-19  

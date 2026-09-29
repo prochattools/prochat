@@ -11,40 +11,39 @@ Mind is canonical for ProChat philosophy, product hierarchy, naming, positioning
 Canonical references:
 
 ```text
-mind/wiki/organisations/prochat/brand/README.md
-mind/wiki/organisations/prochat/brand/product-strategy.md
-mind/wiki/organisations/prochat/brand/product-naming-architecture.md
-mind/wiki/organisations/prochat/brand/product-roadmap.md
-mind/wiki/organisations/prochat/brand/canonical-homepage-copy.md
-mind/wiki/organisations/prochat/brand/global-design-foundation.md
-mind/wiki/organisations/prochat/brand/website-visual-motion-system.md
-mind/wiki/organisations/prochat/brand/website-build-contract.md
+mind/organizations/prochat/brand/README.md
+mind/organizations/prochat/brand/product-strategy.md
+mind/organizations/prochat/brand/product-naming-architecture.md
+mind/organizations/prochat/brand/product-roadmap.md
+mind/organizations/prochat/brand/canonical-homepage-copy.md
+mind/organizations/prochat/brand/global-design-foundation.md
+mind/organizations/prochat/brand/website-visual-motion-system.md
+mind/organizations/prochat/brand/website-build-contract.md
 ```
 
 This document is not a second ProChat strategy source. It only explains how this website repository should apply Mind's strategy in local pages, navigation, metadata, and conversion flows.
 
 ## Current product boundary for the website
 
-Mind currently defines exactly two ProChat products:
+Mind's current public-product system is:
 
 ```text
-ProChat Memory
-ProChat Workbench
+Infinite Brain: Evermind ↔ Nevermind
+Mastermind (separate ProChat product)
 ```
 
-The current launch focus is:
+ProChat Memory for QA is paused/historical, not a current public product. The current product routes are:
 
 ```text
-ProChat Memory for QA
+/evermind · /nevermind · /mastermind
 ```
 
 Website priorities:
 
-1. Lead with ProChat Memory as the flagship product.
-2. Present ProChat Memory for QA as the first launch niche and first discipline-specific edition.
-3. Present ProChat Workbench as the second product, separate from Memory.
-4. Keep future capabilities and interfaces clearly labeled as non-products.
-5. Archive or de-emphasize older directions instead of deleting historical material.
+1. Explain Evermind as human-owned memory and Nevermind as the paid capability/convenience layer around it.
+2. Present Mastermind as a separate planning/orchestration product.
+3. Keep future capabilities and interfaces clearly labeled as non-products.
+4. Archive or de-emphasize older directions instead of deleting historical material.
 
 ## What this repository may decide
 
@@ -78,10 +77,10 @@ Those decisions live in Mind.
 
 Use Mind for the canonical product story, then translate it into website surfaces as follows:
 
-- homepage: explain ProChat through the Memory-first product direction without duplicating Mind's full strategy;
-- ProChat Memory page: explain the flagship product and local, inspectable, review-first memory benefits;
-- ProChat Memory for QA page: explain the first launch niche for QA testers;
-- ProChat Workbench page: explain the local ChatGPT-first builder workbench;
+- homepage: explain Evermind, Nevermind, and Mastermind as a connected product family without duplicating Mind's full strategy;
+- `/evermind`: explain free, open-source, human-owned memory;
+- `/nevermind`: explain paid capability and convenience around human-owned memory;
+- `/mastermind`: explain the separate planning/orchestration product;
 - contact/waitlist: route users toward the relevant product or selected beta interest;
 - docs/learn: support understanding and adoption without inventing new product categories.
 
@@ -93,7 +92,7 @@ API access and MCP integrations may be described only as future interfaces or in
 
 ProChat OS, SaaSKit, ProKit, UXKit, WaaSKit, and MikeOSS are legacy, historical, external, or archived references where relevant. They are not current ProChat products.
 
-BuildFlow may remain only as a technical/internal compatibility identifier for Workbench where required.
+BuildFlow may remain only as a technical/internal compatibility identifier where required.
 
 ## Copy safety rules
 

@@ -1,6 +1,6 @@
 # Deployment
 
-This document covers the current lean ProChat deployment path.
+This document covers the current ProChat deployment and verification path. Production releases flow through `.github/workflows/main.yml` on `main`; do not bypass its checks or deploy a local build directly.
 
 ## Production source
 
@@ -55,14 +55,14 @@ After rollout:
 3. verify intentional compatibility redirects;
 4. verify retired product routes do not render retired bodies;
 5. check production health/console evidence relevant to the change;
-6. for cinematic funnel releases, verify `/evermind` and `/nevermind` at desktop and mobile widths, including first-scroll behavior before the remote MP4 is ready.
+6. for cinematic releases, verify `/`, `/evermind`, `/nevermind`, and `/mastermind` at desktop and mobile widths, including first-scroll and reverse-scroll behavior, reduced motion, and production media readiness.
 
 Canonical routes:
 
 - `/`
-- `/memory`
-- `/memory-qa`
-- `/workbench`
+- `/evermind`
+- `/nevermind`
+- `/mastermind`
 - `/docs`
 - `/contact`
 - `/privacy`

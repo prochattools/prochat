@@ -3,6 +3,8 @@
 **Status:** canonical motion planning document  
 **Authority:** `docs/homepage-visual-storyboard.md`, `DESIGN.md`
 
+> Historical pre-cinematic storyboard. Its Memory/QA-specific sequences are not the current public route specification. Current routes `/`, `/evermind`, `/nevermind`, and `/mastermind` share two full-viewport sections, an intentional 80vh empty spacer, and one scroll-driven cinematic media layer. Other public routes are outside this visual redesign. See `docs/homepage-validation-plan.md` and `docs/implementation-plan.md` for active behavior and evidence.
+
 ## Purpose
 
 This document defines narrative states before GSAP implementation. Motion code must follow named product states rather than inventing choreography in place.
