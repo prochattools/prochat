@@ -21,8 +21,14 @@ async function sampleRenderedCanvas(page: Page) {
     const context = scratch.getContext('2d')
     if (!context) throw new Error('Canvas 2D context is unavailable')
 
+    const directionFrames = {
+      slowDown: new Set<number>(),
+      slowUp: new Set<number>(),
+      fastDown: new Set<number>(),
+      fastUp: new Set<number>(),
+    }
     const result = { samples: 0, uncoveredSamples: 0, visibleCanvasSamples: 0, states: new Set<string>() }
-    const read = () => {
+    const read = (direction: keyof typeof directionFrames) => {
       const root = canvas.closest<HTMLElement>('.cm-video')
       const poster = root?.querySelector<HTMLElement>('.cm-video__poster')
       result.states.add(root?.dataset.renderState ?? 'missing')
@@ -43,7 +49,13 @@ async function sampleRenderedCanvas(page: Page) {
       )
       const pixels = context.getImageData(0, 0, scratch.width, scratch.height).data
       let alpha = 0
-      for (let index = 3; index < pixels.length; index += 4) alpha += pixels[index]
+      let signature = 2166136261
+      for (let index = 0; index < pixels.length; index += 4) {
+        alpha += pixels[index + 3]
+        signature ^= pixels[index] + (pixels[index + 1] << 8) + (pixels[index + 2] << 16) + (pixels[index + 3] << 24)
+        signature = Math.imul(signature, 16777619)
+      }
+      directionFrames[direction].add(signature >>> 0)
       result.samples += 1
       // The canvas is intentionally transparent while the poster is the visible
       // fallback. Count a gap only when neither layer covers the transition.
@@ -52,22 +64,33 @@ async function sampleRenderedCanvas(page: Page) {
       }
     }
 
-    const step = async (direction: -1 | 1, count: number, distance: number) => {
+    const step = async (
+      direction: -1 | 1,
+      key: keyof typeof directionFrames,
+      count: number,
+      distance: number,
+    ) => {
       for (let index = 0; index < count; index += 1) {
-        await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
         window.scrollBy(0, direction * distance)
-        read()
+        await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))
+        read(key)
       }
     }
 
     for (let cycle = 0; cycle < 3; cycle += 1) {
-      await step(1, 42, 5)
-      await step(-1, 42, 5)
-      await step(1, 28, 26)
-      await step(-1, 28, 26)
+      await step(1, 'slowDown', 42, 5)
+      await step(-1, 'slowUp', 42, 5)
+      await step(1, 'fastDown', 28, 26)
+      await step(-1, 'fastUp', 28, 26)
     }
 
-    return { ...result, states: [...result.states] }
+    return {
+      ...result,
+      states: [...result.states],
+      changedFramesByDirection: Object.fromEntries(
+        Object.entries(directionFrames).map(([direction, frames]) => [direction, frames.size]),
+      ),
+    }
   })
 }
 
@@ -111,6 +134,9 @@ test.describe('ProChat final public-site quality', () => {
       expect(sampled.visibleCanvasSamples, `${route} visible canvas samples`).toBeGreaterThan(200)
       expect(sampled.uncoveredSamples, `${route} uncovered background samples`).toBe(0)
       expect(sampled.states.every(state => state === 'bootstrap' || state === 'cache'), `${route} media state stays painted`).toBe(true)
+      for (const [direction, frameCount] of Object.entries(sampled.changedFramesByDirection)) {
+        expect(frameCount, `${route} ${direction} scroll visibly changes the background`).toBeGreaterThan(1)
+      }
       if (canDecodeVideo) expect(sampled.states, `${route} observed cache handoff`).toContain('cache')
     }
   })

@@ -1,6 +1,7 @@
 import { defineConfig } from '@playwright/test'
 
 const isCI = process.env.CI === 'true'
+const browserChannel = process.env.PLAYWRIGHT_CHANNEL
 
 export default defineConfig({
   testDir: '.',
@@ -18,6 +19,7 @@ export default defineConfig({
     : [['html', { outputFolder: './playwright-report', open: 'never' }]],
   use: {
     browserName: 'chromium',
+    ...(browserChannel ? { launchOptions: { channel: browserChannel } } : {}),
     locale: 'en-US',
     timezoneId: 'UTC',
     colorScheme: 'light',
