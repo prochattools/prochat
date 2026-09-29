@@ -1,6 +1,6 @@
 # ProChat website implementation plan
 
-Status: cinematic renderer, utility shell, and local validation complete; commit/push and production release remain pending.
+Status: cinematic renderer, utility shell, validation, merge, deployment, and live route checks complete. Feature commit `f09f92aab3327b3672df0d593e50040171cc1295` was merged to `main` as `f63dd3374c2acd4ecfbc837bfe899569eb4a3a23`; workflow [36573913919](https://github.com/prochattools/prochat/actions/runs/36573913919) succeeded. Post-deploy source/index continuity and safe repository cleanup remain pending.
 
 Last reviewed: 2026-09-29.
 
@@ -38,7 +38,7 @@ Local Chrome 153 recorded 89 visible canvas paints in 1.47s (59.99fps), with 87 
 
 ### C. Validation and release
 
-Run the repository-supported env/doc integrity, TypeScript, ESLint, design lint, asset validation, production build, security, and relevant browser evidence. Review a diff-based safety pass; stage exact files only; commit and push the continuation branch without rewriting history. Integrate through the repository's normal `main` workflow. Verify workflow and deployment success, `/api/version` full SHA, all eight public routes, media and browser health. Then verify the authoritative worktree is clean and the protected checkout's branch, HEAD, status, and diff fingerprint are unchanged. Commit/push/deployment gates for this release are still pending.
+**Release complete (2026-09-29):** feature commit `f09f92aab3327b3672df0d593e50040171cc1295` was reviewed and merged through PR #3 to `main` at `f63dd3374c2acd4ecfbc837bfe899569eb4a3a23`. Push workflow [36573913919](https://github.com/prochattools/prochat/actions/runs/36573913919) succeeded: CI and docs-integrity passed; browser evidence and API security passed; `build-and-deploy` and `Verify production deployment` passed. Production `/api/version` reports revision/image SHA `f63dd3374c2acd4ecfbc837bfe899569eb4a3a23`; `/`, `/evermind`, `/nevermind`, `/mastermind`, `/contact`, `/docs`, `/privacy`, and `/terms` returned HTTP 200. The authoritative feature worktree was clean after merge, and the protected dirty checkout was verified unchanged. Mastermind source/index continuity and final worktree/branch cleanup remain unverified and must use only an authorized, supported mechanism.
 
 ## Known implementation/build debt
 
@@ -46,8 +46,8 @@ Run the repository-supported env/doc integrity, TypeScript, ESLint, design lint,
 
 ## Next performance gate
 
-The 2026-09-29 single-run local Lighthouse diagnostic measured LCP at `/` 2.91s, `/evermind` 2.86s, `/nevermind` 2.86s, `/mastermind` 2.86s, `/docs` 4.05s, and `/contact` 4.21s. All exceed the ≤2.5s target; CLS was 0 and TBT 0ms. This is a diagnostic sample, not production field data. Next roadmap item: bring canonical public-route LCP under 2.5 seconds without reducing the cinematic experience; investigate the utility-route LCP increase separately.
+In the release workflow's mobile-simulated canonical performance evidence (2026-09-29, run [36573913919](https://github.com/prochattools/prochat/actions/runs/36573913919)), all 8 routes completed and 0/8 met the ≤2.5s LCP threshold. Median LCP: `/` 3.78s, `/evermind` 3.77s, `/nevermind` 3.77s, `/mastermind` 3.77s, `/docs` 4.90s, `/contact` 5.12s, `/privacy` 4.82s, `/terms` 3.85s. CLS was 0 and FCP 1.21–1.22s. Trace attribution marked text as LCP and reported FCP-to-LCP of 0ms (navigation-to-FCP/LCP 107–155ms), so investigate the simulation/metric discrepancy before changing rendering. This evidence step is advisory and did not block CI/deployment; it is not production field data. Next roadmap item: investigate and bring canonical public-route LCP under 2.5s without reducing the cinematic experience.
 
 ## Completion evidence
 
-Record test commands/results, screenshot review, measured LiquidGlass comparison, measured LCP, feature and production commits, workflow/deployment result, live version and route checks, final branch/worktree state, preserved-checkout fingerprint, and any remaining warnings. Do not call the work complete on a green local build or successful push alone.
+Record test commands/results, screenshot review, measured LiquidGlass comparison, measured LCP, feature and production commits, workflow/deployment result, live version and route checks, final branch/worktree state, preserved-checkout fingerprint, and any remaining warnings. Release evidence is now recorded above; source/index continuity and repository cleanup are still open. Do not call the entire closeout complete until those items are safely resolved or explicitly reported as blocked.
