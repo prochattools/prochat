@@ -110,7 +110,7 @@ async function renderedCanvasChecksum(page: Page) {
 
 test.describe('ProChat final public-site quality', () => {
   test('core routes keep every cinematic background painted through repeated scroll reversals', async ({ page }) => {
-    test.setTimeout(120_000)
+    test.setTimeout(180_000)
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.emulateMedia({ reducedMotion: 'no-preference' })
 
@@ -121,12 +121,56 @@ test.describe('ProChat final public-site quality', () => {
       await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-canvas-painted', 'true')
       await expect.poll(() => page.locator('.cm-video__canvas').evaluate(canvas => getComputedStyle(canvas).opacity)).toBe('1')
 
+      const warming = await page.evaluate(async () => {
+        const canvas = document.querySelector<HTMLCanvasElement>('.cm-video__canvas')
+        const root = canvas?.closest<HTMLElement>('.cm-video')
+        if (!canvas || !root) throw new Error('Cinematic bootstrap surface is missing')
+        const sample = document.createElement('canvas')
+        sample.width = 32
+        sample.height = 18
+        const context = sample.getContext('2d')
+        if (!context) throw new Error('Canvas 2D context is unavailable')
+        const frames = new Set<number>()
+        let uncoveredSamples = 0
+
+        for (let index = 0; index < 18; index += 1) {
+          window.scrollBy(0, 8)
+          await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))
+          context.clearRect(0, 0, sample.width, sample.height)
+          context.drawImage(canvas, 0, 0, sample.width, sample.height)
+          const pixels = context.getImageData(0, 0, sample.width, sample.height).data
+          let signature = 2166136261
+          let alpha = 0
+          for (let pixel = 0; pixel < pixels.length; pixel += 4) {
+            alpha += pixels[pixel + 3]
+            signature ^= pixels[pixel] + (pixels[pixel + 1] << 8) + (pixels[pixel + 2] << 16) + (pixels[pixel + 3] << 24)
+            signature = Math.imul(signature, 16777619)
+          }
+          frames.add(signature >>> 0)
+          const canvasOpacity = Number.parseFloat(getComputedStyle(canvas).opacity)
+          const poster = root.querySelector<HTMLElement>('.cm-video__poster')
+          const posterOpacity = Number.parseFloat(poster ? getComputedStyle(poster).opacity : '0')
+          if (canvasOpacity + posterOpacity < 0.98 || (canvasOpacity >= 0.99 && alpha === 0)) uncoveredSamples += 1
+        }
+
+        return {
+          state: root.dataset.renderState,
+          cacheReady: canvas.dataset.frameCacheReady,
+          uniqueFrames: frames.size,
+          uncoveredSamples,
+        }
+      })
+      expect(warming.state, `${route} stays on the stable bootstrap while the full cache builds`).toBe('bootstrap')
+      expect(warming.cacheReady, `${route} does not expose a sparse partial cache`).toBe('false')
+      expect(warming.uniqueFrames, `${route} bootstrap visibly scrubs during warm-up`).toBeGreaterThan(1)
+      expect(warming.uncoveredSamples, `${route} remains covered during warm-up`).toBe(0)
+
       const canDecodeVideo = await page.evaluate(() => Boolean(
         document.createElement('video').canPlayType('video/mp4; codecs="avc1.640028"'),
       ))
       if (canDecodeVideo) {
-        await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-frame-cache-ready', 'true', { timeout: 45_000 })
-        await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-frame-count', '120')
+        await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-frame-cache-ready', 'true', { timeout: 90_000 })
+        await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-frame-count', '240')
       }
 
       const sampled = await sampleRenderedCanvas(page)
@@ -191,7 +235,8 @@ test.describe('ProChat final public-site quality', () => {
     }
   })
 
-  test('cached renderer presents tiny scroll changes above 30 frames per second', async ({ page }) => {
+  test('cached renderer presents tiny scroll changes at near-display cadence without frame quantization', async ({ page }) => {
+    test.setTimeout(120_000)
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.emulateMedia({ reducedMotion: 'no-preference' })
     await page.goto(routeUrl('/'), { waitUntil: 'domcontentloaded' })
@@ -199,7 +244,8 @@ test.describe('ProChat final public-site quality', () => {
       document.createElement('video').canPlayType('video/mp4; codecs="avc1.640028"'),
     ))
     test.skip(!canDecodeVideo, 'This browser has no supported H.264 decoder for the cached-video path.')
-    await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-frame-cache-ready', 'true', { timeout: 45_000 })
+    await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-frame-cache-ready', 'true', { timeout: 90_000 })
+    await expect(page.locator('.cm-video__canvas')).toHaveAttribute('data-frame-count', '240')
 
     const cadence = await page.evaluate(async () => {
       const canvas = document.querySelector<HTMLCanvasElement>('.cm-video__canvas')
@@ -254,9 +300,9 @@ test.describe('ProChat final public-site quality', () => {
     })
 
     expect(cadence.samples, 'tiny scroll movements repaint the visible canvas').toBeGreaterThan(45)
-    expect(cadence.framesPerSecond, `observed paint cadence: ${JSON.stringify(cadence)}`).toBeGreaterThanOrEqual(30)
-    expect(cadence.longestGap, `no long gaps during fine scroll: ${JSON.stringify(cadence)}`).toBeLessThan(100)
-    expect(cadence.distinctRenderedFrames, `tiny scroll movements visibly update the image: ${JSON.stringify(cadence)}`).toBeGreaterThanOrEqual(8)
+    expect(cadence.framesPerSecond, `observed paint cadence: ${JSON.stringify(cadence)}`).toBeGreaterThanOrEqual(50)
+    expect(cadence.longestGap, `no long gaps during fine scroll: ${JSON.stringify(cadence)}`).toBeLessThan(40)
+    expect(cadence.distinctRenderedFrames, `tiny scroll movements visibly update the image: ${JSON.stringify(cadence)}`).toBeGreaterThanOrEqual(Math.ceil(cadence.samples * 0.75))
   })
 
   test('four cinematic pages share one clean header and CTA labels stay on a single line at all target widths', async ({ page }) => {
