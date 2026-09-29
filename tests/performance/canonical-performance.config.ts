@@ -20,7 +20,8 @@ export const MOBILE_LIGHTHOUSE_CONFIG = {
     uploadThroughputKbps: 675,
     offline: false,
   },
-  throttlingMethod: 'simulate' as const,
+  // Use Chrome's real throttled navigation so reported LCP matches the trace.
+  throttlingMethod: 'devtools' as const,
   userAgent:
     'Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36',
 }

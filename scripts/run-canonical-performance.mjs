@@ -2,7 +2,8 @@
  * Canonical mobile performance evidence runner.
  *
  * Runs 3 Lighthouse audits per canonical route on a CI-started local
- * production server (WAVE1_BASE_URL=http://localhost:3000).
+ * production server (WAVE1_BASE_URL=http://localhost:3000). DevTools throttling
+ * makes the Lighthouse LCP metric and Chrome trace describe the same navigation.
  *
  * Requirements:
  * - WAVE1_BASE_URL must be set to the local production server URL
@@ -121,11 +122,13 @@ function extractMetrics(lhr) {
   const networkRequests = audits['network-requests']
   const requestCount = networkRequests?.details?.items?.length ?? NaN
 
-  // JavaScript transferred bytes from bootup time audit items
+  // JavaScript transfer comes from network requests; bootup-time items do not
+  // consistently include transferSize in Lighthouse 12.
   let jsBytes = NaN
-  const bootup = audits['bootup-time']
-  if (bootup?.details?.items) {
-    jsBytes = bootup.details.items.reduce((sum, item) => sum + (item.transferSize ?? 0), 0)
+  if (networkRequests?.details?.items) {
+    jsBytes = networkRequests.details.items
+      .filter((item) => item.resourceType === 'Script')
+      .reduce((sum, item) => sum + (item.transferSize ?? 0), 0)
   }
 
   return {
@@ -147,6 +150,13 @@ function median(values) {
   const sorted = [...valid].sort((a, b) => a - b)
   const mid = Math.floor(sorted.length / 2)
   return sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid]
+}
+
+function percentile(values, percentile) {
+  const valid = values.filter((value) => typeof value === 'number' && Number.isFinite(value) && value >= 0)
+  if (valid.length === 0) return null
+  const sorted = [...valid].sort((a, b) => a - b)
+  return sorted[Math.ceil(percentile * sorted.length) - 1]
 }
 
 function computeMedians(runs) {
@@ -213,7 +223,7 @@ async function runLighthouse(url, chromePort) {
       cpuSlowdownMultiplier: 4,
       offline: false,
     },
-    throttlingMethod: 'simulate',
+    throttlingMethod: 'devtools',
     emulatedUserAgent: 'Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Mobile Safari/537.36',
     disableFullPageScreenshot: true,
   })
@@ -261,7 +271,9 @@ async function main() {
       deviceScaleFactor: 2.625,
       cpuThrottling: 4,
       networkThrottle: 'Slow 4G: rtt=150ms, dl=1474.56kbps, ul=675kbps',
-      throttlingMethod: 'simulate',
+      throttlingMethod: 'devtools',
+      lcpMeasurement: 'Chrome-observed DevTools-throttled navigation; trace and Lighthouse metric describe the same navigation.',
+      startupContribution: 'Excluded; the app server is started and readiness-checked before Lighthouse navigation.',
       userAgent: 'Moto G Power (2022) Android 11',
       runCount: RUNS_PER_ROUTE,
       mode: DIAGNOSTIC_MODE ? 'diagnostic' : 'canonical-gate',
@@ -277,7 +289,7 @@ async function main() {
     console.log(`  Lighthouse: ${environment.lighthouseVersion}`)
     console.log(`  Chrome: ${environment.chromeVersion}`)
     console.log(`  Node: ${environment.nodeVersion}`)
-    console.log(`  Form factor: mobile (Moto G Power 2022 simulation)`)
+    console.log(`  Form factor: mobile (Moto G Power 2022 UA; DevTools-throttled)`)
     console.log(`  Viewport: ${environment.viewport}`)
     console.log(`  CPU throttle: ${environment.cpuThrottling}x`)
     console.log(`  Network: ${environment.networkThrottle}`)
@@ -340,6 +352,12 @@ async function main() {
             request_count: rawRuns[0].request_count,
           }
         : computeMedians(rawRuns)
+      const p75 = Object.fromEntries(
+        ['FCP_seconds', 'LCP_seconds', 'CLS', 'TBT_ms', 'SI_seconds'].map((field) => [
+          field,
+          percentile(rawRuns.map((run) => run[field]), 0.75),
+        ]),
+      )
       if (!computedMedians) {
         console.error(`  Median computation failed — one or more metrics have insufficient valid values`)
         failedRoutes.push({ route, error: 'Median computation failed' })
@@ -350,7 +368,7 @@ async function main() {
       const targetGaps = thresholdResults.filter((r) => !r.passes).map((r) => `${r.metric}: ${r.value.toFixed ? r.value.toFixed(3) : r.value} > threshold ${r.threshold}${r.note ? ` (${r.note})` : ''}`)
       const passes = targetGaps.length === 0
 
-      console.log(`  Medians — LCP: ${computedMedians.LCP_seconds.toFixed(2)}s  CLS: ${computedMedians.CLS.toFixed(3)}  TBT: ${computedMedians.TBT_ms.toFixed(0)}ms  FCP: ${computedMedians.FCP_seconds.toFixed(2)}s  score: ${computedMedians.performance_score}`)
+      console.log(`  Medians — LCP: ${computedMedians.LCP_seconds.toFixed(2)}s (p75 ${p75.LCP_seconds?.toFixed(2) ?? 'n/a'}s)  CLS: ${computedMedians.CLS.toFixed(3)}  TBT: ${computedMedians.TBT_ms.toFixed(0)}ms  FCP: ${computedMedians.FCP_seconds.toFixed(2)}s  score: ${computedMedians.performance_score}`)
       if (targetGaps.length > 0) {
         console.log(`  TARGET GAPS: ${targetGaps.join(', ')}`)
       } else {
@@ -362,6 +380,7 @@ async function main() {
         route,
         rawRuns,
         medians: computedMedians,
+        p75,
         thresholdResults,
         passes,
         targetGaps,
@@ -417,8 +436,8 @@ async function main() {
     }
     console.log(`Results: ${latestPath}`)
 
-    console.log(`\n=== Route-by-route ${DIAGNOSTIC_MODE ? 'observations' : 'medians'} (mobile simulated) ===`)
-    console.log('Route'.padEnd(15), 'FCP(s)'.padEnd(8), 'LCP(s)'.padEnd(8), 'CLS'.padEnd(7), 'TBT(ms)'.padEnd(9), 'SI(s)'.padEnd(7), 'Score'.padEnd(7), 'Total(KB)'.padEnd(11), 'JS(KB)')
+    console.log(`\n=== Route-by-route ${DIAGNOSTIC_MODE ? 'observations' : 'medians'} (mobile DevTools-throttled) ===`)
+    console.log('Route'.padEnd(15), 'FCP(s)'.padEnd(8), 'LCP(s)'.padEnd(8), 'LCP p75'.padEnd(8), 'CLS'.padEnd(7), 'TBT(ms)'.padEnd(9), 'SI(s)'.padEnd(7), 'Score'.padEnd(7), 'Total(KB)'.padEnd(11), 'JS(KB)')
     for (const r of routeResults) {
       const m = r.medians
       const gap = r.passes ? '' : ' !'
@@ -426,6 +445,7 @@ async function main() {
         r.route.padEnd(15),
         m.FCP_seconds.toFixed(2).padEnd(8),
         m.LCP_seconds.toFixed(2).padEnd(8),
+        (r.p75?.LCP_seconds?.toFixed(2) ?? 'n/a').padEnd(8),
         m.CLS.toFixed(3).padEnd(7),
         m.TBT_ms.toFixed(0).padEnd(9),
         m.SI_seconds.toFixed(2).padEnd(7),
@@ -443,8 +463,10 @@ async function main() {
       console.log(
         `${item.route}: LCP ${item.LCP_seconds.toFixed(2)}s; ` +
           `${item.lcpElement.elementType} ${item.lcpElement.selector}; ` +
+          `nav→response ${trace.navigationToResponseMs ?? 'n/a'}ms; ` +
           `trace nav→FCP ${trace.navigationToFcpMs ?? 'n/a'}ms; ` +
           `nav→LCP ${trace.navigationToLcpMs ?? 'n/a'}ms; FCP→LCP ${trace.fcpToLcpMs ?? 'n/a'}ms; ` +
+          `nav→DCL ${trace.navigationToDomContentLoadedMs ?? 'n/a'}ms; nav→load ${trace.navigationToLoadMs ?? 'n/a'}ms; ` +
           `candidates ${item.lcpCandidateCount}; replacement ${item.lcpReplacementObserved}; ` +
           `top transfer ${topTransfer}; top execution ${topExecution}; ` +
           `JS ${(item.totalJavaScriptTransferBytes / 1024).toFixed(0)}KB; long tasks ${item.longTaskCount}`,
