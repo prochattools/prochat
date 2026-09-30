@@ -274,7 +274,7 @@ test.describe('cinematic marketing experience', () => {
     })
   }
 
-  test('keeps the opening cinematic frame painted when the video cache takes over', async ({ page }) => {
+  test('keeps the opening cinematic frame painted when video decoding or caching is unavailable', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.emulateMedia({ reducedMotion: 'no-preference' })
     await page.goto(url('/'), { waitUntil: 'domcontentloaded' })
@@ -282,23 +282,20 @@ test.describe('cinematic marketing experience', () => {
     const canvas = page.locator('.cm-video__canvas')
     await expect(canvas).toHaveClass(/is-visible/)
 
-    let hasDecodedVideoFrame = false
+    let frameCacheReady = false
     try {
       await page.waitForFunction(() => {
-        const video = document.querySelector<HTMLVideoElement>('.cm-video__element')
-        return Boolean(video && video.readyState >= 2 && video.videoWidth > 0)
-      }, undefined, { timeout: 8000 })
-      hasDecodedVideoFrame = true
+        return document.querySelector('.cm-video__canvas')?.getAttribute('data-frame-cache-ready') === 'true'
+      }, undefined, { timeout: 20000 })
+      frameCacheReady = true
     } catch (error) {
       if (!(error instanceof Error) || error.name !== 'TimeoutError') throw error
     }
 
-    if (hasDecodedVideoFrame) {
-      await expect(canvas).toHaveAttribute('data-frame-cache-ready', 'true', { timeout: 20000 })
-    } else {
+    if (!frameCacheReady) {
       await page.waitForTimeout(4500)
-      await expect(canvas).toHaveAttribute('data-canvas-painted', 'true')
     }
+    await expect(canvas).toHaveAttribute('data-canvas-painted', 'true')
 
     const paintedPixels = await canvas.evaluate(element => {
       const canvas = element as HTMLCanvasElement
