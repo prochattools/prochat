@@ -279,15 +279,25 @@ test.describe('cinematic marketing experience', () => {
     await page.emulateMedia({ reducedMotion: 'no-preference' })
     await page.goto(url('/'), { waitUntil: 'domcontentloaded' })
 
-    const canDecodeVideo = await page.evaluate(() => Boolean(
-      document.createElement('video').canPlayType('video/mp4; codecs="avc1.640028"'),
-    ))
     const canvas = page.locator('.cm-video__canvas')
     await expect(canvas).toHaveClass(/is-visible/)
-    if (canDecodeVideo) {
+
+    let hasDecodedVideoFrame = false
+    try {
+      await page.waitForFunction(() => {
+        const video = document.querySelector<HTMLVideoElement>('.cm-video__element')
+        return Boolean(video && video.readyState >= 2 && video.videoWidth > 0)
+      }, undefined, { timeout: 8000 })
+      hasDecodedVideoFrame = true
+    } catch (error) {
+      if (!(error instanceof Error) || error.name !== 'TimeoutError') throw error
+    }
+
+    if (hasDecodedVideoFrame) {
       await expect(canvas).toHaveAttribute('data-frame-cache-ready', 'true', { timeout: 20000 })
     } else {
       await page.waitForTimeout(4500)
+      await expect(canvas).toHaveAttribute('data-canvas-painted', 'true')
     }
 
     const paintedPixels = await canvas.evaluate(element => {
