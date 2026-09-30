@@ -42,9 +42,13 @@ The pre-correction local Chrome 153 diagnostic recorded 89 visible canvas paints
 
 Fresh production re-verification on 2026-09-29 used `tests/evidence/cinematic-final-quality.spec.ts`: 9 passed and the H.264 cached-path cadence case was skipped because the bundled Chromium decoder is unavailable. The all-route reversal/coverage checks, injected candidate-frame failure, CTA/Golos/responsive checks, reduced-motion cases, utility-shell checks, and intercepted Contact-form flow passed. `tests/evidence/cinematic-marketing-experience.spec.ts` passed all 11 tests, including the complete responsive screenshot matrix. At that historical check, `/api/version` reported `59a9c61550ca37586091c43f146cfd83023a455c` and `origin/main` was `7be5a0a4b015a80d884fe4a1bed3875652e0c171`; the subsequent performance-measurement merge deployed current `main` `1751f04ca3af8dc2adcb84232cac1c40b06545f9`, which contains no website implementation changes.
 
-## Known implementation/build debt
+## Docker build hardening closeout
 
-`Dockerfile` currently sets placeholder `STRIPE_SECRET_KEY_LIVE` and `STRIPE_WEBHOOK_SECRET_LIVE` values as builder-stage environment variables so retired Stripe module evaluation can pass. They are not real secrets, but they trigger build security warnings. Track a separate narrowly tested refactor to remove this build-time configuration dependency. Never place live credentials in Docker build args or image layers.
+The Dockerfile no longer sets Stripe build-time variables; current app code has no Stripe runtime consumer or dependency, and the old `stripe-env.ts`/`config.ts` explanation was stale. The CI build no longer injects Stripe test placeholders. `.dockerignore` excludes `.env*` files, including the tracked `.env.production` file, from builder context.
+
+Local evidence: Dockerfile check completed with no warnings; a no-cache image build completed without Stripe variables, dotenv files, or database build args; image builder/final config and history scans found no Stripe secret names/literals or dotenv files; the container booted against an isolated test database with HTTP 200 health; canonical browser smoke passed 18/18 and API/security checks 39/39. Typecheck, lint, design lint, environment-doc synchronization, and doc-link validation passed.
+
+This public repository tracks `.env.production` with non-placeholder remote database/password settings, and GitHub secret scanning is disabled. Treat those credentials as exposed. At the owner's direction, they were not rotated or revoked and remain in use; no values were printed. `.dockerignore` keeps dotenv files out of new Docker build contexts/images, but public source-history exposure remains unresolved. The owner authorized proceeding with this deployment while recording that residual risk. The next roadmap item after this release closes is dependency-security review; that work has not started.
 
 ## Completed LCP performance gate
 

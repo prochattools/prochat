@@ -148,7 +148,7 @@ selection_reason: >
 
 ## Deferred security observation (PXF-016D)
 
-CI run 30758962840 reported Dockerfile annotations concerning Stripe live-secret names in Docker build directives. Current source still declares placeholder `STRIPE_SECRET_KEY_LIVE` and `STRIPE_WEBHOOK_SECRET_LIVE` values using builder-stage `ENV` so retired Stripe module evaluation succeeds at build time. These are placeholders, not real credentials, but their presence implies an obsolete build contract. Track removal of this build-time configuration dependency; never pass actual secrets into Docker build args or layers.
+CI run 30758962840 reported Dockerfile annotations concerning Stripe live-secret names in Docker build directives. **Resolved in source on 2026-09-30:** the Dockerfile Stripe `ENV` block and unused CI Stripe test variables were removed after confirming there are no current Stripe imports, env reads, or package dependencies. `.dockerignore` now excludes all `.env*` from builder context. A no-cache local image build passed with no Stripe variables or dotenv files, Dockerfile checks reported no warnings, and image config/history/artifact scans found no targeted secret material. The container booted and its browser/API security smoke suites passed. This public repository tracks `.env.production` with non-placeholder database/password settings; treat those as exposed. At the owner's direction, credentials were not rotated or revoked and remain in use; no values were displayed. Docker exclusion prevents future build-context/image inclusion but does not remediate public source-history exposure. Deployment is authorized with this residual risk recorded. Never pass real secrets through Docker build args or layers.
 
 
 ## LCP attribution semantics (PXF-016D2)
