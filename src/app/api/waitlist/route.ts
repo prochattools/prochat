@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { render } from 'react-email'
 
 import WaitlistAdminNotificationEmail from '@/components/email-templates/WaitlistAdminNotificationEmail'
 import WaitlistConfirmationEmail from '@/components/email-templates/WaitlistConfirmationEmail'
@@ -206,6 +207,21 @@ export async function POST(request: Request) {
     } else {
       try {
         const resend = new Resend(resendApiKey)
+        const [adminHtml, confirmationHtml] = await Promise.all([
+          render(WaitlistAdminNotificationEmail({
+            email: submission.email,
+            timestampIso,
+            products: formattedProducts,
+            brandLockupUrl,
+          }) as React.ReactElement),
+          render(WaitlistConfirmationEmail({
+            email: submission.email,
+            products: formattedProducts,
+            brandLockupUrl,
+            preferencesUrl,
+            unsubscribeUrl,
+          }) as React.ReactElement),
+        ])
 
         const [adminResult, confirmationResult] = await Promise.all([
           resend.emails.send({
@@ -213,25 +229,14 @@ export async function POST(request: Request) {
             to: [adminInbox],
             replyTo: [submission.email],
             subject: 'New ProChat Waitlist Signup',
-            react: WaitlistAdminNotificationEmail({
-              email: submission.email,
-              timestampIso,
-              products: formattedProducts,
-              brandLockupUrl,
-            }),
+            html: adminHtml,
           }),
           resend.emails.send({
             from,
             to: [submission.email],
             replyTo: [adminInbox],
             subject: "You're on the ProChat waitlist",
-            react: WaitlistConfirmationEmail({
-              email: submission.email,
-              products: formattedProducts,
-              brandLockupUrl,
-              preferencesUrl,
-              unsubscribeUrl,
-            }),
+            html: confirmationHtml,
           }),
         ])
 

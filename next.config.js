@@ -14,9 +14,6 @@ const nextConfig = {
     optimizePackageImports: ['@/components'],
   },
   compress: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   reactStrictMode: true,
   async redirects() {
     return [

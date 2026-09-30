@@ -12,9 +12,10 @@ export const metadata: Metadata = {
   },
 }
 
-export default function Page({ searchParams }: { searchParams?: { redirect_url?: string; app?: string } }) {
-  const redirectUrl = searchParams?.redirect_url?.startsWith('/') ? searchParams.redirect_url : '/dashboard'
-  const theme = getAuthTheme(searchParams?.app)
+export default async function Page({ searchParams }: { searchParams: Promise<{ redirect_url?: string; app?: string }> }) {
+  const params = await searchParams
+  const redirectUrl = params.redirect_url?.startsWith('/') ? params.redirect_url : '/dashboard'
+  const theme = getAuthTheme(params.app)
   const loginUrl = new URL('/self-service/login/browser', OryPublicUrl)
   loginUrl.searchParams.set('return_to', `${AuthUiUrl}${redirectUrl}`)
 

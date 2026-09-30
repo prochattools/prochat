@@ -6,15 +6,16 @@ import { getWaitlistSignupByToken } from '@/lib/waitlist/server'
 export const dynamic = 'force-dynamic'
 
 type PreferencesPageProps = {
-  searchParams?: {
+  searchParams?: Promise<{
     token?: string
     updated?: string
     error?: string
-  }
+  }>
 }
 
 export default async function PreferencesPage({ searchParams }: PreferencesPageProps) {
-  const token = searchParams?.token?.trim() || ''
+  const params = await searchParams
+  const token = params?.token?.trim() || ''
   const signup = token ? await getWaitlistSignupByToken(token) : null
 
   return (
@@ -35,15 +36,15 @@ export default async function PreferencesPage({ searchParams }: PreferencesPageP
                 </p>
               </div>
 
-              {searchParams?.updated === '1' ? (
+              {params?.updated === '1' ? (
                 <div className="mb-6 rounded-2xl border border-primary/20 bg-primary/10 px-4 py-3 text-sm text-foreground">
                   Preferences updated.
                 </div>
               ) : null}
 
-              {searchParams?.error && searchParams.error !== 'invalid' ? (
+              {params?.error && params.error !== 'invalid' ? (
                 <div className="mb-6 rounded-2xl border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-foreground">
-                  {searchParams.error}
+                  {params.error}
                 </div>
               ) : null}
 

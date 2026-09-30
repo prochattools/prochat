@@ -1,4 +1,4 @@
-FROM node:20-bookworm AS base
+FROM node:22-bookworm AS base
 WORKDIR /app
 
 FROM base AS deps
@@ -18,7 +18,12 @@ ENV PROCHAT_BUILD_TIMESTAMP=$PROCHAT_BUILD_TIMESTAMP
 COPY . .
 RUN npm run build
 
-FROM node:20-bookworm-slim AS runner
+FROM base AS production-deps
+COPY package.json package-lock.json* ./
+COPY prisma ./prisma
+RUN npm ci --omit=dev
+
+FROM node:22-bookworm-slim AS runner
 ARG PROCHAT_GIT_SHA=unknown
 ARG PROCHAT_IMAGE_REF=unknown
 ARG PROCHAT_BUILD_TIMESTAMP=unknown
@@ -34,7 +39,7 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends curl ca-certificates postgresql-client-15; \
     rm -rf /var/lib/apt/lists/*
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=production-deps /app/node_modules ./node_modules
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/.next/static ./.next/standalone/.next/static

@@ -38,9 +38,9 @@ The B2 POC intentionally uses native browser scrolling. No Lenis/Rive/Lottie/Rem
 
 ## HyperFrames / A2 render
 
-The cached Brain HyperFrames skill requires Node.js >=22 and FFmpeg on `PATH`. The production ProChat application remains on Node 20; do not upgrade the application runtime for this lab.
+The cached Brain HyperFrames skill and production ProChat application use Node.js >=22. FFmpeg must be on `PATH` for HyperFrames rendering.
 
-From `tools/motion-lab/hyperframes` in a Node 22 shell:
+From `tools/motion-lab/hyperframes` in the supported Node 22 environment:
 
 ```bash
 npx hyperframes doctor

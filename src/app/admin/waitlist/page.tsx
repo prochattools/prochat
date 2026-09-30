@@ -25,7 +25,8 @@ function formatTimestamp(date: Date | null) {
   return new Date(date).toLocaleString()
 }
 
-export default async function AdminWaitlistPage({ searchParams }: { searchParams: SearchParams }) {
+export default async function AdminWaitlistPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const params = await searchParams
   const access = await getAdminAccessState()
 
   if (access.status === 'unauthenticated') {
@@ -53,9 +54,9 @@ export default async function AdminWaitlistPage({ searchParams }: { searchParams
   }
 
   const waitlist = await listAdminWaitlist()
-  const normalizedSearch = searchParams.search?.trim().toLowerCase() || ''
+  const normalizedSearch = params.search?.trim().toLowerCase() || ''
   const filtered = waitlist.filter(entry => {
-    if (searchParams.status && entry.status !== searchParams.status) {
+    if (params.status && entry.status !== params.status) {
       return false
     }
 
@@ -96,7 +97,7 @@ export default async function AdminWaitlistPage({ searchParams }: { searchParams
           <label className="flex flex-col text-sm text-muted-foreground">
             Search
             <input
-              defaultValue={searchParams.search}
+              defaultValue={params.search}
               name="search"
               placeholder="email"
               className="mt-1 rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/40"
@@ -105,7 +106,7 @@ export default async function AdminWaitlistPage({ searchParams }: { searchParams
           <label className="flex flex-col text-sm text-muted-foreground">
             Status
             <select
-              defaultValue={searchParams.status ?? ''}
+              defaultValue={params.status ?? ''}
               name="status"
               className="mt-1 rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/40"
             >

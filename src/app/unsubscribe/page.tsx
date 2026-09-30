@@ -5,13 +5,14 @@ import { unsubscribeWaitlistSignup } from '@/lib/waitlist/server'
 export const dynamic = 'force-dynamic'
 
 type UnsubscribePageProps = {
-  searchParams?: {
+  searchParams?: Promise<{
     token?: string
-  }
+  }>
 }
 
 export default async function UnsubscribePage({ searchParams }: UnsubscribePageProps) {
-  const token = searchParams?.token?.trim() || ''
+  const params = await searchParams
+  const token = params?.token?.trim() || ''
   const result = token ? await unsubscribeWaitlistSignup(token) : { status: 'invalid' as const }
 
   return (

@@ -84,7 +84,7 @@ The environment variable contract lives in `docs-public/environment.md` and `.en
 3. Do not reintroduce stale product-first positioning around legacy, archived, external, or internal names.
 4. Never adjust environment contracts without updating `docs-public/environment.md` and `.env.example` where relevant.
 5. Do not reintroduce legacy systems that were removed unless the task explicitly asks for a historical archive or redirect.
-6. Node 20 is the supported runtime for Docker, CI, and local tooling unless the repo contract changes.
+6. Node 22 is the supported runtime for Docker, CI, and local tooling.
 7. Do not restore retired Stripe runtime configuration; current environment requirements are documented in `docs-public/environment.md` and `.env.example`.
 8. Documentation integrity checks (`scripts/check-env-docs.js`, `scripts/check-doc-links.js`, `npm run docs:validate`) run automatically in CI.
 

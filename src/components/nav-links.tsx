@@ -1,9 +1,10 @@
 import { ScrollToSection } from "@/utils/scroll-to-section";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import type { ReactElement } from "react";
 
 interface NavLink {
-  icon?: JSX.Element;
+  icon?: ReactElement;
   title: string;
   link: string;
 }
