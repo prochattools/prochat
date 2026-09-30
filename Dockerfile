@@ -15,18 +15,6 @@ ENV NODE_OPTIONS=--max-old-space-size=4096 --max-http-header-size=16384
 ENV PROCHAT_GIT_SHA=$PROCHAT_GIT_SHA
 ENV PROCHAT_IMAGE_REF=$PROCHAT_IMAGE_REF
 ENV PROCHAT_BUILD_TIMESTAMP=$PROCHAT_BUILD_TIMESTAMP
-# Build-time Stripe vars: stripe-env.ts and config.ts call getters at module eval during page
-# collection. These are server-only (not baked into client bundle) — placeholder values are safe.
-# Dokploy injects real values at container runtime via env; these only exist to satisfy validation.
-ENV STRIPE_MODE=live
-ENV NEXT_PUBLIC_STRIPE_MODE=live
-ENV STRIPE_SECRET_KEY_LIVE=sk_live_build_placeholder_00000000000000000000
-ENV STRIPE_WEBHOOK_SECRET_LIVE=whsec_build_placeholder
-ENV STRIPE_PRODUCT_PROKIT_LIVE=prod_build_placeholder
-ENV STRIPE_PRICE_PROKIT_LIVE=price_build_placeholder
-ENV STRIPE_PRODUCT_SAASKIT_LIVE=prod_build_placeholder
-ENV STRIPE_PRICE_SAASKIT_LIVE=price_build_placeholder
-
 COPY . .
 RUN npm run build
 
