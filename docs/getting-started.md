@@ -4,7 +4,7 @@ This guide covers the current lean ProChat repository. Retired Stripe/Kits check
 
 ## Prerequisites
 
-- Node.js 20
+- Node.js 22
 - npm
 - PostgreSQL when exercising tenant/database workflows
 - Chromium/Playwright only when running browser evidence

@@ -135,11 +135,11 @@ Do not launch with unexplained budget regression, animation-driven layout shift,
 ## Tooling versions (PXF-016D)
 
 ```yaml
-lighthouse: 12.4.0
+  lighthouse: 13.5.0
 chrome-launcher: 1.1.2
-node_requirement: ">=20"
+  node_requirement: ">=22"
 selection_reason: >
-  lighthouse 12.4.0 is the latest stable release compatible with Node 20 (LTS).
+  Lighthouse 13.5.0 and the application runtime use Node 22.
   chrome-launcher 1.1.2 is the recommended companion version.
   Both are pinned in package.json via normal devDependencies.
   No npx transient install. No third-party Lighthouse CI upload service.

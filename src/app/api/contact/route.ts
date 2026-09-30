@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { render } from 'react-email'
 
 import ContactConfirmationEmail from '@/components/email-templates/ContactConfirmationEmail'
 import ContactNotificationEmail from '@/components/email-templates/ContactNotificationEmail'
@@ -146,6 +147,21 @@ export async function POST(request: Request) {
     }
 
     const resend = new Resend(resendApiKey)
+    const [internalHtml, confirmationHtml] = await Promise.all([
+      render(ContactNotificationEmail({
+        name: submission.name,
+        email: submission.email,
+        topic: submission.topic,
+        companyUrl: submission.companyUrl,
+        message: submission.message,
+        timestampIso,
+      }) as React.ReactElement),
+      render(ContactConfirmationEmail({
+        name: submission.name,
+        topic: submission.topic,
+        message: submission.message,
+      }) as React.ReactElement),
+    ])
 
     const [internalEmailResult, confirmationEmailResult] = await Promise.all([
       resend.emails.send({
@@ -153,25 +169,14 @@ export async function POST(request: Request) {
         to: [supportInbox],
         replyTo: [submission.email],
         subject: `[Contact] ${submission.topic} — ${submission.name}`,
-        react: ContactNotificationEmail({
-          name: submission.name,
-          email: submission.email,
-          topic: submission.topic,
-          companyUrl: submission.companyUrl,
-          message: submission.message,
-          timestampIso,
-        }),
+        html: internalHtml,
       }),
       resend.emails.send({
         from,
         to: [submission.email],
         replyTo: [supportInbox],
         subject: 'We received your message',
-        react: ContactConfirmationEmail({
-          name: submission.name,
-          topic: submission.topic,
-          message: submission.message,
-        }),
+        html: confirmationHtml,
       }),
     ])
 

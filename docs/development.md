@@ -4,7 +4,7 @@ This repository now serves a lean public ProChat site plus a small set of intern
 
 ## Runtime
 
-- Node.js 20
+- Node.js 22
 - npm/package-lock
 - Next.js App Router
 - PostgreSQL/Prisma for tenant and waitlist data workflows

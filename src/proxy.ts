@@ -36,7 +36,7 @@ function shouldBypassMaintenance(pathname: string) {
 }
 
 /**
- * Middleware for maintenance mode and development-only route protection.
+ * Proxy for maintenance mode and development-only route protection.
  *
  * - All public routes are redirected to /maintenance while static assets,
  *   Next.js internals, public metadata files, and API routes remain available.
@@ -45,7 +45,7 @@ function shouldBypassMaintenance(pathname: string) {
  * - Debug routes (/debug, /debug/analytics) are accessible only in development;
  *   production requests return 404 (PXF-018G: Items 14, 15).
  */
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
 
   // PXF-018G: Items 14–15 — Gate /debug routes to development environment only

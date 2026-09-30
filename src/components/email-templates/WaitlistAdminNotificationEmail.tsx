@@ -7,7 +7,7 @@ import {
   Preview,
   Section,
   Text,
-} from '@react-email/components'
+} from 'react-email'
 
 import { brand } from '@/lib/brand'
 import ProChatEmailBrand from '@/components/email-templates/ProChatEmailBrand'

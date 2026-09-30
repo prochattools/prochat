@@ -1,5 +1,5 @@
 import React from 'react'
-import { Img, Section } from '@react-email/components'
+import { Img, Section } from 'react-email'
 
 interface ProChatEmailBrandProps {
   lockupUrl: string
